@@ -1,0 +1,23 @@
+== Role-Based Access Controls
+
+single: RBAC single: permissions single: roles single: system-wide roles
+single: singleton roles
+
+3.7 contains minor updates to the Role-Based Access Control (RBAC)
+system. For the latest RBAC documentation, refer to the
+`Role-Based Access Controls<userguide:rbac-ug>` section in the Tower
+User Guide.
+
+=== Organization field on Job Templates
+
+Job templates in now include an organization field in the API. This is
+set on creation based on the organization of the project used by the Job
+Template, and cannot be changed. Because of this, a project's
+organization cannot be changed once it is in use by Job Templates.
+
+This changes visibility and access to job templates. Previously, an
+admin of the organization that a job template's inventory belonged to
+would also be granted admin access to the job template. While existing
+permissions are preserved on an upgrade to 3.7, newly created jobs will
+only grant view access to the job template to the inventory admin in
+this scenario.
