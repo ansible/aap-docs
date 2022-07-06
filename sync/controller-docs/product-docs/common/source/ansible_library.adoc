@@ -1,0 +1,23 @@
+Note
+
+If running a job template that uses a playbook with a custom module that
+has a non-default library path and fact caching enabled, you may
+encounter errors. To avoid this, do not set the path in
+`ansible.cfg library` but instead, do the following:
+
+....
+HTTP PATCH https://tower.example.org/api/v2/settings/jobs/
+....
+
+______________________________________________________
+\{::
+  "AWS_TASK_ENV": \{"ANSIBLE_LIBRARY": "/custom/path"}
+
+}
+______________________________________________________
+
+_______________________________________________________________________________________________________________________________________________________
+If Tower sees a value set there, it won't overwrite it. Instead, it just
+appends the Tower-specific modules to the path so that they are used
+properly.
+_______________________________________________________________________________________________________________________________________________________
