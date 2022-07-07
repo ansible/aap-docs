@@ -32,6 +32,11 @@ jobs:
           path: product-docs
           ssh-key: ${{ secrets.DOCS_BOT_KEY }}
 
+      - name: wipe controller-docs
+        run: |
+          cd sync
+          rm -rf controller-docs
+
       - name: rsync rst files
         run: |
           rsync -vr --delete --relative \
@@ -70,6 +75,11 @@ jobs:
           find . -name "*.rst*" | while read i; do pandoc -f rst -t asciidoc "$i" -o "${i%.*}.adoc"; done
           find . -name "*.rst" -type f -delete
           mv product-docs controller-docs
+
+      - name: move to controller docs
+        run: |
+          git add . --all
+          git commit -m "Synchronize Controller docs to asciidoc"
 
       - name: commit files
         run: |
