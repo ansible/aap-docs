@@ -76,15 +76,10 @@ jobs:
           find . -name "*.rst" -type f -delete
           mv product-docs controller-docs
 
-      - name: move to controller docs
-        run: |
-          git add . --all
-          git commit -m "Synchronize Controller docs to asciidoc"
-
       - name: commit files
         run: |
           git add . --all
-          git commit -m "Synchronize Controller docs to asciidoc"
+          git diff-index --quiet HEAD || git commit -m "Synchronize Controller docs to asciidoc"
 
       - name: push changes
         uses: ad-m/github-push-action@master
