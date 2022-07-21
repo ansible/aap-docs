@@ -483,6 +483,9 @@ documentation] to learn about the valid service provider extra
 the `SOCIAL_AUTH_SAML_EXTRA_DATA` in the API. See Python's
 http://python-social-auth-docs.readthedocs.io/en/latest/backends/saml.html#advanced-settings[SAML
 Advanced Settings] documentation for more information.
+
+[[ag_auth_saml_user_flags_attr_map]]
+[arabic, start=17]
 . The *SAML User Flags Attribute Mapping* field allows you to map SAML
 roles and attributes to special user flags. The following attributes are
 valid in this field:
@@ -501,9 +504,12 @@ a user the system auditor flag
 `is_system_auditor_attr` that is required for the user to be a system
 auditor
 
-If `role` and `attr` are both specified for either superuser or
-system_auditor the settings for `attr` will take precedence over a
-`role`. The following table describes how the logic works.
+If `role` and `attr` are both specified for either `superuser` or
+`system_auditor`, the settings for `attr` will take precedence over a
+`role`. System Admin and System Auditor roles are evaluated at login for
+a SAML user. If you grant a SAML user one of these roles through the UI
+and not through the SAML settings, the roles will be removed on the
+user's next login. The following table describes how the logic works.
 
 [width="72%",cols="23%,21%,32%,24%",options="header",]
 |==============================================
@@ -517,6 +523,19 @@ system_auditor the settings for `attr` will take precedence over a
 |Yes |Yes |No |No
 |Yes |Yes |Unset |Yes
 |==============================================
+
+Example:
+
+....
+{
+    "is_superuser_attr": "blueGroups",
+    "is_superuser_role": "is_superuser",
+    "is_superuser_value": "cn=My-Sys-Admins,ou=memberlist,ou=mygroups,o=myco.com",
+    "is_system_auditor_attr": "blueGroups",
+    "is_system_auditor_role": "is_system_auditor",
+    "is_system_auditor_value": "cn=My-Auditors,ou=memberlist,ou=mygroups,o=myco.com"
+}
+....
 
 [arabic, start=18]
 . Click *Save* when done.

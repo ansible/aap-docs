@@ -14,6 +14,20 @@ directory associated with them. SCM types can consume both inventory
 files and scripts, the overlap between inventory files and custom types
 in that both do scripts.
 
+Any imported hosts will have a description of "imported" by default.
+This can be overridden by setting the `_awx_description` variable on a
+given host. For example, if importing from a sourced .ini file, you
+could add the following host variables:
+
+....
+[main]
+127.0.0.1 _awx_description="my host 1"
+127.0.0.2 _awx_description="my host 2"
+....
+
+Similarly, group descriptions also default to "imported", but can be
+overridden by the `_awx_description` as well.
+
 In order to use old inventory scripts in source control, see
 `ug_customscripts` in the for detail.
 
