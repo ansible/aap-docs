@@ -1,0 +1,50 @@
+- name: Synchronize Controller docs
+  hosts: localhost
+  tasks:
+   - name: clone product-docs
+     ansible.builtin.git:
+       repo: git@github.com:ansible/product-docs.git
+       dest: ./product-docs
+       version: main
+       key_file: ~/.ssh/id_rsa
+   - name: wipe controller-docs
+     ansible.builtin.command:
+       cmd: rm -rf ../sync/controller-docs/*
+   - name: sync controller docs
+     ansible.posix.synchronize:
+       src: ./product-docs/
+       dest: ../sync/controller-docs
+       delete: yes
+       recursive: yes
+       rsync_opts:
+         - "--exclude='**/*.html'"
+         - "--exclude='**/*.css'"
+         - "--exclude='**/*.js'"
+         - "--exclude='**/*.json'"
+         - "--exclude='**/*.yaml'"
+         - "--exclude='**/*.yml'"
+         - "--exclude='**/*.xml'"
+         - "--exclude='**/*.png'"
+         - "--exclude='**/*.svg'"
+         - "--exclude='**/*.ttf'"
+         - "--exclude='**/*.woff'"
+         - "--exclude='**/*.py'"
+         - "--exclude='**/*.eot'"
+         - "--exclude='**/*.po'"
+         - "--exclude='**/*.ico'"
+         - "--exclude='**/*.map'"
+         - "--exclude='**/*.txt'"
+         - "--exclude='**/*.conf'"
+         - "--exclude='**/Makefile'"
+         - "--exclude='_*/*'"
+         - "--exclude='**/_*/*'"
+         - "--exclude='**/locale/*'"
+         - "--exclude='userguide/*'"
+         - "--exclude='release-notes/*'"
+         - "--exclude='contrib/*'"
+   - name: remove product-docs directory
+     ansible.builtin.command:
+       cmd: rm -rf ./product-docs
+   - name: convert rst to adoc
+     ansible.builtin.command:
+       cmd: sh ../sync/bin/transform_rst.sh
