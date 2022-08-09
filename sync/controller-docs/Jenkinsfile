@@ -1,0 +1,111 @@
+def i18n_files = false
+
+pipeline {
+
+    agent {
+        label 'jenkins-jnlp-agent'
+    }
+
+    options {
+        ansiColor('xterm')
+        timestamps()
+        timeout(time: 4, unit: 'HOURS')
+        buildDiscarder(logRotator(daysToKeepStr: '7'))
+    }
+
+    stages {
+        stage ('Does the change contains i18n') {
+            steps {
+                script {
+                    i18n_files = sh(
+                        script: 'git diff-tree --no-commit-id --name-only -r HEAD | grep -E "*.po"',
+                        returnStatus: true
+                    ) == 0
+
+                    echo "Change contains i18n files ? ${i18n_files}"
+                }
+            }
+        }
+
+        stage ('Define GIT_FORK') {
+
+            when {
+                expression {
+                    return i18n_files
+                }
+            }
+
+            steps {
+                script {
+                    if (env.CHANGE_FORK) {
+                        GIT_FORK = env.CHANGE_FORK
+                    } else {
+                        GIT_FORK = 'ansible'
+                    }
+                }
+            }
+        }
+
+        stage ('Build Tower Docs') {
+
+            when {
+                expression {
+                    return i18n_files
+                }
+            }
+
+            parallel {
+
+                stage('English') {
+                    steps {
+                        build(
+                            job: 'Docs/Build_Tower_Docs',
+                            parameters: [
+                                string(name: 'GIT_FORK', value: GIT_FORK),
+                                string(name: 'GIT_BRANCH', value: env.CHANGE_BRANCH),
+                                string(name: 'OFFICIAL', value: 'no'),
+                                string(name: 'OLD_VERSION', value: 'yes'),
+                                string(name: 'LANGUAGE', value: 'en'),
+                                booleanParam(name: 'BUILD_PDF', value: false),
+                            ]
+                        )
+                    }
+                }
+
+                stage('Chinese') {
+                    steps {
+                        build(
+                            job: 'Docs/Build_Tower_Docs',
+                            parameters: [
+                                string(name: 'GIT_FORK', value: GIT_FORK),
+                                string(name: 'GIT_BRANCH', value: env.CHANGE_BRANCH),
+                                string(name: 'OFFICIAL', value: 'no'),
+                                string(name: 'OLD_VERSION', value: 'yes'),
+                                string(name: 'LANGUAGE', value: 'zh'),
+                                booleanParam(name: 'BUILD_PDF', value: false),
+                            ]
+                        )
+                    }
+                }
+
+                stage('Japanese') {
+                    steps {
+                        build(
+                            job: 'Docs/Build_Tower_Docs',
+                            parameters: [
+                                string(name: 'GIT_FORK', value: GIT_FORK),
+                                string(name: 'GIT_BRANCH', value: env.CHANGE_BRANCH),
+                                string(name: 'OFFICIAL', value: 'no'),
+                                string(name: 'OLD_VERSION', value: 'yes'),
+                                string(name: 'LANGUAGE', value: 'ja'),
+                                booleanParam(name: 'BUILD_PDF', value: false),
+                            ]
+                        )
+                    }
+                }
+
+            }
+        }
+
+    }
+}
