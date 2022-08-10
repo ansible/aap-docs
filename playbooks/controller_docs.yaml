@@ -56,16 +56,18 @@
      ansible.builtin.file:
        path: "{{ product_docs }}"
        state: absent
-   - name: convert rst to adoc
-     ansible.builtin.command:
-       cmd: sh ../sync/bin/transform_rst.sh
-   - name: find converted rst files
+   - name: find rst files
      ansible.builtin.find:
        paths: "{{ controller_docs }}"
        patterns: "*.rst"
        recurse: true
        file_type: file
      register: rst_files
+   - name: convert rst to adoc
+     ansible.builtin.shell:
+       cmd: while read i; do pandoc -f rst -t asciidoc "$i" -o "${i%.*}.adoc"; done
+       stdin: "{{ item.path }}"
+     loop: "{{ rst_files.files }}"
    - name: rm converted rst files
      ansible.builtin.file:
        path: "{{ item.path }}"
