@@ -490,19 +490,27 @@ Advanced Settings] documentation for more information.
 roles and attributes to special user flags. The following attributes are
 valid in this field:
 
-* `is_superuser_role`: Specifies a SAML role which will grant a user the
-superuser flag
+* `is_superuser_role`: Specifies one or more SAML roles which will grant
+a user the superuser flag
 * `is_superuser_attr`: Specifies a SAML attribute which will grant a
 user the superuser flag
-* `is_superuser_value`: Specifies a specific value required for
+* `is_superuser_value`: Specifies one or more values required for
 `is_superuser_attr` that is required for the user to be a superuser
-* `is_system_auditor_role`: Specifies a SAML role which will grant a
-user the system auditor flag
+* `is_system_auditor_role`: Specifies one or more SAML roles which will
+grant a user the system auditor flag
 * `is_system_auditor_attr`: Specifies a SAML attribute which will grant
 a user the system auditor flag
-* `is_system_auditor_value`: Specifies a specific value required for
+* `is_system_auditor_value`: Specifies one or more values required for
 `is_system_auditor_attr` that is required for the user to be a system
 auditor
+
+The `role` and `value` fields are lists and are [.title-ref]#or# logic.
+So if you specify two roles: [.title-ref]#[ "Role 1", "Role 2" ]# and
+the SAML user has either role the logic will consider them to have the
+required role for the flag. This is the same with the `value` field, if
+you specify: [.title-ref]#[ "Value 1", "Value 2"]# and the SAML user has
+either value for their attribute the logic will consider their attribute
+value to have matched.
 
 If `role` and `attr` are both specified for either `superuser` or
 `system_auditor`, the settings for `attr` will take precedence over a
@@ -511,9 +519,9 @@ a SAML user. If you grant a SAML user one of these roles through the UI
 and not through the SAML settings, the roles will be removed on the
 user's next login. The following table describes how the logic works.
 
-[width="72%",cols="23%,21%,32%,24%",options="header",]
-|==============================================
-|Has Role |Has Attr |Has Attr Value |Is Flagged
+[width="100%",cols="33%,14%,37%,16%",options="header",]
+|=======================================================================
+|Has one or more roles |Has Attr |Has one or more Attr Value |Is Flagged
 |No |No |N/A |No
 |Yes |No |N/A |Yes
 |No |Yes |Yes |Yes
@@ -522,7 +530,7 @@ user's next login. The following table describes how the logic works.
 |Yes |Yes |Yes |Yes
 |Yes |Yes |No |No
 |Yes |Yes |Unset |Yes
-|==============================================
+|=======================================================================
 
 Example:
 
