@@ -17,6 +17,10 @@
        delete: yes
        recursive: yes
        rsync_opts:
+         - "--exclude='Makefile'"
+         - "--exclude='Dockerfile'"
+         - "--exclude='VERSION'"
+         - "--exclude='*.md'"
          - "--exclude='**/*.html'"
          - "--exclude='**/*.css'"
          - "--exclude='**/*.md'"
@@ -37,9 +41,6 @@
          - "--exclude='**/*.txt'"
          - "--exclude='**/*.conf'"
          - "--exclude='**/*.gitignore'"
-         - "--exclude='**/Makefile'"
-         - "--exclude='**/Dockerfile'"
-         - "--exclude='**/VERSION'"
          - "--exclude='_*/*'"
          - "--exclude='**/_*/*'"
          - "--exclude='**/locale/*'"
