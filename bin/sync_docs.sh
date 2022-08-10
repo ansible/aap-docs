@@ -13,13 +13,12 @@ source=source
 target=target
 
 # Clean the existing downstream content.
-rm -rf $target/controller/topics
+rm -rf $target/controller/titles/administration/administration
+mkdir -p $target/controller/titles/administration/administration
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs $target/controller/topics
+cp -r $source/sync/controller-docs/administration/source/* $target/controller/titles/administration/administration
 
-# Set up the aap-common content.
-# Add a symlink to aap-common in each titles directory.
-find $target/controller/titles/ -mindepth 1 -maxdepth 2 -type d -exec ln -sr $target/aap-common {} \;
-# Include aap-common content in each master assembly.
-find $target/controller/titles/ -name master.adoc -exec sed -i -e 's|//include::aap-common|include::aap-common|g' {} \;
+# Do the same for the stories file.
+rm -rf $target/controller/titles/administration/stories.adoc
+cp -r $source/titles/controller/administration/stories.adoc $target/controller/titles/administration/stories.adoc
