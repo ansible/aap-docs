@@ -1,23 +1,25 @@
 - name: Synchronize Controller docs
   hosts: localhost
   vars:
-    controller_docs: ../sync/controller-docs/
-    product_docs: ../sync/product-docs/
+    source_repo: git@github.com:ansible/product-docs.git
+    source_branch: main
+    source_dir: ../sync/product-docs/
+    target_dir: ../sync/controller-docs/
   tasks:
-   - name: clone product-docs repository
+   - name: clone source repository
      ansible.builtin.git:
-       repo: git@github.com:ansible/product-docs.git
-       dest: "{{ product_docs }}"
-       version: main
+       repo: "{{ source_repo }}"
+       dest: "{{ source_dir }}"
+       version: "{{ source_branch }}"
        key_file: ~/.ssh/id_rsa
-   - name: rm controller-docs directory
+   - name: wipe source directory
      ansible.builtin.file:
-       path: "{{ controller_docs }}*"
+       path: "{{ target_dir }}*"
        state: absent
-   - name: sync controller docs
+   - name: synchronize content
      ansible.posix.synchronize:
-       src: "{{ product_docs }}"
-       dest: "{{ controller_docs }}"
+       src: "{{ source_dir }}"
+       dest: "{{ target_dir }}"
        delete: yes
        recursive: yes
        rsync_opts:
@@ -27,6 +29,7 @@
          - "--exclude='Jenkinsfile'"
          - "--exclude='*.sh'"
          - "--exclude='*.md'"
+         - "--exclude='.gitignore'"
          - "--exclude='**/*.html'"
          - "--exclude='**/*.css'"
          - "--exclude='**/*.md'"
@@ -45,31 +48,15 @@
          - "--exclude='**/*.map'"
          - "--exclude='**/*.txt'"
          - "--exclude='**/*.conf'"
-         - "--exclude='**/*.gitignore'"
          - "--exclude='_*/*'"
          - "--exclude='**/_*/*'"
          - "--exclude='**/locale/*'"
          - "--exclude='userguide/*'"
          - "--exclude='release-notes/*'"
          - "--exclude='contrib/*'"
-   - name: remove product-docs directory
+   - name: remove source directory
      ansible.builtin.file:
-       path: "{{ product_docs }}"
+       path: "{{ source_dir }}"
        state: absent
-   - name: find rst files
-     ansible.builtin.find:
-       paths: "{{ controller_docs }}"
-       patterns: "*.rst"
-       recurse: true
-       file_type: file
-     register: rst_files
    - name: convert rst to adoc
-     ansible.builtin.shell:
-       cmd: while read i; do pandoc -f rst -t asciidoc "$i" -o "${i%.*}.adoc"; done
-       stdin: "{{ item.path }}"
-     loop: "{{ rst_files.files }}"
-   - name: rm converted rst files
-     ansible.builtin.file:
-       path: "{{ item.path }}"
-       state: absent
-     with_items: "{{ rst_files.files }}"
+     ansible.builtin.include_tasks: convert_rst.yaml
