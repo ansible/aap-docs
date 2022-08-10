@@ -1,25 +1,31 @@
 - name: Synchronize Controller docs
   hosts: localhost
+  vars:
+    controller_docs: ../sync/controller-docs/
+    product_docs: ../sync/product-docs/
   tasks:
-   - name: clone product-docs
+   - name: clone product-docs repository
      ansible.builtin.git:
        repo: git@github.com:ansible/product-docs.git
-       dest: ./product-docs
+       dest: "{{ product_docs }}"
        version: main
        key_file: ~/.ssh/id_rsa
-   - name: wipe controller-docs
-     ansible.builtin.command:
-       cmd: rm -rf ../sync/controller-docs/*
+   - name: rm controller-docs directory
+     ansible.builtin.file:
+       path: "{{ controller_docs }}*"
+       state: absent
    - name: sync controller docs
      ansible.posix.synchronize:
-       src: ./product-docs/
-       dest: ../sync/controller-docs
+       src: "{{ product_docs }}"
+       dest: "{{ controller_docs }}"
        delete: yes
        recursive: yes
        rsync_opts:
          - "--exclude='Makefile'"
          - "--exclude='Dockerfile'"
          - "--exclude='VERSION'"
+         - "--exclude='Jenkinsfile'"
+         - "--exclude='*.sh'"
          - "--exclude='*.md'"
          - "--exclude='**/*.html'"
          - "--exclude='**/*.css'"
@@ -29,7 +35,6 @@
          - "--exclude='**/*.yaml'"
          - "--exclude='**/*.yml'"
          - "--exclude='**/*.xml'"
-         - "--exclude='**/*.png'"
          - "--exclude='**/*.svg'"
          - "--exclude='**/*.ttf'"
          - "--exclude='**/*.woff'"
@@ -48,8 +53,21 @@
          - "--exclude='release-notes/*'"
          - "--exclude='contrib/*'"
    - name: remove product-docs directory
-     ansible.builtin.command:
-       cmd: rm -rf ./product-docs
+     ansible.builtin.file:
+       path: "{{ product_docs }}"
+       state: absent
    - name: convert rst to adoc
      ansible.builtin.command:
        cmd: sh ../sync/bin/transform_rst.sh
+   - name: find converted rst files
+     ansible.builtin.find:
+       paths: "{{ controller_docs }}"
+       patterns: "*.rst"
+       recurse: true
+       file_type: file
+     register: rst_files
+   - name: rm converted rst files
+     ansible.builtin.file:
+       path: "{{ item.path }}"
+       state: absent
+     with_items: "{{ rst_files.files }}"
