@@ -496,6 +496,9 @@ a user the superuser flag
 user the superuser flag
 * `is_superuser_value`: Specifies one or more values required for
 `is_superuser_attr` that is required for the user to be a superuser
+* `remove_superusers`: Boolean indicating if the superuser flag should
+be removed for users or not. Defaults to `true`. (See below for more
+details)
 * `is_system_auditor_role`: Specifies one or more SAML roles which will
 grant a user the system auditor flag
 * `is_system_auditor_attr`: Specifies a SAML attribute which will grant
@@ -503,6 +506,9 @@ a user the system auditor flag
 * `is_system_auditor_value`: Specifies one or more values required for
 `is_system_auditor_attr` that is required for the user to be a system
 auditor
+* `remove_system_auditors`: Boolean indicating if the system_auditor
+flag should be removed for users or not. Defaults to `true`. (See below
+for more details)
 
 The `role` and `value` fields are lists and are [.title-ref]#or# logic.
 So if you specify two roles: [.title-ref]#[ "Role 1", "Role 2" ]# and
@@ -517,20 +523,90 @@ If `role` and `attr` are both specified for either `superuser` or
 `role`. System Admin and System Auditor roles are evaluated at login for
 a SAML user. If you grant a SAML user one of these roles through the UI
 and not through the SAML settings, the roles will be removed on the
-user's next login. The following table describes how the logic works.
+user's next login unless the `remove` flag is set to false. The remove
+flag, if `false`, will never allow the SAML adapter to remove the
+corresponding flag from a user. The following table describes how the
+logic works.
 
-[width="100%",cols="33%,14%,37%,16%",options="header",]
+[width="100%",cols="25%,11%,27%,12%,14%,11%",options="header",]
 |=======================================================================
-|Has one or more roles |Has Attr |Has one or more Attr Value |Is Flagged
-|No |No |N/A |No
-|Yes |No |N/A |Yes
-|No |Yes |Yes |Yes
-|No |Yes |No |No
-|No |Yes |Unset |Yes
-|Yes |Yes |Yes |Yes
-|Yes |Yes |No |No
-|Yes |Yes |Unset |Yes
+|Has one or more roles |Has Attr |Has one or more Attr Values |Remove
+Flag |Previous Flag |Is Flagged
+|No |No |N/A |True |False |No
+
+|No |No |N/A |False |False |No
+
+|No |No |N/A |True |True |No
+
+|No |No |N/A |False |True |Yes
+
+|Yes |No |N/A |True |False |Yes
+
+|Yes |No |N/A |False |False |Yes
+
+|Yes |No |N/A |True |True |Yes
+
+|Yes |No |N/A |False |True |Yes
+
+|No |Yes |Yes |True |False |Yes
+
+|No |Yes |Yes |False |False |Yes
+
+|No |Yes |Yes |True |True |Yes
+
+|No |Yes |Yes |False |True |Yes
+
+|No |Yes |No |True |False |No
+
+|No |Yes |No |False |False |No
+
+|No |Yes |No |True |True |No
+
+|No |Yes |No |False |True |Yes
+
+|No |Yes |Unset |True |False |Yes
+
+|No |Yes |Unset |False |False |Yes
+
+|No |Yes |Unset |True |True |Yes
+
+|No |Yes |Unset |False |True |Yes
+
+|Yes |Yes |Yes |True |False |Yes
+
+|Yes |Yes |Yes |False |False |Yes
+
+|Yes |Yes |Yes |True |True |Yes
+
+|Yes |Yes |Yes |False |True |Yes
+
+|Yes |Yes |No |True |False |No
+
+|Yes |Yes |No |False |False |No
+
+|Yes |Yes |No |True |True |No
+
+|Yes |Yes |No |False |True |Yes
+
+|Yes |Yes |Unset |True |False |Yes
+
+|Yes |Yes |Unset |False |False |Yes
+
+|Yes |Yes |Unset |True |True |Yes
+
+|Yes |Yes |Unset |False |True |Yes
 |=======================================================================
+
+Each time a SAML user authenticates to , these checks will be performed
+and the user flags will be altered as needed. If `System Administrator`
+or `System Auditor` is set for a SAML user within the UI, the SAML
+adapter will override the UI setting based on the rules above. If you
+would prefer that the user flags for SAML users do not get removed when
+a SAML user logs in, you can set the `remove_` flag to `false`. With the
+remove flag set to `false`, a user flag set to `true` through either the
+UI, API or SAML adapter will not be removed. However, if a user does not
+have the flag, and the above rules determine the flag should be added,
+it will be added, even if the flag is `false`.
 
 Example:
 
