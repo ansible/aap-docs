@@ -2,7 +2,11 @@
 
 = Updating the route tables
 
+<<<<<<< HEAD
 Before you update the route tables, confirm that you satisfy the xref:proc-azure-hub-spoke-peering_azure-hub-spoke-peering[prerequisites] for the hub-and-spoke peering process.
+=======
+Before you update the route tables, confirm that you satisfy the xref:proc-azure-hub-spoke-peering_aap-azure-hub-spoke-peering[prerequisites] for the hub-and-spoke peering process.
+>>>>>>> 4290622 (Add Ansible on Azure docs #2)
 
 [#routing-to-aap]
 .Routing to {AAPonAzureNameShort}
@@ -54,6 +58,7 @@ The easiest way to implement this is to create a firewall rule that allows all o
 If you choose not to allow all outbound traffic from  port 443, you must configure routes.
 
 * For Red Hat to manage and upgrade {AAPonAzureNameShort} and execute security patching, any machine in the Azure Kubernetes service (AKS) cluster must be allowed to submit a request to pull updates for containers used by {PlatformNameShort}.
+<<<<<<< HEAD
 +
 Add routes in the {PlatformNameShort} route table for outbound traffic from the full CIDR range of the {AAPonAzureNameShort} managed application to the following domains:
 
@@ -88,15 +93,24 @@ Add routes in the {PlatformNameShort} route table for outbound traffic from the 
 ** `*.azure-dns.org`
 ** `azure-dns.info`
 ** `*.azure-dns.info`
+=======
+Add routes in the {PlatformNameShort} route table for outbound traffic from the full CIDR range of the {AAPonAzureNameShort} managed application to the following domains:
+
+** `registry.redhat.io`
+** `quay.io`
+>>>>>>> 4290622 (Add Ansible on Azure docs #2)
 
 * You must also allow traffic from your firewall to any other external domain or IP address that you want {PlatformNameShort} to run automation jobs against.
 Otherwise, your firewall will block connectivity between {PlatformNameShort} and destinations for automation.
 
+<<<<<<< HEAD
 * {PlatformNameShort} requires a public DNS zone to provide SSL certificates.
 This public DNS zone is in the managed resource group of the deployment.
 The platform must be able to communicate via DNS queries with the servers listed in the DNS zone to complete certificate challenges with our upstream provider.
 Blocking this communication prevents successful certificate renewal.
 
+=======
+>>>>>>> 4290622 (Add Ansible on Azure docs #2)
 == Additional resources
 
 For further information about adding routes to a route table in Azure, refer to link:https://docs.microsoft.com/en-us/azure/virtual-network/manage-route-table#create-a-route[Create a route] in the Microsoft Azure _Virtual network_ guide.

@@ -10,14 +10,23 @@
 * You have identified the following:
 ** The CIDR block(s) of your existing VNets (including VPNs & direct connects) that will need access to {AAPonAzureNameShort} UIs.
 ** The CIDR block(s) of your existing VNets (including VPNs & direct connects) that will contain hosts or endpoints for Ansible automation.
+<<<<<<< HEAD
 ** The CIDR blocks of the {AAPonAzureNameShort} VNet from the managed resource group of the application. Refer to xref:proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed resource group] for instructions.
+=======
+** The CIDR blocks of the {AAPonAzureNameShort} VNet from the managed resource group of the application. Refer to xref:proc-azure-find-cluster-cidr_aap-azure-hub-spoke-peering[Finding the CIDR Block of the managed resource group] for instructions.
+>>>>>>> 4290622 (Add Ansible on Azure docs #2)
 
 Before peering any networks, ensure that there is no network address space overlap between your private VNets and your {AAPonAzureNameShort} network.
 
 .Procedure
 
+<<<<<<< HEAD
 . Find the CIDR Block for the {AAPonAzureNameShort} managed application Kubernetes cluster. See xref:proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed application Kubernetes cluster].
 . Configure Network Peering with the {PlatformNameShort} Subnet. See xref:proc-azure-nw-peering-aap-subnet_azure-hub-spoke-peering[Configuring Network Peering with the {PlatformNameShort} Subnet].
+=======
+. Find the CIDR Block for the {AAPonAzureNameShort} managed application Kubernetes cluster. See xref:proc-azure-find-cluster-cidr_aap-azure-hub-spoke-peering[Finding the CIDR Block of the managed application Kubernetes cluster].
+. Configure Network Peering with the {PlatformNameShort} Subnet. See xref:proc-azure-nw-peering-aap-subnet_aap-azure-hub-spoke-peering[Configuring Network Peering with the {PlatformNameShort} Subnet].
+>>>>>>> 4290622 (Add Ansible on Azure docs #2)
 . Update the route tables:
 .. Configure route tables from your existing networks to send traffic to the managed application CIDR. You must add routes to the routing tables of every network requesting {PlatformNameShort} user interfaces and of every network that will have automation performed against its resources.
 See xref:routing-to-aap[Routing to {AAPonAzureNameShort}].
