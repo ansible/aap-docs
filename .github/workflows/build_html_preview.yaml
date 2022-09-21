@@ -25,16 +25,13 @@ jobs:
     - uses: oraNod/asciidocjs-action@v1.3
       with:
         docs_path: titles/**/
-
-    - name: show me
-      run: tree titles/
     
-    - name: commit changes
+    - name: commit
       run: |
         git add titles/**/*.html
         git diff-index --quiet HEAD || git commit -m "Build HTML preview"
     
-    - name: push changes
+    - name: push
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.DOCS_BOT_PAT }}
