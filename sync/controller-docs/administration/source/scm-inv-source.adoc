@@ -59,48 +59,6 @@ those inputs like environment variables or files.
 For more detail, refer to
 `Credential types <userguide:ug_credential_types>`.
 
-[[ag_update_on_project_change]]
-==== Update on Project Update
-
-If the inventory source contains static content, it may be desirable to
-automatically update its content whenever the SHA-1 hash of its source
-project changes. This can be done by configuring the inventory source to
-Update on Project Update.
-
-image:images/sourced-from-project-update-on-project-update.png[image]
-
-When this box is checked, the inventory source will not allow
-update-on-launch. Update-on-launch is important because some
-configurations require it. For example, when you set up a project that
-the inventory references to update in series before a Job Template runs,
-so that the inventory that the Job Template runs will have the updated
-form of that inventory. However, there are two other alternative ways to
-accomplish this:
-
-* You can make a job template that uses a project as well as an
-inventory that updates from that same project. In this case, you can set
-the project to `update_on_launch`, in which case it will trigger an
-inventory update, if needed.
-* If you must use a different project for the playbook than for the
-inventory source, then you can still place the project in a workflow and
-then have a job template run on success of the project update.
-
-This is guaranteed to have the inventory update "on time" (meaning that
-the inventory changes are complete before the job template is launched),
-because the project does not transition to the completed state until the
-inventory update is finished.
-
-Note
-
-A failed inventory update does not mark the project as failed. Also, not
-every project update will trigger a corresponding inventory update. If
-the project revision has not changed and the inventory has not been
-edited, the inventory update will not execute.
-
-Also, projects are not blocked from updating while a related job is
-running. In cases where you have a big project (around 10 GB), disk
-space on `/tmp` may be an issue.
-
 === SCM Inventory Source Fields
 
 The source fields used are:
