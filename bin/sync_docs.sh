@@ -8,9 +8,9 @@
 
 # Set the path to the source and target directories.
 # The source directory contains the content that you want to synchronize.
-source=source
+source=/home/dnaro/git/aap-docs
 # The target directory is the location where you want to synchronize content.
-target=target
+target=/home/dnaro/workspace/controller-sync-test
 
 #####
 # Controller documentation
@@ -21,15 +21,15 @@ target=target
 ###
 
 # Clean existing downstream content.
-rm -rf $target/controller/titles/administration/administration
-rm -f $target/controller/titles/administration/stories.adoc
-mkdir -p $target/controller/titles/administration/administration
+rm -rf $target/controller/administration/administration
+rm -f $target/controller/administration/stories.adoc
+mkdir -p $target/controller/administration/administration
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/administration/source/* $target/controller/titles/administration/administration
+cp -r $source/sync/controller-docs/administration/source/* $target/controller/administration/administration
 
 # Copy the table of contents.
-cp -r $source/titles/controller/administration/stories.adoc $target/controller/titles/administration/stories.adoc
+cp -r $source/titles/controller/administration/stories.adoc $target/controller/administration/stories.adoc
 
 # Copy the images.
-cp -r $source/sync/controller-docs/common/source/images/ $target/controller/titles/administration/
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/administration/
