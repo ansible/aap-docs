@@ -1,0 +1,15 @@
+# Post conversion tasks to clean controller docs.
+# Ensure the target_dir variable is set in the playbook that imports this.
+- name: find adoc files
+  ansible.builtin.find:
+    paths: "{{ target_dir }}"
+    patterns: "*.adoc"
+    recurse: true
+    file_type: file
+  register: adoc_files
+- name: update image references
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: 'image:../../common/source/images/'
+    replace: 'image:'
+  with_items: "{{ adoc_files.files }}"
