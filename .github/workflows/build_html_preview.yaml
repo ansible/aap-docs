@@ -1,0 +1,41 @@
+
+name: Build HTML preview artifact
+
+on:
+  push:
+    branches:
+      - 'html-build-action'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v3
+      with:
+        repository: ansible/aap-docs
+        ref: aap-clouds-latest
+    
+    - name: config docs-bot
+      run: |
+        git config --global user.email "docs-bot@redhat.com"
+        git config --global user.name "docs-bot"
+
+    - uses: oraNod/asciidocjs-action@v1.3
+      with:
+        docs_path: titles/**/
+
+    - name: show me
+      run: tree titles/
+    
+    - name: commit changes
+      run: |
+        git add titles/**/*.html
+        git diff-index --quiet HEAD || git commit -m "Build HTML preview"
+    
+    - name: push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.DOCS_BOT_PAT }}
+        branch: aap-clouds-latest
