@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: ansible/aap-docs
-          ref: aap-2.2
+          ref: main
 
       - name: install pandoc
         run: sudo apt-get -y update && sudo apt-get -y install pandoc
@@ -31,7 +31,7 @@ jobs:
           mkdir ~/.ssh
           echo "$VAULT_PASS" > ~/.ssh/id_rsa
           chmod 0600 ~/.ssh/id_rsa
-          ansible-playbook playbooks/controller_docs.yaml
+          ansible-playbook bin/controller_docs.yaml
 
       - name: commit files
         run: |
@@ -43,4 +43,4 @@ jobs:
         with:
           directory: sync
           github_token: ${{ secrets.DOCS_BOT_PAT }}
-          branch: aap-2.2
+          branch: main
