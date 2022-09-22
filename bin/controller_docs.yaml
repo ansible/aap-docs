@@ -59,7 +59,16 @@
      ansible.builtin.file:
        path: "{{ source_dir }}"
        state: absent
+   - name: find rst files
+     ansible.builtin.find:
+       paths: "{{ target_dir }}"
+       patterns: "*.rst"
+       recurse: true
+       file_type: file
+     register: rst_files
+   - name: modify rst
+     ansible.builtin.include_tasks: modify_controller_rst.yaml
    - name: convert rst to adoc
      ansible.builtin.include_tasks: convert_rst.yaml
-   - name: post-conversion adoc cleanup
-     ansible.builtin.include_tasks: post_controller.yaml
+   - name: modify adoc
+     ansible.builtin.include_tasks: modify_controller_adoc.yaml
