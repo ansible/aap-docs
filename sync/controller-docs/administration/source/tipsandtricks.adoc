@@ -1,21 +1,14 @@
 [[tips_and_tricks]]
 == Controller Tips and Tricks
 
-single: tips single: best practices single: help
-
 === Using the Controller CLI Tool
 
-pair: controller CLI; command line interface pair: tips; controller CLI
-pair: tips; command line interface
-
-has a full-featured command line interface. Refer to link:[AWX Command
-Line Interface] documentation for configuration and usage instructions.
+Automation controller has a full-featured command line interface. Refer
+to link:[AWX Command Line Interface] documentation for configuration and
+usage instructions.
 
 [[tips_change_password]]
 === Changing the Controller Admin Password
-
-pair: admin password; changing password pair: tips; admin password
-change pair: awx-manage; change password
 
 During the installation process, you are prompted to enter an
 administrator password which is used for the `admin` superuser/first
@@ -36,9 +29,6 @@ see `ag_security_django_password` for detail.
 
 === Creating a controller Admin from the commandline
 
-pair: admin creation; commandline pair: super user creation; awx-manage
-pair: tips; admin creation
-
 Once in a while you may find it helpful to create an admin (superuser)
 account from the commandline. To create an admin, run the following
 command as root on the controller server and enter in the admin
@@ -49,9 +39,6 @@ awx-manage createsuperuser
 ....
 
 === Setting up a jump host to use with the controller
-
-pair: jump host; ProxyCommand pair: tips; jump host pair: tips;
-ProxyCommand
 
 Credentials supplied by the controller will not flow to the jump host
 via ProxyCommand. They are only used for the end-node once the tunneled
@@ -84,11 +71,8 @@ ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q <user_name>@<jump_ser
 
 === View Ansible outputs for JSON commands when using the controller
 
-single: Ansible output for JSON commands single: JSON commands, Ansible
-output
-
-When working with , you can use the API to obtain the Ansible outputs
-for commands in JSON format.
+When working with automation controller, you can use the API to obtain
+the Ansible outputs for commands in JSON format.
 
 To view the Ansible outputs, browse to:
 
@@ -98,16 +82,13 @@ https://<controller server name>/api/v2/jobs/<job_id>/job_events/
 
 === Locate and configure the Ansible configuration file
 
-pair: tips; configuration file location pair: tips; configuration file
-configuration single: Ansible configuration file single: ansible.cfg
-pair: tips; ansible.cfg
-
 While Ansible does not require a configuration file, OS packages often
 include a default one in `/etc/ansible/ansible.cfg` for possible
 customization. In order to use a custom `ansible.cfg` file, place it at
-the root of your project. runs `ansible-playbook` from the root of the
-project directory, where it will then find the custom `ansible.cfg`
-file. An `ansible.cfg` anywhere else in the project will be ignored.
+the root of your project. Automation controller runs `ansible-playbook`
+from the root of the project directory, where it will then find the
+custom `ansible.cfg` file. An `ansible.cfg` anywhere else in the project
+will be ignored.
 
 To learn which values you can use in this file, refer to the
 https://github.com/ansible/ansible/blob/devel/examples/ansible.cfg[configuration
@@ -123,8 +104,6 @@ and any other per-job run items in a per-job temporary directory that is
 passed to the container used for job execution.
 
 === View a listing of all ansible_ variables
-
-pair: tips; ansible_variables, viewing all
 
 Ansible by default gathers “facts” about the machines under its
 management, accessible in Playbooks and in templates. To view all facts
@@ -154,16 +133,11 @@ controller UI:
 
 image:settings-jobs-jinja.png[image]
 
-=== Using
+Using execution environments =============
 
-single: execution environment pair: add; execution environment pair:
-jobs; add execution environment
-
-See `ug_execution_environments` in the .
+See `ug_execution_environments` in the Automation Controller User Guide.
 
 === Configuring the `controllerhost` hostname for notifications
-
-pair: notifications; hostname configuration
 
 In the `System Settings <configure_tower_system>`, you can replace
 `https://controller.example.com` in the *Base URL of The Controller
@@ -173,13 +147,11 @@ hostname.
 image:configure-tower-system-misc-baseurl.png[image]
 
 Refreshing your controller license also changes the notification
-hostname. New installations of should not have to set the hostname for
-notifications.
+hostname. New installations of automation controller should not have to
+set the hostname for notifications.
 
 [[launch_jobs_curl]]
 === Launching Jobs with curl
-
-pair: tips; curl
 
 Launching jobs with the controller API is simple. Here are some easy to
 follow examples using the `curl` tool.
@@ -218,9 +190,6 @@ the quotes, etc.
 
 === Dynamic Inventory and private IP addresses
 
-pair: tips; EC2 VPC instances pair: tips; private IPs with dynamic
-inventory pair: tips; dynamic inventory and private IPs
-
 By default, the controller only shows instances in a VPC that have an
 Elastic IP (EIP) address associated with them. To view all of your VPC
 instances, perform the following steps:
@@ -240,9 +209,6 @@ The controller must be running inside the VPC with access to those
 instances in order to usefully configure them.
 
 === Filtering instances returned by the dynamic inventory sources in the controller
-
-pair: tips; filtering instances pair: tips; dynamic inventory and
-instance filtering pair: tips; instance filtering
 
 By default, the dynamic inventory sources in the controller (AWS,
 Google, etc) return all instances available to the cloud credentials
@@ -271,9 +237,6 @@ synchronization operations will delete and replace your custom groups.
 
 === Using an unreleased module from Ansible source with the controller
 
-pair: tips; Ansible modules, unreleased pair: tips; unreleased modules
-pair: tips; modules, using unreleased
-
 If there is a feature that is available in the latest Ansible core
 branch that you would like to leverage with your controller system,
 making use of it in the controller is fairly simple.
@@ -292,8 +255,6 @@ via your normal package manager.
 
 === Using callback plugins with the controller
 
-pair: tips; callback plugins pair: tips; plugins, callback
-
 Ansible has a flexible method of handling actions during playbook runs,
 called callback plugins. You can use these plugins with the controller
 to do things like notify services upon playbook runs or failures, send
@@ -303,8 +264,9 @@ http://docs.ansible.com/developing_plugins.html#callbacks
 
 Note
 
-does not support the `stdout` callback plugin because Ansible only
-allows one, and it is already being used by for streaming event data.
+automation controller does not support the `stdout` callback plugin
+because Ansible only allows one, and it is already being used by
+automation controller for streaming event data.
 
 You may also want to review some example plugins, which should be
 modified for site-specific purposes, such as those available at:
@@ -328,8 +290,6 @@ callback plugins].
 
 === Connecting to Windows with winrm
 
-pair: tips; Windows connection pair: tips; winrm
-
 By default controller attempts to `ssh` to hosts. You must add the
 `winrm` connection info to the group variables to which the Windows
 hosts belong. To get started, edit the Windows group in which the hosts
@@ -347,9 +307,6 @@ Once done, save your edits. If Ansible was previously attempting an SSH
 connection and failed, you should re-run the job template.
 
 === Importing existing inventory files and host/group vars into the controller
-
-pair: tips; inventory import pair: importing inventory; importing
-host/group vars pair: tips; host/group vars import
 
 To import an existing static inventory and the accompanying host and
 group vars into the controller, your inventory should be in a structure

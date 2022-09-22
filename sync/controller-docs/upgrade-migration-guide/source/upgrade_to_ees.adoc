@@ -1,40 +1,39 @@
 [[upgrade_venv]]
-== Upgrading to
+Upgrading to Execution Environments ===================
 
-single: execution environment pair: Ansible; executing in a execution
-environment pair: migrate to execution environments; virtual
-environments pair: build; execution environments
-
-If upgrading from older versions of to 4.0 or later, the controller has
-the ability to detect previous versions of virtual environments
-associated with Organizations, Inventory, and Job Templates; and inform
-you that you will need to migrate to the new model. A brand new
-installation of creates two virtualenvs during installation--one is used
-to run the controller itself, while the other is used to run Ansible.
-Like legacy virtual environments, allow the controller to run in a
-stable environment, while allowing you to add or update modules to your
-as necessary to run your playbooks. For more information, see
-`ug_execution_environments` in the .
+If upgrading from older versions of automation controller to 4.0 or
+later, the controller has the ability to detect previous versions of
+virtual environments associated with Organizations, Inventory, and Job
+Templates; and inform you that you will need to migrate to the new
+execution environment model. A brand new installation of automation
+controller creates two virtualenvs during installation--one is used to
+run the controller itself, while the other is used to run Ansible. Like
+legacy virtual environments, execution environments allow the controller
+to run in a stable environment, while allowing you to add or update
+modules to your execution environment as necessary to run your
+playbooks. For more information, see `ug_execution_environments` in the
+Automation Controller User Guide.
 
 Important
 
 When upgrading, it is highly recommended to always rebuild on top of the
-base that corresponds to the platform version you are using. See
-`ug_build_ees` for more information.
+base execution environment that corresponds to the platform version you
+are using. See `ug_build_ees` for more information.
 
 [[migrate_new_venv]]
-=== Migrate legacy venvs to
+Migrate legacy venvs to execution environments
+--------------------------------
 
-You can have the exact same setup in an that you had in a prior custom
-virtual environment by migrating them to the new . Use the `awx-manage`
-commands in this section to:
+You can have the exact same setup in an execution environment that you
+had in a prior custom virtual environment by migrating them to the new
+execution environment. Use the `awx-manage` commands in this section to:
 
 * list of all the current custom virtual environments and their paths
 (`list_custom_venvs`)
 * view the resources that rely a particular custom virtual environment
 (`custom_venv_associations`)
 * export a particular custom virtual environment to a format that can be
-used to migrate to an (`export_custom_venv`)
+used to migrate to an execution environment (`export_custom_venv`)
 
 [arabic]
 . Before you migrate, it is recommended that you view all the custom
@@ -87,12 +86,14 @@ All of these commands can be run with a `-q` option, which removes the
 instructional content provided on each output.
 
 Now that you have the output from this `pip freeze` data, you can paste
-it into a definition file that can be used to spin up your new using .
-Anyone (both normal users and admins) can use to create an . See
-`ug_build_ees` in the for further detail.
+it into a definition file that can be used to spin up your new execution
+environment using ansible-builder. Anyone (both normal users and admins)
+can use ansible-builder to create an execution environment. See
+`ug_build_ees` in the Automation Controller User Guide for further
+detail.
 
 [[migrate_iso_to_exe]]
-=== Migrate isolated instances to execution nodes
+== Migrate isolated instances to execution nodes
 
 The move from isolated instance groups to execution nodes enables
 inbound or outbound connections. Contrast this with versions 3.8 and
@@ -100,11 +101,11 @@ older where only outbound connections were allowed from controller nodes
 to isolated nodes.
 
 Migrating legacy isolated instance groups to execution nodes in order to
-function properly in the mesh architecture in 4.1, is a preflight
-function of the installer that essentially creates an inventory file
-based on your old file. Even though both .ini and .yml files are still
-accepted formats, the generated file output is only an .ini file at this
-time.
+function properly in the automation controller mesh architecture in 4.1,
+is a preflight function of the installer that essentially creates an
+inventory file based on your old file. Even though both .ini and .yml
+files are still accepted formats, the generated file output is only an
+.ini file at this time.
 
 The preflight check leverages Ansible; and Ansible flattens the concept
 of children, this means that not every single inventory file can be
@@ -199,9 +200,7 @@ instance_group_restrictedzone
 |=======================================================================
 
 [[mesh_topology_ee]]
-=== View mesh topology
-
-single: mesh pair: mesh; graph pair: execution environments; mesh
+== View mesh topology
 
 If you configured a `mesh` topology, the installer can graphically
 validate your mesh configuration through a generated graph rendering
@@ -229,4 +228,4 @@ to `/api/v2/instances/N/` to change the enabled field to true.
 
 If you have already deployed a mesh topology and want to view node type,
 node health, and specific details about each node, see
-`ag_topology_viewer` in the .
+`ag_topology_viewer` in the Automation Controller Administration Guide.

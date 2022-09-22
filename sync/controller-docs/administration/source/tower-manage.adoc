@@ -1,8 +1,6 @@
 [[ag_manage_utility]]
 == The _awx-manage_ Utility
 
-single: awx-manage
-
 The `awx-manage` utility is used to access detailed internal information
 of the controller. Commands for `awx-manage` should run as the `awx` or
 `root` user.
@@ -13,8 +11,6 @@ Running awx-manage commands via playbook is not recommended or
 supported.
 
 === Inventory Import
-
-single: awx-manage; inventory import
 
 `awx-manage` is a mechanism by which a controller administrator can
 import inventory directly into the controller, for those who cannot use
@@ -52,8 +48,6 @@ awx-manage inventory_import --source=/ansible/inventory/ --inventory-id=1 --over
 
 === Cleanup of old data
 
-single: awx-manage, data cleanup
-
 `awx-manage` has a variety of commands used to clean old data from the
 controller. The controller administrators can use the controller
 Management Jobs interface for access or use the command line.
@@ -70,8 +64,6 @@ data older than a specific number of days.
 
 === Cluster management
 
-single: awx-manage; cluster management
-
 Refer to the `ag_clustering` section for details on the
 `awx-manage provision_instance` and `awx-manage deprovision_instance`
 commands.
@@ -84,10 +76,8 @@ Support.
 [[ag_token_utility]]
 === Token and session management
 
-single: awx-manage; token management single: awx-manage; session
-management
-
-supports the following commands for OAuth2 token management:
+automation controller supports the following commands for OAuth2 token
+management:
 
 ==== `create_oauth2_token`
 
@@ -172,12 +162,10 @@ Use this command to delete all sessions that have expired. Refer to
 link:[Django's documentation on clearsessions] for more detail.
 
 For more information on OAuth2 token management in the controller user
-interface, see the `ug_applications_auth` section of the .
+interface, see the `ug_applications_auth` section of the Automation
+Controller User Guide.
 
 === Analytics gathering
-
-single: awx-manage; data collection single: awx-manage; analytics
-gathering
 
 Use this command to gather analytics on-demand outside of the predefined
 window (default is 4 hours):

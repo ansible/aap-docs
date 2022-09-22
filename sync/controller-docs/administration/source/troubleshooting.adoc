@@ -1,11 +1,7 @@
 [[admin_troubleshooting]]
 == Troubleshooting the controller
 
-single: troubleshooting single: help
-
 === Error logs
-
-pair: troubleshooting; general help pair: troubleshooting; error logs
 
 The controller server errors are logged in `/var/log/tower`. Supervisors
 logs can be found in `/var/log/supervisor/`. Nginx web server errors are
@@ -18,8 +14,6 @@ portal at https://access.redhat.com/.
 
 [[admin_troubleshooting_sosreport]]
 === sosreport
-
-pair: troubleshooting; sosreport
 
 The `sosreport` is a utility that collects diagnostic information for
 Support to be able to use to analyze and investigate the issues you
@@ -36,8 +30,6 @@ sosreport].
 . Provide the sosreport to Red Hat Support.
 
 === Problems connecting to your host
-
-pair: troubleshooting; host connections
 
 If you are unable to run the `helloworld.yml` example playbook from the
 Quick Start Guide or other playbooks due to host connection errors, try
@@ -74,19 +66,14 @@ automation-controller-service restart
 
 === WebSockets port for live events not working
 
-pair: live events; port changes pair: troubleshooting; live events pair:
-troubleshooting; websockets
-
-uses port 80/443 on the controller server to stream live updates of
-playbook activity and other events to the client browser. These ports
-are configured for 80/443 by default, but if they are blocked by
-firewalls, close any firewall rules that opened up or added for the
-previous websocket ports, this will ensure your firewall allows traffic
-through this port.
+automation controller uses port 80/443 on the controller server to
+stream live updates of playbook activity and other events to the client
+browser. These ports are configured for 80/443 by default, but if they
+are blocked by firewalls, close any firewall rules that opened up or
+added for the previous websocket ports, this will ensure your firewall
+allows traffic through this port.
 
 === Problems running a playbook
-
-pair: troubleshooting; host connections
 
 If you are unable to run the `helloworld.yml` example playbook from the
 Quick Start Guide or other playbooks due to playbook errors, try the
@@ -105,8 +92,6 @@ Ensure you don't have extra or missing `-` plays.
 
 === Problems when running a job
 
-pair: troubleshooting; job does not run
-
 If you are having trouble running a job from a playbook, you should
 review the playbook YAML file. When importing a playbook, either
 manually or via a source control mechanism, keep in mind that the host
@@ -114,9 +99,6 @@ definition is controlled by the controller and should be set to
 `hosts: all`.
 
 === Playbooks aren't showing up in the "Job Template" drop-down
-
-pair: playbooks are not viewable; Job Template drop-down list pair:
-troubleshooting; playbooks not appearing
 
 If your playbooks are not showing up in the Job Template drop-down list,
 here are a few things you can check:
@@ -131,8 +113,6 @@ chown awx -R /var/lib/awx/projects/
 ....
 
 === Playbook stays in pending
-
-pair: troubleshooting; pending playbook
 
 If you are attempting to run a playbook Job and it stays in the
 "Pending" state indefinitely, try the following:
@@ -149,8 +129,6 @@ request] with the result.
 
 === Cancel a controller job
 
-pair: troubleshooting; job cancellation
-
 When issuing a `cancel` request on a currently running controller job,
 the controller issues a `SIGINT` to the `ansible-playbook` process.
 While this causes Ansible to stop dispatching new tasks and exit, in
@@ -162,8 +140,6 @@ With respect to software dependencies, if a running job is canceled, the
 job is essentially removed but the dependencies will remain.
 
 === Reusing an external database causes installations to fail
-
-pair: installation failure; external database
 
 Instances have been reported where reusing the external DB during
 subsequent installation of nodes causes installation failures.
@@ -178,8 +154,6 @@ installation, the database used for the clustered node must be manually
 cleared before any additional installations can succeed.
 
 === Private EC2 VPC Instances in the controller Inventory
-
-pair: EC2; VPC instances pair: troubleshooting; EC2 VPC instances
 
 By default, the controller only shows instances in a VPC that have an
 Elastic IP (EIP) associated with them. To see all of your VPC instances,
@@ -204,8 +178,6 @@ The controller must be running inside the VPC with access to those
 instances if you want to configure them.
 
 === Troubleshooting "Error: provided hosts list is empty"
-
-pair: troubleshooting; hosts list single: hosts lists (empty)
 
 If you receive the message "Skipping: No Hosts Matched" when you are
 trying to run a playbook through the controller, here are a few things

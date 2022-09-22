@@ -1,32 +1,33 @@
 [[ag_security_best_practices]]
 == Security Best Practices
 
-out-of-the-box is deployed in a secure fashion for use to automate
-typical environments. However, managing certain operating system
-environments, automation, and automation platforms, may require some
-additional best practices to ensure security. This document describes
-best practices for automation in a secure manner.
+automation controller out-of-the-box is deployed in a secure fashion for
+use to automate typical environments. However, managing certain
+operating system environments, automation, and automation platforms, may
+require some additional best practices to ensure security. This document
+describes best practices for automation in a secure manner.
 
 === General best practices
 
-An application is only as secure as the underlying system. To secure ,
-start with the release-appropriate security guide:
+An application is only as secure as the underlying system. To secure Red
+Hat Enterprise Linux, start with the release-appropriate security guide:
 
-* For 7:
+* For Red Hat Enterprise Linux 7:
 https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/
-* For 8:
+* For Red Hat Enterprise Linux 8:
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/security_hardening/index
 
 === Understand the architecture of Ansible and the controller
 
-Ansible and comprise a general purpose, declarative, automation
-platform. That means that once an Ansible playbook is launched (via the
-controller, or directly on the command line), the playbook, inventory,
-and credentials provided to Ansible are considered to be the source of
-truth. If policies are desired around external verification of specific
-playbook content, job definition, or inventory contents, these processes
-must be undertaken before the automation is launched (whether via the
-controller web UI, or the controller API).
+Ansible and automation controller comprise a general purpose,
+declarative, automation platform. That means that once an Ansible
+playbook is launched (via the controller, or directly on the command
+line), the playbook, inventory, and credentials provided to Ansible are
+considered to be the source of truth. If policies are desired around
+external verification of specific playbook content, job definition, or
+inventory contents, these processes must be undertaken before the
+automation is launched (whether via the controller web UI, or the
+controller API).
 
 These can take many forms. The use of source control, branching, and
 mandatory code review is best practice for Ansible automation. There are
@@ -38,14 +39,14 @@ and policy-based actions around arbitrary workflows, including
 automation; these tools can then use Ansible via the controller’s API to
 perform automation.
 
-We recommend all customers of select a secure default administrator
-password at time of installation. See `tips_change_password` for more
-information.
+We recommend all customers of automation controller select a secure
+default administrator password at time of installation. See
+`tips_change_password` for more information.
 
-exposes services on certain well-known ports, such as port 80 for HTTP
-traffic and port 443 for HTTPS traffic. We recommend that you do not
-expose on the open internet, significantly reducing the threat surface
-of your installation.
+automation controller exposes services on certain well-known ports, such
+as port 80 for HTTP traffic and port 443 for HTTPS traffic. We recommend
+that you do not expose automation controller on the open internet,
+significantly reducing the threat surface of your installation.
 
 === Granting access
 
@@ -74,9 +75,9 @@ disaster recovery only.
 
 ==== Minimize local system access
 
-, when used with best practices, should not require local user access
-except for administrative purposes. Non-administrator users should not
-have access to the controller system.
+automation controller, when used with best practices, should not require
+local user access except for administrative purposes. Non-administrator
+users should not have access to the controller system.
 
 ==== Remove access to credentials from users
 
@@ -109,15 +110,16 @@ For the system overall, this can be done via the built in audit support
 (https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Security_Guide/chap-system_auditing.html)
 and via the built-in logging support.
 
-For , this is done via the built-in Activity Stream support that logs
-all changes within the controller, as well as via the automation logs.
+For automation controller, this is done via the built-in Activity Stream
+support that logs all changes within the controller, as well as via the
+automation logs.
 
 Best practices dictate collecting logging and auditing centrally, rather
-than reviewing it on the local system. It is recommended that be
-configured to use whatever IDS and/or logging/auditing (Splunk) is
-standard in your environment. includes built-in logging integrations for
-Elastic Stack, Splunk, Sumologic, Loggly, and more. See `ag_logging` for
-more information.
+than reviewing it on the local system. It is recommended that automation
+controller be configured to use whatever IDS and/or logging/auditing
+(Splunk) is standard in your environment. automation controller includes
+built-in logging integrations for Elastic Stack, Splunk, Sumologic,
+Loggly, and more. See `ag_logging` for more information.
 
 ==== Existing security functionality
 
@@ -125,14 +127,15 @@ Do not disable SELinux, and do not disable the controller’s existing
 multi-tenant containment. Use the controller’s role-based access control
 (RBAC) to delegate the minimum level of privileges required to run
 automation. Use Teams in the controller to assign permissions to groups
-of users rather than to users individually. See `rbac-ug` in the .
+of users rather than to users individually. See `rbac-ug` in the
+Automation Controller User Guide.
 
 ==== External account stores
 
 Maintaining a full set of users just in the controller can be a
-time-consuming task in a large organization, prone to error. supports
-connecting to external account sources via `LDAP <ag_auth_ldap>`,
-`SAML 2.0 <ag_auth_saml>`, and certain
+time-consuming task in a large organization, prone to error. Automation
+controller supports connecting to external account sources via
+`LDAP <ag_auth_ldap>`, `SAML 2.0 <ag_auth_saml>`, and certain
 `OAuth providers <ag_social_auth>`. Using this eliminates a source of
 error when working with permissions.
 

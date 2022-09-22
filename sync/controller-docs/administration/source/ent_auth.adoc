@@ -1,8 +1,6 @@
 [[ag_ent_auth]]
 == Setting up Enterprise Authentication
 
-single: enterprise authentication single: authentication
-
 This section describes setting up authentication for the following
 enterprise systems:
 
@@ -26,8 +24,6 @@ user can no longer be treated as enterprise user.
 
 [[ag_auth_azure]]
 === Azure AD settings
-
-pair: authentication; Azure AD
 
 To set up enterprise authentication for Microsoft Azure Active Directory
 (AD), you will need to obtain an OAuth2 key and secret by registering
@@ -57,8 +53,8 @@ Authentication screen.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the Microsoft Azure logo to allow
-logging in with those credentials.
+automation controller and the login screen will now display the
+Microsoft Azure logo to allow logging in with those credentials.
 
 image:configure-tower-auth-azure-logo.png[image]
 
@@ -73,10 +69,8 @@ Refer to the `ag_auth_ldap` section.
 [[ag_auth_radius]]
 === RADIUS settings
 
-pair: authentication; RADIUS Authentication Settings
-
-can be configured to centrally use RADIUS as a source for authentication
-information.
+automation controller can be configured to centrally use RADIUS as a
+source for authentication information.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -91,19 +85,18 @@ authentication is disabled.
 [[ag_auth_saml]]
 === SAML settings
 
-pair: authentication; SAML Service Provider
-
 SAML allows the exchange of authentication and authorization data
 between an Identity Provider (IdP - a system of servers that provide the
-Single Sign On service) and a Service Provider (in this case, ). can be
-configured to talk with SAML in order to authenticate
-(create/login/logout) controller users. User Team and Organization
-membership can be embedded in the SAML response to the controller.
+Single Sign On service) and a Service Provider (in this case, automation
+controller). automation controller can be configured to talk with SAML
+in order to authenticate (create/login/logout) controller users. User
+Team and Organization membership can be embedded in the SAML response to
+the controller.
 
 image:configure-tower-auth-saml-topology.png[image]
 
-The following instructions describe as the service provider. To
-authenticate users through RHSSO (keycloak), refer to the
+The following instructions describe automation controller as the service
+provider. To authenticate users through RHSSO (keycloak), refer to the
 https://www.ansible.com/blog/red-hat-single-sign-on-integration-with-ansible-tower[Red
 Hat Single Sign On Integration with the Automation Controller] blog.
 
@@ -597,16 +590,16 @@ Flag |Previous Flag |Is Flagged
 |Yes |Yes |Unset |False |True |Yes
 |=======================================================================
 
-Each time a SAML user authenticates to , these checks will be performed
-and the user flags will be altered as needed. If `System Administrator`
-or `System Auditor` is set for a SAML user within the UI, the SAML
-adapter will override the UI setting based on the rules above. If you
-would prefer that the user flags for SAML users do not get removed when
-a SAML user logs in, you can set the `remove_` flag to `false`. With the
-remove flag set to `false`, a user flag set to `true` through either the
-UI, API or SAML adapter will not be removed. However, if a user does not
-have the flag, and the above rules determine the flag should be added,
-it will be added, even if the flag is `false`.
+Each time a SAML user authenticates to automation controller, these
+checks will be performed and the user flags will be altered as needed.
+If `System Administrator` or `System Auditor` is set for a SAML user
+within the UI, the SAML adapter will override the UI setting based on
+the rules above. If you would prefer that the user flags for SAML users
+do not get removed when a SAML user logs in, you can set the `remove_`
+flag to `false`. With the remove flag set to `false`, a user flag set to
+`true` through either the UI, API or SAML adapter will not be removed.
+However, if a user does not have the flag, and the above rules determine
+the flag should be added, it will be added, even if the flag is `false`.
 
 Example:
 
@@ -628,14 +621,13 @@ auto-generated URL found in the *SAML Service Provider Metadata URL*
 into a browser. It should output XML output, otherwise, it is not
 configured correctly.
 +
-Alternatively, logout of and the login screen will now display the SAML
-logo to indicate it as a alternate method of logging into .
+Alternatively, logout of automation controller and the login screen will
+now display the SAML logo to indicate it as a alternate method of
+logging into automation controller.
 +
 image:configure-tower-auth-saml-logo.png[image]
 
 ==== Transparent SAML Logins
-
-pair: authentication; SAML pair: SAML; transparent
 
 For transparent logins to work, you must first get IdP-initiated logins
 to work. To achieve this:
@@ -677,14 +669,12 @@ can enable logging for LDAP. Refer to the `ldap_logging` section.
 [[ag_auth_tacacs]]
 === TACACS+ settings
 
-pair: authentication; TACACS+ Authentication Settings
-
 Terminal Access Controller Access-Control System Plus (TACACS+) is a
 protocol that handles remote authentication and related services for
 networked access control through a centralized server. In particular,
 TACACS+ provides authentication, authorization and accounting (AAA)
-services, in which you can configure to use as a source for
-authentication.
+services, in which you can configure automation controller to use as a
+source for authentication.
 
 Note
 

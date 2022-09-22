@@ -1,8 +1,6 @@
 [[ag_ext_exe_env]]
 == Container and Instance Groups
 
-pair: container; groups pair: instance; groups
-
 The controller allows you to execute jobs via ansible playbook runs
 directly on a member of the cluster or in a namespace of an Openshift
 cluster with the necessary service account provisioned called a
@@ -10,7 +8,8 @@ Container Group. You can execute jobs in a container group only
 as-needed per playbook. For more information, see `ag_container_groups`
 towards the end of this section.
 
-For , see `ug_execution_environments` in the .
+For execution environments, see `ug_execution_environments` in the
+Automation Controller User Guide.
 
 [[ag_instance_groups]]
 === Instance Groups
@@ -52,8 +51,6 @@ deleted nor renamed).
 
 [[ag_automationcontroller_group_policies]]
 ==== `automationcontroller` group policies
-
-pair: policies; automationcontroller groups
 
 Use the following criteria when defining nodes:
 
@@ -122,8 +119,6 @@ group.
 
 ==== Configuring Instance Groups from the API
 
-pair: instance group; configure pair: instance group; API
-
 Instance groups can be created by POSTing to `/api/v2/instance_groups`
 as a system administrator.
 
@@ -139,9 +134,6 @@ following section, `ag_instance_group_policies`, for more details.
 
 [[ag_instance_group_policies]]
 ==== Instance group policies
-
-pair: policies; instance groups pair: clustering; instance group
-policies
 
 You can configure controller instances to automatically join Instance
 Groups when they come online by defining a `policy`. These policies are
@@ -163,9 +155,9 @@ in this Instance Group.
 * `policy_instance_list`: This is a fixed list of instance names to
 always include in this Instance Group.
 
-The Instance Groups list view from the User Interface provides a summary
-of the capacity levels for each instance group according to instance
-group policies:
+The Instance Groups list view from the automation controller User
+Interface provides a summary of the capacity levels for each instance
+group according to instance group policies:
 
 image:instance-groups_list_view.png[Instance
 Group policy example]
@@ -188,8 +180,6 @@ each a percentage value of 25 and the instances will be distributed
 among them with no overlap.
 
 ==== Manually pinning instances to specific groups
-
-pair: pinning; instance groups pair: clustering; pinning
 
 If you have a special instance which needs to be exclusively assigned to
 a specific Instance Group but don't want it to automatically join other
@@ -314,8 +304,6 @@ direct work towards a very specific Host in the controller cluster.
 [[ag_instancegrp_deprovision]]
 ==== Deprovision Instance Groups
 
-pair: groups; deprovisioning
-
 Re-running the setup playbook does not automatically deprovision
 instances since clusters do not currently distinguish between an
 instance that was taken offline intentionally or due to failure.
@@ -348,43 +336,45 @@ instance won't be added back to a group. To be sure that an instance
 will not be added back to a group, remove via the API and also remove it
 in your inventory file, or you can stop defining instance groups in the
 inventory file altogether. You can also manage instance group topology
-through the User Interface. For more information on managing instance
-groups in the UI, refer to
-`Instance Groups <userguide:ug_instance_groups>` in the .
+through the automation controller User Interface. For more information
+on managing instance groups in the UI, refer to
+`Instance Groups <userguide:ug_instance_groups>` in the Automation
+Controller User Guide.
 
 Note
 
 If you have isolated instance groups created in older versions of the
 controller (3.8.x and earlier) and want to migrate them to execution
 nodes to make them compatible for use with the automation mesh
-architecture, see `migrate_iso_to_exe` in the .
+architecture, see `migrate_iso_to_exe` in the Ansible Automation
+Platform Upgrade and Migration Guide.
 
 [[ag_container_groups]]
 === Container Groups
 
-single: container groups pair: containers; instance groups
-
-supports `Container Groups`, which allow you to execute jobs in the
-controller regardless of whether the controller is installed as a
-standalone, in a virtual environment, or in a container. Container
-groups act as a pool of resources within a virtual environment. You can
-create instance groups to point to an OpenShift container, which are job
-environments that are provisioned on-demand as a Pod that exists only
-for the duration of the playbook run. This is known as the ephemeral
-execution model and ensures a clean environment for every job run.
+Ansible Automation Platform supports `Container Groups`, which allow you
+to execute jobs in the controller regardless of whether the controller
+is installed as a standalone, in a virtual environment, or in a
+container. Container groups act as a pool of resources within a virtual
+environment. You can create instance groups to point to an OpenShift
+container, which are job environments that are provisioned on-demand as
+a Pod that exists only for the duration of the playbook run. This is
+known as the ephemeral execution model and ensures a clean environment
+for every job run.
 
 In some cases, it is desirable to have container groups be "always-on",
 which is configured through the creation of an instance.
 
 Note
 
-Container Groups upgraded from versions prior to 4.0 will revert back to
-default and completely remove the old pod definition, clearing out all
-custom pod definitions in the migration.
+Container Groups upgraded from versions prior to automation controller
+4.0 will revert back to default and completely remove the old pod
+definition, clearing out all custom pod definitions in the migration.
 
-Container groups are different from in that are container images and do
-not use a virtual environment. See `ug_execution_environments` in the
-for further detail.
+Container groups are different from execution environments in that
+execution environments are container images and do not use a virtual
+environment. See `ug_execution_environments` in the Automation
+Controller User Guide for further detail.
 
 ==== Create a container group
 
@@ -393,7 +383,8 @@ To create a container group:
 [arabic]
 . Use the controller user interface to create an
 `ug_credentials_ocp_k8s` credential that will be used with your
-container group, see `ug_credentials_add` in the for detail.
+container group, see `ug_credentials_add` in the Automation Controller
+User Guide for detail.
 . Create a new container group by navigating to the Instance Groups
 configuration window by clicking *Instance Groups* from the left
 navigation bar.
@@ -409,11 +400,11 @@ previously created to associate it to the container group.
 [[ag_customize_pod_spec]]
 ==== Customize the Pod spec
 
-provides a simple default Pod specification, however, you can provide a
-custom YAML (or JSON) document that overrides the default Pod spec. This
-field uses any custom fields (i.e. `ImagePullSecrets`) that can be
-"serialized" as valid Pod JSON or YAML. A full list of options can be
-found in the
+Ansible Automation Platform provides a simple default Pod specification,
+however, you can provide a custom YAML (or JSON) document that overrides
+the default Pod spec. This field uses any custom fields (i.e.
+`ImagePullSecrets`) that can be "serialized" as valid Pod JSON or YAML.
+A full list of options can be found in the
 https://docs.openshift.com/online/pro/architecture/core_concepts/pods_and_services.html[OpenShift
 documentation].
 
@@ -431,12 +422,13 @@ image:instance-group-customize-cg-pod-expanded.png[image]
 
 Note
 
-The image used at job launch time is determined by which is associated
-with the job. If a Container Registry credential is associated with the
-, then the controller will attempt to make a `ImagePullSecret` to pull
-the image. If you prefer not to give the service account permission to
-manage secrets, you must pre-create the `ImagePullSecret` and specify it
-on the pod spec, and omit any credential from the used.
+The image used at job launch time is determined by which execution
+environment is associated with the job. If a Container Registry
+credential is associated with the execution environment, then the
+controller will attempt to make a `ImagePullSecret` to pull the image.
+If you prefer not to give the service account permission to manage
+secrets, you must pre-create the `ImagePullSecret` and specify it on the
+pod spec, and omit any credential from the execution environment used.
 
 Refer to the _Allowing Pods to Reference Images from Other Secured
 Registries_ section of the
@@ -475,7 +467,8 @@ To verify the deployment and termination of your container:
 [arabic]
 . Create a mock inventory and associate the container group to it by
 populating the name of the container group in the *Instance Group*
-field. See `ug_inventories_add` in the for detail.
+field. See `ug_inventories_add` in the Automation Controller User Guide
+for detail.
 
 image:inventories-create-new-cg-test-inventory.png[Dummy
 inventory]
@@ -531,8 +524,6 @@ image:instance-group-cg-job-details-error.png[image]
 
 [[ag_container_capacity]]
 ==== Container capacity limits
-
-pair: container groups; capacity pair: container groups; limits
 
 Capacity limits and quotas for containers are defined via objects in the
 Kubernetes API:

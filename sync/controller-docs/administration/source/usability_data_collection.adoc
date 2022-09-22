@@ -2,22 +2,23 @@
 [[user_data_insights]]
 == Automation Analytics
 
-pair: Analytics; Insights pair: Automation; Insights
-
 When you imported your license for the first time, you were given
-options related to the collection of data that powers , a cloud service
-that is part of the subscription. For opt-in of to have any effect, your
-instance of *must* be running on .
+options related to the collection of data that powers Automation
+Analytics, a cloud service that is part of the Ansible Automation
+Platform subscription. For opt-in of Automation Analytics to have any
+effect, your instance of automation controller *must* be running on Red
+Hat Enterprise Linux.
 
-Much like Red Hat Insights, is built to only collect the minimum amount
-of data needed. No credential secrets, personal data, automation
-variables, or task output is gathered. For more information, see
-link:#details-of-data-collection[Details of data collection] below.
+Much like Red Hat Insights, Automation Analytics is built to only
+collect the minimum amount of data needed. No credential secrets,
+personal data, automation variables, or task output is gathered. For
+more information, see link:#details-of-data-collection[Details of data
+collection] below.
 
-In order to enable this feature, turn on data collection for and enter
-your Red Hat customer credentials in the *Miscellaneous System settings*
-of the System configuration list of options located in the *Settings*
-menu.
+In order to enable this feature, turn on data collection for Automation
+Analytics and enter your Red Hat customer credentials in the
+*Miscellaneous System settings* of the System configuration list of
+options located in the *Settings* menu.
 
 image:configure-tower-system-misc-analytics.png[image]
 
@@ -25,11 +26,11 @@ Note that the *Automation Analytics Upload URL* field is pre-populated
 with the location to which the collection of insights data will be
 uploaded.
 
-By default, the data is collected every 4 hours and upon enabling the
-feature, data will be collected up to a month back (or until the
-previous collection). You may turn off this data collection at any time
-in the *Miscellaneous System settings* of the System configuration
-window.
+By default, the Automation Analytics data is collected every 4 hours and
+upon enabling the feature, data will be collected up to a month back (or
+until the previous collection). You may turn off this data collection at
+any time in the *Miscellaneous System settings* of the System
+configuration window.
 
 This setting can also be enabled via the API by specifying
 `INSIGHTS_TRACKING_STATE = True` in either of these endpoints:
@@ -37,8 +38,8 @@ This setting can also be enabled via the API by specifying
 * `api/v2/settings/all`
 * `api/v2/settings/system`
 
-The generated from this data collection will be found on the link:[Red
-Hat Cloud Services] portal.
+The Automation Analytics generated from this data collection will be
+found on the link:[Red Hat Cloud Services] portal.
 
 image:aa-dashboard.png[image]
 
@@ -90,7 +91,8 @@ image:aa-usage-by-org-by-date.png[image]
 
 == Details of data collection
 
-collects certain classes of data from :
+Automation Analytics collects certain classes of data from automation
+controller:
 
 * Basic configuration, like which features are enabled, and what
 operating system is being used
@@ -219,7 +221,8 @@ platform::
 total_licensed_instances::
   The total number of hosts in the license
 controller_url_base::
-  The base URL for the cluster used by clients (shown in )
+  The base URL for the cluster used by clients (shown in Automation
+  Analytics)
 controller_version::
   Version of the software on the cluster
 

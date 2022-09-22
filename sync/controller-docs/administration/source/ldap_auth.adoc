@@ -1,8 +1,6 @@
 [[ag_auth_ldap]]
 == Setting up LDAP Authentication
 
-single: LDAP pair: authentication; LDAP
-
 Note
 
 If the LDAP server you want to connect to has a certificate that is
@@ -47,12 +45,14 @@ the connecting user.
 
 Note
 
-The `ldapsearch` utility is not automatically pre-installed with ,
-however, you can install it from the `openldap-clients` package.
+The `ldapsearch` utility is not automatically pre-installed with
+automation controller, however, you can install it from the
+`openldap-clients` package.
 
 [arabic, start=3]
-. In the User Interface, click *Settings* from the left navigation and
-click to select *LDAP settings* from the list of Authentication options.
+. In the automation controller User Interface, click *Settings* from the
+left navigation and click to select *LDAP settings* from the list of
+Authentication options.
 
 Note
 
@@ -278,11 +278,10 @@ Note
 
 The controller does not actively sync users, but they are created during
 their initial login. To improve performance associated with LDAP
-authentication, see `ug_ldap_auth_perf_tips` in the .
+authentication, see `ug_ldap_auth_perf_tips` in the Automation
+Controller User Guide.
 
 === Referrals
-
-pair: LDAP; referrals pair: troubleshooting; LDAP referrals
 
 Active Directory uses "referrals" in case the queried object is not
 available in its database. It has been noted that this does not work
@@ -298,17 +297,16 @@ AUTH_LDAP_GLOBAL_OPTIONS = {
 
 Note
 
-"Referrals" are disabled by default in version 2.4.3 and above. If you
-are running an earlier version of the controller, you should consider
-adding this parameter to your configuration file.
+"Referrals" are disabled by default in automation controller version
+2.4.3 and above. If you are running an earlier version of the
+controller, you should consider adding this parameter to your
+configuration file.
 
 For details on completing the mapping fields, see
 `ag_ldap_org_team_maps`.
 
 [[ldap_logging]]
 === Enabling Logging for LDAP
-
-single: LDAP pair: authentication; LDAP
 
 To enable logging for LDAP, you must set the level to `DEBUG` in the
 Settings configuration window:
@@ -326,11 +324,6 @@ image:settings-system-logging-debug.png[image]
 
 [[ag_ldap_org_team_maps]]
 === LDAP Organization and Team Mapping
-
-single: organization mapping single: LDAP mapping pair: authentication;
-LDAP mapping pair: authentication; organization mapping pair:
-authentication; LDAP team mapping pair: authentication; team mapping
-single: team mapping
 
 Next, you will need to control which users are placed into which
 controller organizations based on LDAP attributes (mapping out between

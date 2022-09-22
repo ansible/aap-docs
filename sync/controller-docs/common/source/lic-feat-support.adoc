@@ -1,50 +1,47 @@
-== Licensing, Updates, and Support
+Red Hat Ansible Automation Platform controller Licensing, Updates, and
+Support ----------------------------------------
 
-single: license
-
-("*Automation Controller*") is a software product provided as part of an
-annual subscription entered into between you and Red Hat, Inc. ("*Red
-Hat*").
+Red Hat Ansible Automation Platform controller ("*Automation
+Controller*") is a software product provided as part of an annual Red
+Hat Ansible Automation Platform subscription entered into between you
+and Red Hat, Inc. ("*Red Hat*").
 
 Ansible is an open source software project and is licensed under the GNU
 General Public License version 3, as detailed in the Ansible source
 code: https://github.com/ansible/ansible/blob/devel/COPYING
 
-You *must* have valid subscriptions attached before installing the . See
-`attach_subscriptions` for detail.
+You *must* have valid subscriptions attached before installing the
+Ansible Automation Platform. See `attach_subscriptions` for detail.
 
-=== Support
+== Support
 
-single: support
+Red Hat offers support to paid Red Hat Ansible Automation Platform
+customers.
 
-Red Hat offers support to paid customers.
-
-If you or your company has purchased a subscription for , you can
-contact the support team at https://access.redhat.com. To better
-understand the levels of support which match your subscription, refer to
-`subscription-types`. For details of what is covered under an
-subscription, please see the Scopes of Support at:
+If you or your company has purchased a subscription for Ansible
+Automation Platform, you can contact the support team at
+https://access.redhat.com. To better understand the levels of support
+which match your Ansible Automation Platform subscription, refer to
+`subscription-types`. For details of what is covered under an Ansible
+Automation Platform subscription, please see the Scopes of Support at:
 https://access.redhat.com/support/policy/updates/ansible-tower#scope-of-coverage-4
 and https://access.redhat.com/support/policy/updates/ansible-engine.
 
 [[trial-licenses]]
-=== Trial / Evaluation
+== Trial / Evaluation
 
-single: license; trial single: evaluation single: trial
+While a license is required for automation controller to run, there is
+no fee for a trial license.
 
-While a license is required for to run, there is no fee for a trial
-license.
-
-* Trial licenses for are available at: http://ansible.com/license
+* Trial licenses for Red Hat Ansible Automation are available at:
+http://ansible.com/license
 * Support is not included in a trial license or during an evaluation of
-the software.
+the automation controller software.
 
-=== Subscription Types
+== Subscription Types
 
-single: updates single: support single: license; types
-
-is provided at various levels of support and number of machines as an
-annual Subscription.
+Red Hat Ansible Automation Platform is provided at various levels of
+support and number of machines as an annual Subscription.
 
 - Standard::
   * Manage any size environment
@@ -62,43 +59,44 @@ https://access.redhat.com/support/offerings/production/sla - Review the
 Red Hat Support Severity Level Definitions at:
 https://access.redhat.com/support/policy/severity  
 
-All Subscription levels include regular updates and releases of ,
-Ansible, and any other components of the Platform.
+All Subscription levels include regular updates and releases of
+automation controller, Ansible, and any other components of the
+Platform.
 
 For more information, contact Ansible via the Red Hat Customer portal at
 https://access.redhat.com/ or at http://www.ansible.com/contact-us/.
 
-=== Node Counting in Licenses
+== Node Counting in Licenses
 
-single: license; nodes
-
-The license defines the number of Managed Nodes that can be managed as
-part of a subscription. A typical license will say ‘License Count: 500’,
-which sets the maximum number of Managed Nodes at 500.
+The Red Hat Ansible Automation Platform controller license defines the
+number of Managed Nodes that can be managed as part of a Red Hat Ansible
+Automation Platform subscription. A typical license will say ‘License
+Count: 500’, which sets the maximum number of Managed Nodes at 500.
 
 For more information on managed node requirements for licensing, please
 see https://access.redhat.com/articles/3331481.
 
 [[attach_subscriptions]]
-=== Attaching Subscriptions
+== Attaching Subscriptions
 
-pair: subscription; attaching pair: subscription; consume
-
-You *must* have valid subscriptions attached before installing the .
-Attaching an subscription enables repositories. A valid subscription
-needs to be attached to the node only. Other nodes do not need to have a
-valid subscription/pool attached, even if the *[automationhub]* group is
-blank, given this is done at the `repos_el` role level and that this
-role is run on both *[default]* and *[automationhub]* hosts.
+You *must* have valid subscriptions attached before installing the
+Ansible Automation Platform. Attaching an Ansible Automation Platform
+subscription enables Automation Hub repositories. A valid subscription
+needs to be attached to the Automation Hub node only. Other nodes do
+not need to have a valid subscription/pool attached, even if the
+*[automationhub]* group is blank, given this is done at the `repos_el`
+role level and that this role is run on both *[default]* and
+*[automationhub]* hosts.
 
 Note
 
 Attaching subscriptions is unnecessary if your Red Hat account enabled
 https://access.redhat.com/articles/simple-content-access[Simple Content
 Access Mode]. But you still need to register to RHSM or Satellite before
-installing the .
+installing the Ansible Automation Platform.
 
-To find out the `pool_id` of your subscription:
+To find out the `pool_id` of your Ansible Automation Platform
+subscription:
 
 ....
 #subscription-manager list --available --all | grep "Ansible Automation Platform" -B 3 -A 6
@@ -125,8 +123,9 @@ To attach this subscription:
 #subscription-manager attach --pool=<pool_id>
 ....
 
-If this is properly done, and all nodes have attached, then it will find
-the repositories correctly.
+If this is properly done, and all nodes have Red Hat Ansible Automation
+Platform attached, then it will find the Automation Hub repositories
+correctly.
 
 To check whether the subscription was successfully attached:
 
@@ -140,14 +139,13 @@ To remove this subscription:
 #subscription-manager remove --pool=<pool_id>
 ....
 
-=== Component Licenses
+== Component Licenses
 
-pair: licenses; components pair: licenses; RPM files pair: licenses; DEB
-files pair: licenses; installation bundle
-
-To view the license information for the components included within ,
-refer to `/usr/share/doc/automation-controller-<version>/README` where
-`<version>` refers to the version of you have installed.
+To view the license information for the components included within
+automation controller, refer to
+`/usr/share/doc/automation-controller-<version>/README` where
+`<version>` refers to the version of automation controller you have
+installed.
 
 To view a specific license, refer to
 `/usr/share/doc/automation-controller-<version>/*.txt`, where `*` is

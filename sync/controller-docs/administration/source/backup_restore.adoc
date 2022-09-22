@@ -1,8 +1,6 @@
 [[ag_backup_restore]]
 == Backing Up and Restoring
 
-single: backups single: restorations
-
 The ability to backup and restore your system(s) is integrated into the
 platform setup playbook. Refer to `ag_clustering_backup_restore` for
 additional considerations.
@@ -24,9 +22,6 @@ The platform setup playbook is invoked as `setup.sh` from the path where
 you unpacked the platform installer tarball. It uses the same inventory
 file used by the install playbook. The setup script takes the following
 arguments for backing up and restoring:
-
-single: playbook setup; backup/restore arguments single: installation
-wizard; playbook backup/restore arguments
 
 * `-b` Perform a database backup rather than an installation.
 * `-r` Perform a database restore rather than an installation.
@@ -65,8 +60,6 @@ setup.sh -i <inventory file>
 
 === Backup/Restore Playbooks
 
-single: backups; playbooks single: restorations; playbooks
-
 In addition to the `install.yml` file included with your `setup.sh`
 setup playbook, there are also `backup.yml` and `restore.yml` files for
 your backup and restoration needs.
@@ -96,8 +89,6 @@ access.
 
 === Backup and Restoration Considerations
 
-single: backups; considerations single: restorations; considerations
-
 * Disk Space: Review your disk space requirements to ensure you have
 enough room to backup configuration files, keys, and other relevant
 files, plus the database of the platform installation.
@@ -123,8 +114,6 @@ extra var to specify the location of the backup file.
 
 [[ag_clustering_backup_restore]]
 === Backup and Restore for Clustered Environments
-
-single: clustering; backup pair: clustering; restore
 
 The procedure for backup and restore for a clustered environment is
 similar to a single install, except with some considerations described

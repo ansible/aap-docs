@@ -1,8 +1,6 @@
 [[ag_oauth2_token_auth]]
 == Token-Based Authentication
 
-single: token-based authentication single: authentication
-
 OAuth 2 is used for token-based authentication. You can manage OAuth
 tokens as well as applications, a server-side representation of API
 clients used to generate tokens. By including an OAuth token as part of
@@ -190,7 +188,7 @@ endpoint using curl:
 curl -k -H "Authorization: Bearer <token>" -H "Content-Type: application/json" -X POST  -d '{}' https://controller/api/v2/job_templates/5/launch/
 ....
 
-In , the OAuth 2 system is built on top of the
+In automation controller, the OAuth 2 system is built on top of the
 https://django-oauth-toolkit.readthedocs.io/en/latest/[Django Oauth
 Toolkit], which provides dedicated endpoints for authorizing, revoking,
 and refreshing tokens. These endpoints can be found under the
@@ -218,11 +216,11 @@ The scope of an OAuth 2 token is a space-separated string composed of
 valid scope keywords, 'read' and 'write'. These keywords are
 configurable and used to specify permission level of the authenticated
 API client. Read and write scopes provide a mask layer over the
-Role-Based Access Control (RBAC) permission system of . Specifically, a
-'write' scope gives the authenticated user the full permissions the RBAC
-system provides, while a 'read' scope gives the authenticated user only
-read permissions the RBAC system provides. Note that 'write' implies
-'read' as well.
+Role-Based Access Control (RBAC) permission system of automation
+controller. Specifically, a 'write' scope gives the authenticated user
+the full permissions the RBAC system provides, while a 'read' scope
+gives the authenticated user only read permissions the RBAC system
+provides. Note that 'write' implies 'read' as well.
 
 For example, if you have administrative permissions to a job template,
 you can view, modify, launch, and delete the job template if
@@ -312,8 +310,8 @@ Note
 
 You can perform any of the application functions described here using
 the controller user interface. Refer to the
-`Applications <userguide:ug_applications_auth>` section of the for more
-detail.
+`Applications <userguide:ug_applications_auth>` section of the
+Automation Controller User Guide for more detail.
 
 ==== Application using `authorization code` grant type
 
@@ -325,9 +323,10 @@ Note
 
 You can only use the `authorization code` type to acquire an access
 token when using an application. When integrating an external webapp
-with , that webapp may need to create OAuth2 Tokens on behalf of users
-in that other webapp. Creating an application in the controller with the
-`authorization code` grant type is the preferred way to do this because:
+with automation controller, that webapp may need to create OAuth2 Tokens
+on behalf of users in that other webapp. Creating an application in the
+controller with the `authorization code` grant type is the preferred way
+to do this because:
 
 * this allows an external application to obtain a token from the
 controller for a user, using their credentials.
@@ -381,12 +380,12 @@ Requesting an access token after this duration will fail. The duration
 defaults to 600 seconds (10 minutes), based on the
 https://tools.ietf.org/html/rfc6749[RFC6749] recommendation.
 
-The best way to set up app integrations with using the Authorization
-Code grant type is to whitelist the origins for those cross-site
-requests. More generally, you need to whitelist the service or
-application you are integrating with the controller, for which you want
-to provide access tokens. To do this, have your Administrator add this
-whitelist to their local controller settings:
+The best way to set up app integrations with automation controller using
+the Authorization Code grant type is to whitelist the origins for those
+cross-site requests. More generally, you need to whitelist the service
+or application you are integrating with the controller, for which you
+want to provide access tokens. To do this, have your Administrator add
+this whitelist to their local controller settings:
 
 ....
 CORS_ALLOWED_ORIGIN_REGEXES = [
@@ -571,8 +570,8 @@ Alternatively, you can use the `manage` utility,
 `ag_manage_utility_revoke_tokens`, to revoke tokens as described in the
 the `ag_token_utility` section.
 
-This setting can be configured at the system-level in the User
-Interface:
+This setting can be configured at the system-level in the automation
+controller User Interface:
 
 image:configure-tower-system-oauth2-tokens-toggle.png[image]
 

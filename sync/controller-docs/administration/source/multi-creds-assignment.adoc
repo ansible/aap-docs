@@ -1,16 +1,13 @@
 [[ag_multicred_assgn]]
 == Multi-Credential Assignment
 
-single: credentials pair: credentials; multi pair: credentials;
-assignment
-
-provides support for assigning zero or more credentials to a job
-template.
+automation controller provides support for assigning zero or more
+credentials to a job template.
 
 === Background
 
-Prior to 3.3, job templates had a certain set of requirements with
-respect to credentials:
+Prior to automation controller 3.3, job templates had a certain set of
+requirements with respect to credentials:
 
 * All job templates (and jobs) were required to have exactly _one_
 Machine/SSH or Vault credential (or one of both).
@@ -50,11 +47,11 @@ ability to assign multiple Vault credentials to a job template.
 
 === Launch Time Considerations
 
-Prior to 3.3, job templates had a configurable attribute,
-`ask_credential_on_launch`. This value was used at launch time to
-determine which missing credential values were necessary for launch -
-this was primarily used as a way to specify a Machine/SSH credential to
-satisfy the minimum credential requirement.
+Prior to automation controller 3.3, job templates had a configurable
+attribute, `ask_credential_on_launch`. This value was used at launch
+time to determine which missing credential values were necessary for
+launch - this was primarily used as a way to specify a Machine/SSH
+credential to satisfy the minimum credential requirement.
 
 Under the new unified credential list model, this attribute still
 exists, but it is no longer "requiring" a credential. Now when
@@ -156,4 +153,4 @@ Instead of uploading sensitive credential information into the
 controller, you can link credential fields to external systems and using
 them to run your playbooks. Refer to the
 `Secret Management System <userguide:ug_credential_plugins>` section of
-the .
+the Automation Controller User Guide.

@@ -1,21 +1,19 @@
 [[ag_social_auth]]
 == Setting up Social Authentication
 
-single: social authentication single: authentication
-
 Authentication methods help simplify logins for end users--offering
 single sign-ons using existing login information to sign into a third
 party website rather than creating a new login account specifically for
 that website.
 
-Account authentication can be configured in the User Interface and saved
-to the PostgreSQL database. For instructions, refer to the
-`ag_configure_tower` section.
+Account authentication can be configured in the automation controller
+User Interface and saved to the PostgreSQL database. For instructions,
+refer to the `ag_configure_tower` section.
 
-Account authentication in can be configured to centrally use OAuth2,
-while enterprise-level account authentication can be configured for
-SAML, RADIUS, or even LDAP as a source for authentication information.
-See `ag_ent_auth`.
+Account authentication in automation controller can be configured to
+centrally use OAuth2, while enterprise-level account authentication can
+be configured for SAML, RADIUS, or even LDAP as a source for
+authentication information. See `ag_ent_auth`.
 
 For websites, such as Microsoft Azure, Google or GitHub, that provide
 account information, account information is often implemented using the
@@ -36,8 +34,6 @@ access for remote users.
 [[ag_auth_github]]
 === GitHub settings
 
-pair: authentication; GitHub OAuth2
-
 To set up social authentication for GitHub, you will need to obtain an
 OAuth2 key and secret for a web application. To do this, you must first
 register the new application with GitHub at
@@ -45,7 +41,8 @@ https://github.com/settings/developers. In order to register the
 application, you must supply it with your homepage URL, which is the
 *Callback URL* shown in the Details tab for the GitHub default settings
 page. The OAuth2 key (Client ID) and secret (Client Secret) will be used
-to supply the required fields in the User Interface.
+to supply the required fields in the automation controller User
+Interface.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -65,15 +62,13 @@ field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub logo to allow logging
-in with those credentials.
+automation controller and the login screen will now display the GitHub
+logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-logo.png[image]
 
 [[ag_auth_github_org]]
 ==== GitHub Organization settings
-
-pair: authentication; GitHub Org
 
 When defining account authentication with either an organization or a
 team within an organization, you should use the specific organization
@@ -95,7 +90,8 @@ Authorization callback URL, which is the *Callback URL* shown in the
 Details page. Each key and secret must belong to a unique application
 and cannot be shared or reused between different authentication
 backends. The OAuth2 key (Client ID) and secret (Client Secret) will be
-used to supply the required fields in the User Interface.
+used to supply the required fields in the automation controller User
+Interface.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -120,15 +116,13 @@ Organization Name* field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub Organization logo to
-allow logging in with those credentials.
+automation controller and the login screen will now display the GitHub
+Organization logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-orgs-logo.png[image]
 
 [[ag_auth_github_team]]
 ==== GitHub Team settings
-
-pair: authentication; GitHub Team
 
 To set up social authentication for a GitHub Team, you will need to
 obtain an OAuth2 key and secret for a web application. To do this, you
@@ -139,13 +133,14 @@ Authorization callback URL, which is the *Callback URL* shown in the
 Details page. Each key and secret must belong to a unique application
 and cannot be shared or reused between different authentication
 backends. The OAuth2 key (Client ID) and secret (Client Secret) will be
-used to supply the required fields in the User Interface.
+used to supply the required fields in the automation controller User
+Interface.
 
 [arabic]
 . Find the numeric team ID using the GitHub API:
 http://fabian-kostadinov.github.io/2015/01/16/how-to-find-a-github-team-id/.
-The Team ID will be used to supply a required field in the User
-Interface.
+The Team ID will be used to supply a required field in the automation
+controller User Interface.
 . Click *Settings* from the left navigation bar.
 . On the left side of the Settings window, click *GitHub settings* from
 the list of Authentication options.
@@ -164,14 +159,12 @@ Secret* field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub Team logo to allow
-logging in with those credentials.
+automation controller and the login screen will now display the GitHub
+Team logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-teams-logo.png[image]
 
 ==== GitHub Enterprise settings
-
-pair: authentication; GitHub Enterprise
 
 To set up social authentication for a GitHub Enterprise, you will need
 to obtain a GitHub Enterprise URL, an API URL, OAuth2 key and secret for
@@ -189,7 +182,7 @@ specify which auth adapter it will talk to.
 Each key and secret must belong to a unique application and cannot be
 shared or reused between different authentication backends. The OAuth2
 key (Client ID) and secret (Client Secret) will be used to supply the
-required fields in the User Interface.
+required fields in the automation controller User Interface.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -214,14 +207,12 @@ OAuth2 Secret* field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub Enterprise logo to
-allow logging in with those credentials.
+automation controller and the login screen will now display the GitHub
+Enterprise logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-ent-logo.png[image]
 
 ==== GitHub Enterprise Organization settings
-
-pair: authentication; GitHub Enterprise Org
 
 To set up social authentication for a GitHub Enterprise Org, you will
 need to obtain a GitHub Enterprise Org URL, an Org API URL, an Org
@@ -239,7 +230,7 @@ specify which auth adapter it will talk to.
 Each key and secret must belong to a unique application and cannot be
 shared or reused between different authentication backends. The OAuth2
 key (Client ID) and secret (Client Secret) will be used to supply the
-required fields in the User Interface.
+required fields in the automation controller User Interface.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -269,14 +260,12 @@ Enterprise Organization Name* field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub Enterprise Organization
-logo to allow logging in with those credentials.
+automation controller and the login screen will now display the GitHub
+Enterprise Organization logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-ent-org-logo.png[image]
 
 ==== GitHub Enterprise Team settings
-
-pair: authentication; GitHub Enterprise Team
 
 To set up social authentication for a GitHub Enterprise teams, you will
 need to obtain a GitHub Enterprise Org URL, an Org API URL, an Org
@@ -294,13 +283,13 @@ specify which auth adapter it will talk to.
 Each key and secret must belong to a unique application and cannot be
 shared or reused between different authentication backends. The OAuth2
 key (Client ID) and secret (Client Secret) will be used to supply the
-required fields in the User Interface.
+required fields in the automation controller User Interface.
 
 [arabic]
 . Find the numeric team ID using the GitHub API:
 http://fabian-kostadinov.github.io/2015/01/16/how-to-find-a-github-team-id/.
-The Team ID will be used to supply a required field in the User
-Interface.
+The Team ID will be used to supply a required field in the automation
+controller User Interface.
 . Click *Settings* from the left navigation bar.
 . On the left side of the Settings window, click *GitHub settings* from
 the list of Authentication options.
@@ -326,15 +315,13 @@ field.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the GitHub Enterprise Teams logo
-to allow logging in with those credentials.
+automation controller and the login screen will now display the GitHub
+Enterprise Teams logo to allow logging in with those credentials.
 
 image:configure-tower-auth-github-ent-teams-logo.png[image]
 
 [[ag_auth_google_oauth2]]
 === Google OAuth2 settings
-
-pair: authentication; Google OAuth2
 
 To set up social authentication for Google, you will need to obtain an
 OAuth2 key and secret for a web application. To do this, you must first
@@ -344,7 +331,7 @@ you already completed the setup process, you can access those
 credentials by going to the Credentials section of the
 https://console.developers.google.com/[Google API Manager Console]. The
 OAuth2 key (Client ID) and secret (Client secret) will be used to supply
-the required fields in the User Interface.
+the required fields in the automation controller User Interface.
 
 [arabic]
 . Click *Settings* from the left navigation bar.
@@ -375,16 +362,14 @@ each of the fields for instructions and required format.
 . For details on completing the mapping fields, see `ag_org_team_maps`.
 . Click *Save* when done.
 . To verify that the authentication was configured correctly, logout of
-and the login screen will now display the Google logo to indicate it as
-a alternate method of logging into .
+automation controller and the login screen will now display the Google
+logo to indicate it as a alternate method of logging into automation
+controller.
 
 image:configure-tower-auth-google-logo.png[image]
 
 [[ag_org_team_maps]]
 === Organization and Team Mapping
-
-single: organization mapping pair: authentication; organization mapping
-pair: authentication; team mapping single: team mapping
 
 ==== Organization mapping
 
