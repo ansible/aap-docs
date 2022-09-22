@@ -10,6 +10,12 @@
     path: "{{ item.path }}"
     regexp: 'pair:(.+)$'
   with_items: "{{ rst_files.files }}"
+- name: change common includes
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: '.. include:: ../../common/source/'
+    replace: 'include::'
+  with_items: "{{ rst_files.files }}"
 - name: variable expansion
   ansible.builtin.shell: |
     sed -i -e 's/|atversion|/Automation Controller Version 4.3.0/g' \

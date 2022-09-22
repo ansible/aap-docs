@@ -13,3 +13,10 @@
     regexp: 'image:../../common/source/images/'
     replace: 'image:'
   with_items: "{{ adoc_files.files }}"
+- name: update common references
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    after: 'include::'
+    regexp: '.rst'
+    replace: '.adoc[]'
+  with_items: "{{ adoc_files.files }}"
