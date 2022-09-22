@@ -8,9 +8,9 @@
 
 # Set the path to the source and target directories.
 # The source directory contains the content that you want to synchronize.
-source=/home/dnaro/git/aap-docs
+source=source
 # The target directory is the location where you want to synchronize content.
-target=/home/dnaro/workspace/controller-sync-test
+target=target
 
 #####
 # Controller documentation
