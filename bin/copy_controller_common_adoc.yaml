@@ -2,7 +2,7 @@
 # Ensure the target_dir variable is set in the playbook that imports this.
 - name: find common files
   ansible.builtin.find:
-    paths: sync/controller-docs/common/source
+    paths: ../sync/controller-docs/common/source
     patterns: "*.adoc"
     recurse: true
     file_type: file
@@ -10,5 +10,5 @@
 - name: copy common files to administration
   ansible.builtin.copy:
     src: "{{ item.path }}"
-    dest: sync/controller-docs/administration/source
+    dest: ../sync/controller-docs/administration/source
   with_items: "{{ common_adoc_files.files }}"
