@@ -16,9 +16,9 @@ target=target
 # Controller documentation
 #####
 
-###
-# Administration guide
-###
+################
+# Administration
+################
 
 # Clean existing downstream content.
 rm -rf $target/controller/administration/administration
@@ -33,3 +33,93 @@ cp -r $source/titles/controller/administration/stories.adoc $target/controller/a
 
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/administration/
+
+################
+# Controller API
+################
+
+# Clean existing downstream content.
+rm -rf $target/controller/controllerapi/controllerapi
+rm -f $target/controller/controllerapi/stories.adoc
+mkdir -p $target/controller/controllerapi/controllerapi
+
+# Copy converted asciidoc content downstream.
+cp -r $source/sync/controller-docs/controllerapi/source/* $target/controller/controllerapi/controllerapi
+
+# Copy the table of contents.
+cp -r $source/titles/controller/controllerapi/stories.adoc $target/controller/controllerapi/stories.adoc
+
+# Copy the images.
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/controllerapi/
+
+############
+# Quickstart
+############
+
+# Clean existing downstream content.
+rm -rf $target/controller/quickstart/quickstart
+rm -f $target/controller/quickstart/stories.adoc
+mkdir -p $target/controller/quickstart/quickstart
+
+# Copy converted asciidoc content downstream.
+cp -r $source/sync/controller-docs/quickstart/source/* $target/controller/quickstart/quickstart
+
+# Copy the table of contents.
+cp -r $source/titles/controller/quickstart/stories.adoc $target/controller/quickstart/stories.adoc
+
+# Copy the images.
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/quickstart/
+
+###############
+# Release notes
+###############
+
+# Clean existing downstream content.
+rm -rf $target/controller/release-notes/release-notes
+rm -f $target/controller/release-notes/stories.adoc
+mkdir -p $target/controller/release-notes/release-notes
+
+# Copy converted asciidoc content downstream.
+cp -r $source/sync/controller-docs/release-notes/source/* $target/controller/release-notes/release-notes
+
+# Copy the table of contents.
+cp -r $source/titles/controller/release-notes/stories.adoc $target/controller/release-notes/stories.adoc
+
+# Copy the images.
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/release-notes/
+
+#######################
+# Upgrade and migration
+#######################
+
+# Clean existing downstream content.
+rm -rf $target/controller/upgrade-migration-guide/upgrade-migration-guide
+rm -f $target/controller/upgrade-migration-guide/stories.adoc
+mkdir -p $target/controller/upgrade-migration-guide/upgrade-migration-guide
+
+# Copy converted asciidoc content downstream.
+cp -r $source/sync/controller-docs/upgrade-migration-guide/source/* $target/controller/upgrade-migration-guide/upgrade-migration-guide
+
+# Copy the table of contents.
+cp -r $source/titles/controller/upgrade-migration-guide/stories.adoc $target/controller/upgrade-migration-guide/stories.adoc
+
+# Copy the images.
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/upgrade-migration-guide/
+
+############
+# User guide
+############
+
+# Clean existing downstream content.
+rm -rf $target/controller/userguide/userguide
+rm -f $target/controller/userguide/stories.adoc
+mkdir -p $target/controller/userguide/userguide
+
+# Copy converted asciidoc content downstream.
+cp -r $source/sync/controller-docs/userguide/source/* $target/controller/userguide/userguide
+
+# Copy the table of contents.
+cp -r $source/titles/controller/userguide/stories.adoc $target/controller/userguide/stories.adoc
+
+# Copy the images.
+cp -r $source/sync/controller-docs/common/source/images/ $target/controller/userguide/
