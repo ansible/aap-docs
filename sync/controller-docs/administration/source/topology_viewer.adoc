@@ -48,29 +48,47 @@ and execution planes] for more information on each type of node.
 
 Note
 
-If the Legend is not present, use the toggle on the upper right part of
-the window to enable it.
+If the Legend is not present, use the toggle on the upper right corner
+of the window to enable it.
 
-Also in the Legend, you can see how the color corresponds to its status,
-which is indicative of the health of the node. Node health is currently
-being statically rendered at certain points in time dictated by the API,
-and therefore, live polling of the node status is not available at this
-time. The status updates provided by the API is also not configurable.
+The Legend shows the `node status <node_statuses>` by color, which is
+indicative of the health of the node. The status of *Error* in the
+legend encompasses the *Unavailable* state (as displayed in the
+Instances list view) plus any future error conditions encountered in
+later versions of the controller. Also depicted in the legend are the
+link statuses:
+
+____________________________________________________________________________________________________________________________________
+* *Established*: this is a link state that indicates a peer connection
+between nodes that are either ready, unavailable, or disabled
+* *Adding*: this is a link state indicating a peer connection between
+nodes that was selected to be added to the mesh topology
+* *Removing*: this is a link state indicating a peer connection between
+nodes that was selected to be removed from the topology
+____________________________________________________________________________________________________________________________________
 
 [arabic, start=4]
 . Hover over a node and the connectors highlight to show its immediate
-connected nodes or click on the node to retrieve details about it, such
-as its hostname, node type, and status.
+connected nodes (peers) or click on a node to retrieve details about it,
+such as its hostname, node type, and status.
+
+image:topology-viewer-node-hover-click.png[image]
+
+[arabic, start=5]
+. Click on the link for instance hostname from the details displayed,
+and you will be redirected to its Details page that provides more
+information about that node, most notably for information about an
+`Error` status, as in the example below.
 
 image:topology-viewer-node-view.png[image]
 
-Click on the link for instance hostname from the details displayed, and
-you will be redirected to its Details page to provide more information
-about that node, most notably the reason for an `Error` status.
-
 image:topology-viewer-instance-details.png[image]
 
-At the bottom of the Details view, you can run a health check on the
-instance on an as-needed basis, or unassign jobs from the instance. By
-default, jobs can be assigned to each node. However, you can disable it
-to exclude the node from having any jobs running on it.
+At the bottom of the Details view, you can remove the instance, run a
+health check on the instance on an as-needed basis, or unassign jobs
+from the instance. By default, jobs can be assigned to each node.
+However, you can disable it to exclude the node from having any jobs
+running on it.
+
+For more information on creating new nodes and scaling the mesh, refer
+to `ag_instances` in this guide for more detail.
