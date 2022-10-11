@@ -2,17 +2,67 @@
 
 Welcome to the source for Ansible Automation Platform on Clouds technical content.
 
-This directory contains documentation for AAP on Azure.
+== Viewing draft documentation
 
-The main title for AAP on Azure is `/titles/aap-on-azure/aap-on-azure.asciidoc`.
+Draft documentation is available at:
 
-To generate HTML do:
+* link:https://htmlpreview.github.io/?https://github.com/ansible/aap-docs/blob/aap-clouds-latest/titles/aap-on-azure/aap-on-azure.html[AAP on Azure preview]
+* link:https://htmlpreview.github.io/?https://github.com/ansible/aap-docs/blob/aap-clouds-latest/titles/aap-on-azure/aap-on-aws.html[AAP on AWS preview]
+
+[NOTE]
+====
+Draft documentation does not include images.
+You can link:https://github.com/ansible/aap-docs/tree/aap-clouds-latest/images/[view images directly in the repository] or clone the repository and open the HTML preview in your browser.
+====
+
+== Cloning and previewing
+
+For local previews that include images you can do the following:
+
+[source,bash]
+----
+$ git clone -b aap-clouds-latest git@github.com:ansible/aap-docs.git
+$ asciidoctor aap-docs/titles/aap-on-azure/aap-on-azure.asciidoc
+$ firefox aap-docs/titles/aap-on-azure/aap-on-azure.html
+----
+
+== Generating HTML previews
+
+Merging a commit to the repository automatically generates HTML previews.
+If necessary, you can build HTML previews locally as follows:
 
 [source,bash]
 ----
 $ asciidoctor titles/aap-on-azure/aap-on-azure.asciidoc
+$ firefox titles/aap-on-azure/aap-on-azure.html
 ----
 
-You can find the rest of the AAP doc set at:
+=== Undoing local HTML previews
+
+Generating HTML previews locally can result in merge conflicts with `*.html` files.
+This happens when `*.html` files are automatically generated and added to the repository after merge.
+The merge adds a new commit with changes to an `*.html` file that conflict changes in your locally built preview.
+
+Before you commit changes and send a PR, you should checkout the latest preview.
+Doing this overrides your local HTML with the generated one.
+However, when your commit is merged, the preview will generate HTML with your changes.
+
+[source,bash]
+----
+# Make sure your remotes are up to date.
+$ git fetch
+# For example, check out the Azure html to reset changes from a local build.
+$ git checkout titles/aap-on-azure/aap-on-azure.html
+----
+
+== AAP on Clouds production docs
+
+AAP on Clouds documentation is available at:
+
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/
+
+== AAP documentation
+
+Additional documentation source for AAP is available at:
 
 https://github.com/RedHatInsights/red-hat-ansible-automation-platform-documentation
