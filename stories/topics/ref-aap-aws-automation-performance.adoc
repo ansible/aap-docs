@@ -1,0 +1,23 @@
+[id="ref-aap-aws-automation-performance"]
+
+= Automation performance
+
+Automating against the managed node allotment in the offer is provided with the following operational expectations. 
+Automating outside of the boundaries of these criteria is not supported, but can still function depending on your automation.
+
+[cols="30%,30%",options="header"]
+|====
+| Metric | Threshold
+| Concurrent Jobs | 10
+| Forks per job | 55
+|====
+
+[NOTE]
+====
+{PlatformNameMain} on AWS is driven using three m5.large instances, two of which run {PlatformmNameMain} {ControllerName} and one which runs {HubName}. 
+The {ControllerName} instances collectively support a standard workload of 100 managed active nodes. 
+This operating criteria also supports up to 10 forks for each node. 
+The operating criteria was set and tested using output-intensive, chatty workloads that produce 2 messages 7 seconds apart on both {ControllerName} nodes. 
+Workloads that are more I/O intensive might not work inside the boundaries of these conditions and can require the use of extension nodes to scale the deployment to support such automation.
+====
+
