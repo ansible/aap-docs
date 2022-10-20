@@ -1,0 +1,44 @@
+name: Synchronize Ansible-lint docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+        with:
+          repository: ansible/aap-docs
+          ref: main
+
+      - name: install kramdown
+        run: sudo gem install kramdown-asciidoc
+
+      - name: config docs-bot
+        run: |
+          git config --global user.email "docs-bot@redhat.com"
+          git config --global user.name "docs-bot"
+
+      - name: sync and transform lint docs
+        env:
+          VAULT_PASS: ${{ secrets.DOCS_BOT_KEY }}
+        run: |
+          mkdir ~/.ssh
+          echo "$VAULT_PASS" > ~/.ssh/id_rsa
+          chmod 0600 ~/.ssh/id_rsa
+          ansible-playbook bin/lint_docs.yaml
+
+      - name: commit files
+        run: |
+          git add . --all
+          git diff-index --quiet HEAD || git commit -m "Synchronize Ansible-lint docs to asciidoc"
+
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          directory: sync
+          github_token: ${{ secrets.DOCS_BOT_PAT }}
+          branch: main
