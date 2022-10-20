@@ -20,3 +20,18 @@
     regexp: '.rst'
     replace: '.adoc[]'
   with_items: "{{ adoc_files.files }}"
+- name: add passthrough one
+  ansible.builtin.replace:
+    path: "{{ target_dir }}common/source/lic-feat-support.adoc"
+    regexp: '/usr/share/doc/automation-controller-<version>/\*.txt'
+    replace: '+/usr/share/doc/automation-controller-<version>/*.txt+'
+- name: add passthrough two
+  ansible.builtin.replace:
+    path: "{{ target_dir }}common/source/search.adoc"
+    regexp: '\?name__icontains=localhost'
+    replace: '+?name__icontains=localhost+'
+- name: delete duplicatiing anchor
+  ansible.builtin.lineinfile:
+    path: "{{ target_dir }}common/source/work_items_deletion_warning.adoc"
+    line: '[[deletion_warning]]'
+    state: absent
