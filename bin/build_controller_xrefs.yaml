@@ -11,17 +11,23 @@
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '\`ug_'
-    replace: '`xref:ug_'
+    replace: 'xref:ug_'
   with_items: "{{ adoc_files.files }}"
 - name: build ag xrefs
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '\`ag_'
-    replace: '`xref:ag_'
+    replace: 'xref:ag_'
   with_items: "{{ adoc_files.files }}"
 - name: close xrefs
   ansible.builtin.replace:
     path: "{{ item.path }}"
-    regexp: '(?<=xref:)(.*)(?=`)'
+    regexp: '(?<=xref:)(.*)(?=+)'
     replace: '\1[]'
+  with_items: "{{ adoc_files.files }}"
+- name: trim backtick
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: '\]`'
+    replace: ']'
   with_items: "{{ adoc_files.files }}"
