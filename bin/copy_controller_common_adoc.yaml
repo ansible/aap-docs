@@ -11,24 +11,29 @@
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/administration/source
+    mode: 0755
   with_items: "{{ common_adoc_files.files }}"
 - name: copy common files to controllerapi
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/controllerapi/source
+    mode: 0755
   with_items: "{{ common_adoc_files.files }}"
 - name: copy common files to quickstart
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/quickstart/source
+    mode: 0755
   with_items: "{{ common_adoc_files.files }}"
 - name: copy common files to upgrade-migration
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/upgrade-migration-guide/source
+    mode: 0755
   with_items: "{{ common_adoc_files.files }}"
 - name: copy common files to user-guide
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/userguide/source
+    mode: 0755
   with_items: "{{ common_adoc_files.files }}"
