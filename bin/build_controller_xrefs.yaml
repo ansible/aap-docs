@@ -22,7 +22,7 @@
 - name: close xrefs
   ansible.builtin.replace:
     path: "{{ item.path }}"
-    regexp: '(?<=xref:)(.*)(?=+)'
+    regexp: '(?<=xref:)(.*)(?=`)'
     replace: '\1[]'
   with_items: "{{ adoc_files.files }}"
 - name: trim backtick
