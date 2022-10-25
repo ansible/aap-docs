@@ -10,7 +10,7 @@ Note
 
 If you have a custom dynamic inventory script, or a cloud provider that
 is not yet supported natively in the controller, you can also import
-that into the controller. Refer to `ag_inv_import` in the Automation
+that into the controller. Refer to {ag_inv_import} in the Automation
 Controller Administration Guide.
 
 The Inventories window displays a list of the inventories that are
@@ -150,7 +150,7 @@ The `host_filter` parameter allows for:
 * use of the boolean and operator:
 ** `__` to reference related fields in relational fields
 ** `__` is used on ansible_facts to separate keys in a JSON key path
-** `[]` is used to denote a json array in the path specification
+** `[] is used to denote a json array in the path specification
 ** `""` can be used in the value when spaces are wanted in the value
 * "classic" Django queries may be embedded in the `host_filter`
 
@@ -262,15 +262,15 @@ by their respective inventory plugin. In Automation Controller Version
 to the controller via the inventory source `source_vars` for all the
 following inventory sources:
 
-* `ug_source_ec2`
-* `ug_source_gce`
-* `ug_source_azure`
-* `ug_source_vmvcenter`
-* `ug_source_satellite`
-* `ug_source_insights`
-* `ug_source_openstack`
-* `ug_source_rhv`
-* `ug_source_tower`
+* xref:ug_source_ec2[]
+* xref:ug_source_gce[]
+* xref:ug_source_azure[]
+* xref:ug_source_vmvcenter[]
+* xref:ug_source_satellite[]
+* xref:ug_source_insights[]
+* xref:ug_source_openstack[]
+* xref:ug_source_rhv[]
+* xref:ug_source_tower[]
 
 Newly created configurations for inventory sources will contain the
 default plugin configuration values. If you want your newly created
@@ -293,11 +293,11 @@ to `amazon.aws.aws_ec2`.
 
 Adding a new inventory involves several components:
 
-* `ug_inventories_add_permissions`
-* `ug_inventories_add_groups`
-* `ug_inventories_add_host`
-* `ug_inventories_add_source`
-* `ug_inventories_view_completed_jobs`
+* xref:ug_inventories_add_permissions[]
+* xref:ug_inventories_add_groups[]
+* xref:ug_inventories_add_host[]
+* xref:ug_inventories_add_source[]
+* xref:ug_inventories_view_completed_jobs[]
 
 To create a new inventory or Smart Inventory:
 
@@ -326,7 +326,7 @@ hosts that contain those names. Therefore, to populate the *Smart Host
 Filter* field, you are specifying a tag that contains the hosts you
 want, not actually selecting the hosts themselves. Enter the tag in the
 *Search* field and press [Enter]. Filters are case-sensitive. Refer to
-the `ug_host_filters` section for more information.
+the xref:ug_host_filters[] section for more information.
 * *Instance Groups*: Click the
 image:search-button.png[search] button to
 open a separate window. Choose the instance groups for this inventory to
@@ -496,7 +496,7 @@ by selecting the host and click the *Disassociate* button.
 Note
 
 You may also run ad hoc commands from this screen. Refer to
-`ug_inventories_run_ad_hoc` for more detail.
+xref:ug_inventories_run_ad_hoc[] for more detail.
 
 {empty}6. To configure additional groups for the host, click on the name
 of the host from the list of hosts.
@@ -569,10 +569,10 @@ ________________________________________________________________________________
 * *Execution Environment*: Optionally search
 (image:search-button.png[search]) or enter
 the name of the execution environment with which you want to run your
-inventory imports. Refer to the `ug_execution_environments` section for
+inventory imports. Refer to the {ug_execution_environments} section for
 details on building an execution environment.
 * *Source*: Choose a source for your inventory. Refer to the
-`ug_inventory_sources` section for more information about each source
+xref:ug_inventory_sources[] section for more information about each source
 and details for entering the appropriate information.
 ______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
@@ -688,7 +688,7 @@ ________________________________________________________________________________
 [loweralpha]
 . If schedules are already set up; review, edit, or enable/disable your
 schedule preferences.
-. if schedules have not been set up, refer to `ug_scheduling` for more
+. if schedules have not been set up, refer to {ug_scheduling} for more
 information.
 _____________________________________________________________________________________________
 
@@ -707,8 +707,8 @@ ________________________________________________________________________________
 [loweralpha]
 . If notifications are already set up, use the toggles to enable or
 disable the notifications to use with your particular source. For more
-detail, see `ug_notifications_on_off`.
-. if notifications have not been set up, refer to `ug_notifications` for
+detail, see {ug_notifications_on_off}.
+. if notifications have not been set up, refer to {ug_notifications} for
 more information.
 _________________________________________________________________________________________________________________________________________________________________________________
 
@@ -766,7 +766,7 @@ for `adding a source <ug_add_inv_common_fields>`.
 . In order to pass to the custom inventory script, you can optionally
 set environment variables in the *Environment Variables* field. You may
 also place inventory scripts in source control and then run it from a
-project. See `ag_inv_import` in the Automation Controller Administration
+project. See {ag_inv_import} in the Automation Controller Administration
 Guide for detail.
 
 image:inventories-create-source-sourced-from-project-example.png[Inventories
@@ -790,7 +790,7 @@ following details:
 
 ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 * *Credential*: Optionally choose from an existing AWS credential (for
-more information, refer to `ug_credentials`).
+more information, refer to xref:ug_credentials[]).
 +
 If the controller is running on an EC2 instance with an assigned IAM
 Role, the credential may be omitted, and the security credentials from
@@ -828,7 +828,7 @@ hosts. To use this properly, the f.adoc[] condition on the `or` must be on
 Engine* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing GCE Credential. For more information, refer to
-`ug_credentials`.
+xref:ug_credentials[].
 
 image:inventories-create-source-GCE-example.png[Inventories
 - create source - GCE example]
@@ -852,7 +852,7 @@ inventory plugin documenation].
 *Microsoft Azure Resource Manager* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing Azure Credential. For more information, refer to
-`ug_credentials`.
+xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -874,7 +874,7 @@ image:inventories-create-source-azurerm-example.png[Inventories
 the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing VMware Credential. For more information, refer
-to `ug_credentials`.
+to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -906,7 +906,7 @@ image:inventories-create-source-vmware-example.png[Inventories
 Satellite* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing Satellite Credential. For more information,
-refer to `ug_credentials`.
+refer to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -940,7 +940,7 @@ customer credentials to access the full article.
 Insights* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing Insights Credential. For more information, refer
-to `ug_credentials`.
+to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -962,7 +962,7 @@ image:inventories-create-source-insights-example.png[Inventories
 the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing OpenStack Credential. For more information,
-refer to `ug_credentials`.
+refer to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -984,7 +984,7 @@ image:inventories-create-source-openstack-example.png[Inventories
 Hat Virtualization* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing Red Hat Virtualization Credential. For more
-information, refer to `ug_credentials`.
+information, refer to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -1014,7 +1014,7 @@ endpoint.
 Hat Ansible Automation Platform* from the Source field.
 . The Create Source window expands with the required *Credential* field.
 Choose from an existing Ansible Automation Platform Credential. For more
-information, refer to `ug_credentials`.
+information, refer to xref:ug_credentials[].
 . You can optionally specify the verbosity, host filter, enabled
 variable/value, and update options as described in the main procedure
 for `adding a source <ug_add_inv_common_fields>`.
@@ -1098,7 +1098,7 @@ and then create an SCM inventory source in the automation controller
 user interface.
 
 For more information on syncing or using custom inventory scripts, refer
-to `ag_inv_import` in the` in the Automation Controller Administration
+to {ag_inv_import} in the[] in the Automation Controller Administration
 Guide.
 
 [[ug_inventories_view_completed_jobs]]

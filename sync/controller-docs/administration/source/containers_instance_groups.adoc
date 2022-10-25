@@ -5,10 +5,10 @@ The controller allows you to execute jobs via ansible playbook runs
 directly on a member of the cluster or in a namespace of an Openshift
 cluster with the necessary service account provisioned called a
 Container Group. You can execute jobs in a container group only
-as-needed per playbook. For more information, see `ag_container_groups`
+as-needed per playbook. For more information, see {ag_container_groups}
 towards the end of this section.
 
-For execution environments, see `ug_execution_environments` in the
+For execution environments, see {ug_execution_environments} in the
 Automation Controller User Guide.
 
 [[ag_instance_groups]]
@@ -38,7 +38,7 @@ Instances are required to be in the `automationcontroller` or
 `execution_nodes` group alongside other `instance_group_` groups. In a
 clustered setup, at least one instance *must* be present in the
 `automationcontroller` group, which will appear as `controlplane` in the
-API instance groups. See `ag_automationcontroller_group_policies` for
+API instance groups. See xref:ag_automationcontroller_group_policies[] for
 example scenarios.
 * A `default` API instance group is automatically created with all nodes
 capable of running jobs. Technically, it is like any other instance
@@ -130,7 +130,7 @@ HTTP POST /api/v2/instance_groups/x/instances/ {'id': y}`
 
 An instance that is added to an instance group will automatically
 reconfigure itself to listen on the group's work queue. See the
-following section, `ag_instance_group_policies`, for more details.
+following section, xref:ag_instance_group_policies[], for more details.
 
 [[ag_instance_group_policies]]
 ==== Instance group policies
@@ -221,7 +221,7 @@ instance groups, then they also expand that group's capacity. If an
 instance is performing work and it is a member of multiple groups, then
 capacity will be reduced from all groups for which it is a member.
 De-provisioning an instance will remove capacity from the cluster
-wherever that instance was assigned. See the `ag_cluster_deprovision`
+wherever that instance was assigned. See the xref:ag_cluster_deprovision[]
 section for more detail.
 
 Note
@@ -373,7 +373,7 @@ definition, clearing out all custom pod definitions in the migration.
 
 Container groups are different from execution environments in that
 execution environments are container images and do not use a virtual
-environment. See `ug_execution_environments` in the Automation
+environment. See {ug_execution_environments} in the Automation
 Controller User Guide for further detail.
 
 ==== Create a container group
@@ -384,8 +384,8 @@ To create a container group:
 
 [arabic]
 . Use the controller user interface to create an
-`ug_credentials_ocp_k8s` credential that will be used with your
-container group, see `ug_credentials_add` in the Automation Controller
+xref:ug_credentials_ocp_k8s[] credential that will be used with your
+container group, see {ug_credentials_add} in the Automation Controller
 User Guide for detail.
 . Create a new container group by navigating to the Instance Groups
 configuration window by clicking *Instance Groups* from the left
@@ -469,7 +469,7 @@ To verify the deployment and termination of your container:
 [arabic]
 . Create a mock inventory and associate the container group to it by
 populating the name of the container group in the *Instance Group*
-field. See `ug_inventories_add` in the Automation Controller User Guide
+field. See {ug_inventories_add} in the Automation Controller User Guide
 for detail.
 
 image:inventories-create-new-cg-test-inventory.png[Dummy
@@ -535,8 +535,8 @@ Kubernetes API:
 https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#overview[Quotas
 and Limit Ranges].
 * To set limits directly on the pod definition launched by the
-controller, see link:#customize-the-pod-spec[Customize the Pod spec] and
-refer to the OpenShift documentation to set the options to
+controller, see xref:ag_customize_pod_spec[] and refer to the OpenShift
+documentation to set the options to
 https://docs.openshift.com/online/pro/dev_guide/compute_resources.html#dev-compute-resources[compute
 resources].
 

@@ -36,7 +36,7 @@ next to them are workflow templates. Clicking it allows you to
 graphically build a workflow. Many parameters in a job template allow
 you to enable *Prompt on Launch* that can be modified at the workflow
 level, and do not affect the values assigned at the job template level.
-For instructions, see the `ug_wf_editor` section.
+For instructions, see the xref:ug_wf_editor[] section.
 
 === Create a Job Template
 
@@ -201,7 +201,7 @@ the instance groups on which you want to run this job template. If the
 list is extensive, use the search to narrow the options.
 * *Job Slicing*: Specify the number of slices you want this job template
 to run. Each slice will run the same tasks against a portion of the
-inventory. For more information about job slices, see `ug_job_slice`.
+inventory. For more information about job slices, see xref:ug_job_slice[].
 * *Timeout*: Allows you to specify the length of time (in seconds) that
 the job may run before it is canceled. Defaults to 0 for no job timeout.
 * *Show Changes*: Allows you to see the changes made by Ansible tasks.
@@ -220,7 +220,7 @@ an administrator. This is the equivalent of passing the `--become`
 option to the `ansible-playbook` command.
 * *Provisioning Callbacks*: If checked, you enable a host to call back
 to automation controller via the REST API and invoke the launch of a job
-from this job template. Refer to `ug_provisioning_callbacks` for
+from this job template. Refer to xref:ug_provisioning_callbacks[] for
 additional information.
 * *Enable Webhook*: Turns on the ability to interface with a predefined
 SCM system web service that is used to launch a job template. Currently
@@ -246,14 +246,14 @@ automation controller to accept webhooks from this service.
 * *Webhook Credential*: Optionally, provide a GitHub or GitLab personal
 access token (PAT) as a credential to use to send status updates back to
 the webhook service. Before you can select it, the credential must
-exist. See `ug_credentials_cred_types` to create one.
+exist. See xref:ug_credentials_cred_types[] to create one.
 
-For additional information on setting up webhooks, see `ug_webhooks`.
+For additional information on setting up webhooks, see {ug_webhooks}.
 _________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
 * *Concurrent Jobs*: If checked, you are allowing jobs in the queue to
 run simultaneously if not dependent on one another. Check this box if
-you want to run job slices simultaneously. Refer to `ug_job_concurrency`
+you want to run job slices simultaneously. Refer to xref:ug_job_concurrency[]
 for additional information.
 * *Enable Fact Storage*: When checked, automation controller will store
 gathered facts for all hosts in an inventory related to the job running.
@@ -278,7 +278,7 @@ git_branch: production
 release_version: 1.5
 ....
 +
-See `ug_jobtemplates_extravars` for more information.
+See xref:ug_jobtemplates_extravars[] for more information.
 * *Prompt on Launch*: If selected, even if a default value is supplied,
 you will be prompted upon launch to choose command line variables.
 _____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
@@ -322,10 +322,10 @@ integrations you have setup and their statuses, if they have ran.
 image:job-template-completed-notifications-view.png[image]
 
 Use the toggles to enable or disable the notifications to use with your
-particular template. For more detail, see `ug_notifications_on_off`.
+particular template. For more detail, see {ug_notifications_on_off}.
 
 If no notifications have been set up, click the *Add* button to create a
-new notification. Refer to `ug_notifications_types` for additional
+new notification. Refer to {ug_notifications_types} for additional
 details on configuring various notification types and extended
 messaging.
 
@@ -358,7 +358,7 @@ To schedule a job template run, click the *Schedules* tab.
 
 * If schedules are already set up; review, edit, or enable/disable your
 schedule preferences.
-* If schedules have not been set up, refer to `ug_scheduling` for more
+* If schedules have not been set up, refer to {ug_scheduling} for more
 information.
 
 If *Prompt on Launch* was selected for the *Credentials* field, and you
@@ -518,7 +518,7 @@ default value from the job template. Jobs are not relaunched as-is. They
 are relaunched with the user prompts re-applied to the job template.
 
 Below is an example job launch that prompts for Job Tags, and runs the
-example survey created in `ug_surveys`.
+example survey created in xref:ug_surveys[].
 
 image:job-launch-with-prompt-at-launch-jobtags.png[job-launch-with-prompt-job-tags]
 
@@ -593,7 +593,7 @@ Note
 
 You can re-launch the most recent job from the list view to re-run on
 all hosts or just failed hosts in the specified inventory. Refer to
-`ug_jobs` in the Automation Controller User Guide for more detail.
+{ug_jobs} in the Automation Controller User Guide for more detail.
 
 When slice jobs are running, job lists display the workflow and job
 slices, as well as a link to view their details individually.
@@ -636,7 +636,7 @@ or modify the entries in the other fields to complete this page.
 Scan jobs are no longer supported starting with automation controller
 3.2. This system tracking feature was used as a way to capture and store
 facts as historical data. Facts are now stored in the controller via
-fact caching. For more information, see `ug_fact_caching`.
+fact caching. For more information, see xref:ug_fact_caching[].
 
 If you have Job Template Scan Jobs in your system prior to automation
 controller 3.2, they have been converted to type run (like normal job
