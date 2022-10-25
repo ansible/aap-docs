@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rstfiles=$(find . -name '*.rst')
+rstfiles=$(find ../sync/controller-docs/ -name '*.rst')
 
 # Expand variables in Controller docs.
 sed -i -e 's/|atversion|/Automation Controller Version 4.3.0/g' \

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-adocfiles=$(find . -name '*.adoc')
+adocfiles=$(find ../sync/controller-docs/ -name '*.adoc')
 
 # Replace unknown ID or title for internal cross references
 sed -i -e 's/xref:ag_backup_restore\[\]/{ag_backup_restore}/g' \
