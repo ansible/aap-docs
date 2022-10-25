@@ -28,6 +28,6 @@
 - name: trim backtick
   ansible.builtin.replace:
     path: "{{ item.path }}"
-    regexp: '\]`'
-    replace: ']'
+    regexp: '\[\]`'
+    replace: '[]'
   with_items: "{{ adoc_files.files }}"
