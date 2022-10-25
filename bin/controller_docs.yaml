@@ -66,11 +66,19 @@
      register: rst_files
    - name: modify rst
      ansible.builtin.include_tasks: modify_controller_rst.yaml
+   - name: variable expansion
+     ansible.builtin.script:
+      chdir: "{{ target_dir }}"
+      cmd: sh ./replace-controller-variables.sh
    - name: convert rst to adoc
      ansible.builtin.include_tasks: convert_rst.yaml
    - name: modify adoc
      ansible.builtin.include_tasks: modify_controller_adoc.yaml
    - name: build controller xrefs
      ansible.builtin.include_tasks: build_controller_xrefs.yaml
+   - name: fix cross references
+     ansible.builtin.script:
+      chdir: "{{ target_dir }}"
+      cmd: sh ./replace-controller-xrefs.sh
    - name: copy common adoc
      ansible.builtin.include_tasks: copy_controller_common_adoc.yaml

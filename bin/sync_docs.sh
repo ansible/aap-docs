@@ -34,6 +34,9 @@ cp -r $source/titles/controller/administration/stories.adoc $target/controller/a
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/administration/
 
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/administration/controller-xrefs.adoc
+
 ################
 # Controller API
 ################
@@ -51,6 +54,9 @@ cp -r $source/titles/controller/controllerapi/stories.adoc $target/controller/co
 
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/controllerapi/
+
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/controllerapi/controller-xrefs.adoc
 
 ############
 # Quickstart
@@ -70,6 +76,9 @@ cp -r $source/titles/controller/quickstart/stories.adoc $target/controller/quick
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/quickstart/
 
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/quickstart/controller-xrefs.adoc
+
 ###############
 # Release notes
 ###############
@@ -87,6 +96,9 @@ cp -r $source/titles/controller/release-notes/stories.adoc $target/controller/re
 
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/release-notes/
+
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/release-notes/controller-xrefs.adoc
 
 #######################
 # Upgrade and migration
@@ -106,6 +118,9 @@ cp -r $source/titles/controller/upgrade-migration-guide/stories.adoc $target/con
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/upgrade-migration-guide/
 
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/upgrade-migration-guide/controller-xrefs.adoc
+
 ############
 # User guide
 ############
@@ -123,3 +138,6 @@ cp -r $source/titles/controller/userguide/stories.adoc $target/controller/usergu
 
 # Copy the images.
 cp -r $source/sync/controller-docs/common/source/images/ $target/controller/userguide/
+
+# Copy xrefs.
+cp -r $source/bin/controller-xrefs.adoc $target/controller/userguide/controller-xrefs.adoc
