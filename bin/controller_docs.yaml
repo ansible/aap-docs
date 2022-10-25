@@ -68,7 +68,7 @@
      ansible.builtin.include_tasks: modify_controller_rst.yaml
    - name: variable expansion
      ansible.builtin.script:
-      cmd: sh ./replace-controller-variables.sh
+      cmd: replace-controller-variables.sh
    - name: convert rst to adoc
      ansible.builtin.include_tasks: convert_rst.yaml
    - name: modify adoc
@@ -77,6 +77,6 @@
      ansible.builtin.include_tasks: build_controller_xrefs.yaml
    - name: fix cross references
      ansible.builtin.script:
-      cmd: sh ./replace-controller-xrefs.sh
+      cmd: replace-controller-xrefs.sh
    - name: copy common adoc
      ansible.builtin.include_tasks: copy_controller_common_adoc.yaml
