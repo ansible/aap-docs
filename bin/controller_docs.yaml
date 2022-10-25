@@ -5,6 +5,7 @@
     source_branch: release_4.3.0
     source_dir: ../sync/product-docs/
     target_dir: ../sync/controller-docs/
+    absolute_target_dir: /home/runner/work/aap-docs/aap-docs/sync/controller-docs/
   tasks:
    - name: clone source repository
      ansible.builtin.git:
@@ -68,7 +69,7 @@
      ansible.builtin.include_tasks: modify_controller_rst.yaml
    - name: variable expansion
      ansible.builtin.script:
-      chdir: "{{ target_dir }}"
+      chdir: "{{ absolute_target_dir }}"
       cmd: sh ./replace-controller-variables.sh
    - name: convert rst to adoc
      ansible.builtin.include_tasks: convert_rst.yaml
@@ -78,7 +79,7 @@
      ansible.builtin.include_tasks: build_controller_xrefs.yaml
    - name: fix cross references
      ansible.builtin.script:
-      chdir: "{{ target_dir }}"
+      chdir: "{{ absolute_target_dir }}"
       cmd: sh ./replace-controller-xrefs.sh
    - name: copy common adoc
      ansible.builtin.include_tasks: copy_controller_common_adoc.yaml
