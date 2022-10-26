@@ -1,0 +1,3174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.17">
+<title>Ansible-lint user guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
+/* Uncomment the following line when using as a custom stylesheet */
+/* @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700"; */
+html{font-family:sans-serif;-webkit-text-size-adjust:100%}
+a{background:none}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+b,strong{font-weight:bold}
+abbr{font-size:.9em}
+abbr[title]{cursor:help;border-bottom:1px dotted #dddddf;text-decoration:none}
+dfn{font-style:italic}
+hr{height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+audio,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type=checkbox],input[type=radio]{padding:0}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,::before,::after{box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;line-height:1;position:relative;cursor:auto;-moz-tab-size:4;-o-tab-size:4;tab-size:4;word-wrap:anywhere;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:0}
+p{line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #dddddf;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:1px solid #dedede;word-wrap:normal}
+table thead,table tfoot{background:#f7f8f7}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt{background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.center{margin-left:auto;margin-right:auto}
+.stretch{width:100%}
+.clearfix::before,.clearfix::after,.float-group::before,.float-group::after{content:" ";display:table}
+.clearfix::after,.float-group::after{clear:both}
+:not(pre).nobreak{word-wrap:normal}
+:not(pre).nowrap{white-space:nowrap}
+:not(pre).pre-wrap{white-space:pre-wrap}
+:not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
+pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
+pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
+pre>code{display:block}
+pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background:#f7f7f7;border:1px solid #ccc;border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.2),inset 0 0 0 .1em #fff;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button::before,b.button::after{position:relative;top:-1px;font-weight:400}
+b.button::before{content:"[";padding:0 3px 0 2px}
+b.button::after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin:0 auto;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header::before,#header::after,#content::before,#content::after,#footnotes::before,#footnotes::after,#footer::before,#footer::after{content:" ";display:table}
+#header::after,#content::after,#footnotes::after,#footer::after{clear:both}
+#content{margin-top:1.25em}
+#content::before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span::before{content:"\00a0\2013\00a0"}
+#header .details br+span.author::before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark::before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber::after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #dddddf;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #e7e7e9;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #e7e7e9;left:auto;right:0}}
+@media screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border:1px solid #e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:none;background:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:hsla(0,0%,100%,.8);line-height:1.44}
+#content{margin-bottom:.625em}
+.sect1{padding-bottom:.625em}
+@media screen and (min-width:768px){#content{margin-bottom:1.25em}
+.sect1{padding-bottom:1.25em}}
+.sect1:last-child{padding-bottom:0}
+.sect1+.sect1{border-top:1px solid #e7e7e9}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor::before,h2>a.anchor::before,h3>a.anchor::before,#toctitle>a.anchor::before,.sidebarblock>.content>.title>a.anchor::before,h4>a.anchor::before,h5>a.anchor::before,h6>a.anchor::before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+details{margin-left:1.25rem}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
+details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
+details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
+.paragraph.lead>p,#preamble>.sectionbody>[class=paragraph]:first-of-type p{font-size:1.21875em;line-height:1.6;color:rgba(0,0,0,.85)}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:none}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
+@media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
+@media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
+.literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
+.literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
+.listingblock:hover code[data-lang]::before{display:block}
+.listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
+.listingblock.terminal pre .command:not([data-prompt])::before{content:"$"}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.prettyprint{background:#f7f7f8}
+pre.prettyprint .linenums{line-height:1.45;margin-left:2em}
+pre.prettyprint li{background:none;list-style-type:inherit;padding-left:0}
+pre.prettyprint li code[data-lang]::before{opacity:1}
+pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
+table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
+table.linenotable td.code{padding-left:.75em}
+table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote::before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.75em;margin-right:.5ex;text-align:right}
+.verseblock{margin:0 1em 1.25em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans-serif;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract blockquote::before,.quoteblock.excerpt blockquote::before,.quoteblock .quoteblock blockquote::before{display:none}
+.quoteblock.abstract blockquote,.quoteblock.abstract p,.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{line-height:1.6;word-spacing:0}
+.quoteblock.abstract{margin:0 1em 1.25em;display:block}
+.quoteblock.abstract>.title{margin:0 0 .375em;font-size:1.15em;text-align:center}
+.quoteblock.excerpt>blockquote,.quoteblock .quoteblock{padding:0 0 .25em 1em;border-left:.25em solid #dddddf}
+.quoteblock.excerpt,.quoteblock .quoteblock{margin-left:0}
+.quoteblock.excerpt blockquote,.quoteblock.excerpt p,.quoteblock .quoteblock blockquote,.quoteblock .quoteblock p{color:inherit;font-size:1.0625rem}
+.quoteblock.excerpt .attribution,.quoteblock .quoteblock .attribution{color:inherit;font-size:.85rem;text-align:left;margin-right:0}
+p.tableblock:last-child{margin-bottom:0}
+td.tableblock>.content{margin-bottom:1.25em;word-wrap:anywhere}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>*>tr>*{border-width:1px}
+table.grid-cols>*>tr>*{border-width:0 1px}
+table.grid-rows>*>tr>*{border-width:1px 0}
+table.frame-all{border-width:1px}
+table.frame-ends{border-width:1px 0}
+table.frame-sides{border-width:0 1px}
+table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-child>*{border-top-width:0}
+table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
+table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
+table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
+table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+li>p:empty:only-child::before{content:"";display:inline-block}
+ul.checklist>li>p:first-child{margin-left:-1em}
+ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
+ul.inline{display:flex;flex-flow:row wrap;list-style:none;margin:0 0 .625em -1.25em}
+ul.inline>li{margin-left:1.25em}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+td.hdlist2{word-wrap:anywhere}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
+.colist td:not([class]):first-child img{max-width:none}
+.colist td:not([class]):last-child{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background:#00fafa}
+.black{color:#000}
+.black-background{background:#000}
+.blue{color:#0000bf}
+.blue-background{background:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background:#fa00fa}
+.gray{color:#606060}
+.gray-background{background:#7d7d7d}
+.green{color:#006000}
+.green-background{background:#007d00}
+.lime{color:#00bf00}
+.lime-background{background:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background:#7d0000}
+.navy{color:#000060}
+.navy-background{background:#00007d}
+.olive{color:#606000}
+.olive-background{background:#7d7d00}
+.purple{color:#600060}
+.purple-background{background:#7d007d}
+.red{color:#bf0000}
+.red-background{background:#fa0000}
+.silver{color:#909090}
+.silver-background{background:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background:rgba(0,0,0,.8);border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]::after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@page{margin:1.25cm .75cm}
+@media print{*{box-shadow:none!important;text-shadow:none!important}
+html{font-size:80%}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare)::after,a[href^="https:"]:not(.bare)::after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]{border-bottom:1px dotted}
+abbr[title]::after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#header,#content,#footnotes,#footer{max-width:none}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #dddddf!important;padding-bottom:0!important}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span::before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]::before{display:block}
+#footer{padding:0 .9375em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+@media amzn-kf8,print{#header>h1:first-child{margin-top:1.25rem}
+.sect1{padding:0!important}
+.sect1+.sect1{border:0}
+#footer{background:none}
+#footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
+@media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="article toc2 toc-left">
+<div id="header">
+<h1>Ansible-lint user guide</h1>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_ansible_lint_rules">1. Ansible-lint rules</a>
+<ul class="sectlevel2">
+<li><a href="#_syntax_check">1.1. syntax-check</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code">1.1.1. Problematic code</a></li>
+<li><a href="#_correct_code">1.1.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_risky_file_permissions">1.2. risky-file-permissions</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_2">1.2.1. Problematic code</a></li>
+<li><a href="#_correct_code_2">1.2.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_no_tabs">1.3. no-tabs</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_3">1.3.1. Problematic Code</a></li>
+<li><a href="#_correct_code_3">1.3.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_empty_string_compare">1.4. empty-string-compare</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_4">1.4.1. Problematic Code</a></li>
+<li><a href="#_correct_code_4">1.4.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_schema">1.5. schema</a>
+<ul class="sectlevel3">
+<li><a href="#_validated_schema">1.5.1. Validated schema</a></li>
+<li><a href="#_schemameta">1.5.2. schema[meta]</a></li>
+</ul>
+</li>
+<li><a href="#_deprecated_bare_vars">1.6. deprecated-bare-vars</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_5">1.6.1. Problematic code</a></li>
+<li><a href="#_correct_code_5">1.6.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_meta_video_links">1.7. meta-video-links</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_6">1.7.1. Problematic Code</a></li>
+<li><a href="#_correct_code_6">1.7.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_jinja">1.8. jinja</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_7">1.8.1. Problematic code</a></li>
+<li><a href="#_correct_code_7">1.8.2. Correct code</a></li>
+<li><a href="#_current_limitations">1.8.3. Current limitations</a></li>
+</ul>
+</li>
+<li><a href="#_no_log_password">1.9. no-log-password</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_8">1.9.1. Problematic Code</a></li>
+<li><a href="#_correct_code_8">1.9.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_key_order">1.10. key-order</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_9">1.10.1. Problematic code</a></li>
+<li><a href="#_correct_code_9">1.10.2. Correct code</a></li>
+<li><a href="#_reasoning">1.10.3. Reasoning</a></li>
+</ul>
+</li>
+<li><a href="#_avoid_implicit">1.11. avoid-implicit</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_10">1.11.1. Problematic Code</a></li>
+<li><a href="#_correct_code_10">1.11.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_yaml">1.12. yaml</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_11">1.12.1. Problematic code</a></li>
+<li><a href="#_correct_code_11">1.12.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_latest">1.13. latest</a>
+<ul class="sectlevel3">
+<li><a href="#_possible_errors_messages">1.13.1. Possible errors messages:</a></li>
+<li><a href="#_problematic_code_12">1.13.2. Problematic code</a></li>
+<li><a href="#_correct_code_12">1.13.3. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_risky_shell_pipe">1.14. risky-shell-pipe</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_13">1.14.1. Problematic Code</a></li>
+<li><a href="#_correct_code_13">1.14.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_package_latest">1.15. package-latest</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_14">1.15.1. Problematic Code</a></li>
+<li><a href="#_correct_code_14">1.15.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_same_owner">1.16. no-same-owner</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_15">1.16.1. Problematic Code</a></li>
+<li><a href="#_correct_code_15">1.16.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_deprecated_command_syntax">1.17. deprecated-command-syntax</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_16">1.17.1. Problematic Code</a></li>
+<li><a href="#_correct_code_16">1.17.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_role_name">1.18. role-name</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_17">1.18.1. Problematic Code</a></li>
+<li><a href="#_correct_code_17">1.18.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_loop_var_prefix">1.19. loop-var-prefix</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_18">1.19.1. Problematic Code</a></li>
+<li><a href="#_correct_code_18">1.19.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_changed_when">1.20. no-changed-when</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_19">1.20.1. Problematic Code</a></li>
+<li><a href="#_correct_code_19">1.20.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_jinja_when">1.21. no-jinja-when</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_20">1.21.1. Problematic Code</a></li>
+<li><a href="#_correct_code_20">1.21.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_command_instead_of_module">1.22. command-instead-of-module</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_21">1.22.1. Problematic Code</a></li>
+<li><a href="#_correct_code_21">1.22.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_var_naming">1.23. var-naming</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_22">1.23.1. Problematic Code</a></li>
+<li><a href="#_correct_code_22">1.23.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_free_form">1.24. no-free-form</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_23">1.24.1. Problematic code</a></li>
+<li><a href="#_correct_code_23">1.24.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_playbook_extension">1.25. playbook-extension</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_24">1.25.1. Problematic Code</a></li>
+<li><a href="#_correct_code_24">1.25.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_handler">1.26. no-handler</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_25">1.26.1. Problematic Code</a></li>
+<li><a href="#_correct_code_25">1.26.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_command_instead_of_shell">1.27. command-instead-of-shell</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_26">1.27.1. Problematic Code</a></li>
+<li><a href="#_correct_code_26">1.27.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_risky_octal">1.28. risky-octal</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_27">1.28.1. Problematic Code</a></li>
+<li><a href="#_correct_code_27">1.28.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_meta_no_tags">1.29. meta-no-tags</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_28">1.29.1. Problematic Code</a></li>
+<li><a href="#_correct_code_28">1.29.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_literal_compare">1.30. literal-compare</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_29">1.30.1. Problematic Code</a></li>
+<li><a href="#_correct_code_29">1.30.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_meta_no_info">1.31. meta-no-info</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_30">1.31.1. Problematic Code</a></li>
+<li><a href="#_correct_code_30">1.31.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_prompting">1.32. no-prompting</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_31">1.32.1. Problematic Code</a></li>
+<li><a href="#_correct_code_31">1.32.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_no_relative_paths">1.33. no-relative-paths</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_32">1.33.1. Problematic Code</a></li>
+<li><a href="#_correct_code_32">1.33.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_partial_become">1.34. partial-become</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_33">1.34.1. Problematic Code</a></li>
+<li><a href="#_correct_code_33">1.34.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_only_builtins">1.35. only-builtins</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_34">1.35.1. Problematic Code</a></li>
+<li><a href="#_correct_code_34">1.35.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_inline_env_var">1.36. inline-env-var</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_35">1.36.1. Problematic Code</a></li>
+<li><a href="#_correct_code_35">1.36.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_meta_incorrect">1.37. meta-incorrect</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_36">1.37.1. Problematic Code</a></li>
+<li><a href="#_correct_code_36">1.37.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_deprecated_local_action">1.38. deprecated-local-action</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_37">1.38.1. Problematic Code</a></li>
+<li><a href="#_correct_code_37">1.38.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_deprecated_module">1.39. deprecated-module</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_38">1.39.1. Problematic Code</a></li>
+<li><a href="#_correct_code_38">1.39.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_name">1.40. name</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_39">1.40.1. Problematic code</a></li>
+<li><a href="#_correct_code_39">1.40.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_ignore_errors">1.41. ignore-errors</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_40">1.41.1. Problematic Code</a></li>
+<li><a href="#_correct_code_40">1.41.2. Correct Code</a></li>
+</ul>
+</li>
+<li><a href="#_galaxy">1.42. galaxy</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_41">1.42.1. Problematic code</a></li>
+<li><a href="#_correct_code_41">1.42.2. Correct code</a></li>
+</ul>
+</li>
+<li><a href="#_fqcn">1.43. fqcn</a>
+<ul class="sectlevel3">
+<li><a href="#_problematic_code_42">1.43.1. Problematic Code</a></li>
+<li><a href="#_correct_code_42">1.43.2. Correct Code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ansible-lint helps Ansible content creators write <strong>playbooks, roles, and collections</strong> that read like documentation and are production ready.
+Use Ansible-lint for trusted automation that produces consistent, reliable results.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ansible_lint_rules"><a class="anchor" href="#_ansible_lint_rules"></a>1. Ansible-lint rules</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_syntax_check"><a class="anchor" href="#_syntax_check"></a>1.1. syntax-check</h3>
+<div class="paragraph">
+<p>Our linter runs <code>ansible-playbook --syntax-check</code> on all playbooks, and
+if any of these reports a syntax error, this stops any further processing
+of these files.</p>
+</div>
+<div class="paragraph">
+<p>This error <strong>cannot be disabled</strong> due to being a prerequisite for other steps.
+You can exclude these files from linting, but it is better to make sure they can be
+loaded by Ansible. This is often achieved by editing the inventory file and/or
+<code>ansible.cfg</code> so ansible can load required variables.</p>
+</div>
+<div class="paragraph">
+<p>If undefined variables cause the failure, you can use the jinja
+<code>default()</code> filter to provide fallback values, like in the example below.</p>
+</div>
+<div class="paragraph">
+<p>This rule is among the few <code>unskippable</code> rules that cannot be added to
+<code>skip_list</code> or <code>warn_list</code>. One possible workaround is to add the entire file
+to the <code>exclude_paths</code>. This is a valid approach for special cases, like testing
+fixtures that are invalid on purpose.</p>
+</div>
+<div class="paragraph">
+<p>One of the most common sources of errors is failure to assert the presence of
+various variables at the beginning of the playbook.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code"><a class="anchor" href="#_problematic_code"></a>1.1.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Bad use of variable inside hosts block (wrong assumption of it being defined)
+  hosts: "{{ my_hosts }}"
+  tasks: []</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code"><a class="anchor" href="#_correct_code"></a>1.1.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Good use of variable inside hosts, without assumptions
+  hosts: "{{ my_hosts | default([]) }}"
+  tasks: []</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_risky_file_permissions"><a class="anchor" href="#_risky_file_permissions"></a>1.2. risky-file-permissions</h3>
+<div class="paragraph">
+<p>This rule is triggered by various modules that could end up creating new files
+on disk with permissions that might be too open, or unpredictable. Please
+read the documentation of each module carefully to understand the
+implications of using different argument values, as these make the difference
+between using the module safely or not. The fix depends on each module and
+also your particular situation.</p>
+</div>
+<div class="paragraph">
+<p>Some modules have a <code>create</code> argument that defaults to <code>true</code>. For those you
+either need to set <code>create: false</code> or provide some permissions like
+<code>mode: 0600</code> to make the behavior predictable and not dependent on the current
+system settings.</p>
+</div>
+<div class="paragraph">
+<p>Modules that are checked:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/assemble_module.html"><code>ansible.builtin.assemble</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html"><code>ansible.builtin.copy</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html"><code>ansible.builtin.file</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/get_url_module.html"><code>ansible.builtin.get_url</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/replace_module.html"><code>ansible.builtin.replace</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html"><code>ansible.builtin.template</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/community/general/archive_module.html"><code>community.general.archive</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/community/general/ini_file_module.html"><code>community.general.ini_file</code></a></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{warning}" data-lang="{warning}">This rule does not take [module_defaults](https://docs.ansible.com/ansible/latest/user_guide/playbooks_module_defaults.html) configuration into account.
+There are currently no plans to implement this feature because changing task location can also change task behavior.</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_2"><a class="anchor" href="#_problematic_code_2"></a>1.2.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Unsafe example of using ini_file
+  community.general.ini_file:
+    path: foo
+    create: true
+    mode: preserve</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_2"><a class="anchor" href="#_correct_code_2"></a>1.2.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Safe example of using ini_file (1st solution)
+  community.general.ini_file:
+    path: foo
+    create: false  # prevents creating a file with potentially insecure permissions
+    mode: preserve
+
+- name: Safe example of using ini_file (2nd solution)
+  community.general.ini_file:
+    path: foo
+    mode: 0600  # explicitly sets the desired permissions, to make the results predictable
+    mode: preserve</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_tabs"><a class="anchor" href="#_no_tabs"></a>1.3. no-tabs</h3>
+<div class="paragraph">
+<p>This rule checks for the tab character.
+The <code>\t</code> tab character can result in unexpected display or formatting issues.
+You should always use spaces instead of tabs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{note}" data-lang="{note}">This rule does not trigger alerts for tab characters in the ``ansible.builtin.lineinfile`` module.</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_3"><a class="anchor" href="#_problematic_code_3"></a>1.3.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Do not trigger the rule
+      ansible.builtin.lineinfile:
+        path: some.txt
+        regexp: '^\t$'
+        line: 'string with \t inside'
+    - name: Trigger the rule with a debug message
+      ansible.builtin.debug:
+        msg: "Using the \t character can cause formatting issues." # &lt;- Includes the tab character.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_3"><a class="anchor" href="#_correct_code_3"></a>1.3.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Do not trigger the no-tabs rule
+      ansible.builtin.debug:
+        msg: "Using space characters avoids formatting issues."</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_empty_string_compare"><a class="anchor" href="#_empty_string_compare"></a>1.4. empty-string-compare</h3>
+<div class="paragraph">
+<p>This rule checks for empty string comparison in playbooks.
+To ensure code clarity you should avoid using empty strings in conditional statements with the <code>when</code> clause.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use <code>when: var | length &gt; 0</code> instead of <code>when: var != ""</code>.</p>
+</li>
+<li>
+<p>Use <code>when: var | length == 0</code> instead of <code>when: var == ""</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is an opt-in rule.
+You must enable it in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">enable_list:
+  - empty-string-compare</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_4"><a class="anchor" href="#_problematic_code_4"></a>1.4.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Shut down
+      ansible.builtin.command: /sbin/shutdown -t now
+      when: ansible_os_family == "" # &lt;- Compares with an empty string.
+    - name: Shut down
+      ansible.builtin.command: /sbin/shutdown -t now
+      when: ansible_os_family !="" # &lt;- Compares with an empty string.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_4"><a class="anchor" href="#_correct_code_4"></a>1.4.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Shut down
+      ansible.builtin.shell: |
+        /sbin/shutdown -t now
+        echo $var ==
+      when: ansible_os_family</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_schema"><a class="anchor" href="#_schema"></a>1.5. schema</h3>
+<div class="paragraph">
+<p>The <code>schema</code> rule validates Ansible metadata files against JSON schemas.
+These schemas ensure the compatibility of Ansible syntax content across versions.</p>
+</div>
+<div class="paragraph">
+<p>This <code>schema</code> rule is <strong>mandatory</strong>.
+You cannot use inline <code>noqa</code> comments to ignore it.</p>
+</div>
+<div class="paragraph">
+<p>Ansible-lint validates the <code>schema</code> rule before processing other rules.
+This prevents unexpected syntax from triggering multiple rule violations.</p>
+</div>
+<div class="sect3">
+<h4 id="_validated_schema"><a class="anchor" href="#_validated_schema"></a>1.5.1. Validated schema</h4>
+<div class="paragraph">
+<p>Ansible-lint currently validates several schemas that are maintained in
+separate projects and updated independently to ansible-lint.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Report bugs related to schema in their respective repository and not in the ansible-lint project.</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Maintained in the <a href="https://github.com/ansible/ansible-lint">ansible-lint</a> project:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>schema[ansible-lint-config]</code> validates <a href="https://github.com/ansible/ansible-lint/blob/main/src/ansiblelint/schemas/ansible-lint-config.json">ansible-lint configuration</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Maintained in the <a href="https://github.com/ansible/ansible-navigator">ansible-navigator</a> project:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>schema[ansible-navigator]</code> validates <a href="https://github.com/ansible/ansible-navigator/blob/main/src/ansible_navigator/data/ansible-navigator.json">ansible-navigator configuration</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Maintained in the Ansible <a href="https://github.com/ansible/schemas">schemas</a> project:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>schema[arg_specs]</code> validates <a href="https://docs.ansible.com/ansible/latest/dev_guide/developing_program_flow_modules.html#argument-spec">module argument specs</a></p>
+</li>
+<li>
+<p><code>schema[execution-environment]</code> validates <a href="https://docs.ansible.com/automation-controller/latest/html/userguide/execution_environments.html#ees">execution environments</a></p>
+</li>
+<li>
+<p><code>schema[galaxy]</code> validates <a href="https://docs.ansible.com/ansible/latest/dev_guide/collections_galaxy_meta.html">collection metadata</a>.</p>
+</li>
+<li>
+<p><code>schema[inventory]</code> validates <a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html">inventory files</a> that match <code>inventory/*.yml</code>.</p>
+</li>
+<li>
+<p><code>schema[meta-runtime]</code> validates <a href="https://docs.ansible.com/ansible/devel/dev_guide/developing_collections_structure.html#meta-directory-and-runtime-yml">runtime information</a> that matches <code>meta/runtime.yml</code></p>
+</li>
+<li>
+<p><code>schema[meta]</code> validates metadata for roles that match <code>meta/main.yml</code>. See <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-dependencies">role-dependencies</a> or <a href="https://github.com/ansible/ansible/blob/devel/lib/ansible/playbook/role/metadata.py#L79">role/metadata.py</a>) for details.</p>
+</li>
+<li>
+<p><code>schema[playbook]</code> validates Ansible playbooks.</p>
+</li>
+<li>
+<p><code>schema[requirements]</code> validates Ansible <a href="https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#install-multiple-collections-with-a-requirements-file">requirements</a> files that match <code>requirements.yml</code>.</p>
+</li>
+<li>
+<p><code>schema[tasks]</code> validates Ansible task files that match <code>tasks/**/*.yml</code>.</p>
+</li>
+<li>
+<p><code>schema[vars]</code> validates Ansible <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html">variables</a> that match <code>vars/*.yml</code> and <code>defaults/*.yml</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schemameta"><a class="anchor" href="#_schemameta"></a>1.5.2. schema[meta]</h4>
+<div class="paragraph">
+<p>For <code>meta/main.yml</code> files, Ansible-lint requires a <code>galaxy_info.standalone</code>
+property that clarifies if a role is an old standalone one or a new one,
+collection based:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">galaxy_info:
+  standalone: true # &lt;-- this is a standalone role (not part of a collection)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ansible-lint requires the <code>standalone</code> key to avoid confusion and provide more
+specific error messages. For example, the <code>meta</code> schema will require some
+properties only for standalone roles or prevent the use of some properties that
+are not supported by collections.</p>
+</div>
+<div class="paragraph">
+<p>You cannot use an empty <code>meta/main.yml</code> file or use only comments in the <code>meta/main.yml</code> file.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deprecated_bare_vars"><a class="anchor" href="#_deprecated_bare_vars"></a>1.6. deprecated-bare-vars</h3>
+<div class="paragraph">
+<p>This rule identifies possible confusing expressions where it is not clear if
+a variable or string is to be used and asks for clarification.</p>
+</div>
+<div class="paragraph">
+<p>You should either use the full variable syntax ('{{{{ {0} }}}}') or, whenever
+possible, convert it to a list of strings.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_5"><a class="anchor" href="#_problematic_code_5"></a>1.6.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- ansible.builtin.debug:
+    msg: "{{ item }}"
+  with_items: foo # &lt;-- deprecated-bare-vars</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_5"><a class="anchor" href="#_correct_code_5"></a>1.6.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# if foo is not really a variable:
+- ansible.builtin.debug:
+    msg: "{{ item }}"
+  with_items:
+    - foo
+
+# if foo is a variable:
+- ansible.builtin.debug:
+    msg: "{{ item }}"
+  with_items: "{{ foo }}"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_meta_video_links"><a class="anchor" href="#_meta_video_links"></a>1.7. meta-video-links</h3>
+<div class="paragraph">
+<p>This rule checks formatting for video links in metadata.
+Always use dictionaries for items in the <code>meta/main.yml</code> file.</p>
+</div>
+<div class="paragraph">
+<p>Items in the <code>video_links</code> section must be in a dictionary and use the following keys:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>url</code></p>
+</li>
+<li>
+<p><code>title</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The value of the <code>url</code> key must be a shared link from YouTube, Vimeo, or Google Drive.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_6"><a class="anchor" href="#_problematic_code_6"></a>1.7.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+galaxy_info:
+  video_links:
+    - https://youtu.be/this_is_not_a_dictionary # &lt;- Does not use the url key.
+    - my_bad_key: https://youtu.be/aWmRepTSFKs # &lt;- Uses an unsupported key.
+      title: Incorrect key.
+    - url: www.acme.com/vid # &lt;- Uses an unsupported url format.
+      title: Incorrect url format.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_6"><a class="anchor" href="#_correct_code_6"></a>1.7.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+galaxy_info:
+  video_links:
+    - url: https://youtu.be/aWmRepTSFKs # &lt;- Uses a supported shared link with the url key.
+      title: Correctly formatted video link.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jinja"><a class="anchor" href="#_jinja"></a>1.8. jinja</h3>
+<div class="paragraph">
+<p>This rule can report problems related to jinja2 string templates. The current
+version can report:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>jinja[spacing]</code> when there are no spaces between variables
+and operators, including filters, like <code>{{ var_name | filter }}</code>. This
+improves readability and makes it less likely to introduce typos.</p>
+</li>
+<li>
+<p><code>jinja[invalid]</code> when the jinja2 template is invalid, like <code>{{ {{ '1' }} }}</code>,
+which would result in a runtime error if you try to use it with Ansible, even
+if it does pass the Ansible syntax check.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As jinja2 syntax is closely following Python one we aim to follow
+<a href="https://black.readthedocs.io/en/stable/">black</a> formatting rules. If you are
+curious how black would reformat a small sniped feel free to visit
+<a href="https://black.vercel.app/">online black formatter</a> site. Keep in mind to not
+include the entire jinja2 template, so instead of <code>{{ 1+2==3 }}</code>, do paste
+only <code>1+2==3</code>.</p>
+</div>
+<div class="paragraph">
+<p>In ansible, <code>changed_when</code>, <code>failed_when</code>, <code>until</code>, <code>when</code> are considered to
+use implicit jinja2 templating, meaning that they do not require <code>{{ }}</code>. Our
+rule will suggest the removal of the braces for these fields.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_7"><a class="anchor" href="#_problematic_code_7"></a>1.8.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Some task
+  vars:
+    foo: "{{some|dict2items}}" # &lt;-- jinja[spacing]
+    bar: "{{ &amp; }}" # &lt;-- jinja[invalid]
+  when: "{{ foo | bool }}" # &lt;-- jinja[spacing] - 'when' has implicit templating</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_7"><a class="anchor" href="#_correct_code_7"></a>1.8.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Some task
+  vars:
+    foo: "{{ some | dict2items }}"
+    bar: "{{ '&amp;' }}"
+  when: foo | bool</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_current_limitations"><a class="anchor" href="#_current_limitations"></a>1.8.3. Current limitations</h4>
+<div class="paragraph">
+<p>In its current form, this rule presents the following limitations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Jinja2 blocks that have newlines in them will not be reformatted because we
+consider that the user deliberately wanted to format them in a particular way.</p>
+</li>
+<li>
+<p>Jinja2 blocks that use tilde as a binary operation are ignored because black
+does not support tilde as a binary operator. Example: <code>{{ a ~ b }}</code>.</p>
+</li>
+<li>
+<p>Jinja2 blocks that use dot notation with numbers are ignored because python
+and black do not allow it. Example: <code>{{ foo.0.bar }}</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_log_password"><a class="anchor" href="#_no_log_password"></a>1.9. no-log-password</h3>
+<div class="paragraph">
+<p>This rule ensures playbooks do not write passwords to logs when using loops.
+Always set the <code>no_log: true</code> attribute to protect sensitive data.</p>
+</div>
+<div class="paragraph">
+<p>While most Ansible modules mask sensitive data, using secrets inside a loop can result in those secrets being logged.
+Explicitly adding <code>no_log: true</code> prevents accidentally exposing secrets.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_8"><a class="anchor" href="#_problematic_code_8"></a>1.9.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Log user passwords
+      ansible.builtin.user:
+        name: john_doe
+        comment: John Doe
+        uid: 1040
+        group: admin
+        password: "{{ item }}"
+      with_items:
+        - wow
+      no_log: false # &lt;- Sets the no_log attribute to false.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_8"><a class="anchor" href="#_correct_code_8"></a>1.9.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Do not log user passwords
+      ansible.builtin.user:
+        name: john_doe
+        comment: John Doe
+        uid: 1040
+        group: admin
+        password: "{{ item }}"
+      with_items:
+        - wow
+      no_log: true # &lt;- Sets the no_log attribute to a non-false value.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_key_order"><a class="anchor" href="#_key_order"></a>1.10. key-order</h3>
+<div class="paragraph">
+<p>This rule recommends reordering key names in ansible content to make
+code easier to maintain and less prone to errors.</p>
+</div>
+<div class="paragraph">
+<p>Here are some examples of common ordering checks done for tasks and handlers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name</code> must always be the first key for plays, tasks and handlers</p>
+</li>
+<li>
+<p>on tasks, the <code>block</code>, <code>rescue</code> and <code>always</code> keys must be the last keys,
+as this would avoid accidental miss-indentation errors between the last task
+and the parent level.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_9"><a class="anchor" href="#_problematic_code_9"></a>1.10.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- hosts: localhost
+  name: This is a playbook # &lt;-- name key should be the first one
+  tasks:
+    - name: A block
+      block:
+        - name: Display a message
+          debug:
+            msg: "Hello world!"
+      when: true # &lt;-- when key should be before block</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_9"><a class="anchor" href="#_correct_code_9"></a>1.10.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: This is a playbook
+  hosts: localhost
+  tasks:
+    - name: A block
+      when: true
+      block:
+        - name: Display a message
+          debug:
+            msg: "Hello world!"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reasoning"><a class="anchor" href="#_reasoning"></a>1.10.3. Reasoning</h4>
+<div class="paragraph">
+<p>Making decisions about the optimal order of keys for ansible tasks or plays is
+no easy task, as we had a huge number of combinations to consider. This is also
+the reason why we started with a minimal sorting rule (name to be the first),
+and aimed to gradually add more fields later, and only when we find the proofs
+that one approach is likely better than the other.</p>
+</div>
+<div class="sect4">
+<h5 id="_why_i_no_longer_can_put_when_after_a_block"><a class="anchor" href="#_why_i_no_longer_can_put_when_after_a_block"></a>Why I no longer can put <code>when</code> after a <code>block</code>?</h5>
+<div class="paragraph">
+<p>Try to remember that in real life, <code>block/rescue/always</code> have the habit to
+grow due to the number of tasks they host inside, making them exceed what a single screen. This would move the <code>when</code> task further away from the rest of the task properties. A <code>when</code> from the last task inside the block can
+easily be confused as being at the block level, or the reverse. When tasks are
+moved from one location to another, there is a real risk of moving the block
+level when with it.</p>
+</div>
+<div class="paragraph">
+<p>By putting the <code>when</code> before the <code>block</code>, we avoid that kind of risk. The same risk applies to any simple property at the task level, so that is why
+we concluded that the block keys must be the last ones.</p>
+</div>
+<div class="paragraph">
+<p>Another common practice was to put <code>tags</code> as the last property. Still, for the
+same reasons, we decided that they should not be put after block keys either.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_avoid_implicit"><a class="anchor" href="#_avoid_implicit"></a>1.11. avoid-implicit</h3>
+<div class="paragraph">
+<p>This rule identifies the use of dangerous implicit behaviors, often also
+undocumented.</p>
+</div>
+<div class="paragraph">
+<p>This rule will produce the following type of error messages:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>avoid-implicit[copy-content]</code> is not a string as <a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html#synopsis">copy</a>
+modules also accept these, but without documenting them.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_10"><a class="anchor" href="#_problematic_code_10"></a>1.11.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Write file content
+      ansible.builtin.copy:
+        content: { "foo": "bar" } # &lt;-- should use explicit jinja template
+        dest: /tmp/foo.txt</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_10"><a class="anchor" href="#_correct_code_10"></a>1.11.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Write file content
+      vars:
+        content: { "foo": "bar" }
+      ansible.builtin.copy:
+        content: "{{ content | to_json }}" # explicit better than implicit!
+        dest: /tmp/foo.txt</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_yaml"><a class="anchor" href="#_yaml"></a>1.12. yaml</h3>
+<div class="paragraph">
+<p>This rule checks YAML syntax and is an implementation of <code>yamllint</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can disable YAML syntax violations by adding <code>yaml</code> to the <code>skip_list</code>
+in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">skip_list:
+  - yaml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For more fine-grained control, disable violations for specific rules using tag
+identifiers in the <code>yaml[yamllint_rule]</code> format as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">skip_list:
+  - yaml[trailing-spaces]
+  - yaml[indentation]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you want Ansible-lint to report YAML syntax violations as warnings, and not
+fatal errors, add tag identifiers to the <code>warn_list</code> in your configuration, for example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">warn_list:
+  - yaml[document-start]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See the <a href="https://yamllint.readthedocs.io/en/stable/rules.html">list of yamllint rules</a> for more information.</p>
+</div>
+<div class="paragraph">
+<p>Some of the detailed error codes that you might see are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>yaml[brackets]</code> - <em>too few spaces inside empty brackets</em>, or <em>too many spaces inside brackets</em></p>
+</li>
+<li>
+<p><code>yaml[colons]</code> - <em>too many spaces before colon</em>, or <em>too many spaces after colon</em></p>
+</li>
+<li>
+<p><code>yaml[commas]</code> - <em>too many spaces before comma</em>, or <em>too few spaces after comma</em></p>
+</li>
+<li>
+<p><code>yaml[comments-indentation]</code> - <em>Comment not indented like content</em></p>
+</li>
+<li>
+<p><code>yaml[comments]</code> - <em>Too few spaces before comment</em>, or <em>Missing starting space in comment</em></p>
+</li>
+<li>
+<p><code>yaml[document-start]</code> - <em>missing document start "--"</em> or <em>found forbidden document start "--"</em></p>
+</li>
+<li>
+<p><code>yaml[empty-lines]</code> - <em>too many blank lines (&#8230;&#8203;&gt; &#8230;&#8203;)</em></p>
+</li>
+<li>
+<p><code>yaml[indentation]</code> - <em>Wrong indentation: expected &#8230;&#8203; but found &#8230;&#8203;</em></p>
+</li>
+<li>
+<p><code>yaml[key-duplicates]</code> - <em>Duplication of key "&#8230;&#8203;" in mapping</em></p>
+</li>
+<li>
+<p><code>yaml[new-line-at-end-of-file]</code> - <em>No new line character at the end of file</em></p>
+</li>
+<li>
+<p><code>yaml[syntax]</code> - YAML syntax is broken</p>
+</li>
+<li>
+<p><code>yaml[trailing-spaces]</code> - Spaces are found at the end of lines</p>
+</li>
+<li>
+<p><code>yaml[truthy]</code> - <em>Truthy value should be one of &#8230;&#8203;</em></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_11"><a class="anchor" href="#_problematic_code_11"></a>1.12.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml"># Missing YAML document start.
+foo: ...
+foo: ...  # &lt;-- Duplicate key.
+bar: ...       # &lt;-- Incorrect comment indentation</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_11"><a class="anchor" href="#_correct_code_11"></a>1.12.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+foo: ...
+bar: ... # Correct comment indentation.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_latest"><a class="anchor" href="#_latest"></a>1.13. latest</h3>
+<div class="paragraph">
+<p>The <code>latest</code> rule checks that module arguments like those used for source
+control checkout do not have arguments that might generate different results
+based on context.</p>
+</div>
+<div class="paragraph">
+<p>This more generic rule replaced two older rules named <code>git-latest</code> and
+<code>hg-latest</code>.</p>
+</div>
+<div class="paragraph">
+<p>We are aware that there are genuine cases where getting the tip of the main
+branch is not accidental. For these cases, just add a comment such as
+<code># noqa: latest</code> to the same line to prevent it from triggering.</p>
+</div>
+<div class="sect3">
+<h4 id="_possible_errors_messages"><a class="anchor" href="#_possible_errors_messages"></a>1.13.1. Possible errors messages:</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code>latest[git]</code></p>
+</li>
+<li>
+<p><code>latest[hg]</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_12"><a class="anchor" href="#_problematic_code_12"></a>1.13.2. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example for `latest` rule
+  hosts: localhost
+  tasks:
+    - name: Risky use of git module
+      ansible.builtin.git:
+        repo: "https://foosball.example.org/path/to/repo.git"
+        version: HEAD # &lt;-- HEAD value is triggering the rule</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_12"><a class="anchor" href="#_correct_code_12"></a>1.13.3. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example for `latest` rule
+  hosts: localhost
+  tasks:
+    - name: Safe use of git module
+      ansible.builtin.git:
+        repo: "https://foosball.example.org/path/to/repo.git"
+        version: abcd1234... # &lt;-- that is safe</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_risky_shell_pipe"><a class="anchor" href="#_risky_shell_pipe"></a>1.14. risky-shell-pipe</h3>
+<div class="paragraph">
+<p>This rule checks for the bash <code>pipefail</code> option with the Ansible <code>shell</code> module.</p>
+</div>
+<div class="paragraph">
+<p>You should always set <code>pipefail</code> when piping output from a command to another.
+The return status of a pipeline is the exit status of the command.
+The <code>pipefail</code> option ensures that tasks fail as expected if the first command fails.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_13"><a class="anchor" href="#_problematic_code_13"></a>1.14.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Pipeline without pipefail
+      shell: false | cat</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_13"><a class="anchor" href="#_correct_code_13"></a>1.14.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  become: no
+  tasks:
+    - name: Pipeline with pipefail
+      shell: set -o pipefail &amp;&amp; false | cat
+
+    - name: Pipeline with pipefail, multi-line
+      shell: |
+        set -o pipefail # &lt;-- adding this will prevent surprises
+        false | cat</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_package_latest"><a class="anchor" href="#_package_latest"></a>1.15. package-latest</h3>
+<div class="paragraph">
+<p>This rule checks that package managers install software in a controlled, safe manner.</p>
+</div>
+<div class="paragraph">
+<p>Package manager modules, such as <code>ansible.builtin.yum</code>, include a <code>state</code> parameter that configures how Ansible installs software.
+In production environments, you should set <code>state</code> to <code>present</code> and specify a target version to ensure that packages are installed to a planned and tested version.</p>
+</div>
+<div class="paragraph">
+<p>Setting <code>state</code> to <code>latest</code> not only installs software, it performs an update and installs additional packages.
+This can result in performance degradation or loss of service.
+If you do want to update packages to the latest version, you should also set the <code>update_only</code> parameter to <code>true</code> to avoid installing additional packages.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_14"><a class="anchor" href="#_problematic_code_14"></a>1.15.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Install Ansible
+      ansible.builtin.yum:
+        name: ansible
+        state: latest # &lt;- Installs the latest package.
+
+    - name: Install Ansible-lint
+      ansible.builtin.pip:
+        name: ansible-lint
+      args:
+        state: latest # &lt;- Installs the latest package.
+
+    - name: Install some-package
+      ansible.builtin.package:
+        name: some-package
+        state: latest # &lt;- Installs the latest package.
+
+    - name: Install Ansible with update_only to false
+      ansible.builtin.yum:
+        name: sudo
+        state: latest
+        update_only: false # &lt;- Updates and installs packages.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_14"><a class="anchor" href="#_correct_code_14"></a>1.15.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Install Ansible
+      ansible.builtin.yum:
+        name: ansible-2.12.7.0
+        state: present # &lt;- Pins the version to install with yum.
+
+    - name: Install Ansible-lint
+      ansible.builtin.pip:
+        name: ansible-lint
+      args:
+        state: present
+        version: 5.4.0 # &lt;- Pins the version to install with pip.
+
+    - name: Install some-package
+      ansible.builtin.package:
+        name: some-package
+        state: present # &lt;- Ensures the package is installed.
+
+    - name: Update Ansible with update_only to true
+      ansible.builtin.yum:
+        name: sudo
+        state: latest
+        update_only: true # &lt;- Updates but does not install additional packages.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_same_owner"><a class="anchor" href="#_no_same_owner"></a>1.16. no-same-owner</h3>
+<div class="paragraph">
+<p>This rule checks that the owner and group do not transfer across hosts.</p>
+</div>
+<div class="paragraph">
+<p>In many cases the owner and group on remote hosts do not match the owner and group assigned to source files.
+Preserving the owner and group during transfer can result in errors with permissions or leaking sensitive information.</p>
+</div>
+<div class="paragraph">
+<p>When you synchronize files, you should avoid transferring the owner and group by setting <code>owner: false</code> and <code>group: false</code> arguments.
+When you unpack archives with the <code>ansible.builtin.unarchive</code> module you should set the <code>--no-same-owner</code> option.</p>
+</div>
+<div class="paragraph">
+<p>This is an opt-in rule.
+You must enable it in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">enable_list:
+  - no-same-owner</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_15"><a class="anchor" href="#_problematic_code_15"></a>1.16.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Synchronize conf file
+      ansible.posix.synchronize:
+        src: /path/conf.yaml
+        dest: /path/conf.yaml # &lt;- Transfers the owner and group for the file.
+    - name: Extract tarball to path
+      ansible.builtin.unarchive:
+        src: "{{ file }}.tar.gz"
+        dest: /my/path/ # &lt;- Transfers the owner and group for the file.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_15"><a class="anchor" href="#_correct_code_15"></a>1.16.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Synchronize conf file
+      ansible.posix.synchronize:
+        src: /path/conf.yaml
+        dest: /path/conf.yaml
+        owner: false
+        group: false # &lt;- Does not transfer the owner and group for the file.
+    - name: Extract tarball to path
+      ansible.builtin.unarchive:
+        src: "{{ file }}.tar.gz"
+        dest: /my/path/
+        extra_opts:
+          - --no-same-owner # &lt;- Does not transfer the owner and group for the file.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deprecated_command_syntax"><a class="anchor" href="#_deprecated_command_syntax"></a>1.17. deprecated-command-syntax</h3>
+<div class="paragraph">
+<p>This rule identifies the use of shorthand (free-form) syntax as this is highly
+discouraged inside playbooks, mainly because it can easily lead to bugs that
+are hard to identify.</p>
+</div>
+<div class="paragraph">
+<p>While using the free-form from the command line is ok, it should never be used
+inside playbooks.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_16"><a class="anchor" href="#_problematic_code_16"></a>1.17.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Perform chmod
+      ansible.builtin.command: creates=B chmod 644 A # &lt;-- do not use shorthand</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_16"><a class="anchor" href="#_correct_code_16"></a>1.17.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Perform chmod
+      ansible.builtin.command: chmod 644 A
+      args:
+        creates: B</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_role_name"><a class="anchor" href="#_role_name"></a>1.18. role-name</h3>
+<div class="paragraph">
+<p>This rule checks role names to ensure they conform with requirements.</p>
+</div>
+<div class="paragraph">
+<p>Role names must contain only lowercase alphanumeric characters and the underscore <code>_</code> character.
+Role names must also start with an alphabetic character.</p>
+</div>
+<div class="paragraph">
+<p>For more information see the <a href="https://docs.ansible.com/ansible/devel/dev_guide/developing_collections_structure.html#roles-directory">roles directory</a> topic in Ansible documentation.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_17"><a class="anchor" href="#_problematic_code_17"></a>1.18.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  roles:
+    - 1myrole # &lt;- Does not start with an alphabetic character.
+    - myrole2[*^ # &lt;- Contains invalid special characters.
+    - myRole_3 # &lt;- Contains uppercase alphabetic characters.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_17"><a class="anchor" href="#_correct_code_17"></a>1.18.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  roles:
+    - myrole1 # &lt;- Starts with an alphabetic character.
+    - myrole2 # &lt;- Contains only alphanumeric characters.
+    - myrole_3 # &lt;- Contains only lowercase alphabetic characters.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_loop_var_prefix"><a class="anchor" href="#_loop_var_prefix"></a>1.19. loop-var-prefix</h3>
+<div class="paragraph">
+<p>This rule avoids conflicts with nested looping tasks by configuring a variable prefix with <code>loop_var</code>.
+Ansible sets <code>item</code> as the loop variable.
+You can use <code>loop_var</code> to specify a prefix for loop variables and ensure they are unique to each task.</p>
+</div>
+<div class="paragraph">
+<p>This rule can produce the following messages:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>[loop-var-prefix[missing]</code> - Replace unsafe implicit <code>item</code> loop variable by adding <code>loop_var: &lt;loop_var_prefix&gt;...</code>.</p>
+</li>
+<li>
+<p><code>[loop-var-prefix[wrong]</code> - Loop variable should start with <loop_var_prefix></loop_var_prefix></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is an opt-in rule.
+You must enable it in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">enable_list:
+  - loop-var-prefix</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_18"><a class="anchor" href="#_problematic_code_18"></a>1.19.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Does not set a prefix for loop variables.
+      ansible.builtin.debug:
+        var: item
+      loop:
+        - foo
+        - bar # &lt;- These items do not have a unique prefix.
+    - name: Sets
+      ansible.builtin.debug:
+        var: zz_item
+      loop:
+        - foo
+        - bar
+      loop_control:
+        loop_var: zz_item # &lt;- This prefix is not unique.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_18"><a class="anchor" href="#_correct_code_18"></a>1.19.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Sets a unique prefix for loop variables.
+      ansible.builtin.debug:
+        var: zz_item
+      loop:
+        - foo
+        - bar
+      loop_control:
+        loop_var: my_prefix # &lt;- Specifies a unique prefix for loop variables.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_changed_when"><a class="anchor" href="#_no_changed_when"></a>1.20. no-changed-when</h3>
+<div class="paragraph">
+<p>This rule checks that tasks return changes to results or conditions.
+Unless tasks only read information, you should ensure that they return changes in the following ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Register results or conditions and use the <code>changed_when</code> clause.</p>
+</li>
+<li>
+<p>Use the <code>creates</code> or <code>removes</code> argument.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should use the <code>when</code> clause to run tasks only if a check returns a particular result.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_19"><a class="anchor" href="#_problematic_code_19"></a>1.20.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Does not handle any output or return codes
+      ansible.builtin.command: cat {{ my_file | quote }} # &lt;- Does not handle the command output.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_19"><a class="anchor" href="#_correct_code_19"></a>1.20.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Handle shell output with return code
+      ansible.builtin.command: cat {{ my_file | quote }}
+      register: my_output # &lt;- Registers the command output.
+      changed_when: my_output.rc != 0 # &lt;- Uses the return code to define when the task has changed.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_jinja_when"><a class="anchor" href="#_no_jinja_when"></a>1.21. no-jinja-when</h3>
+<div class="paragraph">
+<p>This rule checks conditional statements for Jinja expressions in curly brackets <code>{{ }}</code>.
+Ansible processes conditionals statements that use the <code>when</code>, <code>failed_when</code>, and <code>changed_when</code> clauses as Jinja expressions.</p>
+</div>
+<div class="paragraph">
+<p>An Ansible rule is to always use <code>{{ }}</code> except with <code>when</code> keys.
+Using <code>{{ }}</code> in conditionals creates a nested expression, which is an Ansible
+anti-pattern and does not produce expected results.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_20"><a class="anchor" href="#_problematic_code_20"></a>1.21.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Shut down Debian systems
+      ansible.builtin.command: /sbin/shutdown -t now
+      when: "{{ ansible_facts['os_family'] == 'Debian' }}" # &lt;- Nests a Jinja expression in a conditional statement.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_20"><a class="anchor" href="#_correct_code_20"></a>1.21.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Shut down Debian systems
+      ansible.builtin.command: /sbin/shutdown -t now
+      when: ansible_facts['os_family'] == "Debian" # &lt;- Uses facts in a conditional statement.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_instead_of_module"><a class="anchor" href="#_command_instead_of_module"></a>1.22. command-instead-of-module</h3>
+<div class="paragraph">
+<p>This rule will recommend you to use a specific ansible module instead for tasks
+that are better served by a module, as these are more reliable, provide better
+messaging and usually have additional features like the ability to retry.</p>
+</div>
+<div class="paragraph">
+<p>In the unlikely case that the rule triggers false positives, you can disable it
+by adding a comment like <code># noqa: command-instead-of-module</code> to the same line.</p>
+</div>
+<div class="paragraph">
+<p>You can check the <a href="https://github.com/ansible/ansible-lint/blob/main/src/ansiblelint/rules/command_instead_of_module.py">source</a>
+of the rule for all the known commands that trigger the rule and their allowed
+list arguments of exceptions and raise a pull request to improve them.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_21"><a class="anchor" href="#_problematic_code_21"></a>1.22.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Update apt cache
+  hosts: all
+  tasks:
+    - name: Run apt-get update
+      ansible.builtin.command: apt-get update # &lt;-- better to use ansible.builtin.apt module</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_21"><a class="anchor" href="#_correct_code_21"></a>1.22.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Update apt cache
+  hosts: all
+  tasks:
+    - name: Run apt-get update
+      ansible.builtin.apt:
+        update_cache: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_var_naming"><a class="anchor" href="#_var_naming"></a>1.23. var-naming</h3>
+<div class="paragraph">
+<p>This rule checks variable names to ensure they conform with requirements.</p>
+</div>
+<div class="paragraph">
+<p>Variable names must contain only lowercase alphanumeric characters and the underscore <code><em></code> character.
+Variable names must also start with either an alphabetic or underscore <code></em></code> character.</p>
+</div>
+<div class="paragraph">
+<p>For more information see the <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#creating-valid-variable-names">creating valid variable names</a> topic in Ansible documentation.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_22"><a class="anchor" href="#_problematic_code_22"></a>1.23.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  vars:
+    CamelCase: true # &lt;- Contains a mix of lowercase and uppercase characters.
+    ALL_CAPS: bar # &lt;- Contains only uppercase characters.
+    v@r!able: baz # &lt;- Contains special characters.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_22"><a class="anchor" href="#_correct_code_22"></a>1.23.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  vars:
+    lowercase: true # &lt;- Contains only lowercase characters.
+    no_caps: bar # &lt;- Does not contains uppercase characters.
+    variable: baz # &lt;- Does not contain special characters.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_free_form"><a class="anchor" href="#_no_free_form"></a>1.24. no-free-form</h3>
+<div class="paragraph">
+<p>This rule identifies any use of <a href="https://docs.ansible.com/ansible/2.7/user_guide/playbooks_intro.html#action-shorthand">free-form</a>
+module calling syntax and asks for switching to the full syntax.</p>
+</div>
+<div class="paragraph">
+<p><strong>Free-form</strong> syntax, also known as <strong>inline</strong> or <strong>shorthand</strong>, can produce
+subtle bugs. It can also prevent editors and IDEs from providing feedback,
+autocomplete and validation for the edited line.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{note}" data-lang="{note}">As long you just pass a YAML string that contains a `=` character inside as the
+parameter to the action module name, we consider this as using free-formsyntax.
+Be sure you pass a dictionary to the module, so the free-form parsing
+is never triggered.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As <code>raw</code> module only accepts free-form, we trigger <code>no-free-form[raw]</code> only if
+we detect the presence of <code>executable=</code> inside raw calls. We advice the
+explicit use of <code>args:</code> dictionary for configuring the executable to be run.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_23"><a class="anchor" href="#_problematic_code_23"></a>1.24.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example with discouraged free-form syntax
+  hosts: localhost
+  tasks:
+    - name: Create a placefolder file
+      ansible.builtin.command: chdir=/tmp touch foo # &lt;-- don't use free-form
+    - name: Use raw to echo
+      ansible.builtin.raw: executable=/bin/bash echo foo # &lt;-- don't use executable=
+      changed_when: false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_23"><a class="anchor" href="#_correct_code_23"></a>1.24.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example that avoids free-form syntax
+  hosts: localhost
+  tasks:
+    - name: Create a placefolder file
+      ansible.builtin.command:
+        cmd: touch foo # &lt;-- ansible will not touch it
+        chdir: /tmp
+    - name: Use raw to echo
+      ansible.builtin.raw: echo foo
+      args:
+        executable: /bin/bash # &lt;-- explicit is better
+      changed_when: false</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_playbook_extension"><a class="anchor" href="#_playbook_extension"></a>1.25. playbook-extension</h3>
+<div class="paragraph">
+<p>This rule checks the file extension for playbooks is either <code>.yml</code> or <code>.yaml</code>.
+Ansible playbooks are expressed in YAML format with minimal syntax.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html#yaml-syntax">YAML syntax</a> reference provides additional detail.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_24"><a class="anchor" href="#_problematic_code_24"></a>1.25.1. Problematic Code</h4>
+<div class="paragraph">
+<p>This rule is triggered if Ansible playbooks do not have a file extension or use an unsupported file extension such as <code>playbook.json</code> or <code>playbook.xml</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_24"><a class="anchor" href="#_correct_code_24"></a>1.25.2. Correct Code</h4>
+<div class="paragraph">
+<p>Save Ansible playbooks as valid YAML with the <code>.yml</code> or <code>.yaml</code> file extension.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_handler"><a class="anchor" href="#_no_handler"></a>1.26. no-handler</h3>
+<div class="paragraph">
+<p>This rule checks for the correct handling of changes to results or conditions.</p>
+</div>
+<div class="paragraph">
+<p>If a task has a <code>when: result.changed</code> condition, it effectively acts as a
+<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html">handler</a>.
+The recommended approach is to use <code>notify</code> and move tasks to <code>handlers</code>.
+If necessary you can silence the rule by add a <code># noqa: no-handler</code> comment at the end of the line.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_25"><a class="anchor" href="#_problematic_code_25"></a>1.26.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example of no-handler rule
+  hosts: localhost
+  tasks:
+    - name: Register result of a task
+      ansible.builtin.copy:
+        dest: "/tmp/placeholder"
+        content: "Ansible made this!"
+        mode: 0600
+      register: result # &lt;-- Registers the result of the task.
+    - name: Second command to run
+      ansible.builtin.debug:
+        msg: The placeholder file was modified!
+      when: result.changed # &lt;-- Triggers the no-handler rule.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# Optionally silences the rule.
+when: result.changed # noqa: no-handler</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_25"><a class="anchor" href="#_correct_code_25"></a>1.26.2. Correct Code</h4>
+<div class="paragraph">
+<p>The following code includes the same functionality as the problematic code without recording a <code>result</code> variable.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example of no-handler rule
+  hosts: localhost
+  tasks:
+    - name: Register result of a task
+      ansible.builtin.copy:
+        dest: "/tmp/placeholder"
+        content: "Ansible made this!"
+        mode: 0600
+      notify:
+        - Second command to run # &lt;-- Handler runs only when the file changes.
+  handlers:
+    - name: Second command to run
+      ansible.builtin.debug:
+        msg: The placeholder file was modified!</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_instead_of_shell"><a class="anchor" href="#_command_instead_of_shell"></a>1.27. command-instead-of-shell</h3>
+<div class="paragraph">
+<p>This rule identifies uses of <code>shell</code> modules instead of a <code>command</code> one when
+this is not really needed. Shell is considerably slower than command and should
+be avoided unless there is a special need for using shell features, like
+environment variable expansion or chaining multiple commands using pipes.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_26"><a class="anchor" href="#_problematic_code_26"></a>1.27.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Problematic example
+  hosts: localhost
+  tasks:
+    - name: Echo a message
+      ansible.builtin.shell: echo hello # &lt;-- command is better in this case
+      changed_when: false</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_26"><a class="anchor" href="#_correct_code_26"></a>1.27.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Correct example
+  hosts: localhost
+  tasks:
+    - name: Echo a message
+      ansible.builtin.command: echo hello
+      changed_when: false</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_risky_octal"><a class="anchor" href="#_risky_octal"></a>1.28. risky-octal</h3>
+<div class="paragraph">
+<p>This rule checks that octal file permissions either contain a leading zero or are a string value.</p>
+</div>
+<div class="paragraph">
+<p>Modules that are checked:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/assemble_module.html"><code>ansible.builtin.assemble</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html"><code>ansible.builtin.copy</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html"><code>ansible.builtin.file</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/replace_module.html"><code>ansible.builtin.replace</code></a></p>
+</li>
+<li>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html"><code>ansible.builtin.template</code></a></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_27"><a class="anchor" href="#_problematic_code_27"></a>1.28.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Unsafe example of declaring Numeric file permissions
+      ansible.builtin.file:
+        path: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: 644</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_27"><a class="anchor" href="#_correct_code_27"></a>1.28.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Safe example of declaring Numeric file permissions (1st solution)
+      ansible.builtin.file:
+        path: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: 0644 # &lt;- Leading zero will prevent Numeric file permissions to behave in unexpected ways.
+    - name: Safe example of declaring Numeric file permissions (2nd solution)
+      ansible.builtin.file:
+        path: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: "644" # &lt;- Being in a string will prevent Numeric file permissions to behave in unexpected ways.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_meta_no_tags"><a class="anchor" href="#_meta_no_tags"></a>1.29. meta-no-tags</h3>
+<div class="paragraph">
+<p>This rule checks role metadata for tags with special characters.
+Always use lowercase numbers and letters for tags in the <code>meta/main.yml</code> file.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_28"><a class="anchor" href="#_problematic_code_28"></a>1.29.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# Metadata tags contain upper-case letters and special characters.
+galaxy_info:
+  galaxy_tags: [MyTag#1, MyTag&amp;^-]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_28"><a class="anchor" href="#_correct_code_28"></a>1.29.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# Metadata tags contain only lowercase letters and numbers.
+galaxy_info:
+  galaxy_tags: [mytag1, mytag2]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_literal_compare"><a class="anchor" href="#_literal_compare"></a>1.30. literal-compare</h3>
+<div class="paragraph">
+<p>This rule checks for literal comparison with the <code>when</code> clause.
+Literal comparison, like <code>when: var == True</code>, is unnecessarily complex.
+Use <code>when: var</code> to keep your playbooks simple.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_29"><a class="anchor" href="#_problematic_code_29"></a>1.30.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Print environment variable to stdout
+      ansible.builtin.command: echo $MY_ENV_VAR
+      when: ansible_os_family == True # &lt;- Adds complexity to your playbook.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_29"><a class="anchor" href="#_correct_code_29"></a>1.30.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Print environment variable to stdout
+      ansible.builtin.command: echo $MY_ENV_VAR
+      when: ansible_os_family # &lt;- Keeps your playbook simple.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_meta_no_info"><a class="anchor" href="#_meta_no_info"></a>1.31. meta-no-info</h3>
+<div class="paragraph">
+<p>This rule checks role metadata for missing information.
+Always set appropriate values for the following metadata fields in the <code>meta/main.yml</code> file, under <code>galaxy_info</code> key:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>platforms</code></p>
+</li>
+<li>
+<p><code>min_ansible_version</code></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_30"><a class="anchor" href="#_problematic_code_30"></a>1.31.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# The metadata fields for minimum Ansible version and supported platforms are not set.
+galaxy_info:
+  min_ansible_version:</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_30"><a class="anchor" href="#_correct_code_30"></a>1.31.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+galaxy_info:
+  min_ansible_version: "2.8"
+  platforms:
+    - name: Fedora
+      versions:
+        - all</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_prompting"><a class="anchor" href="#_no_prompting"></a>1.32. no-prompting</h3>
+<div class="paragraph">
+<p>This rule checks for <code>vars_prompt</code> or the <code>ansible.builtin.pause</code> module in playbooks.
+You should enable this rule to ensure that playbooks can run unattended and in CI/CD pipelines.</p>
+</div>
+<div class="paragraph">
+<p>This is an opt-in rule.
+You must enable it in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">enable_list:
+  - no-prompting</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_31"><a class="anchor" href="#_problematic_code_31"></a>1.32.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  vars_prompt: # &lt;- Prompts the user to input credentials.
+    - name: username
+      prompt: What is your username?
+      private: false
+
+    - name: password
+      prompt: What is your password?
+  tasks:
+    - name: Pause for 5 minutes
+      ansible.builtin.pause:
+        minutes: 5 # &lt;- Pauses playbook execution for a set period of time.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_31"><a class="anchor" href="#_correct_code_31"></a>1.32.2. Correct Code</h4>
+<div class="paragraph">
+<p>Correct code for this rule is to omit <code>vars_prompt</code> and the <code>ansible.builtin.pause</code> module from your playbook.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_no_relative_paths"><a class="anchor" href="#_no_relative_paths"></a>1.33. no-relative-paths</h3>
+<div class="paragraph">
+<p>This rule checks for relative paths in the <code>ansible.builtin.copy</code> and <code>ansible.builtin.template</code> modules.</p>
+</div>
+<div class="paragraph">
+<p>Relative paths in a task most often direct Ansible to remote files and directories on managed nodes.
+In the <code>ansible.builtin.copy</code> and <code>ansible.builtin.template</code> modules, the <code>src</code> argument refers to local files and directories on the control node.</p>
+</div>
+<div class="paragraph">
+<p>The recommended locations to store files are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the <code>files/</code> folder in the playbook or role directory for the <code>copy</code> module.</p>
+</li>
+<li>
+<p>Use the <code>templates/</code> folder in the playbook or role directory for the <code>template</code> module.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These folders allow you to omit the path or use a sub-folder when specifying files with the <code>src</code> argument.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{note}" data-lang="{note}">If resources are outside your Ansible playbook or role directory you should use an absolute path with the `src` argument.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{warning}" data-lang="{warning}">Do not store resources at the same directory level as your Ansible playbook or tasks files.
+Doing this can result in disorganized projects and cause user confusion when distinguishing between resources of the same type, such as YAML.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See <a href="https://docs.ansible.com/ansible/latest/user_guide/playbook_pathing.html#task-paths">task paths</a> in the Ansible documentation for more information.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_32"><a class="anchor" href="#_problematic_code_32"></a>1.33.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Template a file to /etc/file.conf
+      ansible.builtin.template:
+        src: ../my_templates/foo.j2 # &lt;- Uses a relative path in the src argument.
+        dest: /etc/file.conf
+        owner: bin
+        group: wheel
+        mode: "0644"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: Example playbook
+  hosts: all
+  vars:
+    source_path: ../../my_templates/foo.j2 # &lt;- Sets a variable to a relative path.
+  tasks:
+    - name: Copy a file to /etc/file.conf
+      ansible.builtin.copy:
+        src: "{{ source_path }}" # &lt;- Uses the variable in the src argument.
+        dest: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: "0644"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_32"><a class="anchor" href="#_correct_code_32"></a>1.33.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Template a file to /etc/file.conf
+      ansible.builtin.template:
+        src: foo.j2 # &lt;- Uses a path from inside templates/ directory.
+        dest: /etc/file.conf
+        owner: bin
+        group: wheel
+        mode: "0644"</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: Example playbook
+  hosts: all
+  vars:
+    source_path: foo.j2 # &lt;- Uses a path from inside files/ directory.
+  tasks:
+    - name: Copy a file to /etc/file.conf
+      ansible.builtin.copy:
+        src: "{{ source_path }}" # &lt;- Uses the variable in the src argument.
+        dest: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: "0644"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_partial_become"><a class="anchor" href="#_partial_become"></a>1.34. partial-become</h3>
+<div class="paragraph">
+<p>This rule checks that privilege escalation is activated when changing users.</p>
+</div>
+<div class="paragraph">
+<p>To perform an action as a different user with the <code>become_user</code> directive, you must set <code>become: true</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{warning}" data-lang="{warning}">While Ansible inherits have of `become` and `become_user` from upper levels,
+like play level or command line, we do not look at these values. This rule
+requires you to be explicit and always define both in the same place, mainly
+in order to prevent accidents when some tasks are moved from one location to
+another one.</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_33"><a class="anchor" href="#_problematic_code_33"></a>1.34.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Start the httpd service as the apache user
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        become_user: apache # &lt;- Does not change the user because "become: true" is not set.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_33"><a class="anchor" href="#_correct_code_33"></a>1.34.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Start the httpd service as the apache user
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        become: true # &lt;- Activates privilege escalation.
+        become_user: apache # &lt;- Changes the user with the desired privileges.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_only_builtins"><a class="anchor" href="#_only_builtins"></a>1.35. only-builtins</h3>
+<div class="paragraph">
+<p>This rule checks that playbooks use actions from the <code>ansible.builtin</code> collection only.</p>
+</div>
+<div class="paragraph">
+<p>This is an opt-in rule.
+You must enable it in your Ansible-lint configuration as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">enable_list:
+  - only-builtins</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_34"><a class="anchor" href="#_problematic_code_34"></a>1.35.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Deploy a Helm chart for Prometheus
+      kubernetes.core.helm: # &lt;- Uses a non-builtin collection.
+        name: test
+        chart_ref: stable/prometheus
+        release_namespace: monitoring
+        create_namespace: true</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_34"><a class="anchor" href="#_correct_code_34"></a>1.35.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Run a shell command
+      ansible.builtin.shell: echo This playbook uses actions from the builtin collection only.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inline_env_var"><a class="anchor" href="#_inline_env_var"></a>1.36. inline-env-var</h3>
+<div class="paragraph">
+<p>This rule checks that playbooks do not set environment variables in the <code>ansible.builtin.command</code> module.</p>
+</div>
+<div class="paragraph">
+<p>You should set environment variables with the <code>ansible.builtin.shell</code> module or the <code>environment</code> keyword.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_35"><a class="anchor" href="#_problematic_code_35"></a>1.36.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Set environment variable
+      ansible.builtin.command: MY_ENV_VAR=my_value # &lt;- Sets an environment variable in the command module.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_35"><a class="anchor" href="#_correct_code_35"></a>1.36.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Set environment variable
+      ansible.builtin.shell: echo $MY_ENV_VAR
+      environment:
+        MY_ENV_VAR: my_value # &lt;- Sets an environment variable with the environment keyword.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Set environment variable
+      ansible.builtin.shell: MY_ENV_VAR=my_value # &lt;- Sets an environment variable with the shell module.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_meta_incorrect"><a class="anchor" href="#_meta_incorrect"></a>1.37. meta-incorrect</h3>
+<div class="paragraph">
+<p>This rule checks role metadata for fields with undefined or default values.
+Always set appropriate values for the following metadata fields in the <code>meta/main.yml</code> file:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>author</code></p>
+</li>
+<li>
+<p><code>description</code></p>
+</li>
+<li>
+<p><code>company</code></p>
+</li>
+<li>
+<p><code>license</code></p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_36"><a class="anchor" href="#_problematic_code_36"></a>1.37.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+# Metadata fields for the role contain default values.
+galaxy_info:
+  author: your name
+  description: your role description
+  company: your company (optional)
+  license: license (GPL-2.0-or-later, MIT, etc)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_36"><a class="anchor" href="#_correct_code_36"></a>1.37.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+galaxy_info:
+  author: Leroy Jenkins
+  description: This role will set you free.
+  company: Red Hat
+  license: Apache</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deprecated_local_action"><a class="anchor" href="#_deprecated_local_action"></a>1.38. deprecated-local-action</h3>
+<div class="paragraph">
+<p>This rule recommends using <code>delegate_to: localhost</code> instead of the
+<code>local_action</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_37"><a class="anchor" href="#_problematic_code_37"></a>1.38.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Task example
+  local_action: # &lt;-- this is deprecated
+    module: boto3_facts</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_37"><a class="anchor" href="#_correct_code_37"></a>1.38.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">- name: Task example
+    boto3_facts:
+  delegate_to: localhost # &lt;-- recommended way to run on localhost</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deprecated_module"><a class="anchor" href="#_deprecated_module"></a>1.39. deprecated-module</h3>
+<div class="paragraph">
+<p>This rule identifies deprecated modules in playbooks.
+You should avoid using deprecated modules because they are not maintained, which can pose a security risk.
+Additionally when a module is deprecated it is available temporarily with a plan for future removal.</p>
+</div>
+<div class="paragraph">
+<p>Refer to the <a href="https://docs.ansible.com/ansible/latest/collections/index_module.html">Ansible module index</a> for information about replacements and removal dates for deprecated modules.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_38"><a class="anchor" href="#_problematic_code_38"></a>1.39.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Configure VLAN ID
+      ansible.netcommon.net_vlan: # &lt;- Uses a deprecated module.
+        vlan_id: 20</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_38"><a class="anchor" href="#_correct_code_38"></a>1.39.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: localhost
+  tasks:
+    - name: Configure VLAN ID
+      dellemc.enterprise_sonic.sonic_vlans: # &lt;- Uses a platform specific module.
+        config:
+          - vlan_id: 20</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_name"><a class="anchor" href="#_name"></a>1.40. name</h3>
+<div class="paragraph">
+<p>This rule identifies several problems related to the naming of tasks and plays.
+This is important because these names are the primary way to <strong>identify</strong> and
+<strong>document</strong> executed operations on console, logs or web interface.</p>
+</div>
+<div class="paragraph">
+<p>This rule can produce messages such:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>name[casing]</code> - All names should start with an uppercase letter for
+languages that support it.</p>
+</li>
+<li>
+<p><code>name[missing]</code> - All tasks should be named.</p>
+</li>
+<li>
+<p><code>name[play]</code> - All plays should be named.</p>
+</li>
+<li>
+<p><code>name[template]</code> - Jinja templates should only be at the end of 'name'. This
+helps with the identification of tasks inside the source code when they fail.
+The use of templating inside <code>name</code> keys is discouraged as there
+are multiple cases where the rendering of the name template is not possible.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want to ignore some of the messages above, you can add any of them to
+the <code>skip_list</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_39"><a class="anchor" href="#_problematic_code_39"></a>1.40.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- hosts: localhost # &lt;-- playbook missing a name key
+  tasks:
+    - name: create placefolder file # &lt;-- not starting with a capital letter
+      ansible.builtin.command: touch /tmp/.placeholder</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_39"><a class="anchor" href="#_correct_code_39"></a>1.40.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Play for creating playholder
+  hosts: localhost
+  tasks:
+    - name: Create placeholder file
+      ansible.builtin.command: touch /tmp/.placeholder</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ignore_errors"><a class="anchor" href="#_ignore_errors"></a>1.41. ignore-errors</h3>
+<div class="paragraph">
+<p>This rule checks that playbooks do not use the <code>ignore_errors</code> directive to ignore all errors.
+Ignoring all errors in a playbook hides actual failures, incorrectly mark tasks as failed, and result in unexpected side effects and behavior.</p>
+</div>
+<div class="paragraph">
+<p>Instead of using the <code>ignore_errors: true</code> directive, you should do the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ignore errors only when using the <code>{{ ansible_check_mode }}</code> variable.</p>
+</li>
+<li>
+<p>Use <code>register</code> to register errors.</p>
+</li>
+<li>
+<p>Use <code>failed_when:</code> and specify acceptable error conditions.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_40"><a class="anchor" href="#_problematic_code_40"></a>1.41.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Run apt-get update
+      ansible.builtin.command: apt-get update
+      ignore_errors: true # &lt;- Ignores all errors, including important failures.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_40"><a class="anchor" href="#_correct_code_40"></a>1.41.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Run apt-get update
+      ansible.builtin.command: apt-get update
+      ignore_errors: "{{ ansible_check_mode }}" # &lt;- Ignores errors in check mode.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Run apt-get update
+      ansible.builtin.command: apt-get update
+      ignore_errors: true
+      register: ignore_errors_register # &lt;- Stores errors and failures for evaluation.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Disable apport
+      become: "yes"
+      lineinfile:
+        line: "enabled=0"
+        dest: /etc/default/apport
+        mode: 0644
+        state: present
+      register: default_apport
+      failed_when: default_apport.rc !=0 and not default_apport.rc == 257 # &lt;- Defines conditions that constitute a failure.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_galaxy"><a class="anchor" href="#_galaxy"></a>1.42. galaxy</h3>
+<div class="paragraph">
+<p>This rule identifies if the collection version mentioned in galaxy.yml is ideal in terms of the version number being greater than or equal to <code>1.0.0</code>.</p>
+</div>
+<div class="paragraph">
+<p>This rule can produce messages such:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>galaxy[version-missing]</code> - <code>galaxy.yaml</code> should have version tag.</p>
+</li>
+<li>
+<p><code>galaxy[version-incorrect]</code> - collection version should be greater than or equal to <code>1.0.0</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want to ignore some of the messages above, you can add any of them to
+the <code>ignore_list</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_41"><a class="anchor" href="#_problematic_code_41"></a>1.42.1. Problematic code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml"># galaxy.yml
+---
+name: foo
+namespace: bar
+version: 0.2.3 # &lt;-- collection version should be &gt;= 1.0.0
+authors:
+  - John
+readme: ../README.md
+description: "..."</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_41"><a class="anchor" href="#_correct_code_41"></a>1.42.2. Correct code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml"># galaxy.yml
+---
+name: foo
+namespace: bar
+version: 1.0.0
+authors:
+  - John
+readme: ../README.md
+description: "..."</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_fqcn"><a class="anchor" href="#_fqcn"></a>1.43. fqcn</h3>
+<div class="paragraph">
+<p>This rule checks for fully-qualified collection names (FQCN) in Ansible content.</p>
+</div>
+<div class="paragraph">
+<p>Declaring an FQCN ensures that an action uses code from the correct namespace.
+This avoids ambiguity and conflicts that can cause operations to fail or produce unexpected results.</p>
+</div>
+<div class="paragraph">
+<p>The <code>fqcn</code> rule has the following checks:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fqcn[action]</code> - Checks all actions for FQCNs.</p>
+</li>
+<li>
+<p><code>fqcn[action-core]</code> - Checks for FQCNs from the <code>ansible.legacy</code> or <code>ansible.builtin</code> collection.</p>
+</li>
+<li>
+<p><code>fqcn[action-redirect]</code> - Provides the correct FQCN to replace short actions.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{note}" data-lang="{note}">In most cases you should declare the `ansible.builtin` collection for internal Ansible actions.
+You should declare the `ansible.legacy` collection if you use local overrides with actions, such with as the ``shell`` module.</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-{warning}" data-lang="{warning}">This rule does not take [`collections` keyword](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html#simplifying-module-names-with-the-collections-keyword) into consideration.
+The `collections` keyword provided a temporary mechanism transitioning to Ansible 2.9.
+You should rewrite any content that uses the `collections:` key and avoid it where possible.</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_problematic_code_42"><a class="anchor" href="#_problematic_code_42"></a>1.43.1. Problematic Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook
+  hosts: all
+  tasks:
+    - name: Create an SSH connection
+      shell: ssh ssh_user@{{ ansible_ssh_host }} # &lt;- Does not use the FQCN for the shell module.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_correct_code_42"><a class="anchor" href="#_correct_code_42"></a>1.43.2. Correct Code</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook (1st solution)
+  hosts: all
+  tasks:
+    - name: Create an SSH connection
+      # Use the FQCN for the legacy shell module and allow local overrides.
+      ansible.legacy.shell: ssh ssh_user@{{ ansible_ssh_host }} -o IdentityFile=path/to/my_rsa</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-yaml" data-lang="yaml">---
+- name: Example playbook (2nd solution)
+  hosts: all
+  tasks:
+    - name: Create an SSH connection
+      # Use the FQCN for the builtin shell module.
+      ansible.builtin.shell: ssh ssh_user@{{ ansible_ssh_host }}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2022-10-26 09:48:24 +0100
+</div>
+</div>
+</body>
+</html>
