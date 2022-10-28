@@ -1,0 +1,24 @@
+[id="proc-aap-aws-modify-cidr-ranges"]
+
+= Modify Deployment CIDR Range
+
+.Default CIDR Range Configuration on Ansible Automation Platform
+The default CIDR range on your Red Hat AAP on AWS deployment is set to 192.168.0.0/16. This CIDR block is further segmented into 4 subnets (2 private and 2 public) which respectively have CIDR ranges of 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24. Every subnet has 247 IPv4 address allocated to it and, when creating new components, an IP address from the appropriate subnet is assigned to the new component. It is important to note that these CIDR ranges are immutable post deployment. If you are looking to update your CIDR ranges, your current deployment needs to be deleted and the Red Hat AAP on AWS Cloud Formation Template needs to be updated with new CIDR ranges. You can follow the steps below to get this done.
+
+.Procedure
+. In the AWS Console, navigate to *CloudFormation* and click on your Red Hat Ansible Automation Platform deployment.
+. Click the *Template* tab and then click the btn:[View in Designer] button.
+. In the top left corner, hover over the file symbol to reveal a dropdown and save your template to a local file.
+. In your saved template update the CIDR block of the network VPC component to your desired CIDR range
+. Update the CIDR blocks of the 4 subnet components. (searching for *"AWS::EC2::Subnet"* with quotes should point you to the subnet components in the template) It is crucial to ensure the CIDR ranges provided for your subnets are within your VPC CIDR range and do not overlap with each other to avoid CIDR collisions. *Note.* You can look at the default subnet CIDR ranges as a point of reference. 
+. Update the CidrIp ingress of the RDS security group component to match the VPC CIDR range (searching for *"aap/rds/security_group"* in quotes should point you to the component)
+. Update the CidrIp ingress of the storage security group component to match the VPC CIDR range (searching for *"aap/storage/security-group"* in quotes should point you to the component).
+. Create a new Red Hat AAP on AWS CloudFormation stack using the modified CIDR range template
+.. In the AWS Console, navigate to *CloudFormation* and click on btn:[Create Stack] located near the top right of the screen
+.. Selected *With neew resources (standard) in the dropdown
+.. In the *Specify template* section under *Template source* select btn:[Upload a template file] and select the template you have modified. Click btn:[Next] to go to the next step 
+.. Enter a stack name and select an AWSKeyPair to use for the deployment. Click btn:[Next] to go to the *Configure stack options* page
+.. Optionally configure stack options and click btn:[Next] to review the stack
+.. Press btn[Submit] to create your new deployment with updated CIDR ranges.
+
+
