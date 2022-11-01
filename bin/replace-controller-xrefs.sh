@@ -48,6 +48,7 @@ sed -i -e 's/xref:ug_build_ees\[\]/{ug_build_ees}/g' \
  -e 's/xref:ug_applications_auth\[\]/{ug_applications_auth}/g' \
  -e 's/xref:ug_galaxy\[\]/{ug_galaxy}/g' \
  -e 's/xref:ug_ldap_auth_perf_tips\[\]/{ug_ldap_auth_perf_tips}/g' \
+ -e 's/xref:ug_content_signing\[\]/{ug_content_signing}/g' \
  -e 's/xref:ug_scheduling\[\]/{ug_scheduling}/g' $adocfiles
 
 # Replace other cross references
