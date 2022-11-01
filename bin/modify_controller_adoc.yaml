@@ -17,7 +17,7 @@
   ansible.builtin.replace:
     path: "{{ item.path }}"
     after: 'include::'
-    regexp: '.rst'
+    regexp: '\.rst'
     replace: '.adoc[]'
   with_items: "{{ adoc_files.files }}"
 - name: add passthrough one

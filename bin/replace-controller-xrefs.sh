@@ -1,6 +1,7 @@
 #!/bin/bash
 
 adocfiles=$(find ../sync/controller-docs/ -name '*.adoc')
+safile=$(find ../sync/controller-docs/ -name 'get-creds-from-service-account.adoc')
 
 # Replace unknown ID or title for internal cross references
 # Administration Guide cross-refs
@@ -52,5 +53,7 @@ sed -i -e 's/xref:ug_build_ees\[\]/{ug_build_ees}/g' \
  -e 's/xref:ug_scheduling\[\]/{ug_scheduling}/g' $adocfiles
 
 # Replace other cross references
-# 
 sed -i -e 's/Token and session management <administration:ag_token_utility>/{ag_token_utility}/g' $adocfiles
+
+# Replace containergroup service account yaml
+sed -i -e 's|containergroup sa <..\/..\/common\/source\/containergroup-sa.yml>|{containergroup-sa-file}|g' $safile

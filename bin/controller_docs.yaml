@@ -53,6 +53,11 @@
          - "--exclude='**/_*/*'"
          - "--exclude='**/locale/*'"
          - "--exclude='contrib/*'"
+   - name: copy example service account yml file
+     ansible.builtin.copy:
+       src: "{{ source_dir }}common/source/containergroup-sa.yml"
+       dest: "{{ target_dir }}common/source/"
+       mode: 0644
    - name: remove source directory
      ansible.builtin.file:
        path: "{{ source_dir }}"
