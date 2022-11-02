@@ -33,4 +33,4 @@ sed -i -e 's/|atversion|/Automation Controller Version 4.3.0/g' \
  -e 's/|rhaap|/Red Hat Ansible Automation Platform/g' \
  -e 's/|RHAT|/Red Hat Ansible Automation Platform controller/g' \
  -e 's/|atng|/Automation Controller Networking Guide/g' \
- -e 's/|atn|/Controller Networking/g' $rstfiles
+ -e 's/|atn|/Controller Networking/g' "$rstfiles"
