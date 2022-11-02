@@ -1,0 +1,118 @@
+[id="ref-aap-aws-secure-hub-controller-connection"]
+
+= Securing the connection between {PlatformNameShort} hub and controller
+
+== Securing the hub load balancer
+
+. Generate Hub Cert
+.. Ensure you are using openssl 3 or later
+.. The following sample command below is provided, filling in the HUB_DNS_NAME with the DNS name of the hub loadbalancer. Certificates can also be requested or imported into AWS.
++
+[source,bash]
+----
+$ openssl req -x509 -nodes -newkey rsa:4096 -keyout hub_key.pem -out hub_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<HUB_DNS_NAME>"
+----
+
+. Import in Amazon Certificate Manager
+.. Navigate to Amazon Certificate Manager (ACM) in AWS UI. Ensure you are in the correct region.
+.. Click Import to begin import of the generated certificate
+.. Paste the contents of cert.pem into the field Certificate body
+.. Paste the contents of key.pem into the field Certificate private key
+.. Click Next, optionally add any tags. Then click Next again, and finally Import.
+. Update the Hub Internal Load Balancer Listener
+.. Navigate to the EC2 Load Balancers in the AWS UI. Ensure you are in the correct region.
+.. Select the internal load balancer for the hub.
+.. Click the Listeners tab
+.. Select the Listener, and then click Edit
+.. Select HTTPS for the protocol, and ensure the port is 443
+.. Under Secure listener settings -> Default SSL/TLS certificate, Ensure that From ACM is selected, and select your imported ACM certificate
+.. Click Save changes
+. Update the load balancer security group
+.. Navigate to EC2 Security Groups in the AWS UI. Ensure you are in the correct region.
+.. Select the Hub ALB Security group
+.. Select the Inbound rules tab and click Edit inbound rules
+.. Add a rule of Type: HTTPS, with Source: Anywhere-IPv4
+.. Delete the old HTTP rule and click Save rules
+. Add certs to EC2 Instances -
+.. Navigate to EC2 Instances in the AWS UI. Ensure you are in the correct region.
+.. Select the hub instance(s)
+.. Paste the hub key in the following location
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/hub_key.pem # Paste key
+----
++
+.. Paste the hub cert in the following location -
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/hub_cert.pem # Paste cert
+----
++
+.. Copy the cert and keys to the ca-trust directory. Then update the ca-trust
++
+[source,bash]
+----
+$ sudo cp /efs/certificates/hub_key.pem /etc/pki/ca-trust/source/anchors/hub-key.pem # Copy key
+$ sudo cp /efs/certificates/hub_cert.pem /etc/pki/ca-trust/source/anchors/hub-cert.pem # Copy cert
+$ sudo update-ca-trust
+----
+
+== Securing the controller load balancer
+
+. Generate Controller Cert
+.. Ensure you are using openssl 3 or later
+.. The following sample command below is provided, filling in the CONTROLLER_DNS_NAME with the DNS name of the controller loadbalancer. Certificates can also be requested or imported into AWS.
++
+[source,bash]
+----
+$ openssl req -x509 -nodes -newkey rsa:4096 -keyout controller_key.pem -out controller_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<CONTROLLER_DNS_NAME>"
+----
+
+. Add in ACM
+.. Navigate to ACM in AWS UI. Ensure you are in the correct region.
+.. Click Import to begin import of the generated certificate
+.. Paste the contents of cert.pem into the field Certificate body
+.. Paste the contents of key.pem into the field Certificate private key
+.. Click Next, optionally add any tags. Then click Next again, and finally Import.
+. Update the Controller Internal Load Balancer Listener
+.. Navigate to the EC2 Load Balancers in the AWS UI. Ensure you are in the correct region.
+.. Select the internal load balancer for the controller.
+.. Click the Listeners tab
+.. Select the Listener, and then click Edit
+.. Select HTTPS for the protocol, and ensure the port is 443
+.. Under Secure listener settings -> Default SSL/TLS certificate, Ensure that From ACM is selected, and select your imported ACM certificate
+.. Click Save changes
+. Update the load balancer security group
+.. Navigate to EC2 Security Groups in the AWS UI. Ensure you are in the correct region.
+.. Select the Controller ALB Security group
+.. Select the Inbound rules tab and click Edit inbound rules
+.. Add a rule of Type: HTTPS, with Source: Anywhere-IPv4
+.. Delete the old HTTP rule and click Save rules
+. Add certs to EC2 Instances -
+.. Navigate to EC2 Instances in the AWS UI. Ensure you are in the correct region.
+.. Select the Controller instance(s)
+.. Paste the controller Key in the following location -
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/controller_key.pem # Paste key. This step only needs to be done on the 1st controller node
+----
++
+.. Paste the controller cert in the following location -
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/controller_cert.pem # Paste cert. This step only needs to be done on the 1st controller node
+----
++
+.. Copy the cert and keys to the ca-trust directory. Then update the ca-trust
++
+[source,bash]
+----
+$ sudo cp /efs/certificates/controller_key.pem /etc/pki/ca-trust/source/anchors/controller-key.pem # Copy key
+$ sudo cp /efs/certificates/controller_cert.pem /etc/pki/ca-trust/source/anchors/controller-cert.pem # Copy cert
+$ sudo update-ca-trust
+
+----
