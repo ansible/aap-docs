@@ -23,7 +23,7 @@ sed -i -e 's/xref:ag_backup_restore\[\]/{ag_backup_restore}/g' \
  -e 's/xref:ag_social_auth`/{ag_social_auth}/g' \
  -e 's/xref:ag_topology_viewer\[\]/{ag_topology_viewer}/g' \
  -e 's/xref:ag_use_oauth_pat\[\]/{ag_use_oauth_pat}/g' \
- -e 's/xref:ag_oauth2_token_revoke\[\]/{ag_oauth2_token_revoke}/g' "$adocfiles"
+ -e 's/xref:ag_oauth2_token_revoke\[\]/{ag_oauth2_token_revoke}/g' $adocfiles
 
 # Administration Guide cross-references
 sed -i -e 's/Token and session management <administration:ag_token_utility>/{ag_token_utility}/g' \
@@ -38,13 +38,13 @@ sed -i -e 's/Token and session management <administration:ag_token_utility>/{ag_
  -e 's/Launching Jobs with Curl<administration:launch_jobs_curl>/{launch_jobs_curl}/g' \
  -e 's/to `usability_data_collection`./to {usability_data_collection}./g' \
  -e 's/in the `usability_data_collection` section/in the {usability_data_collection} section/g' \
- -e 's/`user_data_insights` section/{user_data_insights} section/g' "$adocfiles"
+ -e 's/`user_data_insights` section/{user_data_insights} section/g' $adocfiles
 
 # Upgrade and Migration Guide cross-references
 sed -i -e 's/`migrate_new_venv` for more detail/{migrate_new_venv} for more detail/g' \
  -e 's/`upgrade_venv` in the/{upgrade_venv} in the/g' \
  -e 's/`mesh_topology_ee` in the/{mesh_topology_ee} in the/g' \
- -e 's/`migrate_iso_to_exe` in the/{migrate_iso_to_exe} in the/g' "$adocfiles"
+ -e 's/`migrate_iso_to_exe` in the/{migrate_iso_to_exe} in the/g' $adocfiles
 
 # User Guide cross-references
 sed -i -e 's/xref:ug_build_ees\[\]/{ug_build_ees}/g' \
@@ -72,7 +72,7 @@ sed -i -e 's/xref:ug_build_ees\[\]/{ug_build_ees}/g' \
  -e 's/xref:ug_galaxy\[\]/{ug_galaxy}/g' \
  -e 's/xref:ug_ldap_auth_perf_tips\[\]/{ug_ldap_auth_perf_tips}/g' \
  -e 's/xref:ug_content_signing\[\]/{ug_content_signing}/g' \
- -e 's/xref:ug_scheduling\[\]/{ug_scheduling}/g' "$adocfiles"
+ -e 's/xref:ug_scheduling\[\]/{ug_scheduling}/g' $adocfiles
 
 # User Guide cross-references
 sed -i -e 's/Credential types <userguide:ug_credential_types>/{ug_credential_types}/g' \
@@ -85,7 +85,7 @@ sed -i -e 's/Credential types <userguide:ug_credential_types>/{ug_credential_typ
  -e 's/outlined in `ref_ee_definition`/outlined in {ref_ee_definition}/g' \
  -e 's/`ref_collections_metadata`./{ref_collections_metadata}./g' \
  -e 's/to `rbac-ug` for/to {rbac-ug} for/g' \
- -e 's/`rbac-ug` in the/{rbac-ug} in the/g' "$adocfiles"
+ -e 's/`rbac-ug` in the/{rbac-ug} in the/g' $adocfiles
 
 # Replace containergroup service account yaml
-sed -i -e 's|containergroup sa <..\/..\/common\/source\/containergroup-sa.yml>|{containergroup-sa-file}|g' "$safile"
+sed -i -e 's|containergroup sa <..\/..\/common\/source\/containergroup-sa.yml>|{containergroup-sa-file}|g' $safile
