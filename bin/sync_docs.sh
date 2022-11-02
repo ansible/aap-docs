@@ -27,7 +27,7 @@ rm -f $target/controller/administration/controller-xrefs.adoc
 mkdir -p $target/controller/administration/administration
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/administration/source/ $target/controller/administration/administration/
+cp -r $source/sync/controller-docs/administration/source/* $target/controller/administration/administration
 
 # Copy the table of contents.
 cp -r $source/titles/controller/administration/stories.adoc $target/controller/administration/stories.adoc
@@ -49,7 +49,7 @@ rm -f $target/controller/controllerapi/controller-xrefs.adoc
 mkdir -p $target/controller/controllerapi/controllerapi
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/controllerapi/source/ $target/controller/controllerapi/controllerapi/
+cp -r $source/sync/controller-docs/controllerapi/source/* $target/controller/controllerapi/controllerapi
 
 # Copy the table of contents.
 cp -r $source/titles/controller/controllerapi/stories.adoc $target/controller/controllerapi/stories.adoc
@@ -71,7 +71,7 @@ rm -f $target/controller/quickstart/controller-xrefs.adoc
 mkdir -p $target/controller/quickstart/quickstart
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/quickstart/source/ $target/controller/quickstart/quickstart/
+cp -r $source/sync/controller-docs/quickstart/source/* $target/controller/quickstart/quickstart
 
 # Copy the table of contents.
 cp -r $source/titles/controller/quickstart/stories.adoc $target/controller/quickstart/stories.adoc
@@ -93,7 +93,7 @@ rm -f $target/controller/release-notes/controller-xrefs.adoc
 mkdir -p $target/controller/release-notes/release-notes
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/release-notes/source/ $target/controller/release-notes/release-notes/
+cp -r $source/sync/controller-docs/release-notes/source* $target/controller/release-notes/release-notes
 
 # Copy the table of contents.
 cp -r $source/titles/controller/release-notes/stories.adoc $target/controller/release-notes/stories.adoc
@@ -115,7 +115,7 @@ rm -f $target/controller/upgrade-migration-guide/controller-xrefs.adoc
 mkdir -p $target/controller/upgrade-migration-guide/upgrade-migration-guide
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/upgrade-migration-guide/source/ $target/controller/upgrade-migration-guide/upgrade-migration-guide/
+cp -r $source/sync/controller-docs/upgrade-migration-guide/source/* $target/controller/upgrade-migration-guide/upgrade-migration-guide
 
 # Copy the table of contents.
 cp -r $source/titles/controller/upgrade-migration-guide/stories.adoc $target/controller/upgrade-migration-guide/stories.adoc
@@ -137,7 +137,7 @@ rm -f $target/controller/userguide/controller-xrefs.adoc
 mkdir -p $target/controller/userguide/userguide
 
 # Copy converted asciidoc content downstream.
-cp -r $source/sync/controller-docs/userguide/source/ $target/controller/userguide/userguide/
+cp -r $source/sync/controller-docs/userguide/source/* $target/controller/userguide/userguide
 
 # Copy the table of contents.
 cp -r $source/titles/controller/userguide/stories.adoc $target/controller/userguide/stories.adoc
