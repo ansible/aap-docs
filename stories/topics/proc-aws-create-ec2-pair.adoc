@@ -1,0 +1,24 @@
+[id="proc-aws-create-ec2-pair"]
+
+= Create an EC2 pair
+
+An SSH key pair is required to set up {PlatformNameShort} from {Market}.
+You can use an existing key pair or create a new one.  
+If you have an existing key pair, then you can skip this step.
+
+.Procedure
+. In the AWS Console, navigate to menu:EC2[].
+. In the *Network and Security* section, click btn:[Key Pairs].
+. Click btn:[Create key pair].
+. Fill out the fields in the input form.
+
+* Red Hat recommends that you use ED25519 as the key pair type.
+* Use PEM as the key file format.
+. Click btn:[Create key pair].
+. Download the private key and store it in a secure location, such as the `~/.ssh` folder, and apply appropriate local file permissions to secure the key file.
+. On Linux hosts, run the following command to secure all files in your `ssh` directory.
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+chmod 600 ~/.ssh/*
+----
