@@ -30,7 +30,12 @@
     path: "{{ target_dir }}common/source/search.adoc"
     regexp: '\?name__icontains=localhost'
     replace: '+?name__icontains=localhost+'
-- name: delete duplicatiing anchor
+- name: add passthrough three
+  ansible.builtin.replace:
+    path: "{{ target_dir }}userguide/source/jobs.adoc"
+    regexp: 'refs/heads/\*'
+    replace: '+refs/heads/*+'
+- name: delete duplicating anchor
   ansible.builtin.lineinfile:
     path: "{{ target_dir }}common/source/work_items_deletion_warning.adoc"
     line: '[[deletion_warning]]'

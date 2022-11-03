@@ -10,6 +10,7 @@ safile=$(find ../sync/controller-docs/ -name 'get-creds-from-service-account.ado
 sed -i -e 's/xref:ag_backup_restore\[\]/{ag_backup_restore}/g' \
  -e 's/xref:ag_clustering\[\]/{ag_clustering}/g' \
  -e 's/xref:ag_configure_tower\[\]/{ag_configure_tower}/g' \
+ -e 's/xref:ag_container_capacity\[\]/{ag_container_capacity}/g' \
  -e 's/xref:ag_container_groups\[\]/{ag_container_groups}/g' \
  -e 's/xref:ag_ent_auth\[\]/{ag_ent_auth}/g' \
  -e 's/xref:ag_ext_exe_env\[\]/{ag_ext_exe_env}/g' \
@@ -23,7 +24,12 @@ sed -i -e 's/xref:ag_backup_restore\[\]/{ag_backup_restore}/g' \
  -e 's/xref:ag_social_auth`/{ag_social_auth}/g' \
  -e 's/xref:ag_topology_viewer\[\]/{ag_topology_viewer}/g' \
  -e 's/xref:ag_use_oauth_pat\[\]/{ag_use_oauth_pat}/g' \
- -e 's/xref:ag_oauth2_token_revoke\[\]/{ag_oauth2_token_revoke}/g' $adocfiles
+ -e 's/xref:ag_oauth2_token_revoke\[\]/{ag_oauth2_token_revoke}/g' \
+ -e 's/step 3 above <ag_credential_plugins_link_step>/step 3 in the above procedure/g' \
+ -e 's/Automation Controller Administration Guide <administration:ag_secret_handling>/{ag_secret_handling}/g' \
+ -e 's/grant types <administration:ag_oauth2_token_auth_grant_types>/{ag_oauth2_token_auth_grant_types}/g' \
+ -e 's/Controller Tips and Tricks <administration:ag_tips_jinja_extravars>/{ag_tips_jinja_extravars}/g' \
+ -e 's/Instance Group Policies <administration:ag_instance_group_policies>/{ag_instance_group_policies}/g' $adocfiles
 
 # Administration Guide cross-references
 sed -i -e 's/Token and session management <administration:ag_token_utility>/{ag_token_utility}/g' \
@@ -38,11 +44,13 @@ sed -i -e 's/Token and session management <administration:ag_token_utility>/{ag_
  -e 's/Launching Jobs with Curl<administration:launch_jobs_curl>/{launch_jobs_curl}/g' \
  -e 's/to `usability_data_collection`./to {usability_data_collection}./g' \
  -e 's/in the `usability_data_collection` section/in the {usability_data_collection} section/g' \
+ -e 's/`ldap_logging` section/{ldap_logging} section/g' \
  -e 's/`user_data_insights` section/{user_data_insights} section/g' $adocfiles
 
 # Upgrade and Migration Guide cross-references
 sed -i -e 's/`migrate_new_venv` for more detail/{migrate_new_venv} for more detail/g' \
  -e 's/`upgrade_venv` in the/{upgrade_venv} in the/g' \
+ -e 's/* `upgrade_venv`/* {upgrade_venv}/g' \
  -e 's/`mesh_topology_ee` in the/{mesh_topology_ee} in the/g' \
  -e 's/`migrate_iso_to_exe` in the/{migrate_iso_to_exe} in the/g' $adocfiles
 
@@ -72,6 +80,8 @@ sed -i -e 's/xref:ug_build_ees\[\]/{ug_build_ees}/g' \
  -e 's/xref:ug_galaxy\[\]/{ug_galaxy}/g' \
  -e 's/xref:ug_ldap_auth_perf_tips\[\]/{ug_ldap_auth_perf_tips}/g' \
  -e 's/xref:ug_content_signing\[\]/{ug_content_signing}/g' \
+ -e 's/xref:ug_organizations_create\[\]/{ug_organizations_create}/g' \
+ -e 's/xref:ug_collections_usage\[\]/{ug_collections_usage}/g' \
  -e 's/xref:ug_scheduling\[\]/{ug_scheduling}/g' $adocfiles
 
 # User Guide cross-references
@@ -84,6 +94,10 @@ sed -i -e 's/Credential types <userguide:ug_credential_types>/{ug_credential_typ
  -e 's/job branch overriding <ug_job_branching>/{ug_job_branching}/g' \
  -e 's/outlined in `ref_ee_definition`/outlined in {ref_ee_definition}/g' \
  -e 's/`ref_collections_metadata`./{ref_collections_metadata}./g' \
+ -e 's/`obtain_sub_manifest` for/{obtain_sub_manifest} for/g' \
+ -e 's/`obtain_sub_manifest` in the/{obtain_sub_manifest} in the/g' \
+ -e 's/`ir_notifications_reference` section/{ir_notifications_reference} section/g' \
+ -e 's/`customize the text content <ir_notifications_reference>`/{ir_notifications_reference_inline}/g' \
  -e 's/to `rbac-ug` for/to {rbac-ug} for/g' \
  -e 's/`rbac-ug` in the/{rbac-ug} in the/g' $adocfiles
 

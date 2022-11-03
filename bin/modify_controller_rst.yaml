@@ -10,6 +10,11 @@
     path: "{{ item.path }}"
     regexp: 'pair:(.+)$'
   with_items: "{{ rst_files.files }}"
+- name: remove local metadata
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: '.. contents:: :local:'
+  with_items: "{{ rst_files.files }}"
 - name: change common includes
   ansible.builtin.replace:
     path: "{{ item.path }}"
