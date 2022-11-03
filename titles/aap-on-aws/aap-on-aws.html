@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>{AAPonAWS} guide</title>
+<title>Red Hat Ansible Automation Platform from AWS Marketplace guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,28 +439,53 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left Role ARG Spec">
 <div id="header">
-<h1>{AAPonAWS} guide</h1>
+<h1>Red Hat Ansible Automation Platform from AWS Marketplace guide</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_aaponawsnameshort">{AAPonAWSNameShort}</a></li>
 <li><a href="#making-open-source-more-inclusive">Making open source more inclusive</a></li>
-<li><a href="#intro-to-aap-on-azure">1. Introduction to Ansible Automation Platform on Microsoft Azure</a>
+<li><a href="#assembly-intro-to-aap-on-aws">1. Introduction to Ansible Automation Platform from AWS Marketplace</a>
 <ul class="sectlevel2">
-<li><a href="#con-aap-azure-about_aap-azure-intro">1.1. About Red Hat Ansible Automation Platform on Microsoft Azure</a></li>
-<li><a href="#con-aap-azure-architecture_aap-azure-intro">1.2. Application Architecture</a>
-<ul class="sectlevel3">
-<li><a href="#con-aap-public-access_aap-azure-intro">1.2.1. Public deployment</a></li>
-<li><a href="#con-aap-private-access_aap-azure-intro">1.2.2. Private deployment</a></li>
+<li><a href="#con-aws-application-architecture">1.1. Application architecture</a></li>
+<li><a href="#_aws_infrastructure">1.2. AWS infrastructure</a></li>
+<li><a href="#_architecture_description">1.3. Architecture Description</a></li>
+<li><a href="#_service_descriptions">1.4. Service descriptions</a></li>
 </ul>
 </li>
-<li><a href="#con-aap-azure-network_aap-azure-intro">1.3. Network</a></li>
-<li><a href="#con-aap-azure-infrastructure-usage_aap-azure-intro">1.4. Ansible Automation Platform on Microsoft Azure infrastructure usage</a></li>
-<li><a href="#con-aap-azure-lifecycle_aap-azure-intro">1.5. Lifecycle management</a></li>
-<li><a href="#con-aap-azure-scaling_aap-azure-intro">1.6. Ansible Automation Platform on Microsoft Azure scaling</a></li>
-<li><a href="#con-aap-azure-migration_aap-azure-intro">1.7. Migration</a></li>
+<li><a href="#assembly-aap-aws-install">2. Installing Ansible Automation Platform from AWS Marketplace</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-aws-install-prerequisites">2.1. Prerequisites</a></li>
+<li><a href="#proc-aws-create-ec2-pair">2.2. Create an EC2 pair</a></li>
+<li><a href="#proc-aws-marketplace">2.3. AWS Marketplace</a></li>
+<li><a href="#proc-aws-application-deploy">2.4. Application deployment</a></li>
 </ul>
 </li>
+<li><a href="#assembly-aap-aws-networking-access">3. Networking and application access</a>
+<ul class="sectlevel2">
+<li><a href="#con-aap-aws-access-application">3.1. Accessing the application</a></li>
+<li><a href="#con-aap-aws-network-peering-options">3.2. Network peering options</a></li>
+<li><a href="#proc-aws-vpc-peering">3.3. VPC peering</a></li>
+<li><a href="#proc-aap-aws-configure-route-tables">3.4. Configure VPC route tables</a></li>
+<li><a href="#proc-aap-aws-routing-to-vpcs">3.5. Routing to your VPVCs</a></li>
+<li><a href="#proc-aap-aws-configure-security-network">3.6. Configure network security groups</a></li>
+<li><a href="#proc-aap-aws-traffic-to-vpc">3.7. Traffic to Ansible Automation Platform VPC</a></li>
+<li><a href="#ref-aap-aws-transit-gateway">3.8. Transit gateway</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-aws-additional-configs">4. Ansible Automation Platform from AWS Marketplace additional configurations</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-aws-additional-configs-update-admin-password">4.1. Changing the default Ansible Automation Platform Administrator password</a></li>
+<li><a href="#ref-aap-aws-additional-configs-update-rds-password">4.2. Changing the default RDS database password</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-aws-automation-workloads">5. Automation workloads</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-aws-automation-performance">5.1. Automation performance</a></li>
+<li><a href="#con-aap-aws-deployment-scaling">5.2. Deployment scaling</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-aws-support">6. Support</a></li>
 </ul>
 </div>
 </div>
@@ -468,8 +493,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>This guide helps you install and use {AAPonAWSNameShort}.
-This document has been updated to include information for the latest release of {AAPonAWSNameShort}.</p>
+<p>Install and configure Red Hat Ansible Automation Platform from AWS Marketplace.</p>
 </div>
 </div>
 </div>
@@ -477,7 +501,11 @@ This document has been updated to include information for the latest release of 
 <h2 id="_aaponawsnameshort"><a class="anchor" href="#_aaponawsnameshort"></a>{AAPonAWSNameShort}</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Lorem ipsum abstract for AAP on AWS.</p>
+<p>Thank you for your interest in Red Hat Ansible Automation Platform from <em>AWS Marketplace</em> (AWS).
+Ansible Automation Platform is a commercial offering that helps teams manage complex multi-tier deployments by adding control, knowledge, and delegation to Ansible-powered environments.</p>
+</div>
+<div class="paragraph">
+<p>This guide helps you to understand the installation and use of Ansible Automation Platform from AWS Marketplace.</p>
 </div>
 </div>
 </div>
@@ -493,187 +521,73 @@ For more details, see <a href="https://www.redhat.com/en/blog/making-open-source
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro-to-aap-on-azure"><a class="anchor" href="#intro-to-aap-on-azure"></a>1. Introduction to Ansible Automation Platform on Microsoft Azure</h2>
+<h2 id="assembly-intro-to-aap-on-aws"><a class="anchor" href="#assembly-intro-to-aap-on-aws"></a>1. Introduction to Ansible Automation Platform from AWS Marketplace</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="con-aap-azure-about_aap-azure-intro"><a class="anchor" href="#con-aap-azure-about_aap-azure-intro"></a>1.1. About Red Hat Ansible Automation Platform on Microsoft Azure</h3>
-<div class="paragraph _abstract">
-<p>Red Hat Ansible Automation Platform on Microsoft Azure is a managed application that you can deploy from the <a href="https://azure.microsoft.com/en-us/marketplace/">Azure Marketplace</a> portal to a resource group in your Azure tenant.
-Ansible Automation Platform on Microsoft Azure provides access to a library of Ansible content collections, and it is integrated with key Azure services, so you can start deploying, configuring, and managing infrastructure and applications quickly.</p>
+<div class="paragraph">
+<p>Red Hat Ansible Automation Platform from AWS Marketplace is an offering that you can deploy from the AWS Marketplace portal.
+Ansible Automation Platform from AWS Marketplace provides access to a library of Ansible content collections, and it is integrated with key AWS services, so you can start automating the deployment, configuration, and management of infrastructure and applications quickly.</p>
 </div>
 <div class="paragraph">
-<p>The following Red Hat Automation Platform components are available on Red Hat Ansible Automation Platform on Microsoft Azure:</p>
+<p>The following Red Hat Ansible Automation Platform components are available on Ansible Automation Platform from AWS Marketplace:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Automation Controller</p>
+<p>Automation controller</p>
 </li>
 <li>
-<p>Automation Hub</p>
+<p>Ansible automation hub</p>
 </li>
 <li>
-<p>Private Automation Hub</p>
+<p>private automation hub</p>
 </li>
 <li>
-<p>Automation Service Catalog</p>
+<p>Automation services catalog</p>
 </li>
 <li>
-<p>Ansible Content Collections, including the Microsoft collection for Azure</p>
+<p>Ansible Content Collections</p>
 </li>
 <li>
-<p>Automation Execution Environment</p>
+<p>Automation execution environments</p>
 </li>
 <li>
 <p>Ansible content tools, including access to Red Hat Insights for Red Hat Ansible Automation Platform</p>
 </li>
 </ul>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+<div class="sect2">
+<h3 id="con-aws-application-architecture"><a class="anchor" href="#con-aws-application-architecture"></a>1.1. Application architecture</h3>
 <div class="paragraph">
-<p>Automation mesh is not available on Ansible Automation Platform on Microsoft Azure.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Red Hat Ansible Automation Platform from AWS Marketplace is installed into infrastructure resources running within your AWS account.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-azure-architecture_aap-azure-intro"><a class="anchor" href="#con-aap-azure-architecture_aap-azure-intro"></a>1.2. Application Architecture</h3>
-<div class="paragraph">
-<p>Red Hat Ansible Automation Platform on Microsoft Azure is installed as a managed application.
-Red Hat manages both the underlying Azure resources and the software running on it while that infrastructure runs in your Azure tenant.</p>
-</div>
-<div class="paragraph">
-<p>The managed application resource group is completely separate from other resource groups in your tenant.
-Red Hat only has access to the managed application resource group, with no visibility into other tenant resources.</p>
-</div>
-<div class="paragraph">
-<p>For information about how this works and how resources and access are isolated from the rest of your Azure resources, refer to <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/overview">Azure managed applications overview</a> in the Microsoft <em>Azure managed applications</em> guide.</p>
-</div>
-<div class="paragraph">
-<p>Ansible Automation Platform on Microsoft Azure uses the following resource groups:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A new or existing resource group (RG) in your tenant.
-This resource group includes a single resource referring to the Ansible Automation Platform on Microsoft Azure managed application deployment.
-Red Hat has access to the managed app to perform support, maintenance, and upgrades, but the resource group is outside of Red Hat&#8217;s management.</p>
-</li>
-<li>
-<p>A multi-tenant managed resource group (MRG) that contains most of the infrastructure needed to operate Ansible Automation Platform on Microsoft Azure.
-This multi-tenant resource group is shared between the Red Hat tenant and your tenant. Red Hat has full administrative control and you have read-only access to the resource group.</p>
-</li>
-<li>
-<p>An AKS node pool resource group (NPRG).
-Microsoft requires the NPRG for AKS deployments. It contains resources that AKS uses to function.
-It is created on deployment, and it is outside of Red Hat&#8217;s management.
-Refer to <a href="https://docs.microsoft.com/en-us/azure/aks/faq#why-are-two-resource-groups-created-with-aks">Microsoft&#8217;s AKS documentation</a> for more information about NPRGs.</p>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Do not interact with any resources in the node pool resource group (NPRG) unless explicitly directed to by the Red Hat Ansible Automation Platform on Microsoft Azure SRE team.
-Changes to resources in the NPRG cannot be protected by Red Hat and can cause irrecoverable damage to the application.</p>
-</div>
-<div class="paragraph">
-<p>Red Hat cannot restrict your ability to change or delete resources in the NPRG.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>When you install Ansible Automation Platform on Microsoft Azure, you choose whether the deployment is public or private.
-This affects how users can access the Ansible Automation Platform user interfaces.</p>
-</div>
-<div class="paragraph">
-<p>Regardless of whether you choose a public or private deployment, you must configure network peering for outbound communication from Ansible Automation Platform to the private networks that contain resources that you want to automate against.
-You can configure network peering from Ansible Automation Platform on Microsoft Azure to your private Azure VNets and to on-premises or multi-cloud networks where transit routing with Azure exists.</p>
-</div>
-<div class="sect3">
-<h4 id="con-aap-public-access_aap-azure-intro"><a class="anchor" href="#con-aap-public-access_aap-azure-intro"></a>1.2.1. Public deployment</h4>
-<div class="paragraph">
-<p>Public deployments permit ingress to the Ansible Automation Platform on Microsoft Azure user interfaces over the public internet.
-Upon deployment, a domain name is issued to the Ansible Automation Platform on Microsoft Azure instance.
-No configuration is required to access Ansible Automation Platform.
-Users can navigate to the domain from the public internet and log in to the user interfaces.</p>
-</div>
-<div class="paragraph">
-<p>The following diagram outlines the application resources and architecture that are deployed into the managed application resource group on a public deployment of Ansible Automation Platform on Microsoft Azure into your Azure subscription.
-The IP ranges change based on the networking address range you set on deployment.</p>
-</div>
+<h3 id="_aws_infrastructure"><a class="anchor" href="#_aws_infrastructure"></a>1.2. AWS infrastructure</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/aap-on-azure-public-deployment.png" alt="aap on azure public deployment">
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="con-aap-private-access_aap-azure-intro"><a class="anchor" href="#con-aap-private-access_aap-azure-intro"></a>1.2.2. Private deployment</h4>
-<div class="paragraph">
-<p>A private deployment of Ansible Automation Platform resides in an isolated Azure VNet with no access from external sources: traffic to and from the public internet and other Azure VNets and subnets is blocked.</p>
-</div>
-<div class="paragraph">
-<p>To access the URLs for the Ansible Automation Platform user interfaces, you must configure network peering.</p>
-</div>
-<div class="paragraph">
-<p>Once peering and routing are configured, users can access Ansible Automation Platform through a VM on a connected Azure subnet, or directly if your organization has transit routing set up between Azure and your local network.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>No two Azure networking configurations are the same.
-To allow user access to your Ansible Automation Platform URLs, your organization will need to work with your Azure administrators to connect the private access deployment.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>The following diagram outlines the application resources and architecture that are deployed into the managed application resource group on a private deployment of Ansible Automation Platform on Microsoft Azure into your Azure subscription.
-The IP ranges change based on the networking address range you set on deployment.</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="images/aap-on-azure-private-deployment.png" alt="aap on azure private deployment">
-</div>
+<img src="images/aap-on-aws-architecture.png" alt="AWS application architecture">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-azure-network_aap-azure-intro"><a class="anchor" href="#con-aap-azure-network_aap-azure-intro"></a>1.3. Network</h3>
+<h3 id="_architecture_description"><a class="anchor" href="#_architecture_description"></a>1.3. Architecture Description</h3>
 <div class="paragraph">
-<p>You can configure the networking address range (CIDR block) for the VNet that your Ansible Automation Platform on Microsoft Azure application uses.
-You set the CIDR block for the application in a network configuration form when you deploy Ansible Automation Platform on Microsoft Azure.
-Plan your networking configuration before you deploy the Ansible Automation Platform on Microsoft Azure application, because you cannot change it after deployment.</p>
+<p>Red Hat Ansible Automation Platform from AWS Marketplace was designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually.
+Components deployed are isolated into their own VPC.
+Applications run on instances backed by an autoscale group, which run on RHEL-based <em>Amazon Machine Images</em> (AMIs) as their basis.
+These AMIs are preloaded with all the required container images to run the Ansible Automation Platform, automation hub, automation controller, and receptor rpm/container components.
+A shared EFS volume is mounted into each instance stood up by the autoscale groups.</p>
 </div>
 <div class="paragraph">
-<p>When you are planning your network configuration, bear the following in mind:</p>
+<p>All internal instances have private IP addresses by default and internal traffic is encrypted by default through Amazon Web Services.
+The Ansible Automation Platform application is run in containers managed through podman on the instances provisioned by the autoscale groups.
+This podman configuration is itself managed by systemd.
+SELinux is enabled on our instances and is supported down to the container level.
+Each automation controller instance is configured as an Ansible Automation Platform hybrid node by default to simplify the scale up and out procedures.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>The managed application requires at least a /24 Vnet that is divided into four subnets. The subnets have minimum address spacing.</p>
+</div>
+<div class="sect2">
+<h3 id="_service_descriptions"><a class="anchor" href="#_service_descriptions"></a>1.4. Service descriptions</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -681,181 +595,1007 @@ Plan your networking configuration before you deploy the Ansible Automation Plat
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Networking entity</th>
-<th class="tableblock halign-left valign-top">Minimum CIDR Block</th>
+<th class="tableblock halign-left valign-top">Service Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>VNet</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>/24</p>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elastic Compute Cloud (EC2)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS VM compute platform</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Cluster subnet</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>/26</p>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Relational Database Service</em> (RDS)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS database service</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Gateway subnet</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>/28</p>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Systems Manager</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS operations and application management service.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Database subnet</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>/28</p>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud Watch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS logging service</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Private link subnet</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>/28</p>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual Private Cloud (VPC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS networking service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NAT Gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A NAT gateway is a <em>Network Address Translation</em> (NAT) service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elastic Block Storage (EBS)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS block storage service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Elastic File Storage (EFS)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS file storage service with support for NFS</p></td>
 </tr>
 </tbody>
 </table>
-</li>
-<li>
-<p>Ensure that the VNet range you configure does not intersect with the default CIDR block for AKS clusters (10.0.0.0/16).
-The Azure user interface does not prevent you entering this range, but using the default AKS CIDR block for your VNet causes networking issues.</p>
-</li>
-<li>
-<p>To ensure successful network peering and communication between Ansible Automation Platform on Microsoft Azure and your existing networks, your enterprise network ranges must not overlap with the VNet network range.</p>
-</li>
-<li>
-<p>If you do not have any existing Azure VNets, the Azure user interface suggests a default CIDR block and range for the VNet.
-Do not accept these defaults. Instead, use the network configuration that you have planned.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>For information about planning the network address range and completing the networking configuration form on deployment, refer to
-<a href="https://access.redhat.com/articles/6973251">Red Hat Ansible Automation Platform on Microsoft Azure VNet Preparation</a>.</p>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-install"><a class="anchor" href="#assembly-aap-aws-install"></a>2. Installing Ansible Automation Platform from AWS Marketplace</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="con-aap-azure-infrastructure-usage_aap-azure-intro"><a class="anchor" href="#con-aap-azure-infrastructure-usage_aap-azure-intro"></a>1.4. Ansible Automation Platform on Microsoft Azure infrastructure usage</h3>
+<h3 id="ref-aap-aws-install-prerequisites"><a class="anchor" href="#ref-aap-aws-install-prerequisites"></a>2.1. Prerequisites</h3>
 <div class="paragraph">
-<p>When you install Ansible Automation Platform on Microsoft Azure, the following infrastructure is deployed into your Azure subscription:</p>
+<p>Before you can install and register Ansible Automation Platform, you must be familiar with AWS including how services operate, how data is stored, and any privacy implications that may exist by using these services.
+You must also set up an account with Amazon Web Services.</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Azure Kubernetes service (AKS)</dt>
-<dd>
-<p>The Kubernetes cluster used to deploy Ansible Automation Platform applications and services.</p>
 <div class="paragraph">
-<p><strong>Service Shape:</strong></p>
+<p>You must have a working knowledge of the following aspects of Amazon Web Services:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Compute nodes: Standard_D4s_v3 (4 vCPUs x 16 GiB)</p>
+<p>Deploying solutions from the AWS Marketplace</p>
 </li>
 <li>
-<p>Autoscaling minimum nodes: 2</p>
+<p><em>Elastic Compute Cloud</em> (EC2) instances</p>
 </li>
 <li>
-<p>Autoscaling maximum nodes: 20</p>
+<p><em>Elastic Block Store</em> (EBS) volumes</p>
+</li>
+<li>
+<p><em>Elastic File Storage</em> (EFS)</p>
+</li>
+<li>
+<p>AWS <em>Virtual Private Clouds</em> (VPCs)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Subnets</p>
+</li>
+<li>
+<p>Route Tables</p>
+</li>
+<li>
+<p>Security Groups</p>
+</li>
+<li>
+<p>Load Balancers</p>
 </li>
 </ul>
 </div>
-</dd>
-<dt class="hdlist1">Managed identity</dt>
-<dd>
-<p>An Azure service that enables Ansible Automation Platform components to communicate with other Azure services such as database, DNS, storage, and other services.</p>
-</dd>
-<dt class="hdlist1">Key vault</dt>
-<dd>
-<p>A secure key vault used to store secrets that are unique to the Ansible Automation Platform deployment.</p>
-</dd>
-<dt class="hdlist1">Log Analytics Workspace</dt>
-<dd>
-<p>An Azure service that enables Red Hat site reliability engineers to inspect the operations of Ansible Automation Platform on Microsoft Azure.</p>
-</dd>
-<dt class="hdlist1">Private DNS Zone</dt>
-<dd>
-<p>Manages local DNS requests for the services used by Ansible Automation Platform on Microsoft Azure.</p>
-</dd>
-<dt class="hdlist1">Azure Database for PostgreSQL</dt>
-<dd>
-<p>An Azure database service used for Ansible Automation Platform’s PostgreSQL database.</p>
-<div class="paragraph">
-<p><strong>Service Shape:</strong> 1 TB</p>
-</div>
-</dd>
-<dt class="hdlist1">Storage account</dt>
-<dd>
-<p>The Azure service is used for file and block storage for local storage of projects, containers, etc.</p>
-<div class="paragraph">
-<p><strong>Service Shape:</strong> StorageV2 - Standard_LRS</p>
-</div>
-</dd>
-<dt class="hdlist1">Virtual network</dt>
-<dd>
-<p>The Azure service is used to manage all internal networking and dependent services such as the Azure Application Gateway.</p>
-<div class="paragraph">
-<p><strong>Service Shape:</strong> Application Gateway: WAF_v2</p>
-</div>
-</dd>
-</dl>
+</li>
+<li>
+<p>Network Design</p>
+</li>
+<li>
+<p>Hub-and-spoke networking designs</p>
+</li>
+<li>
+<p>VPC Peering</p>
+</li>
+<li>
+<p><em>Class Inter-Domain Routing</em> (CIDR) blocks</p>
+</li>
+<li>
+<p>Transit routing</p>
+</li>
+<li>
+<p>AWS Lambda</p>
+</li>
+<li>
+<p>AWS CloudWatch</p>
+</li>
+<li>
+<p>SSH</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Exact infrastructure usage depends on the length of time that the managed application is deployed in your tenancy, and the automation requirements that might cause the Kubernetes cluster to autoscale to meet the demands of your workload.</p>
+<p>For more information about Amazon Web Services and terminology, see the <a href="https://aws.amazon.com/">AWS product documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>Microsoft provides a <a href="https://azure.microsoft.com/en-us/pricing/calculator/">Pricing calculator</a> to estimate your costs for Azure products and services.
-Red Hat has configured an example scenario in the pricing calculator: use the <a href="https://azure.com/e/d12a08795a4942c1801c610810791764">Red Hat Ansible Automation Platform on Azure Infrastructure Estimate</a> to tune Kubernetes expected auto scaling variables based on your organization’s workloads.</p>
+<p>Your AWS account must have <em>Identity and Access Management</em> (IAM) permissions to create and manage AWS Marketplace deployments as well as the resources described in <a href="#con-aws-application-architecture">Application architecture</a>.
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Automation mesh is not available on Ansible Automation Platform from AWS Marketplace at this time and is planned for a later release.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-azure-lifecycle_aap-azure-intro"><a class="anchor" href="#con-aap-azure-lifecycle_aap-azure-intro"></a>1.5. Lifecycle management</h3>
+<h3 id="proc-aws-create-ec2-pair"><a class="anchor" href="#proc-aws-create-ec2-pair"></a>2.2. Create an EC2 pair</h3>
 <div class="paragraph">
-<p>Red Hat Ansible is responsible for the monitoring, health, and maintenance of the underlying services and Ansible Automation Platform on Microsoft Azure core systems as well as the operation of Ansible Automation Platform on Microsoft Azure itself.
-This includes lifecycle management of the components.</p>
+<p>An SSH key pair is required to set up Ansible Automation Platform from AWS Marketplace.
+You can use an existing key pair or create a new one.
+If you have an existing key pair, then you can skip this step.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, navigate to menu:EC2[].</p>
+</li>
+<li>
+<p>In the <strong>Network and Security</strong> section, click btn:[Key Pairs].</p>
+</li>
+<li>
+<p>Click btn:[Create key pair].</p>
+</li>
+<li>
+<p>Fill out the fields in the input form.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Red Hat recommends that you use ED25519 as the key pair type.</p>
+</li>
+<li>
+<p>Use PEM as the key file format.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click btn:[Create key pair].</p>
+</li>
+<li>
+<p>Download the private key and store it in a secure location, such as the <code>~/.ssh</code> folder, and apply appropriate local file permissions to secure the key file.</p>
+</li>
+<li>
+<p>On Linux hosts, run the following command to secure all files in your <code>ssh</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">chmod 600 ~/.ssh/*</pre>
+</div>
+</div>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-azure-scaling_aap-azure-intro"><a class="anchor" href="#con-aap-azure-scaling_aap-azure-intro"></a>1.6. Ansible Automation Platform on Microsoft Azure scaling</h3>
+<h3 id="proc-aws-marketplace"><a class="anchor" href="#proc-aws-marketplace"></a>2.3. AWS Marketplace</h3>
 <div class="paragraph">
-<p>Ansible Automation Platform on Microsoft Azure default configuration of <a href="https://docs.microsoft.com/en-us/azure/aks/cluster-autoscaler#about-the-cluster-autoscaler">Microsoft Azure cluster autoscaler</a> for autoscaling, with the following settings to limit the number of nodes:</p>
+<div class="title">Public Offer</div>
+<p>Red Hat Ansible Automation Platform from AWS Marketplace can be obtained directly from the AWS Marketplace.
+Follow these steps to purchase and deploy the public offer.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, navigate to the <strong>AWS Marketplace</strong>.</p>
+</li>
+<li>
+<p>Click btn:[Discover Products].</p>
+</li>
+<li>
+<p>Search for Ansible Automation Platform.</p>
+</li>
+<li>
+<p>Click the listing for Red Hat Ansible Automation Platform on AWS.
+Ensure that you have selected the offer where Red Hat is the publisher.</p>
+</li>
+<li>
+<p>Click btn:[Continue to Subscribe].</p>
+</li>
+<li>
+<p>Click btn:[Continue to Configuration].
+Select the appropriate fulfillment options.
+Note that some selectors may have only one option.</p>
+</li>
+<li>
+<p>Click btn:[Continue to Launch].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Private Offer</div>
+<p>If you have worked with Red Hat Sales to enable a private offer of Red Hat Ansible Automation Platform from AWS Marketplace, follow these steps to accept your offer and deploy the solution.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Visit your Private Offer with the URL link provided by your Red Hat Sales representative.</p>
+</li>
+<li>
+<p>Click btn:[Accept Terms] to subscribe to the AMI Private Offer named Ansible Automation Platform on AWS.</p>
+</li>
+<li>
+<p>After accepting the offer terms, click btn:[Continue to Configuration].</p>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>After subscribing, the offer is also listed in your AWS Marketplace Subscriptions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aws-application-deploy"><a class="anchor" href="#proc-aws-application-deploy"></a>2.4. Application deployment</h3>
+<div class="paragraph">
+<p>Now that you have subscribed to an offer, you can begin configuration before launching the CloudFormation Stack.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the <strong>Fulfillment option</strong> field, select <strong>Ansible Automation Platform CloudFormation</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Software version</strong> field, confirm the latest version available in the list is selected.</p>
+</li>
+<li>
+<p>In the <strong>Region</strong> field, select the region with your EC2 key pair.
+The CloudFormation Stack deploys in the same region.</p>
+</li>
+<li>
+<p>Click btn:[Continue to Launch].</p>
+</li>
+<li>
+<p>On the following screen, click btn:[Launch].
+This launches the AWS CloudFormation Console in a new browser tab.</p>
+</li>
+<li>
+<p>For Step 1, <strong>Specify template</strong>, click btn:[Next].</p>
+</li>
+<li>
+<p>For Step 2, <strong>Specify stack details</strong></p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the <strong>Stack name</strong> field, enter a unique stack name.</p>
+</li>
+<li>
+<p>For <strong>awsKeyPair</strong> select your previously created EC2 keypair.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click btn:[Next] to move to Step 3.</p>
+</li>
+<li>
+<p>For Step 3, <strong>Configure stack options</strong>.
+No changes are necessary.
+All configurations are optional or have the correct default values.</p>
+</li>
+<li>
+<p>Click btn:[Next] to move to Step 4, <strong>Review</strong>.</p>
+</li>
+<li>
+<p>For Step 4, <strong>Review</strong>.
+Scroll to the bottom.
+In the <strong>Capabilities section</strong>, check to acknowledge that CloudFormation may create IAM resources.</p>
+</li>
+<li>
+<p>Click btn:[Create stack].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The application begins provisioning.
+It can take some time for the infrastructure and application to fully provision.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-networking-access"><a class="anchor" href="#assembly-aap-aws-networking-access"></a>3. Networking and application access</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="con-aap-aws-access-application"><a class="anchor" href="#con-aap-aws-access-application"></a>3.1. Accessing the application</h3>
+<div class="paragraph">
+<p>When Ansible Automation Platform from AWS Marketplace is deployed, it is deployed into an isolated VPC and cannot be accessed.
+The following sections describe how to connect the VPC used by Ansible Automation Platform from AWS Marketplace to your existing AWS network.</p>
+</div>
+<div class="paragraph">
+<p>When connected, you must determine how your users connect to Ansible Automation Platform.</p>
+</div>
+<div class="paragraph">
+<p>There are many ways to enable this connectivity such as VPNs, Direct Connect, or bastion servers for private network access.
+You can also expose the platform with public internet access using AWS services such as a Load Balancer.
+How your organization configures application access on AWS is outside the scope of Red Hat’s guidelines and support for Ansible Automation Platform from AWS Marketplace.
+Red Hat recommends contacting <a href="https://aws.amazon.com/">Amazon Web Services</a> for guidelines on these products and topics.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="con-aap-aws-network-peering-options"><a class="anchor" href="#con-aap-aws-network-peering-options"></a>3.2. Network peering options</h3>
+<div class="paragraph">
+<p>Many networking configurations are possible, but the following configurations have been validated to work with Ansible Automation Platform from AWS Marketplace by Red Hat.</p>
+</div>
+<div class="paragraph">
+<p>Private deployments omit access from the public internet.
+This is the default deployment model based on the AWS architecture used by Ansible Automation Platform from AWS Marketplace.</p>
+</div>
+<div class="paragraph">
+<p>If you use this approach you must configure VPC peering, a transit network gateway, or similar AWS networking connectivity to access Ansible Automation Platform from AWS Marketplace.</p>
+</div>
+<div class="paragraph">
+<p>When VPC peering and routing are configured, you can access Ansible Automation Platform through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between AWS and your local networks.</p>
+</div>
+<div class="paragraph">
+<p>Network peering is required for Ansible Automation Platform to access resources that reside on private VPCs or where transit routing between AWS and your on-premises networks exists.</p>
+</div>
+<div class="paragraph">
+<p>Ansible Automation Platform requires peering and routing for outbound communication to perform automations against devices on your AWS networks and connected on-prem or multi-cloud networks.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>While every effort has been made to align with Amazon Web Services’s documentation for this content, there may be a drift in accuracy over time.
+Use Amazon Web Services documentation as the source of information regarding networking topics for AWS.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>AWS offers different ways to peer private networks together.
+This document focuses on basic network peering and routing models:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Peering type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-full-access.html">VPC Peering</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VPCs are individually connected to one another with no other routing hops between them.
+This is a simple peering model and is useful when connecting a few networks.
+Complex peering can be configured, but routing can become more complex over time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html">Transit Gateway</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A transit gateway is a network transit hub that you can use to interconnect your virtual private clouds (VPCs) and on-premises networks.
+As your cloud infrastructure expands globally, inter-Region peering connects transit gateways together using the AWS Global Infrastructure.
+Your data is automatically encrypted and never travels over the public internet.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There are also ways that AWS directs organizations not to attempt to peer networks in their <a href="https://docs.aws.amazon.com/vpc/latest/peering/invalid-peering-configurations.html">Invalid network peering</a> document.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aws-vpc-peering"><a class="anchor" href="#proc-aws-vpc-peering"></a>3.3. VPC peering</h3>
+<div class="paragraph">
+<p><a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a> offers the ability to directly connect different networks within your AWS infrastructure.
+When two or more networks are peered, the peering only establishes the connection between the networks.
+You must also update routing tables to direct the networks to send traffic over the appropriate networking peer.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/aap-aws-vpc-peering.png" alt="VPC peering">
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Prerequisites</div>
+<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and Red Hat Ansible Automation Platform on AWS’s VPC address space.</p>
+</div>
+<div class="paragraph">
+<p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Portal, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>In the <strong>VPC menu</strong>, click btn:[Peering Connections].</p>
+</li>
+<li>
+<p>Click btn:[Create peering connection].</p>
+</li>
+<li>
+<p>Fill out the following fields:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the <strong>Name</strong> field, enter the name of the peering connection as you need.</p>
+</li>
+<li>
+<p>In the <strong>Select a local VPC to peer with</strong> field,  enter the Virtual Private Cloud.
+This can be your existing VPC.</p>
+</li>
+<li>
+<p>In the <strong>Select another VPC to peer with</strong> field, enter the name of the VPC.
+This can be the Ansible Automation Platform on AWS VPC</p>
+</li>
+<li>
+<p>Select <strong>My Account</strong> as these two networks should exist in the same account.</p>
+</li>
+<li>
+<p>Choose the appropriate region configuration based on your VPC layout.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click btn:[Create peering connection].</p>
+</li>
+<li>
+<p>On the next screen, the summary page for the peering, select the <strong>Actions</strong> menu in the top right and select <strong>Accept request</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When you have configured the direct network peering you must configure the route tables, security groups, and Network ACLs for both VPCs for traffic to route properly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-aws-configure-route-tables"><a class="anchor" href="#proc-aap-aws-configure-route-tables"></a>3.4. Configure VPC route tables</h3>
+<div class="paragraph">
+<div class="title">Routing to Ansible Automation Platform</div>
+<p>You must configure route tables from your existing networks to send traffic to the Ansible Automation Platform VPC CIDR for any network that requests Ansible Automation Platform user interfaces or APIs.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Route Tables] in the left menu.</p>
+</li>
+<li>
+<p>Select the route table associated with the VPC that already existed in your AWS account.</p>
+</li>
+<li>
+<p>Click btn:[Edit Routes].</p>
+</li>
+<li>
+<p>Click btn:[Add Route].</p>
+</li>
+<li>
+<p>In the <strong>Destination</strong> field, enter the CIDR block of the Ansible Automation Platform VPC.</p>
+</li>
+<li>
+<p>In the <strong>Target field</strong>, select <strong>Peering Connection</strong>.</p>
+<div class="paragraph">
+<p>Select the peering connection ID for the peering connection with the Ansible Automation Platform on AWS VPC from the list.</p>
+</div>
+</li>
+<li>
+<p>Click btn:[Save changes].</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-aws-routing-to-vpcs"><a class="anchor" href="#proc-aap-aws-routing-to-vpcs"></a>3.5. Routing to your VPVCs</h3>
+<div class="paragraph">
+<p>You must configure route tables to your existing networks to send traffic from Ansible Automation Platform VPC CIDR to any network that has automation performed against resources in those networks.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Route Tables] in the left menu.</p>
+</li>
+<li>
+<p>Select the route table associated with Ansible Automation Platform from AWS Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit Routes].</p>
+</li>
+<li>
+<p>Click btn:[Add Route].</p>
+</li>
+<li>
+<p>In the <strong>Destination</strong> field, enter the CIDR block of the VPC that you peered to the Ansible Automation Platform VPC.</p>
+</li>
+<li>
+<p>In the <strong>Target field</strong>, select Peering Connection.
+A list of peering connections from this VPC is displayed.
+Select the ID for the peering connection with your existing VPC from the list.
+At this stage, you should only have one VPC peered with Ansible Automation Platform from AWS Marketplace VPC, so only one option should appear.</p>
+</li>
+<li>
+<p>Click btn:[Save changes].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When you have configured the routing rules then traffic should successfully route traffic to and from Ansible Automation Platform from AWS Marketplace though your hub network.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-aws-configure-security-network"><a class="anchor" href="#proc-aap-aws-configure-security-network"></a>3.6. Configure network security groups</h3>
+<div class="paragraph">
+<p>You can configure your Ansible Automation Platform network security groups for both VPCs to allow traffic to and from each other.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Security Groups] in the left menu.</p>
+</li>
+<li>
+<p>Select the security group associated with the Ansible Automation Platform from AWS Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit inbound rules].</p>
+</li>
+<li>
+<p>Select <strong>TCP</strong> to allow only UI, API, SSH, and other TCP connections to the platform.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>You can permit other connectivity types, such as ICMP for pings to the EC2 instances deployed with the solution.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set <strong>Source type</strong> to <strong>Custom</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Source</strong> field, enter the CIDR block of the VPC that you peered to the Ansible Automation Platform from AWS Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Save rule].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To ensure that Ansible Automation Platform can pull content collections from Ansible Galaxy and communicate with any system that it may need to automate against you must leave outbound rules set to <strong>all traffic</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-aws-traffic-to-vpc"><a class="anchor" href="#proc-aap-aws-traffic-to-vpc"></a>3.7. Traffic to Ansible Automation Platform VPC</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the AWS console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Security Groups] in the left menu.</p>
+</li>
+<li>
+<p>Select the security group associated with your existing VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit inbound rules].</p>
+</li>
+<li>
+<p>Select TCP to permit only UI, API, SSH, and other TCP connections from Ansible Automation Platform.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can set other connectivity types, such as ICMP for pings to the EC2 instances deployed with the solution.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Set <strong>Source type</strong> to <strong>Custom</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Source</strong> field, enter the CIDR block of the Ansible Automation Platform from AWS Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Save rule].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you have configured more restrictive outbound rules, then can repeat the previous steps for outbound rules to ensure that your existing VPC can communicate to Ansible Automation Platform from AWS Marketplace for UI and API access.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-aws-transit-gateway"><a class="anchor" href="#ref-aap-aws-transit-gateway"></a>3.8. Transit gateway</h3>
+<div class="paragraph">
+<p>Transit Gateways provide a more advanced hub-and-spoke peering model than direct VPC peering provides.
+When Ansible Automation Platform from AWS Marketplace is peered to this type of model, the hub has an additional peering with the CIDR range deployed for the Ansible Automation Platform from AWS Marketplace VPC.
+The Ansible Automation Platform from AWS Marketplace VPC can be peered to a Transit Gateway to participate in the peering model that this AWS service provides.
+Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html">Instructions from AWS</a> for configuring a transit gateway.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/aap-aws-transit-gateway.png" alt="Transit gateway">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-additional-configs"><a class="anchor" href="#assembly-aap-aws-additional-configs"></a>4. Ansible Automation Platform from AWS Marketplace additional configurations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to use automation hub to host execution environments, you must first configure the Application Hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-aws-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-admin-password"></a>4.1. Changing the default Ansible Automation Platform Administrator password</h3>
+<div class="paragraph">
+<p>The default Administrator password for Ansible Automation Platform is generated randomly when Ansible Automation Platform from AWS Marketplace is deployed.
+Follow these steps to change the Administrator password for both automation controller and automation hub:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Locate the correct secret for the CloudFormation Stack by opening the AWS Secrets Manager console and selecting the secret with the name <em>&lt;stack_name&gt;-aap-admin-secret</em>.</p>
+</li>
+<li>
+<p>Select <strong>Retrieve secret value</strong> to view the secret value.</p>
+</li>
+<li>
+<p>Select <strong>Edit</strong> and provide an updated password value.</p>
+</li>
+<li>
+<p>Click btn:[Save].</p>
+</li>
+<li>
+<p>Replace the running Ansible Automation Platform EC2 instances to use the new Administrator password.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the AWS EC2 Instances console.</p>
+</li>
+<li>
+<p>Identify and Terminate one automation controller instance and one automation hub instance for the CloudFormation Stack.</p>
+</li>
+<li>
+<p>Wait for the automation controller Auto Scale group and the automation hub Auto Scaling group to create new EC2 instances.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>The new Administrator can be used when the new automation controller and automation hub EC2 instances reach a <em>Running</em> Instance State.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-aws-additional-configs-update-rds-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-rds-password"></a>4.2. Changing the default RDS database password</h3>
+<div class="paragraph">
+<p>The default RDS database password for Ansible Automation Platform is generated randomly when Ansible Automation Platform from AWS Marketplace is deployed.
+Follow these steps to change the RDS password:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the <strong>AWS Secrets Manager</strong> console, locate the correct secret for the CloudFormation Stack by selecting the secret with the name <em>&lt;stack_name&gt;-aap-rds-secret</em>.</p>
+</li>
+<li>
+<p>Selecting <strong>Retrieve secret value</strong> to view the secret value.</p>
+</li>
+<li>
+<p>Select <strong>Edit</strong> and provide an updated password value.</p>
+</li>
+<li>
+<p>Click btn:[Save].</p>
+</li>
+<li>
+<p>Update the automation hub EC2 instance with the new RDS password.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the AWS EC2 Instances console</p>
+</li>
+<li>
+<p>Identify and connect to the automation hub instance for the CloudFormation Stack.</p>
+</li>
+<li>
+<p>Install the <code>postgresql</code> package using</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ sudo dnf install postgresql</pre>
+</div>
+</div>
+</li>
+<li>
+<p>View the database settings from the following file - <code>/etc/pulp/settings.py</code>. Variables shown here are used in following steps.</p>
+</li>
+<li>
+<p>Run</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ psql -h &lt;DB_HOST&gt; -U awx</pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>When prompted for password: enter &lt;DB_PASSWORD&gt;</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Run</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ ALTER USER awx WITH PASSWORD &lt;UPDATED_PASSWORD&gt;;</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Replace the running Ansible Automation Platform EC2 instances to use the new RDS password.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the AWS EC2 Instances console.</p>
+</li>
+<li>
+<p>Terminate all EC2 instances.
+The autoscale group restarts them.</p>
+</li>
+<li>
+<p>Wait for the automation controller Auto Scale group and the automation hub Auto Scaling group to create new EC2 instances.</p>
+</li>
+<li>
+<p>The new RDS can be used when the new automation controller and automation hub EC2 instances reach a <em>Running</em> Instance State.</p>
+</li>
+<li>
+<p>To validate the RDS password has been changed -</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Identify and connect to the automation hub instance for the CloudFormation Stack.</p>
+</li>
+<li>
+<p>View the updated database settings from the following file - <code>/etc/pulp/settings.py</code>.</p>
+</li>
+<li>
+<p>Attempt to connecct using the following sample connection string:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">psql postgresql://&lt;DB_USER&gt;:&lt;DB_PASSWORD&gt;@&lt;DB_HOST&gt;:&lt;DB_PORT&gt;/&lt;DB_NAME&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Variable definitions can be found in the settings file.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-automation-workloads"><a class="anchor" href="#assembly-aap-aws-automation-workloads"></a>5. Automation workloads</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ansible Automation Platform from AWS Marketplace has been designed to automate the number of managed nodes included with the offer identified at purchase time, typically 100 nodes.
+Consult your AWS offer used when deploying Ansible Automation Platform from AWS Marketplace.</p>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-aws-automation-performance"><a class="anchor" href="#ref-aap-aws-automation-performance"></a>5.1. Automation performance</h3>
+<div class="paragraph">
+<p>Automating against the managed node allotment in the offer is provided with the following operational expectations.
+Automating outside of the boundaries of these criteria is not supported, but can still function depending on your automation.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Metric</th>
+<th class="tableblock halign-left valign-top">Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concurrent Jobs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Forks per job</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">55</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>{PlatformNameMain} from AWS Marketplace is driven using three m5.large instances, two of which run {PlatformNameMain} andautomation controller and one which runs automation hub.
+The automation controller instances collectively support a standard workload of 100 managed active nodes.
+This operating criteria also supports up to 10 forks for each node.
+The operating criteria was set and tested using output-intensive, chatty workloads that produce 2 messages 7 seconds apart on both automation controller nodes.
+Workloads that are more I/O intensive might not work inside the boundaries of these conditions and can require the use of extension nodes to scale the deployment to support such automation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="con-aap-aws-deployment-scaling"><a class="anchor" href="#con-aap-aws-deployment-scaling"></a>5.2. Deployment scaling</h3>
+<div class="paragraph">
+<p>Extension nodes will become available after the initial release of Ansible Automation Platform from AWS Marketplace.
+This documentation will be updated to describe how to purchase and connect extension nodes at that time.</p>
+</div>
+<div class="paragraph">
+<p>If you want to scale your deployment beyond the initial number of supported managed nodes, Ansible Automation Platform from AWS Marketplace can be manually scaled using separately sold extension nodes.
+Extension nodes are additional compute instances that can be deployed to scale-up or scale-out depending on the immediate scaling requirements.
+If your requirements are for higher parallel automation operations you can select compute shapes that scale-up, while if you have a requirement to automate more nodes over time you can select compute shapes that scale out.</p>
+</div>
+<div class="paragraph">
+<p>Extension nodes are the supported way of extending the capabilities of Ansible Automation Platform from AWS Marketplace.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Red Hat does not support environments that are extended through customer design and implementation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-support"><a class="anchor" href="#assembly-aap-aws-support"></a>6. Support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Ansible Automation Platform from AWS Marketplace is a <em>self-managed</em> deployment.
+When the application is deployed into your AWS infrastructure, customers are responsible for the maintenance of the AWS infrastructure, OS patching, and Ansible Automation Platform patching.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat does not support changes to the infrastructure resources deployed as part of the solution unless there is documentation by Red Hat describing the process, such as in route table configuration for networking or documented upgrade processes.
+Adding additional compute resources outside of extension nodes voids Red Hat support for Ansible Automation Platform from AWS Marketplace deployment.</p>
+</div>
+<div class="paragraph">
+<p>Upgrades to Ansible Automation Platform from AWS Marketplace will be performed differently from self-installed Ansible Automation Platform.
+Upgrading individual packages on virtual machines using <code>dnf</code> or other means is also not supported.
+When upgrades are available, upgrade instructions will be provided in this documentation with relevant content for each upgrade.</p>
+</div>
+<div class="paragraph">
+<div class="title">Supported infrastructure configuration changes</div>
+<p>Red Hat supports changes to the folllowing options:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Minimum Nodes: 1</p>
+<p>VPC Route Table configuration</p>
 </li>
 <li>
-<p>Maximum Nodes: 20</p>
+<p>VPC Security Group configuration</p>
+</li>
+<li>
+<p>VPC Load balancer configuration</p>
+</li>
+<li>
+<p>EC2 Block Storage expansion</p>
+</li>
+<li>
+<p>DNS and <code>resolv.conf</code> files</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="con-aap-azure-migration_aap-azure-intro"><a class="anchor" href="#con-aap-azure-migration_aap-azure-intro"></a>1.7. Migration</h3>
 <div class="paragraph">
-<p>Red Hat does not provide a solution to migrate existing deployments to Ansible Automation Platform on Microsoft Azure.</p>
+<div class="title">Red Hat responsibilities</div>
+<p>Red Hat has the following responsibilities:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>Premium support for Ansible Automation Platform</p>
+</li>
+<li>
+<p>Directions and how-to-processes for upgrading Ansible Automation Platform</p>
+</li>
+<li>
+<p>Providing vulnerability fixes for Ansible Automation Platform and for third-party packages included with Ansible Automation Platform from AWS Marketplace.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Customer responsibilities</div>
+<p>You have the following responsibilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>AWS Infrastructure uptime</p>
+</li>
+<li>
+<p>AWS Infrastructure changes, for example, increasing block storage sizes</p>
+</li>
+<li>
+<p>AWS network peering and configuration</p>
+</li>
+<li>
+<p>EC2 operating system upgrades</p>
+</li>
+<li>
+<p>Backing up AWS resources</p>
+</li>
+<li>
+<p>Application of Ansible Automation Platform upgrades</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-01 15:04:28 UTC
+Last updated 2022-11-03 11:21:22 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
