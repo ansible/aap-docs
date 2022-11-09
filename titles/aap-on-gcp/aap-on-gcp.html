@@ -445,6 +445,41 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_aaponawsnameshort">{AAPonAWSNameShort}</a></li>
 <li><a href="#making-open-source-more-inclusive">Making open source more inclusive</a></li>
+<li><a href="#assembly-intro-to-aap-on-gcp">1. Introduction to Ansible Automation Platform on Google Cloud Platform</a>
+<ul class="sectlevel2">
+<li><a href="#con-gcp-application-architecture">1.1. Application architecture</a></li>
+<li><a href="#_gcp_infrastructure">1.2. GCP infrastructure</a></li>
+<li><a href="#_architecture_description">1.3. Architecture Description</a></li>
+<li><a href="#_service_descriptions">1.4. Service descriptions</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-gcp-install">2. Installing Ansible Automation Platform on Google Cloud Platform</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-gcp-install-prerequisites">2.1. Prerequisites</a></li>
+<li><a href="#con-aap-gcp-create-project">2.2. Create a project</a></li>
+<li><a href="#proc-gcp-marketplace">2.3. Google cloud marketplace</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-gcp-networking-access">3. Networking and application access</a>
+<ul class="sectlevel2">
+<li><a href="#con-aap-gcp-network-peering-options">3.1. Network peering options</a></li>
+<li><a href="#proc-aws-vpc-peering">3.2. VPC peering</a></li>
+<li><a href="#proc-aap-gcp-configure-route-tables">3.3. Configure VPC route tables</a></li>
+<li><a href="#proc-aap-gcp-routing-to-vpcs">3.4. Routing to your VPCs</a></li>
+<li><a href="#proc-aap-gcp-configure-security-network">3.5. Configure network security groups</a></li>
+<li><a href="#proc-aap-gcp-traffic-to-vpc">3.6. Traffic to Ansible Automation Platform VPC</a></li>
+<li><a href="#ref-aap-gcp-transit-gateway">3.7. Transit gateway</a></li>
+<li><a href="#ref-aap-gcp-external-load-balancer">3.8. Using an external load balancer</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-gcp-additional-configs">4. Ansible Automation Platform on GCP additional configurations</a></li>
+<li><a href="#assembly-aap-gcp-monitoring-logging">5. Monitoring and logging</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-gcp-ansible-podman-config">5.1. Ansible and podman configuration</a></li>
+<li><a href="#proc-aap-gcp-change-config-controller-hub">5.2. Changing the configuration of automation hub or automation controller</a></li>
+<li><a href="#proc-aap-gcp-configure-google-cloud-ops-agent">5.3. Google cloud ops agent configuration</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -479,10 +514,840 @@ For more details, see <a href="https://www.redhat.com/en/blog/making-open-source
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="assembly-intro-to-aap-on-gcp"><a class="anchor" href="#assembly-intro-to-aap-on-gcp"></a>1. Introduction to Ansible Automation Platform on Google Cloud Platform</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Red Hat Ansible Automation Platform on Google Cloud Platform is an offering that you can deploy from the GCP Marketplace portal.
+Ansible Automation Platform on Google Cloud Platform provides access to a library of Ansible content collections, and it is integrated with key GCP services, so you can start automating the deployment, configuration, and management of infrastructure and applications quickly.</p>
+</div>
+<div class="paragraph">
+<p>The following Red Hat Ansible Automation Platform components are available on Ansible Automation Platform on Google Cloud Platform:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automation controller</p>
+</li>
+<li>
+<p>Ansible automation hub</p>
+</li>
+<li>
+<p>private automation hub</p>
+</li>
+<li>
+<p>Automation services catalog</p>
+</li>
+<li>
+<p>Ansible Content Collections</p>
+</li>
+<li>
+<p>Automation execution environments</p>
+</li>
+<li>
+<p>Ansible content tools, including access to Red Hat Insights for Red Hat Ansible Automation Platform</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Automation mesh is not available on Ansible Automation Platform on Google Cloud Platform at this time and is planned for a later release.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="con-gcp-application-architecture"><a class="anchor" href="#con-gcp-application-architecture"></a>1.1. Application architecture</h3>
+<div class="paragraph">
+<p>Red Hat Ansible Automation Platform on Google Cloud Platform is installed into infrastructure resources running within your GCP account.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_gcp_infrastructure"><a class="anchor" href="#_gcp_infrastructure"></a>1.2. GCP infrastructure</h3>
+<div class="paragraph">
+<p>&lt;IMAGE HERE</p>
+</div>
+<div class="paragraph">
+<p>&lt;IMAGE HERE&gt;</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_architecture_description"><a class="anchor" href="#_architecture_description"></a>1.3. Architecture Description</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_service_descriptions"><a class="anchor" href="#_service_descriptions"></a>1.4. Service descriptions</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Service Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compute Engine</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP VM compute platform</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud SQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP database service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filestore</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP file storage service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual Private Cloud (VPC)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP networking service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud monitoring</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP metrics collector</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloud loging</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GCP log management Service</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NAT Gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A NAT gateway is a <em>Network Address Translation</em> (NAT) service</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-gcp-install"><a class="anchor" href="#assembly-aap-gcp-install"></a>2. Installing Ansible Automation Platform on Google Cloud Platform</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="ref-aap-gcp-install-prerequisites"><a class="anchor" href="#ref-aap-gcp-install-prerequisites"></a>2.1. Prerequisites</h3>
+<div class="paragraph">
+<p>Before you can install and register Ansible Automation Platform, you must be familiar with GCP including how services operate, how data is stored, and any privacy implications that may exist by using these services.
+You must also set up an account with Google Cloud Platform (GCP).</p>
+</div>
+<div class="paragraph">
+<p>You must have a working knowledge of the following aspects of Google Cloud Platform:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deploying solutions from the GCP Marketplace</p>
+</li>
+<li>
+<p>Compute engine <em>Virtual machine</em> (VM) instances</p>
+</li>
+<li>
+<p><em>Elastic Block Store</em> (EBS) volumes</p>
+</li>
+<li>
+<p>Cloud SQL for PostgreSQL</p>
+</li>
+<li>
+<p>Filestore</p>
+</li>
+<li>
+<p>GPC <em>Virtual Private Clouds</em> (VPCs)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Subnets</p>
+</li>
+<li>
+<p>Route Tables</p>
+</li>
+<li>
+<p>Security Groups</p>
+</li>
+<li>
+<p>Load Balancers</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Network Design</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Hub-and-spoke networking designs</p>
+</li>
+<li>
+<p>VPC Peering</p>
+</li>
+<li>
+<p><em>Class Inter-Domain Routing</em> (CIDR) blocks</p>
+</li>
+<li>
+<p>Transit routing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>GCP Cloud monitoring</p>
+<div class="ulist">
+<ul>
+<li>
+<p>GCP Ops agent</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SSH</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For more information about Amazon Web Services and terminology, see the <a href="https://cloud.google.com//">GCP product documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>Your GCP account must have <em>Identity and Access Management</em> (IAM) permissions to create and manage GCP Marketplace deployments as well as the resources described in <a href="#con-gcp-application-architecture">Application architecture</a>.
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="con-aap-gcp-create-project"><a class="anchor" href="#con-aap-gcp-create-project"></a>2.2. Create a project</h3>
+<div class="paragraph">
+<p>To install Ansible Automation Platform, you must create a project in your Google Cloud Platform account to host the application if you do not already have one.
+See <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and managing projects</a> in the GCP documentation.</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in stories/topics/con-aap-gcp-create-project.adoc - include::topics/con-aap-gcp-required-apis.adoc[leveloffset=+1]
+Unresolved directive in stories/topics/con-aap-gcp-create-project.adoc - include::topics/con-aap-gcp-service-account.adoc[leveloffset=+1]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-gcp-marketplace"><a class="anchor" href="#proc-gcp-marketplace"></a>2.3. Google cloud marketplace</h3>
+<div class="paragraph">
+<div class="title">Public Offer</div>
+<p>Red Hat Ansible Automation Platform on GCP can be obtained directly from the Google Marketplace.
+Follow these steps to purchase and deploy the public offer.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the Google Cloud Console, navigate to the <strong>Marketplace</strong>.</p>
+</li>
+<li>
+<p>Click btn:[Discover Products].</p>
+</li>
+<li>
+<p>Search for Ansible Automation Platform.</p>
+</li>
+<li>
+<p>Click the listing for Red Hat Ansible Automation Platform on GCP.
+Ensure that you have selected the offer where Red Hat is the publisher.
+Select the appropriate fulfillment options.
+Note that some selectors may have only one option.</p>
+</li>
+<li>
+<p>Click btn:[Continue to Launch].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<div class="title">Private Offer</div>
+<p>If you have worked with Red Hat Sales to enable a private offer of Red Hat Ansible Automation Platform from AWS Marketplace, follow these steps to accept your offer and deploy the solution.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Visit your Private Offer with the URL link provided by your Red Hat Sales representative.</p>
+</li>
+<li>
+<p>Click btn:[Accept Terms] to subscribe to the AMI Private Offer named Ansible Automation Platform on AWS.</p>
+</li>
+<li>
+<p>After accepting the offer terms, click btn:[Continue to Configuration].</p>
+</li>
+</ol>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>After subscribing, the offer is also listed in your AWS Marketplace Subscriptions.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-gcp-networking-access"><a class="anchor" href="#assembly-aap-gcp-networking-access"></a>3. Networking and application access</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When Ansible Automation Platform on GCP is deployed, it is deployed into an isolated VPC and cannot be accessed.
+The following instructions describe how to connect the VPC used by Ansible Automation Platform on GCP to your existing GCP network.
+When connected, you must determine how your users connect to Ansible Automation Platform.</p>
+</div>
+<div class="paragraph">
+<p>There are many ways to enable this connectivity such as VPNs, Google Cloud Interconnect, or bastion servers for private network access.
+You can also expose the platform with public internet access using GCP services such as a Load Balancer.</p>
+</div>
+<div class="paragraph">
+<p>How your organization configures application access on GCP is outside the scope of Red Hat’s guidelines and support for Ansible Automation Platform on GCP.
+Contact (link?)GCP for guidelines on these products and topics.</p>
+</div>
+<div class="sect2">
+<h3 id="con-aap-gcp-network-peering-options"><a class="anchor" href="#con-aap-gcp-network-peering-options"></a>3.1. Network peering options</h3>
+<div class="paragraph">
+<p>Many networking configurations are possible, but the following configurations have been validated to work with Ansible Automation Platform on GCP by Red Hat.</p>
+</div>
+<div class="paragraph">
+<p>Private deployments omit access from the public internet.
+This is the default deployment model based on the GCP architecture used by Ansible Automation Platform on GCP.</p>
+</div>
+<div class="paragraph">
+<p>If you use this approach you must configure VPC peering, a transit network gateway, or similar GCP networking connectivity to access Ansible Automation Platform on GCP.</p>
+</div>
+<div class="paragraph">
+<p>When VPC peering and routing are configured, you can access Ansible Automation Platform through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between GCP and your local networks.</p>
+</div>
+<div class="paragraph">
+<p>Ansible Automation Platform requires peering and routing for outbound communication to perform automations against devices on your AWS networks and connected on-prem or multi-cloud networks.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>While every effort has been made to align with Google Cloud Platform’s documentation for this content, there may be a drift in accuracy over time.
+Use Google Cloud Platform documentation as the source of information regarding networking topics for GCP.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>AWS offers different ways to peer private networks together.
+This document focuses on basic network peering and routing models:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Peering type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VPC Peering</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VPCs are individually connected to one another with no other routing hops between them.
+This is a simple peering model and is useful when connecting a few networks.
+Complex peering can be configured, but routing can become more complex over time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transit Gateway</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A transit gateway is a network transit hub that you can use to interconnect your virtual private clouds (VPCs) and on-premises networks.
+As your cloud infrastructure expands globally, inter-Region peering connects transit gateways together using the GCP Global Infrastructure.
+Your data is automatically encrypted and never travels over the public internet.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There are also ways that AWS directs organizations not to attempt to peer networks in their Invalid network peering document.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aws-vpc-peering"><a class="anchor" href="#proc-aws-vpc-peering"></a>3.2. VPC peering</h3>
+<div class="paragraph">
+<p>VPC Peering offers the ability to directly connect different networks within your AWS infrastructure.
+When two or more networks are peered, the peering only establishes the connection between the networks.
+You must also update routing tables to direct the networks to send traffic over the appropriate networking peer.</p>
+</div>
+<div class="paragraph">
+<div class="title">Prerequisites</div>
+<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and Ansible Automation Platform from GCP Marketplace’s VPC address space.</p>
+</div>
+<div class="paragraph">
+<p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the GCP Portal, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>In the <strong>VPC menu</strong>, click btn:[Peering Connections].</p>
+</li>
+<li>
+<p>Click btn:[Create peering connection].</p>
+</li>
+<li>
+<p>Fill out the following fields:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the <strong>Name</strong> field, enter the name of the peering connection as you need.</p>
+</li>
+<li>
+<p>In the <strong>Select a local VPC to peer with</strong> field,  enter the Virtual Private Cloud.
+This can be your existing VPC.</p>
+</li>
+<li>
+<p>In the <strong>Select another VPC to peer with</strong> field, enter the name of the VPC.
+This can be the Ansible Automation Platform on GCP MarketPlace VPC</p>
+</li>
+<li>
+<p>Select <strong>My Account</strong> as these two networks should exist in the same account.</p>
+</li>
+<li>
+<p>Choose the appropriate region configuration based on your VPC layout.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click btn:[Create peering connection].</p>
+</li>
+<li>
+<p>On the next screen, the summary page for the peering, select the <strong>Actions</strong> menu in the top right and select <strong>Accept request</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When you have configured the direct network peering you must configure the route tables, security groups, and Network ACLs for both VPCs for traffic to route properly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-configure-route-tables"><a class="anchor" href="#proc-aap-gcp-configure-route-tables"></a>3.3. Configure VPC route tables</h3>
+<div class="paragraph">
+<div class="title">Routing to Ansible Automation Platform</div>
+<p>You must configure route tables from your existing networks to send traffic to the Ansible Automation Platform VPC CIDR for any network that requests Ansible Automation Platform user interfaces or APIs.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the GCP Console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Route Tables] in the left menu.</p>
+</li>
+<li>
+<p>Select the route table associated with the VPC that already existed in your GCP account.</p>
+</li>
+<li>
+<p>Click btn:[Edit Routes].</p>
+</li>
+<li>
+<p>Click btn:[Add Route].</p>
+</li>
+<li>
+<p>In the <strong>Destination</strong> field, enter the CIDR block of the Ansible Automation Platform VPC.</p>
+</li>
+<li>
+<p>In the <strong>Target field</strong>, select <strong>Peering Connection</strong>.</p>
+<div class="paragraph">
+<p>Select the peering connection ID for the peering connection with the Ansible Automation Platform on GCP VPC from the list.</p>
+</div>
+</li>
+<li>
+<p>Click btn:[Save changes].</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-routing-to-vpcs"><a class="anchor" href="#proc-aap-gcp-routing-to-vpcs"></a>3.4. Routing to your VPCs</h3>
+<div class="paragraph">
+<p>You must configure route tables to your existing networks to send traffic from Ansible Automation Platform VPC CIDR to any network that has automation performed against resources in those networks.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the GCP console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Route Tables] in the left menu.</p>
+</li>
+<li>
+<p>Select the route table associated with Ansible Automation Platform from the GCP Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit Routes].</p>
+</li>
+<li>
+<p>Click btn:[Add Route].</p>
+</li>
+<li>
+<p>In the <strong>Destination</strong> field, enter the CIDR block of the VPC that you peered to the Ansible Automation Platform VPC.</p>
+</li>
+<li>
+<p>In the <strong>Target field</strong>, select Peering Connection.
+A list of peering connections from this VPC is displayed.
+Select the ID for the peering connection with your existing VPC from the list.
+At this stage, you should only have one VPC peered with the Ansible Automation Platform on GCP VPC, so only one option should appear.</p>
+</li>
+<li>
+<p>Click btn:[Save changes].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When you have configured the routing rules then traffic should successfully route traffic to and from Ansible Automation Platform on GCP though your hub network.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-configure-security-network"><a class="anchor" href="#proc-aap-gcp-configure-security-network"></a>3.5. Configure network security groups</h3>
+<div class="paragraph">
+<p>You can configure your Ansible Automation Platform network security groups for both VPCs to allow traffic to and from each other.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the GCP console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Security Groups] in the left menu.</p>
+</li>
+<li>
+<p>Select the security group associated with the Ansible Automation Platform on GCP VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit inbound rules].</p>
+</li>
+<li>
+<p>Select <strong>TCP</strong> to allow only UI, API, SSH, and other TCP connections to the platform.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>You can permit other connectivity types, such as ICMP for pings to the EC2 instances deployed with the solution.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set <strong>Source type</strong> to <strong>Custom</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Source</strong> field, enter the CIDR block of the VPC that you peered to the Ansible Automation Platform from AWS Marketplace VPC.</p>
+</li>
+<li>
+<p>Click btn:[Save rule].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To ensure that Ansible Automation Platform can pull content collections from Ansible Galaxy and communicate with any system that it may need to automate against you must leave outbound rules set to <strong>all traffic</strong>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-traffic-to-vpc"><a class="anchor" href="#proc-aap-gcp-traffic-to-vpc"></a>3.6. Traffic to Ansible Automation Platform VPC</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the GCP console, navigate to menu:VPC[].</p>
+</li>
+<li>
+<p>Click btn:[Security Groups] in the left menu.</p>
+</li>
+<li>
+<p>Select the security group associated with your existing VPC.</p>
+</li>
+<li>
+<p>Click btn:[Edit inbound rules].</p>
+</li>
+<li>
+<p>Select TCP to permit only UI, API, SSH, and other TCP connections from Ansible Automation Platform.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You can set other connectivity types, such as ICMP for pings to the EC2 instances deployed with the solution.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Set <strong>Source type</strong> to <strong>Custom</strong>.</p>
+</li>
+<li>
+<p>In the <strong>Source</strong> field, enter the CIDR block of the Ansible Automation Platform on GCP VPC.</p>
+</li>
+<li>
+<p>Click btn:[Save rule].</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If you have configured more restrictive outbound rules, then you can repeat the previous steps for outbound rules</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-gcp-transit-gateway"><a class="anchor" href="#ref-aap-gcp-transit-gateway"></a>3.7. Transit gateway</h3>
+<div class="paragraph">
+<p>Transit Gateways provide a more advanced hub-and-spoke peering model than direct VPC peering provides.
+When Ansible Automation Platform on GCP is peered to this type of model, the hub has an additional peering with the CIDR range deployed for the Ansible Automation Platform on GCP VPC.
+The Ansible Automation Platform on GCP VPC can be peered to a Transit Gateway to participate in the peering model that this GCP service provides.
+Follow [TBD] for configuring a transit gateway.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-gcp-external-load-balancer"><a class="anchor" href="#ref-aap-gcp-external-load-balancer"></a>3.8. Using an external load balancer</h3>
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-gcp-additional-configs"><a class="anchor" href="#assembly-aap-gcp-additional-configs"></a>4. Ansible Automation Platform on GCP additional configurations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TBD</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-gcp-monitoring-logging"><a class="anchor" href="#assembly-aap-gcp-monitoring-logging"></a>5. Monitoring and logging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can send metrics to the Google Cloud Platform monitoring system and can be visualized in the Google Cloud Platform UI.
+The Ansible Automation Platform on GCP metrics and logging are disabled by default as there is a cost to send these metrics to GCP.
+Refer to <a href="https://cloud.google.com/stackdriver/pricing#monitoring-costs">Cloud Monitoring</a> and <a href="https://cloud.google.com/stackdriver/pricing">Cloud Logging</a> respectively for more information.</p>
+</div>
+<div class="paragraph">
+<p>Metrics are provided by Ansible, Podman and Google Ops Agent.
+The Ansible metrics is only installed on the automation hub, the Google Ops Agent and Podman are also installed on automation controllers.</p>
+</div>
+<div class="paragraph">
+<p>A process (collector), which can be configured, runs on each automation controller and automation hub to export the collected Ansible and Podman metrics to Google Cloud Platform Monitoring. As the Google Ops Agent is part of the Google Cloud solution, it has its own configuration file.</p>
+</div>
+<div class="paragraph">
+<p>The Google Ops Agent is also responsible for the logging configuration.</p>
+</div>
+<div class="paragraph">
+<p>The service APIs <code>monitoring.googleapis.com</code> and <code>logging.googleapis.com</code> must be respectively enabled for the monitoring and logging capabilities.</p>
+</div>
+<div class="sect2">
+<h3 id="ref-aap-gcp-ansible-podman-config"><a class="anchor" href="#ref-aap-gcp-ansible-podman-config"></a>5.1. Ansible and podman configuration</h3>
+<div class="paragraph">
+<p>The file  `/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring.yaml' on the automation controller or automation hub contains the configuration.</p>
+</div>
+<div class="paragraph">
+<p>The default configuration for automation controller looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># of a given collector
+# NB: The awx exported should not run on controllers as
+# it will duplicates the number of records sent to GCP Monitoring
+
+defaultCollectorInterval: $DEFAULT_COLLECTOR_INTERVAL
+collectors:
+- name: podman
+ endpoint: http://localhost:9882/podman/metrics
+ enabled: true
+
+# list of metrics to exclude
+# excludedMetrics:
+# - podman_container_created_seconds
+
+ metrics:
+ - name: podman_container_exit_code
+   # interval on which the metric must be pushed to gcp
+   sendInterval: 59s</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The default configuration for automation hub looks like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># This value will be set at deployment time.
+# set to zero if loggingEnabled is false otherwise 59s
+# The collection interval for each collector will be the minimum
+# between the defaultCollectorInterval and all sendInterval
+# of a given collector
+# NB: The awx exporter should not run on controllers as
+# it will duplicates the number of records sent to GCP Monitoring
+defaultCollectorInterval: 59s
+collectors:
+- name: awx
+ userName: admin
+ endpoint: http://&lt;Controller_LB_IP&gt;/api/v2/metrics/
+ enabled: true
+ metrics:
+ - name: awx_inventories_total
+   # interval on which the metric must be pushed to gcp
+   sendInterval: 59s
+- name: podman
+ endpoint: http://localhost:9882/podman/metrics
+ enabled: true
+# list of metrics to exclude
+#  excludedMetrics:
+#  - podman_container_created_seconds
+ metrics:
+ - name: podman_container_exit_code
+   # interval on which the metric must be pushed to gcp
+   sendInterval: 59s</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>where</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>collectors</code> is a configuration array with one item per collector, that is, awx and podman.</p>
+</div>
+<div class="paragraph">
+<p>The awx collector requires authentication and so the <code>userName</code> must be set to <code>admin</code>.
+The password is retrieved from the secret-manager.</p>
+</div>
+<div class="paragraph">
+<p>The endpoint should not be changed.</p>
+</div>
+<div class="paragraph">
+<p><code>defaultCollectorInterval</code> specifies the default interval at which the exporter collects the information from the metric end-point and send it to Google Cloud Platform Monitoring.</p>
+</div>
+<div class="paragraph">
+<p>Setting this value to <code>0</code> or omitting this attribute disables all collectors.</p>
+</div>
+<div class="paragraph">
+<p>Each collector can be enabled or disabled separately by setting <code>enabled</code> to <code>true</code> or <code>false</code>.</p>
+</div>
+<div class="paragraph">
+<p>A collector returns all available metrics grouped by families, but you can exclude the families that should not be sent to Google Cloud Platform Monitoring by adding their name in the array <code>excludedMetrics</code>.</p>
+</div>
+<div class="paragraph">
+<p>For all other family metrics, you can specify the interval at which you want to collect and send them to the Google Cloud Platform Monitoring. The collector interval is then the minimum between all family metrics interval and the defaultCollectorInterval and this to ensure that a collection is made for each set of metrics sent to Google Cloud Platform Monitoring.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-change-config-controller-hub"><a class="anchor" href="#proc-aap-gcp-change-config-controller-hub"></a>5.2. Changing the configuration of automation hub or automation controller</h3>
+<div class="paragraph">
+<p>If you want to have a different configuration for automation controller and automation hub, you must follow the steps below for each automation controller or automation hub that you want a different configuration for.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Login on the automation controller or automation hub.</p>
+</li>
+<li>
+<p>To login as a super user run :</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># sudo su -</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To have one file per server for either {ControllerNaame} or automation hub, copy the file
+<code>/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring.yaml</code>
+to
+<code>/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring-$HOSTNAME.yaml</code>.</p>
+</li>
+<li>
+<p>To login as the awx user run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ su - awx</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To remove the current exporter run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ podman rm aoc-metric-exporter –force</pre>
+</div>
+</div>
+</li>
+<li>
+<p>To start the export with the newly created configuration file (<code>monitoring=$HOSTNAME.yaml</code>).run:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">podman run -d --name=aoc-metric-exporter --network=host \
+-v  ${CONFIG_DIR}:/config:ro \
+quay.io/ansible-on-clouds/aoc-metric-exporter:latest \
+gcp \
+--collectors-config-file /config/monitoring-$HOSTNAME.yaml\
+--awx-password-secret-name ${GCP_ADMIN_SECRET_NAME} \
+--project ${PROJECT}</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Where <code>GCP_ADMIN_SECRET_NAME</code> is the result of</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/gcp-admin-secret-name" -H "Metadata-Flavor: Google" 2&gt;/dev/null</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and PROJECT is the name of your project.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-gcp-configure-google-cloud-ops-agent"><a class="anchor" href="#proc-aap-gcp-configure-google-cloud-ops-agent"></a>5.3. Google cloud ops agent configuration</h3>
+<div class="paragraph">
+<p>The configuration file details can be found here.</p>
+</div>
+<div class="paragraph">
+<p>The configuration file is located in <code>/etc/google-cloud-ops-agent.yaml</code>
+This is a symbolic link to the shared disk <code>/app/bootstrap/config_file_templates/controller/gcp-ops-agent-config.yaml</code> or <code>/app/bootstrap/config_file_templates/hub/gcp-ops-agent-config.yaml</code>  depending on the component type.</p>
+</div>
+<div class="paragraph">
+<p>As logging and monitoring is not enabled by default, the configuration contains the default configuration.
+If you want to add the logging or metrics, you can concatenate the files named <code>gcp-ops-agent-config-metric.yaml</code> and <code>gcp-ops-agent-config-logging.yaml</code> located in the same directory into the <code>gcp-ops-agent-config.yaml</code>.</p>
+</div>
+<div class="paragraph">
+<p>A crontab job restarts the agent if <code>gcp-ops-agent-config.yaml</code> changed in the last 10 minutes and thus the agent rereads its configuration.</p>
+</div>
+<div class="paragraph">
+<p>To have different configurations per automation controller and automation hub, the following procedure must be applied for each automation controller or automation hub for which you want a different configuration.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-04 10:38:58 UTC
+Last updated 2022-11-09 13:14:22 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
