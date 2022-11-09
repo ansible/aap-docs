@@ -1,0 +1,23 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-aap-gcp-monitoring-logging"]
+= Monitoring and logging
+
+:context: aap-gcp-monitor-log
+
+You can send metrics to the {GCP} monitoring system and can be visualized in the {GCP} UI. 
+The {PlatformNameShort} on GCP metrics and logging are disabled by default as there is a cost to send these metrics to GCP. 
+Refer to link:https://cloud.google.com/stackdriver/pricing#monitoring-costs[Cloud Monitoring] and link:https://cloud.google.com/stackdriver/pricing[Cloud Logging] respectively for more information.
+
+Metrics are provided by Ansible, Podman and Google Ops Agent.
+The Ansible metrics is only installed on the {HubName}, the Google Ops Agent and Podman are also installed on {ControllerName}s.
+
+A process (collector), which can be configured, runs on each {ControllerName} and {HubName} to export the collected Ansible and Podman metrics to {GCP} Monitoring. As the Google Ops Agent is part of the Google Cloud solution, it has its own configuration file.
+
+The Google Ops Agent is also responsible for the logging configuration.
+
+The service APIs `monitoring.googleapis.com` and `logging.googleapis.com` must be respectively enabled for the monitoring and logging capabilities.
+
+include::topics/ref-aap-gcp-ansible-podman-config.adoc[leveloffset=+1]
+include::topics/proc-aap-gcp-change-config-controller-hub.adoc[leveloffset=+1]
+include::topics/proc-aap-gcp-configure-google-cloud-ops-agent.adoc[leveloffset=+1]

@@ -1,0 +1,17 @@
+[id="proc-aap-gcp-traffic-to-vpc"]
+
+= Traffic to {PlatformNameShort} VPC
+
+. In the GCP console, navigate to menu:VPC[].
+. Click btn:[Security Groups] in the left menu.
+. Select the security group associated with your existing VPC.
+. Click btn:[Edit inbound rules].
+. Select TCP to permit only UI, API, SSH, and other TCP connections from {PlatformNameShort}.
+
+You can set other connectivity types, such as ICMP for pings to the EC2 instances deployed with the solution.
+
+. Set *Source type* to *Custom*.
+. In the *Source* field, enter the CIDR block of the {PlatformNameShort} on GCP VPC.
+. Click btn:[Save rule].
+
+If you have configured more restrictive outbound rules, then you can repeat the previous steps for outbound rules 

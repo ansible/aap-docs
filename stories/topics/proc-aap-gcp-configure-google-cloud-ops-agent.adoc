@@ -1,0 +1,16 @@
+[id="proc-aap-gcp-configure-google-cloud-ops-agent"]
+
+= Google cloud ops agent configuration
+
+The configuration file details can be found here.
+
+The configuration file is located in `/etc/google-cloud-ops-agent.yaml` 
+This is a symbolic link to the shared disk `/app/bootstrap/config_file_templates/controller/gcp-ops-agent-config.yaml` or `/app/bootstrap/config_file_templates/hub/gcp-ops-agent-config.yaml`  depending on the component type. 
+
+As logging and monitoring is not enabled by default, the configuration contains the default configuration. 
+If you want to add the logging or metrics, you can concatenate the files named `gcp-ops-agent-config-metric.yaml` and `gcp-ops-agent-config-logging.yaml` located in the same directory into the `gcp-ops-agent-config.yaml`.
+
+A crontab job restarts the agent if `gcp-ops-agent-config.yaml` changed in the last 10 minutes and thus the agent rereads its configuration.
+
+To have different configurations per {ControllerName} and {HubName}, the following procedure must be applied for each {ControllerName} or {HubName} for which you want a different configuration.
+
