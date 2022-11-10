@@ -470,7 +470,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-aap-aws-routing-to-vpcs">3.5. Routing to your VPCs</a></li>
 <li><a href="#proc-aap-aws-configure-security-network">3.6. Configure network security groups</a></li>
 <li><a href="#proc-aap-aws-traffic-to-vpc">3.7. Traffic to Ansible Automation Platform VPC</a></li>
-<li><a href="#ref-aap-aws-transit-gateway">3.8. Transit gateway</a></li>
+<li><a href="#ref-aap-aws-transit-gateway">3.8. Transit gateways</a></li>
 </ul>
 </li>
 <li><a href="#assembly-aap-aws-additional-configs">4. Ansible Automation Platform from AWS Marketplace additional configurations</a>
@@ -539,7 +539,7 @@ Ansible Automation Platform from AWS Marketplace provides access to a library of
 <p>Ansible automation hub</p>
 </li>
 <li>
-<p>private automation hub</p>
+<p>Private automation hub</p>
 </li>
 <li>
 <p>Automation services catalog</p>
@@ -572,8 +572,8 @@ Ansible Automation Platform from AWS Marketplace provides access to a library of
 <div class="sect2">
 <h3 id="_architecture_description"><a class="anchor" href="#_architecture_description"></a>1.3. Architecture Description</h3>
 <div class="paragraph">
-<p>Red Hat Ansible Automation Platform from AWS Marketplace was designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually.
-Components deployed are isolated into their own VPC.
+<p>Red Hat Ansible Automation Platform from AWS Marketplace is designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually.
+Components deployed are isolated into their own <em>Virtual Private Cloud</em> (VPC).
 Applications run on instances backed by an autoscale group, which run on RHEL-based <em>Amazon Machine Images</em> (AMIs) as their basis.
 These AMIs are preloaded with all the required container images to run the Ansible Automation Platform, automation hub, automation controller, and receptor rpm/container components.
 A shared EFS volume is mounted into each instance stood up by the autoscale groups.</p>
@@ -799,7 +799,7 @@ Follow these steps to purchase and deploy the public offer.</p>
 <p>Search for Ansible Automation Platform.</p>
 </li>
 <li>
-<p>Click the listing for Red Hat Ansible Automation Platform on AWS.
+<p>Click the listing for <strong>Red Hat Ansible Automation Platform from AWS Marketplace</strong>.
 Ensure that you have selected the offer where Red Hat is the publisher.</p>
 </li>
 <li>
@@ -826,7 +826,7 @@ Note that some selectors may have only one option.</p>
 <p>Visit your Private Offer with the URL link provided by your Red Hat Sales representative.</p>
 </li>
 <li>
-<p>Click btn:[Accept Terms] to subscribe to the AMI Private Offer named Ansible Automation Platform on AWS.</p>
+<p>Click btn:[Accept Terms] to subscribe to the AMI Private Offer named Ansible Automation Platform from AWS Marketplace.</p>
 </li>
 <li>
 <p>After accepting the offer terms, click btn:[Continue to Configuration].</p>
@@ -948,7 +948,7 @@ This is the default deployment model based on the AWS architecture used by Ansib
 <p>Network peering is required for Ansible Automation Platform to access resources that reside on private VPCs or where transit routing between AWS and your on-premises networks exists.</p>
 </div>
 <div class="paragraph">
-<p>Ansible Automation Platform requires peering and routing for outbound communication to perform automations against devices on your AWS networks and connected on-prem or multi-cloud networks.</p>
+<p>Ansible Automation Platform requires peering and routing for outbound communication to perform automations against devices on your AWS networks and connected on-premise or multi-cloud networks.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1024,7 +1024,7 @@ You must also update routing tables to direct the networks to send traffic over 
 </div>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
-<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and Red Hat Ansible Automation Platform on AWS’s VPC address space.</p>
+<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs, and Red Hat Ansible Automation Platform from AWS Marketplace&#8217;s VPC address space.</p>
 </div>
 <div class="paragraph">
 <p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
@@ -1049,12 +1049,12 @@ You must also update routing tables to direct the networks to send traffic over 
 <p>In the <strong>Name</strong> field, enter the name of the peering connection as you need.</p>
 </li>
 <li>
-<p>In the <strong>Select a local VPC to peer with</strong> field,  enter the Virtual Private Cloud.
+<p>In the <strong>Select a local VPC to peer with</strong> field, enter the Virtual Private Cloud.
 This can be your existing VPC.</p>
 </li>
 <li>
-<p>In the <strong>Select another VPC to peer with</strong> field, enter the name of the VPC.
-This can be the Ansible Automation Platform on AWS VPC</p>
+<p>In the <strong>Select another VPC to peer with</strong> field, enter the name of the Virtual Private Cloud.
+This can be the Ansible Automation Platform from AWS Marketplace VPC</p>
 </li>
 <li>
 <p>Select <strong>My Account</strong> as these two networks should exist in the same account.</p>
@@ -1093,7 +1093,7 @@ This can be the Ansible Automation Platform on AWS VPC</p>
 <p>Click btn:[Route Tables] in the left menu.</p>
 </li>
 <li>
-<p>Select the route table associated with the VPC that already existed in your AWS account.</p>
+<p>Select the route table associated with the VPC that already existed in your AWS Marketplace account.</p>
 </li>
 <li>
 <p>Click btn:[Edit Routes].</p>
@@ -1107,7 +1107,7 @@ This can be the Ansible Automation Platform on AWS VPC</p>
 <li>
 <p>In the <strong>Target field</strong>, select <strong>Peering Connection</strong>.</p>
 <div class="paragraph">
-<p>Select the peering connection ID for the peering connection with the Ansible Automation Platform on AWS VPC from the list.</p>
+<p>Select the peering connection ID for the peering connection with the Ansible Automation Platform from AWS Marketplace VPC from the list.</p>
 </div>
 </li>
 <li>
@@ -1131,7 +1131,7 @@ This can be the Ansible Automation Platform on AWS VPC</p>
 <p>Click btn:[Route Tables] in the left menu.</p>
 </li>
 <li>
-<p>Select the route table associated with Ansible Automation Platform from AWS Marketplace VPC.</p>
+<p>Select the route table associated with the Ansible Automation Platform from AWS Marketplace VPC.</p>
 </li>
 <li>
 <p>Click btn:[Edit Routes].</p>
@@ -1244,11 +1244,11 @@ At this stage, you should only have one VPC peered with Ansible Automation Platf
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-aws-transit-gateway"><a class="anchor" href="#ref-aap-aws-transit-gateway"></a>3.8. Transit gateway</h3>
+<h3 id="ref-aap-aws-transit-gateway"><a class="anchor" href="#ref-aap-aws-transit-gateway"></a>3.8. Transit gateways</h3>
 <div class="paragraph">
 <p>Transit Gateways provide a more advanced hub-and-spoke peering model than direct VPC peering provides.
 When Ansible Automation Platform from AWS Marketplace is peered to this type of model, the hub has an additional peering with the CIDR range deployed for the Ansible Automation Platform from AWS Marketplace VPC.
-The Ansible Automation Platform from AWS Marketplace VPC can be peered to a Transit Gateway to participate in the peering model that this AWS service provides.
+The Ansible Automation Platform from AWS Marketplace VPC can be peered to a transit gateway to participate in the peering model that this AWS service provides.
 Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html">Instructions from AWS</a> for configuring a transit gateway.</p>
 </div>
 <div class="imageblock">
@@ -1263,7 +1263,7 @@ Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.h
 <h2 id="assembly-aap-aws-additional-configs"><a class="anchor" href="#assembly-aap-aws-additional-configs"></a>4. Ansible Automation Platform from AWS Marketplace additional configurations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to use automation hub to host execution environments, you must first configure the Application Hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
+<p>If you want to use automation hub to host execution environments, you must first configure the application hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
 </div>
 <div class="sect2">
 <h3 id="ref-aap-aws-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-admin-password"></a>4.1. Changing the default Ansible Automation Platform Administrator password</h3>
@@ -1302,7 +1302,7 @@ Follow these steps to change the Administrator password for both automation cont
 </div>
 </li>
 <li>
-<p>The new Administrator can be used when the new automation controller and automation hub EC2 instances reach a <em>Running</em> Instance State.</p>
+<p>The new Administrator can be used when the new automation controller and automation hub EC2 instances reach a <em>Running</em> instance state.</p>
 </li>
 </ol>
 </div>
@@ -1341,7 +1341,7 @@ Follow these steps to change the RDS password:</p>
 <p>Install the <code>postgresql</code> package using</p>
 <div class="listingblock">
 <div class="content">
-<pre class="nowrap">$ sudo dnf install postgresql</pre>
+<pre class="nowrap"># dnf install postgresql</pre>
 </div>
 </div>
 </li>
@@ -1427,7 +1427,7 @@ The autoscale group restarts them.</p>
 <h2 id="assembly-aap-aws-automation-workloads"><a class="anchor" href="#assembly-aap-aws-automation-workloads"></a>5. Automation workloads</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Automation Platform from AWS Marketplace has been designed to automate the number of managed nodes included with the offer identified at purchase time, typically 100 nodes.
+<p>Ansible Automation Platform from AWS Marketplace is designed to automate the number of managed nodes included with the offer identified at purchase time, typically 100 nodes.
 Consult your AWS offer used when deploying Ansible Automation Platform from AWS Marketplace.</p>
 </div>
 <div class="sect2">
@@ -1595,7 +1595,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-09 13:14:22 UTC
+Last updated 2022-11-10 16:02:31 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
