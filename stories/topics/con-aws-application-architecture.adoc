@@ -10,8 +10,8 @@ image::aap-on-aws-architecture.png[AWS application architecture]
 
 == Architecture Description
 
-{PlatformName} from {Market} was designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually. 
-Components deployed are isolated into their own VPC. 
+{PlatformName} from {Market} is designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually. 
+Components deployed are isolated into their own _Virtual Private Cloud_ (VPC). 
 Applications run on instances backed by an autoscale group, which run on RHEL-based _Amazon Machine Images_ (AMIs) as their basis. 
 These AMIs are preloaded with all the required container images to run the {PlatformNameShort}, {HubName}, {ControllerName}, and {ReceptorRPM} components. 
 A shared EFS volume is mounted into each instance stood up by the autoscale groups.
