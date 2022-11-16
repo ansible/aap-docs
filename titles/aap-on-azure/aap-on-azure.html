@@ -453,7 +453,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#con-aap-private-access_aap-azure-intro">1.2.2. Private deployment</a></li>
 </ul>
 </li>
-<li><a href="#con-aap-azure-network_aap-azure-intro">1.3. Network</a></li>
+<li><a href="#con-aap-azure-network_aap-azure-intro">1.3. Network</a>
+<ul class="sectlevel3">
+<li><a href="#azure-vnet-cidr_aap-azure-intro">1.3.1. VNet CIDR blocks</a></li>
+<li><a href="#azure_aks-cidr_aap-azure-intro">1.3.2. AKS CIDR Blocks</a></li>
+</ul>
+</li>
 <li><a href="#con-aap-azure-infrastructure-usage_aap-azure-intro">1.4. Ansible Automation Platform on Microsoft Azure infrastructure usage</a></li>
 <li><a href="#con-aap-azure-lifecycle_aap-azure-intro">1.5. Lifecycle management</a></li>
 <li><a href="#con-aap-azure-scaling_aap-azure-intro">1.6. Ansible Automation Platform on Microsoft Azure scaling</a></li>
@@ -712,9 +717,37 @@ The IP ranges change based on the networking address range you set on deployment
 <div class="sect2">
 <h3 id="con-aap-azure-network_aap-azure-intro"><a class="anchor" href="#con-aap-azure-network_aap-azure-intro"></a>1.3. Network</h3>
 <div class="paragraph">
+<p>When you deploy Ansible Automation Platform on Microsoft Azure, you can configure the following networks in the <code>Networking</code> tab of the form:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The networking address range (CIDR block) for the VNet that your Ansible Automation Platform on Microsoft Azure application uses.</p>
+</li>
+<li>
+<p>AKS network CIDR blocks.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Plan your networking configuration before you deploy the Ansible Automation Platform on Microsoft Azure application, because you cannot change it after deployment.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="azure-vnet-cidr_aap-azure-intro"><a class="anchor" href="#azure-vnet-cidr_aap-azure-intro"></a>1.3.1. VNet CIDR blocks</h4>
+<div class="paragraph">
 <p>You can configure the networking address range (CIDR block) for the VNet that your Ansible Automation Platform on Microsoft Azure application uses.
-You set the CIDR block for the application in a network configuration form when you deploy Ansible Automation Platform on Microsoft Azure.
-Plan your networking configuration before you deploy the Ansible Automation Platform on Microsoft Azure application, because you cannot change it after deployment.</p>
+You set the CIDR block for the application in the <code>Configure virtual networks</code> section of the form when you deploy Ansible Automation Platform on Microsoft Azure.</p>
 </div>
 <div class="paragraph">
 <p>When you are planning your network configuration, bear the following in mind:</p>
@@ -794,6 +827,96 @@ Do not accept these defaults. Instead, use the network configuration that you ha
 <div class="paragraph">
 <p>For information about planning the network address range and completing the networking configuration form on deployment, refer to
 <a href="https://access.redhat.com/articles/6973251">Red Hat Ansible Automation Platform on Microsoft Azure VNet Preparation</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="azure_aks-cidr_aap-azure-intro"><a class="anchor" href="#azure_aks-cidr_aap-azure-intro"></a>1.3.2. AKS CIDR Blocks</h4>
+<div class="paragraph">
+<p>You can configure the AKS network CIDR blocks.
+Traffic that originates from the AKS cluster will appear to come from the range configured in AKS, not from the VNET.</p>
+</div>
+<div class="paragraph">
+<p>When you are planning your AKS CIDR block configuration, bear the following in mind:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure that these network ranges do not overlap with any existing network range in your enterprise network.</p>
+</li>
+<li>
+<p>Do not use the following reserved network ranges:</p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">AKS Reserved CIDR Blocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>169.254.0.0/16</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>172.30.0.0/16</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>172.31.0.0/16</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>192.0.2.0/24</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>172.17.0.1/26</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You can configure the AKS network CIDR blocks in the <code>Configure AKS networks</code> area of the <code>networking</code> tab.
+Do not accept the default values suggested in the Azure user interface.
+Instead, use the CIDR blocks that you have planned.
+The settings have the following requirements:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Network</th>
+<th class="tableblock halign-left valign-top">Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service CIDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires a /26 block at minimum. A larger block is not necessary.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DNS Service IP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be an IP address in the Service CIDR other than the first IP in that range.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pod CIDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requires a /20 or larger block.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -1139,7 +1262,7 @@ You can create a new one when needed.</p>
 </div>
 <div class="paragraph">
 <p>You create the network configuration for the Ansible Automation Platform on Microsoft Azure VNet when you initiate the deployment.
-Refer to your network configuration plan before deploying the managed application. For information about planning your network configuration, see <a href="#con-aap-azure-network_aap-azure-intro">Networking configuration</a>.</p>
+Refer to your network configuration plan before deploying the managed application. For information about planning your network configuration, see <a href="#con-aap-azure-network_aap-azure-intro">Network</a>.</p>
 </div>
 <div class="paragraph">
 <p>Complete the form to provision Red Hat Ansible Automation Platform infrastructure and resources into your Azure tenant.</p>
@@ -1507,7 +1630,7 @@ Complete the form to provision Ansible Automation Platform infrastructure and re
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Network peering must be configured by Azure administrators in your organizaion who are familiar with Azure networking.
+<p>Network peering must be configured by Azure administrators in your organization who are familiar with Azure networking.
 Configuring network changes to your Azure account can cause outages or other disruptions.</p>
 </div>
 <div class="paragraph">
@@ -2194,7 +2317,7 @@ Add the following line to your hosts file:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-10 16:02:31 UTC
+Last updated 2022-11-16 17:46:28 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
