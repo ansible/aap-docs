@@ -7,10 +7,10 @@ The configuration file details can be found link:https://cloud.google.com/stackd
 The configuration file is located in `/etc/google-cloud-ops-agent.yaml` 
 This is a symbolic link to the shared disk `/app/bootstrap/config_file_templates/controller/gcp-ops-agent-config.yaml` or `/app/bootstrap/config_file_templates/hub/gcp-ops-agent-config.yaml` depending on the component type. 
 
-Logging and monitoring are not enabled by default, however, the configuration file contains the default configuration. 
-If you want to add the logging or metrics, you can concatenate the files named `gcp-ops-agent-config-metric.yaml` and `gcp-ops-agent-config-logging.yaml` located in the same directory into the `gcp-ops-agent-config.yaml`.
+The configuration file contains a number of receivers specifying what should be collected by the ops agent. 
+Your selection of Connect Logging and Connect Metrics during deployment determines which pipelines are included in the file and therefore which logs and metrics are collected and sent to GCP. 
+If you need to add more pipelines post-deployment, you can insert them in the `/app/bootstrap/config_file_templates/hub|controller/gcp-ops-agent-config.yaml`. 
+You can find examples in `/app/bootstrap/config_file_templates/hub|controller/`, `gcp-ops-agent-config-metric-service.yaml`, gcp-ops-agent-config-logging-service.yaml located in the same directory into the gcp-ops-agent-config.yaml.
 
 A crontab job restarts the agent if `gcp-ops-agent-config.yaml` changed in the last 10 minutes and thus the agent rereads its configuration.
-
-To have different configurations per {ControllerName} and {HubName}, the following procedure must be applied for each {ControllerName} or {HubName} that you want a different configuration for.
 
