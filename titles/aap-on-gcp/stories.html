@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.16">
-<title>Red Hat Ansible Automation Platform from GCP guide</title>
+<title>Making open source more inclusive</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,96 +436,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="book toc2 toc-left Role ARG Spec">
+<body class="article">
 <div id="header">
-<h1>Red Hat Ansible Automation Platform from GCP guide</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_aaponawsnameshort">{AAPonAWSNameShort}</a></li>
-<li><a href="#making-open-source-more-inclusive">Making open source more inclusive</a></li>
-<li><a href="#assembly-intro-to-aap-on-gcp">1. Introduction to Ansible Automation Platform from GCP Marketplace</a>
-<ul class="sectlevel2">
-<li><a href="#con-gcp-application-architecture">1.1. Application architecture</a></li>
-<li><a href="#_gcp_infrastructure">1.2. GCP infrastructure</a></li>
-<li><a href="#_architecture_description">1.3. Architecture Description</a></li>
-<li><a href="#_service_descriptions">1.4. Service descriptions</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-install">2. Installing Red Hat Ansible Automation Platform from GCP Marketplace</a>
-<ul class="sectlevel2">
-<li><a href="#ref-aap-gcp-install-prerequisites">2.1. Prerequisites</a></li>
-<li><a href="#con-aap-gcp-create-project">2.2. Create a project</a>
-<ul class="sectlevel3">
-<li><a href="#con-aap-gcp-required-apis">2.2.1. Required APIs</a></li>
-<li><a href="#con-aap-gcp-service-account">2.2.2. Your service account</a></li>
-</ul>
-</li>
-<li><a href="#proc-gcp-marketplace">2.3. GCP Marketplace</a></li>
-<li><a href="#proc-aap-gcp-application-deploy_aap-gcp-install">2.4. Application deployment</a></li>
-<li><a href="#ref-aap-gcp-networking-options">2.5. Networking options</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-networking-access">3. Networking and application access</a>
-<ul class="sectlevel2">
-<li><a href="#con-aap-gcp-network-peering-options">3.1. Network peering options</a></li>
-<li><a href="#proc-gcp-vpc-peering">3.2. VPC peering</a></li>
-<li><a href="#ref-aap-gcp-external-load-balancer">3.3. Using an external load balancer</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-additional-configs">4. Additional configurations</a>
-<ul class="sectlevel2">
-<li><a href="#ref-aap-gcp-additional-configs-update-admin-password">4.1. Changing the default Ansible Automation Platform administrator password</a></li>
-<li><a href="#proc-aap-gcp-secure-communication-SSL">4.2. Securing internal communication with SSL</a></li>
-<li><a href="#ref-aap-gcp-security-considerations">4.3. Security considerations</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-automation-workloads">5. Automation workloads</a>
-<ul class="sectlevel2">
-<li><a href="#ref-aap-gcp-automation-performance">5.1. Automation performance</a></li>
-<li><a href="#ref-aap-gcp-deployment-scaling">5.2. Deployment scaling</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-monitoring-logging">6. Monitoring and logging</a></li>
-<li><a href="#_configuration">7. Configuration</a>
-<ul class="sectlevel2">
-<li><a href="#ref-aap-gcp-ansible-podman-config">7.1. Ansible and podman configuration</a></li>
-<li><a href="#proc-aap-gcp-configure-google-cloud-ops-agent">7.2. Google cloud ops agent configuration</a></li>
-</ul>
-</li>
-<li><a href="#assembly-aap-gcp-support">8. Support</a></li>
-<li><a href="#ref-aap-gcp-vm-image-packages">9. VM Image packages</a>
-<ul class="sectlevel2">
-<li><a href="#ref-aap-gcp-supported-changes">9.1. Supported infrastructure configuration changes</a></li>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>Install and configure Red Hat Ansible Automation Platform from GCP.</p>
-</div>
-</div>
-</div>
 <div class="sect1">
-<h2 id="_aaponawsnameshort"><a class="anchor" href="#_aaponawsnameshort"></a>{AAPonAWSNameShort}</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Thank you for your interest in Red Hat Ansible Automation Platform from GCP.
-Ansible Automation Platform is a commercial offering that helps teams manage complex multi-tier deployments by adding control, knowledge, and delegation to Ansible-powered environments.</p>
-</div>
-<div class="paragraph">
-<p>This guide helps you to understand the installation and use of Ansible Automation Platform from GCP.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="making-open-source-more-inclusive"><a class="anchor" href="#making-open-source-more-inclusive"></a>Making open source more inclusive</h2>
+<h2 id="making-open-source-more-inclusive">Making open source more inclusive</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Red Hat is committed to replacing problematic language in our code, documentation, and web properties.
@@ -536,37 +453,37 @@ For more details, see <a href="https://www.redhat.com/en/blog/making-open-source
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-intro-to-aap-on-gcp"><a class="anchor" href="#assembly-intro-to-aap-on-gcp"></a>1. Introduction to Ansible Automation Platform from GCP Marketplace</h2>
+<h2 id="assembly-intro-to-aap-on-gcp">Introduction to {AAPonGCP}</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is an offering that you can deploy from the <a href="https://console.cloud.google.com/marketplace">GCP Marketplace</a> portal.
-Ansible Automation Platform from GCP Marketplace provides access to a library of Ansible content collections, and is integrated with key GCP services, so you can start automating the deployment, configuration, and management of infrastructure and applications quickly.</p>
+<p>{AAPonGCP} is an offering that you can deploy from the <a href="https://console.cloud.google.com/marketplace">GCP Marketplace</a> portal.
+{AAPonGCP} provides access to a library of Ansible content collections, and is integrated with key GCP services, so you can start automating the deployment, configuration, and management of infrastructure and applications quickly.</p>
 </div>
 <div class="paragraph">
-<p>The following Red Hat Ansible Automation Platform components are available on Ansible Automation Platform from GCP Marketplace:</p>
+<p>The following {PlatformName} components are available on {AAPonGCP}:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://www.ansible.com/products/controller">Automation controller</a></p>
+<p><a href="https://www.ansible.com/products/controller">{ControllerNameStart}</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/getting_started_with_automation_hub/pr01">Ansible automation hub</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/getting_started_with_automation_hub/pr01">{HubNameMain}</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.1/html-single/managing_containers_in_private_automation_hub/index">Private automation hub</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.1/html-single/managing_containers_in_private_automation_hub/index">{PrivateHubNameStart}</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/getting_started_with_automation_services_catalog/index">Automation services catalog</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html/getting_started_with_automation_services_catalog/index">{CatalogNameStart}</a></p>
 </li>
 <li>
 <p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html-single/publishing_proprietary_content_collections_in_automation_hub/index">Ansible Content Collections</a></p>
 </li>
 <li>
-<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html-single/creating_and_consuming_execution_environments/index">Automation execution environments</a></p>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.2/html-single/creating_and_consuming_execution_environments/index">{ExecEnvNameStart}</a></p>
 </li>
 <li>
-<p><a href="https://www.ansible.com/products/automation-platform">Ansible content tools, including access to Red Hat Insights for Red Hat Ansible Automation Platform</a></p>
+<p><a href="https://www.ansible.com/products/automation-platform">Ansible content tools, including access to {InsightsName}</a></p>
 </li>
 </ul>
 </div>
@@ -574,50 +491,50 @@ Ansible Automation Platform from GCP Marketplace provides access to a library of
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Automation mesh is not available on Ansible Automation Platform from GCP Marketplace at this time and is planned for a later release.</p>
+<p>{AutomationMeshStart} is not available on {AAPonGCP} at this time and is planned for a later release.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="sect2">
-<h3 id="con-gcp-application-architecture"><a class="anchor" href="#con-gcp-application-architecture"></a>1.1. Application architecture</h3>
+<h3 id="con-gcp-application-architecture">Application architecture</h3>
 <div class="paragraph">
-<p>Red Hat Ansible Automation Platform from GCP Marketplace is installed into infrastructure resources running within your GCP account.</p>
+<p>{PlatformName} from {GCPMarket} is installed into infrastructure resources running within your GCP account.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_gcp_infrastructure"><a class="anchor" href="#_gcp_infrastructure"></a>1.2. GCP infrastructure</h3>
+<h3 id="_gcp_infrastructure">GCP infrastructure</h3>
 <div class="imageblock">
 <div class="content">
-<img src="images/aap-on-gcp-architecture.png" alt="GCP application architecture">
+<img src="aap-on-gcp-architecture.png" alt="GCP application architecture">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_architecture_description"><a class="anchor" href="#_architecture_description"></a>1.3. Architecture Description</h3>
+<h3 id="_architecture_description">Architecture Description</h3>
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace was designed to be private, with no public access or public egress enabled by default.
-This requires customers to connect existing GCP infrastructure to Ansible Automation Platform infrastructure manually.
-Ansible Automation Platform components that are deployed are isolated into their own VPC.
+<p>{AAPonGCP} was designed to be private, with no public access or public egress enabled by default.
+This requires customers to connect existing GCP infrastructure to {PlatformNameShort} infrastructure manually.
+{PlatformNameShort} components that are deployed are isolated into their own VPC.
 Applications then run on instances managed by an instance group, which run on RHEL-based Google Compute machine images.
-These machine images are preloaded with required container images to run Ansible Automation Platform including automation hub, automation controller, and receptor rpm/container components.
+These machine images are preloaded with required container images to run {PlatformNameShort} including {Hubname}, {ControllerName}, and {ReceptorRpm} components.
 A shared Google Filestore volume is mounted into each instance deployed by the instance group manager.</p>
 </div>
 <div class="paragraph">
 <p>All GCP Compute instances have private IP addresses by default.
-The Ansible Automation Platform applications are run in containers managed through podman on the instances.
+The {PlatformNameShort} applications are run in containers managed through podman on the instances.
 This podman configuration is itself managed by systemd.
 SELinux is enabled on GCP Compute instances and is supported down to the container level.
-Each automation controller instance is configured as an Ansible Automation Platform hybrid node by default to simplify the scale up and out procedures.</p>
+Each {ControllerName} instance is configured as an {PlatformNameShort} hybrid node by default to simplify the scale up and out procedures.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_service_descriptions"><a class="anchor" href="#_service_descriptions"></a>1.4. Service descriptions</h3>
+<h3 id="_service_descriptions">Service descriptions</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -660,21 +577,21 @@ Each automation controller instance is configured as an Ansible Automation Platf
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-install"><a class="anchor" href="#assembly-aap-gcp-install"></a>2. Installing Red Hat Ansible Automation Platform from GCP Marketplace</h2>
+<h2 id="assembly-aap-gcp-install">Installing Red Hat {AAPonGCP}</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="ref-aap-gcp-install-prerequisites"><a class="anchor" href="#ref-aap-gcp-install-prerequisites"></a>2.1. Prerequisites</h3>
+<h3 id="ref-aap-gcp-install-prerequisites">Prerequisites</h3>
 <div class="paragraph">
-<p>Before you can install and register Ansible Automation Platform, you must be familiar with GCP including how services operate, how data is stored, and any privacy implications that may exist by using these services.
-You must also set up an account with <em>Google Cloud Platform</em> (GCP).</p>
+<p>Before you can install and register {PlatformNameShort}, you must be familiar with GCP including how services operate, how data is stored, and any privacy implications that may exist by using these services.
+You must also set up an account with <em>{GCP}</em> (GCP).</p>
 </div>
 <div class="paragraph">
-<p>You must have a working knowledge of the following aspects of Google Cloud Platform:</p>
+<p>You must have a working knowledge of the following aspects of {GCP}:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Deploying solutions from the GCP Marketplace</p>
+<p>Deploying solutions from the {GCPMarket}</p>
 </li>
 <li>
 <p>Compute engine <em>Virtual machine</em> (VM) instances</p>
@@ -736,19 +653,19 @@ You must also set up an account with <em>Google Cloud Platform</em> (GCP).</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>For more information about Google Cloud Platform and terminology, see the <a href="https://cloud.google.com//">GCP product documentation</a>.</p>
+<p>For more information about {GCP} and terminology, see the <a href="https://cloud.google.com//">GCP product documentation</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-gcp-create-project"><a class="anchor" href="#con-aap-gcp-create-project"></a>2.2. Create a project</h3>
+<h3 id="con-aap-gcp-create-project">Create a project</h3>
 <div class="paragraph">
-<p>To install Ansible Automation Platform, you must create a project in your Google Cloud Platform account to host the application if you do not already have one.
+<p>To install {PlatformNameShort}, you must create a project in your {GCP} account to host the application if you do not already have one.
 See <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and managing projects</a> in the GCP documentation.</p>
 </div>
 <div class="sect3">
-<h4 id="con-aap-gcp-required-apis"><a class="anchor" href="#con-aap-gcp-required-apis"></a>2.2.1. Required APIs</h4>
+<h4 id="con-aap-gcp-required-apis">Required APIs</h4>
 <div class="paragraph">
-<p>Your Google Cloud Platform (GCP) project requires access to several API services to complete Ansible Automation Platform installation.
+<p>Your {GCP} (GCP) project requires access to several API services to complete {PlatformNameShort} installation.
 On marketplace deployment, the process automatically attempts to enable the followwing APIs.</p>
 </div>
 <div class="paragraph">
@@ -828,11 +745,11 @@ On marketplace deployment, the process automatically attempts to enable the foll
 </table>
 </div>
 <div class="sect3">
-<h4 id="con-aap-gcp-service-account"><a class="anchor" href="#con-aap-gcp-service-account"></a>2.2.2. Your service account</h4>
+<h4 id="con-aap-gcp-service-account">Your service account</h4>
 <div class="paragraph">
-<p>You must have a service account to set up Ansible Automation Platform from GCP Marketplace.
-This account is used to install and configure the application and remains associated with the Ansible Automation Platform virtual machines.
-You can use an existing service account with the required roles, or the Ansible Automation Platform deployment can create one with the required roles on your behalf.
+<p>You must have a service account to set up {AAPonGCP}.
+This account is used to install and configure the application and remains associated with the {PlatformNameShort} virtual machines.
+You can use an existing service account with the required roles, or the {PlatformNameShort} deployment can create one with the required roles on your behalf.
 If you use an existing account, it must have the following roles:</p>
 </div>
 <div class="ulist">
@@ -862,15 +779,15 @@ If you use an existing account, it must have the following roles:</p>
 </div>
 <div class="paragraph">
 <p>The Compute Network Aministrator role is only required at the time of deployment to configure the application properly.
-When installation and configuration are complete, this role can be removed from the service account, which remains configured on the Ansible Automation Platform Virtual Machines.</p>
+When installation and configuration are complete, this role can be removed from the service account, which remains configured on the {PlatformNameShort} Virtual Machines.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-gcp-marketplace"><a class="anchor" href="#proc-gcp-marketplace"></a>2.3. GCP Marketplace</h3>
+<h3 id="proc-gcp-marketplace">{GCPMarket}</h3>
 <div class="paragraph">
 <div class="title">Public Offer</div>
-<p>Red Hat Ansible Automation Platform from GCP Marketplace can be obtained directly from the GCP Marketplace.
+<p>Red Hat {AAPonGCP} can be obtained directly from the {GCPMarket}.
 Follow these steps to purchase and deploy the public offer.</p>
 </div>
 <div class="olist arabic">
@@ -880,10 +797,10 @@ Follow these steps to purchase and deploy the public offer.</p>
 <p>In the Google Cloud Console, navigate to the <a href="https://console.cloud.google.com/marketplace">Marketplace</a>.</p>
 </li>
 <li>
-<p>In the <strong>Search Marketplace</strong> text box, search for Ansible Automation Platform.</p>
+<p>In the <strong>Search Marketplace</strong> text box, search for {PlatformNameShort}.</p>
 </li>
 <li>
-<p>Select the listing for <strong>Red Hat Ansible Automation Platform</strong>.</p>
+<p>Select the listing for <strong>{PlatformName}</strong>.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -899,17 +816,17 @@ Follow these steps to purchase and deploy the public offer.</p>
 </div>
 <div class="paragraph">
 <div class="title">Private Offer</div>
-<p>If you have worked with Red Hat Sales to enable a private offer of Red Hat Ansible Automation Platform from GCP Marketplace, follow the steps in <a href="https://cloud.google.com/marketplace/docs/accepting-private-offer">Accepting a private offer</a> to accept your offer and deploy the solution.</p>
+<p>If you have worked with Red Hat Sales to enable a private offer of {PlatformName} from {GCPMarket}, follow the steps in <a href="https://cloud.google.com/marketplace/docs/accepting-private-offer">Accepting a private offer</a> to accept your offer and deploy the solution.</p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>After subscribing, the offer is also listed in your <a href="https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions">GCP Marketplace Subscriptions</a>.</p>
+<p>After subscribing, the offer is also listed in your <a href="https://us-east-1.console.aws.amazon.com/marketplace/home#/subscriptions">{GCPMarket} Subscriptions</a>.</p>
 </div>
 </td>
 </tr>
@@ -917,7 +834,7 @@ Follow these steps to purchase and deploy the public offer.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-gcp-application-deploy_aap-gcp-install"><a class="anchor" href="#proc-aap-gcp-application-deploy_aap-gcp-install"></a>2.4. Application deployment</h3>
+<h3 id="proc-aap-gcp-application-deploy_aap-gcp-install">Application deployment</h3>
 <div class="paragraph">
 <p>Now that you have launched the public or private offer, you can begin configuration before deploying the application.</p>
 </div>
@@ -925,19 +842,19 @@ Follow these steps to purchase and deploy the public offer.</p>
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<div class="title">Important</div>
 </td>
 <td class="content">
 <div class="paragraph">
 <p>A temporary yet necessary constraint has been placed on the length of deployment names.
-This is due to GCP&#8217;s naming schemes for internal components that make up an Ansible Automation Platform deployment.
+This is due to GCP&#8217;s naming schemes for internal components that make up an {PlatformNameShort} deployment.
 Component names based on this naming scheme can get too long and often break naming constraints imposed by other services, creating deployment errors.</p>
 </div>
 <div class="paragraph">
 <p>The length of the name of your deployment, plus the length of your GCP project name must be less than 36 characters.</p>
 </div>
 <div class="paragraph">
-<p>The calculation below will help you find the maximum length of the name of an Ansible Automation Platform deployment in your project.</p>
+<p>The calculation below will help you find the maximum length of the name of an {PlatformNameShort} deployment in your project.</p>
 </div>
 <div class="paragraph">
 <p>length of deployment name &lt; = 36 - length(gcp_project_name)</p>
@@ -991,7 +908,7 @@ It can take some time for the infrastructure and application to fully provision.
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1011,9 +928,9 @@ It can take some time for the infrastructure and application to fully provision.
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-networking-options"><a class="anchor" href="#ref-aap-gcp-networking-options"></a>2.5. Networking options</h3>
+<h3 id="ref-aap-gcp-networking-options">Networking options</h3>
 <div class="paragraph">
-<p>The network topology of Ansible Automation Platform from GCP Marketplace includes several configurable network segments that can be changed to fit into your organization&#8217;s network requirements.</p>
+<p>The network topology of {AAPonGCP} includes several configurable network segments that can be changed to fit into your organization&#8217;s network requirements.</p>
 </div>
 <div class="paragraph">
 <p>The deployment creates a new VPC and subnet that are not accessible from the public internet.
@@ -1040,33 +957,33 @@ The “/24” segment range  is a requirement of GCP CloudSQL network peering co
 <p>Default: 192.168.241.0/24</p>
 </div>
 <div class="paragraph">
-<p><strong>Filestore Peering Network Range</strong>:  The Ansible Automation Platform from GCP Marketplace uses GCP Filestore service to share configuration files between multiple automation controller and automation hub VMs provisioned as part of the deployment.
+<p><strong>Filestore Peering Network Range</strong>:  The {AAPonGCP} uses GCP Filestore service to share configuration files between multiple {ControllerName} and {HubName} VMs provisioned as part of the deployment.
 This network CIDR range defines the peer network that is used by the offering to peer between the GCP Filestore network and the custom VPC baseNetwork of the offering.</p>
 </div>
 <div class="paragraph">
 <p>Default: 192.168.243.0/24</p>
 </div>
 <div class="paragraph">
-<p><strong>Load Balancer Proxy Subnet Range</strong>:  Ansible Automation Platform from GCP Marketplace is deployed using GCP’s native cloud capabilities to provide a scalable and reliable installation.
-As part of the Ansible Automation Platform from GCP Marketplace deployment topology two Load Balancers are deployed in front of the automation hub and automation controller VMs.
+<p><strong>Load Balancer Proxy Subnet Range</strong>:  {AAPonGCP} is deployed using GCP’s native cloud capabilities to provide a scalable and reliable installation.
+As part of the {AAPonGCP} deployment topology two Load Balancers are deployed in front of the {HubName} and {ControllerName} VMs.
 All traffic is directed at these Load Balancers and is proxied to the available backend VMs.
 The deployment takes advantage of GCP’s native Load Balancing support enabling the customer to add additional ports (https) to the Load Balancers to capture and forward requests onto the backend VMs.
 This also provides request balancing and session tracking for better reliability.
 As part of the Load Balancer deployment GCP requires creation of a special proxy network where GCP natively handles the redirection of requests to the backend VMs.
-This special proxy network is not used within Ansible Automation Platform from GCP Marketplace for any other purpose than GCP’s Load Balancer’s proxy network requirement.  A “/24” segment is required.</p>
+This special proxy network is not used within {AAPonGCP} for any other purpose than GCP’s Load Balancer’s proxy network requirement.  A “/24” segment is required.</p>
 </div>
 <div class="paragraph">
 <p>Default: 192.168.242.0/24</p>
 </div>
 <div class="paragraph">
-<p><strong>Controller Internal Load Balancer IP Address</strong>:  This is the static IP Address assigned to the automation controller Load Balancer.
+<p><strong>Controller Internal Load Balancer IP Address</strong>:  This is the static IP Address assigned to the {Controllername} Load Balancer.
 This address must be within the Application Subnet Range segment.</p>
 </div>
 <div class="paragraph">
 <p>Default: 192.168.240.20</p>
 </div>
 <div class="paragraph">
-<p><strong>Hub Internal Load Balancer IP Address</strong>:  This is the static IP Address assigned to the automation hub Load Balancer.
+<p><strong>Hub Internal Load Balancer IP Address</strong>:  This is the static IP Address assigned to the {Hubname} Load Balancer.
 This address must be within the Application Subnet Range segment.</p>
 </div>
 <div class="paragraph">
@@ -1076,40 +993,40 @@ This address must be within the Application Subnet Range segment.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-networking-access"><a class="anchor" href="#assembly-aap-gcp-networking-access"></a>3. Networking and application access</h2>
+<h2 id="assembly-aap-gcp-networking-access">Networking and application access</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>When Ansible Automation Platform from GCP Marketplace is deployed, it is installed into an isolated VPC and cannot be accessed.
-The following instructions describe how to connect the VPC used by Ansible Automation Platform from GCP Marketplace to your existing GCP network.
-When connected, you must determine how your users connect to Ansible Automation Platform.</p>
+<p>When {AAPonGCP} is deployed, it is installed into an isolated VPC and cannot be accessed.
+The following instructions describe how to connect the VPC used by {AAPonGCP} to your existing GCP network.
+When connected, you must determine how your users connect to {PlatformNameShort}.</p>
 </div>
 <div class="paragraph">
 <p>There are many ways to enable this connectivity such as VPNs, Google Cloud Interconnect, or bastion servers for private network access.
 You can also expose the platform with public internet access using GCP services such as a Load Balancer.</p>
 </div>
 <div class="paragraph">
-<p>How your organization configures application access on GCP is outside the scope of Red Hat’s guidelines and support for Ansible Automation Platform from GCP Marketplace.
+<p>How your organization configures application access on GCP is outside the scope of Red Hat’s guidelines and support for {AAPonGCP}.
 For further information, see <a href="https://cloud.google.com/solutions/connecting-securely#external">Securely connecting to VMs</a> for guidelines on these topics.</p>
 </div>
 <div class="sect2">
-<h3 id="con-aap-gcp-network-peering-options"><a class="anchor" href="#con-aap-gcp-network-peering-options"></a>3.1. Network peering options</h3>
+<h3 id="con-aap-gcp-network-peering-options">Network peering options</h3>
 <div class="paragraph">
 <p>VPC deployments omit access from the public internet by default.
-This is also the deployment model for the GCP architecture used by Ansible Automation Platform from GCP Marketplace.
-Many networking configurations to access the platform are possible, but the following configurations have been validated to work with Ansible Automation Platform from GCP Marketplace.</p>
+This is also the deployment model for the GCP architecture used by {AAPonGCP}.
+Many networking configurations to access the platform are possible, but the following configurations have been validated to work with {AAPonGCP}.</p>
 </div>
 <div class="paragraph">
-<p>When VPC peering and routing are configured, you can access Ansible Automation Platform through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between GCP and your local networks.</p>
+<p>When VPC peering and routing are configured, you can access {PlatformNameShort} through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between GCP and your local networks.</p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>VPC peering is required for Ansible Automation Platform to access resources that reside on private VPCs or where transit routing between Google Cloud Platform and your on-premises network(s) exist.</p>
+<p>VPC peering is required for {PlatformNameShort} to access resources that reside on private VPCs or where transit routing between {GCP} and your on-premises network(s) exist.</p>
 </div>
 </td>
 </tr>
@@ -1119,11 +1036,11 @@ Many networking configurations to access the platform are possible, but the foll
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>While every effort has been made to align with Google Cloud Platform’s documentation for this content, there may be a drift in accuracy over time.
+<p>While every effort has been made to align with {GCP}’s documentation for this content, there may be a drift in accuracy over time.
 Use <a href="https://cloud.google.com/vpc/docs/vpc-peering">GCP documentation</a> as the source of information regarding networking topics for GCP.</p>
 </div>
 </td>
@@ -1132,7 +1049,7 @@ Use <a href="https://cloud.google.com/vpc/docs/vpc-peering">GCP documentation</a
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-gcp-vpc-peering"><a class="anchor" href="#proc-gcp-vpc-peering"></a>3.2. VPC peering</h3>
+<h3 id="proc-gcp-vpc-peering">VPC peering</h3>
 <div class="paragraph">
 <p><a href="https://cloud.google.com/vpc/docs/vpc-peering">VPC Peering</a> offers the ability to directly connect different networks within your GCP infrastructure. VPCs are individually connected to one another with no other routing hops between them.</p>
 </div>
@@ -1147,11 +1064,11 @@ Use <a href="https://cloud.google.com/vpc/docs/vpc-peering">GCP documentation</a
 </div>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
-<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and Ansible Automation Platform from GCP Marketplace&#8217;s VPC address space.
+<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and {AAPonGCP}'s VPC address space.
 The GCP Portal should prevent peering if this is attempted.</p>
 </div>
 <div class="paragraph">
-<p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
+<p>The following procedure lets you configure VPC peering with {PlatformNameShort}.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1173,12 +1090,12 @@ The GCP Portal should prevent peering if this is attempted.</p>
 </li>
 <li>
 <p>In the <strong>Peered VPC Network</strong> field, select the second VPC to peer.
-This must be the Ansible Automation Platform from GCP Marketplace VPC.</p>
+This must be the {AAPonGCP} VPC.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
 <p>Subnet routes between these two networks are created by default.
-Therefore, access to Ansible Automation Platform can occur from VMs that reside on the peered VPC.
+Therefore, access to {PlatformNameShort} can occur from VMs that reside on the peered VPC.
 However, if you have more complex routing, such as a hub-and-spoke network model, then other routes must be created.</p>
 </li>
 <li>
@@ -1200,9 +1117,9 @@ Normally, these checkboxes configure routing between the newly peered networks a
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-external-load-balancer"><a class="anchor" href="#ref-aap-gcp-external-load-balancer"></a>3.3. Using an external load balancer</h3>
+<h3 id="ref-aap-gcp-external-load-balancer">Using an external load balancer</h3>
 <div class="paragraph">
-<p>It is possible to expose Ansible automation controller and Ansible private automation hub to the public internet if you wish users to have access to the platform from any internet connected machine.
+<p>It is possible to expose Ansible {ControllerName} and Ansible {PrivateHubName} to the public internet if you wish users to have access to the platform from any internet connected machine.
 This is not recommended as a best practice for security reasons, however this implementation can be secured with different GCP tools.  This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products.
 Only use this approach if you intend to protect the public endpoints with <a href="https://cloud.google.com/armor/">Google Cloud Armor</a> or similar product(s).</p>
 </div>
@@ -1210,11 +1127,11 @@ Only use this approach if you intend to protect the public endpoints with <a hre
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is deployed with two internal application load balancers.
+<p>{AAPonGCP} is deployed with two internal application load balancers.
 These load balancers direct traffic within local VPCs and must remain part of the deployment even if you configure public load balancers.</p>
 </div>
 </td>
@@ -1323,7 +1240,7 @@ This returns you to <strong>Backend configuration</strong> section.</p>
 <p>Click btn:[OK].</p>
 </li>
 <li>
-<p>Click btn:[CREATE] to create the load balancer for the automation controller UI.
+<p>Click btn:[CREATE] to create the load balancer for the {ControllerName} UI.
 This will take a few minutes to complete.
 .A load balancer has now been created.
 .Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.</p>
@@ -1334,31 +1251,31 @@ This will take a few minutes to complete.
 </ol>
 </div>
 <div class="paragraph">
-<p>At this point you should have accesss to the Ansible Automation Platform automation controller UI.
+<p>At this point you should have accesss to the {PlatformNameShort} {Controllername} UI.
 You can log after you retrieve the admin password.
-Repeat the same process for private automation hub.
+Repeat the same process for {PrivateHubName}.
 The process is identical except for selecting the instance group <code>-aap-hub-igm</code> during backend configuration</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-additional-configs"><a class="anchor" href="#assembly-aap-gcp-additional-configs"></a>4. Additional configurations</h2>
+<h2 id="assembly-aap-gcp-additional-configs">Additional configurations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following chapter describes Ansible Automation Platform configuration steps that you can perform once your deployment is complete on GCP.</p>
+<p>The following chapter describes {PlatformNameShort} configuration steps that you can perform once your deployment is complete on GCP.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-gcp-additional-configs-update-admin-password"></a>4.1. Changing the default Ansible Automation Platform administrator password</h3>
+<h3 id="ref-aap-gcp-additional-configs-update-admin-password">Changing the default {PlatformNameShort} administrator password</h3>
 <div class="paragraph">
-<p>The default administrator password for Ansible Automation Platform is generated randomly when Ansible Automation Platform from GCP Marketplace is deployed.
-Follow these steps to change the administrator password for both automation controller and automation hub.</p>
+<p>The default administrator password for {PlatformNameShort} is generated randomly when {AAPonGCP} is deployed.
+Follow these steps to change the administrator password for both {ControllerName} and {HubName}.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Locate the correct secret for the Ansible Automation Platform deployment by opening the GCP Secrets Manager console and selecting the secret with the name <em>&lt;deployment_name&gt;-aap-admin</em>.</p>
+<p>Locate the correct secret for the {PlatformNameShort} deployment by opening the GCP Secrets Manager console and selecting the secret with the name <em>&lt;deployment_name&gt;-aap-admin</em>.</p>
 </li>
 <li>
 <p>Select <strong>NEW VERSION</strong> to add a new version.</p>
@@ -1373,38 +1290,38 @@ Follow these steps to change the administrator password for both automation cont
 <p>Click btn:[ADD NEW VERSION]</p>
 </li>
 <li>
-<p>Replace the running Ansible Automation Platform VM instances to use the new administrator password.</p>
+<p>Replace the running {PlatformNameShort} VM instances to use the new administrator password.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
 <p>Navigate to the <strong>GCP VM Instances</strong> console.</p>
 </li>
 <li>
-<p>Identify and delete one automation controller VM instance and one automation hub VM instance for the {PlatfromNameShort} deployment.</p>
+<p>Identify and delete one {ControllerName} VM instance and one {HubName} VM instance for the {PlatfromNameShort} deployment.</p>
 </li>
 <li>
-<p>Wait for the automation controller Auto Scale group and the automation hub Auto Scaling group to create new VM instances.</p>
+<p>Wait for the {ControllerName} Auto Scale group and the {HubName} Auto Scaling group to create new VM instances.</p>
 </li>
 </ol>
 </div>
 </li>
 <li>
-<p>The new administrator can be used when the new automation controller and automation hub VM instances reach a <em>Running</em> Instance State.</p>
+<p>The new administrator can be used when the new {ControllerName} and {HubName} VM instances reach a <em>Running</em> Instance State.</p>
 </li>
 </ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-gcp-secure-communication-SSL"><a class="anchor" href="#proc-aap-gcp-secure-communication-SSL"></a>4.2. Securing internal communication with SSL</h3>
+<h3 id="proc-aap-gcp-secure-communication-SSL">Securing internal communication with SSL</h3>
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is deployed with two internal application load balancers, one each in front of the hub and controller instances.
+<p>{AAPonGCP} is deployed with two internal application load balancers, one each in front of the hub and controller instances.
 These external load balancers must be configured with SSL certificates after deployment completes.</p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1426,7 +1343,7 @@ We will modify the internal load balancers, which have the suffix int-lb
 For both the controller and hub load balancers, do the following:</p>
 </li>
 <li>
-<p>For the automation controller load balancer, which has the format <code>&lt;DEPLOYMENT_NAME&gt;-aap&lt;cntrlr&gt;-int-lb</code></p>
+<p>For the {ControllerName} load balancer, which has the format <code>&lt;DEPLOYMENT_NAME&gt;-aap&lt;cntrlr&gt;-int-lb</code></p>
 </li>
 <li>
 <p>Click btn:[Edit].</p>
@@ -1496,29 +1413,29 @@ Use the following values:</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-security-considerations"><a class="anchor" href="#ref-aap-gcp-security-considerations"></a>4.3. Security considerations</h3>
+<h3 id="ref-aap-gcp-security-considerations">Security considerations</h3>
 <div class="paragraph">
-<p>To configure Red Hat Single Sign-On with an identity provider that can enable MFA, follow the steps <a href="https://docs.ansible.com/ansible-tower/latest/html/administration/ent_auth.html">here</a> for connecting enterprise authentication to Ansible Automation Platform.</p>
+<p>To configure {RHSSO} with an identity provider that can enable MFA, follow the steps <a href="https://docs.ansible.com/ansible-tower/latest/html/administration/ent_auth.html">here</a> for connecting enterprise authentication to {PlatformNameShort}.</p>
 </div>
 <div class="paragraph">
 <p>Securing infrastructure services is an important step to any cloud deployment.
-Follow the implementation and security suggestions from <a href="https://cloud.google.com/docs">GCP documentation</a> for services used as part of an Ansible Automation Platform from GCP Marketplace deployment.</p>
+Follow the implementation and security suggestions from <a href="https://cloud.google.com/docs">GCP documentation</a> for services used as part of an {AAPonGCP} deployment.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-automation-workloads"><a class="anchor" href="#assembly-aap-gcp-automation-workloads"></a>5. Automation workloads</h2>
+<h2 id="assembly-aap-gcp-automation-workloads">Automation workloads</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is designed to automate the number of managed nodes included with the offer identified at purchase time.
+<p>{AAPonGCP} is designed to automate the number of managed nodes included with the offer identified at purchase time.
 This is typically 100 nodes.</p>
 </div>
 <div class="paragraph">
-<p>Consult your GCP offer used when deploying Ansible Automation Platform from GCP Marketplace.</p>
+<p>Consult your GCP offer used when deploying {AAPonGCP}.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-automation-performance"><a class="anchor" href="#ref-aap-gcp-automation-performance"></a>5.1. Automation performance</h3>
+<h3 id="ref-aap-gcp-automation-performance">Automation performance</h3>
 <div class="paragraph">
 <p>Automating against the managed node allotment in the offer is provided with the following operational expectations.
 Automating outside of the boundaries of these criteria is not supported, but can still function depending on your automation.</p>
@@ -1549,13 +1466,13 @@ Automating outside of the boundaries of these criteria is not supported, but can
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is driven using three m5.large instances, two of which run Red Hat Ansible Automation Platform automation controller and one which runs automation hub. The automation controller instances collectively support a standard workload for 100 managed active nodes.
+<p>{AAPonGCP} is driven using three m5.large instances, two of which run {PlatformName} {ControllerName} and one which runs {HubName}. The {ControllerName} instances collectively support a standard workload for 100 managed active nodes.
 Testing this operating criteria by Red Hat found support for up-to 10 forks each.
-This operating criteria above has been set and tested using output-intensive, “chatty” workloads that produce 2 messages 7 seconds apart on both automation controller nodes.
+This operating criteria above has been set and tested using output-intensive, “chatty” workloads that produce 2 messages 7 seconds apart on both {ControllerName} nodes.
 Workloads that are more I/O intensive might not work inside the boundaries of these conditions and can require the use of extension nodes to scale the deployment to support such automation.</p>
 </div>
 </td>
@@ -1564,26 +1481,26 @@ Workloads that are more I/O intensive might not work inside the boundaries of th
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-deployment-scaling"><a class="anchor" href="#ref-aap-gcp-deployment-scaling"></a>5.2. Deployment scaling</h3>
+<h3 id="ref-aap-gcp-deployment-scaling">Deployment scaling</h3>
 <div class="paragraph">
-<p>Extension nodes will be made available after the initial release of Ansible Automation Platform from GCP Marketplace.
+<p>Extension nodes will be made available after the initial release of {AAPonGCP}.
 This documentation will be updated to describe how to purchase and connect extension nodes at that time.</p>
 </div>
 <div class="paragraph">
-<p>If you want to scale your deployment beyond the initial number of supported managed nodes, Ansible Automation Platform from GCP Marketplace can be manually scaled using separately sold extension nodes.</p>
+<p>If you want to scale your deployment beyond the initial number of supported managed nodes, {AAPonGCP} can be manually scaled using separately sold extension nodes.</p>
 </div>
 <div class="paragraph">
 <p>Extension nodes are additional compute instances that can be deployed to scale-up or scale-out depending on the immediate scaling requirements.
 If your requirements are for higher parallel automation operations you can select compute shapes that scale-up, while if you have a requirement to automate more nodes over time you can select compute shapes that scale out.</p>
 </div>
 <div class="paragraph">
-<p>Extension nodes are the supported way of extending the capabilities of Ansible Automation Platform from GCP Marketplace.</p>
+<p>Extension nodes are the supported way of extending the capabilities of {AAPonGCP}.</p>
 </div>
 <div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<div class="title">Note</div>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1597,19 +1514,19 @@ If your requirements are for higher parallel automation operations you can selec
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-monitoring-logging"><a class="anchor" href="#assembly-aap-gcp-monitoring-logging"></a>6. Monitoring and logging</h2>
+<h2 id="assembly-aap-gcp-monitoring-logging">Monitoring and logging</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can send metrics to the Google Cloud Platform monitoring system to be visualized in the Google Cloud Platform UI.
-Ansible Automation Platform from GCP Marketplace metrics and logging are disabled by default as there is a cost to send these metrics to GCP.
+<p>You can send metrics to the {GCP} monitoring system to be visualized in the {GCP} UI.
+{PlatformNameShort} from {GCPMarket} metrics and logging are disabled by default as there is a cost to send these metrics to GCP.
 Refer to <a href="https://cloud.google.com/stackdriver/pricing#monitoring-costs">Cloud Monitoring</a> and <a href="https://cloud.google.com/stackdriver/pricing">Cloud Logging</a> respectively for more information.</p>
 </div>
 <div class="paragraph">
 <p>Metrics are provided by <a href="https://docs.ansible.com/ansible-tower/latest/html/administration/metrics.html">Ansible</a>, <a href="https://github.com/containers/prometheus-podman-exporter">Podman</a> and <a href="https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent">Google Ops Agent</a>.
-Ansible metrics is only installed on automation hub, the Google Ops Agent and Podman are also installed on automation controllers.</p>
+Ansible metrics is only installed on {HubName}, the Google Ops Agent and Podman are also installed on {ControllerName}s.</p>
 </div>
 <div class="paragraph">
-<p>A configurable process (collector) runs on each automation controller and automation hub to export the collected Ansible and Podman metrics to Google Cloud Platform Monitoring.
+<p>A configurable process (collector) runs on each {ControllerName} and {HubName} to export the collected Ansible and Podman metrics to {GCP} Monitoring.
 As the Google Ops Agent is part of the Google Cloud solution, it has its own configuration file.</p>
 </div>
 <div class="paragraph">
@@ -1621,19 +1538,19 @@ As the Google Ops Agent is part of the Google Cloud solution, it has its own con
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration"><a class="anchor" href="#_configuration"></a>7. Configuration</h2>
+<h2 id="_configuration">Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Configuration files are located on a disk shared by each automation controller and automation hub.
+<p>Configuration files are located on a disk shared by each {ControllerName} and {HubName}.
 Modify the file <code>/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring.yaml</code> to configure all exporters and agents.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-ansible-podman-config"><a class="anchor" href="#ref-aap-gcp-ansible-podman-config"></a>7.1. Ansible and podman configuration</h3>
+<h3 id="ref-aap-gcp-ansible-podman-config">Ansible and podman configuration</h3>
 <div class="paragraph">
-<p>The file `/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring.yaml' on automation controller or automation hub contains the configuration for collecting and sending Ansible and podman metrics to GCP.</p>
+<p>The file `/aap/common/bootstrap/config_file_templates/&lt;controller|hub&gt;/monitoring.yaml' on {ControllerName} or {HubName} contains the configuration for collecting and sending Ansible and podman metrics to GCP.</p>
 </div>
 <div class="paragraph">
-<p>The default configuration for automation controller looks like this:</p>
+<p>The default configuration for {ControllerName} looks like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1662,7 +1579,7 @@ collectors:
 </div>
 </div>
 <div class="paragraph">
-<p>The default configuration for automation hub looks like:</p>
+<p>The default configuration for {HubName} looks like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1712,7 +1629,7 @@ The password is retrieved from the secret-manager.</p>
 <p>The endpoint should not be changed.</p>
 </div>
 <div class="paragraph">
-<p><code>defaultCollectorInterval</code> specifies the default interval at which the exporter collects the information from the metric end-point and sends it to Google Cloud Platform Monitoring.</p>
+<p><code>defaultCollectorInterval</code> specifies the default interval at which the exporter collects the information from the metric end-point and sends it to {GCP} Monitoring.</p>
 </div>
 <div class="paragraph">
 <p>Setting this value to <code>0</code> or omitting this attribute disables all collectors.</p>
@@ -1721,16 +1638,16 @@ The password is retrieved from the secret-manager.</p>
 <p>Each collector can be enabled or disabled separately by setting <code>enabled</code> to <code>true</code> or <code>false</code>.</p>
 </div>
 <div class="paragraph">
-<p>A collector returns all available metrics grouped by families, but you can exclude the families that should not be sent to Google Cloud Platform Monitoring by adding their name in the array <code>excludedMetrics</code>.</p>
+<p>A collector returns all available metrics grouped by families, but you can exclude the families that should not be sent to {GCP} Monitoring by adding their name in the array <code>excludedMetrics</code>.</p>
 </div>
 <div class="paragraph">
-<p>For all other family metrics, you can specify the interval at which you want to collect and send them to the Google Cloud Platform Monitoring.
+<p>For all other family metrics, you can specify the interval at which you want to collect and send them to the {GCP} Monitoring.
 The collector interval is the minimum between all family metrics interval and the <code>defaultCollectorInterval</code>.
-This to ensure that a collection is made for each set of metrics sent to Google Cloud Platform Monitoring.</p>
+This to ensure that a collection is made for each set of metrics sent to {GCP} Monitoring.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-gcp-configure-google-cloud-ops-agent"><a class="anchor" href="#proc-aap-gcp-configure-google-cloud-ops-agent"></a>7.2. Google cloud ops agent configuration</h3>
+<h3 id="proc-aap-gcp-configure-google-cloud-ops-agent">Google cloud ops agent configuration</h3>
 <div class="paragraph">
 <p>The configuration file details can be found <a href="https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent/configuration">here</a>.</p>
 </div>
@@ -1751,22 +1668,22 @@ You can find examples in <code>/app/bootstrap/config_file_templates/hub|controll
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-gcp-support"><a class="anchor" href="#assembly-aap-gcp-support"></a>8. Support</h2>
+<h2 id="assembly-aap-gcp-support">Support</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is a self-managed deployment.
-When the application is deployed into your GCP infrastructure, customers are responsible for the maintenance of the GCP infrastructure, OS patching, and Ansible Automation Platform patching.
+<p>{AAPonGCP} is a self-managed deployment.
+When the application is deployed into your GCP infrastructure, customers are responsible for the maintenance of the GCP infrastructure, OS patching, and {PlatformNameShort} patching.
 However, Red Hat does not support any changes to the infrastructure resources deployed as part of the solution unless there is documentation by Red Hat to do so, such as in route table configuration for networking or documented upgrade processes.
-Adding additional compute resources outside of extension nodes voids Red Hat support for the Ansible Automation Platform from GCP Marketplace deployment.</p>
+Adding additional compute resources outside of extension nodes voids Red Hat support for the {AAPonGCP} deployment.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ref-aap-gcp-vm-image-packages"><a class="anchor" href="#ref-aap-gcp-vm-image-packages"></a>9. VM Image packages</h2>
+<h2 id="ref-aap-gcp-vm-image-packages">VM Image packages</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Ansible Automation Platform from GCP Marketplace is delivered through virtual machines that are based on a VM image produced by the Red Hat Ansible team.
-This image contains packages from Red Hat and Google in order to properly function on Google Cloud Platform and run Red Hat Ansible Automation Platform.
+<p>{AAPonGCP} is delivered through virtual machines that are based on a VM image produced by the Red Hat Ansible team.
+This image contains packages from Red Hat and Google in order to properly function on {GCP} and run {PlatformName}.
 The image contains the following Google packages and containers:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1792,20 +1709,20 @@ Combining logging and metrics into a single agent, the Ops Agent uses Fluent Bit
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>gce-proxy</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The Cloud SQL Authorization proxy is used to connect Ansible Automation Platform components with the Cloud SQL database using the virtual machine service account.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Cloud SQL Authorization proxy is used to connect {PlatformNameShort} components with the Cloud SQL database using the virtual machine service account.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>gcloud CLI</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The gcloud command line interface is used to configure the Ansible Automation Platform installation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The gcloud command line interface is used to configure the {PlatformNameShort} installation.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Upgrades, including package updates and CVE patches, will be provided as new VM images through the GCP Marketplace.
-Red Hat operates within its premium support policies for providing updated machine images to Red Hat Ansible Automation Platform from GCP Marketplace, and will provide upgrade instructions to customers when upgradable machine images are available.</p>
+<p>Upgrades, including package updates and CVE patches, will be provided as new VM images through the {GCPMarket}.
+Red Hat operates within its premium support policies for providing updated machine images to Red Hat {AAPonGCP}, and will provide upgrade instructions to customers when upgradable machine images are available.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-gcp-supported-changes"><a class="anchor" href="#ref-aap-gcp-supported-changes"></a>9.1. Supported infrastructure configuration changes</h3>
+<h3 id="ref-aap-gcp-supported-changes">Supported infrastructure configuration changes</h3>
 <div class="paragraph">
 <p>Red Hat supports changes to the following options:</p>
 </div>
@@ -1838,7 +1755,7 @@ Red Hat operates within its premium support policies for providing updated machi
 <p>Premium support for Ansible Automation Platform</p>
 </li>
 <li>
-<p>Directions and how-to processes for upgrading Ansible Automation Platform from GCP Marketplace.</p>
+<p>Directions and how-to processes for upgrading {AAPonGCP}.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1868,7 +1785,7 @@ Red Hat operates within its premium support policies for providing updated machi
 <p>Backing up Ansible data from GCP databases and file storageResources</p>
 </li>
 <li>
-<p>Application of Ansible Automation Platform upgrades</p>
+<p>Application of {PlatformNameShort} upgrades</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1885,32 +1802,8 @@ Red Hat operates within its premium support policies for providing updated machi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-04 10:26:36 UTC
+Last updated 2022-11-18 15:19:53 UTC
 </div>
 </div>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  messageStyle: "none",
-  tex2jax: {
-    inlineMath: [["\\(", "\\)"]],
-    displayMath: [["\\[", "\\]"]],
-    ignoreClass: "nostem|nolatexmath"
-  },
-  asciimath2jax: {
-    delimiters: [["\\$", "\\$"]],
-    ignoreClass: "nostem|noasciimath"
-  },
-  TeX: { equationNumbers: { autoNumber: "none" } }
-})
-MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
-  MathJax.InputJax.AsciiMath.postfilterHooks.Add(function (data, node) {
-    if ((node = data.script.parentNode) && (node = node.parentNode) && node.classList.contains("stemblock")) {
-      data.math.root.display = "block"
-    }
-    return data
-  })
-})
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 </html>
