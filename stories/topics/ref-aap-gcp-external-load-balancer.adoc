@@ -6,6 +6,12 @@ It is possible to expose Ansible {ControllerName} and Ansible {PrivateHubName} t
 This is not recommended as a best practice for security reasons, however this implementation can be secured with different GCP tools.  This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
 Only use this approach if you intend to protect the public endpoints with link:https://cloud.google.com/armor/[Google Cloud Armor] or similar product(s).
 
+[NOTE]
+====
+{AAPonGCP} is deployed with two internal application load balancers. 
+These load balancers direct traffic within local VPCs and must remain part of the deployment even if you configure public load balancers.
+====
+
 
 .Procedure
 . Select the main menu from the top left.

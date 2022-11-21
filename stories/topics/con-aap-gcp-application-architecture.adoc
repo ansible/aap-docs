@@ -10,7 +10,7 @@ image::aap-on-gcp-architecture.png[GCP application architecture]
 
 == Architecture Description
 
-{PlatformName} from {GCPMarket} was designed to be private, with no public access or public egress enabled by default. 
+{AAPonGCP} was designed to be private, with no public access or public egress enabled by default. 
 This requires customers to connect existing GCP infrastructure to {PlatformNameShort} infrastructure manually. 
 {PlatformNameShort} components that are deployed are isolated into their own VPC. 
 Applications then run on instances managed by an instance group, which run on RHEL-based Google Compute machine images. 
@@ -23,7 +23,6 @@ This podman configuration is itself managed by systemd.
 SELinux is enabled on GCP Compute instances and is supported down to the container level. 
 Each {ControllerName} instance is configured as an {PlatformNameShort} hybrid node by default to simplify the scale up and out procedures.
 
-
 == Service descriptions
 
 [cols="30%,30%",options="header"]
@@ -35,5 +34,4 @@ Each {ControllerName} instance is configured as an {PlatformNameShort} hybrid no
 | Virtual Private Cloud (VPC) | GCP networking service
 | Cloud monitoring | GCP metrics collector
 | Cloud loging | GCP log management Service
-| NAT Gateway | A NAT gateway is a _Network Address Translation_ (NAT) service
 |====

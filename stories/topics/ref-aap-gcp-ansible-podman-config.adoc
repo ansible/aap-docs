@@ -37,7 +37,7 @@ The default configuration for {HubName} looks like:
 [options="nowrap" subs="+quotes"]
 ----
 # This value will be set at deployment time.
-# Set to zero if loggingEnabled is false otherwise 59s
+# Set to zero if monitoringEnabled is false otherwise 59s
 # The collection interval for each collector will be the minimum
 # between the defaultCollectorInterval and all sendInterval
 # of a given collector
@@ -85,7 +85,7 @@ Each collector can be enabled or disabled separately by setting `enabled` to `tr
 
 A collector returns all available metrics grouped by families, but you can exclude the families that should not be sent to {GCP} Monitoring by adding their name in the array `excludedMetrics`.
 
-For all other family metrics, you can specify the interval at which you want to collect and send them to the Google Cloud Platform Monitoring. 
+For all other family metrics, you can specify the interval at which you want to collect and send them to the {GCP} Monitoring. 
 The collector interval is the minimum between all family metrics interval and the `defaultCollectorInterval`. 
 This to ensure that a collection is made for each set of metrics sent to {GCP} Monitoring.
 
