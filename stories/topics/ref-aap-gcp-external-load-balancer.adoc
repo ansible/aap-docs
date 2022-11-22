@@ -3,14 +3,17 @@
 = Using an external load balancer
 
 It is possible to expose Ansible {ControllerName} and Ansible {PrivateHubName} to the public internet if you wish users to have access to the platform from any internet connected machine. 
-This is not recommended as a best practice for security reasons, but this implementation can be secured with different GCP tools.  This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
+This is not recommended as a best practice for security reasons. 
+However this implementation can be secured with different GCP tools. 
+This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
 Only use this approach if you intend to protect the public endpoints with link:https://cloud.google.com/armor/[Google Cloud Armor] or similar product(s).
 
 [NOTE]
 ====
-{PlatformNameShort} from {GCPMarket} is deployed with two internal application load balancers.  
-These load balancers direct traffic within local VPCs and should remain part of the deployment even if you configure public load balancers.
+{AAPonGCP} is deployed with two internal application load balancers. 
+These load balancers direct traffic within local VPCs and must remain part of the deployment even if you configure public load balancers.
 ====
+
 
 .Procedure
 . Select the main menu from the top left.
@@ -23,33 +26,35 @@ If you do not see *Network Services*, then select *View All Products*.
 . Select *From Internet to my VMs* or *Serverless services and Global HTTP(s) Load Balancer*.
 . Click btn:[CONTINUE].
 . Enter the required fields on the *Frontend* configuration page.
-.. Only use HTTPS as the *Protocol* for internet-facing applications.
-.. You can use your own *SSL certificate*, or use a Google managed certificate.
-.. *IP Address* should be set to a static IP address so that you do not risk accidentally deleting it.
+.. *Protocol*: HTTPS.
+.. *Port*: 443.
+.. *IP Address* Select an existing IP addres or create a new one.
+.. *Certificate*, You can use your own SSL Certificate or use a Google managed certificate.
+.. *SSL Policy*: GCP default, or another configured policy.
 . Click btn:[Backend configuration] from the menu on the left.
-. Click the *Create* drop-down, or select *Backend services*.
+. Click the *Create or select backend services* drop-down.
 . Click btn:[CREATE A BACKEND SERVICE].
-. In the *Instance group* field, set the Backend type.
-. Set the *Protocol* to `HTTP` and *Named Port* to `http`.
-. Change the *Timeout* to `300`.
-. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down and select the instance group that has `-aap-cntrlr-igm` at the end of its name.  
-. In the resulting dialog box, select *USE EXISTING PORT NAME*.
-. Scroll down until you see a text box showing *Health check*. 
-. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK]. 
-. In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
-. Set *Request* to `/api/v2/ping/`.
-. Keep all other default settings. 
-. Click btn:[SAVE].
+.. Set the *Backend type* to *Instance group*.
+.. Set the *Protocol* to `HTTP` and *Named Port* to `http`.
+.. Change the *Timeout* to `300`.
+.. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down and select the instance group that has `-aap-cntrlr-igm` at the end of its name.  
+.. In the resulting dialog box, select *USE EXISTING PORT NAME*.
+.. Scroll down until you see a text box showing *Health check*. 
+.. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK]. 
+.. In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
+.. Set *.Request* to `/api/v2/ping/`.
+.. Keep all other default settings. 
+.. Click btn:[SAVE].
 This returns you to the *Create backend services* window.
-. Click btn:[CREATE].
+.. Click btn:[CREATE].
 This returns you to *Backend configuration* section.
-. Click btn:[OK].
-. Click btn:[CREATE] to create the load balancer for the {ControllerName} UI.  
+.. Click btn:[OK].
+.. Click btn:[CREATE] to create the load balancer for the {ControllerName} UI.  
 This will take a few minutes to complete. 
-A load balancer has now been created. 
+. A load balancer has now been created. 
 . Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.  
 
 At this point you should have accesss to the {PlatformNameShort} {Controllername} UI.  
-You can log after you retrieve the admin password.
+You can log in after you retrieve the admin password.
 Repeat the same process for {PrivateHubName}.
 The process is identical except for selecting the instance group `-aap-hub-igm` during backend configuration
