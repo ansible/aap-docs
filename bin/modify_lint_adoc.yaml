@@ -1,6 +1,6 @@
 # Post conversion modification of adoc files.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: add passthrough to schema rule
+- name: Add passthrough to the schema rule to avoid DocBook build failure
   ansible.builtin.replace:
     path: "{{ target_rules_dir }}schema.adoc"
     regexp: 'vars/\*.yml'

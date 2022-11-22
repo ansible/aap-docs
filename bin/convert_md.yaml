@@ -1,11 +1,11 @@
 # Shared tasks that convert Markdown to Asciidoc.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: convert markdown to adoc
+- name: Convert markdown to asciidoc
   ansible.builtin.shell:
     cmd: while read i; do kramdoc "$i" -o "${i%.*}.adoc"; done
     stdin: "{{ item.path }}"
   loop: "{{ md_files.files }}"
-- name: rm converted markdown files
+- name: Remove markdown files after conversion
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent

@@ -1,37 +1,37 @@
 # Copies common ADOC files to each Controller title directory.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: find common files
+- name: Find and register common asciidoc files
   ansible.builtin.find:
     paths: ../sync/controller-docs/common/source
     patterns: "*.adoc"
     recurse: true
     file_type: file
   register: common_adoc_files
-- name: copy common files to administration
+- name: Copy the common content to administration
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/administration/source
     mode: 0644
   with_items: "{{ common_adoc_files.files }}"
-- name: copy common files to controllerapi
+- name: Copy the common content to controllerapi
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/controllerapi/source
     mode: 0644
   with_items: "{{ common_adoc_files.files }}"
-- name: copy common files to quickstart
+- name: Copy the common content to quickstart
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/quickstart/source
     mode: 0644
   with_items: "{{ common_adoc_files.files }}"
-- name: copy common files to upgrade-migration
+- name: Copy the common content to upgrade-migration
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/upgrade-migration-guide/source
     mode: 0644
   with_items: "{{ common_adoc_files.files }}"
-- name: copy common files to user-guide
+- name: Copy the common content to user guide
   ansible.builtin.copy:
     src: "{{ item.path }}"
     dest: ../sync/controller-docs/userguide/source

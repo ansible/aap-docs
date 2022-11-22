@@ -1,11 +1,11 @@
 # Shared tasks that convert RST to Asciidoc.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: convert rst to adoc
+- name: Convert restructured text to asciidoc
   ansible.builtin.shell:
     cmd: while read i; do pandoc -f rst -t asciidoc "$i" -o "${i%.*}.adoc"; done
     stdin: "{{ item.path }}"
   loop: "{{ rst_files.files }}"
-- name: rm converted rst files
+- name: Remove rst files after conversion
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent

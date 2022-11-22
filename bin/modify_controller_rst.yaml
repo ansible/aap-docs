@@ -1,21 +1,21 @@
 # Pre conversion modification of RST files.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: remove single metadata
+- name: Remove single metadata tags
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: 'single:(.+)$'
   with_items: "{{ rst_files.files }}"
-- name: remove pair metadata
+- name: Remove pair metadata tags
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: 'pair:(.+)$'
   with_items: "{{ rst_files.files }}"
-- name: remove local metadata
+- name: Remove local metadata tags
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '.. contents:: :local:'
   with_items: "{{ rst_files.files }}"
-- name: change common includes
+- name: Change include directive for common content
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '.. include:: ../../common/source/'

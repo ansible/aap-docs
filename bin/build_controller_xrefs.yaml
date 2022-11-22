@@ -1,31 +1,31 @@
 # Post conversion modification of adoc files to build asciidoc xrefs.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: find adoc files
+- name: Find and register asciidoc files
   ansible.builtin.find:
     paths: "{{ target_dir }}"
     patterns: "*.adoc"
     recurse: true
     file_type: file
   register: adoc_files
-- name: build ug xrefs
+- name: Build Controller User Guide cross-references
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '\`ug_'
     replace: 'xref:ug_'
   with_items: "{{ adoc_files.files }}"
-- name: build ag xrefs
+- name: Build Controller Administration cross-references
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '\`ag_'
     replace: 'xref:ag_'
   with_items: "{{ adoc_files.files }}"
-- name: close xrefs
+- name: Add closing brackets to xref declarations
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '(?<=xref:)(.*)(?=`)'
     replace: '\1[]'
   with_items: "{{ adoc_files.files }}"
-- name: trim backtick
+- name: Trim the backtick character from xref declarations
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: '\[\]`'

@@ -1,41 +1,41 @@
 # Post conversion modification of adoc files.
 # Ensure the target_dir variable is set in the playbook that imports this.
-- name: find adoc files
+- name: Find and register asciidoc files
   ansible.builtin.find:
     paths: "{{ target_dir }}"
     patterns: "*.adoc"
     recurse: true
     file_type: file
   register: adoc_files
-- name: update image references
+- name: Update image references
   ansible.builtin.replace:
     path: "{{ item.path }}"
     regexp: 'image:../../common/source/images/'
     replace: 'image:'
   with_items: "{{ adoc_files.files }}"
-- name: update common references
+- name: Change include statements to reference adoc files
   ansible.builtin.replace:
     path: "{{ item.path }}"
     after: 'include::'
     regexp: '\.rst'
     replace: '.adoc[]'
   with_items: "{{ adoc_files.files }}"
-- name: add passthrough one
+- name: Add passthrough one to avoid DocBook build failure
   ansible.builtin.replace:
     path: "{{ target_dir }}common/source/lic-feat-support.adoc"
     regexp: '/usr/share/doc/automation-controller-<version>/\*.txt'
     replace: '+/usr/share/doc/automation-controller-<version>/*.txt+'
-- name: add passthrough two
+- name: Add passthrough two to avoid DocBook build failure
   ansible.builtin.replace:
     path: "{{ target_dir }}common/source/search.adoc"
     regexp: '\?name__icontains=localhost'
     replace: '+?name__icontains=localhost+'
-- name: add passthrough three
+- name: Add passthrough three to avoid DocBook build failure
   ansible.builtin.replace:
     path: "{{ target_dir }}userguide/source/jobs.adoc"
     regexp: 'refs/heads/\*'
     replace: '+refs/heads/*+'
-- name: delete duplicating anchor
+- name: Remove a duplicate anchor to avoid DocBook build failure
   ansible.builtin.lineinfile:
     path: "{{ target_dir }}common/source/work_items_deletion_warning.adoc"
     line: '[[deletion_warning]]'
