@@ -19,7 +19,7 @@
       ansible.builtin.file:
         path: "{{ target_dir }}"
         state: "{{ item }}"
-        mode: 0755
+        mode: 0644
       with_items:
         - absent
         - directory
@@ -41,13 +41,13 @@
       ansible.builtin.copy:
         src: "{{ item.path }}"
         dest: "{{ target_dir }}"
-        mode: 0755
+        mode: 0644
       with_items: "{{ lint_doc_files.files }}"
     - name: Copy the lint rule source files to the target directory
       ansible.builtin.copy:
         src: "{{ item.path }}"
         dest: "{{ target_rules_dir }}"
-        mode: 0755
+        mode: 0644
       with_items: "{{ lint_rule_files.files }}"
     - name: Remove the source directory
       ansible.builtin.file:
