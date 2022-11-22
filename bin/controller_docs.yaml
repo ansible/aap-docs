@@ -6,82 +6,82 @@
     source_dir: ../sync/product-docs/
     target_dir: ../sync/controller-docs/
   tasks:
-   - name: Clone the source repository
-     ansible.builtin.git:
-       repo: "{{ source_repo }}"
-       dest: "{{ source_dir }}"
-       version: "{{ source_branch }}"
-       key_file: ~/.ssh/id_rsa
-   - name: Remove the target directory
-     ansible.builtin.file:
-       path: "{{ target_dir }}*"
-       state: absent
-   - name: Synchronize the source and target
-     ansible.posix.synchronize:
-       src: "{{ source_dir }}"
-       dest: "{{ target_dir }}"
-       delete: yes
-       recursive: yes
-       rsync_opts:
-         - "--exclude='Makefile'"
-         - "--exclude='Dockerfile'"
-         - "--exclude='VERSION'"
-         - "--exclude='Jenkinsfile'"
-         - "--exclude='*.sh'"
-         - "--exclude='*.md'"
-         - "--exclude='.gitignore'"
-         - "--exclude='.github'"
-         - "--exclude='**/*.html'"
-         - "--exclude='**/*.css'"
-         - "--exclude='**/*.md'"
-         - "--exclude='**/*.js'"
-         - "--exclude='**/*.json'"
-         - "--exclude='**/*.yaml'"
-         - "--exclude='**/*.yml'"
-         - "--exclude='**/*.xml'"
-         - "--exclude='**/*.svg'"
-         - "--exclude='**/*.ttf'"
-         - "--exclude='**/*.woff'"
-         - "--exclude='**/*.py'"
-         - "--exclude='**/*.eot'"
-         - "--exclude='**/*.po'"
-         - "--exclude='**/*.ico'"
-         - "--exclude='**/*.map'"
-         - "--exclude='**/*.txt'"
-         - "--exclude='**/*.conf'"
-         - "--exclude='_*/*'"
-         - "--exclude='**/_*/*'"
-         - "--exclude='**/locale/*'"
-         - "--exclude='contrib/*'"
-   - name: Copy the example service account yml file
-     ansible.builtin.copy:
-       src: "{{ source_dir }}common/source/containergroup-sa.yml"
-       dest: "{{ target_dir }}common/source/"
-       mode: 0644
-   - name: Remove the source directory
-     ansible.builtin.file:
-       path: "{{ source_dir }}"
-       state: absent
-   - name: Find and register RST files
-     ansible.builtin.find:
-       paths: "{{ target_dir }}"
-       patterns: "*.rst"
-       recurse: true
-       file_type: file
-     register: rst_files
-   - name: Modify RST files before conversion
-     ansible.builtin.include_tasks: modify_controller_rst.yaml
-   - name: variable expansion
-     ansible.builtin.script:
-      cmd: replace-controller-variables.sh
-   - name: Convert rst files to asciidoc files
-     ansible.builtin.include_tasks: convert_rst.yaml
-   - name: Modify asciidoc files after converstion
-     ansible.builtin.include_tasks: modify_controller_adoc.yaml
-   - name: Build Controller cross-references
-     ansible.builtin.include_tasks: build_controller_xrefs.yaml
-   - name: Convert xrefs to hrefs for asciidoc compatibility
-     ansible.builtin.script:
-      cmd: replace-controller-xrefs.sh
-   - name: Copy the common content to each Controller assembly
-     ansible.builtin.include_tasks: copy_controller_common_adoc.yaml
+    - name: Clone the source repository
+      ansible.builtin.git:
+        repo: "{{ source_repo }}"
+        dest: "{{ source_dir }}"
+        version: "{{ source_branch }}"
+        key_file: ~/.ssh/id_rsa
+    - name: Remove the target directory
+      ansible.builtin.file:
+        path: "{{ target_dir }}*"
+        state: absent
+    - name: Synchronize the source and target
+      ansible.posix.synchronize:
+        src: "{{ source_dir }}"
+        dest: "{{ target_dir }}"
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude='Makefile'"
+          - "--exclude='Dockerfile'"
+          - "--exclude='VERSION'"
+          - "--exclude='Jenkinsfile'"
+          - "--exclude='*.sh'"
+          - "--exclude='*.md'"
+          - "--exclude='.gitignore'"
+          - "--exclude='.github'"
+          - "--exclude='**/*.html'"
+          - "--exclude='**/*.css'"
+          - "--exclude='**/*.md'"
+          - "--exclude='**/*.js'"
+          - "--exclude='**/*.json'"
+          - "--exclude='**/*.yaml'"
+          - "--exclude='**/*.yml'"
+          - "--exclude='**/*.xml'"
+          - "--exclude='**/*.svg'"
+          - "--exclude='**/*.ttf'"
+          - "--exclude='**/*.woff'"
+          - "--exclude='**/*.py'"
+          - "--exclude='**/*.eot'"
+          - "--exclude='**/*.po'"
+          - "--exclude='**/*.ico'"
+          - "--exclude='**/*.map'"
+          - "--exclude='**/*.txt'"
+          - "--exclude='**/*.conf'"
+          - "--exclude='_*/*'"
+          - "--exclude='**/_*/*'"
+          - "--exclude='**/locale/*'"
+          - "--exclude='contrib/*'"
+    - name: Copy the example service account yml file
+      ansible.builtin.copy:
+        src: "{{ source_dir }}common/source/containergroup-sa.yml"
+        dest: "{{ target_dir }}common/source/"
+        mode: 0644
+    - name: Remove the source directory
+      ansible.builtin.file:
+        path: "{{ source_dir }}"
+        state: absent
+    - name: Find and register RST files
+      ansible.builtin.find:
+        paths: "{{ target_dir }}"
+        patterns: "*.rst"
+        recurse: true
+        file_type: file
+      register: rst_files
+    - name: Modify RST files before conversion
+      ansible.builtin.include_tasks: modify_controller_rst.yaml
+    - name: Expand product name variables from Sphinx conf
+      ansible.builtin.script:
+        cmd: replace-controller-variables.sh
+    - name: Convert rst files to asciidoc files
+      ansible.builtin.include_tasks: convert_rst.yaml
+    - name: Modify asciidoc files after converstion
+      ansible.builtin.include_tasks: modify_controller_adoc.yaml
+    - name: Build Controller cross-references
+      ansible.builtin.include_tasks: build_controller_xrefs.yaml
+    - name: Convert xrefs to hrefs for asciidoc compatibility
+      ansible.builtin.script:
+        cmd: replace-controller-xrefs.sh
+    - name: Copy the common content to each Controller assembly
+      ansible.builtin.include_tasks: copy_controller_common_adoc.yaml

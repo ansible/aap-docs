@@ -5,6 +5,7 @@
     cmd: while read i; do pandoc -f rst -t asciidoc "$i" -o "${i%.*}.adoc"; done
     stdin: "{{ item.path }}"
   loop: "{{ rst_files.files }}"
+  changed_when: false
 - name: Remove rst files after conversion
   ansible.builtin.file:
     path: "{{ item.path }}"

@@ -5,6 +5,7 @@
     cmd: while read i; do kramdoc "$i" -o "${i%.*}.adoc"; done
     stdin: "{{ item.path }}"
   loop: "{{ md_files.files }}"
+  changed_when: false
 - name: Remove markdown files after conversion
   ansible.builtin.file:
     path: "{{ item.path }}"
