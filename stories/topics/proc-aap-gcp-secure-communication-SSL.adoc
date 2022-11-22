@@ -1,0 +1,38 @@
+[id="proc-aap-gcp-secure-communication-SSL"]
+
+= Securing internal communication with SSL
+
+{AAPonGCP} is deployed with two internal application load balancers, one each in front of the hub and controller instances. 
+These external load balancers must be configured with SSL certificates after deployment completes.
+
+[NOTE]
+====
+Securing traffic through these internal load balancers is different than securing traffic through external load balancers in previous steps. 
+This process ensures HTTP traffic is encrypted even when the traffic is localized to private GCP VPCs.
+====
+
+. In the GCP console, navigate to the link:https://console.cloud.google.com/net-services/loadbalancing/list/loadBalancers[*Load Balancing*] page.
+. In the search bar, enter the name of your stack to filter down to your load balancers.
+To modify the internal load balancers, which have the suffix int-lb.
+For both the controller and hub load balancers, do the following:
+. For the {ControllerName} load balancer, which has the format `<DEPLOYMENT_NAME>-aap<cntrlr>-int-lb`
+. Click btn:[Edit]. 
+. Click btn:[Frontend configuration].
+. Click btn:[ADD FRONTEND IP AND PORT].
+Use the following values:
+.. *Protocol*: HTTPS (includes HTTP/2).
+.. *Subnetwork*: Select the available aap-subnet.
+.. *Port*: 443
+.. *IP Address*: `<DEPLOYMENT_NAME>-aap<cntrlr/hub>-intl-lb-ip`
+. .If you have already added your certificate, select it.
+.. If you have not added your certificate, click btn:[CREATE A NEW CERTIFICATE].
+.. Provide a name for your certificate.
+.. Using your previously generated certificate, copy its contents and paste it under *Certificate*.
+.. Using your previously generated certificate key, copy its contents and paste it under *Private Key*.
+. Click btn:[Create].
+. Click btn:[Done].
+.Optional: Delete HTTP Frontend configuration.
+. Click btn:[Update], and confirm update.
+. Select *backend service for internal load balancer*
+. Click btn:[Edit].
+. Update the protocol to HTTPS.
