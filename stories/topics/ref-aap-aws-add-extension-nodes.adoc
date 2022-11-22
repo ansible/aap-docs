@@ -8,14 +8,10 @@ Follow these steps to add execution nodes into your {PlatformNameShort} from {Ma
 . Open the {ControllerName} Launch Configuration
 .. Navigate to the AWS CloudFormation UI and click the *Resources* tab. Ensure *Tree View* is selected in the top right corner.
 .. Expand *controller*, then *autoscale-group*, then *Launch Config*.
-+
-image::aws-launch-config.png[Launch Configuration]
 .. Click the Launch Config Physical ID to open the launch configuration in a new tab.
 . Create the extension node launch configuration
 .. In the Launch configuration tab, ensure the {ControllerName} launch configuration is selected, then click *Copy to launch template*, then *Copy selected*.
 .. Replace the *New launch template name* with the name 'extension-group-template' and ensure the checkbox for *Create an Auto Scaling group using the new template* is checked. Click Copy.
-+
-image::copy-to-launch-template-example.png[Launch template copy example]
 .. For the Auto Scaling group name, enter 'extension-group'
 .. Under *Launch Template*, click 'Create a launch template version' to create a new verison of the launch template
 .. Under *Application and OS Images*, search for 'AAP-2.2.1-EXT_HVM-2022-10-27-19-13-28-x86_64-1-Marketplace-GP2', and click 'Select' next to the AMI which has this name.
@@ -29,10 +25,8 @@ image::copy-to-launch-template-example.png[Launch template copy example]
 .. Click the refresh icon under *Version*, in the *Launch template* section
 .. Select the latest option, which we have just created, then click *Next*
 .. Under *Network*, ensure the correct VPC is selected
-... The correct VPC can be found quickly from the Cloudformation page, by dropping down *Network*, then *VPC*
+... The correct VPC can be found quickly from the Cloudformation resources page by dropping down *Network*, then *VPC* in tree view.
 ... Select the matching VPC ID
-+
-image::aws-find-vpc-id.png[locate VPC]
 .. Under *Availability Zones and subnets*, select all available options, then click *Next*
 .. At the *Configure advanced options* page, click *Next*
 .. Configure the *Group size* capacity as desired, then click *Next*
@@ -41,5 +35,3 @@ image::aws-find-vpc-id.png[locate VPC]
 .. At the *Review* page, scroll to the bottom and click *Create Auto Scaling group*
 . Wait for the Auto scaling group to create the nodes and for the related nodes to reach a _Running_ instance state.
 . The extension node EC2 instances should now be visible in the Automation Controller UI under Administration -> Instances.
-+
-image::aws-controller-instances-view.png[Instances]
