@@ -3,7 +3,9 @@
 = Using an external load balancer
 
 It is possible to expose Ansible {ControllerName} and Ansible {PrivateHubName} to the public internet if you wish users to have access to the platform from any internet connected machine. 
-This is not recommended as a best practice for security reasons, however this implementation can be secured with different GCP tools.  This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
+This is not recommended as a best practice for security reasons. 
+However this implementation can be secured with different GCP tools. 
+This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
 Only use this approach if you intend to protect the public endpoints with link:https://cloud.google.com/armor/[Google Cloud Armor] or similar product(s).
 
 [NOTE]
@@ -49,10 +51,10 @@ This returns you to *Backend configuration* section.
 .. Click btn:[OK].
 .. Click btn:[CREATE] to create the load balancer for the {ControllerName} UI.  
 This will take a few minutes to complete. 
-.A load balancer has now been created. 
-.Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.  
+. A load balancer has now been created. 
+. Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.  
 
 At this point you should have accesss to the {PlatformNameShort} {Controllername} UI.  
-You can log after you retrieve the admin password.
+You can log in after you retrieve the admin password.
 Repeat the same process for {PrivateHubName}.
 The process is identical except for selecting the instance group `-aap-hub-igm` during backend configuration
