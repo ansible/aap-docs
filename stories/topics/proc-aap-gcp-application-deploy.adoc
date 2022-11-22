@@ -2,13 +2,13 @@
 
 = Application deployment
 
-Now that you have subscribed to an offer, you can begin configuration before launching the application.
+Now that you have launched the public or private offer, you can begin configuration before deploying the application.
 
 [IMPORTANT]
 ====
 A temporary yet necessary constraint has been placed on the length of deployment names. 
 This is due to GCP's naming schemes for internal components that make up an {PlatformNameShort} deployment. 
-Component names based on this naming scheme can get too long and often break naming constraints imposed by other services creating deployment errors. 
+Component names based on this naming scheme can get too long and often break naming constraints imposed by other services, creating deployment errors. 
 
 The length of the name of your deployment, plus the length of your GCP project name must be less than 36 characters. 
 
@@ -17,32 +17,35 @@ The calculation below will help you find the maximum length of the name of an {P
 length of deployment name < = 36 - length(gcp_project_name)
 ====
 
-.Procedure (TO CHANGE)
+.Procedure
+. In the *Deployment* page, click the btn:[Service Usage API] link below the *Confirm Service Usage API is enabled* checkbox.
+. In the *API/Service Details* tab, ensure that the API is enabled, then return to the deployment page.
+. Check the *Confirm Service Usage API is enabled* checkbox.
+. Select or create a *Service Account*. TBD
+. In the *Region* field, select the region where you want the application deployed.
+. In the *Zone* field, select the zone where you want the Filestore deployed.
+The zone must be in the *Region* you selected.
+. In the *Observability* section, you can enable logging and metrics to be sent to Cloud Logging and Cloud Monitoring. 
+See link:https://cloud.google.com/stackdriver/pricing[Operations Suite Pricing] for the financial cost of enabling these services. 
+See xref:assembly-aap-gcp-monitoring-logging[Monitoring and logging] for more information on configuring this feature.
+. The *Networking* section provides defaults for all of the network ranges used in the deployment. 
+If you want to modify these values, see xref:???[Networking Options]
+. Click btn:[DEPLOY].
+The Deployment Manager displays the running deployment. 
 
-. In the *Fulfillment option* field, select *{PlatformNameShort} CloudFormation*.
-. In the *Software version* field, confirm the latest version available in the list is selected.
-. In the *Region* field, select the region with your EC2 key pair. 
-The CloudFormation Stack deploys in the same region. 
-. Click btn:[Continue to Launch].
-. On the following screen, click btn:[Launch]. 
-This launches the AWS CloudFormation Console in a new browser tab.
-. For Step 1, *Specify template*, click btn:[Next].
-. For Step 2, *Specify stack details* 
-.. In the *Stack name* field, enter a unique stack name.
-.. For *awsKeyPair* select your previously created EC2 keypair.  
-. Click btn:[Next] to move to Step 3.
-. For Step 3, *Configure stack options*.  
-No changes are necessary. 
-All configurations are optional or have the correct default values.
-. Click btn:[Next] to move to Step 4, *Review*.
-. For Step 4, *Review*.
-Scroll to the bottom. 
-In the *Capabilities section*, check to acknowledge that CloudFormation may create IAM resources.  
-. Click btn:[Create stack].
 
 The application begins provisioning.  
 It can take some time for the infrastructure and application to fully provision.
 
-TODO: Include details on Networking options in the Launch, 
+[NOTE]
+====
+You will see a warning on the deployment
 
-TODO: Include blurb that the warning about RuntimeConfig is expected and ok. “​​This deployment has resources from the Runtime Configurator service, which is in Beta. There is no planned date for moving this feature into General Availability (GA). Examples of runtimeconfig types used: runtimeconfig.v1beta1.config, runtimeconfig.v1beta1.waiter”
+[options="nowrap" subs="+quotes,attributes"]
+----
+This deployment has resources from the Runtime Configurator service, which is in Beta. 
+----
+
+This warning is expected and is not a cause for concern. 
+====
+

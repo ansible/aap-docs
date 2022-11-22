@@ -1,32 +1,36 @@
-[id="proc-aws-vpc-peering"]
+[id="proc-gcp-vpc-peering"]
 
 = VPC peering
 
-VPC Peering offers the ability to directly connect different networks within your AWS infrastructure. 
-When two or more networks are peered, the peering only establishes the connection between the networks. 
-You must also update routing tables to direct the networks to send traffic over the appropriate networking peer.
+link:https://cloud.google.com/vpc/docs/vpc-peering[VPC Peering] offers the ability to directly connect different networks within your GCP infrastructure. VPCs are individually connected to one another with no other routing hops between them. 
+
+This is a simple peering model and is useful when connecting a few networks. 
+
+Complex peering can be configured, but routing can become more complex over time.
+
+When two or more networks are peered, link:https://cloud.google.com/vpc/docs/vpc-peering#key_properties[Google performs automated actions] to assist with routing, but can perform routable updates to enable taffic flow within your GCP infrastructure.
 
 .Prerequisites
-Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and {PlatformNameShort} from GCP Marketplace’s VPC address space. 
-Google should prevent peering if this is attempted.
+Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and {AAPonGCP}'s VPC address space. 
+The GCP Portal should prevent peering if this is attempted.
 
 The following procedure lets you configure VPC peering with {PlatformNameShort}.
 
 .Procedure
-. In the GCP Portal, navigate to menu:VPC[].
+. In the GCP Portal, navigate to menu:VPC Network[].
 . In the *VPC menu*, click btn:[VPC Network Peering].
 . Click btn:[Create peering connection].
-. In the *Name* field, enter the name of the peering connection as you need.
+. In the *Name* field, enter the name of the peering connection that you need.
 . In the *Your VPC Network* field, select the first VPC that you plan to peer. 
 . In the *Peered VPC Network* field, select the second VPC to peer. 
-This can be the {PlatformNameShort} from {GCPMarket} VPC.
+This must be the {AAPonGCP} VPC.
 .. Subnet routes between these two networks are created by default.
 Therefore, access to {PlatformNameShort} can occur from VMs that reside on the peered VPC.
-However, if you have more complex routing, such as a hub-and-spoke network model, then other route must be created.
+However, if you have more complex routing, such as a hub-and-spoke network model, then other routes must be created.
 .. Select *Exchange custom routes* and *Exchange subnet routes with public IP* carefully. 
 Google provides explanations what each fields does. 
-Your selection impact how traffic flows through your VPCs. 
-Under the proper conditions, these checkboxes configure routing between the newly peered networks and other networks through the route table exchange enabling network traffic to traverse multiple networks (transit routing).
+Your selection affects how traffic flows through your VPCs. 
+Normally, these checkboxes configure routing between the newly peered networks and other networks through the route table exchange and enable network traffic to traverse multiple networks (transit routing).
 . Click btn:[Create].
 
-For additional information on routing tables, firewalls and other networking components, see [here]
+For additional information on routing tables, firewalls and other networking components, see link:https://cloud.google.com/docs[here]
