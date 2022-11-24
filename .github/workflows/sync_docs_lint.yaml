@@ -9,34 +9,52 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           repository: ansible/aap-docs
           ref: main
 
-      - name: install kramdown
+      - name: Checkout Ansible-lint
+        uses: actions/checkout@v3
+        with:
+          repository: ansible/ansible-lint
+          ref: main
+          path: ansible-lint
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Output Python info
+        run: python --version --version && which python
+
+      - name: Install tox
+        run: sudo pip install tox
+
+      - name: Build Ansible-lint docs from source
+        run: |
+          cd ansible-lint
+          tox -e docs
+
+      - name: Install kramdown
         run: sudo gem install kramdown-asciidoc
 
-      - name: config docs-bot
+      - name: Convert lint docs to asciidoc
+        run: ansible-playbook bin/lint_docs.yaml
+
+      - name:  Remove the Ansible lint directory
+        run: rm -rf ansible-lint
+
+      - name: Commit files
         run: |
           git config --global user.email "docs-bot@redhat.com"
           git config --global user.name "docs-bot"
-
-      - name: sync and transform lint docs
-        env:
-          VAULT_PASS: ${{ secrets.DOCS_BOT_KEY }}
-        run: |
-          mkdir ~/.ssh
-          echo "$VAULT_PASS" > ~/.ssh/id_rsa
-          chmod 0600 ~/.ssh/id_rsa
-          ansible-playbook bin/lint_docs.yaml
-
-      - name: commit files
-        run: |
           git add . --all
           git diff-index --quiet HEAD || git commit -m "Synchronize Ansible-lint docs to asciidoc"
 
-      - name: push changes
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           directory: sync

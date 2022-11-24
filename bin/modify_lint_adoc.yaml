@@ -2,6 +2,11 @@
 # Ensure the target_dir variable is set in the playbook that imports this.
 - name: Add passthrough to the schema rule to avoid DocBook build failure
   ansible.builtin.replace:
-    path: "{{ target_rules_dir }}schema.adoc"
+    path: "{{ target_dir }}rules/schema.adoc"
     regexp: 'vars/\*.yml'
     replace: '+vars/*.yml+'
+- name: Add passthrough to the var-naming rule to avoid DocBook build failure
+  ansible.builtin.replace:
+    path: "{{ target_dir }}rules/var-naming.adoc"
+    regexp: 'underscore `_` character'
+    replace: 'underscore `+_+` character'

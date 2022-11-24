@@ -1,58 +1,34 @@
 - name: Synchronize Ansible lint docs
   hosts: localhost
   vars:
-    source_repo: git@github.com:ansible/ansible-lint.git
-    source_branch: main
-    source_dir: ../sync/ansible-lint/
-    source_docs_dir: ../sync/ansible-lint/docs/
-    source_rules_dir: ../sync/ansible-lint/src/ansiblelint/rules/
+    source_root_dir: ../ansible-lint/
+    source_dir: ../ansible-lint/docs/
     target_dir: ../sync/lint-docs/
-    target_rules_dir: ../sync/lint-docs/rules/
   tasks:
-    - name: Clone the source repository
-      ansible.builtin.git:
-        repo: "{{ source_repo }}"
-        dest: "{{ source_dir }}"
-        version: "{{ source_branch }}"
-        key_file: ~/.ssh/id_rsa
     - name: Remove the target directory
       ansible.builtin.file:
-        path: "{{ target_dir }}"
-        state: "{{ item }}"
-        mode: 0644
-      with_items:
-        - absent
-        - directory
-    - name: Find and register lint source files
-      ansible.builtin.find:
-        paths: "{{ source_docs_dir }}"
-        patterns: "*.md"
-        recurse: true
-        file_type: file
-      register: lint_doc_files
-    - name: Find and register lint rule source files
-      ansible.builtin.find:
-        paths: "{{ source_rules_dir }}"
-        patterns: "*.md"
-        recurse: true
-        file_type: file
-      register: lint_rule_files
-    - name: Copy the source files to the target directory
-      ansible.builtin.copy:
-        src: "{{ item.path }}"
-        dest: "{{ target_dir }}"
-        mode: 0644
-      with_items: "{{ lint_doc_files.files }}"
-    - name: Copy the lint rule source files to the target directory
-      ansible.builtin.copy:
-        src: "{{ item.path }}"
-        dest: "{{ target_rules_dir }}"
-        mode: 0644
-      with_items: "{{ lint_rule_files.files }}"
-    - name: Remove the source directory
-      ansible.builtin.file:
-        path: "{{ source_dir }}"
+        path: "{{ target_dir }}*"
         state: absent
+    - name: Synchronize the source and target
+      ansible.posix.synchronize:
+        src: "{{ source_dir }}"
+        dest: "{{ target_dir }}"
+        delete: true
+        recursive: true
+        rsync_opts:
+          - "--exclude='__pycache__'"
+          - "--exclude='_static'"
+          - "--exclude='licenses'"
+          - "--exclude='pkg'"
+          - "--exclude='.gitignore'"
+          - "--exclude='.nojekyll'"
+          - "--exclude='conf.py'"
+          - "--exclude='redirects.yml'"
+    - name: Copy the Ansible lint configuration file
+      ansible.builtin.copy:
+        src: "{{ source_root_dir }}.ansible-lint"
+        dest: "{{ target_dir }}ansible-lint-config.txt"
+        mode: 0644
     - name: Find and register all markdown files
       ansible.builtin.find:
         paths: "{{ target_dir }}"
