@@ -21,7 +21,19 @@ Ensure the checkbox for *Create an Auto Scaling group using the new template* is
 Click btn:[Copy].
 . For the Auto Scaling group name, enter `extension-group`.
 . Under *Launch Template*, click btn:[Create a launch template version] to create a new version of the launch template.
-. Under *Application and OS Images*, search for 'AAP-2.2.1-EXT_HVM-2022-10-27-19-13-28-x86_64-1-Marketplace-GP2', and click btn:[Select] next to the AMI which has this name.
+. Identify the AMI name for the extension nodes for the current version.
+.. Navigate to the AWS CloudFormation UI and click the *Resources* tab. Ensure *Tree View* is selected.
+.. Click menu:controller[autoscale-group>ASG].
+.. Click the ASG Physical ID to open the autoscale group in a new tab.
+.. Click on the *Instance Management* tab for the {ControllerName} autoscale-group.
+.. Click on one of the Instance IDs, under the *Instances* section of this tab to open that instance page in a new tab.
+.. Under the *Instance details* section, copy the *AMI name*:
++
+The format of the copied AMI name is `AAP-<VERSION>_HVM-<DATETIME>-x86_64-1-Marketplace-GP2-<SUFFIX>`.
+.. To identify the AMI name for the extension node, remove the suffix from the copied AMI name and add in '-EXT' after the version:
++
+The format for the proper extension node AMI name is `AAP-<VERSION>-EXT_HVM-<DATETIME>-x86_64-1-Marketplace-GP2`.
+. Under *Application and OS Images*, search for the AMI name for the extension node. Click btn:[Select] next to the AMI which has this name.
 . If prompted, confirm the changes.
 . (Optional) Modify the Instance type.
 Valid values are m5.large, m5.xlarge, or m5.2xlarge. The default is m5.large.
