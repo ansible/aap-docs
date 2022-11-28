@@ -958,7 +958,41 @@ Click btn:[Copy].</p>
 <p>Under <strong>Launch Template</strong>, click btn:[Create a launch template version] to create a new version of the launch template.</p>
 </li>
 <li>
-<p>Under <strong>Application and OS Images</strong>, search for 'AAP-2.2.1-EXT_HVM-2022-10-27-19-13-28-x86_64-1-Marketplace-GP2', and click btn:[Select] next to the AMI which has this name.</p>
+<p>Identify the AMI name for the extension nodes for the current version.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Navigate to the AWS CloudFormation UI and click the <strong>Resources</strong> tab. Ensure <strong>Tree View</strong> is selected.</p>
+</li>
+<li>
+<p>Click menu:controller[autoscale-group&gt;ASG].</p>
+</li>
+<li>
+<p>Click the ASG Physical ID to open the autoscale group in a new tab.</p>
+</li>
+<li>
+<p>Click on the <strong>Instance Management</strong> tab for the automation controller autoscale-group.</p>
+</li>
+<li>
+<p>Click on one of the Instance IDs, under the <strong>Instances</strong> section of this tab to open that instance page in a new tab.</p>
+</li>
+<li>
+<p>Under the <strong>Instance details</strong> section, copy the <strong>AMI name</strong>:</p>
+<div class="paragraph">
+<p>The format of the copied AMI name is <code>AAP-&lt;VERSION&gt;_HVM-&lt;DATETIME&gt;-x86_64-1-Marketplace-GP2-&lt;SUFFIX&gt;</code>.</p>
+</div>
+</li>
+<li>
+<p>To identify the AMI name for the extension node, remove the suffix from the copied AMI name and add in '-EXT' after the version:</p>
+<div class="paragraph">
+<p>The format for the proper extension node AMI name is <code>AAP-&lt;VERSION&gt;-EXT_HVM-&lt;DATETIME&gt;-x86_64-1-Marketplace-GP2</code>.</p>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Under <strong>Application and OS Images</strong>, search for the AMI name for the extension node. Click btn:[Select] next to the AMI which has this name.</p>
 </li>
 <li>
 <p>If prompted, confirm the changes.</p>
@@ -1725,7 +1759,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-28 17:09:57 UTC
+Last updated 2022-11-28 23:04:42 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
