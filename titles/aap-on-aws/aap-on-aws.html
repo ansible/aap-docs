@@ -461,31 +461,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#proc-aws-application-deploy">2.4. Application deployment</a></li>
 </ul>
 </li>
-<li><a href="#assembly-aap-aws-networking-access">3. Networking and application access</a>
+<li><a href="#assembly-aap-aws-extension">3. Extension nodes</a>
 <ul class="sectlevel2">
-<li><a href="#con-aap-aws-access-application">3.1. Accessing the application</a></li>
-<li><a href="#con-aap-aws-network-peering-options">3.2. Network peering options</a></li>
-<li><a href="#proc-aws-vpc-peering">3.3. VPC peering</a></li>
-<li><a href="#proc-aap-aws-configure-route-tables">3.4. Configure VPC route tables</a></li>
-<li><a href="#proc-aap-aws-routing-to-vpcs">3.5. Routing to your VPCs</a></li>
-<li><a href="#proc-aap-aws-configure-security-network">3.6. Configure network security groups</a></li>
-<li><a href="#proc-aap-aws-traffic-to-vpc">3.7. Traffic to Ansible Automation Platform VPC</a></li>
-<li><a href="#ref-aap-aws-transit-gateway">3.8. Transit gateways</a></li>
+<li><a href="#ref-aap-aws-add-extension-nodes">3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</a></li>
 </ul>
 </li>
-<li><a href="#assembly-aap-aws-additional-configs">4. Ansible Automation Platform from AWS Marketplace additional configurations</a>
+<li><a href="#assembly-aap-aws-networking-access">4. Networking and application access</a>
 <ul class="sectlevel2">
-<li><a href="#ref-aap-aws-additional-configs-update-admin-password">4.1. Changing the default Ansible Automation Platform Administrator password</a></li>
-<li><a href="#ref-aap-aws-additional-configs-update-rds-password">4.2. Changing the default RDS database password</a></li>
+<li><a href="#con-aap-aws-access-application">4.1. Accessing the application</a></li>
+<li><a href="#con-aap-aws-network-peering-options">4.2. Network peering options</a></li>
+<li><a href="#proc-aws-vpc-peering">4.3. VPC peering</a></li>
+<li><a href="#proc-aap-aws-configure-route-tables">4.4. Configure VPC route tables</a></li>
+<li><a href="#proc-aap-aws-routing-to-vpcs">4.5. Routing to your VPCs</a></li>
+<li><a href="#proc-aap-aws-configure-security-network">4.6. Configure network security groups</a></li>
+<li><a href="#proc-aap-aws-traffic-to-vpc">4.7. Traffic to Ansible Automation Platform VPC</a></li>
+<li><a href="#ref-aap-aws-transit-gateway">4.8. Transit gateways</a></li>
 </ul>
 </li>
-<li><a href="#assembly-aap-aws-automation-workloads">5. Automation workloads</a>
+<li><a href="#assembly-aap-aws-additional-configs">5. Ansible Automation Platform from AWS Marketplace additional configurations</a>
 <ul class="sectlevel2">
-<li><a href="#ref-aap-aws-automation-performance">5.1. Automation performance</a></li>
-<li><a href="#con-aap-aws-deployment-scaling">5.2. Deployment scaling</a></li>
+<li><a href="#ref-aap-aws-additional-configs-update-admin-password">5.1. Changing the default Ansible Automation Platform Administrator password</a></li>
+<li><a href="#ref-aap-aws-additional-configs-update-rds-password">5.2. Changing the default RDS database password</a></li>
 </ul>
 </li>
-<li><a href="#assembly-aap-aws-support">6. Support</a></li>
+<li><a href="#assembly-aap-aws-automation-workloads">6. Automation workloads</a>
+<ul class="sectlevel2">
+<li><a href="#ref-aap-aws-automation-performance">6.1. Automation performance</a></li>
+<li><a href="#con-aap-aws-deployment-scaling">6.2. Deployment scaling</a></li>
+</ul>
+</li>
+<li><a href="#assembly-aap-aws-support">7. Support</a></li>
 </ul>
 </div>
 </div>
@@ -911,10 +916,135 @@ It can take some time for the infrastructure and application to fully provision.
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-aws-networking-access"><a class="anchor" href="#assembly-aap-aws-networking-access"></a>3. Networking and application access</h2>
+<h2 id="assembly-aap-aws-extension"><a class="anchor" href="#assembly-aap-aws-extension"></a>3. Extension nodes</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="con-aap-aws-access-application"><a class="anchor" href="#con-aap-aws-access-application"></a>3.1. Accessing the application</h3>
+<h3 id="ref-aap-aws-add-extension-nodes"><a class="anchor" href="#ref-aap-aws-add-extension-nodes"></a>3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</h3>
+<div class="paragraph">
+<p>By default, the foundation stack is deployed with two automation controller nodes and one automation hub node.
+You can add execution nodes to scale out Ansible Automation Platform from AWS Marketplace.
+Follow these steps to add execution nodes into your Ansible Automation Platform from AWS Marketplace environment:</p>
+</div>
+<div class="olist arabic">
+<div class="title">Open the automation controller Launch Configuration</div>
+<ol class="arabic">
+<li>
+<p>Navigate to the AWS CloudFormation UI and click the <strong>Resources</strong> tab. Ensure <strong>Tree View</strong> is selected.</p>
+</li>
+<li>
+<p>Click menu:controller[autoscale-group&gt;Launch Config].</p>
+</li>
+<li>
+<p>Click the Launch Config Physical ID to open the launch configuration in a new tab.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Create the extension node launch configuration</div>
+<ol class="arabic">
+<li>
+<p>In the <strong>Launch configuration</strong> tab, ensure the automation controller launch configuration is selected.
+Click <strong>Copy to launch template</strong>, then <strong>Copy selected</strong>.</p>
+</li>
+<li>
+<p>Replace the <strong>New launch template name</strong> with <strong>extension-group-template</strong>.
+Ensure the checkbox for <strong>Create an Auto Scaling group using the new template</strong> is checked.
+Click btn:[Copy].</p>
+</li>
+<li>
+<p>For the Auto Scaling group name, enter <code>extension-group</code>.</p>
+</li>
+<li>
+<p>Under <strong>Launch Template</strong>, click btn:[Create a launch template version] to create a new version of the launch template.</p>
+</li>
+<li>
+<p>Under <strong>Application and OS Images</strong>, search for 'AAP-2.2.1-EXT_HVM-2022-10-27-19-13-28-x86_64-1-Marketplace-GP2', and click btn:[Select] next to the AMI which has this name.</p>
+</li>
+<li>
+<p>If prompted, confirm the changes.</p>
+</li>
+<li>
+<p>(Optional) Modify the Instance type.
+Valid values are m5.large, m5.xlarge, or m5.2xlarge. The default is m5.large.</p>
+</li>
+<li>
+<p>Scroll down to the <strong>Storage</strong> category.
+Expand <strong>Volume 1</strong>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set <strong>Size (GiB)</strong> to 100.</p>
+</li>
+<li>
+<p>Ensure <strong>Encrypted</strong> is set to <code>Encrypted</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click <strong>Create template version</strong>.</p>
+</li>
+</ol>
+</div>
+<div class="olist arabic">
+<div class="title">Create the auto scaling group</div>
+<ol class="arabic">
+<li>
+<p>Navigate back to the <strong>Choose launch template or configuration</strong> tab.</p>
+</li>
+<li>
+<p>In the <strong>Launch template</strong> section, click the <strong>refresh</strong> icon under <strong>Version</strong>.</p>
+</li>
+<li>
+<p>Select the latest option, which we have just created, then click btn:[Next].</p>
+</li>
+<li>
+<p>Under <strong>Network</strong>, ensure the correct VPC is selected.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>To find the correct VPC, click menu:Network[VPC] to display the VPC ID in the cloudformation stack resources page.</p>
+</li>
+<li>
+<p>Select the matching VPC ID.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Under <strong>Availability Zones and subnets</strong>, select all available options, then click btn:[Next].</p>
+</li>
+<li>
+<p>In the <strong>Configure advanced options</strong> page, click btn:[Next].</p>
+</li>
+<li>
+<p>Configure the <strong>Group size</strong> capacity, then click btn:[Next].</p>
+</li>
+<li>
+<p>In the <strong>Add notifications</strong> page, click btn:[Next].</p>
+</li>
+<li>
+<p>In the <strong>Add tags</strong> page, click btn:[Next].</p>
+</li>
+<li>
+<p>In the <strong>Review</strong> page, scroll to the bottom and click <strong>Create Auto Scaling group</strong>.</p>
+</li>
+<li>
+<p>Wait for the Auto scaling group to create the nodes and for the related nodes to reach a <em>Running</em> instance state.</p>
+</li>
+<li>
+<p>To view the extension node EC2 instances in the automation controller UI, click menu:Administration[Instances].</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="assembly-aap-aws-networking-access"><a class="anchor" href="#assembly-aap-aws-networking-access"></a>4. Networking and application access</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="con-aap-aws-access-application"><a class="anchor" href="#con-aap-aws-access-application"></a>4.1. Accessing the application</h3>
 <div class="paragraph">
 <p>When Ansible Automation Platform from AWS Marketplace is deployed, it is deployed into an isolated VPC and cannot be accessed.
 The following sections describe how to connect the VPC used by Ansible Automation Platform from AWS Marketplace to your existing AWS network.</p>
@@ -930,7 +1060,7 @@ Red Hat recommends contacting <a href="https://aws.amazon.com/">Amazon Web Servi
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-aws-network-peering-options"><a class="anchor" href="#con-aap-aws-network-peering-options"></a>3.2. Network peering options</h3>
+<h3 id="con-aap-aws-network-peering-options"><a class="anchor" href="#con-aap-aws-network-peering-options"></a>4.2. Network peering options</h3>
 <div class="paragraph">
 <p>Many networking configurations are possible, but the following configurations have been validated to work with Ansible Automation Platform from AWS Marketplace by Red Hat.</p>
 </div>
@@ -1011,7 +1141,7 @@ Your data is automatically encrypted and never travels over the public internet.
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aws-vpc-peering"><a class="anchor" href="#proc-aws-vpc-peering"></a>3.3. VPC peering</h3>
+<h3 id="proc-aws-vpc-peering"><a class="anchor" href="#proc-aws-vpc-peering"></a>4.3. VPC peering</h3>
 <div class="paragraph">
 <p><a href="https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html">VPC Peering</a> offers the ability to directly connect different networks within your AWS infrastructure.
 When two or more networks are peered, the peering only establishes the connection between the networks.
@@ -1078,7 +1208,7 @@ This can be the Ansible Automation Platform from AWS Marketplace VPC</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-aws-configure-route-tables"><a class="anchor" href="#proc-aap-aws-configure-route-tables"></a>3.4. Configure VPC route tables</h3>
+<h3 id="proc-aap-aws-configure-route-tables"><a class="anchor" href="#proc-aap-aws-configure-route-tables"></a>4.4. Configure VPC route tables</h3>
 <div class="paragraph">
 <div class="title">Routing to Ansible Automation Platform</div>
 <p>You must configure route tables from your existing networks to send traffic to the Ansible Automation Platform VPC CIDR for any network that requests Ansible Automation Platform user interfaces or APIs.</p>
@@ -1117,7 +1247,7 @@ This can be the Ansible Automation Platform from AWS Marketplace VPC</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-aws-routing-to-vpcs"><a class="anchor" href="#proc-aap-aws-routing-to-vpcs"></a>3.5. Routing to your VPCs</h3>
+<h3 id="proc-aap-aws-routing-to-vpcs"><a class="anchor" href="#proc-aap-aws-routing-to-vpcs"></a>4.5. Routing to your VPCs</h3>
 <div class="paragraph">
 <p>You must configure route tables to your existing networks to send traffic from Ansible Automation Platform VPC CIDR to any network that has automation performed against resources in those networks.</p>
 </div>
@@ -1158,7 +1288,7 @@ At this stage, you should only have one VPC peered with Ansible Automation Platf
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-aws-configure-security-network"><a class="anchor" href="#proc-aap-aws-configure-security-network"></a>3.6. Configure network security groups</h3>
+<h3 id="proc-aap-aws-configure-security-network"><a class="anchor" href="#proc-aap-aws-configure-security-network"></a>4.6. Configure network security groups</h3>
 <div class="paragraph">
 <p>You can configure your Ansible Automation Platform network security groups for both VPCs to allow traffic to and from each other.</p>
 </div>
@@ -1203,7 +1333,7 @@ At this stage, you should only have one VPC peered with Ansible Automation Platf
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aap-aws-traffic-to-vpc"><a class="anchor" href="#proc-aap-aws-traffic-to-vpc"></a>3.7. Traffic to Ansible Automation Platform VPC</h3>
+<h3 id="proc-aap-aws-traffic-to-vpc"><a class="anchor" href="#proc-aap-aws-traffic-to-vpc"></a>4.7. Traffic to Ansible Automation Platform VPC</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1244,7 +1374,7 @@ At this stage, you should only have one VPC peered with Ansible Automation Platf
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-aws-transit-gateway"><a class="anchor" href="#ref-aap-aws-transit-gateway"></a>3.8. Transit gateways</h3>
+<h3 id="ref-aap-aws-transit-gateway"><a class="anchor" href="#ref-aap-aws-transit-gateway"></a>4.8. Transit gateways</h3>
 <div class="paragraph">
 <p>Transit Gateways provide a more advanced hub-and-spoke peering model than direct VPC peering provides.
 When Ansible Automation Platform from AWS Marketplace is peered to this type of model, the hub has an additional peering with the CIDR range deployed for the Ansible Automation Platform from AWS Marketplace VPC.
@@ -1260,13 +1390,13 @@ Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.h
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-aws-additional-configs"><a class="anchor" href="#assembly-aap-aws-additional-configs"></a>4. Ansible Automation Platform from AWS Marketplace additional configurations</h2>
+<h2 id="assembly-aap-aws-additional-configs"><a class="anchor" href="#assembly-aap-aws-additional-configs"></a>5. Ansible Automation Platform from AWS Marketplace additional configurations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If you want to use automation hub to host execution environments, you must first configure the application hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-aws-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-admin-password"></a>4.1. Changing the default Ansible Automation Platform Administrator password</h3>
+<h3 id="ref-aap-aws-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-admin-password"></a>5.1. Changing the default Ansible Automation Platform Administrator password</h3>
 <div class="paragraph">
 <p>The default Administrator password for Ansible Automation Platform is generated randomly when Ansible Automation Platform from AWS Marketplace is deployed.
 Follow these steps to change the Administrator password for both automation controller and automation hub:</p>
@@ -1308,7 +1438,7 @@ Follow these steps to change the Administrator password for both automation cont
 </div>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-aws-additional-configs-update-rds-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-rds-password"></a>4.2. Changing the default RDS database password</h3>
+<h3 id="ref-aap-aws-additional-configs-update-rds-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-rds-password"></a>5.2. Changing the default RDS database password</h3>
 <div class="paragraph">
 <p>The default RDS database password for Ansible Automation Platform is generated randomly when Ansible Automation Platform from AWS Marketplace is deployed.
 Follow these steps to change the RDS password:</p>
@@ -1424,14 +1554,14 @@ The autoscale group restarts them.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-aws-automation-workloads"><a class="anchor" href="#assembly-aap-aws-automation-workloads"></a>5. Automation workloads</h2>
+<h2 id="assembly-aap-aws-automation-workloads"><a class="anchor" href="#assembly-aap-aws-automation-workloads"></a>6. Automation workloads</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ansible Automation Platform from AWS Marketplace is designed to automate the number of managed nodes included with the offer identified at purchase time, typically 100 nodes.
 Consult your AWS offer used when deploying Ansible Automation Platform from AWS Marketplace.</p>
 </div>
 <div class="sect2">
-<h3 id="ref-aap-aws-automation-performance"><a class="anchor" href="#ref-aap-aws-automation-performance"></a>5.1. Automation performance</h3>
+<h3 id="ref-aap-aws-automation-performance"><a class="anchor" href="#ref-aap-aws-automation-performance"></a>6.1. Automation performance</h3>
 <div class="paragraph">
 <p>Automating against the managed node allotment in the offer is provided with the following operational expectations.
 Automating outside of the boundaries of these criteria is not supported, but can still function depending on your automation.</p>
@@ -1478,7 +1608,7 @@ Workloads that are more I/O intensive might not work inside the boundaries of th
 </div>
 </div>
 <div class="sect2">
-<h3 id="con-aap-aws-deployment-scaling"><a class="anchor" href="#con-aap-aws-deployment-scaling"></a>5.2. Deployment scaling</h3>
+<h3 id="con-aap-aws-deployment-scaling"><a class="anchor" href="#con-aap-aws-deployment-scaling"></a>6.2. Deployment scaling</h3>
 <div class="paragraph">
 <p>Extension nodes will become available after the initial release of Ansible Automation Platform from AWS Marketplace.
 This documentation will be updated to describe how to purchase and connect extension nodes at that time.</p>
@@ -1509,7 +1639,7 @@ If your requirements are for higher parallel automation operations you can selec
 </div>
 </div>
 <div class="sect1">
-<h2 id="assembly-aap-aws-support"><a class="anchor" href="#assembly-aap-aws-support"></a>6. Support</h2>
+<h2 id="assembly-aap-aws-support"><a class="anchor" href="#assembly-aap-aws-support"></a>7. Support</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Ansible Automation Platform from AWS Marketplace is a <em>self-managed</em> deployment.
@@ -1595,7 +1725,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-22 11:42:37 UTC
+Last updated 2022-11-28 17:09:57 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
