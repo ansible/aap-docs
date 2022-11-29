@@ -10,11 +10,11 @@ A temporary yet necessary constraint has been placed on the length of deployment
 This is due to GCP's naming schemes for internal components that make up an {PlatformNameShort} deployment. 
 Component names based on this naming scheme can get too long and often break naming constraints imposed by other services, creating deployment errors. 
 
-The length of the name of your deployment, plus the length of your GCP project name must be less than 36 characters. 
+The length of the name of your deployment, plus the length of your GCP project name must be less than 35 characters and the length of the deployment name must be less than 30 characters. 
 
 The calculation below will help you find the maximum length of the name of an {PlatformNameShort} deployment in your project.
 
-length of deployment name < = 36 - length(gcp_project_name)
+length of deployment name < = (minimum between 30 and 35) - length(gcp project name)
 ====
 
 .Procedure
@@ -29,7 +29,7 @@ The zone must be in the *Region* you selected.
 See link:https://cloud.google.com/stackdriver/pricing[Operations Suite Pricing] for the financial cost of enabling these services. 
 See xref:assembly-aap-gcp-monitoring-logging[Monitoring and logging] for more information on configuring this feature.
 . The *Networking* section provides defaults for all of the network ranges used in the deployment. 
-If you want to modify these values, see xref:???[Networking Options]
+If you want to modify these values, see xref:ref-aap-gcp-networking-options[Networking Options]
 . Click btn:[DEPLOY].
 The Deployment Manager displays the running deployment. 
 
