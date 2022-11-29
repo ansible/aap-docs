@@ -26,32 +26,41 @@ If you do not see *Network Services*, then select *View All Products*.
 . Select the *HTTP(S) Load Balancing* tile and click btn:[START CONFIGURATION].
 . Select *From Internet to my VMs* or *Serverless services and Global HTTP(s) Load Balancer*.
 . Click btn:[CONTINUE].
+. Provide your load balancer a name, example - `<DeploymentName>-aap-<cntrlr/hub>-ext-lb`
 . Ensure that *Frontend* configuration is selected at the left of the screen.
-. Enter the required fields on the *Frontend* configuration page.
+. Enter the required fields on the *Frontend* configuration page then click btn:[DONE]
 .. *Protocol*: HTTPS.
 .. *Port*: 443.
-.. *IP Address* Select an existing IP addres or create a new one.
+.. *IP Address* Select an existing IP address or create a new one.
 .. *Certificate*, You can use your own SSL Certificate or use a Google managed certificate.
 .. *SSL Policy*: GCP default, or another configured policy.
 . Click btn:[Backend configuration] from the menu on the left.
 . Click the *Backend services & backend buckets* drop-down.
 . Click btn:[CREATE A BACKEND SERVICE].
+.. Provide your backend service a name, example - `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-bknd-svc`
 .. Set the *Backend type* to *Instance group*.
 .. Set the *Protocol* to `HTTP` and *Named Port* to `http`.
 .. Change the *Timeout* to `300`.
-.. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down and select the instance group that has `-aap-cntrlr-igm` at the end of its name.  
+.. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down and select the correct instance group.
+...  For the {Controllername} load balancer, the correct instance group has the suffix - `-aap-cntrlr-igm`.
+...  For the {HubName} load balancer, the correct instance group has the suffix - `-aap-hub-igm`.
 .. In the resulting dialog box, select *USE EXISTING PORT NAME*.
 .. Scroll down until you see a text box showing *Health check*. 
-.. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK]. 
-.. In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
-.. Set *.Request* to `/api/v2/ping/`.
+.. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].
+... Provide your health check a name, example - `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-hc`
+... For the {Controllername}, use the following health check settings
+.... In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
+.... Set *Request* to `/api/v2/ping/`.
+... For the {HubName}, use the following health check settings
+.... In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8080`.
+.... Set *Request* to `/pulp/api/v3/status/`.
 .. Keep all other default settings. 
 .. Click btn:[SAVE].
 This returns you to the *Backend services & backend buckets* window.
 .. Click btn:[CREATE].
 This returns you to *Backend configuration* section.
 .. Click btn:[OK].
-.. Click btn:[CREATE] to create the load balancer for the {ControllerName} UI.  
+.. Click btn:[CREATE] to create the load balancer for the {ControllerName} or {HubName} UI.  
 This will take a few minutes to complete. 
 . A load balancer has now been created. 
 . Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.  
