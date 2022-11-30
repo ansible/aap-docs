@@ -9,6 +9,7 @@ These external load balancers must be configured with SSL certificates after dep
 ====
 Securing traffic through these internal load balancers is different than securing traffic through external load balancers in previous steps. 
 This process ensures HTTP traffic is encrypted even when the traffic is localized to private GCP VPCs.
+The same procedure can be followed for both the {ControllerName} and {HubName} load balancers.
 ====
 
 .Procedure
@@ -16,7 +17,7 @@ This process ensures HTTP traffic is encrypted even when the traffic is localize
 . In the search bar, enter the name of your deployed image name to filter down to your load balancers.
 To modify the internal load balancers, which have the suffix int-lb.
 For both the controller and hub load balancers, do the following:
-. For the {ControllerName} load balancer, which has the format `<DEPLOYMENT_NAME>-aap-<cntrlr>-int-lb`
+. For the {ControllerName} and {HubName} load balancers, which have the format `<DEPLOYMENT_NAME>-aap-<cntrlr/hub>-int-lb`.
 . Click btn:[Edit]. 
 . Click btn:[Frontend configuration].
 . Click btn:[ADD FRONTEND IP AND PORT].
@@ -25,12 +26,12 @@ Use the following values:
 .. *Subnetwork*: Select the available aap-subnet.
 .. *Port*: 443
 .. *IP Address*: `<DEPLOYMENT_NAME>-aap<cntrlr/hub>-intl-lb-ip`
-. .If you have already added your certificate, select it.
+. If you have already added your certificate, select it.
 .. If you have not added your certificate, click btn:[CREATE A NEW CERTIFICATE].
 .. Provide a name for your certificate.
 .. Using your previously generated certificate, copy its contents and paste it under *Certificate*.
 .. Using your previously generated certificate key, copy its contents and paste it under *Private Key*.
-. Click btn:[Create].
+.. Click btn:[Create].
 . Click btn:[Done].
 . Optional: To delete the HTTP Frontend configuration.
 .. Open the Load balancer instance.
@@ -38,8 +39,8 @@ Use the following values:
 The configurations appear on the left side of the UI.
 .. Scroll to the configuration you want to delete.
 .. Click the trashcan icon to delete the configuration.
-. Click btn:[Update], and confirm update.
 . Select *Backend Configuration*.
-. Select *Backend Services*.
-. Click btn:[Edit].
-. Update the protocol to HTTPS.
+. Under *Backend Services*, click btn:[Edit].
+.. Update the protocol to HTTPS.
+.. Click btn:[Update]
+. Click btn:[Update], and confirm update.
