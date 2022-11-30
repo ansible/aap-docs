@@ -1256,10 +1256,16 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <p>Click btn:[CONTINUE].</p>
 </li>
 <li>
+<p>Provide your load balancer a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb</code></p>
+</li>
+<li>
 <p>Ensure that <strong>Frontend</strong> configuration is selected at the left of the screen.</p>
 </li>
 <li>
 <p>Enter the required fields on the <strong>Frontend</strong> configuration page.</p>
+</li>
+<li>
+<p>Click btn:[DONE]</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1269,7 +1275,7 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <p><strong>Port</strong>: 443.</p>
 </li>
 <li>
-<p><strong>IP Address</strong> Select an existing IP addres or create a new one.</p>
+<p><strong>IP Address</strong> Select an existing IP address or create a new one.</p>
 </li>
 <li>
 <p><strong>Certificate</strong>, You can use your own SSL Certificate or use a Google managed certificate.</p>
@@ -1291,6 +1297,9 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
+<p>Provide your backend service a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-bknd-svc</code></p>
+</li>
+<li>
 <p>Set the <strong>Backend type</strong> to <strong>Instance group</strong>.</p>
 </li>
 <li>
@@ -1300,7 +1309,17 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <p>Change the <strong>Timeout</strong> to <code>300</code>.</p>
 </li>
 <li>
-<p>Scroll down to the <strong>Backends</strong> section and in the <strong>New backend</strong> field, select the <strong>Instance group</strong> drop-down and select the instance group that has <code>-aap-cntrlr-igm</code> at the end of its name.</p>
+<p>Scroll down to the <strong>Backends</strong> section and in the <strong>New backend</strong> field, select the <strong>Instance group</strong> drop-down and select the correct instance group.</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>For the automation controller load balancer, the correct instance group has the suffix - <code>-aap-cntrlr-igm</code>.</p>
+</li>
+<li>
+<p>For the automation hub load balancer, the correct instance group has the suffix - <code>-aap-hub-igm</code>.</p>
+</li>
+</ol>
+</div>
 </li>
 <li>
 <p>In the resulting dialog box, select <strong>USE EXISTING PORT NAME</strong>.</p>
@@ -1310,12 +1329,39 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 </li>
 <li>
 <p>Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Provide your health check a name, example - <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-hc</code></p>
 </li>
+<li>
+<p>For the automation controller, use the following health check settings</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
 <li>
 <p>In the <strong>Health Check</strong> dialog box, set <strong>Protocol</strong> to <code>TCP</code>, and <strong>Port</strong> to <code>8052</code>.</p>
 </li>
 <li>
-<p>Set <strong>.Request</strong> to <code>/api/v2/ping/</code>.</p>
+<p>Set <strong>Request</strong> to <code>/api/v2/ping/</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>For the automation hub, use the following health check settings</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p>In the <strong>Health Check</strong> dialog box, set <strong>Protocol</strong> to <code>TCP</code>, and <strong>Port</strong> to <code>8080</code>.</p>
+</li>
+<li>
+<p>Set <strong>Request</strong> to <code>/pulp/api/v3/status/</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
 </li>
 <li>
 <p>Keep all other default settings.</p>
@@ -1332,7 +1378,7 @@ This returns you to <strong>Backend configuration</strong> section.</p>
 <p>Click btn:[OK].</p>
 </li>
 <li>
-<p>Click btn:[CREATE] to create the load balancer for the automation controller UI.
+<p>Click btn:[CREATE] to create the load balancer for the automation controller or automation hub UI.
 This will take a few minutes to complete.</p>
 </li>
 </ol>
@@ -1424,7 +1470,8 @@ These external load balancers must be configured with SSL certificates after dep
 <td class="content">
 <div class="paragraph">
 <p>Securing traffic through these internal load balancers is different than securing traffic through external load balancers in previous steps.
-This process ensures HTTP traffic is encrypted even when the traffic is localized to private GCP VPCs.</p>
+This process ensures HTTP traffic is encrypted even when the traffic is localized to private GCP VPCs.
+The same procedure can be followed for both the automation controller and automation hub load balancers.</p>
 </div>
 </td>
 </tr>
@@ -1442,7 +1489,7 @@ To modify the internal load balancers, which have the suffix int-lb.
 For both the controller and hub load balancers, do the following:</p>
 </li>
 <li>
-<p>For the automation controller load balancer, which has the format <code>&lt;DEPLOYMENT_NAME&gt;-aap-&lt;cntrlr&gt;-int-lb</code></p>
+<p>For the automation controller and automation hub load balancers, which have the format <code>&lt;DEPLOYMENT_NAME&gt;-aap-&lt;cntrlr/hub&gt;-int-lb</code>.</p>
 </li>
 <li>
 <p>Click btn:[Edit].</p>
@@ -1471,7 +1518,7 @@ Use the following values:</p>
 </div>
 </li>
 <li>
-<p>.If you have already added your certificate, select it.</p>
+<p>If you have already added your certificate, select it.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1486,11 +1533,11 @@ Use the following values:</p>
 <li>
 <p>Using your previously generated certificate key, copy its contents and paste it under <strong>Private Key</strong>.</p>
 </li>
-</ol>
-</div>
-</li>
 <li>
 <p>Click btn:[Create].</p>
+</li>
+</ol>
+</div>
 </li>
 <li>
 <p>Click btn:[Done].</p>
@@ -1516,19 +1563,23 @@ The configurations appear on the left side of the UI.</p>
 </div>
 </li>
 <li>
-<p>Click btn:[Update], and confirm update.</p>
-</li>
-<li>
 <p>Select <strong>Backend Configuration</strong>.</p>
 </li>
 <li>
-<p>Select <strong>Backend Services</strong>.</p>
-</li>
-<li>
-<p>Click btn:[Edit].</p>
-</li>
+<p>Under <strong>Backend Services</strong>, click btn:[Edit].</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Update the protocol to HTTPS.</p>
+</li>
+<li>
+<p>Click btn:[Update]</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Click btn:[Update], and confirm update.</p>
 </li>
 </ol>
 </div>
@@ -2019,7 +2070,7 @@ Red Hat operates within its premium support policies for providing updated machi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-30 13:10:23 UTC
+Last updated 2022-11-30 16:10:09 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
