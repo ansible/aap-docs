@@ -1,4 +1,4 @@
-[id="ref-aap-aws-add-extension-nodes"]
+[id="proc-aap-aws-add-extension-nodes"]
 
 = Adding extension nodes to {PlatformNameShort} from {Market}
 
@@ -6,50 +6,56 @@ By default, the foundation stack is deployed with two {ControllerName} nodes and
 You can add execution nodes to scale out {PlatformNameShort} from {Market}.
 Follow these steps to add execution nodes into your {PlatformNameShort} from {Market} environment:
 
-.Open the {ControllerName} Launch Configuration
+.Procedure
+. Open the {ControllerName} Launch Configuration
+. Navigate to the AWS CloudFormation UI, and click the *Resources* tab. 
+. Ensure *Tree View* is selected.
+. In the *Controller* menu, select *autoscale-group > Launch Config*.
+. Click btn:[Launch Config Physical ID] to open the launch configuration in a new tab.
 
-. Navigate to the AWS CloudFormation UI and click the *Resources* tab. Ensure *Tree View* is selected.
-. Click menu:controller[autoscale-group>Launch Config].
-. Click the Launch Config Physical ID to open the launch configuration in a new tab.
+= Create the extension node launch configuration
 
-.Create the extension node launch configuration
-
+.Procedure
 . In the *Launch configuration* tab, ensure the {ControllerName} launch configuration is selected.
-Click *Copy to launch template*, then *Copy selected*.
+. Click btn:[Copy to launch template].
+. Click btn:[Copy selected].
 . Replace the *New launch template name* with *extension-group-template*.
-Ensure the checkbox for *Create an Auto Scaling group using the new template* is checked.
-Click btn:[Copy].
-. For the Auto Scaling group name, enter `extension-group`.
+. Ensure *Create an Auto Scaling group using the new template* checkbox is checked.
+. Click btn:[Copy].
+. For the *Auto Scaling group* name, enter `extension-group`.
 . Under *Launch Template*, click btn:[Create a launch template version] to create a new version of the launch template.
 . Identify the AMI name for the extension nodes for the current version.
-.. Navigate to the AWS CloudFormation UI and click the *Resources* tab. Ensure *Tree View* is selected.
-.. Click menu:controller[autoscale-group>ASG].
-.. Click the ASG Physical ID to open the autoscale group in a new tab.
-.. Click on the *Instance Management* tab for the {ControllerName} autoscale-group.
-.. Click on one of the Instance IDs, under the *Instances* section of this tab to open that instance page in a new tab.
-.. Under the *Instance details* section, copy the *AMI name*:
+.. In the AWS CloudFormation UI, click the *Resources* tab. 
+.. Ensure *Tree View* is selected.
+.. In the Controller menu, select *autoscale-group > ASG*.
+.. Click btn:[ASG Physical ID] to open the autoscale group in a new tab.
+.. In the *Instance Management* tab for the {ControllerName} autoscale-group, click on one of the Instance IDs, under the *Instances* section of this tab to open that instance page in a new tab.
+.. In the *Instance details* section, copy the *AMI name*:
 +
 The format of the copied AMI name is `AAP-<VERSION>_HVM-<DATETIME>-x86_64-1-Marketplace-GP2-<SUFFIX>`.
 .. To identify the AMI name for the extension node, remove the suffix from the copied AMI name and add in '-EXT' after the version:
 +
 The format for the proper extension node AMI name is `AAP-<VERSION>-EXT_HVM-<DATETIME>-x86_64-1-Marketplace-GP2`.
-. Under *Application and OS Images*, search for the AMI name for the extension node. Click btn:[Select] next to the AMI which has this name.
+. Under *Application and OS Images*, search for the AMI name for the extension node. 
+. Click btn:[Select] next to the AMI which has this name.
 . If prompted, confirm the changes.
-. (Optional) Modify the Instance type.
-Valid values are m5.large, m5.xlarge, or m5.2xlarge. The default is m5.large.
+. Optional: Modify the Instance type.
+Valid values are m5.large, m5.xlarge, or m5.2xlarge. 
+The default is m5.large.
 . Scroll down to the *Storage* category.
-Expand *Volume 1*. 
+. Expand *Volume 1*. 
 .. Set *Size (GiB)* to 100.
 .. Ensure *Encrypted* is set to `Encrypted`.
 . Click *Create template version*.
 
-.Create the auto scaling group
+= Create the auto scaling group
 
-. Navigate back to the *Choose launch template or configuration* tab.
+. Select the *Choose launch template or configuration* tab.
 . In the *Launch template* section, click the *refresh* icon under *Version*.
-. Select the latest option, which we have just created, then click btn:[Next].
-. Under *Network*, ensure the correct VPC is selected.
-.. To find the correct VPC, click menu:Network[VPC] to display the VPC ID in the cloudformation stack resources page.
+. Select the option that you have just created.
+. Click btn:[Next].
+. In the *Network* menu, ensure the correct VPC is selected.
+.. To find the correct VPC, select *VPC* to display the VPC ID in the cloudformation stack resources page.
 .. Select the matching VPC ID.
 . Under *Availability Zones and subnets*, select all available options, then click btn:[Next].
 . In the *Configure advanced options* page, click btn:[Next].
@@ -58,4 +64,4 @@ Expand *Volume 1*.
 . In the *Add tags* page, click btn:[Next].
 . In the *Review* page, scroll to the bottom and click *Create Auto Scaling group*.
 . Wait for the Auto scaling group to create the nodes and for the related nodes to reach a _Running_ instance state.
-. To view the extension node EC2 instances in the {ControllerName} UI, click menu:Administration[Instances].
+. In the {ControllerName} UI, select *Administration > Instances* to view the extension node EC2 instances.
