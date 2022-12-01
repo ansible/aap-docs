@@ -2,12 +2,17 @@
 
 = VPC peering
 
-link:https://cloud.google.com/vpc/docs/vpc-peering[VPC Peering] offers the ability to directly connect different networks within your GCP infrastructure. 
-VPCs are individually connected to one another with no other routing hops between them. 
+link:https://cloud.google.com/vpc/docs/vpc-peering[VPC Peering] is required for {PlatformNameShort} to access resources that reside on private VPCs or where transit routing between {GCP} and your on-premises network(s) exist.
+It offers the ability to directly connect different networks within your GCP infrastructure. 
+VPCs are individually connected to one another with no other routing hops between them. VPC deployments omit access from the public internet by default. 
+
+This is also the deployment model for the GCP architecture used by {AAPonGCP}. 
 
 This is a simple peering model and is useful when connecting a few networks. 
 
 Complex peering can be configured, but routing can become more complex over time.
+
+When VPC peering and routing are configured, you can access {PlatformNameShort} through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between GCP and your local networks.
 
 When two or more networks are peered, link:https://cloud.google.com/vpc/docs/vpc-peering#key_properties[Google performs automated actions] to assist with routing, but can perform routable updates to enable taffic flow within your GCP infrastructure.
 
@@ -19,7 +24,7 @@ The following procedure lets you configure VPC peering with {PlatformNameShort}.
 
 .Procedure
 . In the GCP Portal, navigate to menu:VPC Network[].
-. In the *VPC menu*, click btn:[VPC Network Peering].
+. In the *VPC menu*, select *VPC Network Peering*.
 . Click btn:[Create peering connection].
 . In the *Name* field, enter the name of the peering connection that you need.
 . In the *Your VPC Network* field, select the first VPC that you plan to peer. 
