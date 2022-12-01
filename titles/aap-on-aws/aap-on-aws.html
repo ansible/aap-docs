@@ -463,7 +463,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#assembly-aap-aws-extension">3. Extension nodes</a>
 <ul class="sectlevel2">
-<li><a href="#ref-aap-aws-add-extension-nodes">3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</a></li>
+<li><a href="#proc-aap-aws-add-extension-nodes">3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</a></li>
+<li><a href="#_create_the_extension_node_launch_configuration">3.2. Create the extension node launch configuration</a></li>
+<li><a href="#_create_the_auto_scaling_group">3.3. Create the auto scaling group</a></li>
 </ul>
 </li>
 <li><a href="#assembly-aap-aws-networking-access">4. Networking and application access</a>
@@ -919,40 +921,58 @@ It can take some time for the infrastructure and application to fully provision.
 <h2 id="assembly-aap-aws-extension"><a class="anchor" href="#assembly-aap-aws-extension"></a>3. Extension nodes</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="ref-aap-aws-add-extension-nodes"><a class="anchor" href="#ref-aap-aws-add-extension-nodes"></a>3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</h3>
+<h3 id="proc-aap-aws-add-extension-nodes"><a class="anchor" href="#proc-aap-aws-add-extension-nodes"></a>3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</h3>
 <div class="paragraph">
 <p>By default, the foundation stack is deployed with two automation controller nodes and one automation hub node.
 You can add execution nodes to scale out Ansible Automation Platform from AWS Marketplace.
 Follow these steps to add execution nodes into your Ansible Automation Platform from AWS Marketplace environment:</p>
 </div>
 <div class="olist arabic">
-<div class="title">Open the automation controller Launch Configuration</div>
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Navigate to the AWS CloudFormation UI and click the <strong>Resources</strong> tab. Ensure <strong>Tree View</strong> is selected.</p>
+<p>Open the automation controller Launch Configuration</p>
 </li>
 <li>
-<p>Click menu:controller[autoscale-group&gt;Launch Config].</p>
+<p>Navigate to the AWS CloudFormation UI, and click the <strong>Resources</strong> tab.</p>
 </li>
 <li>
-<p>Click the Launch Config Physical ID to open the launch configuration in a new tab.</p>
+<p>Ensure <strong>Tree View</strong> is selected.</p>
+</li>
+<li>
+<p>In the <strong>Controller</strong> menu, select <strong>autoscale-group &gt; Launch Config</strong>.</p>
+</li>
+<li>
+<p>Click btn:[Launch Config Physical ID] to open the launch configuration in a new tab.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_create_the_extension_node_launch_configuration"><a class="anchor" href="#_create_the_extension_node_launch_configuration"></a>3.2. Create the extension node launch configuration</h3>
 <div class="olist arabic">
-<div class="title">Create the extension node launch configuration</div>
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the <strong>Launch configuration</strong> tab, ensure the automation controller launch configuration is selected.
-Click <strong>Copy to launch template</strong>, then <strong>Copy selected</strong>.</p>
+<p>In the <strong>Launch configuration</strong> tab, ensure the automation controller launch configuration is selected.</p>
 </li>
 <li>
-<p>Replace the <strong>New launch template name</strong> with <strong>extension-group-template</strong>.
-Ensure the checkbox for <strong>Create an Auto Scaling group using the new template</strong> is checked.
-Click btn:[Copy].</p>
+<p>Click btn:[Copy to launch template].</p>
 </li>
 <li>
-<p>For the Auto Scaling group name, enter <code>extension-group</code>.</p>
+<p>Click btn:[Copy selected].</p>
+</li>
+<li>
+<p>Replace the <strong>New launch template name</strong> with <strong>extension-group-template</strong>.</p>
+</li>
+<li>
+<p>Ensure <strong>Create an Auto Scaling group using the new template</strong> checkbox is checked.</p>
+</li>
+<li>
+<p>Click btn:[Copy].</p>
+</li>
+<li>
+<p>For the <strong>Auto Scaling group</strong> name, enter <code>extension-group</code>.</p>
 </li>
 <li>
 <p>Under <strong>Launch Template</strong>, click btn:[Create a launch template version] to create a new version of the launch template.</p>
@@ -962,22 +982,22 @@ Click btn:[Copy].</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Navigate to the AWS CloudFormation UI and click the <strong>Resources</strong> tab. Ensure <strong>Tree View</strong> is selected.</p>
+<p>In the AWS CloudFormation UI, click the <strong>Resources</strong> tab.</p>
 </li>
 <li>
-<p>Click menu:controller[autoscale-group&gt;ASG].</p>
+<p>Ensure <strong>Tree View</strong> is selected.</p>
 </li>
 <li>
-<p>Click the ASG Physical ID to open the autoscale group in a new tab.</p>
+<p>In the Controller menu, select <strong>autoscale-group &gt; ASG</strong>.</p>
 </li>
 <li>
-<p>Click on the <strong>Instance Management</strong> tab for the automation controller autoscale-group.</p>
+<p>Click btn:[ASG Physical ID] to open the autoscale group in a new tab.</p>
 </li>
 <li>
-<p>Click on one of the Instance IDs, under the <strong>Instances</strong> section of this tab to open that instance page in a new tab.</p>
+<p>In the <strong>Instance Management</strong> tab for the automation controller autoscale-group, click on one of the Instance IDs, under the <strong>Instances</strong> section of this tab to open that instance page in a new tab.</p>
 </li>
 <li>
-<p>Under the <strong>Instance details</strong> section, copy the <strong>AMI name</strong>:</p>
+<p>In the <strong>Instance details</strong> section, copy the <strong>AMI name</strong>:</p>
 <div class="paragraph">
 <p>The format of the copied AMI name is <code>AAP-&lt;VERSION&gt;_HVM-&lt;DATETIME&gt;-x86_64-1-Marketplace-GP2-&lt;SUFFIX&gt;</code>.</p>
 </div>
@@ -992,18 +1012,24 @@ Click btn:[Copy].</p>
 </div>
 </li>
 <li>
-<p>Under <strong>Application and OS Images</strong>, search for the AMI name for the extension node. Click btn:[Select] next to the AMI which has this name.</p>
+<p>Under <strong>Application and OS Images</strong>, search for the AMI name for the extension node.</p>
+</li>
+<li>
+<p>Click btn:[Select] next to the AMI which has this name.</p>
 </li>
 <li>
 <p>If prompted, confirm the changes.</p>
 </li>
 <li>
-<p>(Optional) Modify the Instance type.
-Valid values are m5.large, m5.xlarge, or m5.2xlarge. The default is m5.large.</p>
+<p>Optional: Modify the Instance type.
+Valid values are m5.large, m5.xlarge, or m5.2xlarge.
+The default is m5.large.</p>
 </li>
 <li>
-<p>Scroll down to the <strong>Storage</strong> category.
-Expand <strong>Volume 1</strong>.</p>
+<p>Scroll down to the <strong>Storage</strong> category.</p>
+</li>
+<li>
+<p>Expand <strong>Volume 1</strong>.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
@@ -1020,24 +1046,29 @@ Expand <strong>Volume 1</strong>.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_create_the_auto_scaling_group"><a class="anchor" href="#_create_the_auto_scaling_group"></a>3.3. Create the auto scaling group</h3>
 <div class="olist arabic">
-<div class="title">Create the auto scaling group</div>
 <ol class="arabic">
 <li>
-<p>Navigate back to the <strong>Choose launch template or configuration</strong> tab.</p>
+<p>Select the <strong>Choose launch template or configuration</strong> tab.</p>
 </li>
 <li>
 <p>In the <strong>Launch template</strong> section, click the <strong>refresh</strong> icon under <strong>Version</strong>.</p>
 </li>
 <li>
-<p>Select the latest option, which we have just created, then click btn:[Next].</p>
+<p>Select the option that you have just created.</p>
 </li>
 <li>
-<p>Under <strong>Network</strong>, ensure the correct VPC is selected.</p>
+<p>Click btn:[Next].</p>
+</li>
+<li>
+<p>In the <strong>Network</strong> menu, ensure the correct VPC is selected.</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>To find the correct VPC, click menu:Network[VPC] to display the VPC ID in the cloudformation stack resources page.</p>
+<p>To find the correct VPC, select <strong>VPC</strong> to display the VPC ID in the cloudformation stack resources page.</p>
 </li>
 <li>
 <p>Select the matching VPC ID.</p>
@@ -1067,7 +1098,7 @@ Expand <strong>Volume 1</strong>.</p>
 <p>Wait for the Auto scaling group to create the nodes and for the related nodes to reach a <em>Running</em> instance state.</p>
 </li>
 <li>
-<p>To view the extension node EC2 instances in the automation controller UI, click menu:Administration[Instances].</p>
+<p>In the automation controller UI, select <strong>Administration &gt; Instances</strong> to view the extension node EC2 instances.</p>
 </li>
 </ol>
 </div>
@@ -1759,7 +1790,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-30 16:10:09 UTC
+Last updated 2022-12-01 09:05:19 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
