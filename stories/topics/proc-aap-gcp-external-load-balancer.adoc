@@ -24,7 +24,7 @@ If you do not see *Network Services*, then select *View All Products*.
 . Select *Load Balancing*. 
 . In the top menu, select *CREATE LOAD BALANCER*.
 . Select the *HTTP(S) Load Balancing* tile and click btn:[START CONFIGURATION].
-. Select *From Internet to my VMs* or *Serverless services and Global HTTP(s) Load Balancer*.
+. Select *From Internet to my VMs or serverless services* and *Global HTTP(s) Load Balancer*.
 . Click btn:[CONTINUE].
 . Provide your load balancer a name, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb`
 . Ensure that *Frontend* configuration is selected at the left of the screen.
@@ -48,6 +48,8 @@ For the {Controllername} load balancer, the correct instance group has the suffi
 +
 For the {HubName} load balancer, the correct instance group has the suffix - `-aap-hub-igm`.
 .. In the resulting dialog box, select *USE EXISTING PORT NAME*.
+.. Set *Balancing mode* to *Rate*.
+.. Set *Maximum RPS* to 300.
 .. Scroll down until you see a text box showing *Health check*. 
 .. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].
 .. Enter a name for your health check, for example - `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-hc`
