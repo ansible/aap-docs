@@ -25,12 +25,12 @@ Find the Amazon Resource Name (ARN) of the RDS snapshot you want to recover from
 Modify the CloudFormation Template of your current {PlatformNameShort} deployment to reference your RDS snapshot
 
 .Procedure
-. Find the CloudFormation Template used to create your old AAP Deployment
+. Find the CloudFormation Template used to create your old {PlatformNameShort} Deployment
 . Navigate to the RDS component of the CloudFormation Template (Can search for *postgres* to get to the component)
-. Under `Properties`` add `“DBSnapshotIdentifier”: <ARN of the RDS snapshot>`
-. Under `Properties`` change `“DBName”: “awx”` to  `“DBName”: {“Ref": "AWS::NoValue" }`
+. Under `Properties` add `“DBSnapshotIdentifier”: <ARN of the RDS snapshot>`
+. Under `Properties` change `“DBName”: “awx”` to  `“DBName”: {“Ref": "AWS::NoValue" }`
 
-Restore an EFS Backup for your deployment
+Restore an EFS Backup for your {PlatformNameShort} deployment
 
 .Procedure
 . In the AWS Console, navigate to menu:CloudFormation[] and select your deployment
