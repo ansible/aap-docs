@@ -1,0 +1,47 @@
+[id="proc-aap-gcp-application-uninstall_{context}"]
+
+= Uninstalling the application
+
+[IMPORTANT]
+====
+This action cannot be reversed.
+
+If a Load Balancer was added for the deployment, it needs to be deleted before uninstalling the deployment.
+====
+
+.Procedure
+. Select the main menu from the top left.
+. Select *Deployment Manager*. If you do not see *Deployment Manager*, select *View All Products*.
+. Select *Deployment Manager*.
+. Tick the checkbox in front of the deployment to be deleted.
+. Click on *Delete* in the top bar, this action cannot be reversed.
+
+The deployment is being deleted.
+
+== Deleting the administration secret.
+
+.Procedure
+. Select the main menu from the top left.
+. Select *Security*. If you do not see *Security*, select *View All Products*.
+. Select *Secret Manager*.
+. Filter with the name of the deployment as the secret name format is <DeploymentName>-aap-admin
+. Click the image::more_actions.png[More,10,25] on the line of the deployment.
+. Select *Delete*, the administration password will be displayed. 
+. Type the name of the secret.
+. Click btn:[Delete Secret].
+
+== Deleting the service account.
+
+[IMPORTANT]
+====
+If a new service account was created for the deployment and if it is not use anywhere else, it could be deleted
+====
+
+.Procedure
+. Select the main menu from the top left.
+. Select *IAM & Admin*. If you do not see *IAM & Admin*, select *View All Products*.
+. Select *Service Accounts*.
+. Filter with the name of the service account.
+. Click the image::more_actions.png[More,10,25] on the line of the service account.
+. Select *Delete*, the administration password is displayed. 
+. Click btn:[Delete]
