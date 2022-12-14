@@ -11,6 +11,7 @@ exclude_paths:
   - .github/
   - test/fixtures/formatting-before/
   - test/fixtures/formatting-prettier/
+  - test/schemas/
 # parseable: true
 # quiet: true
 # strict: true
@@ -33,7 +34,7 @@ loop_var_prefix: "{role}_"
 # Enforce variable names to follow pattern below, in addition to Ansible own
 # requirements, like avoiding python identifiers. To disable add `var-naming`
 # to skip_list.
-# var_naming_pattern: "^[a-z_][a-z0-9_]*$"
+var_naming_pattern: "^[a-z_][a-z0-9_]*$"
 
 use_default_rules: true
 # Load custom rules from this specific folder
@@ -47,9 +48,11 @@ skip_list:
 # Ansible-lint does not automatically load rules that have the 'opt-in' tag.
 # You must enable opt-in rules by listing each rule 'id' below.
 enable_list:
+  - args
   - empty-string-compare # opt-in
   - no-log-password # opt-in
   - no-same-owner # opt-in
+  - name[prefix] # opt-in
   # add yaml here if you want to avoid ignoring yaml checks when yamllint
   # library is missing. Normally its absence just skips using that rule.
   - yaml
@@ -109,3 +112,6 @@ kinds:
 # List of additions modules to allow in only-builtins rule.
 # only_builtins_allow_modules:
 #   - example_module
+
+# Allow setting custom prefix for name[prefix] rule
+task_name_prefix: "{stem} | "
