@@ -1,0 +1,79 @@
+[id="proc-aap-aws-backup-and-recovery"]
+
+To backup and restore your AAP deployment, it is vital to ensure automatic backups have been set for EFS and that these backups are accessible for restoration. When you create an  {PlatformNameShort} deployment, automatic Amazon Elastic File System (EFS) backups are set by default, however it is prudent to check if those backups can be restored before a disaster scenario. In addition, it is also extremely important that regular manual snapshots of the Amazon Relational Database Service (RDS) are taken to ensure a deployment can be restored as close as possible to its previous working state. Follow the steps below to ensure a smooth backup and recovery process.
+
+== Backup Process
+
+.Procedure
+. In the AWS console, navigate to menu:CloudFormation[] on your AWS Console
+. Select the *Resources* tab and navigate to menu:rds[rds] on the resource tree and click the link to go to the RDS of the deployment
+. Select *Instance actions* near the top of the screen to reveal a drop-down menu 
+. Click the btn:[Take Snapshot] 
+. Enter a name for the snapshot and click btn:[Take Snapshot]
+. Your snapshot should now appear in a list of manual RDS snapshots. It is important to take a manual snapshot over relying on the automated ones created by an instance as automated snapshots are attached to the lifecycle of the RDS instance. You cannot use an automated snapshot for recovery in the event that your deployment is lost.
+
+== Recovery Procedure
+
+Find the Amazon Resource Name (ARN) of the RDS snapshot you want to recover from
+
+.Procedure
+. Navigate to menu:RDS[] on your AWS console
+. Select *Snapshots* in the left menu
+. Select the snapshot you want to use for your new deployment
+. The ARN will be listed near the top right of the page. Record the ARN of the snapshot for use in the next step
+
+Modify the CloudFormation Template of your current {PlatformNameShort} deployment to reference your RDS snapshot
+
+.Procedure
+. Find the CloudFormation Template used to create your old {PlatformNameShort} Deployment
+. Navigate to the RDS component of the CloudFormation Template (Can search for *postgres* to get to the component)
+. Under `Properties` add `“DBSnapshotIdentifier”: <ARN of the RDS snapshot>`
+. Under `Properties` change `“DBName”: “awx”` to  `“DBName”: {“Ref": "AWS::NoValue" }`
+
+Restore an EFS Backup for your {PlatformNameShort} deployment
+
+.Procedure
+. In the AWS Console, navigate to menu:CloudFormation[] and select your deployment
+. Select the *Resources* tab and expand the *storage* section on the resource tree
+. Record the physical ID of the filesystem (format should look like this fs-044fce19b58a6d8f5)
+. In your AWS console, navigate to menu:AWS Backup[] on your AWS Console
+. On the side bar select *Backup vaults*
+. From the displayed list of backup vaults select *aws/efs/automatic-backup-vault*
+. Filter recovery points by entering the filesystem id, found in the step above, in to the filter bar
+. Select a recovery point from the filtered results. (Recovery points are sorted from most to least recent)
+. Click the btn:[Restore] in the top right corner of the page
+. For *Restore type* select *Full restore*
+. For *Restore location* select *Restore to a new file system*
+. For *File system type* select *Regional*
+. For *Performance* select *General Purpose*
+. Select the *Enable Encryption* radio button
+. Wait for the Restore Job to complete and record the Resource ID of the restore job. The format should look like `file-system/fs-08729f158d58b3c77`. We want to record everything to the right of the `/`, so in this case we would record `fs-08729f158d58b3c77`. This is the id of the restored EFS filesystem and it will be important for the next step.
+
+Modify the CloudFormation Template from your old {PlatformNameShort} deployment to reference your restored EFS
+
+.Procedure
+. From the template, remove the entire filesystem JSON object named `storage6B604F96` (Located at `Resources.storage6B604F96` )
+. In the JSON template under `Resources.storagemounttarget1A24DC9FD.Properties` update the value for `FileSystemId` to the filesystem ID of the restored EFS (recorded in the steps above)
+. In the JSON template under `Resources.storagemounttarget273289903.Properties` update the value for `FileSystemId` to the filesystem ID of the restored EFS (recorded in the steps above)
+. In the JSON template under `Resources.storageaccesspoint6DF311E5.Properties` update the value for `FileSystemId` to the filesystem ID of the restored EFS (recorded in the steps above)
+. In the JSON template under `Resources.controllerautoscalegroupLaunchConfig02845540.Properties.UserData.Fn::Base64.Fn::Join[1][0]` after `EFS_VOUME=` add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing `Fn::GetAtt`)
+. In the JSON template under `Resources.controllerautoscalegroupASG89CA6D06.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]` after `EFS_VOUME=` add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing `Fn::GetAtt`)
+. In the JSON template under `Resources.hubautoscalegroupLaunchConfig3FD9231D.Properties.UserData.Fn::Base64.Fn::Join[1][0]` after `EFS_VOUME=` add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing `Fn::GetAtt`)
+. In the JSON template under `Resources.hubautoscalegroupASG7FC5A5DF.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]` after `EFS_VOUME=` add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing `Fn::GetAtt`)
+. In the JSON template under `Outputs.storageEFSID4982FF06` update the value for `Value` to `arn:aws:elasticfilesystem:<region>:<account_id>:file-system/<restored_efs_id>`
+. Save this file
+
+
+Create a new AAP Deployment Using the Modified Template
+
+.Procedure
+. In the AWS Console, navigate to menu:CloudFormation[] and click on btn:[Create Stack] located near the top right of the screen
+. Select *With new resources (standard)* in the dropdown
+. In the *Specify template* section under *Template source* select btn:[Upload a template file] and select the template you have modified.
+. Click btn:[Next] to go to the next step
+. Enter a stack name and select an AWSKeyPair to use for the deployment. Click btn:[Next] to go to the *Configure stack options* page
+. Optionally configure stack options and click btn:[Next] to review the stack
+. Click btn:[Submit] to create your new deployment using an RDS Snapshot and restored EFS.
+
+
+You can now log in succesfully to {PlatformName} {ControllerName} and {HubName} using your old deployment credentials. In addition, all job history, uploaded collections and other records should be in the same state as the restored deployment.
