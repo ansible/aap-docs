@@ -1,0 +1,113 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-ai-install"]
+= Installing {AnsibleInsideName}
+
+:context: ai-install
+
+
+== Introduction
+
+{AnsibleInsideName} {AnsibleInsideVers} is a product bundle of Ansible Executor (runner), Ansible Core, Ansible Navigator, Ansible Builder and Ansible Execution Environments.
+{AnsibleInsideNameShort} allows a Red Hat Partner to integrate Ansible automation within their application using the Command Line Interfaces of the Ansible components.
+
+== Prerequisites
+
+{AnsibleInsideNameShort} {AnsibleInsideVers} requires a valid subscription to an {AnsibleInsideNameShort} SKU and enablement of the corresponding RHSM Repo.
+
+Contact Red Hat customer support or Red Hat sales for purchasing/attaching an {AnsibleInsideNameShort} subscription. 
+
+Once a valid {AnsibleInsideNameShort} subscription has been attached to your organization within Red Hat Subscription Manager, you will be able to enable the required repo as follows:
+
+RHEL 8:: `sudo subscription-manager repos --enable=ansible-inside-0.9-for-rhel-8-x86_64-rpms`
+
+RHEL 9:: `sudo subscription-manager repos --enable=ansible-inside-0.9-for-rhel-9-x86_64-rpms`
+
+After the repository is attached successfully, you can proceed with installing the Ansible components.
+
+== Installation
+
+You can install the following {AnsibleInsideName} {AnsibleInsideVers} components  using the Red Hat subscription manager. Alternatively, you can download them from the Red Hat Registry.
+
+* Ansible Core (installed via RHSM)
+* Ansible Executor (runner) (installed via RHSM)
+* Ansible Navigator (installed via RHSM)
+* Ansible Builder (installed via RHSM)
+* Ansible Execution Environment (Downloaded via Red Hat Registry)
+
+You can install all the RHSM components as All-In-One or Individually.
+
+=== All-In-One RHSM
+
+To install all the components in one go, run the following command:
+
+[source,bash]
+----
+sudo dnf install ansible-navigator ansible-core ansible-builder ansible-runner
+----
+
+=== Individual RHSM
+
+You can install only the required components for your needs individually using the following commands:
+
+ansible-core::
++
+[source,bash]
+----
+sudo dnf install ansible-core
+----
+ansible-builder::
++
+[source,bash]
+----
+sudo dnf install ansible-builder
+----
+ansible-runner::
++
+[source,bash]
+----
+sudo dnf install ansible-runner
+----
+ansible-navigator::
++
+[source,bash]
+----
+sudo dnf install ansible-navigator 
+----
+
+
+=== Download from the Red Hat Registry
+
+Ansible Execution Environments are used in {AnsibleInsideNameShort} as either a baseline to execute your Ansible automation with, or can be used with Ansible Builder to provide extended automation compatibility to suit your needs.
+
+The Red Hat supported execution environments available are:
+
+compatibility execution environment (ansible-automation-platform-22/ee-29-rhel8)::
+ee-29 contains ansible 2.9, for compatibility with playbooks and content written for previous versions of Ansible Automation Platform.
+minimal execution environment (ansible-automation-platform-22/ee-minimal-rhel8)::
+ee-minimal is an automation execution environment for Red Hat Ansible Automation Platform. ee-minimal contains ansible-core 2.13.
+
+supported execution environment (ansible-automation-platform-22/ee-supported-rhel8)::
+ee-supported is an automation execution environment for use with Red Hat Ansible Automation Platform.
+ee-supported contains ansible-core 2.13 and automation content collections supported by Red Hat.
+
+.Example of pull for an image
+
+All the images can be pulled using Podman and other means. Here is an example of a Podman pull.
+
+[source,bash]
+----
+podman login registry.redhat.io
+Username: {REGISTRY-SERVICE-ACCOUNT-USERNAME}
+Password: {REGISTRY-SERVICE-ACCOUNT-PASSWORD}
+Login Succeeded!
+
+podman pull registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8:2.13.4-1
+----
+
+
+Refer to catalog.redhat.com for other installation methods available.
+
+
+//include::topics/proc-ai-install.adoc[leveloffset=+1]
+
