@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.17">
-<title>Red Hat Ansible Automation Platform from AWS Marketplace guide</title>
+<title>Ansible Automation Platform from AWS Marketplace guide</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -439,11 +439,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left Role ARG Spec">
 <div id="header">
-<h1>Red Hat Ansible Automation Platform from AWS Marketplace guide</h1>
+<h1>Ansible Automation Platform from AWS Marketplace guide</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_aaponawsnameshort">{AAPonAWSNameShort}</a></li>
+<li><a href="#_ansible_automation_platform_from_aws_marketplace">Ansible Automation Platform from AWS Marketplace</a></li>
 <li><a href="#making-open-source-more-inclusive">Making open source more inclusive</a></li>
 <li><a href="#assembly-intro-to-aap-on-aws">1. Introduction to Ansible Automation Platform from AWS Marketplace</a>
 <ul class="sectlevel2">
@@ -456,7 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#assembly-aap-aws-install">2. Installing Ansible Automation Platform from AWS Marketplace</a>
 <ul class="sectlevel2">
 <li><a href="#ref-aap-aws-install-prerequisites">2.1. Prerequisites</a></li>
-<li><a href="#proc-aws-create-ec2-pair">2.2. Create an EC2 pair</a></li>
+<li><a href="#proc-aws-create-ec2-pair">2.2. Creating an EC2 pair</a></li>
 <li><a href="#proc-aws-marketplace">2.3. AWS Marketplace</a></li>
 <li><a href="#proc-aws-application-deploy">2.4. Application deployment</a></li>
 </ul>
@@ -464,8 +464,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#assembly-aap-aws-extension">3. Extension nodes</a>
 <ul class="sectlevel2">
 <li><a href="#proc-aap-aws-add-extension-nodes">3.1. Adding extension nodes to Ansible Automation Platform from AWS Marketplace</a></li>
-<li><a href="#_create_the_extension_node_launch_configuration">3.2. Create the extension node launch configuration</a></li>
-<li><a href="#_create_the_auto_scaling_group">3.3. Create the auto scaling group</a></li>
+<li><a href="#_creating_the_extension_node_launch_configuration">3.2. Creating the extension node launch configuration</a></li>
+<li><a href="#_creating_the_auto_scaling_group">3.3. Creating the auto scaling group</a></li>
 </ul>
 </li>
 <li><a href="#assembly-aap-aws-networking-access">4. Networking and application access</a>
@@ -494,10 +494,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#assembly-aap-aws-uninstall">7. Uninstalling Ansible Automation Platform from AWS Marketplace</a>
 <ul class="sectlevel2">
-<li><a href="#ref-aws-uninstall">7.1. Uninstall</a>
+<li><a href="#ref-aws-uninstall">7.1. Uninstalling</a>
 <ul class="sectlevel3">
-<li><a href="#_uninstall_extension_nodes">7.1.1. Uninstall extension nodes</a></li>
-<li><a href="#_uninstall_ansible_automation_platform_from_aws_marketplace">7.1.2. Uninstall Ansible Automation Platform from AWS Marketplace</a></li>
+<li><a href="#_uninstalling_extension_nodes">7.1.1. Uninstalling extension nodes</a></li>
+<li><a href="#_uninstalling_ansible_automation_platform_from_aws_marketplace">7.1.2. Uninstalling Ansible Automation Platform from AWS Marketplace</a></li>
 </ul>
 </li>
 </ul>
@@ -506,6 +506,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_backup_process">8.1. Backup Process</a></li>
 <li><a href="#_recovery_procedure">8.2. Recovery Procedure</a></li>
+<li><a href="#_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot">8.3. Modifing the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</a></li>
+<li><a href="#_restoring_an_efs_backup_for_your_ansible_automation_platform_deployment">8.4. Restoring an EFS Backup for your Ansible Automation Platform deployment</a></li>
+<li><a href="#_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs">8.5. Modifing the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</a></li>
+<li><a href="#_creating_a_new_aap_deployment_using_the_modified_template">8.6. Creating a new AAP Deployment Using the Modified Template</a></li>
 </ul>
 </li>
 <li><a href="#assembly-aap-aws-support">9. Support</a></li>
@@ -516,15 +520,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Install and configure Red Hat Ansible Automation Platform from AWS Marketplace.</p>
+<p>Install and configure Ansible Automation Platform from AWS Marketplace.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_aaponawsnameshort"><a class="anchor" href="#_aaponawsnameshort"></a>{AAPonAWSNameShort}</h2>
+<h2 id="_ansible_automation_platform_from_aws_marketplace"><a class="anchor" href="#_ansible_automation_platform_from_aws_marketplace"></a>Ansible Automation Platform from AWS Marketplace</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Thank you for your interest in Red Hat Ansible Automation Platform from <em>AWS Marketplace</em> (AWS).
+<p>Thank you for your interest in Ansible Automation Platform from AWS Marketplace.
 Ansible Automation Platform is a commercial offering that helps teams manage complex multi-tier deployments by adding control, knowledge, and delegation to Ansible-powered environments.</p>
 </div>
 <div class="paragraph">
@@ -547,7 +551,7 @@ For more details, see <a href="https://www.redhat.com/en/blog/making-open-source
 <h2 id="assembly-intro-to-aap-on-aws"><a class="anchor" href="#assembly-intro-to-aap-on-aws"></a>1. Introduction to Ansible Automation Platform from AWS Marketplace</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Red Hat Ansible Automation Platform from AWS Marketplace is an offering that you can deploy from the AWS Marketplace portal.
+<p>Ansible Automation Platform from AWS Marketplace is an offering that you can deploy from the AWS Marketplace portal.
 Ansible Automation Platform from AWS Marketplace provides access to a library of Ansible content collections, and it is integrated with key AWS services, so you can start automating the deployment, configuration, and management of infrastructure and applications quickly.</p>
 </div>
 <div class="paragraph">
@@ -581,7 +585,7 @@ Ansible Automation Platform from AWS Marketplace provides access to a library of
 <div class="sect2">
 <h3 id="con-aws-application-architecture"><a class="anchor" href="#con-aws-application-architecture"></a>1.1. Application architecture</h3>
 <div class="paragraph">
-<p>Red Hat Ansible Automation Platform from AWS Marketplace is installed into infrastructure resources running within your AWS account.</p>
+<p>Ansible Automation Platform from AWS Marketplace is installed into infrastructure resources running within your AWS account.</p>
 </div>
 </div>
 <div class="sect2">
@@ -595,7 +599,7 @@ Ansible Automation Platform from AWS Marketplace provides access to a library of
 <div class="sect2">
 <h3 id="_architecture_description"><a class="anchor" href="#_architecture_description"></a>1.3. Architecture Description</h3>
 <div class="paragraph">
-<p>Red Hat Ansible Automation Platform from AWS Marketplace is designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually.
+<p>Ansible Automation Platform from AWS Marketplace is designed to be private, with no public access or public egress installed by default. This requires customers to expose their infrastructure manually.
 Components deployed are isolated into their own <em>Virtual Private Cloud</em> (VPC).
 Applications run on instances backed by an autoscale group, which run on RHEL-based <em>Amazon Machine Images</em> (AMIs) as their basis.
 These AMIs are preloaded with all the required container images to run the Ansible Automation Platform, automation hub, automation controller, and receptor rpm/container components.
@@ -754,7 +758,7 @@ The application can fail to deploy if your IAM policies restrict deployment and 
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aws-create-ec2-pair"><a class="anchor" href="#proc-aws-create-ec2-pair"></a>2.2. Create an EC2 pair</h3>
+<h3 id="proc-aws-create-ec2-pair"><a class="anchor" href="#proc-aws-create-ec2-pair"></a>2.2. Creating an EC2 pair</h3>
 <div class="paragraph">
 <p>An SSH key pair is required to set up Ansible Automation Platform from AWS Marketplace.
 You can use an existing key pair or create a new one.
@@ -806,7 +810,7 @@ If you have an existing key pair, then you can skip this step.</p>
 <h3 id="proc-aws-marketplace"><a class="anchor" href="#proc-aws-marketplace"></a>2.3. AWS Marketplace</h3>
 <div class="paragraph">
 <div class="title">Public Offer</div>
-<p>Red Hat Ansible Automation Platform from AWS Marketplace can be obtained directly from the AWS Marketplace.
+<p>Ansible Automation Platform from AWS Marketplace can be obtained directly from the AWS Marketplace.
 Follow these steps to purchase and deploy the public offer.</p>
 </div>
 <div class="olist arabic">
@@ -822,7 +826,7 @@ Follow these steps to purchase and deploy the public offer.</p>
 <p>Search for Ansible Automation Platform.</p>
 </li>
 <li>
-<p>Click the listing for <strong>Red Hat Ansible Automation Platform from AWS Marketplace</strong>.
+<p>Click the listing for <strong>Ansible Automation Platform from AWS Marketplace</strong>.
 Ensure that you have selected the offer where Red Hat is the publisher.</p>
 </li>
 <li>
@@ -840,7 +844,7 @@ Note that some selectors may have only one option.</p>
 </div>
 <div class="paragraph">
 <div class="title">Private Offer</div>
-<p>If you have worked with Red Hat Sales to enable a private offer of Red Hat Ansible Automation Platform from AWS Marketplace, follow these steps to accept your offer and deploy the solution.</p>
+<p>If you have worked with Red Hat Sales to enable a private offer of Ansible Automation Platform from AWS Marketplace, follow these steps to accept your offer and deploy the solution.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -856,12 +860,19 @@ Note that some selectors may have only one option.</p>
 </li>
 </ol>
 </div>
-<div class="exampleblock">
-<div class="content">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>After subscribing, the offer is also listed in your AWS Marketplace Subscriptions.</p>
 </div>
-</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -965,7 +976,7 @@ Follow these steps to add execution nodes into your Ansible Automation Platform 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_the_extension_node_launch_configuration"><a class="anchor" href="#_create_the_extension_node_launch_configuration"></a>3.2. Create the extension node launch configuration</h3>
+<h3 id="_creating_the_extension_node_launch_configuration"><a class="anchor" href="#_creating_the_extension_node_launch_configuration"></a>3.2. Creating the extension node launch configuration</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1064,8 +1075,9 @@ The default is m5.large.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_the_auto_scaling_group"><a class="anchor" href="#_create_the_auto_scaling_group"></a>3.3. Create the auto scaling group</h3>
+<h3 id="_creating_the_auto_scaling_group"><a class="anchor" href="#_creating_the_auto_scaling_group"></a>3.3. Creating the auto scaling group</h3>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Select the <strong>Choose launch template or configuration</strong> tab.</p>
@@ -1235,7 +1247,7 @@ You must also update routing tables to direct the networks to send traffic over 
 </div>
 <div class="paragraph">
 <div class="title">Prerequisites</div>
-<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs, and Red Hat Ansible Automation Platform from AWS Marketplace&#8217;s VPC address space.</p>
+<p>Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs, and Ansible Automation Platform from AWS Marketplace&#8217;s VPC address space.</p>
 </div>
 <div class="paragraph">
 <p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
@@ -1451,7 +1463,7 @@ At this stage, you should only have one VPC peered with Ansible Automation Platf
 </ol>
 </div>
 <div class="paragraph">
-<p>If you have configured more restrictive outbound rules, then can repeat the previous steps for outbound rules to ensure that your existing VPC can communicate to Ansible Automation Platform from AWS Marketplace for UI and API access.</p>
+<p>If you have configured more restrictive outbound rules, then you can repeat the previous steps for outbound rules to ensure that your existing VPC can communicate to Ansible Automation Platform from AWS Marketplace for UI and API access.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1474,7 +1486,7 @@ Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.h
 <h2 id="assembly-aap-aws-additional-configs"><a class="anchor" href="#assembly-aap-aws-additional-configs"></a>5. Ansible Automation Platform from AWS Marketplace additional configurations</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you want to use automation hub to host execution environments, you must first configure the application hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
+<p>If you want to use automation hub to host execution environments, you must first configure the automation hub&#8217;s Application Load Balancer, which also involves trusting the self-signed certificate, <code>update-ca-trust</code> on the EC2 Instance.</p>
 </div>
 <div class="sect2">
 <h3 id="ref-aap-aws-additional-configs-update-admin-password"><a class="anchor" href="#ref-aap-aws-additional-configs-update-admin-password"></a>5.1. Changing the default Ansible Automation Platform Administrator password</h3>
@@ -1483,6 +1495,7 @@ Follow <a href="https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.h
 Follow these steps to change the Administrator password for both automation controller and automation hub:</p>
 </div>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>Locate the correct secret for the CloudFormation Stack by opening the AWS Secrets Manager console and selecting the secret with the name <em>&lt;stack_name&gt;-aap-admin-secret</em>.</p>
@@ -1525,6 +1538,7 @@ Follow these steps to change the Administrator password for both automation cont
 Follow these steps to change the RDS password:</p>
 </div>
 <div class="olist arabic">
+<div class="title">Procedure</div>
 <ol class="arabic">
 <li>
 <p>In the <strong>AWS Secrets Manager</strong> console, locate the correct secret for the CloudFormation Stack by selecting the secret with the name <em>&lt;stack_name&gt;-aap-rds-secret</em>.</p>
@@ -1602,10 +1616,13 @@ The autoscale group restarts them.</p>
 <li>
 <p>The new RDS can be used when the new automation controller and automation hub EC2 instances reach a <em>Running</em> Instance State.</p>
 </li>
+</ol>
+</div>
+</li>
 <li>
-<p>To validate the RDS password has been changed -</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
+<p>To validate the RDS password has been changed:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
 <p>Identify and connect to the automation hub instance for the CloudFormation Stack.</p>
 </li>
@@ -1613,7 +1630,7 @@ The autoscale group restarts them.</p>
 <p>View the updated database settings from the following file - <code>/etc/pulp/settings.py</code>.</p>
 </li>
 <li>
-<p>Attempt to connecct using the following sample connection string:</p>
+<p>Attempt to connect using the following sample connection string:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="nowrap">psql postgresql://&lt;DB_USER&gt;:&lt;DB_PASSWORD&gt;@&lt;DB_HOST&gt;:&lt;DB_PORT&gt;/&lt;DB_NAME&gt;</pre>
@@ -1621,9 +1638,6 @@ The autoscale group restarts them.</p>
 </div>
 <div class="paragraph">
 <p>Variable definitions can be found in the settings file.</p>
-</div>
-</li>
-</ol>
 </div>
 </li>
 </ol>
@@ -1723,12 +1737,13 @@ If your requirements are for higher parallel automation operations you can selec
 <h2 id="assembly-aap-aws-uninstall"><a class="anchor" href="#assembly-aap-aws-uninstall"></a>7. Uninstalling Ansible Automation Platform from AWS Marketplace</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="ref-aws-uninstall"><a class="anchor" href="#ref-aws-uninstall"></a>7.1. Uninstall</h3>
+<h3 id="ref-aws-uninstall"><a class="anchor" href="#ref-aws-uninstall"></a>7.1. Uninstalling</h3>
 <div class="paragraph">
-<p>This section describes how to uninstall Ansible Automation Platform from AWS Marketplace. If you deployed extension nodes, you must take the following steps to remove the extension nodes before uninstalling the stack.</p>
+<p>This section describes how to uninstall Ansible Automation Platform from AWS Marketplace.
+If you deployed extension nodes, you must take the following steps to remove the extension nodes before uninstalling the stack.</p>
 </div>
 <div class="sect3">
-<h4 id="_uninstall_extension_nodes"><a class="anchor" href="#_uninstall_extension_nodes"></a>7.1.1. Uninstall extension nodes</h4>
+<h4 id="_uninstalling_extension_nodes"><a class="anchor" href="#_uninstalling_extension_nodes"></a>7.1.1. Uninstalling extension nodes</h4>
 <div class="paragraph">
 <p>If you did not install extension nodes, skip theses steps.</p>
 </div>
@@ -1803,7 +1818,7 @@ If your requirements are for higher parallel automation operations you can selec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_uninstall_ansible_automation_platform_from_aws_marketplace"><a class="anchor" href="#_uninstall_ansible_automation_platform_from_aws_marketplace"></a>7.1.2. Uninstall Ansible Automation Platform from AWS Marketplace</h4>
+<h4 id="_uninstalling_ansible_automation_platform_from_aws_marketplace"><a class="anchor" href="#_uninstalling_ansible_automation_platform_from_aws_marketplace"></a>7.1.2. Uninstalling Ansible Automation Platform from AWS Marketplace</h4>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1825,15 +1840,11 @@ If your requirements are for higher parallel automation operations you can selec
 </li>
 <li>
 <p>Click btn:[Delete stack] to confirm the deletion.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>It can take some time to complete deletion.</p>
 </li>
 </ol>
 </div>
-</li>
-</ol>
+<div class="paragraph">
+<p>It can take some time to complete deletion.</p>
 </div>
 </div>
 </div>
@@ -1843,7 +1854,10 @@ If your requirements are for higher parallel automation operations you can selec
 <h2 id="assembly-aap-aws-backup-and-recovery"><a class="anchor" href="#assembly-aap-aws-backup-and-recovery"></a>8. Ansible Automation Platform from AWS Marketplace Backup and Recovery Process</h2>
 <div class="sectionbody">
 <div id="proc-aap-aws-backup-and-recovery" class="paragraph">
-<p>To backup and restore your AAP deployment, it is vital to ensure automatic backups have been set for EFS and that these backups are accessible for restoration. When you create an  Ansible Automation Platform deployment, automatic Amazon Elastic File System (EFS) backups are set by default, however it is prudent to check if those backups can be restored before a disaster scenario. In addition, it is also extremely important that regular manual snapshots of the Amazon Relational Database Service (RDS) are taken to ensure a deployment can be restored as close as possible to its previous working state. Follow the steps below to ensure a smooth backup and recovery process.</p>
+<p>To backup and restore your AAP deployment, it is vital to ensure automatic backups have been set for EFS and that these backups are accessible for restoration.
+When you create an  Ansible Automation Platform deployment, automatic Amazon Elastic File System (EFS) backups are set by default, however it is prudent to check if those backups can be restored before a disaster scenario.
+In addition, it is also extremely important that regular manual snapshots of the Amazon Relational Database Service (RDS) are taken to ensure a deployment can be restored as close as possible to its previous working state.
+Follow the steps below to ensure a smooth backup and recovery process.</p>
 </div>
 <div class="sect2">
 <h3 id="_backup_process"><a class="anchor" href="#_backup_process"></a>8.1. Backup Process</h3>
@@ -1851,22 +1865,24 @@ If your requirements are for higher parallel automation operations you can selec
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the AWS console, navigate to menu:CloudFormation[] on your AWS Console</p>
+<p>In the AWS console, navigate to menu:CloudFormation[].</p>
 </li>
 <li>
-<p>Select the <strong>Resources</strong> tab and navigate to menu:rds[rds] on the resource tree and click the link to go to the RDS of the deployment</p>
+<p>Select the <strong>Resources</strong> tab and navigate to menu:rds[rds] on the resource tree and click the link to go to the RDS of the deployment.</p>
 </li>
 <li>
-<p>Select <strong>Instance actions</strong> near the top of the screen to reveal a drop-down menu</p>
+<p>Select <strong>Instance actions</strong> near the top of the screen to reveal a drop-down menu.</p>
 </li>
 <li>
-<p>Click the btn:[Take Snapshot]</p>
+<p>Click the btn:[Take Snapshot].</p>
 </li>
 <li>
-<p>Enter a name for the snapshot and click btn:[Take Snapshot]</p>
+<p>Enter a name for the snapshot and click btn:[Take Snapshot].</p>
 </li>
 <li>
-<p>Your snapshot should now appear in a list of manual RDS snapshots. It is important to take a manual snapshot over relying on the automated ones created by an instance as automated snapshots are attached to the lifecycle of the RDS instance. You cannot use an automated snapshot for recovery in the event that your deployment is lost.</p>
+<p>Your snapshot should now appear in a list of manual RDS snapshots.
+It is important to take a manual snapshot over relying on the automated ones created by an instance as automated snapshots are attached to the lifecycle of the RDS instance.
+You cannot use an automated snapshot for recovery in the event that your deployment is lost.</p>
 </li>
 </ol>
 </div>
@@ -1874,159 +1890,176 @@ If your requirements are for higher parallel automation operations you can selec
 <div class="sect2">
 <h3 id="_recovery_procedure"><a class="anchor" href="#_recovery_procedure"></a>8.2. Recovery Procedure</h3>
 <div class="paragraph">
-<p>Find the Amazon Resource Name (ARN) of the RDS snapshot you want to recover from</p>
+<p>Find the <em>Amazon Resource Name</em> (ARN) of the RDS snapshot you want to recover from</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Navigate to menu:RDS[] on your AWS console</p>
+<p>In the AWS console, navigate to menu:RDS[].</p>
 </li>
 <li>
-<p>Select <strong>Snapshots</strong> in the left menu</p>
+<p>Select <strong>Snapshots</strong> in the left menu.</p>
 </li>
 <li>
-<p>Select the snapshot you want to use for your new deployment</p>
+<p>Select the snapshot you want to use for your new deployment.</p>
 </li>
 <li>
-<p>The ARN will be listed near the top right of the page. Record the ARN of the snapshot for use in the next step</p>
+<p>The ARN will be listed near the top right of the page.
+Record the ARN of the snapshot for use in the next step</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Modify the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</p>
 </div>
+<div class="sect2">
+<h3 id="_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"><a class="anchor" href="#_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"></a>8.3. Modifing the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Find the CloudFormation Template used to create your old Ansible Automation Platform Deployment</p>
+<p>Find the CloudFormation Template used to create your old Ansible Automation Platform Deployment.</p>
 </li>
 <li>
-<p>Navigate to the RDS component of the CloudFormation Template (Can search for <strong>postgres</strong> to get to the component)</p>
+<p>Navigate to the RDS component of the CloudFormation Template.
+You can search for <strong>postgres</strong> to find the component.</p>
 </li>
 <li>
-<p>Under <code>Properties</code> add <code>“DBSnapshotIdentifier”: &lt;ARN of the RDS snapshot&gt;</code></p>
+<p>Under <strong>Properties</strong> add <strong>“DBSnapshotIdentifier”: &lt;ARN of the RDS snapshot&gt;</strong>.</p>
 </li>
 <li>
-<p>Under <code>Properties</code> change <code>“DBName”: “awx”</code> to  <code>“DBName”: {“Ref": "AWS::NoValue" }</code></p>
+<p>Under <strong>Properties</strong> change <strong>“DBName”: “awx”</strong> to  <strong>“DBName”: {“Ref": "AWS::NoValue" }</strong>.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Restore an EFS Backup for your Ansible Automation Platform deployment</p>
 </div>
+<div class="sect2">
+<h3 id="_restoring_an_efs_backup_for_your_ansible_automation_platform_deployment"><a class="anchor" href="#_restoring_an_efs_backup_for_your_ansible_automation_platform_deployment"></a>8.4. Restoring an EFS Backup for your Ansible Automation Platform deployment</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the AWS Console, navigate to menu:CloudFormation[] and select your deployment</p>
+<p>In the AWS Console, navigate to menu:CloudFormation[] and select your deployment.</p>
 </li>
 <li>
-<p>Select the <strong>Resources</strong> tab and expand the <strong>storage</strong> section on the resource tree</p>
+<p>Select the <strong>Resources</strong> tab and expand the <strong>storage</strong> section on the resource tree.</p>
 </li>
 <li>
-<p>Record the physical ID of the filesystem (format should look like this fs-044fce19b58a6d8f5)</p>
+<p>Record the physical ID of the filesystem.
+The format should be similar to <code>fs-044fce19b58a6d8f5</code>.</p>
 </li>
 <li>
-<p>In your AWS console, navigate to menu:AWS Backup[] on your AWS Console</p>
+<p>In the AWS console, navigate to menu:AWS Backup[].</p>
 </li>
 <li>
-<p>On the side bar select <strong>Backup vaults</strong></p>
+<p>On the side bar select <strong>Backup vaults</strong>.</p>
 </li>
 <li>
-<p>From the displayed list of backup vaults select <strong>aws/efs/automatic-backup-vault</strong></p>
+<p>From the displayed list of backup vaults select <strong>aws/efs/automatic-backup-vault</strong>.</p>
 </li>
 <li>
-<p>Filter recovery points by entering the filesystem id, found in the step above, in to the filter bar</p>
+<p>Enter the filesystem ID, found in the step above, in to the filter bar to filter recovery points.</p>
 </li>
 <li>
-<p>Select a recovery point from the filtered results. (Recovery points are sorted from most to least recent)</p>
+<p>Select a recovery point from the filtered results.
+Note that recovery points are sorted from most to least recent.</p>
 </li>
 <li>
-<p>Click the btn:[Restore] in the top right corner of the page</p>
+<p>Click btn:[Restore] in the top right corner of the page.</p>
 </li>
 <li>
-<p>For <strong>Restore type</strong> select <strong>Full restore</strong></p>
+<p>For <strong>Restore type</strong> select <strong>Full restore</strong>.</p>
 </li>
 <li>
-<p>For <strong>Restore location</strong> select <strong>Restore to a new file system</strong></p>
+<p>For <strong>Restore location</strong> select <strong>Restore to a new file system</strong>.</p>
 </li>
 <li>
-<p>For <strong>File system type</strong> select <strong>Regional</strong></p>
+<p>For <strong>File system type</strong> select <strong>Regional</strong>.</p>
 </li>
 <li>
-<p>For <strong>Performance</strong> select <strong>General Purpose</strong></p>
+<p>For <strong>Performance</strong> select <strong>General Purpose</strong>.</p>
 </li>
 <li>
-<p>Select the <strong>Enable Encryption</strong> radio button</p>
+<p>Select the <strong>Enable Encryption</strong> radio button.</p>
 </li>
 <li>
-<p>Wait for the Restore Job to complete and record the Resource ID of the restore job. The format should look like <code>file-system/fs-08729f158d58b3c77</code>. We want to record everything to the right of the <code>/</code>, so in this case we would record <code>fs-08729f158d58b3c77</code>. This is the id of the restored EFS filesystem and it will be important for the next step.</p>
+<p>Wait for the Restore Job to complete and record the Resource ID of the restore job.
+The format should be similar to <code>file-system/fs-08729f158d58b3c77</code>.
+You must record everything to the right of the <code>/</code>, so in this case you would record <code>fs-08729f158d58b3c77</code>.
+This is the ID of the restored EFS filesystem.
+It is important for the next step.</p>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"><a class="anchor" href="#_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"></a>8.5. Modifing the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</h3>
 <div class="paragraph">
-<p>Modify the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</p>
+<p>You must have the filesystem ID of the restored EFS available to continue.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>From the template, remove the entire filesystem JSON object named <code>storage6B604F96</code> (Located at <code>Resources.storage6B604F96</code> )</p>
+<p>From the template, remove the entire filesystem JSON object named <code>storage6B604F96</code> located at <code>Resources.storage6B604F96</code>.</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.storagemounttarget1A24DC9FD.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the steps above)</p>
+<p>In the JSON template under <code>Resources.storagemounttarget1A24DC9FD.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the previous procedure).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.storagemounttarget273289903.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the steps above)</p>
+<p>In the JSON template under <code>Resources.storagemounttarget273289903.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the previous procedure).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.storageaccesspoint6DF311E5.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the steps above)</p>
+<p>In the JSON template under <code>Resources.storageaccesspoint6DF311E5.Properties</code> update the value for <code>FileSystemId</code> to the filesystem ID of the restored EFS (recorded in the previous procedure).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.controllerautoscalegroupLaunchConfig02845540.Properties.UserData.Fn::Base64.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>)</p>
+<p>In the JSON template under <code>Resources.controllerautoscalegroupLaunchConfig02845540.Properties.UserData.Fn::Base64.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the previous procedure) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.controllerautoscalegroupASG89CA6D06.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>)</p>
+<p>In the JSON template under <code>Resources.controllerautoscalegroupASG89CA6D06.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the previous procedure) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.hubautoscalegroupLaunchConfig3FD9231D.Properties.UserData.Fn::Base64.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>)</p>
+<p>In the JSON template under <code>Resources.hubautoscalegroupLaunchConfig3FD9231D.Properties.UserData.Fn::Base64.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the previous procedure) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Resources.hubautoscalegroupASG7FC5A5DF.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the steps above) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>)</p>
+<p>In the JSON template under <code>Resources.hubautoscalegroupASG7FC5A5DF.Metadata.AWS::CloudFomration::Init.copyBootstrap.files./bootstrap_node.sh.content.Fn::Join[1][0]</code> after <code>EFS_VOUME=</code> add the filesystem ID of the restored EFS (recorded in the previous procedure) and remove the object directly below this line (object containing <code>Fn::GetAtt</code>).</p>
 </li>
 <li>
-<p>In the JSON template under <code>Outputs.storageEFSID4982FF06</code> update the value for <code>Value</code> to <code>arn:aws:elasticfilesystem:&lt;region&gt;:&lt;account_id&gt;:file-system/&lt;restored_efs_id&gt;</code></p>
+<p>In the JSON template under <code>Outputs.storageEFSID4982FF06</code> update the value for <code>Value</code> to <code>arn:aws:elasticfilesystem:&lt;region&gt;:&lt;account_id&gt;:file-system/&lt;restored_efs_id&gt;</code>.</p>
 </li>
 <li>
-<p>Save this file</p>
+<p>Save this file.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p>Create a new AAP Deployment Using the Modified Template</p>
 </div>
+<div class="sect2">
+<h3 id="_creating_a_new_aap_deployment_using_the_modified_template"><a class="anchor" href="#_creating_a_new_aap_deployment_using_the_modified_template"></a>8.6. Creating a new AAP Deployment Using the Modified Template</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>In the AWS Console, navigate to menu:CloudFormation[] and click on btn:[Create Stack] located near the top right of the screen</p>
+<p>In the AWS Console, navigate to menu:CloudFormation[].</p>
 </li>
 <li>
-<p>Select <strong>With new resources (standard)</strong> in the dropdown</p>
+<p>Click on btn:[Create Stack] near the top right of the screen.</p>
 </li>
 <li>
-<p>In the <strong>Specify template</strong> section under <strong>Template source</strong> select btn:[Upload a template file] and select the template you have modified.</p>
+<p>Select <strong>With new resources (standard)</strong> in the dropdown.</p>
+</li>
+<li>
+<p>In the <strong>Specify template</strong> section under <strong>Template source</strong> click btn:[Upload a template file] and select the template you have modified.</p>
 </li>
 <li>
 <p>Click btn:[Next] to go to the next step</p>
 </li>
 <li>
-<p>Enter a stack name and select an AWSKeyPair to use for the deployment. Click btn:[Next] to go to the <strong>Configure stack options</strong> page</p>
+<p>Enter a stack name and select an AWSKeyPair to use for the deployment.</p>
 </li>
 <li>
-<p>Optionally configure stack options and click btn:[Next] to review the stack</p>
+<p>Click btn:[Next] to go to the <strong>Configure stack options</strong> page.</p>
+</li>
+<li>
+<p>Optional: You can configure stack options and click btn:[Next] to review the stack</p>
 </li>
 <li>
 <p>Click btn:[Submit] to create your new deployment using an RDS Snapshot and restored EFS.</p>
@@ -2034,7 +2067,8 @@ If your requirements are for higher parallel automation operations you can selec
 </ol>
 </div>
 <div class="paragraph">
-<p>You can now log in succesfully to Red Hat Ansible Automation Platform automation controller and automation hub using your old deployment credentials. In addition, all job history, uploaded collections and other records should be in the same state as the restored deployment.</p>
+<p>You can now log in succesfully to Red Hat Ansible Automation Platform automation controller and automation hub using your old deployment credentials.
+In addition, all job history, uploaded collections and other records should be in the same state as the restored deployment.</p>
 </div>
 </div>
 </div>
@@ -2126,7 +2160,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-12-14 16:04:22 UTC
+Last updated 2022-12-15 14:56:20 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
