@@ -1021,7 +1021,7 @@ It can take some time for the infrastructure and application to fully provision.
 </table>
 </div>
 <div class="paragraph">
-<p>To retrieve the admin password:</p>
+<p>To retrieve the administration password:</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1036,16 +1036,18 @@ It can take some time for the infrastructure and application to fully provision.
 <p>Select <strong>Secret Manager</strong>.</p>
 </li>
 <li>
-<p>Filter with the name of the deployment as the secret name format is &lt;DeploymentName&gt;-aap-admin</p>
+<p>Filter with the name of the deployment.
+The secret name format is <code>&lt;DeploymentName&gt;-aap-admin</code>.</p>
 </li>
 <li>
 <p>Click on the secret name of the deployment</p>
 </li>
 <li>
-<p>Click the <span class="image"><img src="images/more_actions.png" alt="More" width="10" height="25"></span> on the line of the deployment.</p>
+<p>Click the <span class="image"><img src="images/ellipsis.png" alt="Ellipsis" width="5" height="12"></span> on the line of the deployment.</p>
 </li>
 <li>
-<p>Select <strong>View secret value</strong>, the administration password is be displayed.</p>
+<p>Select <strong>View secret value</strong>.
+The administration password is displayed.</p>
 </li>
 </ol>
 </div>
@@ -1066,7 +1068,7 @@ Each range should exist within a private network class.</p>
 </div>
 <div class="paragraph">
 <div class="title"><strong>Application Subnet Range</strong></div>
-<p>Network CIDR defining the subnet range used by the custom VPC deployed by the offering.
+<p>The network CIDR defining the subnet range used by the custom VPC deployed by the offering.
 Must be a minimum <code>/24</code> segment and must be in the private network range (192.168 or 10.0).</p>
 </div>
 <div class="paragraph">
@@ -1074,7 +1076,7 @@ Must be a minimum <code>/24</code> segment and must be in the private network ra
 </div>
 <div class="paragraph">
 <div class="title"><strong>Cloud SQL Peering Network Range</strong></div>
-<p>Network CIDR defining the network segment used to peer the GCP CloudSQL network with the baseNetwork deployed by the offering.
+<p>The network CIDR defining the network segment used to peer the GCP CloudSQL network with the baseNetwork deployed by the offering.
 Must be a <code>/24</code> segment.
 The <code>/24</code> segment range is a requirement of GCP CloudSQL network peering configuration.</p>
 </div>
@@ -1083,7 +1085,7 @@ The <code>/24</code> segment range is a requirement of GCP CloudSQL network peer
 </div>
 <div class="paragraph">
 <div class="title"><strong>Filestore Peering Network Range</strong></div>
-<p>The Ansible Automation Platform from GCP Marketplace uses GCP Filestore service to share configuration files between multiple automation controller and automation hub VMs provisioned as part of the deployment.
+<p>Ansible Automation Platform from GCP Marketplace uses GCP Filestore service to share configuration files between multiple automation controller and automation hub VMs provisioned as part of the deployment.
 This network CIDR range defines the peer network that is used by the offering to peer between the GCP Filestore network and the custom VPC baseNetwork of the offering.</p>
 </div>
 <div class="paragraph">
@@ -1092,12 +1094,12 @@ This network CIDR range defines the peer network that is used by the offering to
 <div class="paragraph">
 <div class="title"><strong>Load Balancer Proxy Subnet Range</strong></div>
 <p>Ansible Automation Platform from GCP Marketplace is deployed using GCP’s native cloud capabilities to provide a scalable and reliable installation.
-As part of the Ansible Automation Platform from GCP Marketplace deployment topology two Load Balancers are deployed in front of the automation hub and automation controller VMs.
-All traffic is directed at these Load Balancers and is proxied to the available backend VMs.
-The deployment takes advantage of GCP’s native Load Balancing support enabling the customer to add additional ports (https) to the Load Balancers to capture and forward requests onto the backend VMs.
+As part of the Ansible Automation Platform from GCP Marketplace deployment topology two load balancers are deployed in front of the automation hub and automation controller VMs.
+All traffic is directed at these load balancers and is proxied to the available backend VMs.
+The deployment takes advantage of GCP’s native load balancing support enabling the customer to add additional ports (https) to the load balancers to capture and forward requests onto the backend VMs.
 This also provides request balancing and session tracking for better reliability.
-As part of the Load Balancer deployment GCP requires creation of a special proxy network where GCP natively handles the redirection of requests to the backend VMs.
-This special proxy network is not used within Ansible Automation Platform from GCP Marketplace for any other purpose than GCP’s Load Balancer’s proxy network requirement.
+As part of the load balancer deployment, GCP requires creation of a special proxy network where GCP natively handles the redirection of requests to the backend VMs.
+This special proxy network is not used within Ansible Automation Platform from GCP Marketplace for any other purpose than GCP’s load balancer’s proxy network requirement.
 A <code>/24</code> segment is required.</p>
 </div>
 <div class="paragraph">
@@ -2235,7 +2237,7 @@ Red Hat operates within its premium support policies for providing updated machi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-04 16:27:16 UTC
+Last updated 2023-01-10 14:16:02 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
