@@ -12,32 +12,32 @@ Ensure that each range does not overlap with any other specified here, and does 
 Each range should exist within a private network class.
 
 .*Application Subnet Range*
-Network CIDR defining the subnet range used by the custom VPC deployed by the offering. 
+The network CIDR defining the subnet range used by the custom VPC deployed by the offering. 
 Must be a minimum `/24` segment and must be in the private network range (192.168 or 10.0).  
 
 Default: 192.168.240.0/24
 
 .*Cloud SQL Peering Network Range*  
-Network CIDR defining the network segment used to peer the GCP CloudSQL network with the baseNetwork deployed by the offering.  
+The network CIDR defining the network segment used to peer the GCP CloudSQL network with the baseNetwork deployed by the offering.  
 Must be a `/24` segment.  
 The `/24` segment range is a requirement of GCP CloudSQL network peering configuration. 
 
 Default: 192.168.241.0/24
 
 .*Filestore Peering Network Range*  
-The {AAPonGCP} uses GCP Filestore service to share configuration files between multiple {ControllerName} and {HubName} VMs provisioned as part of the deployment. 
+{AAPonGCP} uses GCP Filestore service to share configuration files between multiple {ControllerName} and {HubName} VMs provisioned as part of the deployment. 
 This network CIDR range defines the peer network that is used by the offering to peer between the GCP Filestore network and the custom VPC baseNetwork of the offering.  
 
 Default: 192.168.243.0/24
 
 .*Load Balancer Proxy Subnet Range*  
 {AAPonGCP} is deployed using GCP’s native cloud capabilities to provide a scalable and reliable installation. 
-As part of the {AAPonGCP} deployment topology two Load Balancers are deployed in front of the {HubName} and {ControllerName} VMs. 
-All traffic is directed at these Load Balancers and is proxied to the available backend VMs. 
-The deployment takes advantage of GCP’s native Load Balancing support enabling the customer to add additional ports (https) to the Load Balancers to capture and forward requests onto the backend VMs.
+As part of the {AAPonGCP} deployment topology two load balancers are deployed in front of the {HubName} and {ControllerName} VMs. 
+All traffic is directed at these load balancers and is proxied to the available backend VMs. 
+The deployment takes advantage of GCP’s native load balancing support enabling the customer to add additional ports (https) to the load balancers to capture and forward requests onto the backend VMs.
 This also provides request balancing and session tracking for better reliability.  
-As part of the Load Balancer deployment GCP requires creation of a special proxy network where GCP natively handles the redirection of requests to the backend VMs. 
-This special proxy network is not used within {AAPonGCP} for any other purpose than GCP’s Load Balancer’s proxy network requirement.  
+As part of the load balancer deployment, GCP requires creation of a special proxy network where GCP natively handles the redirection of requests to the backend VMs. 
+This special proxy network is not used within {AAPonGCP} for any other purpose than GCP’s load balancer’s proxy network requirement.  
 A `/24` segment is required. 
 
 Default: 192.168.242.0/24
