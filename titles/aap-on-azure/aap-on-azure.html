@@ -479,8 +479,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#proc-azure-proc-azure-deploy-aap_aap-azure-install">2.3. Deploying Ansible Automation Platform from Azure Marketplace</a>
 <ul class="sectlevel3">
-<li><a href="#proc-azure-locate-aap-marketplace_aap-azure-install">2.3.1. Locating Ansible Automation Platform in Azure Marketplace</a></li>
-<li><a href="#proc-azure-provisioning-aap_aap-azure-install">2.3.2. Provisioning Red Hat Ansible Automation Platform on Microsoft Azure</a></li>
+<li><a href="#proc-azure-podidentity_aap-azure-install">2.3.1. Enabling PodIdentityPreview capability in Azure</a></li>
+<li><a href="#proc-azure-locate-aap-marketplace_aap-azure-install">2.3.2. Locating Ansible Automation Platform in Azure Marketplace</a></li>
+<li><a href="#proc-azure-provisioning-aap_aap-azure-install">2.3.3. Provisioning Red Hat Ansible Automation Platform on Microsoft Azure</a></li>
 </ul>
 </li>
 <li><a href="#proc-azure-accessing-aap_aap-azure-install">2.4. Accessing Red Hat Ansible Automation Platform on Microsoft Azure</a>
@@ -1221,7 +1222,22 @@ You can create a new one when needed.</p>
 <div class="sect2">
 <h3 id="proc-azure-proc-azure-deploy-aap_aap-azure-install"><a class="anchor" href="#proc-azure-proc-azure-deploy-aap_aap-azure-install"></a>2.3. Deploying Ansible Automation Platform from Azure Marketplace</h3>
 <div class="sect3">
-<h4 id="proc-azure-locate-aap-marketplace_aap-azure-install"><a class="anchor" href="#proc-azure-locate-aap-marketplace_aap-azure-install"></a>2.3.1. Locating Ansible Automation Platform in Azure Marketplace</h4>
+<h4 id="proc-azure-podidentity_aap-azure-install"><a class="anchor" href="#proc-azure-podidentity_aap-azure-install"></a>2.3.1. Enabling PodIdentityPreview capability in Azure</h4>
+<div class="paragraph">
+<p>Ansible Automation Platform on Microsoft Azure uses Azure features that require enablement.
+Run the following command from the Azure CLI or Cloud Console to enable those features:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You only need to perform this action once for each Azure subscription that you use to install Ansible Automation Platform on Microsoft Azure.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="proc-azure-locate-aap-marketplace_aap-azure-install"><a class="anchor" href="#proc-azure-locate-aap-marketplace_aap-azure-install"></a>2.3.2. Locating Ansible Automation Platform in Azure Marketplace</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -1243,7 +1259,7 @@ You can create a new one when needed.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="proc-azure-provisioning-aap_aap-azure-install"><a class="anchor" href="#proc-azure-provisioning-aap_aap-azure-install"></a>2.3.2. Provisioning Red Hat Ansible Automation Platform on Microsoft Azure</h4>
+<h4 id="proc-azure-provisioning-aap_aap-azure-install"><a class="anchor" href="#proc-azure-provisioning-aap_aap-azure-install"></a>2.3.3. Provisioning Red Hat Ansible Automation Platform on Microsoft Azure</h4>
 <div class="paragraph _abstract">
 <p>When you initiate the deployment of the Red Hat Ansible Automation Platform managed app from Azure marketplace, a form is displayed in the <strong>Create Red Hat Ansible Automation Platform on Microsoft Azure</strong> window.</p>
 </div>
@@ -2320,7 +2336,7 @@ Add the following line to your hosts file:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-10 14:16:02 UTC
+Last updated 2023-01-11 16:41:16 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
