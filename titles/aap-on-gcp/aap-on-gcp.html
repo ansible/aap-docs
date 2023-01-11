@@ -1166,13 +1166,14 @@ Use <a href="https://cloud.google.com/vpc/docs/vpc-peering">GCP documentation</a
 <div class="paragraph">
 <p><a href="https://cloud.google.com/vpc/docs/vpc-peering">VPC Peering</a> is required for Ansible Automation Platform to access resources that reside on private VPCs or where transit routing between Google Cloud Platform and your on-premises network(s) exists.
 It offers the ability to directly connect different networks within your GCP infrastructure.
-VPCs are individually connected to one another with no other routing hops between them. VPC deployments omit access from the public internet by default.</p>
+VPCs are individually connected to one another with no other routing hops between them.
+VPC deployments omit access from the public internet by default.</p>
 </div>
 <div class="paragraph">
 <p>This is also the deployment model for the GCP architecture used by Ansible Automation Platform from GCP Marketplace.</p>
 </div>
 <div class="paragraph">
-<p>This is a simple peering model and is useful when connecting a few networks.</p>
+<p>This is a simple peering model and is useful when connecting several networks.</p>
 </div>
 <div class="paragraph">
 <p>Complex peering can be configured, but routing can become more complex over time.</p>
@@ -1189,7 +1190,7 @@ VPCs are individually connected to one another with no other routing hops betwee
 The GCP Portal should prevent peering if this is attempted.</p>
 </div>
 <div class="paragraph">
-<p>The following procedure lets you configure VPC peering with Ansible Automation Platform.</p>
+<p>Configure VPC peering with Ansible Automation Platform with the following procedure.</p>
 </div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
@@ -1212,8 +1213,8 @@ The GCP Portal should prevent peering if this is attempted.</p>
 <li>
 <p>In the <strong>Peered VPC Network</strong> field, select the second VPC to peer.
 This must be the Ansible Automation Platform from GCP Marketplace VPC.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<div class="ulist">
+<ul>
 <li>
 <p>Subnet routes between these two networks are created by default.
 Therefore, access to Ansible Automation Platform can occur from VMs that reside on the peered VPC.
@@ -1225,7 +1226,7 @@ Google provides explanations what each fields does.
 Your selection affects how traffic flows through your VPCs.
 Normally, these checkboxes configure routing between the newly peered networks and other networks through the route table exchange and enable network traffic to traverse multiple networks (transit routing).</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
 <li>
@@ -1291,15 +1292,15 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <p>Click btn:[CONTINUE].</p>
 </li>
 <li>
-<p>Provide your load balancer a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb</code></p>
+<p>Give your load balancer a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb</code></p>
 </li>
 <li>
 <p>Ensure that <strong>Frontend</strong> configuration is selected at the left of the screen.</p>
 </li>
 <li>
-<p>Enter the required fields on the <strong>Frontend</strong> configuration page.</p>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
+<p>On the <strong>Frontend</strong> configuration page, complete the following fields:</p>
+<div class="ulist">
+<ul>
 <li>
 <p><strong>Protocol</strong>: HTTPS.</p>
 </li>
@@ -1315,7 +1316,7 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <li>
 <p><strong>SSL Policy</strong>: GCP default, or another configured policy.</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
 <li>
@@ -1332,24 +1333,25 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Provide your backend service a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-bknd-svc</code></p>
+<p>Give your backend service a name, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-bknd-svc</code></p>
 </li>
 <li>
-<p>Set the <strong>Backend type</strong> to <strong>Instance group</strong>.</p>
+<p>Set <strong>Backend type</strong> to <strong>Instance group</strong>.</p>
 </li>
 <li>
-<p>Set the <strong>Protocol</strong> to <code>HTTP</code> and <strong>Named Port</strong> to <code>http</code>.</p>
+<p>Set <strong>Protocol</strong> to <code>HTTP</code> and <strong>Named Port</strong> to <code>http</code>.</p>
 </li>
 <li>
-<p>Change the <strong>Timeout</strong> to <code>300</code>.</p>
+<p>Change <strong>Timeout</strong> to <code>300</code>.</p>
 </li>
 <li>
-<p>Scroll down to the <strong>Backends</strong> section and in the <strong>New backend</strong> field, select the <strong>Instance group</strong> drop-down and select the correct instance group.</p>
+<p>Scroll down to the <strong>Backends</strong> section and in the <strong>New backend</strong> field, select the <strong>Instance group</strong> drop-down.
+Select the correct instance group.</p>
 <div class="paragraph">
-<p>For the automation controller load balancer, the correct instance group has the suffix - <code>-aap-cntrlr-igm</code>.</p>
+<p>For the automation controller load balancer, the correct instance group has the suffix <code>-aap-cntrlr-igm</code>.</p>
 </div>
 <div class="paragraph">
-<p>For the automation hub load balancer, the correct instance group has the suffix - <code>-aap-hub-igm</code>.</p>
+<p>For the automation hub load balancer, the correct instance group has the suffix <code>-aap-hub-igm</code>.</p>
 </div>
 </li>
 <li>
@@ -1368,25 +1370,25 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <p>Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].</p>
 </li>
 <li>
-<p>Enter a name for your health check, for example - <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-hc</code></p>
+<p>Enter a name for your health check, for example, <code>&lt;DeploymentName&gt;-aap-&lt;cntrlr/hub&gt;-ext-lb-hc</code></p>
 </li>
 <li>
 <p>For automation controller, use the following health check settings</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
+<div class="ulist">
+<ul>
 <li>
 <p>In the <strong>Health Check</strong> dialog box, set <strong>Protocol</strong> to <code>TCP</code>, and <strong>Port</strong> to <code>8052</code>.</p>
 </li>
 <li>
 <p>Set <strong>Request</strong> to <code>/api/v2/ping/</code>.</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
 <li>
 <p>For automation hub, use the following health check settings</p>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
+<div class="ulist">
+<ul>
 <li>
 <p>In the <strong>Health Check</strong> dialog box, set <strong>Protocol</strong> to <code>TCP</code>, and <strong>Port</strong> to <code>8080</code>.</p>
 </li>
@@ -1396,7 +1398,7 @@ If you do not see <strong>Network Services</strong>, then select <strong>View Al
 <li>
 <p>Keep all other default settings.</p>
 </li>
-</ol>
+</ul>
 </div>
 </li>
 <li>
@@ -1431,7 +1433,7 @@ This will take a few minutes to complete.</p>
 </div>
 <div class="paragraph">
 <p>At this point you should have accesss to the Ansible Automation Platform automation controller UI.
-You can log in after you retrieve the admin password.</p>
+You can log in after you retrieve the administration password.</p>
 </div>
 <div class="paragraph">
 <p>Repeat the same process for private automation hub.
@@ -2237,7 +2239,7 @@ Red Hat operates within its premium support policies for providing updated machi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-11 16:41:16 UTC
+Last updated 2023-01-11 17:56:47 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
