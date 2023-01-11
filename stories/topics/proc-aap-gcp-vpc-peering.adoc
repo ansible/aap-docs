@@ -4,11 +4,12 @@
 
 link:https://cloud.google.com/vpc/docs/vpc-peering[VPC Peering] is required for {PlatformNameShort} to access resources that reside on private VPCs or where transit routing between {GCP} and your on-premises network(s) exists.
 It offers the ability to directly connect different networks within your GCP infrastructure. 
-VPCs are individually connected to one another with no other routing hops between them. VPC deployments omit access from the public internet by default. 
+VPCs are individually connected to one another with no other routing hops between them. 
+VPC deployments omit access from the public internet by default. 
 
 This is also the deployment model for the GCP architecture used by {AAPonGCP}. 
 
-This is a simple peering model and is useful when connecting a few networks. 
+This is a simple peering model and is useful when connecting several networks. 
 
 Complex peering can be configured, but routing can become more complex over time.
 
@@ -20,7 +21,7 @@ When two or more networks are peered, link:https://cloud.google.com/vpc/docs/vpc
 Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs and {AAPonGCP}'s VPC address space. 
 The GCP Portal should prevent peering if this is attempted.
 
-The following procedure lets you configure VPC peering with {PlatformNameShort}.
+Configure VPC peering with {PlatformNameShort} with the following procedure.
 
 .Procedure
 . In the GCP Portal, navigate to menu:VPC Network[].
@@ -30,10 +31,10 @@ The following procedure lets you configure VPC peering with {PlatformNameShort}.
 . In the *Your VPC Network* field, select the first VPC that you plan to peer. 
 . In the *Peered VPC Network* field, select the second VPC to peer. 
 This must be the {AAPonGCP} VPC.
-.. Subnet routes between these two networks are created by default.
+* Subnet routes between these two networks are created by default.
 Therefore, access to {PlatformNameShort} can occur from VMs that reside on the peered VPC.
 However, if you have more complex routing, such as a hub-and-spoke network model, then other routes must be created.
-.. Select *Exchange custom routes* and *Exchange subnet routes with public IP* carefully. 
+* Select *Exchange custom routes* and *Exchange subnet routes with public IP* carefully. 
 Google provides explanations what each fields does. 
 Your selection affects how traffic flows through your VPCs. 
 Normally, these checkboxes configure routing between the newly peered networks and other networks through the route table exchange and enable network traffic to traverse multiple networks (transit routing).
