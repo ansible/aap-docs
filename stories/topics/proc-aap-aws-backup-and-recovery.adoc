@@ -7,6 +7,8 @@ Follow the steps below to ensure a smooth backup and recovery process.
 
 == Backup Process
 
+Taking an RDS Snapshot of Your Existing AAP Deployment 
+
 .Procedure
 . In the AWS console, navigate to menu:CloudFormation[].
 . Select the *Resources* tab and navigate to menu:rds[rds] on the resource tree and click the link to go to the RDS of the deployment.
@@ -16,6 +18,26 @@ Follow the steps below to ensure a smooth backup and recovery process.
 . Your snapshot should now appear in a list of manual RDS snapshots. 
 It is important to take a manual snapshot over relying on the automated ones created by an instance as automated snapshots are attached to the lifecycle of the RDS instance. 
 You cannot use an automated snapshot for recovery in the event that your deployment is lost.
+
+Creating an On-Demand Backup For the EFS of Your Existing Deployment
+
+.Procedure
+. In the AWS console, navigate to menu:AWS Backup[].
+. From the side menu, select *Dashboard*
+. Click btn:[Create on-demand backup].
+. From the *Resource Type* dropdown select *EFS*
+. From the *File system ID* dropdown choose the File system ID attached to your AAP Deployment
+. To find the filesystem ID of the deployment
+..  In the AWS Console, navigate to menu:CloudFormation[] in the AWS Console and select your deployment stack.
+.. Select the *Resources* tab and expand the *storage* section on the resource tree.
+.. Note the physical ID of the filesystem. 
+The format should be similar to `fs-044fce19b58a6d8f5`.
+. From the *Backup vault* dropdown select the backup vault you would like to use. Aditional information on creating and configuring backup vault can be found https://docs.aws.amazon.com/aws-backup/latest/devguide/creating-a-vault.html[*here*].
+. Click btn:[Create on-demand backup]
+
+To create a recurring scehduled backup of EFS, a *Backup Plan* must be created on AWS. For information on creating a *Backup Plan* click https://docs.aws.amazon.com/aws-backup/latest/devguide/creating-a-backup-plan.html[*here*].
+
+
 
 == Recovery Procedure
 
@@ -28,7 +50,7 @@ Find the _Amazon Resource Name_ (ARN) of the RDS snapshot you want to recover fr
 . The ARN will be listed near the top right of the page. 
 Record the ARN of the snapshot for use in the next step
 
-== Modifing the CloudFormation Template of your current {PlatformNameShort} deployment to reference your RDS snapshot
+== Modifying the CloudFormation Template of your current {PlatformNameShort} deployment to reference your RDS snapshot
 
 .Procedure
 . Find the CloudFormation Template used to create your old {PlatformNameShort} Deployment.
@@ -62,7 +84,7 @@ You must record everything to the right of the `/`, so in this case you would re
 This is the ID of the restored EFS filesystem. 
 It is important for the next step.
 
-== Modifing the CloudFormation Template from your old {PlatformNameShort} deployment to reference your restored EFS
+== Modifying the CloudFormation Template from your old {PlatformNameShort} deployment to reference your restored EFS
 
 You must have the filesystem ID of the restored EFS available to continue.
 
