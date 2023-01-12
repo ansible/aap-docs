@@ -506,9 +506,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_backup_process">8.1. Backup Process</a></li>
 <li><a href="#_recovery_procedure">8.2. Recovery Procedure</a></li>
-<li><a href="#_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot">8.3. Modifing the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</a></li>
+<li><a href="#_modifying_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot">8.3. Modifying the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</a></li>
 <li><a href="#_restoring_an_efs_backup_for_your_ansible_automation_platform_deployment">8.4. Restoring an EFS Backup for your Ansible Automation Platform deployment</a></li>
-<li><a href="#_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs">8.5. Modifing the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</a></li>
+<li><a href="#_modifying_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs">8.5. Modifying the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</a></li>
 <li><a href="#_creating_a_new_aap_deployment_using_the_modified_template">8.6. Creating a new AAP Deployment Using the Modified Template</a></li>
 </ul>
 </li>
@@ -1867,6 +1867,9 @@ Follow the steps below to ensure a smooth backup and recovery process.</p>
 </div>
 <div class="sect2">
 <h3 id="_backup_process"><a class="anchor" href="#_backup_process"></a>8.1. Backup Process</h3>
+<div class="paragraph">
+<p>Taking an RDS Snapshot of Your Existing AAP Deployment</p>
+</div>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1891,6 +1894,55 @@ It is important to take a manual snapshot over relying on the automated ones cre
 You cannot use an automated snapshot for recovery in the event that your deployment is lost.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Creating an On-Demand Backup For the EFS of Your Existing Deployment</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS console, navigate to menu:AWS Backup[].</p>
+</li>
+<li>
+<p>From the side menu, select <strong>Dashboard</strong></p>
+</li>
+<li>
+<p>Click btn:[Create on-demand backup].</p>
+</li>
+<li>
+<p>From the <strong>Resource Type</strong> dropdown select <strong>EFS</strong></p>
+</li>
+<li>
+<p>From the <strong>File system ID</strong> dropdown choose the File system ID attached to your AAP Deployment</p>
+</li>
+<li>
+<p>To find the filesystem ID of the deployment</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the AWS Console, navigate to menu:CloudFormation[] in the AWS Console and select your deployment stack.</p>
+</li>
+<li>
+<p>Select the <strong>Resources</strong> tab and expand the <strong>storage</strong> section on the resource tree.</p>
+</li>
+<li>
+<p>Note the physical ID of the filesystem.
+The format should be similar to <code>fs-044fce19b58a6d8f5</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>From the <strong>Backup vault</strong> dropdown select the backup vault you would like to use. Aditional information on creating and configuring backup vault can be found <a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/creating-a-vault.html"><strong>here</strong></a>.</p>
+</li>
+<li>
+<p>Click btn:[Create on-demand backup]</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To create a recurring scehduled backup of EFS, a <strong>Backup Plan</strong> must be created on AWS. For information on creating a <strong>Backup Plan</strong> click <a href="https://docs.aws.amazon.com/aws-backup/latest/devguide/creating-a-backup-plan.html"><strong>here</strong></a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1918,7 +1970,7 @@ Record the ARN of the snapshot for use in the next step</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"><a class="anchor" href="#_modifing_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"></a>8.3. Modifing the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</h3>
+<h3 id="_modifying_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"><a class="anchor" href="#_modifying_the_cloudformation_template_of_your_current_ansible_automation_platform_deployment_to_reference_your_rds_snapshot"></a>8.3. Modifying the CloudFormation Template of your current Ansible Automation Platform deployment to reference your RDS snapshot</h3>
 <div class="olist arabic">
 <div class="title">Procedure</div>
 <ol class="arabic">
@@ -1998,7 +2050,7 @@ It is important for the next step.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"><a class="anchor" href="#_modifing_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"></a>8.5. Modifing the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</h3>
+<h3 id="_modifying_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"><a class="anchor" href="#_modifying_the_cloudformation_template_from_your_old_ansible_automation_platform_deployment_to_reference_your_restored_efs"></a>8.5. Modifying the CloudFormation Template from your old Ansible Automation Platform deployment to reference your restored EFS</h3>
 <div class="paragraph">
 <p>You must have the filesystem ID of the restored EFS available to continue.</p>
 </div>
@@ -2166,7 +2218,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-12 13:05:20 UTC
+Last updated 2023-01-12 15:48:35 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
