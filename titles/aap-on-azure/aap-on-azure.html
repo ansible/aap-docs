@@ -1959,6 +1959,12 @@ Add routes in the Ansible Automation Platform route table for outbound traffic f
 <p>You must also allow traffic from your firewall to any other external domain or IP address that you want Ansible Automation Platform to run automation jobs against.
 Otherwise, your firewall will block connectivity between Ansible Automation Platform and destinations for automation.</p>
 </li>
+<li>
+<p>Ansible Automation Platform requires a public DNS zone to provide SSL certificates.
+This public DNS zone is in the managed resource group of the deployment.
+The platform must be able to communicate via DNS queries with the servers listed in the DNS zone to complete certificate challenges with our upstream provider.
+Blocking this communication prevents successful certificate renewal.</p>
+</li>
 </ul>
 </div>
 <div class="sect5">
@@ -2336,7 +2342,7 @@ Add the following line to your hosts file:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-01-26 09:59:31 UTC
+Last updated 2023-01-26 11:31:07 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
