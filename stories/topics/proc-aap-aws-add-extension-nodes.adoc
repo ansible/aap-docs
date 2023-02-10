@@ -62,7 +62,11 @@ The default is m5.large.
 . In the *Configure advanced options* page, click btn:[Next].
 . Configure the *Group size* capacity, then click btn:[Next].
 . In the *Add notifications* page, click btn:[Next].
-. In the *Add tags* page, click btn:[Next].
+. In the *Add tags* page add the following tag:
+.. Key: `aap:cloudformation:main-stack-name` Value: `<CLOUDFORMATION_STACK_NAME>`
+.. Replace `<CLOUDFORMATION_STACK_NAME>` with the name of your cloudformation stack.
+.. Ensure `Tag new instances` is checked.
+. Click btn:[Next].
 . In the *Review* page, scroll to the bottom and click *Create Auto Scaling group*.
 . Wait for the Auto scaling group to create the nodes and for the related nodes to reach a _Running_ instance state.
 . In the {ControllerName} UI, select *Administration > Instances* to view the extension node EC2 instances.
