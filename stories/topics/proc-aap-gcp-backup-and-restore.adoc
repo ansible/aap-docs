@@ -1,0 +1,123 @@
+[id="proc-aap-gcp-backup-and-restore"]
+
+= Ansible Automation Platform Backup and Restore Process
+
+In order to backup and restore your AAP deployment, it is vital to have your existing AAP Admin Secret name and value recorded somewhere safe. In addition to this, it is also extremely important that regular manual backups of the Cloud SQL DB instance and filestore backups are taken to ensure a deployment can be restored as close as possible to its previous working state. The playbooks backup and restore provides backup and restore support for the AAP on GCP foundation deployment. 
+
+**Please not that the restore process will deploy a new deployment with the filestore and SQL DB instance being restored to the backup specified.**
+
+Follow the steps below to ensure a smooth backup and recovery process.
+
+== Backup Process
+
+The backup process involves taking backup of Cloud SQL DB instance and filestore instance at a given point of time.
+
+=== Run backup playbook 
+
+The backup playbook require an active AAP on GCP foundation deployment to be running. The instructions below guide how run backup playbook.
+
+. Gather the following input variables
+.. *gcp_service_account_credentials_json_path*: Service account crendential json file path for google cloud account.
+.. *gcp_deployment_name*: Deployment name which you want to backup.
+.. *gcp_compute_region*: GCP region where foundation deployment deployed.
+.. *gcp_compute_zone*: GCP zone where foundation deployment deployed.
++
+Create an extra_vars.yaml file with the above parameters
++
+[source,bash]
+----
+gcp_deployment_name: "" 
+gcp_compute_region: ""
+gcp_compute_zone: ""
+gcp_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
+----
++
+. Run the backup playbook. Pull the docker image for operational container having tag with the version of the foundation deployment.
+  *Note*: Operational image tag should match with the version of your foundation deployment. For example, If your foundation deployment version is 2.2.1, you should pull operational image with tag 2.2.1
++
+[source,bash]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
++
+. Run the backup playbook as container.
++
+Replace `absolute_path_google_application_credentials_dirname` with your path to service account credential json file for google cloud and `absolute_path_of_extra_vars_dirname` with the path to your directory where you extra_var file exists which you have created in step 1 of backup process. 
+Run the command to run the playbook.
++
+[source,bash]
+----
+$ docker run -v <absolute_path_google_application_credentials_dirname>:/secret -v <absolute_path_of_extra_vars_dirname>:/extra_vars $IMAGE redhat.onclouds.gcp_backup_deployment.yml -e @/extra_vars/<basename_of_extra_vars>
+----
++
+Make note of SQL DB Backup ID and SQL DB Backup name.
++
+
+
+
+=== Resources that are backed up
+
+Once the backup playbook run successfully, following resources are backup up.
+  - CLoud SQL DB instance
+  - Filestore instance
+
+== Restore Process
+
+The restore process will deploy a new deployment with the filestore and SQL DB instance being restored to the backup specified.
+
+*Note*: The restored filestore instance will use CIDR network range `192.168.244.0/29`, which is different from the default network filestore network range of the backup deployment.
+
+=== Run restore playbook
+
+The instructions below guide how run restore playbook.
+
+. Gather the following input variables
+.. *gcp_service_account_credentials_json_path*: Service account crendential json file path for google cloud account.
+.. *gcp_deployment_name*: Deployment name which you backed up.
+.. *gcp_restored_deployment_name*: Deployment name of restored AAP foundation created by playbook
+.. *gcp_compute_region*: GCP region where foundation deployment deployed.
+.. *gcp_compute_zone*: GCP zone where foundation deployment deployed.
+.. *gcp_filestore_backup_name*: The backup name where filestore instance backup will be stored (You will get this after executing backup playbook).
+.. *gcp_sql_backup_id*: Backup ID of the Cloud SQL DB instance to use when restoring the deployment (You will get this after executing backup playbook).
+.. *gcp_sql_backup_db_name*: GCP foundation SQL DB name (You will get this after executing backup playbook).
++
+Create an extra_vars.yaml file with the above parameters
++
+[source,bash]
+----
+gcp_deployment_name: ""
+gcp_restored_deployment_name: ""
+gcp_compute_region: ""
+gcp_compute_zone: ""
+gcp_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
+gcp_filestore_backup_name: ""
+gcp_sql_backup_id: ""
+gcp_sql_backup_db_name: ""
+----
++
+. Run the restore playbook
++
+Pull the docker image for operational container having tag with the version of the foundation deployment.
++
+*Note*: Operational image tag should match with the version of your foundation deployment. For example, If your foundation deployment version is 2.2.1, you should pull operational image with tag 2.2.1
++
+[source,bash]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
++
+. Run the restore playbook as container.
++
+Replace `absolute_path_google_application_credentials_dirname` with your path to service account credential json file for google cloud and `absolute_path_of_extra_vars_dirname` with the path to your directory where you extra_var file exists which you have created in step 1 of restore process. 
+Run the command to run the playbook.
++
+[source,bash]
+----
+$ docker run -v <absolute_path_google_application_credentials_dirname>:/secret -v <absolute_path_of_extra_vars_dirname>:/extra_vars $IMAGE redhat.onclouds.gcp_restore_deployment.yml -e @/extra_vars/<basename_of_extra_vars>
+----
++
+Wait for 5-10 minutes for the deployment to finish and all the containers to be up and running.
++
+. You should now be able to successfully log in to Red Hat Ansible Automation Platform Controller and Hub using your old deployment credentials. In addition, all job history, uploaded collections and other records should be in the same state as the restored deployment.
