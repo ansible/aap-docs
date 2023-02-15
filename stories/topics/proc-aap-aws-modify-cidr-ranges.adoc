@@ -3,7 +3,25 @@
 = Modify Deployment CIDR Range
 
 .Default CIDR Range Configuration on Ansible Automation Platform
-The default CIDR range on your Red Hat AAP on AWS deployment is set to 192.168.0.0/16. This CIDR block is further segmented into 4 subnets (2 private and 2 public) which respectively have CIDR ranges of 192.168.0.0/24, 192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24. Every subnet has 247 IPv4 address allocated to it and, when creating new components, an IP address from the appropriate subnet is assigned to the new component. It is important to note that these CIDR ranges are immutable post deployment. If you are looking to update your CIDR ranges, your current deployment needs to be deleted and the Red Hat AAP on AWS Cloud Formation Template needs to be updated with new CIDR ranges. You can follow the steps below to get this done.
+If you would like to modify your CIDR range, you must modify your CIDR range before installation.
+
+This CIDR block is further divided into 4 subnets (2 private and 2 public, which have the following CIDR ranges:
+
+.Private
+192.168.0.0/24
+192.168.1.0/24
+
+.Public
+192.168.2.0/24
+192.168.3.0/24
+
+[IMPORTANT]
+====
+These CIDR ranges cannot be changed following deployment.
+====
+If you want to update your CIDR ranges, the current deployment must be deleted and the Red Hat {PlatformName} on AWS Cloud Formation template must be updated with your new CIDR ranges.
+
+The following procedure describes how to do this:
 
 .Procedure
 . In the AWS Console, navigate to *CloudFormation* and click on your Red Hat Ansible Automation Platform deployment.
