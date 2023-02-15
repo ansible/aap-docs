@@ -3,9 +3,12 @@
 = Modify Load Balancers CIDR Range
 
 == Default Load Balancers CIDR Range Configuration on Ansible Automation Platform
-The default CIDR range on Load Balancers are set to 0.0.0.0/0, allowing everyone to access the Load Balancers. If you are looking to update these CIDR range, you can update them before or after the deployment. You can follow the steps below to get this done.
+If you intend to update the CIDR range, you can do this before or after the deployment.
 
-=== Procedure - update before the deployment
+The following procedure describes how to do this.
+
+=== Updating before the deployment
+.Procedure
 . In the AWS Console, navigate to *CloudFormation* and click on your Red Hat Ansible Automation Platform deployment.
 . Click the *Template* tab and then click the btn:[View in Designer] button.
 . In the top left corner, hover over the file symbol to reveal a dropdown and save your template to a local file.
@@ -20,7 +23,8 @@ The default CIDR range on Load Balancers are set to 0.0.0.0/0, allowing everyone
 .. Optionally configure stack options and click btn:[Next] to review the stack
 .. Press btn:[Submit] to create your new deployment with updated Load Balancers CIDR range
 
-=== Procedure - update after the deployment
+=== Updating after the deployment
+.Procedure
 . In the AWS Console, under LOAD BALANCING, click *Load Balancers*
 . Update Controller load balancer CIDR range
 .. Select the Controller load balancer
