@@ -455,10 +455,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#assembly-aap-aws-install">2. Installing Ansible Automation Platform from AWS Marketplace</a>
 <ul class="sectlevel2">
-<li><a href="#ref-aap-aws-install-prerequisites">2.1. Prerequisites</a></li>
+<li><a href="#ref-aap-aws-install-prerequisites">2.1. Prerequisites</a>
+<ul class="sectlevel3">
+<li><a href="#_iam_policies">2.1.1. IAM Policies</a></li>
+</ul>
+</li>
 <li><a href="#proc-aws-create-ec2-pair">2.2. Creating an EC2 pair</a></li>
 <li><a href="#proc-aws-marketplace">2.3. AWS Marketplace</a></li>
-<li><a href="#proc-aws-application-deploy">2.4. Application deployment</a></li>
+<li><a href="#proc-aap-aws-modify-alb-cidr-range">2.4. Modify Load Balancers CIDR Range</a>
+<ul class="sectlevel3">
+<li><a href="#_default_load_balancers_cidr_range_configuration_on_ansible_automation_platform">2.4.1. Default Load Balancers CIDR Range Configuration on Ansible Automation Platform</a></li>
+</ul>
+</li>
+<li><a href="#proc-aap-aws-modify-cidr-ranges">2.5. Modify Deployment CIDR Range</a></li>
+<li><a href="#proc-aws-application-deploy">2.6. Application deployment</a></li>
 </ul>
 </li>
 <li><a href="#assembly-aap-aws-extension">3. Extension nodes</a>
@@ -753,8 +763,196 @@ You must also set up an account with Amazon Web Services.</p>
 <p>For more information about Amazon Web Services and terminology, see the <a href="https://aws.amazon.com/">AWS product documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>Your AWS account must have <em>Identity and Access Management</em> (IAM) permissions to create and manage AWS Marketplace deployments as well as the resources described in <a href="#con-aws-application-architecture">Application architecture</a>.
-The application can fail to deploy if your IAM policies restrict deployment and management of these resources.</p>
+<p>Your AWS account must have <em>Identity and Access Management</em> (IAM) permissions below to create and manage AWS Marketplace deployments as well as the resources described in <a href="#con-aws-application-architecture">Application architecture</a>. Your AWS account must also be licensed to deploy Ansible Automation Platform from AWS Marketplace.
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources. The exact list of IAM policies necessary is found below.</p>
+</div>
+<div class="sect3">
+<h4 id="_iam_policies"><a class="anchor" href="#_iam_policies"></a>2.1.1. IAM Policies</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Managed Policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>AWSCloudFormationReadOnlyAccess</p>
+</li>
+<li>
+<p>AmazonS3ReadOnlyAccess</p>
+</li>
+<li>
+<p>IAMReadOnlyAccess</p>
+</li>
+<li>
+<p>AmazonRDSReadOnlyAccess</p>
+</li>
+<li>
+<p>AmazonElasticFileSystemReadOnlyAccess</p>
+</li>
+<li>
+<p>AmazonEC2FullAccess</p>
+</li>
+<li>
+<p>AWSMarketplaceFullAccess</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>CloudFormation inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>cloudformation:DeleteStack</p>
+</li>
+<li>
+<p>cloudformation:CreateUploadBucket</p>
+</li>
+<li>
+<p>cloudformation:CreateStack</p>
+</li>
+<li>
+<p>cloudformation:UpdateStack</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>S3 inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>s3:CreateBucket</p>
+</li>
+<li>
+<p>s3:PutObject</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>IAM inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>iam:DetachRolePolicy</p>
+</li>
+<li>
+<p>iam:RemoveRoleFromInstanceProfile</p>
+</li>
+<li>
+<p>iam:DeleteInstanceProfile</p>
+</li>
+<li>
+<p>iam:DeleteRolePolicy</p>
+</li>
+<li>
+<p>iam:CreateRole</p>
+</li>
+<li>
+<p>iam:PutRolePolicy</p>
+</li>
+<li>
+<p>iam:DeleteRole</p>
+</li>
+<li>
+<p>iam:AttachRolePolicy</p>
+</li>
+<li>
+<p>iam:CreateInstanceProfile</p>
+</li>
+<li>
+<p>iam:AddRoleToInstanceProfile</p>
+</li>
+<li>
+<p>iam:PassRole</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SecretsManager inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>secretsmanager:DeleteSecret</p>
+</li>
+<li>
+<p>secretsmanager:GetSecretValue</p>
+</li>
+<li>
+<p>secretsmanager:GetRandomPassword</p>
+</li>
+<li>
+<p>secretsmanager:CreateSecret</p>
+</li>
+<li>
+<p>secretsmanager:TagResource</p>
+</li>
+<li>
+<p>secretsmanager:PutSecretValue</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>RDS inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>rds:DeleteDBSubnetGroup</p>
+</li>
+<li>
+<p>rds:DeleteDBInstance</p>
+</li>
+<li>
+<p>rds:CreateDBSubnetGroup</p>
+</li>
+<li>
+<p>rds:AddTagsToResource</p>
+</li>
+<li>
+<p>rds:CreateDBInstance</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Elastic File System inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>elasticfilesystem:DeleteFileSystem</p>
+</li>
+<li>
+<p>elasticfilesystem:DeleteMountTarget</p>
+</li>
+<li>
+<p>elasticfilesystem:DeleteAccessPoint</p>
+</li>
+<li>
+<p>elasticfilesystem:CreateFileSystem</p>
+</li>
+<li>
+<p>elasticfilesystem:CreateAccessPoint</p>
+</li>
+<li>
+<p>elasticfilesystem:CreateMountTarget</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SNS inline IAM policies</p>
+<div class="ulist">
+<ul>
+<li>
+<p>sns:ListTopics</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -769,6 +967,7 @@ The application can fail to deploy if your IAM policies restrict deployment and 
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -896,7 +1095,226 @@ Note that some selectors may have only one option.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="proc-aws-application-deploy"><a class="anchor" href="#proc-aws-application-deploy"></a>2.4. Application deployment</h3>
+<h3 id="proc-aap-aws-modify-alb-cidr-range"><a class="anchor" href="#proc-aap-aws-modify-alb-cidr-range"></a>2.4. Modify Load Balancers CIDR Range</h3>
+<div class="sect3">
+<h4 id="_default_load_balancers_cidr_range_configuration_on_ansible_automation_platform"><a class="anchor" href="#_default_load_balancers_cidr_range_configuration_on_ansible_automation_platform"></a>2.4.1. Default Load Balancers CIDR Range Configuration on Ansible Automation Platform</h4>
+<div class="paragraph">
+<p>If you intend to update the CIDR range, you can do this before or after the deployment.</p>
+</div>
+<div class="paragraph">
+<p>The following procedure describes how to do this.</p>
+</div>
+<div class="sect4">
+<h5 id="_updating_before_the_deployment"><a class="anchor" href="#_updating_before_the_deployment"></a>Updating before the deployment</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, navigate to <strong>CloudFormation</strong> and click on your Red Hat Ansible Automation Platform deployment.</p>
+</li>
+<li>
+<p>Click the <strong>Template</strong> tab and then click the btn:[View in Designer] button.</p>
+</li>
+<li>
+<p>In the top left corner, hover over the file symbol to reveal a dropdown and save your template to a local file.</p>
+</li>
+<li>
+<p>In your saved template update "controlleralbsecuritygroupEFD044E7" and "hubalbsecuritygroup4C1C53F8" CIDR range to your desired CIDR range</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Update the Ingress CidrIp ingress of the Controller Load Balancer security group component to your desired CIDR range (searching for "controlleralbsecuritygroupEFD044E7" in quotes should point you to the component)</p>
+</li>
+<li>
+<p>Update the Ingress CidrIp ingress of the Hub Load Balancer security group component to your desired CIDR range (searching for "hubalbsecuritygroup4C1C53F8" in quotes should point you to the component)</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Create a new Red Hat AAP on AWS CloudFormation stack using the modified Load Balancers CIDR range template</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the AWS Console, navigate to <strong>CloudFormation</strong> and click on btn:[Create Stack] located near the top right of the screen</p>
+</li>
+<li>
+<p>Select <strong>With new resources (standard)</strong> in the dropdown</p>
+</li>
+<li>
+<p>In the <strong>Specify template</strong> section under <strong>Template source</strong> select btn:[Upload a template file] and select the template you have modified. Click btn:[Next] to go to the next step</p>
+</li>
+<li>
+<p>Enter a stack name and select an AWSKeyPair to use for the deployment. Click btn:[Next] to go to the <strong>Configure stack options</strong> page</p>
+</li>
+<li>
+<p>Optionally configure stack options and click btn:[Next] to review the stack</p>
+</li>
+<li>
+<p>Press btn:[Submit] to create your new deployment with updated Load Balancers CIDR range</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_updating_after_the_deployment"><a class="anchor" href="#_updating_after_the_deployment"></a>Updating after the deployment</h5>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, under LOAD BALANCING, click <strong>Load Balancers</strong></p>
+</li>
+<li>
+<p>Update Controller load balancer CIDR range</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select the Controller load balancer</p>
+</li>
+<li>
+<p>On the Description tab, under Security, click security group <strong>aap/controller/alb-security-group</strong> link</p>
+</li>
+<li>
+<p>Select security group with <strong>aap/controller/alb-security-group</strong> description</p>
+</li>
+<li>
+<p>On Inbound rules tab, click btn:[Edit inbound rules]</p>
+</li>
+<li>
+<p>Update Source CIDR range from "0.0.0.0/0" to to your desired CIDR range</p>
+</li>
+<li>
+<p>Click btn:[Save rules]</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Update Hub load balancer CIDR range</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Select the Hub load balancer</p>
+</li>
+<li>
+<p>On the Description tab, under Security, click security group <strong>aap/hub/alb-security-group</strong> link</p>
+</li>
+<li>
+<p>Select security group with <strong>aap/hub/alb-security-group</strong> description</p>
+</li>
+<li>
+<p>On Inbound rules tab, click btn:[Edit inbound rules]</p>
+</li>
+<li>
+<p>Update Source CIDR range from "0.0.0.0/0" to to your desired CIDR range</p>
+</li>
+<li>
+<p>Click btn:[Save rules]</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aap-aws-modify-cidr-ranges"><a class="anchor" href="#proc-aap-aws-modify-cidr-ranges"></a>2.5. Modify Deployment CIDR Range</h3>
+<div class="paragraph">
+<div class="title">Default CIDR Range Configuration on Ansible Automation Platform</div>
+<p>If you would like to modify your CIDR range, you must modify your CIDR range before installation.</p>
+</div>
+<div class="paragraph">
+<p>This CIDR block is further divided into 4 subnets (2 private and 2 public, which have the following CIDR ranges:</p>
+</div>
+<div class="paragraph">
+<div class="title">Private</div>
+<p>192.168.0.0/24
+192.168.1.0/24</p>
+</div>
+<div class="paragraph">
+<div class="title">Public</div>
+<p>192.168.2.0/24
+192.168.3.0/24</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>These CIDR ranges cannot be changed following deployment.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you want to update your CIDR ranges, the current deployment must be deleted and the Red Hat Red Hat Ansible Automation Platform on AWS Cloud Formation template must be updated with your new CIDR ranges.</p>
+</div>
+<div class="paragraph">
+<p>The following procedure describes how to do this:</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>In the AWS Console, navigate to <strong>CloudFormation</strong> and click on your Red Hat Ansible Automation Platform deployment.</p>
+</li>
+<li>
+<p>Click the <strong>Template</strong> tab and then click the btn:[View in Designer] button.</p>
+</li>
+<li>
+<p>In the top left corner, hover over the file symbol to reveal a dropdown and save your template to a local file.</p>
+</li>
+<li>
+<p>In your saved template update the CIDR block of the network VPC component to your desired CIDR range</p>
+</li>
+<li>
+<p>Update the CIDR blocks of the 4 subnet components. (searching for <strong>"AWS::EC2::Subnet"</strong> with quotes should point you to the subnet components in the template) It is crucial to ensure the CIDR ranges provided for your subnets are within your VPC CIDR range and do not overlap with each other to avoid CIDR collisions. <strong>Note.</strong> You can look at the default subnet CIDR ranges as a point of reference.</p>
+</li>
+<li>
+<p>Update the CidrIp ingress of the RDS security group component to match the VPC CIDR range (searching for <strong>"aap/rds/security_group"</strong> in quotes should point you to the component)</p>
+</li>
+<li>
+<p>Update the CidrIp ingress of the storage security group component to match the VPC CIDR range (searching for <strong>"aap/storage/security-group"</strong> in quotes should point you to the component).</p>
+</li>
+<li>
+<p>Create a new Red Hat AAP on AWS CloudFormation stack using the modified CIDR range template</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>In the AWS Console, navigate to <strong>CloudFormation</strong> and click on btn:[Create Stack] located near the top right of the screen</p>
+</li>
+<li>
+<p>Select <strong>With new resources (standard)</strong> in the dropdown</p>
+</li>
+<li>
+<p>In the <strong>Specify template</strong> section under <strong>Template source</strong> select btn:[Upload a template file] and select the template you have modified. Click btn:[Next] to go to the next step</p>
+</li>
+<li>
+<p>Enter a stack name and select an AWSKeyPair to use for the deployment. Click btn:[Next] to go to the <strong>Configure stack options</strong> page</p>
+</li>
+<li>
+<p>Optionally configure stack options and click btn:[Next] to review the stack</p>
+</li>
+<li>
+<p>Press btn[Submit] to create your new deployment with updated CIDR ranges.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proc-aws-application-deploy"><a class="anchor" href="#proc-aws-application-deploy"></a>2.6. Application deployment</h3>
 <div class="paragraph">
 <p>Now that you have subscribed to an offer, you can begin configuration before launching the CloudFormation Stack.</p>
 </div>
@@ -2248,7 +2666,7 @@ When upgrades are available, upgrade instructions will be provided in this docum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-10 13:56:46 UTC
+Last updated 2023-02-15 13:58:16 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
