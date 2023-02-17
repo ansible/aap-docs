@@ -1,6 +1,6 @@
 [id="proc-aap-aws-modify-cidr-ranges"]
 
-= Modifying the VPC CIDR range after deployment
+= Modifying the application CIDR range before deployment
 
 If you access {PlatformNameShort} through VPC peering, this enables your private network to look into and communicate with other private networks.
 Because these private networks can overlap, they have CIDR configurations which need to be validated before deployment so as to avoid IP conflicts in the network.
@@ -17,7 +17,12 @@ The default CIDR block for the VPC is divided into 4 subnets (2 private and 2 pu
 
 192.168.3.0/24
 
-If you want to modify your CIDR ranges after deployment, your current deployment must be deleted and the Red Hat {PlatformName} on AWS Cloud Formation template must be updated with your new CIDR ranges.
+If you want to modify your CIDR ranges before deployment, your current deployment must be deleted and the Red Hat {PlatformName} on AWS Cloud Formation template must be updated with your new CIDR ranges.
+
+[IMPORTANT]
+====
+These CIDR ranges cannot be changed following deployment.
+====
 
 To delete your current deployment, follow the directions in xref:assembly-aap-aws-uninstall[Uninstalling {AAPonAWS}]
 
@@ -53,5 +58,4 @@ You can look at the default subnet CIDR ranges as a point of reference.
 .. Click btn:[Next] to go to the *Configure stack options* page.
 .. Optionally configure stack options and click btn:[Next] to review the stack
 .. Click btn:[Submit] to create your new deployment with updated CIDR ranges.
-
 
