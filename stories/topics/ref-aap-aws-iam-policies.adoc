@@ -1,0 +1,62 @@
+[id="ref-aap-aws-iam-policies"]
+
+= IAM policies
+
+Your AWS account must have _Identity and Access Management_ (IAM) permissions below to create and manage {Market} deployments as well as the resources described in xref:con-aws-application-architecture[Application architecture]. 
+
+Your AWS account must also be licensed to deploy {AAPonAWS}.
+
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources. 
+
+The following is a list of necessary IAM policies:
+
+* Managed Policies
+** AWSCloudFormationReadOnlyAccess
+** AmazonS3ReadOnlyAccess
+** IAMReadOnlyAccess
+** AmazonRDSReadOnlyAccess
+** AmazonElasticFileSystemReadOnlyAccess
+** AmazonEC2FullAccess
+** AWSMarketplaceFullAccess
+* CloudFormation inline IAM policies
+** cloudformation:DeleteStack
+** cloudformation:CreateUploadBucket
+** cloudformation:CreateStack
+** cloudformation:UpdateStack
+* S3 inline IAM policies
+** s3:CreateBucket
+** s3:PutObject
+* IAM inline IAM policies
+** iam:DetachRolePolicy
+** iam:RemoveRoleFromInstanceProfile
+** iam:DeleteInstanceProfile
+** iam:DeleteRolePolicy
+** iam:CreateRole
+** iam:PutRolePolicy
+** iam:DeleteRole
+** iam:AttachRolePolicy
+** iam:CreateInstanceProfile
+** iam:AddRoleToInstanceProfile
+** iam:PassRole
+* SecretsManager inline IAM policies
+** secretsmanager:DeleteSecret
+** secretsmanager:GetSecretValue
+** secretsmanager:GetRandomPassword
+** secretsmanager:CreateSecret
+** secretsmanager:TagResource
+** secretsmanager:PutSecretValue
+* RDS inline IAM policies
+** rds:DeleteDBSubnetGroup
+** rds:DeleteDBInstance
+** rds:CreateDBSubnetGroup
+** rds:AddTagsToResource
+** rds:CreateDBInstance
+* Elastic File System inline IAM policies
+** elasticfilesystem:DeleteFileSystem
+** elasticfilesystem:DeleteMountTarget
+** elasticfilesystem:DeleteAccessPoint
+** elasticfilesystem:CreateFileSystem
+** elasticfilesystem:CreateAccessPoint
+** elasticfilesystem:CreateMountTarget
+* SNS inline IAM policies
+** sns:ListTopics
