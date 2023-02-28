@@ -2,7 +2,7 @@
 
 = Ansible Automation Platform Backup and Restore Process
 
-In order to backup and restore your AAP deployment, it is vital to have your existing AAP Admin Secret name and value recorded somewhere safe. In addition to this, it is also extremely important that regular manual backups of the Cloud SQL DB instance and filestore backups are taken to ensure a deployment can be restored as close as possible to its previous working state. The playbooks backup and restore provides backup and restore support for the AAP on GCP foundation deployment. 
+To backup and restore your AAP deployment, it is vital to have your existing AAP Admin Secret name and value recorded somewhere safe. In addition, it is also extremely important that regular manual backups of the Cloud SQL DB instance and filestore backups are taken to ensure a deployment can be restored as close as possible to its previous working state. The playbooks backup and restore provides backup and restore support for the AAP on GCP foundation deployment. 
 
 **Note that the restore process deploys a new AAP deployment with the filestore and SQL DB instance being restored to the specified backup.**
 
@@ -28,7 +28,11 @@ gcp_service_account_credentials_json_path: "/secret/<service-account-creds-json-
 ----
 +
 . Run the backup playbook. Pull the docker image for operational container having tag with the version of the foundation deployment.
-  *Note*: Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215.
++
+[NOTE]
+=====  
+Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215.
+=====
 +
 [source,bash]
 ----
@@ -36,14 +40,20 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 +
-. Run the backup playbook as a container.
+. Running the backup playbook as a container.
 +
-Replace `absolute_path_google_application_credentials_dirname` with your path to service account credential Json file for google cloud and `absolute_path_of_extra_vars_dirname` with the path to your directory where your `extra_var.yaml` file exists which you have created in step 1 of backup process. 
-Run the command to run the playbook.
+. Replace `<absolute path to google application credentials dir>` with your path to the service account credential Json file for google cloud and `<absolute path of extra vars dir>` with the path to your directory where you `extra_vars.yaml` file exists which you have created in step 1 of backup process. 
++
+. Run the command to run the playbook.
 +
 [source,bash]
 ----
-$ docker run -v <absolute_path_google_application_credentials_dirname>:/secret -v <absolute_path_of_extra_vars_dirname>:/extra_vars $IMAGE redhat.onclouds.gcp_backup_deployment.yml -e @/extra_vars/<basename_of_extra_vars>
+$ docker run --rm \
+-v <absolute path to google application credentials dir>:/secrets \
+-v <absolute path of extra vars dir>:/extra_vars:ro \
+quay.io/leena_ibm/ljawale-ansible-on-clouds-ops:latest \
+redhat.ansible_on_clouds.gcp_backup_deployment \
+-e @/extra_vars/extra_vars.yaml
 ----
 +
 Make a note of the SQL DB Backup ID and SQL DB Backup name.
@@ -106,15 +116,20 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 +
-. Running the restored playbook as a container.
+. Running the restore playbook as a container.
 +
-Replace `absolute_path_google_application_credentials_dirname` with your path to the service account credential json file for google cloud and `absolute_path_of_extra_vars_dirname` with the path to your directory where you extra_var file exists which you have created in step 1 of restore process. 
+. Replace `<absolute path to google application credentials dir>` with your path to the service account credential Json file for google cloud and `<absolute path of extra vars dir>` with the path to your directory where you `extra_vars.yaml` file exists which you have created in step 1 of restore process. 
 +
 . Run the command to run the playbook.
 +
 [source,bash]
 ----
-$ docker run -v <absolute_path_google_application_credentials_dirname>:/secret -v <absolute_path_of_extra_vars_dirname>:/extra_vars $IMAGE redhat.onclouds.gcp_restore_deployment.yml -e @/extra_vars/<basename_of_extra_vars>
+$ docker run --rm \
+-v <absolute path to google application credentials dir>:/secrets \
+-v <absolute path of extra vars dir>:/extra_vars:ro \
+quay.io/leena_ibm/ljawale-ansible-on-clouds-ops:latest \
+redhat.ansible_on_clouds.gcp_restore_deployment \
+-e @/extra_vars/extra_vars.yaml
 ----
 +
 . It can take 5-10 minutes for the deployment to finish and for all the containers to run.
