@@ -1,0 +1,32 @@
+[id="setting-up-reporting_{context}"]
+
+= Setting up reporting for {AnsibleInsideNameShort}
+
+ .Prerequisites
+
+Before installing {AnsibleInsideNameShort}, select a location on your file system to store the metrics data.
+
+.Procedure
+
+During the installation process, set the `metrics_output_path` parameter to the path to the directory where you want to store the recorded data.
+
+// PLACEHOLDER: 
+// 
+// The installer checks access to the directory. ?
+// * Show an example of setting the parameter
+// * Location cannot be changed
+
+.Verification
+
+After an automation job has completed, navigate to the directory that you specified for storing the data and list the files.
+
+The data for the newly-completed job is contained in a tarball file whose name begins with the date and time that the automation job was run. For example, the following file records data for an automation job executed on 27 February 2023 at 9.12AM.
+
+[source, bash]
+----
+$ ls
+2023-02-27-09_12_00_aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa_job_data.tar.gz
+----
+
+To view the files in the tarball, run `tar xvf`.
+

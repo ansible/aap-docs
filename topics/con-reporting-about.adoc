@@ -1,0 +1,22 @@
+[id="about-reporting_{context}"]
+
+= About reporting metrics
+
+{AnsibleInsideNameShort} saves high-level usage data about your automation jobs.
+Red Hat uses this data to identify where to focus effort in product improvements and new features.
+
+After an automation job is completed, metrics are gathered to save the following information about the job:
+
+* The type, duration, and time of the automation job.
+* The names of the collections and roles used in the job, and the number of times they are used.
+* The number of nodes that were installed, updated, failed, and skipped.
+
+[NOTE]
+====
+Red Hat does not gather Personal Identifiable Information (PII), such as IP addresses, location, user details, or operating system specification.
+====
+
+The following architecture diagram illustrates how the data is saved to the persistent data storage outside the Python application so that it can be sent to Red Hat.
+
+image::sdk-reporting-analytics.png["The project, credential and inventory sources pass data to the Ansible SDK sync library in the Python application. The automation data receiver sends data from the sync library to the persistent data storage, which sends the data to reporting and analytics. "]
+
