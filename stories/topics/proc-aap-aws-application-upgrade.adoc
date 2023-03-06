@@ -1,29 +1,87 @@
-[id="proc-aap-gcp-application-upgrade"]
+[id="proc-aap-aws-application-upgrade"]
 
-You can upgrade your existing {AAPonGCP} deployment to the newer version. The upgrade process covers upgrading of automation hub and automation controller. The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. Follow the steps below to ensure a smooth upgrade process.
+You can upgrade your existing {AAPonAWS} deployment to the newer version. The upgrade process covers upgrading of Automation Hub and Automation Controller. The upgrade process takes roughly the same amount of time as a {AAPonAWS} deployment install. Follow the steps below to ensure a smooth upgrade process.
 
 [NOTE]
 =====
-{AAPonGCP} supports sequential upgrades. All upgrades should be no more than one major version behind what you are currently upgrading to. For example, in order to upgrade to {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
+{AAPonAWS} supports sequential upgrades. All upgrades should be no more than one minor version behind what you are currently upgrading to. For example, in order to upgrade to {AAPonAWS} to 2.2.20230215, you must be on the first version of {AAPonAWS}.
 =====
 
+== Requirements
+
+This upgrade process requires the following:
+- Linux or macOS system (where the Upgrader will be run)
+- Docker
+
+== Preparing the environment
+
+The upgrade process requires a few volumes to be mounted, so prepare a fresh directory to be used for this process.
++
+First, create the directories that will be used to configure the upgrade process.
++
+[source,bash]
+----
+# Secrets directory. Store the AWS credentials and config files.
+$ mkdir secrets
+
+# Extra vars directory. All the configuration variables for the upgrade process.
+$ mkdir extra_vars
+
+# Inventory directory. The inventory file will be generated here.
+$ mkdir inventories
+----
++
+Create the `secrets/config` file and add the following content to it. Remember to replace the `us-east-1` with your respective region.
++
+[source,ini]
+----
+[default]
+region = us-east-1
+----
++
+Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
++
+[source,ini]
+----
+[default]
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+----
++
+The final result should look like this:
++
+[source,bash]
+----
+$ tree
+.
+├── extra_vars/
+│   └── extra_vars.yml
+├── inventories/
+└── secrets/
+    ├── config
+    └── credentials
+----
+
+
 == Upgrade Process
+
+
 
 The following instructions describe how to run the upgrade playbook.
 
 .Procedure
 . Gather the following input variables to create an `extra_vars.yaml` file.
-.. *gcp_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account.
-.. *gcp_deployment_name*: Deployment name which you want to backup.
-.. *gcp_compute_region*: GCP region where foundation deployment deployed.
-.. *gcp_compute_zone*: GCP zone where foundation deployment deployed.
+.. *aws_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account.
+.. *aws_deployment_name*: Deployment name which you want to backup.
+.. *aws_compute_region*: aws region where foundation deployment deployed.
+.. *aws_compute_zone*: aws zone where foundation deployment deployed.
 +
 [source,bash]
 ----
-gcp_deployment_name: ""
-gcp_compute_region: ""
-gcp_compute_zone: ""
-gcp_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
+aws_deployment_name: ""
+aws_compute_region: ""
+aws_compute_zone: ""
+aws_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
 ----
 +
 . Pull the docker image for ansible on clouds operational container having tag with the version which you want to upgrade to.
@@ -57,7 +115,7 @@ Replace `<deployment-name>` with your foundation deployment name.
 [source,bash]
 ----
 $ docker run --rm \
-  --env PLATFORM=GCP \
+  --env PLATFORM=aws \
   --env CLOUDSDK_CORE_PROJECT=gc-ansible-cloud \
   --env GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
   --env GENERATE_INVENTORY=true \
@@ -65,7 +123,7 @@ $ docker run --rm \
   -v <absolute path to google application credentials dir>:/secrets \
   -v <absolute path of extra vars dir>:/extra_vars:ro \
   $IMAGE \
-  redhat.ansible_on_clouds.gcp_upgrade \
+  redhat.ansible_on_clouds.aws_upgrade \
   -e @/extra_vars/extra_vars.yaml
 ----
 +
@@ -73,10 +131,10 @@ $ docker run --rm \
 +
 [source,bash]
 ----
-TASK [redhat.ansible_on_clouds.standalone_gcp_upgrade : [upgrade] Show GCP current version] ***
+TASK [redhat.ansible_on_clouds.standalone_aws_upgrade : [upgrade] Show aws current version] ***
 ok: [localhost] => {
-    "msg": "AAP on GCP upgrade succeeded to version: 2.2.20230215-00"
+    "msg": "AAP on aws upgrade succeeded to version: 2.2.20230215-00"
 }
 ----
 +
-Your {AAPonGCP} deployment now should be upgraded to newer version and you should now be able to successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
+Your {AAPonAWS} deployment now should be upgraded to newer version and you should now be able to successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
