@@ -133,17 +133,20 @@ Replace `<deployment-name>` with your foundation deployment name.
 +
 [source,bash]
 ----
-$ docker run --rm \
-  --env PLATFORM=aws \
-  --env CLOUDSDK_CORE_PROJECT=gc-ansible-cloud \
-  --env GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
-  --env GENERATE_INVENTORY=true \
-  --env DEPLOYMENT_NAME=<deployment-name> \
-  -v <absolute path to google application credentials dir>:/secrets \
-  -v <absolute path of extra vars dir>:/extra_vars:ro \
-  $IMAGE \
-  redhat.ansible_on_clouds.aws_upgrade \
-  -e @/extra_vars/extra_vars.yaml
+# Export the volume paths
+export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
+export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+
+$	docker run --rm \
+    --env PLATFORM=AWS \
+    --env DEPLOYMENT_NAME=<deployment-name> \
+    --env GENERATE_INVENTORY=true \
+    -v ${VOLUME_AWS_CREDENTIALS_DIR} \
+    -v ${VOLUME_EXTRA_VARS_DIR} \
+    ${IMAGE} \
+      -i /aap-aoc-collections/playbooks/inventory.aws_ec2.yaml \
+      redhat.ansible_on_clouds.aws_upgrade \
+      -e @/extra_vars/extra_vars.yml
 ----
 +
 . After successfully running the playbook, the playbook will return something like this
