@@ -37,6 +37,7 @@ Create the `secrets/config` file and add the following content to it. Remember t
 ----
 [default]
 region = us-east-1
+output = json
 ----
 +
 Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
@@ -94,19 +95,18 @@ $ tree
     └── credentials
 ----
 
-
 == Upgrade Process
-
-
 
 The following instructions describe how to run the upgrade playbook.
 
-.Procedure
-. Gather the following input variables to create an `extra_vars.yaml` file.
-.. *aws_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account.
-.. *aws_deployment_name*: Deployment name which you want to backup.
-.. *aws_compute_region*: aws region where foundation deployment deployed.
-.. *aws_compute_zone*: aws zone where foundation deployment deployed.
+.Setting up the `extra_vars.yaml` configuration file
+. Main variables.
+.. *aws_foundation_stack_name*: The name of the foundation deployment. This is the same name you used when you deployed the foundation.
+.. *aws_region*: The region where the foundation deployment is located.
+. The AWS Backup. The upgrade process will create a backup of your existing deployment before the main process starts. It requires the following variables:
+.. *aws_backup_vault_name*: The name of the AWS Backup vault to use. The vault must exist in the same region as the deployment.
+.. *aws_backup_iam_role_arn*: The ARN of the IAM role to use for the backup. The role must have the `AWSBackupServiceRolePolicyForBackup` policy attached to it. If you want to use the default AWS Backup service role, use the following ARN: `arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AWSBackupDefaultServiceRole`.
+
 +
 [source,bash]
 ----
@@ -116,11 +116,11 @@ aws_compute_zone: ""
 aws_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
 ----
 +
-. Pull the docker image for ansible on clouds operational container having tag with the version which you want to upgrade to.
+. Pull the Docker image for Ansible on Clouds operational container having tag with the version which you want to upgrade to.
 +
 [NOTE]
 =====
-The ansible on clouds operational image tag must match with the version which you want to upgrade to. For example, if your foundation deployment version is 2.2.0, pull operational image with tag 2.2.20230215 to upgrade to version 2.2.20230215.
+The Ansible on Clouds operational image tag must match with the version which you want to upgrade to. For example, if your foundation deployment version is 2.2.0, pull operational image with tag 2.2.20230215 to upgrade to version 2.2.20230215.
 =====
 +
 [source,bash]
