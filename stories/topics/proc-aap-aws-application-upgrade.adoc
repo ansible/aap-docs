@@ -145,7 +145,7 @@ $ docker run --rm \
     --env DEPLOYMENT_NAME=<deployment-name> \
     --env GENERATE_INVENTORY=true \
     -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
-    -v ${VOLUME_EXTRA_VARS_DIR}:/aap-aoc-collections/playbooks/inventories/:rw \
+    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
     ${IMAGE} \
       redhat.ansible_on_clouds.aws_upgrade \
       -e @/extra_vars/extra_vars.yml
