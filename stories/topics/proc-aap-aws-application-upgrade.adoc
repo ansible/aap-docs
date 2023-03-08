@@ -11,13 +11,16 @@ You can upgrade your existing {AAPonAWS} deployment to the newer version. The up
 =====
 
 .Prerequisites
+* Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
+* Docker
 
-- Linux or macOS system (where the Upgrader will be run)
-- Docker
+.Procedure
+. Create the prepare the environment and the configuration files.
+. Run the `ansible-on-clouds-ops` container to upgrade your {AAPonAWS} deployment.
 
 == Preparing the environment
 
-The upgrade process requires a few volumes to be mounted, so prepare a fresh directory to be used for this process.
+The upgrade process requires a few volumes to be mounted, so *prepare a fresh directory* to be used for this process.
 
 First, create the directories that will be used to configure the upgrade process.
 
@@ -41,7 +44,6 @@ output = json
 
 Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
 
-NOTE: To create the credentials
 [NOTE]
 =====
 To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
@@ -97,7 +99,7 @@ $ tree
     └── credentials
 ----
 
-== Upgrade Process
+== Performing the upgrade
 
 The following instructions describe how to run the upgrade playbook.
 
