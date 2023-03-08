@@ -18,9 +18,9 @@ You can upgrade your existing {AAPonAWS} deployment to the newer version. The up
 == Preparing the environment
 
 The upgrade process requires a few volumes to be mounted, so prepare a fresh directory to be used for this process.
-+
+
 First, create the directories that will be used to configure the upgrade process.
-+
+
 [source,bash]
 ----
 # Secrets directory. Store the AWS credentials and config files.
@@ -29,38 +29,38 @@ $ mkdir secrets
 # Extra vars directory. All the configuration variables for the upgrade process.
 $ mkdir extra_vars
 ----
-+
+
 Create the `secrets/config` file and add the following content to it. Remember to replace the `us-east-1` with your respective region.
-+
+
 [source,ini]
 ----
 [default]
 region = us-east-1
 output = json
 ----
-+
+
 Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
-+
+
 NOTE: To create the credentials
 [NOTE]
 =====
 To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
 =====
-+
+
 [source,ini]
 ----
 [default]
 aws_access_key_id=AKIAIOSFODNN7EXAMPLE
 aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ----
-+
+
 Create the `extra_vars/extra_vars.yml` file and add the following content to it.
 
 [NOTE]
 =====
 See the next session for more details on the variables.
 =====
-+
+
 [source,yaml]
 ----
 # Main vars
@@ -98,26 +98,26 @@ $ tree
 ----
 
 == Upgrade Process
-+
+
 The following instructions describe how to run the upgrade playbook.
-+
+
 Pull the Docker image for Ansible on Clouds operational container having tag with the version which you want to upgrade to.
-+
+
 [NOTE]
 =====
 The Ansible on Clouds operational image tag must match with the version which you want to upgrade to. For example, if your foundation deployment version is 2.2.0, pull operational image with tag 2.2.20230215 to upgrade to version 2.2.20230215.
 =====
-+
+
 [source,bash]
 ----
 $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
-+
+
 Running the upgrade playbook as a container.
-+
+
 Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
-+
+
 [source,bash]
 ----
 # Export the volume paths
@@ -134,9 +134,9 @@ $ docker run --rm \
       redhat.ansible_on_clouds.aws_upgrade \
       -e @/extra_vars/extra_vars.yml
 ----
-+
+
 After successfully running the playbook, the playbook will return something like this
-+
+
 [source,bash]
 ----
 TASK [redhat.ansible_on_clouds.standalone_aws_upgrade : [upgrade] Show aws current version] ***
@@ -144,5 +144,5 @@ ok: [localhost] => {
     "msg": "AAP on aws upgrade succeeded to version: 2.2.20230215-00"
 }
 ----
-+
+
 Your {AAPonAWS} deployment now should be upgraded to newer version and you should now be able to successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
