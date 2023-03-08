@@ -1,0 +1,29 @@
+[id="customize-file-location_{context}"]
+
+= Customizing the metrics storage location
+
+You can specify the path to the directory to store your metrics files in the Python file that runs your playbook.
+
+You can set a different directory path for every Python automation job file, or you can store the tarballs for multiple jobs in one directory.
+If you do not set the path in a Python file, the tarballs for the jobs that it runs will be saved in the default directory (`{MetricsDefaultDir}`).
+
+.Procedure
+
+. Decide on a location on your file system to store the metrics data. Ensure that the location is readable and writable.
+Ansible SDK creates the directory if it does not already exist.
+. In the `job_options` in the `main()` function of your Python file, set the `metrics_output_path` parameter to the directory where the tarballs are to be stored.
++
+In the following example, the metrics files are stored in the `/tmp/metrics` directory after the `pb.yml` playbook has been executed:
++
+[source, python]
+----
+async def main():
+    executor = AnsibleSubprocessJobExecutor()
+    executor_options = AnsibleSubprocessJobOptions()
+    job_options = {
+        'playbook': 'pb.yml',
+        # Change the default job-related data path
+        'metrics_output_path': '/tmp/metrics',
+    }
+----
+

@@ -1,0 +1,41 @@
+[id="reporting-view-metrics-files_{context}"]
+
+= Viewing metrics files
+
+After an automation job has completed, navigate to the directory that you specified for storing the data and list the files.
+
+The data for the newly-completed job is contained in a tarball file whose name begins with the date and time that the automation job was run.
+For example, the following file records data for an automation job executed on 8 March 2023 at 2.30AM.
+
+[source, bash]
+----
+$ ls
+
+2023_03_08_02_30_24__aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa_job_data.tar.gz
+----
+
+To view the files in the tarball, run `tar xvf`.
+
+[source, bash]
+----
+$ tar xvf 2023_03_08_02_30_24__aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa_job_data.tar.gz
+
+x jobs.csv
+x modules.csv
+x collections.csv
+x roles.csv
+x playbook_on_stats.csv
+----
+
+The folowing example shows the `jobs.csv` file.
+
+[source, bash]
+----
+$ cat jobs.csv
+
+job_id,job_type,started,finished,job_state,hosts_ok,hosts_changed,hosts_skipped,hosts_failed,hosts_unreachable,task_count,task_duration
+84896567-a586-4215-a914-7503010ef281,local,2023-03-08 02:30:22.440045,2023-03-08 02:30:24.316458,,5,0,0,0,0,2,0:00:01.876413
+----
+
+When a parameter value is not available, the corresponding entry in the CSV file is empty. In the `jobs.csv` file above, the `job_state` value is not available.
+
