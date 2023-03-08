@@ -1,5 +1,8 @@
 [id="proc-aap-gcp-backup-and-restore"]
 
+Technical Preview
+~~~~~~~~~~~~~~~~~
+
 To backup and restore your {PlatformNameShort} deployment, it is vital to have your existing {PlatformNameShort} admin secret name and value recorded somewhere safe. In addition, it is also extremely important that regular manual backups of the Cloud SQL database instance and filestore backups are taken to ensure a deployment can be restored as close as possible to its previous working state. The playbooks backup and restore provides backup and restore support for the {AAPonGCP} foundation deployment. 
 
 *Note that the restore process deploys a new {PlatformNameShort} deployment with the filestore and SQL database instance being restored to the specified backup.*
@@ -26,16 +29,16 @@ gcp_compute_zone: ""
 gcp_service_account_credentials_json_path: "/secret/<service-account-creds-json-filename>"
 ----
 +
-. Pull the docker image for operational container having tag with the version of the foundation deployment.
+. Pull the docker image for "ansible-on-clouds-ops" container having tag with the version of the foundation deployment.
 +
 [NOTE]
 =====  
-The operational image tag must match the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215.
+The "ansible-on-clouds-ops" container image tag must match the version of your foundation deployment. For example, if your foundation deployment version is 2.2.1, pull the "ansible-on-clouds-ops" image with tag 2.2.1.
 =====
 +
 [source,bash]
 ----
-$ export IMAGE=<image-path>
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 $ docker pull $IMAGE
 ----
 +
@@ -50,7 +53,7 @@ $ docker pull $IMAGE
 $ docker run --rm \
 -v <absolute path to google application credentials dir>:/secrets \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
-quay.io/leena_ibm/ljawale-ansible-on-clouds-ops:latest \
+$IMAGE \
 redhat.ansible_on_clouds.gcp_backup_deployment \
 -e @/extra_vars/extra_vars.yaml
 ----
@@ -109,16 +112,16 @@ gcp_sql_backup_id: ""
 gcp_sql_backup_db_name: ""
 ----
 +
-. Pull the docker image for the operational container having tag with the version of the foundation deployment.
+. Pull the docker image for "ansible-on-clouds-ops" container having tag with the version of the foundation deployment.
 +
 [NOTE]
 =====
-The operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215
+The "ansible-on-clouds-ops" container image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.1, pull the operational image with tag 2.2.1
 =====
 +
 [source,bash]
 ----
-$ export IMAGE=<image-path>
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 $ docker pull $IMAGE
 ----
 +
@@ -133,7 +136,7 @@ $ docker pull $IMAGE
 $ docker run --rm \
 -v <absolute path to google application credentials dir>:/secrets \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
-quay.io/leena_ibm/ljawale-ansible-on-clouds-ops:latest \
+$IMAGE \
 redhat.ansible_on_clouds.gcp_restore_deployment \
 -e @/extra_vars/extra_vars.yaml
 ----
