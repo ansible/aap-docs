@@ -1,6 +1,6 @@
 [id="proc-aap-aws-add-extension-nodes"]
 
-= Adding extension nodes to {AAPonAWS}
+= Add/remove extension nodes to/from {AAPonAWS}
 
 By default, the foundation stack is deployed with two {ControllerName} nodes and one {HubName} node.
 You can add execution nodes to scale out {AAPonAWS}.
@@ -14,7 +14,8 @@ Follow these steps to add execution nodes into your {AAPonAWS} environment:
 .Procedure
 . Decide the offer type for the extension nodes.
 . Create the prepare the environment and the configuration files.
-. Run the `ops container` to create the extension nodes.
+. Run the `ansible-on-clouds-ops` container to create the extension nodes.
+. Run the `ansible-on-clouds-ops` container to remove the extension nodes.
 
 == Deciding the offer type
 
@@ -133,15 +134,53 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 
-Running the upgrade playbook as a container.
-
-Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+Running the upgrade playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
 
 [source,bash]
 ----
 # Export the volume paths
 $ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
 $ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+
+# Run the playbook
+$ docker run --rm \
+    --env PLATFORM=AWS \
+    --env DEPLOYMENT_NAME=<deployment-name> \
+    -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
+    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
+    ${IMAGE} \
+      redhat.ansible_on_clouds.aws_add_extension_nodes \
+      -e @/extra_vars/extra_vars.yml
+----
+
+== Removing the extension nodes
+
+Assuming you ran the *Preparing the environment* section.
+
+The following instructions describe how to run the playbook to remove the extension nodes.
+
+Pull the Docker image for `ansible-on-clouds-ops` container image having tag with the version you're currently using.
+
+[NOTE]
+=====
+The `ansible-on-clouds-ops` container image tag must match the current installed version of {AAPonAWS}
+=====
+
+[source,bash]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
+
+Running the upgrade playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+
+[source,bash]
+----
+# Export the volume paths
+$ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
+$ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+
+# Run the playbook
 $ docker run --rm \
     --env PLATFORM=AWS \
     --env DEPLOYMENT_NAME=<deployment-name> \
