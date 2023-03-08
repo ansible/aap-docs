@@ -1,37 +1,55 @@
 [id="proc-aap-aws-backup-and-recovery"]
 
-To backup and restore your AAP deployment, it is vital to ensure automatic backups have been set for EFS and that these backups are accessible for restoration. 
-When you create an  {PlatformNameShort} deployment, automatic Amazon Elastic File System (EFS) backups are set by default, however it is prudent to check if those backups can be restored before a disaster scenario. 
-In addition, it is also extremely important that regular manual snapshots of the Amazon Relational Database Service (RDS) are taken to ensure a deployment can be restored as close as possible to its previous working state. 
+To backup and restore your AAP deployment, it is vital to ensure automatic backups have been set for Amazon Elastic File System (EFS) and that these backups are accessible for restoration. 
+When you create an  {PlatformNameShort} deployment, automatic Amazon EFS backups are set by default, however it is prudent to check if those backups can be restored before a disaster scenario. 
+In addition, it is also extremely important that snapshots of the Amazon Relational Database Service (RDS) are taken regularly to ensure a deployment can be restored as close as possible to its previous working state. 
 Follow the steps below to ensure a smooth backup and recovery process.
 
 == Backup Process
 
 .Procedure
-. Gather the following input variables to create an `extra_vars.yaml` file
+. Gather the following input variables to create an `extra_vars.yaml` file like below
++
+[source, yaml]
+----
+aws_foundation_stack_name: "my-foundation-stack"
+aws_region: us-east-1
+aws_backup_vault_name: "Default"
+aws_backup_iam_role_arn: "arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole"
+----
 .. aws_foundation_stack_name: The name of your existing deployment.
 .. aws_region: The region the stack was deployed in.
-.. aws_backup_vault_name: AWS backup vault name.
-.. aws_backup_iam_role_arn: AWS IAM Role that has permissions to perform backup operations.
+.. aws_backup_vault_name: The name of the backup vault to store the EFS backup.
+.. aws_backup_iam_role_arn: Amazon Resource Name (ARN) of the AWS IAM Role that has permissions to perform backup operations.
++
+[NOTE]
+====
+Can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole` 
+====
 
 . Pull the docker image for operational container having the tag with the same version as the foundation deployment
 +
 [source,bash]
 ----
-$ export IMAGE=<image-path still needs to be determined>
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE
+----
+for EMEA regions (Europe, Middle East, Africa) run the command below instead
++
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00-limited
 $ docker pull $IMAGE
 ----
 +
 
 [NOTE]
 =====  
-Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215.
+Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the operational image with tag 2.2.20230215-00.
 =====
 . Run the backup playbook as a container
 
-.. Replace `<absolute path of extra vars dir>` with the path to your directory where your `extra_vars.yaml` file exists which you have created in step 1 of the backup process and replace `<Your AWS Access Key ID>` and `<Your AWS Secret Access Key>` with the values for the AWS account you want to run the backup with. For more information on finding your AWS account credentials see link:https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-about[Accessing AWS using your AWS credentials].
-
-.. Run the command to run the playbook.
+.. Use the following command to run the playbook.
 +
 [source,bash]
 ----
@@ -39,10 +57,12 @@ $ docker run --rm --env PLATFORM=AWS \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
 -e AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
 -e AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
-<image path still needs to be determined>:latest \
+$IMAGE \
 redhat.ansible_on_clouds.aws_backup_stack \
 -e @/extra_vars/extra_vars.yaml
 ----
+
+.. Replace `<absolute path of extra vars dir>` with the path to your directory where your `extra_vars.yaml` file exists which you have created in step 1 of the backup process and replace `<Your AWS Access Key ID>` and `<Your AWS Secret Access Key>` with the values for the AWS account you want to run the backup with. For more information on finding your AWS account credentials see link:https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-about[Accessing AWS using your AWS credentials].
 
 .. Note the output of the playbook.
 +
@@ -65,34 +85,62 @@ The playbook will return something like this
 }
 ----
 +
-Make a note of the *rds_db_snapshot_arn* and the latest *RecoveryPointArn*. These will be needed for the restore playbook.
+The playbook will have successfully created an EFS backup and RDS snapshot of your deployment listing the most recent EFS restore point and RDS snapshot information. Make a note of the `rds_db_snapshot_arn` and the latest `RecoveryPointArn`. These will be needed for the restore playbook.
 +
 
 
 == Recovery Process
 
 .Procedure
-. Gather the following input variables to create an `extra_vars.yaml` file
+. Gather the following input variables to create an `extra_vars.yaml` file like below
++
+[source, yaml]
+----
+aws_foundation_stack_name: "my-foundation-stack"
+
+aws_restored_stack_name: "my-foundation-stack-restored"
+
+aws_region: us-east-1
+
+aws_backup_vault_name: "Default"
+
+aws_rds_db_snapshot_arn: "arn:aws:rds:us-east-1:123456789012:snapshot:my-foundation-stack-rds169785b9-55rtrqwtj4e6-snap-2023-03-07"
+
+aws_backup_restore_point_arn: "arn:aws:backup:us-east-1:123456789012:recovery-point:878a542c-0f59-42d7-ad4d-f46848c21757"
+
+aws_backup_iam_role_arn: "arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole"
+
+aws_s3_bucket: "my-example-bucket"
+
+aws_efs_physical_id: "fs-05a4f9a1049c00977"
+
+aws_cf_keypair_name: "my-key-pair"
+----
 .. aws_foundation_stack_name: The name of your existing deployment.
-.. aws_restored_stack_name: The name of your new deployment.
-.. aws_region: The region the stack was deployed in.
+.. aws_restored_stack_name: The name you want for your new restored deployment.
+.. aws_region: The region the existing stack was deployed in and the region the new restored stack will also be deployed in.
 .. aws_backup_vault_name: The name of the backup vault your EFS backup is stored in.
-.. aws_rds_db_snapshot_arn: The ARN of the RDS snapshot you want to use for restore, which can be found from the backup playbook output as *rds_db_snapshot_arn*. 
+.. aws_rds_db_snapshot_arn: The ARN of the RDS snapshot you want to use for restore, which can be found from the backup playbook output as `rds_db_snapshot_arn`. 
 +
 [NOTE]
 ====
-If you have a specific RDS snapshot you want to use, you will have to manually find its ARN in the AWS console.
+If you have a specific RDS snapshot you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the RDS snapshot is a from a AoC deployment with a version matching the version of the operational container you are using to run the restore operation.
 ==== 
-.. aws_backup_restore_point_arn: The ARN of the recovery point you want to use for restore, which can be found from the backup playbook output as *RecoveryPointArn*.
+.. aws_backup_restore_point_arn: The ARN of the recovery point you want to use for restore, which can be found from the backup playbook output as `RecoveryPointArn`.
 + 
 [NOTE]
 ==== 
-If you have automatic backups set up and you have a specific EFS recovery point you want to use, you will have to manually find its ARN in the AWS console.
+If you have automatic backups set up and you have a specific EFS recovery point you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the EFS recovery point is a from a AoC deployment with a version matching the version of the operational container you are using the run the restore operation.
 ====
 .. aws_backup_iam_role_arn: AWS IAM Role that has permissions to perform backup operations.
-.. aws_s3_bucket: AWS S3 bucket name. Used to upload cloudformation template.
++
+[NOTE]
+====
+Can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole` 
+====
+.. aws_s3_bucket: The name of an S3 bucket that the playbook can access to upload a CloudFormation Template.
 .. aws_efs_physical_id: The physical Id of the EFS from the original deployment. Looks something like `fs-06837574544929090`.  
-.. aws_cf_keypair_name: The keypair to pass as a parameter when creating the deployment.
+.. aws_cf_keypair_name: The keypair to pass as a parameter when creating the new restored deployment.
 +
 [NOTE]
 ====
@@ -103,18 +151,22 @@ The keypair used must exist in the aws region you are restoring to.
 +
 [source,bash]
 ----
-$ export IMAGE=<image-path still needs to be determined>
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE
+----
+for EMEA regions (Europe, Middle East, Africa) run the command below instead
++
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00-limited
 $ docker pull $IMAGE
 ----
 +
-
 [NOTE]
 =====  
-Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215, pull the operational image with tag 2.2.20230215.
+Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the operational image with tag 2.2.20230215-00.
 =====
 . Run the restore playbook as a container
-
-.. Replace `<absolute path of extra vars dir>` with the path to your directory where your `extra_vars.yaml` file exists which you have created in step 1 of the backup process and replace `<Your AWS Access Key ID>` and `<Your AWS Secret Access Key>` with the values for the AWS account you want to run the backup with. For more information on finding your AWS account credentials see link:https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-about[Accessing AWS using your AWS credentials].
 
 .. Use the following command to run the playbook.
 +
@@ -124,15 +176,16 @@ $ docker run --rm --env PLATFORM=AWS \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
 -e AWS_ACCESS_KEY_ID=<Your AWS Access Key ID>
 -e AWS_SECRET_ACCESS_KEY=<Your AWS Secret Access Key>
-<image path still needs to be determined>:latest \
+$IMAGE \
 redhat.ansible_on_clouds.aws_restore_stack \
 -e @/extra_vars/extra_vars.yaml
 ----
+.. Replace `<absolute path of extra vars dir>` with the path to your directory where your `extra_vars.yaml` file exists which you have created in step 1 of the restore process and replace `<Your AWS Access Key ID>` and `<Your AWS Secret Access Key>` with the values for the AWS account you want to run the restore with. For more information on finding your AWS account credentials see link:https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-about[Accessing AWS using your AWS credentials].
 
-After successfully running the playbook, you should see a new restored deployment in AWS CloudFormation.
-+
+After successfully running the playbook, you should see a new restored deployment in AWS CloudFormation matching the name provided for it in the `extra_vars.yaml` file.
+
 [NOTE]
 ====
-Access to the restored deployment needs to be configured through either an external load balancer or VPN. When a connection method is configured you can log in to {PlatformName} {ControllerName} and {HubName} using your old deployment credentials. 
+Access to the restored deployment needs to be configured through a bastion host or VPN. When a connection method is configured, you can log in to {PlatformName} {ControllerName} and {HubName} using your old deployment credentials. 
 In addition, all job history, uploaded collections and other records should be in the same state as the restored deployment.
 ====
