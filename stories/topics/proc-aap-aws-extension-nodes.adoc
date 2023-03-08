@@ -6,67 +6,148 @@ By default, the foundation stack is deployed with two {ControllerName} nodes and
 You can add execution nodes to scale out {AAPonAWS}.
 Follow these steps to add execution nodes into your {AAPonAWS} environment:
 
-.Procedure
-. Open the {ControllerName} Launch Configuration
-. Navigate to the AWS CloudFormation UI, and click the *Resources* tab.
-. Ensure *Tree View* is selected.
-. In the *Controller* menu, select *autoscale-group > Launch Config*.
-. Click btn:[Launch Config Physical ID] to open the launch configuration in a new tab.
+.Prerequisites
 
-= Creating the extension node launch configuration
+- Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
+- Docker
 
 .Procedure
-. In the *Launch configuration* tab, ensure the {ControllerName} launch configuration is selected.
-. Click btn:[Copy to launch template].
-. Click btn:[Copy selected].
-. Replace the *New launch template name* with *extension-group-template*.
-. Ensure *Create an Auto Scaling group using the new template* checkbox is checked.
-. Click btn:[Copy].
-. For the *Auto Scaling group* name, enter `extension-group`.
-. Under *Launch Template*, click btn:[Create a launch template version] to create a new version of the launch template.
-. Identify the AMI name for the extension nodes for the current version.
-.. In the AWS CloudFormation UI, click the *Resources* tab.
-.. Ensure *Tree View* is selected.
-.. In the Controller menu, select *autoscale-group > ASG*.
-.. Click btn:[ASG Physical ID] to open the autoscale group in a new tab.
-.. In the *Instance Management* tab for the {ControllerName} autoscale-group, click on one of the Instance IDs, under the *Instances* section of this tab to open that instance page in a new tab.
-.. In the *Instance details* section, copy the *AMI name*:
-+
-The format of the copied AMI name is `AAP-<VERSION>_HVM-<DATETIME>-x86_64-1-Marketplace-GP2-<SUFFIX>`.
-.. To identify the AMI name for the extension node, remove the suffix from the copied AMI name and add in '-EXT' after the version:
-+
-The format for the proper extension node AMI name is `AAP-<VERSION>-EXT_HVM-<DATETIME>-x86_64-1-Marketplace-GP2`.
-. Under *Application and OS Images*, search for the AMI name for the extension node.
-. Click btn:[Select] next to the AMI which has this name.
-. If prompted, confirm the changes.
-. Optional: Modify the Instance type.
-Valid values are m5.large, m5.xlarge, or m5.2xlarge.
-The default is m5.large.
-. Scroll down to the *Storage* category.
-. Expand *Volume 1*.
-.. Set *Size (GiB)* to 100.
-.. Ensure *Encrypted* is set to `Encrypted`.
-. Click *Create template version*.
+. Decide the offer type for the extension nodes.
+. Create the prepare the environment and the configuration files.
+. Run the `ops container` to create the extension nodes.
 
-= Creating the auto scaling group
+== Deciding the offer type
 
-.Procedure
-. Select the *Choose launch template or configuration* tab.
-. In the *Launch template* section, click the *refresh* icon under *Version*.
-. Select the option that you have just created.
-. Click btn:[Next].
-. In the *Network* menu, ensure the correct VPC is selected.
-.. To find the correct VPC, select *VPC* to display the VPC ID in the cloudformation stack resources page.
-.. Select the matching VPC ID.
-. Under *Availability Zones and subnets*, select all available options, then click btn:[Next].
-. In the *Configure advanced options* page, click btn:[Next].
-. Configure the *Group size* capacity, then click btn:[Next].
-. In the *Add notifications* page, click btn:[Next].
-. In the *Add tags* page add the following tag:
-.. Key: `aap:cloudformation:main-stack-name` Value: `<CLOUDFORMATION_STACK_NAME>`
-.. Replace `<CLOUDFORMATION_STACK_NAME>` with the name of your cloudformation stack.
-.. Ensure `Tag new instances` is checked.
-. Click btn:[Next].
-. In the *Review* page, scroll to the bottom and click *Create Auto Scaling group*.
-. Wait for the Auto scaling group to create the nodes and for the related nodes to reach a _Running_ instance state.
-. In the {ControllerName} UI, select *Administration > Instances* to view the extension node EC2 instances.
+The following table lists the offer types and the corresponding AWS instance types. Depending on the workload needs, you can choose a more suitable offer type for the extension nodes.
+
+
+.Offer types:
+
+[options="header",width="60%",cols="^s,<"]
+|=============================
+|Offer Type |AWS Instance Type
+|100        |m5.large
+|200        |m5.xlarge
+|400        |m5.2xlarge
+|=============================
+
+== Preparing the environment
+
+The upgrade process requires a few volumes to be mounted, so *prepare a fresh directory* to be used for this process.
+
+First, create the directories that will be used to configure the upgrade process.
+
+[source,bash]
+----
+# Secrets directory. Store the AWS credentials and config files.
+$ mkdir secrets
+# Extra vars directory. All the configuration variables for the upgrade process.
+$ mkdir extra_vars
+----
+
+Create the `secrets/config` file and add the following content to it. Remember to replace the `us-east-1` with your respective region.
+
+[source,ini]
+----
+[default]
+region = us-east-1
+output = json
+----
+
+Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
+
+[NOTE]
+=====
+To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
+=====
+
+[source,ini]
+----
+[default]
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+----
+
+Create the `extra_vars/extra_vars.yml` file and add the following content to it.
+
+[NOTE]
+=====
+See the next session for more details on the variables.
+=====
+
+[source,yaml]
+----
+# Main vars
+aws_foundation_stack_name: "myDeployment"
+aws_region: us-east-1
+
+# Extension node vars
+aws_offer_type: "100"
+aws_launch_template_name: "myDeployment-lt"
+aws_autoscaling_group_name: "myDeployment-asg"
+aws_asg_min_size: 2
+aws_asg_desired_capacity: 2
+----
+
+
+Variables description:
+
+.Setting up the `extra_vars/extra_vars.yaml` configuration file
+* Main variables
+** *aws_foundation_stack_name*: The name of the foundation deployment. This is the same name you used when you deployed the foundation.
+** *aws_region*: The region where the foundation deployment is located.
+* The extension node variables.
+** *aws_offer_type*: The offer type of the extension nodes. Must be *100*, *200*, or *400*.
+** *aws_launch_template_name*: The name of the AWS EC2 launch template to create.
+** *aws_autoscaling_group_name*: The name of the AWS AutoScaling Group to create for the extension nodes.
+** *aws_asg_min_size*: The AutoScaling Group minimum capacity. (Max is set by offer_type)
+** *aws_asg_desired_capacity*: The AutoScaling Group desired capacity.
+
+The final result should look like this:
+
+[source,bash]
+----
+$ tree
+.
+├── extra_vars/
+│   └── extra_vars.yml
+└── secrets/
+    ├── config
+    └── credentials
+----
+
+== Creating the extension nodes
+
+The following instructions describe how to run the playbook to create the extension nodes.
+
+Pull the Docker image for `ansible-on-clouds-ops` container image having tag with the version you're currently using.
+
+[NOTE]
+=====
+The `ansible-on-clouds-ops` container image tag must match the current installed version of {AAPonAWS}
+=====
+
+[source,bash]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
+
+Running the upgrade playbook as a container.
+
+Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+
+[source,bash]
+----
+# Export the volume paths
+$ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
+$ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+$ docker run --rm \
+    --env PLATFORM=AWS \
+    --env DEPLOYMENT_NAME=<deployment-name> \
+    -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
+    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
+    ${IMAGE} \
+      redhat.ansible_on_clouds.aws_add_extension_nodes \
+      -e @/extra_vars/extra_vars.yml
+----
