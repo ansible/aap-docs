@@ -27,7 +27,7 @@ aws_backup_iam_role_arn: "arn:aws:iam::123456789012:role/service-role/AWSBackupD
 Can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole` 
 ====
 
-. Pull the docker image for operational container having the tag with the same version as the foundation deployment
+. Pull the `ansible-on-clouds-ops` container image having the tag with the same version as the foundation deployment
 +
 [source,bash]
 ----
@@ -45,7 +45,7 @@ $ docker pull $IMAGE
 
 [NOTE]
 =====  
-Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the operational image with tag 2.2.20230215-00.
+The `ansible-on-clouds-ops` image tag should match the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the `ansible-on-clouds-ops` image with tag 2.2.20230215-00.
 =====
 . Run the backup playbook as a container
 
@@ -124,13 +124,13 @@ aws_cf_keypair_name: "my-key-pair"
 +
 [NOTE]
 ====
-If you have a specific RDS snapshot you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the RDS snapshot is a from a AoC deployment with a version matching the version of the operational container you are using to run the restore operation.
+If you have a specific RDS snapshot you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the RDS snapshot is a from a AoC deployment with a version matching the version of the `ansible-on-clouds-ops` container you are using to run the restore operation.
 ==== 
 .. aws_backup_restore_point_arn: The ARN of the recovery point you want to use for restore, which can be found from the backup playbook output as `RecoveryPointArn`.
 + 
 [NOTE]
 ==== 
-If you have automatic backups set up and you have a specific EFS recovery point you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the EFS recovery point is a from a AoC deployment with a version matching the version of the operational container you are using the run the restore operation.
+If you have automatic backups set up and you have a specific EFS recovery point you want to use, you will have to manually find its ARN in the AWS console. You must also ensure the EFS recovery point is a from a AoC deployment with a version matching the version of the `ansible-on-clouds-ops` container you are using the run the restore operation.
 ====
 .. aws_backup_iam_role_arn: AWS IAM Role that has permissions to perform backup operations.
 +
@@ -147,7 +147,7 @@ Can use the AWS Backup Default Service Role for this which has the format `arn:a
 The keypair used must exist in the aws region you are restoring to.
 ====
 
-. Pull the docker image for operational container having the tag with the same version as the foundation deployment
+. Pull the `ansible-on-clouds-ops` container image having the tag with the same version as the foundation deployment
 +
 [source,bash]
 ----
@@ -164,7 +164,7 @@ $ docker pull $IMAGE
 +
 [NOTE]
 =====  
-Operational image tag should match with the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the operational image with tag 2.2.20230215-00.
+The `ansible-on-clouds-ops` image tag should match the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the `ansible-on-clouds-ops` image with tag 2.2.20230215-00.
 =====
 . Run the restore playbook as a container
 
