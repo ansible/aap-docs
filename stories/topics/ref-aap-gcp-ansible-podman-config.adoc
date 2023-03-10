@@ -2,7 +2,7 @@
 
 = Ansible and podman configuration
 
-The file `/aap/common/bootstrap/config_file_templates/<controller|hub>/monitoring.yaml` on {ControllerName} or {HubName} contains the configuration for collecting and sending Ansible and podman metrics to GCP.
+The file `/aap/bootstrap/config_file_templates/<controller|hub>/monitoring.yaml` on {ControllerName} or {HubName} contains the configuration for collecting and sending Ansible and podman metrics to GCP.
 
 The default configuration for {ControllerName} looks like this:
 
@@ -67,12 +67,12 @@ collectors:
    # interval on which the metric must be pushed to gcp
    sendInterval: 59s
 ----
- 
+
 where
 
-`collectors` is a configuration array with one item per collector, that is, awx and podman. 
+`collectors` is a configuration array with one item per collector, that is, awx and podman.
 
-The awx collector requires authentication and so `userName` must be set to `admin`. 
+The awx collector requires authentication and so `userName` must be set to `admin`.
 The password is retrieved from the secret-manager.
 
 The endpoint should not be changed.
@@ -85,7 +85,6 @@ Each collector can be enabled or disabled separately by setting `enabled` to `tr
 
 A collector returns all available metrics grouped by families, but you can exclude the families that should not be sent to {GCP} Monitoring by adding their name in the array `excludedMetrics`.
 
-For all other family metrics, you can specify the interval at which you want to collect and send them to the {GCP} Monitoring. 
-The collector interval is the minimum between all family metrics interval and the `defaultCollectorInterval`. 
+For all other family metrics, you can specify the interval at which you want to collect and send them to the {GCP} Monitoring.
+The collector interval is the minimum between all family metrics interval and the `defaultCollectorInterval`.
 This to ensure that a collection is made for each set of metrics sent to {GCP} Monitoring.
-
