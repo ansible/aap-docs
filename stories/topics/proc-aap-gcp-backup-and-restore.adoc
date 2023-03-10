@@ -21,6 +21,16 @@ The following instructions describe how to run the backup playbook.
 .. *gcp_compute_region*: GCP region where foundation deployment deployed.
 .. *gcp_compute_zone*: GCP zone where foundation deployment deployed.
 +
+[NOTE]
+=====
+You can find the region and zone from the filestore instance deployed with the foundation deployment. Look for filestore with name <deployment-name>-filestore and make note of Location field that is your `gcp_compute_zone` and remove the last 2 bits from the location that is your `gcp_compute_region`. For example, filestore instance location is `us-eat1-d`, your `gcp_compute_zone` is `us-east1-d` and your region is `us-east1`.
+=====
++
+[NOTE]
+=====
+To create the GCP credentials file, see https://cloud.google.com/iam/docs/keys-create-delete
+=====
++
 [source,bash]
 ----
 gcp_deployment_name: "" 
