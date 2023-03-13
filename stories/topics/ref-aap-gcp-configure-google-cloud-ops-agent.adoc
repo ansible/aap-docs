@@ -4,17 +4,16 @@
 
 The configuration file details can be found link:https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent/configuration[here].
 
-The configuration file is located in `/etc/google-cloud-ops-agent.yaml`. 
+The configuration file is located in `/etc/google-cloud-ops-agent/config.yaml`.
 
-This is a symbolic link to the shared disk `/app/bootstrap/config_file_templates/controller/gcp-ops-agent-config.yaml` or `/app/bootstrap/config_file_templates/hub/gcp-ops-agent-config.yaml` depending on the component type. 
+This is a symbolic link to the shared disk `/aap/bootstrap/config_file_templates/controller/gcp-ops-agent-config.yaml` or `/aap/bootstrap/config_file_templates/hub/gcp-ops-agent-config.yaml` depending on the component type.
 
-The configuration file contains a number of receivers specifying what should be collected by the ops agent. 
+The configuration file contains a number of receivers specifying what should be collected by the ops agent.
 
 Your selection of *Connect Logging* and *Connect Metrics* during deployment determines which pipelines are included in the file and therefore which logs and metrics are collected and sent to GCP.
 
-If you need to add more pipelines post-deployment, you can insert them in `/app/bootstrap/config_file_templates/hub|controller/gcp-ops-agent-config.yaml`. 
+If you need to add more pipelines post-deployment, you can insert them in `/aap/bootstrap/config_file_templates/hub|controller/gcp-ops-agent-config.yaml`.
 
-You can find examples in `/app/bootstrap/config_file_templates/hub|controller/`, `gcp-ops-agent-config-metric-service.yaml`, and `gcp-ops-agent-config-logging-service.yaml` which are located in the same directory as the gcp-ops-agent-config.yaml.
+You can find examples in `/aap/bootstrap/config_file_templates/hub|controller/`, `gcp-ops-agent-config-metric-service.yaml`, and `gcp-ops-agent-config-logging-service.yaml` which are located in the same directory as the gcp-ops-agent-config.yaml.
 
 A crontab job restarts the agent if `gcp-ops-agent-config.yaml` changed in the last 10 minutes and thus the agent rereads its configuration.
-

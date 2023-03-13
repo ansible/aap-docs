@@ -6,31 +6,31 @@ If you want to have a different configuration for {ControllerName} and {HubName}
 
 .Procedure
 . Login on the {ControllerName} or {HubName}.
-. To login as a super user run : 
+. To login as a super user run :
 +
 [options="nowrap" subs="+quotes,attributes"]
 ----
-# su - 
+# su -
 ----
 
 . To have one file per server for either {ControllerNaame} or {HubName}, copy the file
-`/aap/common/bootstrap/config_file_templates/<controller|hub>/monitoring.yaml` 
+`/aap/bootstrap/config_file_templates/<controller|hub>/monitoring.yaml`
 to
-`/aap/common/bootstrap/config_file_templates/<controller|hub>/monitoring-$HOSTNAME.yaml`.
+`/aap/bootstrap/config_file_templates/<controller|hub>/monitoring-$HOSTNAME.yaml`.
 
 . To login as the awx user run:
 +
 [options="nowrap" subs="+quotes,attributes"]
----- 
+----
 # su - awx
----- 
+----
 
 . To remove the current exporter run:
 +
 [options="nowrap" subs="+quotes,attributes"]
----- 
+----
 $ podman rm aoc-metric-exporter –force
----- 
+----
 
 . To start the export with the newly created configuration file (`monitoring=$HOSTNAME.yaml`).run:
 +
@@ -42,7 +42,7 @@ quay.io/ansible-on-clouds/aoc-metric-exporter:latest \
 gcp \
 --collectors-config-file /config/monitoring-$HOSTNAME.yaml\
 --awx-password-secret-name ${GCP_ADMIN_SECRET_NAME} \
---project ${PROJECT} 
+--project ${PROJECT}
 ----
 
 Where `GCP_ADMIN_SECRET_NAME` is the result of
@@ -53,4 +53,3 @@ $ curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/g
 ----
 
 and PROJECT is the name of your project.
-
