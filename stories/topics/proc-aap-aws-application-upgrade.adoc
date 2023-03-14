@@ -102,7 +102,9 @@ $ tree
 
 The following instructions describe how to run the upgrade playbook.
 
-Pull the Docker image for Ansible on Clouds operational container having tag with the version which you want to upgrade to.
+.Procedure
+
+. Pull the Docker image for Ansible on Clouds operational container having tag with the version which you want to upgrade to.
 
 [NOTE]
 =====
@@ -115,9 +117,11 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 
-Running the upgrade playbook as a container.
+== Running
 
-Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+.Procedure
+
+. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
 
 [source,bash]
 ----
@@ -136,7 +140,7 @@ $ docker run --rm \
       -e @/extra_vars/extra_vars.yml
 ----
 
-After successfully running the playbook, the playbook will return something like this
+. After successfully running the playbook, the playbook will return something like this
 
 [source,bash]
 ----
@@ -146,4 +150,4 @@ ok: [localhost] => {
 }
 ----
 
-Your {AAPonAWS} deployment now should be upgraded to newer version and you should now be able to successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
+Your {AAPonAWS} deployment is now upgraded to a newer version and you can log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
