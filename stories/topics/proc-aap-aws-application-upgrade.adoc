@@ -20,9 +20,9 @@ You can upgrade your existing {AAPonAWS} deployment to the newer version. The up
 
 == Preparing the environment
 
-The upgrade process requires a few volumes to be mounted, so *prepare a fresh directory* to be used for this process.
+The upgrade process requires a few volumes to be mounted. Prepare a directory you can use for this purpose.
 
-First, create the directories that will be used to configure the upgrade process.
+Create the directories used to configure the upgrade process.
 
 [source,bash]
 ----
@@ -33,7 +33,7 @@ $ mkdir secrets
 $ mkdir extra_vars
 ----
 
-Create the `secrets/config` file and add the following content to it. Remember to replace the `us-east-1` with your respective region.
+Create the `secrets/config` file and add the following content to it. Remember to replace `us-east-1` with your respective region.
 
 [source,ini]
 ----
@@ -42,11 +42,11 @@ region = us-east-1
 output = json
 ----
 
-Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
+Create the `secrets/credentials` file and add the following content to it. Remember to replace `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
 
 [NOTE]
 =====
-To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
+To create the AWS credentials,  see link:https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
 =====
 
 [source,ini]
@@ -75,16 +75,15 @@ aws_backup_vault_name: Default
 aws_backup_iam_role_arn: arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AWSBackupDefaultServiceRole
 ----
 
-Describing the variables:
+== Setting up the extra_vars/extra_vars.yaml configuration file
 
-. Setting up the `extra_vars/extra_vars.yaml` configuration file
 . Main variables.
-.. *aws_foundation_stack_name*: The name of the foundation deployment. This is the same name you used when you deployed the foundation.
-.. *aws_region*: The region where the foundation deployment is located.
-.. *aws_ssm_bucket_name*: The name of the S3 bucket where the configuration files for the AWS SSM are stored. Can be an existent bucket used of AWS SSM or a new one
+** *aws_foundation_stack_name*: The name of the foundation deployment. This is the same name you used when you deployed the foundation.
+** *aws_region*: The region where the foundation deployment is located.
+** *aws_ssm_bucket_name*: The name of the S3 bucket where the configuration files for the AWS SSM are stored. Can be an existent bucket used of AWS SSM or a new one
 . The AWS Backup. The upgrade process will create a backup of your existing deployment before the main process starts. It requires the following variables:
-.. *aws_backup_vault_name*: The name of the AWS Backup vault to use. The vault must exist in the same region as the deployment.
-.. *aws_backup_iam_role_arn*: The ARN of the IAM role to use for the backup. The role must have the `AWSBackupServiceRolePolicyForBackup` policy attached to it. If you want to use the default AWS Backup service role, use the following ARN: `arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AWSBackupDefaultServiceRole`.
+** *aws_backup_vault_name*: The name of the AWS Backup vault to use. The vault must exist in the same region as the deployment.
+** *aws_backup_iam_role_arn*: The ARN of the IAM role to use for the backup. The role must have the `AWSBackupServiceRolePolicyForBackup` policy attached to it. If you want to use the default AWS Backup service role, use the following ARN: `arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AWSBackupDefaultServiceRole`.
 
 The final result should look like this:
 
