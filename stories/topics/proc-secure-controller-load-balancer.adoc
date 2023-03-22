@@ -1,0 +1,82 @@
+[id="proc-aap-aws-secure-controller-load-balancer"]
+
+== Securing the controller load balancer
+
+The following procedure describes how to secure the {ControllerName} load balancer.
+
+.Prereqisites
+* Ensure you are using openssl 3 or later
+
+.Procedure
+. Generate the {ControllerName} certificate with the following command:
++
+[source,bash]
+----
+$ openssl req -x509 -nodes -newkey rsa:4096 -keyout controller_key.pem -out controller_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<CONTROLLER_DNS_NAME>"
+----
+where `CONTROLLER_DNS_NAME` is the DNS name of the controller load balancer. 
+Certificates can also be requested or imported into AWS.
+. In the {AWS} UI, navigate to menu:ACM[]. 
+Ensure you are in the correct region.
+. Click btn:[Import] to start the import of the generated certificate.
+. Paste the contents of `cert.pem` into the *Certificate body* field.
+. Paste the contents of `key.pem` into the *Certificate private key* field.
+. Click btn:[Next]
+. Optional: Add any additional tags you require. 
+. Click btn:[Next].
+. Click btn:[Import].
+
+[discrete]
+== Updating the {ControllerName} internal load balancer listener
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Load Balancers[]. 
+Ensure you are in the correct region.
+. Select the internal load balancer for {ControllerName}.
+. Click the *Listeners* tab.
+. Select the Listener, and then click btn:[Edit].
+. Select *HTTPS* for the protocol, and ensure the port is `443`.
+. Select *listener settings > Default SSL/TLS certificate* and ensure that *From ACM* is selected.
+. Select your imported ACM certificate.
+. Click btn:[Save changes].
+
+[discrete]
+== Updating the load balancer security group
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Security Groups[]. 
+Ensure you are in the correct region.
+. Select the {ControllerName} *ALB Security group*.
+. Select the *Inbound rules* tab and click btn:[Edit inbound rules].
+. Add a rule of Type: `HTTPS`, with Source: `Anywhere-IPv4`.
+. Delete the old HTTP rule and click btn:[Save rules].
+
+[discrete]
+== Adding certificates to the EC2 Instances
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Instances[]. 
+Ensure you are in the correct region.
+. Select the {ControllerName} instance(s)
+. Paste the {ControllerName} key in the following location:
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/controller_key.pem # Paste key. This step only needs to be done on the first controller node.
+----
++
+. Paste the controller certificate in the following location -
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/controller_cert.pem # Paste cert. This step only needs to be done on the first controller node.
+----
++
+. Copy the certificte and keys to the ca-trust directory. Then update the ca-trust directory using the following commands:
++
+[source,bash]
+----
+$ sudo cp /efs/certificates/controller_key.pem /etc/pki/ca-trust/source/anchors/controller-key.pem # Copy key
+$ sudo cp /efs/certificates/controller_cert.pem /etc/pki/ca-trust/source/anchors/controller-cert.pem # Copy cert
+$ sudo update-ca-trust
+----
