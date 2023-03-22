@@ -1,0 +1,86 @@
+[id="proc-aap-aws-secure-hub-controller-connection"]
+
+= Securing the connection between {HubName} and {ControllerName}
+
+The following procedure describes how to secure the {HubName} load balancer
+
+.Prerequisites
+* Ensure you are using openssl v3 or later.
+
+.Procedure
+. Generate the {HubName} certificate with the following command:
++
+[source,bash]
+----
+$ openssl req -x509 -nodes -newkey rsa:4096 -keyout hub_key.pem -out hub_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<HUB_DNS_NAME>"
+----
++
+where `HUB_DNS_NAME` is the DNS name of the hub loadbalancer. 
+Certificates can also be requested or imported into AWS.
+. In the {AWS} UI, navigate to menu:Amazon Certificate Manager[]. 
+Ensure you are in the correct region.
+. Click btn:[Import] to start the import of the generated certificate.
+. Paste the contents of `cert.pem` into the *Certificate body* field.
+. Paste the contents of `key.pem` into the *Certificate private key* field.
+. Click btn:[Next]
+. Optional: Add any additional tags you require. 
+. Click btn:[Next].
+. Click btn:[Import].
+
+[discrete]
+== Updating the {HubName} internal Load Balancer Listener
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Load Balancers[]. 
+Ensure you are in the correct region.
+. Select the internal load balancer for {HubName}.
+. Click the *Listeners* tab.
+. Select the Listener, and then click btn:[Edit].
+. Select *HTTPS* for the protocol, and ensure the port is `443`.
+. Select *listener settings > Default SSL/TLS certificate* and ensure that *From ACM* is selected.
+. Select your imported ACM certificate.
+. Click btn:[Save changes].
+
+[discrete]
+== Updating the load balancer security group
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Security Groups[]. 
+Ensure you are in the correct region.
+. Select the {HubName} *ALB Security group*.
+. Select the *Inbound rules* tab and click btn:[Edit inbound rules].
+. Add a rule of Type: `HTTPS`, with Source: `Anywhere-IPv4`.
+. Delete the old HTTP rule and click btn:[Save rules].
+
+[discrete]
+== Adding certificates to the EC2 Instances
+
+TBD
+
+.Procedure
+. In the {AWS} UI, navigate to menu:EC2 Instances[]. 
+Ensure you are in the correct region.
+. Select the {HubName} instance(s)
+. Paste the {HubName} key in the following location:
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/hub_key.pem # Paste key
+----
++
+. Paste the {HubName} certificate in the following location: 
++
+[source,bash]
+----
+$ sudo vi /efs/certificates/hub_cert.pem # Paste cert
+----
++
+. Copy the certificate and keys to the ca-trust directory. 
+Then update the ca-trust using the following commands:
++
+[source,bash]
+----
+$ sudo cp /efs/certificates/hub_key.pem /etc/pki/ca-trust/source/anchors/hub-key.pem # Copy key
+$ sudo cp /efs/certificates/hub_cert.pem /etc/pki/ca-trust/source/anchors/hub-cert.pem # Copy cert
+$ sudo update-ca-trust
+----
