@@ -13,9 +13,9 @@ The following instructions describe how to run the restore playbook.
 
 .Procedure
 . Gather the following input variables to create an `extra_vars.yaml` file.
-* *gcp_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account. This is the path within an `ansible-on-clouds-ops` container where the credentials json file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`.
+* *gcp_service_account_credentials_json_path*: Service account crendential JSON file path for the Google cloud account. This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`.
 +
-Replace `<service-account-creds-json-filename>` with your google service account credential filename.
+Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
 +
 [NOTE]
 =====
@@ -78,15 +78,15 @@ $ docker pull $IMAGE
 == Running the restore playbook as a container
 
 .Procedure
-. Replace `<absolute path to google application credentials dir>` with the path to the service account credential json file for the google cloud.
-. Replace `<absolute path of extra vars dir>` with the path to the directory where the `extra_vars.yaml` file you created in step 1 of the backup process. 
+. Replace `<absolute path to Google application credentials dir>` with the path to the service account credential JSON file for the Google cloud.
+. Replace `<absolute path of extra vars dir>` with the path to the directory where the `extra_vars.yaml` file you created in step one of the backup process. 
 +
 . Use the following command to run the playbook.
 +
 [source,bash]
 ----
 $ docker run --rm \
--v <absolute path to google application credentials dir>:/secrets:ro \
+-v <absolute path to Google application credentials dir>:/secrets:ro \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
 $IMAGE \
 redhat.ansible_on_clouds.gcp_restore_deployment \

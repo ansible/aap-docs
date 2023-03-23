@@ -31,7 +31,7 @@ $ mkdir secrets
 $ mkdir extra_vars
 ----
 +
-. Store your service account credential json file in the secrets directory. 
+. Store your service account credential JSON file in the secrets directory. 
 +
 [NOTE]
 =====
@@ -41,9 +41,9 @@ link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete serv
 =====
 +
 . Gather the following input variables to create an `extra_vars.yaml` file within `extra_vars` dir.
-* *gcp_service_account_credentials_json_path*:  Service account crendential json file path for the google cloud account.  This is the path within an `ansible-on-clouds-ops` container where the credentials json file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
+* *gcp_service_account_credentials_json_path*:  Service account crendential json file path for the Google cloud account.  This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
 +
-Replace `<service-account-creds-json-filename>` with your google service account credential filename.
+Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
 
 * *gcp_deployment_name*: Deployment name that you want to upgrade.
 * *gcp_compute_region*: GCP region that you provided when deploying foundation deployment. 
@@ -108,16 +108,16 @@ $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 == Running the upgrade playbook as a container
 
 .Procedure
-. Set the `GOOGLE_APPLICATION_CREDENTIALS` variable to the google cloud credential json file path.
+. Set the `GOOGLE_APPLICATION_CREDENTIALS` variable to the Google cloud credential JSON file path.
 +
 [source,bash]
 ----
-$ export GOOGLE_APPLICATION_CREDENTIALS=<path to the google credential json file>
+$ export GOOGLE_APPLICATION_CREDENTIALS=<path to the Google credential JSON file>
 ----
 +
-. Replace `<absolute path to secrets dir>` with the path to the service account credential json file for google cloud.
+. Replace `<absolute path to secrets dir>` with the path to the service account credential json file for Google cloud.
 . Replace `<absolute path of extra vars dir>` with the path to the directory where your `extra_vars.yaml` file exists.
-. Replace `<google-cloud-project-id>` with the project id for your google account.
+. Replace `<google-cloud-project-id>` with the project id for your Google account.
 . Replace `<deployment-name>` with your foundation deployment name.
 . Use the following command to run the playbook.
 +
@@ -125,7 +125,7 @@ $ export GOOGLE_APPLICATION_CREDENTIALS=<path to the google credential json file
 ----
 $ docker run --rm \
   --env PLATFORM=GCP \
-  --env CLOUDSDK_CORE_PROJECT=<google-cloud-project-id> \
+  --env CLOUDSDK_CORE_PROJECT=<Google-cloud-project-id> \
   --env GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
   --env GENERATE_INVENTORY=true \
   --env DEPLOYMENT_NAME=<deployment-name> \
