@@ -1,22 +1,19 @@
-[id="proc-aap-gcp-backup-and-restore"]
+[id="proc-aap-gcp-restore-process"]
 
-To backup and restore your {PlatformNameShort} deployment, it is vital to have your existing {PlatformNameShort} administration secret name and value recorded somewhere safe. In addition, it is also extremely important to take regular manual backups of the Cloud SQL database instance and filestore backups, to ensure a deployment can be restored as close as possible to its previous working state. The playbooks backup and restore provides backup and restore support for the {AAPonGCP} foundation deployment. 
+= Restore Process
+
+The restore process deploys a new deployment, and restores the filestore and SQL database instance to the specified backup.
 
 [NOTE]
-====
-The restore process deploys a new {PlatformNameShort} with the filestore and SQL database instance being restored to the specified backup.
-====
+=====
+The restored filestore instance uses CIDR network range `192.168.244.0/29`, which is different from the default network filestore network range of the backup deployment.
+=====
 
-= Backup Process
-
-The backup process involves taking a backup of the Cloud SQL database and filestore instances at a given point in time.
-The backup playbook require an active {AAPonGCP} foundation deployment to be running.
-
-The following instructions describe how to run the backup playbook.
+The following instructions describe how to run the restore playbook.
 
 .Procedure
 . Gather the following input variables to create an `extra_vars.yaml` file.
-* *gcp_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account. This is the path within an `ansible-on-clouds-ops` container where the credentials json file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
+* *gcp_service_account_credentials_json_path*: Service account crendential json file path for the google cloud account. This is the path within an `ansible-on-clouds-ops` container where the credentials json file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`.
 +
 Replace `<service-account-creds-json-filename>` with your google service account credential filename.
 +
@@ -26,8 +23,9 @@ To create the GCP credentials file, see,
 link:https://developers.google.com/workspace/guides/create-credentials[Create credentials] and 
 link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
 =====
-
-* *gcp_deployment_name*: Deployment name which you want to backup.
++
+* *gcp_deployment_name*: Deployment name which you backed up.
+* *gcp_restored_deployment_name*: Deployment name of restored AAP foundation created by playbook.
 * *gcp_compute_region*: GCP region where the foundation deployment is deployed.
 * *gcp_compute_zone*: GCP zone where the foundation deployment is deployed.
 +
@@ -43,36 +41,47 @@ For example, the filestore instance location might be `us-east1-d`
 For example, if your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
 =====
 +
+* *gcp_filestore_backup_name*: The backup name where the filestore instance backup is stored. 
+You receive this after executing the backup playbook.
+* *gcp_sql_backup_id*: Backup ID of the Cloud SQL database instance to use when restoring the deployment. 
+You receive this after executing the backup playbook.
+* *gcp_sql_backup_db_name*: GCP foundation SQL database name. 
+You receive this after executing backup the playbook.
++
 [source,bash]
 ----
 gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
-gcp_deployment_name: "" 
+gcp_deployment_name: ""
+gcp_restored_deployment_name: ""
 gcp_compute_region: ""
 gcp_compute_zone: ""
+gcp_filestore_backup_name: ""
+gcp_sql_backup_id: ""
+gcp_sql_backup_db_name: ""
 ----
 +
 . Pull the docker image for the `ansible-on-clouds-ops` container with a tag the same as the version of the foundation deployment.
 +
 [NOTE]
-=====  
+=====
 The `ansible-on-clouds-ops` container image tag must match the version of your foundation deployment. 
 For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
 =====
 +
 [source,bash]
 ----
-$ docker pull $IMAGE
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
+$ docker pull $IMAGE
 ----
 
 [discrete]
-== Running the backup playbook as a container
+== Running the restore playbook as a container
 
 .Procedure
 . Replace `<absolute path to google application credentials dir>` with the path to the service account credential json file for the google cloud.
 . Replace `<absolute path of extra vars dir>` with the path to the directory where the `extra_vars.yaml` file you created in step 1 of backup process. 
 +
-. Use the following command to run the playbook:
+. Use the following command to run the playbook.
 +
 [source,bash]
 ----
@@ -80,23 +89,16 @@ $ docker run --rm \
 -v <absolute path to google application credentials dir>:/secrets:ro \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
 $IMAGE \
-redhat.ansible_on_clouds.gcp_backup_deployment \
+redhat.ansible_on_clouds.gcp_restore_deployment \
 -e @/extra_vars/extra_vars.yaml
 ----
 +
-. Note the output of the playbook.
+. When you have run the playbook, a new restored deployment is visible in GCP deployment. 
+It can take a few minutes for the deployment to finish and for all the containers to run.
 +
-The playbook returns something like this:
-+
-[source, bash]
-----
-TASK [redhat.ansible_on_clouds.standalone_gcp_backup : [backup_deployment] Print vars required for restore process] ***
-ok: [localhost] => {
-    "msg": [
-        "AAP on GCP Backup successful. Please note below vars which are required for restore process.",
-        "{ gcp_sql_backup_id: 1677552759614 , gcp_sql_backup_db_name: test-bnr-aap-db ,gcp_filestore_backup_name: test-bnr-filestore-iygs }"
-    ]
-}
-----
-+
-Make a note of the SQL database backup ID, SQL batabase backup name and the filestore backup name. You will require these for the restore playbook.
+[NOTE]
+=====
+Access to the restored deployment must be configured through either an external load balancer or VPN. 
+When a connection method is configured you can log in to {PlatformName} {ControllerName} and {HubName} using your old deployment credentials. 
+In addition, all job history, uploaded collections and other records must be in the same state as the restored deployment.
+=====
