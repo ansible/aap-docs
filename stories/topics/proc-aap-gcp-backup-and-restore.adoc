@@ -9,6 +9,11 @@ The restore process deploys a new {PlatformNameShort} with the filestore and SQL
 
 = Backup Process
 
+[IMPORTANT]
+====
+This is a Techical Preview feature. Technology Preview features are not supported with Red Hat production service-level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them for production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+====
+
 The backup process involves taking a backup of the Cloud SQL database and filestore instances at a given point in time.
 The backup playbook require an active {AAPonGCP} foundation deployment to be running.
 
@@ -61,8 +66,8 @@ For example, if your foundation deployment version is 2.2.1, pull the `ansible-o
 +
 [source,bash]
 ----
-$ docker pull $IMAGE
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
+$ docker pull $IMAGE
 ----
 
 [discrete]
