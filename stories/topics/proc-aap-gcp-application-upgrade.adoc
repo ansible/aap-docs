@@ -1,24 +1,32 @@
 [id="proc-aap-gcp-application-upgrade"]
 
-Technical Preview
-~~~~~~~~~~~~~~~~~
+= Upgrading your deployment
 
-You can upgrade your existing {AAPonGCP} deployment to the newer version. The upgrade process covers upgrading of automation hub and automation controller. The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. Follow the steps below to ensure a smooth upgrade process.
+[IMPORTANT]
+====
+This is a Techical Preview feature. Technology Preview features are not supported with Red Hat production service-level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them for production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+====
+
+You can upgrade your existing {AAPonGCP} deployment to the newer version. 
+The upgrade process covers upgrading of {HubName} and {ControllerName}. 
+The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. 
+
+Use the following procedure to ensure a smooth upgrade process.
 
 [NOTE]
 =====
-{AAPonGCP} supports sequential upgrades. All upgrades should be no more than one major version behind what you are currently upgrading to. For example, in order to upgrade to {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
+{AAPonGCP} supports sequential upgrades. 
+All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+For example, to upgrade {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
 =====
 
 .Prerequisites
-* You require the docker installed in order to run the upgrade playbook.
-
-== Preparing the environment
-
-The upgrade process requires a few volumes to be mounted, so *prepare a fresh directory* to be used for this process.
+* Docker must be installed to run the upgrade playbook.
+* The upgrade process requires several volumes to be mounted. 
+Prepare a fresh directory to be used for this process.
 
 .Procedure
-. First, create the directories that will be used to configure the upgrade process.
+. Create the directories used to configure the upgrade process using the following commands:
 +
 [source,bash]
 ----
@@ -28,7 +36,7 @@ $ mkdir secrets
 $ mkdir extra_vars
 ----
 +
-. Store your Service account credential json file in secrets dir. 
+. Store your service account credential JSON file in the secrets directory. 
 +
 [NOTE]
 =====
@@ -37,27 +45,38 @@ link:https://developers.google.com/workspace/guides/create-credentials[Create cr
 link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
 =====
 +
-+
 . Gather the following input variables to create an `extra_vars.yaml` file within `extra_vars` dir.
-.. *gcp_service_account_credentials_json_path*:  Service account crendential json file path for the google cloud account. This is the path within "ansible-on-clouds-ops" container where credentials json file is mounted to `/secrets` dir. The path should be `/secrets/<service-account-creds-json-filename>`, Replace `<service-account-creds-json-filename>` with your google service account credential filename.
-.. *gcp_deployment_name*: Deployment name which you want to upgrade.
-.. *gcp_compute_region*: GCP region which you provided when deploying foundation deployment. If you haven't provided region when deploying foundation, use default region here which is `us-east1`.
-.. *gcp_compute_zone*: GCP zone which you provided when deploying foundation deployment. If you haven't provided zone when deploying foundation, use default zone here which is `us-east1-b`.
+* *gcp_service_account_credentials_json_path*:  Service account crendential json file path for the Google cloud account.  This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
++
+Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
+
+* *gcp_deployment_name*: Deployment name that you want to upgrade.
+* *gcp_compute_region*: GCP region that you provided when deploying foundation deployment. 
+If you have not provided a region when deploying the foundation, use the default region `us-east1` here.
+* *gcp_compute_zone*: GCP zone that you provided when deploying foundation deployment. 
+If you have not provided a zone when deploying the foundation, use the default `us-east1-b` here.
 +
 [NOTE]
 =====
-You can find the region and zone from the filestore instance deployed with the foundation deployment. Look for filestore with name <deployment-name>-filestore and make note of Location field that is your `gcp_compute_zone` and remove the last 2 bits from the location that is your `gcp_compute_region`. For example, filestore instance location is `us-east1-d`, your `gcp_compute_zone` is `us-east1-d` and your region is `us-east1`.
+You can find the region and zone from the filestore instance deployed with the foundation deployment. 
+Look for the filestore with the name `<deployment-name>-filestore`.
+
+* Make note of the location field that is your `gcp_compute_zone`. 
+For example, the filestore instance location might be `us-east1-d`
+
+* Remove the last two characters from the location that is your `gcp_compute_region`. 
+For example, if your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
 =====
 +
 [source,bash]
 ----
+gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
 gcp_deployment_name: "" 
 gcp_compute_region: ""
 gcp_compute_zone: ""
-gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
 ----
 +
-. The final result should look like this:
+. The final result should look similar to the following:
 +
 [source,bash]
 ----
@@ -70,17 +89,18 @@ tree
     └── gc-ansible-cloud-123434.json
 ----
 
-
-== Running the upgrade playbook
+[discrete]
+= Running the upgrade playbook
 
 The following instructions describe how to run the upgrade playbook.
 
 .Procedure
-. Pull the docker image for "ansible-on-clouds-ops" container having the tag with the version which you want to upgrade to.
+. Pull the docker image for the `ansible-on-clouds-ops` container with a tag the same as the version of the foundation deployment.
 +
 [NOTE]
 =====
-The "ansible-on-clouds-ops" container image with the tag must match with the version which you want to upgrade to. For example, if your foundation deployment version is 2.2.0, pull "ansible-on-clouds-ops" image with tag 2.2.1 to upgrade to version 2.2.1.
+The `ansible-on-clouds-ops` container image tag must match the version of your foundation deployment. 
+For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
 =====
 +
 [source,bash]
@@ -88,27 +108,29 @@ The "ansible-on-clouds-ops" container image with the tag must match with the ver
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 $ docker pull $IMAGE
 ----
-+
-. Running the upgrade playbook as a container.
-+
-.. Set variable `GOOGLE_APPLICATION_CREDENTIALS` to the google cloud credential Json file path.
+
+[discrete]
+== Running the upgrade playbook as a container
+
+.Procedure
+. Set the `GOOGLE_APPLICATION_CREDENTIALS` variable to the Google cloud credential JSON file path.
 +
 [source,bash]
 ----
-$ export GOOGLE_APPLICATION_CREDENTIALS=<path to the google credential Json file>
+$ export GOOGLE_APPLICATION_CREDENTIALS=<path to the Google credential JSON file>
 ----
 +
-.. Replace `<absolute path to secrets dir>` with your path to the service account credential Json file for google cloud and `<absolute path of extra vars dir>` with the path to your directory where you `extra_vars.yaml` file exists.
-+
-Replace `<google-cloud-project-id>` with the project id for your google account and `<deployment-name>` with your foundation deployment name.
-+
-.. Use the following command to run the playbook.
+. Replace `<absolute path to secrets dir>` with the path to the service account credential json file for Google cloud.
+. Replace `<absolute path of extra vars dir>` with the path to the directory where your `extra_vars.yaml` file exists.
+. Replace `<Google-cloud-project-id>` with the project id for your Google account.
+. Replace `<deployment-name>` with your foundation deployment name.
+. Use the following command to run the playbook.
 +
 [source,bash]
 ----
 $ docker run --rm \
   --env PLATFORM=GCP \
-  --env CLOUDSDK_CORE_PROJECT=<google-cloud-project-id> \
+  --env CLOUDSDK_CORE_PROJECT=<Google-cloud-project-id> \
   --env GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
   --env GENERATE_INVENTORY=true \
   --env DEPLOYMENT_NAME=<deployment-name> \
@@ -119,7 +141,7 @@ $ docker run --rm \
   -e @/extra_vars/extra_vars.yaml
 ----
 +
-. After successfully running the playbook, the playbook will return something like this
+. After successfully running the playbook, the playbook returns something similar to the following:
 +
 [source,bash]
 ----
@@ -128,5 +150,5 @@ ok: [localhost] => {
     "msg": "AAP on GCP upgrade succeeded to version: 2.2.20230215-00"
 }
 ----
-+
-Your {AAPonGCP} deployment now should be upgraded to newer version and you should now be able to successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
+
+. Your {AAPonGCP} deployment is now upgraded to the newer version and you can now successfully log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
