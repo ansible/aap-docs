@@ -15,7 +15,7 @@ Follow these steps to add execution nodes into your {AAPonAWS} environment.
 * Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
 * Docker
 
-.Procedure
+.Steps
 . Decide the offer type for the extension nodes.
 . Create the prepare the environment and the configuration files.
 . Run the `ansible-on-clouds-ops` container to create the extension nodes.
@@ -39,6 +39,11 @@ The following table lists the offer types and the corresponding AWS instance typ
 == Preparing the environment
 
 The extension nodes deployment process requires a few volumes to be mounted, so *prepare a new directory*.
+
+.Procedure
+- Create a new directory for the extension nodes deployment process.
+- Create the AWS credentials and config files in the `secrets` directory.
+- Create the `extra_vars/extra_vars.yml` file in the `extra_vars` directory with the deployment configuration.
 
 First, you need to create some directories where the configuration files will be placed:
 
@@ -93,7 +98,6 @@ aws_autoscaling_group_name: "myDeployment-asg"
 aws_asg_min_size: 2
 aws_asg_desired_capacity: 2
 ----
-
 
 Variables description:
 
