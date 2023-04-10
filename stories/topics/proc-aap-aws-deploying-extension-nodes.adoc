@@ -38,7 +38,7 @@ The following table lists the offer types and the corresponding AWS instance typ
 
 == Preparing the environment
 
-The upgrade process requires a few volumes to be mounted, so *prepare a new directory*.
+The extension nodes deployment process requires a few volumes to be mounted, so *prepare a new directory*.
 
 First, you need to create some directories where the configuration files will be placed:
 
@@ -46,7 +46,7 @@ First, you need to create some directories where the configuration files will be
 ----
 # Secrets directory. Store the AWS credentials and config files.
 $ mkdir secrets
-# Extra vars directory. All the configuration variables for the upgrade process.
+# Extra vars directory. All the configuration variables for the extension nodes deployment process.
 $ mkdir extra_vars
 ----
 
@@ -138,7 +138,7 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 
-Run the upgrade playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+Run the `aws_add_extension_nodes` playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
 
 [source,bash]
 ----
