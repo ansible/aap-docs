@@ -38,9 +38,9 @@ The following table lists the offer types and the corresponding AWS instance typ
 
 == Preparing the environment
 
-The upgrade process requires a few volumes to be mounted, so *prepare a fresh directory* to be used for this process.
+The upgrade process requires a few volumes to be mounted, so *prepare a new directory*.
 
-First, create the directories that will be used to configure the upgrade process.
+First, you need to create some directories where the configuration files will be placed:
 
 [source,bash]
 ----
@@ -50,7 +50,7 @@ $ mkdir secrets
 $ mkdir extra_vars
 ----
 
-Create the `secrets/config` file and add the following content to it. Remember to replace the `us-east-1` with your respective region.
+Create the `secrets/config` file and add the following content. Remember to replace the `us-east-1` with your respective region.
 
 [source,ini]
 ----
@@ -59,7 +59,7 @@ region = us-east-1
 output = json
 ----
 
-Create the `secrets/credentials` file and add the following content to it. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
+Create the `secrets/credentials` file and add the following content. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
 
 [NOTE]
 =====
@@ -125,11 +125,11 @@ $ tree
 
 The following instructions describe how to run the playbook to create the extension nodes.
 
-Pull the Docker image for `ansible-on-clouds-ops` container image having tag with the version you're currently using.
+Pull the container image for the `ansible-on-clouds-ops` container. Make sure to select the **image tag specific to your deployment version**.
 
 [NOTE]
 =====
-The `ansible-on-clouds-ops` container image tag must match the current installed version of {AAPonAWS}
+The `ansible-on-clouds-ops` container image tag must match the currently installed version of {AAPonAWS}
 =====
 
 [source,bash]
@@ -138,7 +138,7 @@ $ export IMAGE=<image-path>
 $ docker pull $IMAGE
 ----
 
-Running the upgrade playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
+Run the upgrade playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
 
 [source,bash]
 ----
