@@ -1,0 +1,39 @@
+[id="proc-aap-aws-create-extension-nodes"]
+
+= Creating the extension nodes
+
+The following procedure describes how to run the playbook to create the extension nodes.
+
+.Procedure
+. Pull the container image for the `ansible-on-clouds-ops` container. 
++
+[NOTE]
+====
+* Make sure to select the image tag specific to your deployment version.
+* The `ansible-on-clouds-ops` container image tag must match the currently installed version of {AAPonAWS}
+====
++
+[source,bash]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
+
+. Run the `aws_add_extension_nodes` playbook as a container. Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
++
+[source,bash]
+----
+# Export the volume paths
+$ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
+$ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+
+# Run the playbook
+$ docker run --rm \
+    --env PLATFORM=AWS \
+    --env DEPLOYMENT_NAME=<deployment-name> \
+    -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
+    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
+    ${IMAGE} \
+      redhat.ansible_on_clouds.aws_add_extension_nodes \
+      -e @/extra_vars/extra_vars.yml
+----
