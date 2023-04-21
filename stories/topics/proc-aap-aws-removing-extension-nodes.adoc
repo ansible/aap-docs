@@ -1,39 +1,30 @@
 [id="proc-aap-aws-removing-extension-nodes"]
 
-= Removing the extension nodes
-
-The following instructions describe how to run the playbook to remove the extension nodes.
+= Running the ansible-on-clouds-ops container to remove the extension nodes
 
 .Procedure
-. Pull the Docker image for `ansible-on-clouds-ops` container image with a tag the same as the version you are currently using.
-
-[NOTE]
-=====
-The `ansible-on-clouds-ops` container image tag must match the current installed version of {AAPonAWS}
-=====
-
-[source,bash]
+. To remove a set of extension nodes, run the command generator to generate the CLI command.
++
+[options="nowrap" subs="+quotes,attributes"]
 ----
-$ export IMAGE=<image-path>
-$ docker pull $IMAGE
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
+----
++
+Provides the following command:
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro\
+ --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_remove_extension_nodes -e\ 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 <
+  aws_launch_template_name=ext-node-lt-1 aws_autoscaling_group_name=ext-node-asg-1'
+----
+. Run the supplied upgrade command to remove a set of extension nodes.
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro\
+ --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_remove_extension_nodes -e\ 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 <
+  aws_launch_template_name=ext-node-lt-1 aws_autoscaling_group_name=ext-node-asg-1'
 ----
 
-. Run the upgrade playbook as a container using the following command.
-Replace `<removal-name>` with your foundation deployment name. 
 
-[source,bash]
-----
-# Export the volume paths
-$ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
-$ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
-
-# Run the playbook
-$ docker run --rm \
-    --env PLATFORM=AWS \
-    --env removal_NAME=<removal-name> \
-    -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
-    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
-    ${IMAGE} \
-      redhat.ansible_on_clouds.aws_remove_extension_nodes \
-      -e @/extra_vars/extra_vars.yml
-----

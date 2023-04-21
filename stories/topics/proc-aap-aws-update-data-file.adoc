@@ -1,0 +1,29 @@
+[id="proc-aap-aws-update-data-file"]
+
+= Update the data file
+
+You must populate the data file before triggering the operation. 
+The variables listed in the data file are defined below.
+
+* `cloud_credentials_path` is the path to your AWS credentials file. Ex. `~/.aws/credentials`
+* `deployment_name` is the name of the foundation deployment. 
+This is the same name you used when you deployed the foundation.
+* `aws_autoscaling_group_name` is the name of the AWS AutoScaling Group to create for the extension nodes.
+* `aws_launch_template_name` is the name of the AWS EC2 launch template to create.
+* `aws_region` is the region where the foundation deployment is located.
+
+After populating the data file, it should resemble the following:
+
+The values below are provided as examples:
+
+[options="nowrap" subs="+quotes,attributes"]
+----
+aws_remove_extension_nodes:
+  cloud_credentials_path: ~/.aws/credentials
+  deployment_name: AnsibleAutomationPlatform
+  extra_vars:
+    aws_autoscaling_group_name: ext-node-asg-1
+    aws_launch_template_name: ext-node-lt-1
+    aws_region: us-east-1
+----
+
