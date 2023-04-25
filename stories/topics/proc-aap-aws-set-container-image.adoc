@@ -1,0 +1,24 @@
+[id="proc-aap-aws-set-container-image"]
+
+= Setting the ansible-on-clouds-ops container image
+
+.Procedure
+. Pull the `ansible-on-clouds-ops` container image with the same tag version as the foundation deployment.
++
+[NOTE]
+=====  
+The `ansible-on-clouds-ops` image tag should match the version of your foundation deployment. For example, if your foundation deployment version is 2.2.20230215-00, pull the `ansible-on-clouds-ops` image with tag 2.2.20230215-00.
+=====
++
+[source,bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE
+----
+for EMEA regions (Europe, Middle East, Africa) run the following command instead:
++
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00-limited
+$ docker pull $IMAGE
+----
