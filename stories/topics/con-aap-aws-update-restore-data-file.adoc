@@ -5,7 +5,7 @@
 You must populate the data file before triggering the restore. 
 The following variables are parameters listed in the data file.
 
-* `cloud_credentials_path` is the path to your AWS credentials file. Ex. ~/.aws/credentials
+* `cloud_credentials_path` is the path to your AWS credentials file.
 * `deployment_name` is the name of the foundation deployment. This is the same name you used when you deployed the foundation.
 * `aws_backup_iam_role_arn` is the _Amazon Resource Name_ (ARN) of the AWS IAM Role that has permissions to perform backup operations.
 +
@@ -18,7 +18,7 @@ If provided, the playbook defaults to this value over the vaue of the IAM role r
 +
 [NOTE]
 ====
-If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. 
+If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. See xref:ref-aap-aws-permissions[AWS permissions].
 You must also ensure that the provided restore point is from a version of Ansible on Clouds (AoC) that matches the version of the ansible-on-clouds-ops container image running the restore. 
 For example, a restore point taken from a deployment on AoC version 2.3-20230420174801-00 needs to use the `ansible-on-clouds-ops` container image of the same version.
 ====
@@ -27,7 +27,7 @@ For example, a restore point taken from a deployment on AoC version 2.3-20230420
 +
 [NOTE]
 ====
-If provided, the playbook defaults to this value over the backup vault referenced in the backup file on S3.
+If provided, the playbook defaults to this value over the backup vault referenced in the backup file on S3 which was generated when running the backup operation. See xref:ref-aap-aws-permissions[AWS permissions].
 ====
 +
 * `aws_rds_db_snapshot_arn` is the optional ARN of the RDS snapshot you want to use for restore.
