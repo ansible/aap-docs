@@ -5,4 +5,43 @@ ifdef::context[:parent-context: {context}]
 
 :context: aap-aws-application-upgrade
 
-include::topics/proc-aap-aws-application-upgrade.adoc[leveloffset=+1]
+You can upgrade your existing {AAPonGCP} deployment to the newer version. 
+The upgrade process covers upgrading of {HubName} and {ControllerName}. 
+The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. 
+
+[NOTE]
+=====
+{AAPonGCP} supports sequential upgrades. 
+All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+For example, to upgrade {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
+=====
+
+.Prerequisites
+* Docker must be installed to run the upgrade playbook.
+* The upgrade process requires several volumes to be mounted. 
+Prepare a fresh directory to be used for this process.
+
+The following procedures form the upgrade process:
+
+. Backup your {PlatformNameShort} stack.
+.. Pull the ansible-on-clouds-ops 2.2 container image 
+.. Ensure minimum required permissions are met
+.. Prepare the environment
+.. Run the ansible-on-clouds-ops 2.2 container to backup the stack
+. Upgrade {PlatformNameShort}.
+.. Pull the ansible-on-clouds-ops 2.3 container image 
+.. Ensure minimum required permissions are met
+.. Generate data files by running the ansible-on-clouds-ops container
+.. Update the data file
+.. Run the ansible-on-clouds-ops 2.3 container to upgrade your {AAPonAWS} deployment
+. (Optional) Restore the stack from backup. 
+.. Pull the ansible-on-clouds-ops 2.2 container image 
+.. Ensure minimum required permissions are met
+.. Prepare the environment
+.. Run the ansible-on-clouds-ops 2.2 container to restore the stack
+
+:concept: backup
+include::topics/con-aap-aws-upgrade-backup-process.adoc[leveloffset=+1]
+:concept: upgrade
+include::topics/con-aap-aws-upgrade-upgrading-aap.adoc[leveloffset=+1]
+//include::topics/proc-aap-aws-application-upgrade.adoc[leveloffset=+1]

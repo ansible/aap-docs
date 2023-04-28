@@ -1,0 +1,36 @@
+[id="proc-aws-generate-upgrade-data-file"]
+
+= Generating the upgrade data file
+
+The commands in this section create a directory and populate it with an empty data template that, when completed, is used during the upgrade. 
+
+Run the following commands to generate the required data file. 
+
+. Procedure
+. Create a folder to hold the configuration files
++
+[source,bash]
+----
+$ mkdir command_generator_data
+----
+. Populate the `command_generator_data` folder with configuration file template.
++
+[source,bash]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+command_generator_vars aws_upgrade \
+--output-data-file /data/extra_vars.yml
+----    
+. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+This template file should resemble the following: 
++
+[source,bash]
+----
+aws_upgrade:
+  ansible_config_path:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    aws_region:
+    aws_ssm_bucket_name:
+----
