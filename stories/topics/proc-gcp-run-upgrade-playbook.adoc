@@ -1,0 +1,20 @@
+[id="proc-gcp-run-upgrade-playbook"]
+
+= Running the upgrade playbook
+
+The following instructions describe how to run the upgrade playbook.
+
+.Procedure
+* Pull the docker image for the `ansible-on-clouds-ops` container with the same tag as the version you want to upgrade to.
++
+[NOTE]
+=====
+The `ansible-on-clouds-ops` container image tag must match the version that you want to upgrade to. 
+For example, if your foundation deployment version is 2.2.20230215, pull the `ansible-on-clouds-ops` image with tag 2.3.20230221-00 to upgrade to version 2.3.20230221-00.
+=====
++
+[source,bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
+$ docker pull $IMAGE
+----
