@@ -5,21 +5,25 @@
 The following commands generate the required data file. 
 These commands create a directory, and  an empty data template that, when populated, is used during the upgrade. 
 
+.Procedure
+. Create a folder to hold the configuration files.
++
 [options="nowrap" subs="+quotes,attributes"]
 ----
-# Create a folder to hold the configuration files
 $ mkdir command_generator_data
-
-
-# Populate command_generator_data folder with configuration file template
+----
+. Populate the `command_generator_data` folder with the configuration file template.
++
+[options="nowrap" subs="+quotes,attributes"]
+----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 command_generator_vars aws_remove_extension_nodes \
 --output-data-file /data/extra_vars.yml
 ----
 
-When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+. When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created. 
 This template file resembles the following:- 
-
++
 [options="nowrap" subs="+quotes,attributes"]
 ----
 # Create 
