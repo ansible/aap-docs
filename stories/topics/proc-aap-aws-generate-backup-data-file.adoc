@@ -7,12 +7,14 @@ The following commands create a directory, and populate it with an empty data te
 .Procedure
 . Create a folder to hold the configuration 
 +
+[source,bash]
 ----
 $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
 This creates the `extra-vars.yaml` file wwithin the `command-generator_data` directory with `root:root_user` and `group` permissions.
 +
+[source,bash]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   command_generator_vars aws_backup_stack \
@@ -21,13 +23,15 @@ $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 
 . After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
 This template file resembles the following:
++
+[source,bash]
 ---- 
 aws_backup_stack:
   cloud_credentials_path:
   deployment_name:
- extra_vars:
-aws_backup_iam_role:
-	aws_backup_vault_name:
+  extra_vars:
+    aws_backup_iam_role:
+	  aws_backup_vault_name:
     aws_region:
     aws_s3_bucket:
 ----

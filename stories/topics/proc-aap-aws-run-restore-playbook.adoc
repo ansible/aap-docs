@@ -31,25 +31,5 @@ aws_restored_stack_name=AnsibleAutomationPlatform-restore \
 aws_s3_bucket=ansible-automation-platform-bucket'
 
 ----
-. The playbook can take some  time to create a restored deployment.
+. The playbook can take some time to create a restored deployment.
 After you have run the playbook successfully, a restored deployment is available in AWS CloudFormation matching the name provided for it in the `extra_vars.yaml` file.
-
-+
-[source, bash]
-----
-{
-    "efs_restore_points": [
-        {
-            "CreationDate": "2023-02-28T21:54:07.515000+00:00",
-            "RecoveryPointArn": "arn:aws:backup:us-east-1:080914983077:recovery-point:967be465-a43e-432a-b536-8b16e6b0452d"
-        },
-        {
-            "CreationDate": "2023-02-28T16:08:08.905000+00:00",
-            "RecoveryPointArn": "arn:aws:backup:us-east-1:080914983077:recovery-point:d2058e3a-dca6-4a18-b175-5ef624f513a7"
-        }
-    ],
-    "rds_db_snapshot_arn": "arn:aws:rds:us-east-1:080914983077:snapshot:test-bnr-ops-container-rds169785b9-orm2iuzlfqem-snap-2023-02-28"
-}
-----
-. Your {AAPonAWS} deployment is now successfully backed up. 
-As the log shows, the playbook successfully creats an EFS backup and RDS snapshot of your deployment listing the most recent EFS restore point and RDS snapshot information.
