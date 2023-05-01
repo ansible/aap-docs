@@ -5,8 +5,33 @@ ifdef::context[:parent-context: {context}]
 
 :context: aap-aws-extension-nodes
 
-include::topics/ref-aap-aws-deploying-extension-nodes.adoc[leveloffset=+1]
+The foundation stack is deployed with two {ControllerName} nodes and one {HubName} node by default. You can add execution nodes to scale out {AAPonAWS}.
+Extension node offers can be mixed and matched together to scale up and out the {PlatformNameShort} deployment.
+
+You must create a backup of the {PlatformNameShort} deployment before deploying new extension nodes.
+
+The procedure contains the following steps:
+
+. Decide the offer type for the extension nodes.
+. Pull the `ansible-on-clouds-ops` container image. 
+. Ensure the minimum permissions are met to manage extension nodes.
+. Generate data files by running the `ansible-on-clouds-ops` container.
+. Update the data file.
+. Run the `ansible-on-clouds-ops` container to deploy extension nodes.
+
+.Prerequisites
+* Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
+* Docker
+
 include::topics/ref-aap-aws-decide-offer-type.adoc[leveloffset=+1]
-include::topics/proc-aap-aws-prepare-environment.adoc[leveloffset=+1]
-include::topics/proc-aap-aws-create-extension-nodes.adoc[leveloffset=+1]
+//The next two files  are duplicates of those in PR#86. Merge PR#86 first and then these files will be available.
+//Remove comments and comment markers.
+//include::topics/con-aap-pull-container-image.adoc[leveloffset=+1]
+//include::topics/ref-aap-aws-permissions-to-manage-nodes.adoc[leveloffset=+1]
+include::topics/proc-aap-aws-generate-add-data-files.adoc[leveloffset=+1]
+include::topics/proc-aa-aws-update-add_data-files.adoc[leveloffset=+1]
+//Don't need these
+//include::topics/proc-aap-aws-prepare-environment.adoc[leveloffset=+1]
+//include::topics/proc-aap-aws-create-extension-nodes.adoc[leveloffset=+1]
+include::topics/proc-aap-aws-deploying_extension-nodes.adoc[leveloffset=+1]
 
