@@ -18,7 +18,8 @@ If provided, the playbook defaults to this value over the vaue of the IAM role r
 +
 [NOTE]
 ====
-If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. See xref:ref-aap-aws-permissions[AWS permissions].
+If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. 
+See xref:ref-aap-aws-permissions[AWS permissions].
 You must also ensure that the provided restore point is from a version of Ansible on Clouds (AoC) that matches the version of the ansible-on-clouds-ops container image running the restore. 
 For example, a restore point taken from a deployment on AoC version 2.3-20230420174801-00 needs to use the `ansible-on-clouds-ops` container image of the same version.
 ====
@@ -28,6 +29,7 @@ For example, a restore point taken from a deployment on AoC version 2.3-20230420
 [NOTE]
 ====
 If provided, the playbook defaults to this value over the backup vault referenced in the backup file on S3 which was generated when running the backup operation. See xref:ref-aap-aws-permissions[AWS permissions].
+You must also ensure that this backup vault matches the one used to backup the deployment.
 ====
 +
 * `aws_rds_db_snapshot_arn` is the optional ARN of the RDS snapshot you want to use for restore.
@@ -43,13 +45,16 @@ For example, an RDS snapshot taken from a deployment on AoC version 2.3-20230420
 * `aws_restored_stack_name` is the desired name of the restored deployment.
 * `aws_s3_bucket` is the name of the S3 bucket where the backup files are stored.
 This must be the same bucket used for backup.
-. When you have populated the data file, it should resemble the following. 
++
+When you have populated the data file, it should resemble the following. 
 The values in this file are provided as examples - 
++
+[source,bash]
 ----
 aws_restore_stack:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
- extra_vars:
+  extra_vars:
     aws_region: us-east-1
     aws_restored_stack_name:AnsibleAutomationPlatform-restore
     aws_s3_bucket: ansible-automation-platform-bucket

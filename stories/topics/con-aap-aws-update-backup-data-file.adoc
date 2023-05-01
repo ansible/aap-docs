@@ -14,7 +14,7 @@ The following variables are parameters listed in the data file.
 You can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole`. 
 ====
 +
-* `aws_backup_vault_name` is the name of the backup vault that holds the EFS recovery points.
+* `aws_backup_vault_name` is the name of the backup vault that will hold the EFS recovery points.
 * `aws_region` is the region the stack was deployed in.
 * `aws_s3_bucket` is the name of the S3 bucket where the backup files are stored. 
 This creates a new bucket if one does not already exist. 
@@ -23,12 +23,14 @@ Every subsequent backup to the same bucket overwrites the backup files with the 
 For guidance on bucket naming, see link:https://www.google.com/url?q=https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html&sa=D&source=docs&ust=1682584492105680&usg=AOvVaw0WgUwkieoKwP4tRrvSpFBC[Bucket naming rules]
 
 When you have populated the data file, it should resemble the following. 
-The values in this file are provided as examples - 
+The values in this file are provided as examples:
+
+[source,bash]
 ----
 aws_backup_stack:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
- extra_vars:
+  extra_vars:
     aws_backup_iam_role: arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole
 	aws_backup_vault_name: Default
     aws_region: us-east-1
