@@ -1,0 +1,32 @@
+[id="gcp-upgrade-data-file"]
+
+= Updating the data file
+
+You must populate the data file before triggering the upgrade. 
+The following variables are parameters listed in the data file.
+
+* `ansible_config_path`: (Optional) Only use if overriding with a custom ansible_config.
+* `cloud_credentials_path` is the path to your AWS credentials file.
+* `deployment_name` is the name of the foundation deployment. 
+This is the same name you used when you deployed the foundation.
+* `gcp_backup_taken`: Verification that a manual backup of the current deployment was recently created prior to running this upgrade.
+Use `true` here to verify a recent backup was created.
+* `gcp_compute_region`: GCP region that you provided when deploying foundation deployment. 
+If you have not provided a region when deploying the foundation, use the default region `us-east1`` here.
+* `gcp_compute_zone`: GCP zone that you provided when deploying foundation deployment. If you have not provided a zone when deploying the foundation, use the default us-east1-b here.
+
+
+After populating the data file, it should resemble the following. 
+
+The following values are provided as examples:
+[source,bash]
+---- 
+aws_upgrade:
+  ansible_config_path:
+  cloud_credentials_path: ~/secrets/GCP-secrets.json
+  deployment_name: AnsibleAutomationPlatform
+  extra_vars:
+    gcp_backup_taken: true
+gcp_compute_region: us-east1
+gcp_compute_zone: us-east1-b
+----
