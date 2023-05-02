@@ -1,0 +1,35 @@
+[id="proc-gcp-run-backup-playbook-as-container"]
+= Running the backup playbook as a container
+
+.Procedure
+. Replace `<absolute path to Google application credentials dir>` with the path to the service account credential json file for the Google cloud.
+. Replace `<absolute path of extra vars dir>` with the path to the directory where the `extra_vars.yaml` file you created in step 1 of the backup process. 
++
+. Use the following command to run the playbook:
++
+[source,bash]
+----
+$ docker run --rm \
+-v <absolute path to google application credentials dir>:/secrets:ro \
+-v <absolute path of extra vars dir>:/extra_vars:ro \
+$IMAGE \
+redhat.ansible_on_clouds.gcp_backup_deployment \
+-e @/extra_vars/extra_vars.yaml
+----
++
+. Note the output of the playbook.
++
+The playbook output resembles the following:
++
+[source, bash]
+----
+TASK [redhat.ansible_on_clouds.standalone_gcp_backup : [backup_deployment] Print vars required for restore process] ***
+ok: [localhost] => {
+    "msg": [
+        "AAP on GCP Backup successful. Please note below vars which are required for restore process.",
+        "{ gcp_sql_backup_id: 1677552759614 , gcp_sql_backup_db_name: test-bnr-aap-db ,gcp_filestore_backup_name: test-bnr-filestore-iygs }"
+    ]
+}
+----
++
+Make a note of the SQL database backup ID, SQL batabase backup name and the filestore backup name. You will require these for the restore playbook.
