@@ -1,16 +1,16 @@
-[id="proc-gcp-set-monitoring-logging-yaml"]
+[id="proc-gcp-set-monitoring-logging-yml"]
 
 = Updating the data file
 
 If you do not require a parameter, remove that parameter from the configuration file.
 
 .Procedure
-. Edit the /tmp/logging-monitoring.yaml file and set the following parameters:
+. Edit the `/tmp/logging-monitoring.yml` file and set the following parameters:
 
 * `ansible_config_path` is used by default as the standard configuration for the `ansible-on-cloud offering` but if you have extra requirements in your environment you can specify your own. 
 * `cloud_credentials_path` is the absolute path toward your credentials. 
 This must be an absolute path.
-* `deployment_name` is the name of the backuped deployment
+* `deployment_name` is the name of the deployment.
 * `components` is an array containing the type of component where you want to do the setup. 
 The default is [ “controller”, “hub” ] which means that the logging monitoring will be enabled on both {controllerName} and {HubName}.
 * `monitoring_enabled` is set to `true` to enable the monitoring, `false` otherwise. Default = `false`.

@@ -32,4 +32,17 @@ $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/cre
 aws_launch_template_name=ext-node-lt-1 aws_autoscaling_group_name=ext-node-asg-1'
 ----
 
-The process may take some time.
+The process may take some time, and provides output similar to the following:
+
+[source,bash]
+----
+ASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable logging_enabled] ***
+changed: [<user_name> -> localhost]
+
+TASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable monitoring_enabled] ***
+changed: [<user_name> -> localhost]
+
+PLAY RECAP *********************************************************************
+<user_name>     : ok=20   changed=6    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0  
+-----
+
