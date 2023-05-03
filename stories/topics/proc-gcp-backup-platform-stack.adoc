@@ -1,6 +1,6 @@
-[id="proc-prepare-upgrade-aap-platform-stack"]
+[id="proc-gcp-backup-platform-stack"]
 
-= Preparing upgrade of your {PlatformNameShort} stack
+= Backing up your {PlatformNameShort} stack
 
 .Procedure
 
@@ -20,20 +20,21 @@ $ mkdir extra_vars
 =====
 To create the GCP credentials file, see, 
 link:https://developers.google.com/workspace/guides/create-credentials[Create credentials] and 
-link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys].
+link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
 =====
 +
-. Gather the following input variables to create an `extra_vars.yaml` file within `extra_vars` dir.
-* *gcp_service_account_credentials_json_path*:  Service account credential json file path for the Google cloud account.  This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
+. The `extra_vars.yml` file contains the following input variables within `extra_vars` dir:
+* `gcp_service_account_credentials_json_path` is the service account credential json file path for the Google cloud account.  
+This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. 
+The path should be `/secrets/<service-account-creds-json-filename>`. 
 +
 Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
 
-* *gcp_deployment_name*: Deployment name that you want to upgrade.
-* *gcp_compute_region*: GCP region that you provided when deploying foundation deployment. 
+* `gcp_deployment_name` is the deployment name that you want to upgrade.
+* `gcp_compute_region` is the GCP region that you provided when deploying foundation deployment. 
 If you have not provided a region when deploying the foundation, use the default region `us-east1` here.
-* *gcp_compute_zone*: GCP zone that you provided when deploying foundation deployment. 
+* `gcp_compute_zone` is the GCP zone that you provided when deploying foundation deployment. 
 If you have not provided a zone when deploying the foundation, use the default `us-east1-b` here.
-* *gcp_backup_taken*: Verification that a manual backup of the current deployment was recently created prior to running this upgrade.  Use true here to verify a recent backup was created.
 +
 [NOTE]
 =====
@@ -53,7 +54,6 @@ gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json
 gcp_deployment_name: "" 
 gcp_compute_region: ""
 gcp_compute_zone: ""
-gcp_backup_taken: true
 ----
 +
 . The final result should look similar to the following:

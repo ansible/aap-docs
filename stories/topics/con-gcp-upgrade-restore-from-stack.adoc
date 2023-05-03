@@ -1,4 +1,4 @@
-[id="gcp-upgrade-restore-from-stack"]
+[id="con-gcp-upgrade-restore-from-stack"]
 
 = Restoring the stack from backups
 
@@ -14,12 +14,13 @@ The restore process deploys a new deployment, and restores the filestore and SQL
 The restored filestore instance uses CIDR network range 192.168.244.0/29, which is different from the default network filestore network range of the backup deployment.
 ====
 
-.Procedure
 The following instructions describe how to run the restore playbook.
 
-. Gather the following input variables to create an extra_vars.yaml file:
-.. *gcp_service_account_credentials_json_path*: Service account credential JSON file path for the Google cloud account. 
-This is the path within an ansible-on-clouds-ops container where the credentials JSON file is mounted to the /secrets directory. 
+.Procedure
+
+. The extra_vars.yml file contains the following input variables:
+.. `gcp_service_account_credentials_json_path` is the service account credential JSON file path for the Google cloud account. 
+This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `secrets/directory`. 
 The path should be /secrets/<service-account-creds-json-filename>.
 Replace <service-account-creds-json-filename> with your Google service account credential filename.
 +
@@ -30,10 +31,10 @@ link:https://developers.google.com/workspace/guides/create-credentials[Create cr
 link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
 ====
 +
-.. *gcp_deployment_name*: Deployment name which you backed up.
-.. *gcp_restored_deployment_name*: Deployment name of restored AAP foundation created by playbook.
-.. *gcp_compute_region*: GCP region where the foundation deployment is deployed.
-.. *gcp_compute_zone*: GCP zone where the foundation deployment is deployed.
+.. `gcp_deployment_name` is the deployment name which you backed up.
+.. `gcp_restored_deployment_name` is the deployment name of restored AAP foundation created by playbook.
+.. `gcp_compute_region` is the GCP region where the foundation deployment is deployed.
+.. `gcp_compute_zone` is the GCP zone where the foundation deployment is deployed.
 +
 [NOTE]
 ====
@@ -41,14 +42,14 @@ You can find the region and zone from the filestore instance deployed with the f
 Look for the filestore with the name <deployment-name>-filestore.
 ====
 + 
-... Make note of the location field that is your `gcp_compute_zone`. For example, the filestore instance location might be `us-east1-d`.
-... Remove the last two characters from the location that is your `gcp_compute_region`. 
+.. Make note of the location field that is your `gcp_compute_zone`. For example, the filestore instance location might be `us-east1-d`.
+.. Remove the last two characters from the location that is your `gcp_compute_region`. 
 For example, if your `gcp_compute_zone location is `us-east1-d`, your region is `us-east1`.
-.. *gcp_filestore_backup_name*: The backup name where the filestore instance backup is stored. 
+.. `gcp_filestore_backup_name` is the backup name where the filestore instance backup is stored. 
 You receive this after executing the backup playbook.
-.. *gcp_sql_backup_id*: Backup ID of the Cloud SQL database instance to use when restoring the deployment. 
+.. `gcp_sql_backup_id` is the backup ID of the Cloud SQL database instance to use when restoring the deployment. 
 You receive this after executing the backup playbook.
-.. *gcp_sql_backup_db_name*: GCP foundation SQL database name. 
+.. `gcp_sql_backup_db_name` is the GCP foundation SQL database name. 
 You receive this after executing backup the playbook.
 +
 [source,bash]
@@ -76,3 +77,5 @@ For example, if your foundation deployment version is 2.2, pull the `ansible-on-
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
 $ docker pull $IMAGE
 ----
+
+include::proc-gcp-run-restore-playbook-as-container.adoc[leveloffset=+1]
