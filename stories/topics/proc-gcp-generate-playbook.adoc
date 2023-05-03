@@ -26,17 +26,19 @@ Run the supplied command to run the playbook.
 
 [source,bash]
 ----
-$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro\
---env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_remove_extension_nodes \
--e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
-aws_launch_template_name=ext-node-lt-1 aws_autoscaling_group_name=ext-node-asg-1'
+$ docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=mu-deployment \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_setup_logging_monitoring \
+-e 'gcp_deployment_name=mu-deployment \
+gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  components=["hubs","controllers"]\
+monitoring_enabled=True logging_enabled=True default_collector_interval=60s'
 ----
 
 The process may take some time, and provides output similar to the following:
 
 [source,bash]
 ----
-ASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable logging_enabled] ***
+TASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable logging_enabled] ***
 changed: [<user_name> -> localhost]
 
 TASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable monitoring_enabled] ***
