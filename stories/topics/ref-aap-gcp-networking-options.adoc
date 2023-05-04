@@ -4,7 +4,7 @@
 
 The network topology of {AAPonGCP} includes several configurable network segments that can be changed to fit into your organization's network requirements.
 
-The deployment creates a new VPC and subnet that are not accessible from the public internet. 
+The deployment creates a new VPC and subnet that are not accessible from the public internet, or by using an existing VPC network. 
 You must provide access to the application as described in xref:assembly-aap-gcp-networking-access[Networking and Application Access]. 
 
 Consider your existing network configurations when specifying the following network ranges below. 
@@ -18,7 +18,7 @@ Must be a minimum `/24` segment and must be in the private network range (192.16
 Default: 192.168.240.0/24
 
 .*Cloud SQL Peering Network Range*  
-The network CIDR defining the network segment used to peer the GCP CloudSQL network with the baseNetwork deployed by the offering.  
+The network CIDR defines the network segment used to peer the GCP CloudSQL network with the application subnet deployed by the offering.  
 Must be a `/24` segment.  
 The `/24` segment range is a requirement of GCP CloudSQL network peering configuration. 
 
@@ -26,9 +26,10 @@ Default: 192.168.241.0/24
 
 .*Filestore Peering Network Range*  
 {AAPonGCP} uses GCP Filestore service to share configuration files between multiple {ControllerName} and {HubName} VMs provisioned as part of the deployment. 
-This network CIDR range defines the peer network that is used by the offering to peer between the GCP Filestore network and the custom VPC baseNetwork of the offering.  
+This network CIDR range defines the peer network that is used by the offering to peer between the GCP Filestore network and the custom VPC application subnet of the offering.
+Must be a minimum `/29` segment.  
 
-Default: 192.168.243.0/24
+Default: 192.168.243.0/29
 
 .*Load Balancer Proxy Subnet Range*  
 {AAPonGCP} is deployed using GCP’s native cloud capabilities to provide a scalable and reliable installation. 
