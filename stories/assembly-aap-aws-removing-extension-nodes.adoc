@@ -5,13 +5,6 @@ ifdef::context[:parent-context: {context}]
 
 :context: aap-aws-extension-nodes
 
-[IMPORTANT]
-====
-This is a Technical Preview feature. Technology Preview features are not supported with Red Hat production service-level agreements (SLAs) and might not be functionally complete. 
-Red Hat does not recommend using them for production. 
-These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
-====
-
 You must create a backup of the {PlatformNameShort} deployment before removing extension nodes.
 
 Follow these steps to remove execution nodes from your {AAPonAWS} environment.
@@ -21,8 +14,14 @@ Follow these steps to remove execution nodes from your {AAPonAWS} environment.
 * Docker
 
 .Steps
-. Prepare the environment and the configuration files.
+. Pull the `ansible-on-clouds-ops` container image.
+. Generate data files by running the ansible-on-clouds-ops container.
+. Update the data file.
 . Run the `ansible-on-clouds-ops` container to remove the extension nodes.
 
-include::topics/proc-aap-aws-prepare-environment-to-remove.adoc[leveloffset=+1]
+include::topics/con-aap-aws-pull-container-image.adoc[leveloffset=+1]
+:context: remove
+include::topics/ref-aws-permissions-to-manage-nodes.adoc[leveloffset=+1]
+include::topics/proc-aap-aws-generate-remove-data-files.adoc[leveloffset=+1]
+include::topics/proc-aap-aws-update-remove-data-file.adoc[leveloffset=+1]
 include::topics/proc-aap-aws-removing-extension-nodes.adoc[leveloffset=+1]
