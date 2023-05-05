@@ -17,7 +17,11 @@ This generates the backup CLI command
 [source, bash]
 ----
 ----------------------------------------------
-docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack -e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_backup_vault_name=Default aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole  aws_s3_bucket=AnsibleAutomationPlatform-bucket'
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_backup_vault_name=Default \
+aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole \
+aws_s3_bucket=AnsibleAutomationPlatform-bucket'
 ===============================================
 ----
 . Run the generated command to trigger the backup.
