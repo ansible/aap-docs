@@ -1,6 +1,6 @@
 [id="proc-aap-aws-upgrade-pull-container-image"]
 
-= Pull the ansible-on-clouds-ops 2.3 container image
+= Pulling the ansible-on-clouds-ops 2.3 container image
 
 .Procedure
 . Pull the Docker image for Ansible on Clouds operational container with the same tag as the version you want to upgrade to.
@@ -13,5 +13,13 @@ The Ansible on Clouds operational image tag must match the version that you want
 [source,bash]
 ----
 $ export IMAGE=_<image_path>_
+$ docker pull $IMAGE
+----
+
+for EMEA regions (Europe, Middle East, Africa) run the following command instead:
++
+[source,bash]
+----
+$ export IMAGE=_<EMEA_image_path>_
 $ docker pull $IMAGE
 ----

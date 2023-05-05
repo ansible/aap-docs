@@ -8,18 +8,19 @@ ifdef::context[:parent-context: {context}]
 You can upgrade your existing {AAPonGCP} deployment to the newer version. 
 The upgrade process covers upgrading of {HubName} and {ControllerName}. 
 The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. 
+The upgrade process also backs up {PlatformNameShort}.
 
 [NOTE]
 =====
 {AAPonGCP} supports sequential upgrades. 
 All upgrades should be no more than one major version behind the version you are currently upgrading to. 
-For example, to upgrade {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
+For example, to upgrade {AAPonGCP} to 2.3.20230221, you must be on version 2.2.20230215 version of {AAPonGCP}.
 =====
 
 .Prerequisites
 * Docker must be installed to run the upgrade playbook.
-* The upgrade process requires several volumes to be mounted. 
-Prepare a fresh directory to be used for this process.
+* A Linux or macOS system, where the `ansible-on-clouds-ops` container image will run.
+
 
 The following procedures form the upgrade process:
 

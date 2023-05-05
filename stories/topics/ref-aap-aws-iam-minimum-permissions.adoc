@@ -12,28 +12,28 @@ required-roles:
   -backup:ListRecoveryPointsByBackupVault
   -backup:StartBackupJob
  resources:
-  -*
+  -'*'
 cloudformation:
  actions:
   -elasticfilesystem:DescribeFileSystems
  resources:
-  -*
+  -'*'
 iam:
  actions:
   -rds:CreateDBSnapshot
-  -rds:DescribeDBSnapshot
+  -rds:DescribeDBSnapshots
  resources:
-  -*
+  -'*'
 secretsmanager:
  actions:
   -secretsmanager:GetSecretValue
  resources:
-  -*
+  -'*'
 s3
  actions:
   -s3:CreateBucket
   -s3:GetObject
   -s3:PutObject
  resources:
-  -*
+  -'*'
 ----

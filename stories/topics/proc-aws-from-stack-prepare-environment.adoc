@@ -3,7 +3,7 @@
 = Preparing the environment
 
 .Procedure
-. Ensure the following environment variable is defined pointing to your AWS Credentials file.
+. Ensure the `AWS_CREDS_ABS_PATH` environment variable is defined pointing to your AWS Credentials file.
 +
 [source,bash]
 ----
@@ -21,6 +21,9 @@ export AWS_CREDS_ABS_PATH=/Users/<USER>/.aws/credentials
 * `aws_s3_bucket` = "my-example-bucket"
 * `aws_efs_physical_id` = "fs-05a4f9a1049c00977"
 * `aws_cf_keypair_name` = "my-key-pair"
++
+where:
++
 * `aws_foundation_stack_name` is the name of your existing deployment.
 * `aws_restored_stack_name` is the name you want for your new restored deployment.
 * `aws_region` is the region the existing stack was deployed in and the region the new restored stack will also be deployed in.
@@ -48,7 +51,7 @@ You must also ensure the EFS recovery point is a from an Ansible on Clouds deplo
 You can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole`.
 ====
 +
-* `aws_s3_bucket` is the name of an S3 bucket that the playbook can access to upload a CloudFormation Template.
+* `aws_s3_bucket` is the name of an S3 bucket that the playbook can access to upload a CloudFormation Template. The  name must not contain upper case letters.
 * `aws_efs_physical_id` is the physical Id of the EFS from the original deployment. 
 For example, `fs-06837574544929090`.
 * `aws_cf_keypair_name` is the keypair to pass as a parameter when creating the new restored deployment.
