@@ -5,7 +5,13 @@
 .Procedure
 . In the AWS Console, navigate to menu:CloudFormation[].
 . Click on your {PlatformName} deployment.
-. Select the *Template* tab and click btn:[View in Designer].
+. In the *Fulfillment option* field, select *Ansible Automation Platform CloudFormation*.
+. In the *Software version* field, confirm the latest version available in the list is selected.
+. In the *Region* field, select the region with your EC2 pair.
+The CloudFormation stack deploys in the same region.
+. Click btn:[Continue to Launch].
+. Click btn:[Launch]. This launches the AWS CloundFormation Console in a new browser.
+. In the *Specify Template* field, click btn:[View in Designer].
 . In the top left corner, hover over the file symbol to reveal a dropdown.
 . Save your template to a local file.
 . In your saved template update the "controlleralbsecuritygroupEFD044E7" and "hubalbsecuritygroup4C1C53F8" CIDR ranges to your desired CIDR range.
@@ -19,7 +25,8 @@ Search for "hubalbsecuritygroup4C1C53F8" (in quotes) to locate the component.
 .. Select *With new resources (standard)* from the dropdown.
 .. In the *Specify template* section under *Template source* click btn:[Upload a template file] and select the template you have modified. 
 .. Click btn:[Next] to go to the next step. 
-.. Enter a stack name and select an `AWSKeyPair` to use for the deployment. 
+.. Enter a stack name and select an *EC2 KeyPair* to use for the deployment. 
+.. For *Select VPC*, select *New* or *Existing*. For more information, see xref:proc-aws-application-deploy[Application deployment].
 .. Click btn:[Next] to go to the *Configure stack options* page.
 .. Optional: Configure stack options and click btn:[Next] to review the stack.
 .. Click btn:[Submit] to create your new deployment with the updated CIDR range for the load balancers.
