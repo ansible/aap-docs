@@ -1,0 +1,40 @@
+[id="proc-aap-aws-generate-restore-data-file"]
+
+= Generating the restore data file
+
+The following commands create a directory, and populate it with an empty data template that, when completed, will be used during the backup. 
+
+.Procedure
+. Create a folder to hold the configuration 
++
+[source,bash]
+----
+$ mkdir command_generator_data
+----
+. Populate the `command_generator_data` folder with the configuration file template.
++
+[source,bash]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+  command_generator_vars aws_restore_stack \
+  --output-data-file /data/extra_vars.yml
+----
+
+. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+This template file resembles the following:
++
+[source,bash]
+---- 
+aws_restore_stack:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    aws_backup_iam_role:
+	  aws_backup_iam_role_arn:
+    aws_backup_restore_point_arn:
+    aws_backup_vault_name:
+    aws_rds_db_snapshot_arn:
+    aws_region:
+    aws_restored_stack_name:
+    aws_s3_bucket:
+----

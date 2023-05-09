@@ -1,0 +1,37 @@
+[id="ref-aap-aws-permissions"]
+
+= AWS permissions
+
+Before starting the backup process, the AWS account used to execute a backup must have the following permissions granted.
+
+[cols="20%,25%",options="header"]
+|====
+| Service/Permission | Resources
+a| backup 
+
+* backup:DescribeBackupJob
+* backup:ListRecoveryPointsByBackupVault
+* backup:StartBackupJob |
+a| cloudformation
+
+* cloudformation:DescribeStacks
+* cloudformation:DescribeStackResources |
+a| elasticfilesystem
+
+* elasticfilesystem:DescribeFileSystems |
+a| iam
+
+* iam:PassRole | arn:aws:iam::*:`role/service-role/AWSBackupDefaultServiceRole`
+a| rds
+
+* rds:CreateDBSnapshot
+* rds:DescribeDBSnapshots |
+a| secretsmanager
+
+* secretsmanager:GetSecretValue |
+a| s3
+
+* s3:CreateBucket
+* s3:GetObject
+* s3:PutObject |
+|====
