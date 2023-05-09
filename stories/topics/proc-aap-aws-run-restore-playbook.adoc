@@ -1,0 +1,37 @@
+[id="proc-aap-aws-run-restore-playbook"]
+
+= Running the restore playbook
+
+The following procedure runs the restore playbook as a container.
+
+.Procedure
+. To run the restore, run the command generator.
++
+[source, bash]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_restore_stack --data-file /data/extra_vars.yml
+----
++
+This generates the restore CLI command  
++
+[source, bash]
+----
+----------------------------------------------
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_restore_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ aws_restored_stack_name=AnsibleAutomationPlatform-restore aws_s3_bucket=ansible-automation-platform-bucket'
+===============================================
+----
+. Run the generated command to trigger the restore.
++
+[source, bash]
+----
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_restore_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform \
+aws_restored_stack_name=AnsibleAutomationPlatform-restore \
+aws_s3_bucket=ansible-automation-platform-bucket'
+
+----
+. The playbook can take some time to create a restored deployment.
+After you have run the playbook successfully, a restored deployment is available in AWS CloudFormation matching the name provided for it in the `extra_vars.yml` file.
