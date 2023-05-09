@@ -15,6 +15,12 @@ You can use the AWS Backup Default Service Role for this which has the format `a
 ====
 +
 * `aws_backup_vault_name` is the name of the backup vault that will hold the EFS recovery points.
++
+[NOTE]
+====
+Please ensure the referenced backup vault exists and the AWS Backup IAM role provided above has the required permissions to create an EFS recovery point inside the vault. 
+====
++
 * `aws_region` is the region the stack was deployed in.
 * `aws_s3_bucket` is the name of the S3 bucket where the backup files are stored. 
 This creates a new bucket if one does not already exist. 
@@ -31,8 +37,8 @@ aws_backup_stack:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
   extra_vars:
-    aws_backup_iam_role: arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole
-	  aws_backup_vault_name: Default
+    aws_backup_iam_role_arn: arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole
+    aws_backup_vault_name: Default
     aws_region: us-east-1
     aws_s3_bucket: ansible-automation-platform-bucket
 ----
