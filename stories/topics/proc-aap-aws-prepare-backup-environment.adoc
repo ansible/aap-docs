@@ -1,0 +1,31 @@
+[id="proc-aap-aws-prepare-backup-environment"]
+
+= Preparing the environment
+
+. Ensure that the `AWS_CREDS_ABS_PATH` environment variable is defined pointing to your AWS Credentials file.
++
+[source,bash]
+----
+export AWS_CREDS_ABS_PATH=/Users/<USER>/.aws/credentials
+----
+. Create an `extra_vars/vars.yml file`, adding the following values and ensuring that they are customized to match your environment.
++
+[source,bash]
+----
+aws_foundation_stack_name: "AnsibleAutomationPlatformmy-foundation-stack"
+aws_region: us-east-1
+aws_backup_vault_name: "Default"
+aws_backup_iam_role_arn: "arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole"
+----
++
+where:
++
+* `aws_foundation_stack_name` is the name of your existing deployment.
+* `aws_region` is the region the existing stack was deployed in.
+* `aws_backup_vault_name' is the name of the backup vault your EFS backup is stored in.
+* `aws-backup_iam_role_arn` is the _Amazon Resource Name_ (ARN) of the AWS IAM Role that has permissions to perform backup operations.
++
+[NOTE]
+====
+You can use the AWS Backup Default Service Role for this which has the format `arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole` 
+====
