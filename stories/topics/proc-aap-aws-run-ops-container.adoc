@@ -1,0 +1,15 @@
+[id="proc-aap-aws-run-ops-container"]
+
+= Running the ansible-on-clouds-ops 2.2 container to backup the stack
+
+When you have prepared the environment, you can trigger the backup by running the following command: 
+
+[source, yaml]
+----
+$ docker run --rm --env PLATFORM=AWS \
+-v $(pwd)/extra_vars:/extra_vars:ro \
+-v ${AWS_CREDS_ABS_PATH}:/home/runner/.aws/credentials \
+$IMAGE \
+redhat.ansible_on_clouds.aws_backup_stack \
+-e @/extra_vars/vars.yml
+----
