@@ -3,7 +3,7 @@
 = Generating data files by running the ansible-on-clouds-ops container
 
 The following commands generate the required data file. 
-These commands create a directory, and  an empty data template that, when populated is used TBD. 
+These commands create a directory, and  an empty data template that, when populated, is used to generate the playbook. 
 
 .Procedure
 . Create a folder to hold the configuration files.
@@ -17,7 +17,7 @@ $ mkdir command_generator_data
 [options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
-command_generator_vars aws_remove_extension_nodes \
+command_generator_vars gcp_setup_logging_monitoring \
 --output-data-file /data/extra_vars.yml
 ----
 +
@@ -38,6 +38,13 @@ gcp_setup_logging_monitoring --data-file /data/logging-monitoring.yaml
 ----
 
 . When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created. 
++
+[NOTE]
+====
+In the following example file, `ansible_config_path` is optional. 
+A default configuration will be using containing the required collections.
+====
++
 This template file resembles the following:- 
 +
 [source,bash]
