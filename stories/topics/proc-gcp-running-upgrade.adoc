@@ -14,16 +14,19 @@ This generates the following command:
 [source,bash]
 ----
 -----------------------------------------------
-docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro --env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform --env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade -e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
+docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg \
+--env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade -e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
 ===============================================
 ----
 . Run the given upgrade command to trigger the upgrade.
 +
 [source,bash]
 ----
-$ docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro 
---env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform 
---env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade 
+$ docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade \
 -e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
 ----
 . The upgrade can take some time to complete, but can take longer depending on the number of extension nodes on the system. 
