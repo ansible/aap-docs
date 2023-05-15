@@ -1,0 +1,60 @@
+[id="proc-gcp-generate-variables"]
+
+= Generating data files by running the ansible-on-clouds-ops container
+
+The following commands generate the required data file. 
+These commands create a directory, and  an empty data template that, when populated, is used to generate the playbook. 
+
+.Procedure
+. Create a folder to hold the configuration files.
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ mkdir command_generator_data
+----
+. Populate the `command_generator_data` folder with the configuration file template.
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+command_generator_vars gcp_setup_logging_monitoring \
+--output-data-file /data/extra_vars.yml
+----
++
+Creates the following command file:
++
+[source,bash]
+----
+===============================================
+Playbook: gcp_setup_logging_monitoring
+Description: This playbook setup the logging and monitoring.
+-----------------------------------------------
+Install monitoring tools and configure them to send data to the Google Cloud Monitoring service.
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator \
+gcp_setup_logging_monitoring --data-file /data/logging-monitoring.yaml
+----
+
+. When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created. 
++
+[NOTE]
+====
+In the following example file, `ansible_config_path` is optional. 
+====
++
+This template file resembles the following:- 
++
+[source,bash]
+----
+gcp_setup_logging_monitoring:
+  ansible_config_path:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    components:
+    default_collector_interval:
+    logging_enabled:
+    monitoring_enabled:
+----
