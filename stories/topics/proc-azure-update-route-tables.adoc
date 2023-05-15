@@ -54,20 +54,38 @@ The easiest way to implement this is to create a firewall rule that allows all o
 If you choose not to allow all outbound traffic from  port 443, you must configure routes.
 
 * For Red Hat to manage and upgrade {AAPonAzureNameShort} and execute security patching, any machine in the Azure Kubernetes service (AKS) cluster must be allowed to submit a request to pull updates for containers used by {PlatformNameShort}.
++
 Add routes in the {PlatformNameShort} route table for outbound traffic from the full CIDR range of the {AAPonAzureNameShort} managed application to the following domains:
 
+** `redhat.com`
+** `*.redhat.com`
 ** `registry.redhat.io`
+** `*.registry.redhat.io`
 ** `quay.io`
 ** `*.quay.io`
+** `letsencrypt.org`
 ** `*.letsencrypt.org`
-** `*.azure-dns.com`
-** `*.azure-dns.net`
-** `*.azure-dns.org`
-** `*.azure-dns.info`
+** `gcr.io`
 ** `*.gcr.io`
+** `docker.com`
 ** `*.docker.com`
+** `docker.io`
 ** `*.docker.io`
+** `googleapis.com`
+** `*.googleapis.com`
+** `mcr.microsoft.com`
 ** `*.mcr.microsoft.com`
+
+* Add the following Azure DNS URLs to the allowlist for port 53:
+
+** `azure-dns.com`
+** `*.azure-dns.com`
+** `azure-dns.net`
+** `*.azure-dns.net`
+** `azure-dns.org`
+** `*.azure-dns.org`
+** `azure-dns.info`
+** `*.azure-dns.info`
 
 * You must also allow traffic from your firewall to any other external domain or IP address that you want {PlatformNameShort} to run automation jobs against.
 Otherwise, your firewall will block connectivity between {PlatformNameShort} and destinations for automation.
