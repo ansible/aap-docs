@@ -1,0 +1,54 @@
+[id="ref-gcp-prepare-backup-environment"]
+
+= Backup environment preparation
+
+.Procedure
+. Create the `extra_vars.yml` file, adding the following input variables and ensuring that they match your environment.
+
+* `gcp_service_account_credentials_json_path` is the service account credential JSON file path for the Google cloud account.  
+This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. 
+The path should be `/secrets/<service-account-creds-json-filename>`. 
++
+Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
+
+* `gcp_deployment_name` is the deployment name that you want to upgrade.
+* `gcp_compute_region` is the GCP region that you provided when deploying foundation deployment. 
+If you have not provided a region when deploying the foundation, use the default region `us-east1` here.
+* `gcp_compute_zone` is the GCP zone that you provided when deploying foundation deployment. 
+If you have not provided a zone when deploying the foundation, use the default `us-east1-b` here.
++
+[NOTE]
+=====
+You can find the region and zone from the filestore instance deployed with the foundation deployment. 
+Look for the filestore with the name `<deployment-name>-filestore`.
+
+Make a note of the location of your `gcp_compute_zone`. 
+
+Remove the last two characters from each location. 
+For example, if your filestore instance location is `us-east1-d`, your zone is `us-east1`.
+
+If your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
+=====
++
+Giving you:
++
+[source,bash]
+----
+gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
+gcp_deployment_name: "" 
+gcp_compute_region: ""
+gcp_compute_zone: ""
+----
++
+. The final result resembles the following:
++
+[source,bash]
+----
+$ tree
+tree
+.
+├── extra_vars
+│   └── extra_vars.yml
+└── secrets
+    └── gc-ansible-cloud-123434.json
+----
