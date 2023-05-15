@@ -2,6 +2,23 @@
 
 = Upgrading your deployment
 
+You can upgrade your existing {AAPonGCP} deployment to the newer version. 
+The upgrade process covers upgrading of {HubName} and {ControllerName}. 
+The upgrade process takes roughly the same amount of time as a {AAPonGCP} deployment install. 
+
+Use the following procedure to ensure a smooth upgrade process.
+
+[NOTE]
+====
+{AAPonGCP} supports sequential upgrades. 
+All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+For example, to upgrade {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
+====
+
+.Prerequisites
+* Docker must be installed to run the upgrade playbook.
+* The upgrade process requires several volumes to be mounted. 
+Prepare a fresh directory to be used for this process.
 
 .Procedure
 . Create the directories used to configure the upgrade process using the following commands:
@@ -17,11 +34,11 @@ $ mkdir extra_vars
 . Store your service account credential JSON file in the secrets directory. 
 +
 [NOTE]
-=====
+====
 To create the GCP credentials file, see, 
 link:https://developers.google.com/workspace/guides/create-credentials[Create credentials] and 
 link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
-=====
+====
 +
 . Gather the following input variables to create an `extra_vars.yaml` file within `extra_vars` dir.
 * *gcp_service_account_credentials_json_path*:  Service account crendential json file path for the Google cloud account.  This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `/secrets` directory. The path should be `/secrets/<service-account-creds-json-filename>`. 
@@ -35,7 +52,7 @@ If you have not provided a region when deploying the foundation, use the default
 If you have not provided a zone when deploying the foundation, use the default `us-east1-b` here.
 +
 [NOTE]
-=====
+====
 You can find the region and zone from the filestore instance deployed with the foundation deployment. 
 Look for the filestore with the name `<deployment-name>-filestore`.
 
@@ -44,7 +61,7 @@ For example, the filestore instance location might be `us-east1-d`
 
 * Remove the last two characters from the location that is your `gcp_compute_region`. 
 For example, if your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
-=====
+====
 +
 [source,bash]
 ----
@@ -62,7 +79,7 @@ $ tree
 tree
 .
 ├── extra_vars
-│   └── extra_vars.yaml
+│   └── extra_vars.yaml
 └── secrets
     └── gc-ansible-cloud-123434.json
 ----
@@ -76,10 +93,10 @@ The following instructions describe how to run the upgrade playbook.
 . Pull the docker image for the `ansible-on-clouds-ops` container with a tag the same as the version of the foundation deployment.
 +
 [NOTE]
-=====
+====
 The `ansible-on-clouds-ops` container image tag must match the version of your foundation deployment. 
 For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
-=====
+====
 +
 [source,bash]
 ----
