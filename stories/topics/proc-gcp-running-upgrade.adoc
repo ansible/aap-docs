@@ -14,9 +14,9 @@ This generates the following command:
 [source,bash]
 ----
 -----------------------------------------------
-docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg \
---env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro 
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg 
+--env DEPLOYMENT_NAME=AnsibleAutomationPlatform 
 --env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade -e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
 ===============================================
 ----
