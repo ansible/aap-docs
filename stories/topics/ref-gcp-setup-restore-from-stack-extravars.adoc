@@ -1,0 +1,52 @@
+[id="ref-gcp_set-restore-from-stack-extravars"]
+
+= Setting up the extra_vars file
+
+.Procedure
+
+. Ensure that the `extra_vars/vars.yml` file contains the following values and that they are customized to match your environment.
+* `gcp_service_account_credentials_json_path` is the service account credential JSON file path for the Google cloud account. 
+This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `secrets/directory`. 
+The path should be /secrets/<service-account-creds-json-filename>.
+Replace <service-account-creds-json-filename> with your Google service account credential filename.
++
+[NOTE]
+====
+To create the GCP credentials file, see, 
+link:https://developers.google.com/workspace/guides/create-credentials[Create credentials] and 
+link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys]
+====
++
+* `gcp_deployment_name` is the deployment name which you backed up.
+* `gcp_restored_deployment_name` is the deployment name of restored AAP foundation created by playbook.
+* `gcp_compute_region` is the GCP region where the foundation deployment is deployed.
+* `gcp_compute_zone` is the GCP zone where the foundation deployment is deployed.
++
+[NOTE]
+====
+You can find the region and zone from the filestore instance deployed with the foundation deployment. 
+Look for the filestore with the name <deployment-name>-filestore.
+====
++ 
+. Make note of the location field that is your `gcp_compute_zone`. For example, the filestore instance location might be `us-east1-d`.
+.. Remove the last two characters from the location that is your `gcp_compute_region`. 
+For example, if your `gcp_compute_zone location is `us-east1-d`, your region is `us-east1`.
+* `gcp_filestore_backup_name` is the backup name where the filestore instance backup is stored. 
+You receive this after executing the backup playbook.
+* `gcp_sql_backup_id` is the backup ID of the Cloud SQL database instance to use when restoring the deployment. 
+You receive this after executing the backup playbook.
+* `gcp_sql_backup_db_name` is the GCP foundation SQL database name. 
+You receive this after executing backup the playbook.
+. The file resembles the following: 
++
+[source,bash]
+----
+gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
+gcp_deployment_name: ""
+gcp_restored_deployment_name: ""
+gcp_compute_region: ""
+gcp_compute_zone: ""
+gcp_filestore_backup_name: ""
+gcp_sql_backup_id: ""
+gcp_sql_backup_db_name: ""
+----

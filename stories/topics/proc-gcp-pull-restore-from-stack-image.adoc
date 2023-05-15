@@ -1,0 +1,17 @@
+[id="proc-gcp-pull-restore-from-stack-image"]
+
+= Pulling the ansible-on-clouds-ops 2.2 container image to restore the stack
+
+. Pull the docker image for the ansible-on-clouds-ops 2.2 container with the same tag same as the version of the foundation deployment.
++
+[NOTE]
+====
+The `ansible-on-clouds-ops` container image tag must match the version of your foundation deployment. 
+For example, if your foundation deployment version is 2.2, pull the `ansible-on-clouds-ops` image with tag 2.2.
+====
++ 
+[source,bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE
+----
