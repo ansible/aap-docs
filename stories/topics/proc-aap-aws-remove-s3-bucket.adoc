@@ -1,0 +1,27 @@
+[id="proc-aap-aws-remove-s3-bucket"]
+
+= Removing unnecessary S3 bucket files
+
+The following procedure deletes S3 bucket files left after backup.
+
+[NOTE]
+==== 
+This action cannot be reversed.
+
+This is the backup data. 
+If you delete these files, you will not be able to restore your deployment afterwards.
+====
+
+.Procedure
+. In the AWS UI, navigate to the link:https://s3.console.aws.amazon.com/s3/buckets[S3 Bucket page].
+Ensure you have selected the same region as your stack.
+. Identify the S3 Bucket associated with your backup.
+.. Search for the bucket name. 
+The bucket name must be the same the name used during the backup procedure.
+. Delete the resource.
+.. Select the radio button next to the bucket name.
+.. Click btn:[Empty].
+.. Confirm all objects deletion.
+.. Select the radio button next to the bucket name.
+.. Click btn:[Delete].
+..Confirm the deletion.
