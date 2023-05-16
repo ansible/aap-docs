@@ -1,0 +1,33 @@
+[id="proc-gcp-generate-upgrade-data-file"]
+
+= Generating the data file
+
+.Procedure
+
+. Run the following commands  to generate the required data file. 
+These commands create a directory, and populate it with an empty data template that, once populated, will be used during the upgrade. 
++
+[source,bash]
+----
+# Create a folder to hold the configuration files
+$ mkdir command_generator_data
+# Populate command_generator_data folder with configuration file template
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+    command_generator_vars gcp_upgrade \
+    --output-data-file /data/extra_vars.yml
+----
+. After running the previous commands, a `command_generator_data/extra_vars.yml` template is created. This template file should resemble:
+
++
+[source,bash]
+----
+  gcp_upgrade:
+  ansible_config_path:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    gcp_backup_taken:
+    gcp_compute_region:
+    gcp_compute_zone:
+----
+
