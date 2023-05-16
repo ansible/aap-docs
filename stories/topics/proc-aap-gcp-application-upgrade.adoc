@@ -12,15 +12,40 @@ Use the following procedure to ensure a smooth upgrade process.
 ====
 {AAPonGCP} supports sequential upgrades. 
 All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+<<<<<<< HEAD
 For example, to upgrade {AAPonGCP} to 2.2.20230215, you must be on the first version of {AAPonGCP}.
 ====
+=======
+For example, to upgrade to {PlatformNameShort} from {GCPMarket} to 2.3.20230221, you must be on version 2.2.20230215.
+=====
+>>>>>>> 3cdc412e (Update the GCP Upgrade information)
 
 .Prerequisites
 * Docker must be installed to run the upgrade playbook.
 * The upgrade process requires several volumes to be mounted. 
 Prepare a fresh directory to be used for this process.
 
+The following procedures form the upgrade process:
+. Backup your {PlatformNameShort} 2.2 stack.
+.. Pull the `ansible-on-clouds-ops` 2.2 container image
+.. Prepare the environment
+.. Run the `ansible-on-clouds-ops 2.2 container to backup the stack
+
+. Upgrade {PlatformNameShort}.
+.. Pull the `ansible-on-clouds-ops` 2.3 container image
+.. Generate data files by running the `ansible-on-clouds-ops` container
+.. Update the data file
+.. Run the `ansible-on-clouds-ops` 2.3 container to upgrade your {PlatformNameShort} from {GCP Marketplace} deployment.
+
+. (Optional) Restore the stack from backup.
+.. Pull the ansible-on-clouds-ops 2.2 container image
+.. Prepare the environment
+.. Run the `ansible-on-clouds-ops` 2.2 container to restore the stack
+
+= Backing up your {PlatformNameShort} stack
+
 .Procedure
+
 . Create the directories used to configure the upgrade process using the following commands:
 +
 [source,bash]
@@ -83,6 +108,7 @@ tree
 └── secrets
     └── gc-ansible-cloud-123434.json
 ----
+<<<<<<< HEAD
 
 [discrete]
 = Running the upgrade playbook
@@ -97,10 +123,21 @@ The following instructions describe how to run the upgrade playbook.
 The `ansible-on-clouds-ops` container image tag must match the version of your foundation deployment. 
 For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
 ====
+=======
+>>>>>>> 3cdc412e (Update the GCP Upgrade information)
 +
+. Pull the `ansible-on-clouds-ops 2.2` container image with the same tag version as the foundation deployment.
+
 [source,bash]
 ----
-$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE"
+----
+For EMEA regions (Europe, Middle East, Africa), run the following command instead:
+
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00-limited
 $ docker pull $IMAGE
 ----
 
