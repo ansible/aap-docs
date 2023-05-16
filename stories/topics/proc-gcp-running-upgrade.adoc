@@ -1,0 +1,42 @@
+[id="proc-gcp-running-upgrade"]
+
+= Running the ansible-on-clouds-ops 2.3 container to upgrade your {AAPonGCP} deployment
+
+. To run the upgrade, run the command generator to generate the upgrade CLI command:
++
+[source,bash]
+---- 
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
+----
++
+This generates the following command:
++
+[source,bash]
+----
+-----------------------------------------------
+docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro 
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg 
+--env DEPLOYMENT_NAME=AnsibleAutomationPlatform 
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade -e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
+===============================================
+----
+. Run the given upgrade command to trigger the upgrade.
++
+[source,bash]
+----
+$ docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_upgrade \
+-e 'gcp_deployment_name=AnsibleAutomationPlatform gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
+----
+. The upgrade can take some time to complete, but can take longer depending on the number of extension nodes on the system. 
+A successful upgrade is marked by the log below.
++
+[source,bash]
+----
+TASK [redhat.ansible_on_clouds.standalone_gcp_upgrade : [upgrade] Show GCP current version] ***
+ok: [localhost] => {
+    "msg": "gcp_current_version: 2.3.20230221-00"
+}
+----
+. Your {AAPonGCP} deployment is now upgraded to a newer version and you can log in to Red Hat Ansible Automation Platform automation controller and automation hub using your deployment credentials.

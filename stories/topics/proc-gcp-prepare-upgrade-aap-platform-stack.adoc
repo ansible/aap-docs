@@ -1,0 +1,88 @@
+[id="proc-gcp-prepare-upgrade-aap-platform-stack"]
+
+= Preparing upgrade of your {PlatformNameShort} stack
+
+.Procedure
+
+. Create the directories used to configure the upgrade process using the following commands:
++
+[source,bash]
+----
+# Secrets directory. Store the GCP credentials file.
+$ mkdir secrets
+# Extra vars directory. All the configuration variables for the upgrade process.
+$ mkdir extra_vars
+----
++
+. Store your service account credential JSON file in the secrets directory. 
++
+[NOTE]
+=====
+To create the GCP credentials file, see, 
+link:https://developers.google.com/workspace/guides/create-credentials[Create credentials] and 
+link:https://cloud.google.com/iam/docs/keys-create-delete[Create and delete service account keys].
+=====
++
+. The extra_vars.yml file contains the following input variables:
+* `gcp_service_account_credentials_json_path` is the service account credential json file path for the Google cloud account.  
+This is the path within an `ansible-on-clouds-ops` container where the credentials JSON file is mounted to the `secrets/directory`. 
+The path should be `/secrets/<service-account-creds-json-filename>`. 
++
+Replace `<service-account-creds-json-filename>` with your Google service account credential filename.
+
+* `gcp_deployment_name` is the deployment name that you want to upgrade.
+* `gcp_compute_region` is the GCP region that you provided when deploying foundation deployment. 
+If you have not provided a region when deploying the foundation, use the default region `us-east1` here.
+* `gcp_compute_zone` is the GCP zone that you provided when deploying foundation deployment. 
+If you have not provided a zone when deploying the foundation, use the default `us-east1-b` here.
+* `gcp_backup_taken` is the verification that a manual backup of the current deployment was recently created prior to running this upgrade. 
+Use true here to verify a recent backup was created.
++
+[NOTE]
+=====
+You can find the region and zone from the filestore instance deployed with the foundation deployment. 
+Look for the filestore with the name `<deployment-name>-filestore`.
+
+* Make note of the location field that is your `gcp_compute_zone`. 
+For example, the filestore instance location might be `us-east1-d`
+
+* Remove the last two characters from the location that is your `gcp_compute_region`. 
+For example, if your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
+=====
++
+[source,bash]
+----
+gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
+gcp_deployment_name: "" 
+gcp_compute_region: ""
+gcp_compute_zone: ""
+gcp_backup_taken: true
+----
++
+. The final result should look similar to the following:
++
+[source,bash]
+----
+$ tree
+tree
+.
+├── extra_vars
+│   └── extra_vars.yaml
+└── secrets
+    └── gc-ansible-cloud-123434.json
+----
++
+. Pull the `ansible-on-clouds-ops 2.2` container image with the same tag version as the foundation deployment.
+
+[source,bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
+$ docker pull $IMAGE"
+----
+For EMEA regions (Europe, Middle East, Africa), run the following command instead:
+
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00-limited
+$ docker pull $IMAGE
+----
