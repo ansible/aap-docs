@@ -1,0 +1,45 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-aap-aws-support"]
+= Support
+
+:context: aap-aws-support
+
+{AAPonAWS} is a _self-managed_ deployment. 
+When the application is deployed into your AWS infrastructure, customers are responsible for the maintenance of the AWS infrastructure, OS patching, and {PlatformNameShort} patching.  
+
+Red Hat does not support changes to the infrastructure resources deployed as part of the solution unless there is documentation by Red Hat describing the process, such as in route table configuration for networking or documented upgrade processes. 
+Adding additional compute resources outside of extension nodes voids Red Hat support for {AAPonAWS} deployment.
+
+Upgrades to {PlatformNameShort} from {Market} will be performed differently from self-installed {PlatformNameShort}. 
+Upgrading individual packages on virtual machines using `dnf` or other means is also not supported. 
+When upgrades are available, upgrade instructions will be provided in this documentation with relevant content for each upgrade.
+
+.Supported infrastructure configuration changes
+
+Red Hat supports changes to the folllowing options:
+
+* VPC Route Table configuration
+* VPC Security Group configuration
+* VPC Load balancer configuration
+* EC2 Block Storage expansion
+* DNS and `resolv.conf` files
+
+.Red Hat responsibilities
+
+Red Hat has the following responsibilities:
+
+* Premium support for {PlatformNameShort}
+* Directions and how-to-processes for upgrading {PlatformNameShort}
+* Providing vulnerability fixes for {PlatformNameShort} and for third-party packages included with {AAPonAWS}.
+
+.Customer responsibilities
+
+You have the following responsibilities:
+
+* AWS Infrastructure uptime
+* AWS Infrastructure changes, for example, increasing block storage sizes
+* AWS network peering and configuration
+* EC2 operating system upgrades
+* Backing up AWS resources
+* Application of {PlatformNameShort} upgrades

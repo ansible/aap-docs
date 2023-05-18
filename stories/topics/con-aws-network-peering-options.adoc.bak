@@ -1,0 +1,41 @@
+[id="con-aap-aws-network-peering-options"]
+
+= Network peering options
+
+Many networking configurations are possible, but the following configurations have been validated to work with {PlatformNameShort} from {Market} by Red Hat.
+
+Private deployments omit access from the public internet. 
+This is the default deployment model based on the AWS architecture used by {AAPonAWS}.
+
+If you use this approach you must configure VPC peering, a transit network gateway, or similar AWS networking connectivity to access {AAPonAWS}.  
+
+When VPC peering and routing are configured, you can access {PlatformNameShort} through a VM on a connected VPC subnet, or directly if your organization has a transit routing setup between AWS and your local networks.
+
+Network peering is required for {PlatformNameShort} to access resources that reside on private VPCs or where transit routing between AWS and your on-premises networks exists. 
+
+{PlatformNameShort} requires peering and routing for outbound communication to perform automations against devices on your AWS networks and connected on-premise or multi-cloud networks.
+
+[NOTE]
+====
+While every effort has been made to align with {AWS}’s documentation for this content, there may be a drift in accuracy over time. 
+Use {AWS} documentation as the source of information regarding networking topics for AWS.
+====
+
+AWS offers different ways to peer private networks together. 
+This document focuses on basic network peering and routing models:
+
+[cols="10%,40%",options="header"]
+|====
+| Peering type | Description
+| link:https://docs.aws.amazon.com/vpc/latest/peering/peering-configurations-full-access.html[VPC Peering] | VPCs are individually connected to one another with no other routing hops between them. 
+This is a simple peering model and is useful when connecting a few networks. 
+Complex peering can be configured, but routing can become more complex over time.
+| link:https://docs.aws.amazon.com/vpc/latest/tgw/what-is-transit-gateway.html[Transit Gateway] | A transit gateway is a network transit hub that you can use to interconnect your virtual private clouds (VPCs) and on-premises networks. 
+As your cloud infrastructure expands globally, inter-Region peering connects transit gateways together using the AWS Global Infrastructure. 
+Your data is automatically encrypted and never travels over the public internet.
+|====
+
+[NOTE]
+====
+There are also ways that AWS directs organizations not to attempt to peer networks in their link:https://docs.aws.amazon.com/vpc/latest/peering/invalid-peering-configurations.html[Invalid network peering] document.
+====

@@ -1,0 +1,51 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-aap-aws-application-upgrade"]
+= {AAPonAWS} Upgrade Process
+
+:context: aap-aws-application-upgrade
+
+You can upgrade your existing {AAPonAWS} deployment to the newer version. 
+The upgrade process covers upgrading of {HubName} and {ControllerName}. 
+The upgrade process takes roughly the same amount of time as a {AAPonAWS} deployment install. 
+The upgrade process also backs up {PlatformNameShort}.
+
+[NOTE]
+=====
+{AAPonAWS} supports sequential upgrades. 
+All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+For example, to upgrade {AAPonAWS} to 2.3.20230221, you must be on version 2.2.20230215 version of {AAPonAWS}.
+=====
+
+.Prerequisites
+* Docker must be installed to run the upgrade playbook.
+* A Linux or macOS system, where the `ansible-on-clouds-ops` container image will run.
+
+
+The following procedures form the upgrade process:
+
+. Backup your {PlatformNameShort} stack.
+.. Pull the ansible-on-clouds-ops 2.2 container image 
+.. Ensure minimum required permissions are met
+.. Prepare the environment
+.. Run the ansible-on-clouds-ops 2.2 container to backup the stack
+. Upgrade {PlatformNameShort}.
+.. Pull the ansible-on-clouds-ops 2.3 container image 
+.. Ensure minimum required permissions are met
+.. Generate data files by running the ansible-on-clouds-ops container
+.. Update the data file
+.. Run the ansible-on-clouds-ops 2.3 container to upgrade your {AAPonAWS} deployment
+. (Optional) Restore the stack from backup. 
+.. Pull the ansible-on-clouds-ops 2.2 container image 
+.. Ensure minimum required permissions are met
+.. Prepare the environment
+.. Run the ansible-on-clouds-ops 2.2 container to restore the stack
+
+//Context label added in case modules are reused.
+:context: backup
+include::topics/con-aap-aws-upgrade-backup-process.adoc[leveloffset=+1]
+:context: upgrade
+include::topics/con-aap-aws-upgrade-upgrading-aap.adoc[leveloffset=+1]
+:context: restore
+include::topics/con-aws-upgrade-restore-from-stack.adoc[leveloffset=+1]
+//include::topics/proc-aap-aws-application-upgrade.adoc[leveloffset=+1]

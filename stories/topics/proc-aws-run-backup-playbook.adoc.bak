@@ -1,0 +1,57 @@
+[id="proc-aap-aws-run-backup-playbook"]
+
+= Running the backup playbook
+
+The following procedure runs the backup playbook as a container.
+
+.Procedure
+. To run the backup, run the command generator.
++
+[source, bash]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_backup_stack --data-file /data/extra_vars.yaml
+----
++
+This generates the backup CLI command  
++
+[source, bash]
+----
+----------------------------------------------
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_backup_vault_name=Default \
+aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole \
+aws_s3_bucket=AnsibleAutomationPlatform-bucket'
+===============================================
+----
+. Run the generated command to trigger the backup.
++
+[source, bash]
+----
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
+aws_backup_vault_name=Default \
+aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole \ aws_s3_bucket=AnsibleAutomationPlatform-bucket'
+----
+. The backup can take several minutes to complete, depending on the database size. 
+A successful backup returns a log similar to the following:
++
+[source, bash]
+----
+{
+    "efs_restore_points": [
+        {
+            "CreationDate": "2023-02-28T21:54:07.515000+00:00",
+            "RecoveryPointArn": "arn:aws:backup:us-east-1:080914983077:recovery-point:967be465-a43e-432a-b536-8b16e6b0452d"
+        },
+        {
+            "CreationDate": "2023-02-28T16:08:08.905000+00:00",
+            "RecoveryPointArn": "arn:aws:backup:us-east-1:080914983077:recovery-point:d2058e3a-dca6-4a18-b175-5ef624f513a7"
+        }
+    ],
+    "rds_db_snapshot_arn": "arn:aws:rds:us-east-1:080914983077:snapshot:test-bnr-ops-container-rds169785b9-orm2iuzlfqem-snap-2023-02-28"
+}
+----
+. Your {AAPonAWS} deployment is now successfully backed up. 
+As the log shows, the playbook successfully creats an EFS backup and RDS snapshot of your deployment listing the most recent EFS restore point and RDS snapshot information.

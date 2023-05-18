@@ -1,0 +1,39 @@
+[id="ref-aap-aws-iam-minimum-permissions"]
+
+= IAM minimum permissions
+
+You must have the following ASW IAM permissions to backup the stack:
+
+[source,bash]
+----
+required-roles:
+ actions:
+  -backup:DescribeBackupJob
+  -backup:ListRecoveryPointsByBackupVault
+  -backup:StartBackupJob
+ resources:
+  -'*'
+cloudformation:
+ actions:
+  -elasticfilesystem:DescribeFileSystems
+ resources:
+  -'*'
+iam:
+ actions:
+  -rds:CreateDBSnapshot
+  -rds:DescribeDBSnapshots
+ resources:
+  -'*'
+secretsmanager:
+ actions:
+  -secretsmanager:GetSecretValue
+ resources:
+  -'*'
+s3
+ actions:
+  -s3:CreateBucket
+  -s3:GetObject
+  -s3:PutObject
+ resources:
+  -'*'
+----

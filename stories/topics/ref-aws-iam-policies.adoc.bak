@@ -1,0 +1,262 @@
+[id="ref-aap-aws-iam-policies"]
+
+= IAM policies
+
+Your AWS account must have _Identity and Access Management_ (IAM) permissions to create and manage {Market} deployments as well as the resources described in xref:con-aws-application-architecture[Application architecture]. 
+
+Your AWS account must also be licensed to deploy {AAPonAWS}.
+
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources. 
+
+The application has two deployment options:
+
+. Deployment with new VPC
+. Deployment with existing VPC
+
+
+The following table contains a list of necessary IAM policies:
+
+[cols="30%,40%",options="header"]
+|====
+| For deployment with a new VPC | For deployment with an existing VPC
+a| * Managed Policies
+
+** AWSMarketplaceFullAccess a| * Managed Policies
+
+** AWSMarketplaceFullAccess
+a| * CloudFormation inline IAM policies
+** cloudformation:DeleteStack
+** cloudformation:CreateUploadBucket
+** cloudformation:CreateStack
+** cloudformation:UpdateStack
+** cloudformation:GetTemplateSummary
+** cloudformation:ListStacks
+** cloudformation:GetStackPolicy
+** cloudformation:DescribeStacks
+** cloudformation:ListStackResources
+** cloudformation:DescribeStackEvents a| * CloudFormation inline IAM policies
+
+** cloudformation:DeleteStack
+** cloudformation:CreateUploadBucket
+** cloudformation:CreateStack
+** cloudformation:UpdateStack
+** cloudformation:GetTemplateSummary
+** cloudformation:ListStacks
+** cloudformation:GetStackPolicy
+** cloudformation:DescribeStacks
+** cloudformation:ListStackResources
+** cloudformation:DescribeStackEvents
+a| * S3 inline IAM policies
+
+** s3:CreateBucket
+** s3:PutObject
+** s3:GetObject a| * S3 inline IAM policies
+
+** s3:CreateBucket
+** s3:PutObject
+** s3:GetObject
+a| * IAM inline IAM policies
+
+** iam:DetachRolePolicy
+** iam:RemoveRoleFromInstanceProfile
+** iam:DeleteInstanceProfile
+** iam:DeleteRolePolicy
+** iam:CreateRole
+** iam:PutRolePolicy
+** iam:DeleteRole
+** iam:AttachRolePolicy
+** iam:CreateInstanceProfile
+** iam:AddRoleToInstanceProfile
+** iam:PassRole
+** iam:ListRoles
+** iam:GetRolePolicy
+** iam:TagRole a| * IAM inline IAM policies
+
+** iam:DetachRolePolicy
+** iam:RemoveRoleFromInstanceProfile
+** iam:DeleteInstanceProfile
+** iam:DeleteRolePolicy
+** iam:CreateRole
+** iam:PutRolePolicy
+** iam:DeleteRole
+** iam:AttachRolePolicy 
+** iam:CreateInstanceProfile
+** iam:AddRoleToInstanceProfile
+** iam:PassRole
+** iam:ListRoles
+** iam:GetRolePolicy
+** iam:TagRole
+a| * SecretsManager inline IAM policies
+** secretsmanager:DeleteSecret
+** secretsmanager:GetSecretValue
+** secretsmanager:GetRandomPassword
+** secretsmanager:CreateSecret
+** secretsmanager:TagResource
+** secretsmanager:PutSecretValue a|  * SecretsManager inline IAM policies
+
+** secretsmanager:DeleteSecret
+** secretsmanager:GetSecretValue
+** secretsmanager:GetRandomPassword
+** secretsmanager:CreateSecret
+** secretsmanager:TagResource
+** secretsmanager:PutSecretValue 
+a| * RDS inline IAM policies
+
+** rds:DeleteDBSubnetGroup
+** rds:DeleteDBInstance
+** rds:CreateDBSubnetGroup
+** rds:AddTagsToResource
+** rds:CreateDBInstance
+** rds:DescribeDBSubnetGroups
+** rds:DescribeDBInstances a| * RDS inline IAM policies
+
+** rds:DeleteDBSubnetGroup
+** rds:DeleteDBInstance
+** rds:CreateDBSubnetGroup
+** rds:AddTagsToResource
+** rds:CreateDBInstance
+** rds:DescribeDBSubnetGroups
+** rds:DescribeDBInstances
+a| * Elastic File System inline IAM policies
+
+** elasticfilesystem:DeleteFileSystem
+** elasticfilesystem:DeleteMountTarget
+** elasticfilesystem:DeleteAccessPoint
+** elasticfilesystem:CreateFileSystem
+** elasticfilesystem:CreateAccessPoint
+** elasticfilesystem:CreateMountTarget
+** elasticfilesystem:DescribeFileSystems
+** elasticfilesystem:DescribeFileSystemPolicy
+** elasticfilesystem:DescribeBackupPolicy
+** elasticfilesystem:DescribeLifecycleConfiguration
+** elasticfilesystem:DescribeAccessPoints
+** elasticfilesystem:DescribeMountTargets a| * Elastic File System inline IAM policies
+** elasticfilesystem:DeleteFileSystem
+** elasticfilesystem:DeleteMountTarget
+** elasticfilesystem:DeleteAccessPoint
+** elasticfilesystem:CreateFileSystem
+** elasticfilesystem:CreateAccessPoint
+** elasticfilesystem:CreateMountTarget
+** elasticfilesystem:DescribeFileSystems
+** elasticfilesystem:DescribeFileSystemPolicy
+** elasticfilesystem:DescribeBackupPolicy
+** elasticfilesystem:DescribeLifecycleConfiguration
+** elasticfilesystem:DescribeAccessPoints
+** elasticfilesystem:DescribeMountTargets
+a| * EC2 inline IAM policies
+
+** ec2:RevokeSecurityGroupEgress
+** ec2:RevokeSecurityGroupIngress
+** ec2:DescribeKeyPairs
+** ec2:CreateSecurityGroup
+** ec2:DescribeSecurityGroups
+** ec2:DeleteSecurityGroup
+** ec2:CreateTags
+** ec2:AuthorizeSecurityGroupEgress
+** ec2:AuthorizeSecurityGroupIngress
+** ec2:DescribeInstances
+** ec2:CreateVpc
+** ec2:DescribeVpcs
+** ec2:DeleteVpc
+** ec2:CreateSubnet
+** ec2:DeleteSubnet
+** ec2:DescribeSubnets
+** ec2:DeleteSubnetCidrReservation
+** ec2:AssociateSubnetCidrBlock
+** ec2:DisassociateSubnetCidrBlock
+** ec2:CreateSubnetCidrReservation
+** ec2:GetSubnetCidrReservations
+** ec2:DescribeAvailabilityZones
+** ec2:CreateRouteTable
+** ec2:DeleteRouteTable
+** ec2:CreateRoute
+** ec2:DeleteRoute
+** ec2:CreateInternetGateway
+** ec2:DeleteInternetGateway
+** ec2:DescribeInternetGateways
+** ec2:AttachInternetGateway
+** ec2:DetachInternetGateway
+** ec2:AssociateRouteTable
+** ec2:DescribeRouteTables
+** ec2:DisassociateRouteTable
+** ec2:ModifyVpcAttribute
+** ec2:DescribeAccountAttributes
+** ec2:DescribeAddresses
+** ec2:AssociateAddress
+** ec2:DisassociateAddress
+** ec2:DescribeAddressesAttribute
+** ec2:ModifyAddressAttribute
+** ec2:AssociateNatGatewayAddress
+** ec2:DisassociateNatGatewayAddress
+** ec2:CreateNatGateway
+** ec2:DeleteNatGateway
+** ec2:DescribeNatGateways
+** ec2:AllocateAddress
+** ec2:ReleaseAddress a| * EC2 inline IAM policies
+
+** ec2:RevokeSecurityGroupEgress
+** ec2:RevokeSecurityGroupIngress
+** ec2:DescribeKeyPairs
+** ec2:CreateSecurityGroup
+** ec2:DescribeSecurityGroups
+** ec2:DeleteSecurityGroup
+** ec2:CreateTags
+** ec2:AuthorizeSecurityGroupEgress
+** ec2:AuthorizeSecurityGroupIngress
+** ec2:DescribeInstances
+a| * AutoScaling inline IAM policies
+
+** autoscaling:CreateLaunchConfiguration
+** autoscaling:CreateAutoScalingGroup
+** autoscaling:DeleteLaunchConfiguration
+** autoscaling:UpdateAutoScalingGroup
+** autoscaling:DeleteAutoScalingGroup
+** autoscaling:DescribeAutoScalingGroups
+** autoscaling:DescribeLaunchConfigurations
+** autoscaling:DescribeScalingActivities
+** autoscaling:DescribeAutoScalingInstances a| * AutoScaling inline IAM policies
+
+** autoscaling:CreateLaunchConfiguration
+** autoscaling:CreateAutoScalingGroup
+** autoscaling:DeleteLaunchConfiguration
+** autoscaling:UpdateAutoScalingGroup
+** autoscaling:DeleteAutoScalingGroup
+** autoscaling:DescribeAutoScalingGroups
+** autoscaling:DescribeLaunchConfigurations
+** autoscaling:DescribeScalingActivities
+** autoscaling:DescribeAutoScalingInstances
+a| * ElasticLoadBalancing inline IAM policies
+
+** elasticloadbalancing:CreateTargetGroup
+** elasticloadbalancing:ModifyTargetGroupAttributes
+** elasticloadbalancing:DeleteTargetGroup
+** elasticloadbalancing:AddTags
+** elasticloadbalancing:CreateLoadBalancer
+** elasticloadbalancing:ModifyLoadBalancerAttributes
+** elasticloadbalancing:DescribeTargetGroups
+** elasticloadbalancing:DescribeListeners
+** elasticloadbalancing:CreateListener
+** elasticloadbalancing:DeleteListener
+** elasticloadbalancingv2:DeleteLoadBalancer
+** elasticloadbalancingv2:DescribeLoadBalancers a| * ElasticLoadBalancing inline IAM policies
+
+** elasticloadbalancing:CreateTargetGroup
+** elasticloadbalancing:ModifyTargetGroupAttributes
+** elasticloadbalancing:DeleteTargetGroup
+** elasticloadbalancing:AddTags
+** elasticloadbalancing:CreateLoadBalancer
+** elasticloadbalancing:ModifyLoadBalancerAttributes
+** elasticloadbalancing:DescribeTargetGroups
+** elasticloadbalancing:DescribeListeners
+** elasticloadbalancing:CreateListener
+** elasticloadbalancing:DeleteListener
+** elasticloadbalancingv2:DeleteLoadBalancer
+** elasticloadbalancingv2:DescribeLoadBalancers
+a| * SNS inline IAM policies
+
+** sns:ListTopics a| * SNS inline IAM policies
+
+** sns:ListTopics
+
+|====
+

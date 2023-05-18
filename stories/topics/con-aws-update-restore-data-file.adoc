@@ -1,4 +1,4 @@
-[id="con-aap-aws-update-restore-data-file"]
+[id="con-aws-update-restore-data-file"]
 
 = Updating the restore data file
 
@@ -11,7 +11,7 @@ The following variables are parameters listed in the data file.
 +
 [NOTE]
 ====
-If provided, the playbook defaults to this value over the vaue of the IAM role referenced in the backup file on S3. For further information, see xref:con-aap-aws-backup-process[Backing up the {PlatformNameShort} deployment]
+If provided, the playbook defaults to this value over the vaue of the IAM role referenced in the backup file on S3. For further information, see xref:con-aws-backup-process[Backing up the {PlatformNameShort} deployment]
 ====
 +
 * `aws_backup_restore_point_arn` is the optional ARN of the of the EFS recovery point you want to use for restore.
@@ -19,7 +19,7 @@ If provided, the playbook defaults to this value over the vaue of the IAM role r
 [NOTE]
 ====
 If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. 
-See xref:ref-aap-aws-permissions[AWS permissions].
+See xref:ref-aws-permissions[AWS permissions].
 You must also ensure that the provided restore point is from a version of Ansible on Clouds (AoC) that matches the version of the ansible-on-clouds-ops container image running the restore. 
 For example, a restore point taken from a deployment on AoC version 2.3-20230420174801-00 needs to use the `ansible-on-clouds-ops` container image of the same version.
 ====
@@ -28,7 +28,7 @@ For example, a restore point taken from a deployment on AoC version 2.3-20230420
 +
 [NOTE]
 ====
-If provided, the playbook defaults to this value over the backup vault referenced in the backup file on S3 which was generated when running the backup operation. See xref:ref-aap-aws-permissions[AWS permissions].
+If provided, the playbook defaults to this value over the backup vault referenced in the backup file on S3 which was generated when running the backup operation. See xref:ref-aws-permissions[AWS permissions].
 You must also ensure that this backup vault matches the one used to backup the deployment.
 ====
 +
