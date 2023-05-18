@@ -1,0 +1,31 @@
+[id="proc-aws-vpc-peering"]
+
+= VPC peering
+
+link:https://docs.aws.amazon.com/vpc/latest/peering/what-is-vpc-peering.html[VPC Peering] offers the ability to directly connect different networks within your AWS infrastructure. 
+When two or more networks are peered, the peering only establishes the connection between the networks. 
+You must also update routing tables to direct the networks to send traffic over the appropriate networking peer.
+
+image::aws-vpc-peering.png[VPC peering]
+
+.Prerequisites
+Before using VPC peering to connect any VPC, you must ensure that there is no network address space overlap between the networks that you intend to route traffic between your VPCs, and {AAPonAWS}'s VPC address space.
+
+The following procedure lets you configure VPC peering with {PlatformNameShort}.
+
+.Procedure
+. In the AWS Portal, navigate to menu:VPC[].
+. In the *VPC menu*, click btn:[Peering Connections].
+. Click btn:[Create peering connection].
+. Fill out the following fields:
+.. In the *Name* field, enter the name of the peering connection as you need.
+.. In the *Select a local VPC to peer with* field, enter the Virtual Private Cloud. 
+This can be your existing VPC.
+.. In the *Select another VPC to peer with* field, enter the name of the Virtual Private Cloud. 
+This can be the {PlatformNameShort} from {Market} VPC
+.. Select *My Account* as these two networks should exist in the same account.
+.. Choose the appropriate region configuration based on your VPC layout.
+. Click btn:[Create peering connection].
+. On the next screen, the summary page for the peering, select the *Actions* menu in the top right and select *Accept request*.
+
+When you have configured the direct network peering you must configure the route tables, security groups, and Network ACLs for both VPCs for traffic to route properly.

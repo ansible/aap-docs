@@ -1,0 +1,108 @@
+[id="ref-aws-iam-upgrade-minimum-permissions"]
+
+= IAM minimum upgrade permissions
+
+You must have the following ASW IAM permissions to upgrade the stack:
+
+[source,bash]
+----
+required-roles:
+  ec2:
+    actions:
+      - ec2:DescribeInstances
+      - ec2:GetLaunchTemplateData
+      - ec2:DescribeAccountAttributes
+      - ec2:DescribeLaunchTemplates
+      - ec2:CreateTags
+      - ec2:RunInstances
+      - ec2:DescribeInstanceTypes
+      - ec2:DescribeSubnets
+      - ec2:DeleteTags
+      - ec2:DescribeRegions
+      - ec2:DescribeAvailabilityZones
+      - ec2:DeleteLaunchTemplate
+      - ec2:DescribeTags
+      - ec2:DescribeLaunchTemplateVersions
+      - ec2:DescribeSecurityGroups
+      - ec2:CreateLaunchTemplateVersion
+      - ec2:CreateLaunchTemplate
+      - ec2:DescribeVpcs
+      - ec2:ModifyLaunchTemplate
+    resources:
+      - "*"
+  iam:
+    actions:
+      - iam:ListRoleTags
+      - iam:AttachRolePolicy
+      - iam:PutRolePolicy
+      - iam:AddRoleToInstanceProfile
+      - iam:ListAttachedRolePolicies
+      - iam:GetRole
+      - iam:GetRolePolicy
+      - iam:CreateInstanceProfile
+      - iam:ListInstanceProfilesForRole
+      - iam:PassRole
+      - iam:GetInstanceProfile
+      - iam:CreateServiceLinkedRole
+    resources:
+      - "*"
+  secretsmanager:
+    actions:
+      - secretsmanager:DescribeSecret
+      - secretsmanager:ListSecrets
+      - secretsmanager:TagResource
+      - secretsmanager:UntagResource
+      - secretsmanager:CreateSecret
+      - secretsmanager:GetSecretValue
+      - secretsmanager:UpdateSecret
+      - secretsmanager:GetResourcePolicy
+    resources:
+      - "*"
+  ssm:
+    actions:
+      - ssm:StartSession
+      - ssm:TerminateSession
+    resources:
+      - "*"
+  autoscaling:
+    actions:
+      - autoscaling:DescribeAutoScalingGroups
+      - autoscaling:UpdateAutoScalingGroup
+      - autoscaling:DescribeInstanceRefreshes
+      - autoscaling:DeleteTags
+      - autoscaling:DescribeTags
+      - autoscaling:CreateOrUpdateTags
+      - autoscaling:CreateAutoScalingGroup
+      - autoscaling:DescribeLaunchConfigurations
+      - autoscaling:DescribeLifecycleHooks
+      - autoscaling:StartInstanceRefresh
+      - autoscaling:CreateLaunchConfiguration
+      - autoscaling:DisableMetricsCollection
+      - autoscaling:DeleteLaunchConfiguration
+    resources:
+      - "*"
+  s3:
+    actions:
+      - s3:DeleteObject
+      - s3:PutObject
+      - s3:GetObject
+      - s3:GetBucketLocation
+    resources:
+      - "*"
+  cloudformation:
+    actions:
+      - cloudformation:ListStackResources
+      - cloudformation:DescribeStacks
+      - cloudformation:GetTemplate
+    resources:
+      - "*"
+  elasticloadbalancing:
+    actions:
+      - elasticloadbalancing:DescribeTargetGroupAttributes
+      - elasticloadbalancing:DescribeTags
+      - elasticloadbalancing:DescribeTargetHealth
+      - elasticloadbalancing:DescribeTargetGroups
+      - elasticloadbalancing:ModifyTargetGroup
+    resources:
+      - "*"
+----
