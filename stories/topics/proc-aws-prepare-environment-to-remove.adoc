@@ -1,0 +1,75 @@
+[id="proc-aws-prepare-environment-to-remove"]
+
+= Preparing the environment
+
+The extension nodes removal process requires a few volumes to be mounted, so you must prepare a new directory.
+
+.Procedure
+. Create a directoies for the configuration file during the extension nodes removal process.
++
+[source,bash]
+----
+# Secrets directory. Store the AWS credentials and config files.
+$ mkdir secrets
+# Extra vars directory. All the configuration variables for the extension nodes removal process.
+$ mkdir extra_vars
+----
+
+. Create the `secrets/config` file and add the following content. Replace `us-east-1` with your region, and to replace `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
++
+[source,ini]
+----
+[default]
+region = us-east-1
+output = json
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+----
++
+[NOTE]
+=====
+To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
+=====
+
+. Create the `extra_vars/extra_vars.yml` file in the `extra_vars` directory, and add the following content to it.
++
+[source,yaml]
+----
+# Main vars
+aws_foundation_stack_name: "mydeployment"
+aws_region: us-east-1
+
+# Extension node vars
+aws_offer_type: "100"
+aws_launch_template_name: "mydeployment-lt"
+aws_autoscaling_group_name: "mydeployment-asg"
+aws_asg_min_size: 2
+aws_asg_desired_capacity: 2
+----
++
+where:
++
+.Main variables
+* `aws_foundation_stack_name` is Tthe name of the foundation deployment. 
+This is the same name you used when you deployed the foundation.
+* `aws_region` is the region where the foundation deployment is located.
++
+.Extension node variables.
+* `aws_offer_type` is the offer type of the extension nodes. Must be `100`, `200`, or `400`.
+* `aws_launch_template_name` is the name of the AWS EC2 launch template to create.
+* `aws_autoscaling_group_name` is the name of the AWS AutoScaling Group to create for the extension nodes.
+* `aws_asg_min_size` is the AutoScaling Group minimum capacity. (Max is set by offer_type)
+* `aws_asg_desired_capacity` is the AutoScaling Group desired capacity.
+
+. The final result looks similar to the following:
+
+[source,bash]
+----
+$ tree
+.
+├── extra_vars/
+│   └── extra_vars.yml
+└── secrets/
+    ├── config
+    └── credentials
+----

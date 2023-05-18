@@ -1,0 +1,20 @@
+[id="proc-aws-routing-to-vpcs"]
+
+= Routing to your VPCs
+
+You must configure route tables to your existing networks to send traffic from {PlatformNameShort} VPC CIDR to any network that has automation performed against resources in those networks.
+
+.Procedure
+. In the AWS console, navigate to menu:VPC[].
+. Click btn:[Route Tables] in the left menu.
+. Select the route table associated with the {AAPonAWS} VPC.
+. Click btn:[Edit Routes].
+. Click btn:[Add Route].
+. In the *Destination* field, enter the CIDR block of the VPC that you peered to the {PlatformNameShort} VPC.
+. In the *Target field*, select Peering Connection.  
+A list of peering connections from this VPC is displayed. 
+Select the ID for the peering connection with your existing VPC from the list. 
+At this stage, you should only have one VPC peered with {AAPonAWS} VPC, so only one option should appear.
+. Click btn:[Save changes].
+
+When you have configured the routing rules then traffic should successfully route traffic to and from {AAPonAWS} though your hub network.
