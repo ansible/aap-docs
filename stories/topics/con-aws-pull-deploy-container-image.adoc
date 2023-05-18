@@ -1,0 +1,23 @@
+[id="con-aws-pull-deploy-container-image"]
+
+= Pulling the ansible-on-clouds-ops container image
+
+Pull the Docker image for the Ansible on Clouds operational container with the same tag as the version you are deploying to.
+
+For example, if your foundation deployment version is 2.2.20230215, you must pull the operational image with tag 2.3.20230221-00 to deploy extension nodes to the foundation stack.
+
+Use the following commands:
+
+[source,bash]
+----
+$ export IMAGE==quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.3.20230221-00-latest-rh_inc	
+$ docker pull $IMAGE
+----
+
+For EMEA regions (Europe, Middle East, Africa) run the following command instead:
+
+[source, bash]
+----
+$ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.3.20230221-00-latest-rh-limited
+$ docker pull $IMAGE
+----
