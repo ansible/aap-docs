@@ -5,6 +5,11 @@
 .Procedure
 . Populate the command_generator_data directory with the configuration file template.
 +
+[NOTE]
+====
+As `/tmp` is used, the `<local_data_file_directory>` must be set to `/tmp` unless you chose a different location for `backup.yml`.
+====
++
 [source,bash]
 ----
 docker run -v /tmp:/data --rm $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
