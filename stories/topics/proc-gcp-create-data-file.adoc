@@ -1,0 +1,49 @@
+[id="proc-gcp-create-data-file"]
+
+= Creating the backup data file
+
+.Procedure
+. Populate the command_generator_data directory with the configuration file template.
++
+[source,bash]
+----
+docker run -v /tmp:/data --rm $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
+----
++
+Produces the following output:
++
+[source,bash]
+----
+docker run --rm -v <local_data_file_directory>:/data $IMAGE \
+command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
+
+===============================================
+Playbook: gcp_backup_deployment
+Description: This playbook is used to backup the AoC Self-managed GCP environment.
+-----------------------------------------------
+This playbook is used to backup the AoC Self-managed GCP environment.
+For more information regarding backup and restore, visit our official documentation - 
+
+-----------------------------------------------
+----
+. Run the supplied command
++
+[source,bash]
+----
+$ docker run --rm -v /tmp:/data $IMAGE \
+command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
+----
+. After running the command, a `/tmp/backup.yml` template file is created. 
+This template file resembles the following: 
++
+[source,bash]
+----
+gcp_backup_deployment:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    gcp_bucket_backup_name:
+    gcp_compute_region:
+    gcp_compute_zone:
+----
+
