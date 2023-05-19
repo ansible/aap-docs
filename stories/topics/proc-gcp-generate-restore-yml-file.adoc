@@ -1,0 +1,47 @@
+[id="proc-gcp-generate-restore-yml-file"]
+
+= Generating the restore.yml file
+
+.Procedure
+. Run the command generator `command_generator_vars`` to generate `restore.yml`.
++
+[source,bash]
+----
+docker run --rm -v /tmp:/data $IMAGE command_generator_vars gcp_restore_deployment --output-data-file /data/restore.yml
+----
++
+Providing the following output:
++
+[source,bash]
+----
+===============================================
+Playbook: gcp_restore_deployment
+Description: This playbook is used to restore the AoC Self-managed GCP environment.
+-----------------------------------------------
+This playbook is used to restore the AoC Self-managed GCP environment.
+For more information regarding backup and restore, visit our official documentation - 
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm -v /tmp:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
+----
++
+The template resembles the following:
++
+[source,bash]
+----
+gcp_restore_deployment:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    gcp_bucket_backup_name:
+    gcp_cloud_sql_peering_network:
+    gcp_compute_region:
+    gcp_compute_zone:
+    gcp_controller_internal_ip_address:
+    gcp_existing_vpc:
+    gcp_filestore_ip_range:
+    gcp_hub_internal_ip_address:
+    gcp_restored_deployment_name:
+----
