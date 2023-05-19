@@ -1,0 +1,20 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-aap-gcp-networking-access"]
+= Networking and application access
+
+:context: aap-gcp-networking
+
+When {AAPonGCP} is deployed, it is installed into an isolated VPC and cannot be accessed. 
+The following instructions describe how to connect the VPC used by {AAPonGCP} to your existing GCP network. 
+When connected, you must determine how your users connect to {PlatformNameShort}.  
+
+There are many ways to enable this connectivity such as VPNs, Google Cloud Interconnect, or bastion servers for private network access. 
+You can also expose the platform with public internet access using GCP services such as a Load Balancer. 
+
+How your organization configures application access on GCP is outside the scope of Red Hat’s guidelines and support for {AAPonGCP}. 
+For further information, see link:https://cloud.google.com/solutions/connecting-securely#external[Securely connecting to VMs] for guidelines on these topics.
+
+include::topics/con-aap-gcp-network-peering-options.adoc[leveloffset=+1]
+include::topics/proc-aap-gcp-vpc-peering.adoc[leveloffset=+1]
+include::topics/proc-aap-gcp-external-load-balancer.adoc[leveloffset=+1]

@@ -1,0 +1,55 @@
+[id="proc-aap-gcp-change-config-controller-hub"]
+
+= Changing the configuration of {HubName} or {ControllerName}
+
+If you want to have a different configuration for {ControllerName} and {HubName}, you must follow the steps below for each {ControllerName} or {Hubname} that you want a different configuration for.
+
+.Procedure
+. Login on the {ControllerName} or {HubName}.
+. To login as a super user run :
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+# su -
+----
+
+. To have one file per server for either {ControllerNaame} or {HubName}, copy the file
+`/aap/bootstrap/config_file_templates/<controller|hub>/monitoring.yaml`
+to
+`/aap/bootstrap/config_file_templates/<controller|hub>/monitoring-$HOSTNAME.yaml`.
+
+. To login as the awx user run:
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+# su - awx
+----
+
+. To remove the current exporter run:
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ podman rm aoc-metric-exporter –force
+----
+
+. To start the export with the newly created configuration file (`monitoring=$HOSTNAME.yaml`).run:
++
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ podman run -d --name=aoc-metric-exporter --network=host \
+-v  ${CONFIG_DIR}:/config:ro \
+quay.io/ansible-on-clouds/aoc-metric-exporter:latest \
+gcp \
+--collectors-config-file /config/monitoring-$HOSTNAME.yaml\
+--awx-password-secret-name ${GCP_ADMIN_SECRET_NAME} \
+--project ${PROJECT}
+----
+
+Where `GCP_ADMIN_SECRET_NAME` is the result of
+
+[options="nowrap" subs="+quotes,attributes"]
+----
+$ curl "http://metadata.google.internal/computeMetadata/v1/instance/attributes/gcp-admin-secret-name" -H "Metadata-Flavor: Google" 2>/dev/null
+----
+
+and PROJECT is the name of your project.

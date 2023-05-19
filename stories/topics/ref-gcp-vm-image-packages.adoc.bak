@@ -1,0 +1,21 @@
+[id="ref-aap-gcp-vm-image-packages"]
+
+= VM Image packages
+
+{AAPonGCP} is delivered through virtual machines that are based on a VM image produced by the Red Hat Ansible team. 
+This image contains packages from Red Hat and Google in order to properly function on {GCP} and run {PlatformName}. 
+The image contains the following Google packages and containers:
+
+[cols="30%,40%",options="header"]
+|====
+| Package Name | Description
+| `google-osconfig-agent` | The Google OS Configuration Agent uses the management service to deploy, query, and maintain consistent configurations, that is, the desired state and software for your VM instance.
+| `google-cloud-ops-agent` | The Ops Agent is the primary agent for collecting telemetry from your Compute Engine instances. 
+Combining logging and metrics into a single agent, the Ops Agent uses Fluent Bit for logs, which supports high-throughput logging, and the OpenTelemetry Collector for metrics.
+| `gce-proxy` | The Cloud SQL Authorization proxy is used to connect {PlatformNameShort} components with the Cloud SQL database using the virtual machine service account.
+| `gcloud CLI` | The gcloud command line interface is used to configure the {PlatformNameShort} installation.
+|====
+
+Upgrades, including package updates and CVE patches, will be provided as new VM images through the {GCPMarket}. 
+Red Hat operates within its premium support policies for providing updated machine images to Red Hat {AAPonGCP}, and will provide upgrade instructions to customers when upgradable machine images are available.
+

@@ -1,0 +1,46 @@
+[id="ref-gcp-populate-restore-file"]
+
+= Parameters of the restore.yml file
+
+You can restore using either a new VPC network or an existing one.
+You must set additional parameters to restore on an existing VPC network.
+
+.For a new VPC
+
+If you want to restore using a new VPC set the following parameters:
+
+* `gcp_existing_vpc` must be set to `false`.
+
+The following parameters must be removed:
+
+* `gcp_filestore_ip_range`
+* `gcp_cloud_sql_peering_network`
+* `gcp_controller_internal_ip_address`
+* `gcp_hub_internal_ip_address`
+
+Provide values for the following parameters:
+
+* `gcp_existing_vpc` must be set to `false`.
+* `cloud_credentials_path` is the absolute path toward your credentials.
+* `gcp_deployment_name` is the name of the deployment you want to back up.
+* `gcp_restored_deployment_name` isthe name under which the deployment must be restored.
+* `gcp_bucket_backup_name` is the bucket you used for the backup.
+* `gcp_bucket_backup_name` is the name you used for backup.
+* `gcp_compute_region` is the region where the backup was taken.
+* `gcp_compute_zone` is the zone where the backup was taken.
+
+
+.For an existing VPC
+
+If you want to restore using an existing VPC, you must set the parameters shown above.
+
+You must also set the following additional parameters:
+
+* `gcp_existing_vpc` is set to `true`.
+* `gcp_filestore_ip_range` must be set to a free ip/29 range of your VPC.
+For example: 192.168.245.0/29.
+You must not use 192.168.243.0/29 as this the default used when deploying {AAPonGCP}.
+* `gcp_cloud_sql_peering_network` must be set to a free `/24` subnet.
+You must not use 192.168.241.0/24 as this is used during the original deployment.
+* `gcp_controller_internal_ip_address` must be set to a free IP in your VPC network.
+* `gcp_hub_internal_ip_address` must set to a free IP in your VPC network.
