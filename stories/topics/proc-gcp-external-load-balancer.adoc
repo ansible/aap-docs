@@ -1,0 +1,80 @@
+[id="proc-gcp-external-load-balancer"]
+
+= Using an external load balancer
+
+It is possible to expose Ansible {ControllerName} and Ansible {PrivateHubName} to the public internet if you want users to have access to the platform from any internet connected machine. 
+
+This is not recommended as a best practice for security reasons. 
+
+However this implementation can be secured with different GCP tools. 
+This section describes how to connect a load balancer that faces the public internet, but it does not include steps to harden access through Google’s security products. 
+Only use this approach if you intend to protect the public endpoints with link:https://cloud.google.com/armor/[Google Cloud Armor] or similar product(s).
+
+[NOTE]
+====
+{AAPonGCP} is deployed with two _internal_ application load balancers. 
+These load balancers direct traffic within local VPCs and must remain part of the deployment even if you configure public load balancers.
+====
+
+
+.Procedure
+. Select the main menu from the top left.
+. Select *Network Services*. 
+If you do not see *Network Services*, then select *View All Products*.
+. Select *Load Balancing*. 
+. In the top menu, select *CREATE LOAD BALANCER*.
+. Select the *HTTP(S) Load Balancing* tile and click btn:[START CONFIGURATION].
+. Select *From Internet to my VMs or serverless services* and *Global HTTP(s) Load Balancer*.
+. Click btn:[CONTINUE].
+. Give your load balancer a name, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb`
+. Ensure that *Frontend* configuration is selected at the left of the screen.
+. On the *Frontend* configuration page, complete the following fields:
+* *Protocol*: HTTPS.
+* *Port*: 443.
+* *IP Address*: Select an existing IP address or create a new one.
+* *Certificate*: You can use your own SSL Certificate or use a Google managed certificate.
+* *SSL Policy*: GCP default, or another configured policy.
+. Click btn:[DONE].
+. Select *Backend configuration* from the menu on the left.
+. Click the *Backend services & backend buckets* drop-down.
+. Click btn:[CREATE A BACKEND SERVICE].
+.. Give your backend service a name, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-bknd-svc`
+.. Set *Backend type* to *Instance group*.
+.. Set *Protocol* to `HTTP` and *Named Port* to `http`.
+.. Change *Timeout* to `300`.
+.. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down. 
+Select the correct instance group.
++
+For the {Controllername} load balancer, the correct instance group has the suffix `-aap-cntrlr-igm`.
++
+For the {HubName} load balancer, the correct instance group has the suffix `-aap-hub-igm`.
+.. In the resulting dialog box, select *USE EXISTING PORT NAME*.
+.. Set *Balancing mode* to *Rate*.
+.. Set *Maximum RPS* to 300.
+.. Scroll down until you see a text box showing *Health check*. 
+.. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].
+.. Enter a name for your health check, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-hc`
+.. For {Controllername}, use the following health check settings
+* In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
+* Set *Request* to `/api/v2/ping/`.
+.. For {HubName}, use the following health check settings
+* In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8080`.
+* Set *Request* to `/pulp/api/v3/status/`.
+* Keep all other default settings. 
+.. Click btn:[SAVE].
++
+This returns you to the *Backend services & backend buckets* window.
+.. Click btn:[CREATE].
++
+This returns you to *Backend configuration* section.
+.. Click btn:[OK].
+.. Click btn:[CREATE] to create the load balancer for the {ControllerName} or {HubName} UI.  
+This will take a few minutes to complete. 
+. A load balancer has now been created. 
+. Configure the DNS record for the domain that you used in your SSL certificate to point to the IP address of the load balancer.  
+
+At this point you should have accesss to the {PlatformNameShort} {Controllername} UI.  
+You can log in after you retrieve the administration password.
+
+Repeat the same process for {PrivateHubName}.
+The process is identical except for selecting the instance group `-aap-hub-igm` during backend configuration.

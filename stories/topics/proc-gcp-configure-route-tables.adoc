@@ -1,0 +1,19 @@
+[id="proc-gcp-configure-route-tables"]
+
+= Configure VPC route tables
+
+.Routing to {PlatformNameShort}
+You must configure route tables from your existing networks to send traffic to the {PlatformNameShort} VPC CIDR for any network that requests {PlatformNameShort} user interfaces or APIs.
+
+.Procedure
+. In the GCP Console, navigate to menu:VPC[].
+. Click btn:[Route Tables] in the left menu.
+. Select the route table associated with the VPC that already existed in your GCP account.
+. Click btn:[Edit Routes].
+. Click btn:[Add Route].
+. In the *Destination* field, enter the CIDR block of the {PlatformNameShort} VPC.
+. In the *Target field*, select *Peering Connection*.  
++
+Select the peering connection ID for the peering connection with the {PlatformNameShort} on GCP VPC from the list.
++
+. Click btn:[Save changes].
