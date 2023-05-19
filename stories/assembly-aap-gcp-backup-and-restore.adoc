@@ -1,9 +1,23 @@
 ifdef::context[:parent-context: {context}]
 
 [id="assembly-aap-gcp-backup-and-restore"]
-= Backup and Restore
+= Backup and Restore for {AAPonGCP}
 
-:context: aap-gcp-backup-restore
+:context: gcp-backup-restore
 
-include::topics/proc-aap-gcp-backup-process.adoc[leveloffset=+1]
-include::topics/proc-aap-gcp-restore-process.adoc[leveloffset=+1]
+To backup and restore your {PlatformNameShort} deployment, it is vital to have your existing {PlatformNameShort} administration secret name and value recorded somewhere safe.
+
+It is also important to take regular manual backups of the Cloud SQL database instance and filestore backups, to ensure a deployment can be restored as close as possible to its previous working state.
+
+The playbooks backup and restore provides backup and restore support for the {AAPonGCP} foundation deployment. 
+
+[NOTE]
+====
+The restore process deploys a new {PlatformNameShort} with the filestore and SQL database instance being restored to the specified backup.
+====
+
+//context markers here are for any modules which are reused
+:context: backup
+include::topics/con-gcp-backup-process.adoc[leveloffset=+1]
+:context: restore
+include::topics/con-gcp-restore-process.adoc[leveloffset=+1]
