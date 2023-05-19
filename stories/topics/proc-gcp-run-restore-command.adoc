@@ -2,7 +2,7 @@
 
 = Running the restore command
 
-With restore.yml populated, you can usse the command generator to create the restore command.
+When `restore.yml` is populated, you can use the command generator to create the restore command.
 
 .Procedure
 . Run the command generator. 
@@ -39,7 +39,7 @@ $ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gc
 gcp_deployment_name=<former_deployment_name> gcp_restored_deployment_name=<new_deployment_name> \
 gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=True'
 ----
-. When the playbook has completed the output resembles the following:
+. When the playbook has completed, the output resembles the following:
 +
 [source,bash]
 ----
@@ -53,7 +53,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=33   changed=8    unreachable=0    failed=0    skipped=6    rescued=0    ignored=2  
 ----
 
-You cannot delete the backed up environment before a restore because on GCP the database backups are stored in the deployment. 
+You cannot delete the backed up environment before a restore because the database backups are stored in the deployment. 
 Deleting your deployment therefore deletes the database backups.
 
 Versioned or point-in-time backups are not supported by the `ansible-on-clouds-op` container. 
