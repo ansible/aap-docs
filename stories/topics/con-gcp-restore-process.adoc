@@ -4,12 +4,18 @@
 
 The restore process deploys a new deployment, and restores the filestore and SQL database instance to the specified backup.
 
-[NOTE]
+[IMPORTANT]
 =====
 * You must restore with the same operational image version as the backup.
 
-* You can restore using either a new VPC network or an existing one. 
+* You can restore using either a new VPC network or an existing one.
 You must configure additional parameters to restore on an existing VPC network.
+
+* You cannot delete the backed up environment before a restore because the database backups are stored in the deployment.
+Deleting your deployment therefore deletes the database backups.
+
+* Versioned or point-in-time backups are not supported by the `ansible-on-clouds-op` container.
+Only the most recent backup of a deployment is used to restore the deployment.
 =====
 
 The following procedures describe how to restore the {AAPonGCP} deployment.
