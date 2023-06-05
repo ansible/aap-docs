@@ -1,0 +1,39 @@
+[id="proc-aap-populate-command-data-file"]
+
+= Populating the data file
+
+.Procedure
+* Edit the data-file generated in xref:proc-aap-generate-command-data-file[Generating the data file].
++
+Any attribute that represents a path must be an absolute path. 
+The command_generator automatically mounts a volume for it in the final command.
++
+ifdef:: GCP
+For example, in the case of the `gcp_backup_deployment` playbook, the file becomes:
++
+[source,bash]
+----
+gcp_backup_deployment
+  cloud_credentials_path: /path/to/credentials
+  deployment_name: my-deployment
+  extra_vars:
+    cp_bucket_backup_name: my-bucket
+    gcp_compute_region: us-east1
+    gcp_compute_zone: us-east1-b
+----
+endif::[]
+ifdef:: AWS
+For example, in the case of the `aws_backup_stack` playbook, the file becomes:
++
+[source,bash]
+----
+aws_backup_stack:
+  cloud_credentials_path: ~/.aws/credentials
+  deployment_name: AnsibleAutomationPlatform
+  extra_vars:
+    aws_backup_iam_role: arn:aws:iam::<Your AWS Account Number>:role/service-role/AWSBackupDefaultServiceRole
+	aws_backup_vault_name: Default
+    aws_region: us-east-1
+    aws_s3_bucket: ansible-automation-platform-bucket
+----
+endif::[]
