@@ -8,7 +8,7 @@
 Any attribute that represents a path must be an absolute path.
 The command_generator automatically mounts a volume for it in the final command.
 +
-ifdef::product_GCP
+ifdef::product_GCP[]
 For example, in the case of the `gcp_backup_deployment` playbook, the file becomes:
 +
 [source,bash]
@@ -21,8 +21,8 @@ gcp_backup_deployment
     gcp_compute_region: us-east1
     gcp_compute_zone: us-east1-b
 ----
-endif::[]
-ifdef::product_AWS
+endif::product_GCP[]
+ifdef::product_AWS[]
 For example, in the case of the `aws_backup_stack` playbook, the file becomes:
 +
 [source,bash]
@@ -36,4 +36,4 @@ aws_backup_stack:
     aws_region: us-east-1
     aws_s3_bucket: ansible-automation-platform-bucket
 ----
-endif::[]
+endif::product_AWS[]

@@ -38,7 +38,7 @@ $ docker run —–-rm $IMAGE command_generator_vars
 +
 This provides a list of playbooks and a command similar to the following:
 +
-ifdef:: product_AWS
+ifdef::product_AWS[]
 [source,bash]
 ----
 ===============================================
@@ -57,8 +57,8 @@ docker run --rm $IMAGE command_generator aws_add_extension_nodes [--ansible-conf
 --extra-vars 'aws_region=<aws_region> aws_launch_template_name=<aws_launch_template_name> aws_autoscaling_group_name=<aws_autoscaling_group_name> aws_asg_min_size=<aws_asg_min_size> aws_asg_desired_capacity=<aws_asg_desired_capacity> aws_offer_type=<aws_offer_type> [seller_name=<seller_name>]'
 ===============================================
 ----
-endif::[]
-ifdef:: product_GCP
+endif::product_AWS[]
+ifdef::product_GCP[]
 [source,bash]
 ----
 ===============================================
@@ -74,4 +74,4 @@ docker run --rm $IMAGE command_generator gcp_upgrade [--ansible-config ansible_c
 -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_backup_taken=<true|false>'
 ===============================================
 ----
-endif::[]
+endif::product_GCP[]
