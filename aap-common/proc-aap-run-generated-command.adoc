@@ -5,7 +5,7 @@
 .Procedure
 . Ensure that the mounted volume points to the directory where the data file is.
 +
-ifdef:: GCP
+ifdef::product_GCP
 For the `gcp_backup_deployment` playbook example, this is:
 +
 [source,bash]
@@ -16,7 +16,7 @@ Which generates the following output:
 +
 [sourc,bash]
 ----
-Command to run playbook: 
+Command to run playbook:
 
 $ docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE\ redhat.ansible_on_clouds.gcp_backup_deployment \
@@ -25,7 +25,7 @@ gcp_deployment_name=my-deployment gcp_compute_region=us-east1 gcp_compute_zone=u
 ----
 endif::[]
 
-ifdef:: GCP
+ifdef::product_AWS
 For the `aws_backup_stack` playbook example, this is:
 +
 [source,bash]
@@ -36,7 +36,7 @@ Which generates the following output:
 +
 [sourc,bash]
 ----
-Command to run playbook: 
+Command to run playbook:
 
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
 --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
@@ -49,5 +49,4 @@ endif::[]
 This new command has the required parameters, environment variables and mounted volumes to run the playbook.
 
 . Run the generated command.
-You can save this command to rerun it later if required. 
-
+You can save this command to rerun it later if required.

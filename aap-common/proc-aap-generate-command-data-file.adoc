@@ -10,11 +10,11 @@
 $ docker run -rm -v <local_directory_data_file>:/data $IMAGE command_generator_vars <playbook_name> -output-data-file /data/<data-file>.yml
 ----
 +
-The outputs of this command are the command to run and the data file template. 
-The data file is also saved in your `<local_data_file_directory>`. 
+The outputs of this command are the command to run and the data file template.
+The data file is also saved in your `<local_data_file_directory>`.
 This is the template which you populate with your data.
 +
-ifdef:: GCP
+ifdef::product_GCP
 The following example uses the `gcp_backup_deployment` playbook.
 +
 [source,bash]
@@ -32,10 +32,10 @@ Playbook: gcp_backup_deployment
 Description: This playbook is used to backup the AoC Self-managed GCP environment.
 -----------------------------------------------
 This playbook is used to backup the AoC Self-managed GCP environment.
-For more information regarding backup and restore, visit our official documentation - 
+For more information regarding backup and restore, visit our official documentation -
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
 
@@ -52,7 +52,7 @@ gcp_backup_deployment:
 ===============================================
 ----
 endif::[]
-ifdef:: AWS
+ifdef::product_AWS
 The following example uses the `aws_backup_stack` playbook.
 +
 [source,bash]
@@ -69,11 +69,11 @@ $ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator_
 Playbook: aws_backup_stack
 Description: This playbook is used to backup the Ansible Automation Platform from AWS Marketplace environment.
 -----------------------------------------------
-This playbook is used to backup the Ansible Automation Platform from AWS Marketplace environment. 
-For more information regarding backup and restore, visit our official documentation - 
+This playbook is used to backup the Ansible Automation Platform from AWS Marketplace environment.
+For more information regarding backup and restore, visit our official documentation -
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
 

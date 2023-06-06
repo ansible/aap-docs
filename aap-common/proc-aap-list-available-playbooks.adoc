@@ -38,7 +38,7 @@ $ docker run —–-rm $IMAGE command_generator_vars
 +
 This provides a list of playbooks and a command similar to the following:
 +
-ifdef:: AWS
+ifdef:: product_AWS
 [source,bash]
 ----
 ===============================================
@@ -46,11 +46,11 @@ Playbook: aws_add_extension_nodes
 Description: Add extension nodes to an existing Ansible Automation Platform from AWS Marketplace stack
 -----------------------------------------------
 This playbook is used to deploy extension nodes to an existing Ansible Automation Platform from AWS Marketplace environment.
-For more information regarding extension nodes, visit our official documentation - 
+For more information regarding extension nodes, visit our official documentation -
 https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aap-aws-deploy-extension
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator aws_add_extension_nodes [--ansible-config ansible_config_path>] \
 -d <deployment_name> -c <cloud_credentials_path> \
@@ -58,7 +58,7 @@ docker run --rm $IMAGE command_generator aws_add_extension_nodes [--ansible-conf
 ===============================================
 ----
 endif::[]
-ifdef:: GCP
+ifdef:: product_GCP
 [source,bash]
 ----
 ===============================================
@@ -68,7 +68,7 @@ Description: Performs the upgrade of the Ansible Automation Platform from GCP Ma
 Performs the upgrade of the Ansible Automation Platform from GCP Marketplace components to the latest version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator gcp_upgrade [--ansible-config ansible_config_path>] \
 -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_backup_taken=<true|false>'
