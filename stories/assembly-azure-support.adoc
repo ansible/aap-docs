@@ -1,0 +1,44 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-azure-support"]
+= Support
+
+:context: azure-support
+
+{AAPonAzureName} is a managed application, supported and maintained by Red Hat.
+Due to the architecture of the application and the deployment strategy in Azure, there are a few situations where customizing and changing some aspects of the configuration could lead to a change in the responsibilities of some components.
+
+.Azure Virtual Appliance Routing with {AAPonAzureNameShort}
+
+Your organization may use Azure firewall services or third-party firewall appliances through a Virtual Appliance connection.
+When configuring outbound routes within the route table for {AAPonAzureNameShort}, you must take into account expected outbound traffic that {AAPonAzureNameShort} will require in order to be managed by Red Hat properly including upgrades and security patching.
+
+More information can be found at https://access.redhat.com/articles/6972355.
+
+.Private DNS Zones
+
+{AAPonAzureNameShort} uses Azure's managed DNS services when deployed.
+
+To use private DNS records that cannot be resolved publicly, you can either use Azure Private DNS Zones that are peered to the managed application VNET, or you can submit DNS zones that should be forwarded to a customer-managed private DNS server.
+
+Azure Private DNS Zones are a native Azure service. You can add, edit, and remove zones without contacting Red Hat.
+
+A limitation of Private DNS Zones is that only one instance of a given zone may be linked to a Virtual Network.
+Attempting to link zones that match the names of Private DNS Zones in the managed resource group will cause conflicts.
+Microsoft recommends consolidating DNS records into a single zone to work around this limitation.
+
+You can replicate the records from the zones in the managed resource group into your own instance of the Private DNS Zone.
+You can then unlink Private DNS Zones in the managed resource group from the Virtual Network and replace it with your own instance of the Private DNS Zone.
+
+Failure to properly maintain the records in the Private DNS Zone may prevent the managed application from operating.
+
+For more information about working with Private DNS Zones, see the link:https://access.redhat.com/articles/6983525[Private DNS with Red Hat Ansible Automation Platform on Microsoft Azure] article on the Red Hat customer portal.
+
+.Microsoft Azure Policies
+
+In some situations, using Azure Policies to enforce, for example, tagging rules and conventions, can adversely affect the Resource Group where the components of {AAPonAzureNameShort} reside.
+The enforcement of the Azure Policie could prevent changes, impact operations, or block deployment of new components in the Resource Group.
+
+These situations are identified by Red Hat during maintenance or daily operations.
+Exceptions on the enforcement of the Azure Policies could be required.
+
