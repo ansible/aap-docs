@@ -4,12 +4,20 @@
 
 Pull the Docker image for the Ansible on Clouds operational container with the same tag as the version you want to upgrade to.
 
-For example, if your foundation deployment version is 2.2.20230215, you must pull the operational image with tag 2.3.20230221-00 to upgrade to version 2.3.20230221-00.
+For example, if your foundation deployment version is 2.3.20230221, you must pull the operational image with tag 2.3.20230221 to remove extension nodes from the foundation stack.
 
 Use the following commands:
 
-[options="nowrap" subs="+quotes,attributes"]
+[source,bash]
 ----
-$ export IMAGE=<image-path>
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.3.20230221
+$ docker pull $IMAGE
+----
+
+For EMEA regions (Europe, Middle East, Africa) run the following command instead:
+
+[source, bash]
+----
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-emea-rhel8:2.3.20230221
 $ docker pull $IMAGE
 ----
