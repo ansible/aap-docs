@@ -28,9 +28,8 @@ aws_asg_min_size=2 aws_asg_desired_capacity=2 aws_offer_type=100'
 [source,bash]
 ----
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials \
---env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
---env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_upgrade \
--e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
-aws_s3_bucket=AnsibleAutomationPlatform-bucket aws_ssm_bucket_name=AnsibleAutomationPlatform-bucket \ aws_backup_vault_name=Default \
-aws_backup_iam_role_arn=arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AWSBackupDefaultServiceRole'
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ aws_launch_template_name=AnsibleAutomationPlatform-ext-lt1-100 \
+aws_autoscaling_group_name=AnsibleAutomationPlatform-ext-asg1-100 \
+aws_asg_min_size=2 aws_asg_desired_capacity=2 aws_offer_type=100'
 ----
