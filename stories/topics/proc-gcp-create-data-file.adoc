@@ -5,37 +5,32 @@
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
-[NOTE]
-====
-As `/tmp` is used, the `<local_data_file_directory>` must be set to `/tmp` unless you chose a different location for `backup.yml`.
-====
-+
-[literal, options="nowrap" subs="+quotes,attributes"]
+[source,bash]
 ----
-docker run -v /tmp:/data --rm $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
+docker run -v $(pwd)/command_generator_data/:/data --rm $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 ----
 +
 Produces the following output:
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-docker run --rm -v <local_data_file_directory>:/data $IMAGE \
+docker run -v $(pwd)/command_generator_data/:/data --rm $IMAGE \
 command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 
 ===============================================
 Playbook: gcp_backup_deployment
-Description: This playbook is used to backup the AoC Self-managed GCP environment.
+Description: This playbook is used to backup the Ansible Automation Platform from GCP Marketplace environment.
 -----------------------------------------------
-This playbook is used to backup the AoC Self-managed GCP environment.
+This playbook is used to backup the Ansible Automation Platform from GCP Marketplace environment.
 For more information regarding backup and restore, visit our official documentation - 
-
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-gcp-backup-and-restore
 -----------------------------------------------
 ----
 . Run the supplied command:
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ docker run --rm -v /tmp:/data $IMAGE \
+$  docker run -v $(pwd)/command_generator_data/:/data --rm $IMAGE \
 command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 ----
 . After running the command, a `/tmp/backup.yml` template file is created. 

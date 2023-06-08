@@ -7,7 +7,7 @@
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
 ----
 +
 Resulting in the following ouput:
@@ -17,21 +17,21 @@ Resulting in the following ouput:
 -----------------------------------------------
 Command to run playbook: 
 
-docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
+docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
 gcp_deployment_name=<deployment_name> gcp_compute_region=<region> \
-gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>’
+gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>'
 ----
 . Run the supplied backup command to trigger the backup.
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
+$ docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
 gcp_deployment_name=<deployment_name> gcp_compute_region=<region> \
-gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>’
+gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>'
 ----
 . When the playbook has finished running, the output resembles the following:
 +
