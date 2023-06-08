@@ -6,7 +6,7 @@ To generate the playbook, run the command generator to generate the CLI command.
 
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-docker run --rm -v /tmp:/data $IMAGE command_generator gcp_setup_logging_monitoring \
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_setup_logging_monitoring \
 --data-file /data/logging-monitoring.yaml
 ----
 
@@ -14,12 +14,11 @@ Provides the following command:
 
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=mu-deployment \
---env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_setup_logging_monitoring \
--e 'gcp_deployment_name=mu-deployment \
-gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  components=["hubs","controllers"]\
-monitoring_enabled=True logging_enabled=True default_collector_interval=60s'
+docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name> --env GENERATE_INVENTORY=true  \
+$IMAGE redhat.ansible_on_clouds.gcp_setup_logging_monitoring -e 'gcp_deployment_name=<deployment_name> \
+gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  monitoring_enabled=<monitoring_enabled> \
+logging_enabled=<logging_enabled> default_collector_interval=<interval>'
 ----
 
 Run the supplied command to run the playbook.
