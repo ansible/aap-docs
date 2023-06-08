@@ -14,7 +14,7 @@ As `/tmp` is used, the `<local_data_file_directory>` must be set to `/tmp` unles
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ docker run --rm -v /tmp:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----
 +
 This generates a new command containing all needed volumes, environment variables and parameters.
