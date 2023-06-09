@@ -9,10 +9,11 @@ The Command Generator is used to generate commands for launching operational pla
 
 The process involves five steps:
 
-. Pull the `ansible-on-clouds-ops`` container image.
+. Pull the `ansible-on-clouds-ops` container image.
 . List the available playbooks.
 . Use a command generator to generate a data file and the next command to run.
-. Populate the data file and launching the previous generated command.
+`command_generator_vars` and the command_generator are implemented using a docker container and are run using the docker command line interface.
+. Populate the data file and run the previous generated command.
 This generates the final command with all parameters.
 +
 [NOTE]
@@ -20,11 +21,7 @@ This generates the final command with all parameters.
 When this step is complete, you can save the generated command and run the playbook when it is required.
 ====
 +
-. Running the final command.
-
-`command_generator_vars` and the command_generator are implemented using a docker container and are launched using the docker command line interface.
-
-The docker image is available at:
+. Run the final command.
 
 .Prerequisites
 * Docker
