@@ -8,6 +8,15 @@ For example, if your foundation deployment version is 2.3.20230221-00, pull the 
 .Procedure
 . Pull the `ansible-on-clouds-ops` container image with the same tag version as the foundation deployment.
 +
+[NOTE]
+====
+Before Pulling the docker image, make sure you are login to redhat registry using docker. Use the below command to login to redhat registry. 
+----
+$ docker login registry.redhat.io
+----
+Refer link:https://access.redhat.com/RegistryAuthentication[Registry Authentication] for more information about registry login.
+====
++
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.3.20230221
