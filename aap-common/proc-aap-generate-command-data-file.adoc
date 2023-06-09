@@ -1,0 +1,95 @@
+[id="proc-aap-generate-command-data-file"]
+
+= Generating the data file
+
+.Procedure
+. Run the command generator.
++
+[source,bash]
+----
+$ docker run -rm -v <local_directory_data_file>:/data $IMAGE command_generator_vars <playbook_name> -output-data-file /data/<data-file>.yml
+----
++
+The outputs of this command are the command to run and the data file template.
+The data file is also saved in your `<local_data_file_directory>`.
+This is the template which you populate with your data.
+
+ifdef::product_GCP[]
++
+The following example uses the `gcp_backup_deployment` playbook.
++
+[source,bash]
+----
+$ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator_vars gcp_backup_deployment \
+--output-data-file /data/backup.yml
+----
++
+. Producing the following output.
++
+[source,bash]
+----
+===============================================
+Playbook: gcp_backup_deployment
+Description: This playbook is used to backup the AoC Self-managed GCP environment.
+-----------------------------------------------
+This playbook is used to backup the AoC Self-managed GCP environment.
+For more information regarding backup and restore, visit our official documentation -
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
+
+Data template:
+
+gcp_backup_deployment:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    gcp_bucket_backup_name:
+    gcp_compute_region:
+    gcp_compute_zone:
+
+===============================================
+----
+endif::product_GCP[]
+ifdef::product_AWS[]
++
+The following example uses the `aws_backup_stack` playbook.
++
+[source,bash]
+----
+$ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator_vars aws_backup_stack \
+--output-data-file /data/backup.yml
+----
++
+. Producing the following output.
++
+[source,bash]
+----
+===============================================
+Playbook: aws_backup_stack
+Description: This playbook is used to backup the Ansible Automation Platform from AWS Marketplace environment.
+-----------------------------------------------
+This playbook is used to backup the Ansible Automation Platform from AWS Marketplace environment.
+For more information regarding backup and restore, visit our official documentation -
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
+
+Data template:
+
+aws_backup_stack:
+  cloud_credentials_path:
+  deployment_name:
+  extra_vars:
+    aws_backup_iam_role:
+	aws_backup_vault_name:
+    aws_region:
+    aws_s3_bucket:
+
+===============================================
+----
+endif::product_AWS[]
