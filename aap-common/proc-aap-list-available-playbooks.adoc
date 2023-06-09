@@ -1,0 +1,79 @@
+[id="proc-aap-list-available-playbooks"]
+
+= Listing the available playbooks
+
+.Procedure
+. For the list of available playbooks without details, use the following command.
++
+[source,bash]
+----
+$ docker run —–-rm $IMAGE command_generator_vars | grep Playbook
+
+The current version of the operational playbooks collection contains the following playbooks:
+
+Playbook: aws_add_extension_nodes
+Playbook: aws_backup_stack
+Playbook: aws_deployment_inventory
+Playbook: aws_remove_extension_nodes
+Playbook: aws_restore_stack
+Playbook: aws_upgrade
+Playbook: gcp_aap_health_check
+Playbook: gcp_backup_deployment
+Playbook: gcp_create_external_load_balancer
+Playbook: gcp_delete_external_load_balancer
+Playbook: gcp_deployment_inventory
+Playbook: gcp_health_check
+Playbook: gcp_list_deployments
+Playbook: gcp_nodes_health_check
+Playbook: gcp_restore_deployment
+Playbook: gcp_setup_logging_monitoring
+Playbook: gcp_upgrade
+----
+. To provide a list of all available playbooks, and to use the command generator, use the following command.
++
+[source,bash]
+----
+$ docker run —–-rm $IMAGE command_generator_vars
+----
++
+This provides a list of playbooks and a command similar to the following:
+
+ifdef::product_AWS[]
++
+[source,bash]
+----
+===============================================
+Playbook: aws_add_extension_nodes
+Description: Add extension nodes to an existing Ansible Automation Platform from AWS Marketplace stack
+-----------------------------------------------
+This playbook is used to deploy extension nodes to an existing Ansible Automation Platform from AWS Marketplace environment.
+For more information regarding extension nodes, visit our official documentation -
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aap-aws-deploy-extension
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_add_extension_nodes [--ansible-config ansible_config_path>] \
+-d <deployment_name> -c <cloud_credentials_path> \
+--extra-vars 'aws_region=<aws_region> aws_launch_template_name=<aws_launch_template_name> aws_autoscaling_group_name=<aws_autoscaling_group_name> aws_asg_min_size=<aws_asg_min_size> aws_asg_desired_capacity=<aws_asg_desired_capacity> aws_offer_type=<aws_offer_type> [seller_name=<seller_name>]'
+===============================================
+----
+endif::product_AWS[]
+ifdef::product_GCP[]
++
+[source,bash]
+----
+===============================================
+Playbook: gcp_upgrade
+Description: Performs the upgrade of the Ansible Automation Platform from GCP Marketplace components to the latest version.
+-----------------------------------------------
+Performs the upgrade of the Ansible Automation Platform from GCP Marketplace components to the latest version.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_upgrade [--ansible-config ansible_config_path>] \
+-d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_backup_taken=<true|false>'
+===============================================
+----
+endif::product_GCP[]

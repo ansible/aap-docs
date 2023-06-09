@@ -1,0 +1,53 @@
+[id="proc-aa-run-generated-command"]
+
+= Running the generated command
+
+.Procedure
+. Ensure that the mounted volume points to the directory where the data file is.
++
+ifdef::product_GCP[]
+For the `gcp_backup_deployment` playbook example, this is:
++
+[source,bash]
+----
+$ docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
+----
+Which generates the following output:
++
+[source,bash]
+----
+Command to run playbook:
+
+$ docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE\ redhat.ansible_on_clouds.gcp_backup_deployment \
+-e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
+gcp_deployment_name=my-deployment gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b'
+----
+endif::product_GCP[]
+
+ifdef::product_AWS[]
++
+For the `aws_backup_stack` playbook example, this is:
++
+[source,bash]
+----
+$ docker run --rm -v /tmp:/data $IMAGE command_generator aws_backup_stack --data-file /data/backup.yml
+----
+Which generates the following output:
++
+[source,bash]
+----
+Command to run playbook:
+
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
+aws_backup_vault_name=Default \
+aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDefaultServiceRole \ aws_s3_bucket=AnsibleAutomationPlatform-bucket'
+----
+endif::product_AWS[]
++
+This new command has the required parameters, environment variables and mounted volumes to run the playbook.
+
+. Run the generated command.
+You can save this command to rerun it later if required.
