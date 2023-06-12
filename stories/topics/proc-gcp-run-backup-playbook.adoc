@@ -5,14 +5,14 @@
 .Procedure
 . To run the backup, run the command generator to generate the backup command.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 docker run --rm -v /tmp:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
 ----
 +
 Resulting in the following ouput:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 -----------------------------------------------
 Command to run playbook: 
@@ -25,7 +25,7 @@ gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>’
 ----
 . Run the supplied backup command to trigger the backup.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
@@ -35,7 +35,7 @@ gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>’
 ----
 . When the playbook has finished running, the output resembles the following:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_gcp_backup : [backup_deployment] Print vars required for restore process] ***
 ok: [localhost] => 
