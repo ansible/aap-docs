@@ -53,7 +53,7 @@ You receive this after executing the backup playbook.
 * *gcp_sql_backup_db_name*: GCP foundation SQL database name. 
 You receive this after executing backup the playbook.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
 gcp_deployment_name: ""
@@ -73,7 +73,7 @@ The `ansible-on-clouds-ops` container image tag must match the version of your f
 For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
 =====
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 $ docker pull $IMAGE
@@ -88,7 +88,7 @@ $ docker pull $IMAGE
 +
 . Use the following command to run the playbook.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm \
 -v <absolute path to Google application credentials dir>:/secrets:ro \

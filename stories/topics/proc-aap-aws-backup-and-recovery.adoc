@@ -29,7 +29,7 @@ Can use the AWS Backup Default Service Role for this which has the format `arn:a
 
 . Pull the `ansible-on-clouds-ops` container image having the tag with the same version as the foundation deployment
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
 $ docker pull $IMAGE
@@ -51,7 +51,7 @@ The `ansible-on-clouds-ops` image tag should match the version of your foundatio
 
 .. Use the following command to run the playbook.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
@@ -149,7 +149,7 @@ The keypair used must exist in the aws region you are restoring to.
 
 . Pull the `ansible-on-clouds-ops` container image having the tag with the same version as the foundation deployment
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.20230215-00
 $ docker pull $IMAGE
@@ -170,7 +170,7 @@ The `ansible-on-clouds-ops` image tag should match the version of your foundatio
 
 .. Use the following command to run the playbook.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS \
 -v <absolute path of extra vars dir>:/extra_vars:ro \
