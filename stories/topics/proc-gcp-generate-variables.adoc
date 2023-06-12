@@ -18,7 +18,7 @@ $ mkdir command_generator_data
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 command_generator_vars gcp_setup_logging_monitoring \
---output-data-file /data/logging-monitoring.yaml
+--output-data-file /data/logging-monitoring.yml
 ----
 +
 Creates the following command file:
@@ -34,10 +34,10 @@ Install monitoring tools and configure them to send data to the Google Cloud Mon
 Command generator template: 
 
 docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator \
-gcp_setup_logging_monitoring --data-file /data/logging-monitoring.yaml
+gcp_setup_logging_monitoring --data-file /data/logging-monitoring.yml
 ----
 
-. When you have run these commands, a `command_generator_data/logging-monitoring.yaml` template file is created. 
+. When you have run these commands, a `command_generator_data/logging-monitoring.yml` template file is created. 
 +
 [NOTE]
 ====
