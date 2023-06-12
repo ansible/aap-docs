@@ -10,7 +10,7 @@ The following procedure describes how to secure the {HubName} load balancer
 .Procedure
 . Generate the {HubName} certificate with the following command:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ openssl req -x509 -nodes -newkey rsa:4096 -keyout hub_key.pem -out hub_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<HUB_DNS_NAME>"
 ----
@@ -61,14 +61,14 @@ Ensure you are in the correct region.
 . Select the {HubName} instance(s)
 . Paste the {HubName} key in the following location:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ sudo vi /efs/certificates/hub_key.pem # Paste key
 ----
 +
 . Paste the {HubName} certificate in the following location: 
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ sudo vi /efs/certificates/hub_cert.pem # Paste cert
 ----
@@ -76,7 +76,7 @@ $ sudo vi /efs/certificates/hub_cert.pem # Paste cert
 . Copy the certificate and keys to the ca-trust directory. 
 Then update the ca-trust using the following commands:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ sudo cp /efs/certificates/hub_key.pem /etc/pki/ca-trust/source/anchors/hub-key.pem # Copy key
 $ sudo cp /efs/certificates/hub_cert.pem /etc/pki/ca-trust/source/anchors/hub-cert.pem # Copy cert
