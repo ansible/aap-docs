@@ -26,7 +26,7 @@ The upgrade process requires a few volumes to be mounted. Prepare a directory yo
 
 Create the directories used to configure the upgrade process.
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 # Secrets directory. Store the AWS credentials and config files.
 $ mkdir secrets
@@ -89,7 +89,7 @@ aws_backup_iam_role_arn: arn:aws:iam::<YOUR_ACCOUNT_NUMBER>:role/service-role/AW
 
 The final result should look like this:
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ tree
 .
@@ -113,7 +113,7 @@ The following instructions describe how to run the upgrade playbook.
 The Ansible on Clouds operational image tag must match with the version which you want to upgrade to. For example, if your foundation deployment version is 2.2.0, pull operational image with tag 2.2.20230215 to upgrade to version 2.2.20230215.
 =====
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=<image-path>
 $ docker pull $IMAGE
@@ -125,7 +125,7 @@ $ docker pull $IMAGE
 
 . Replace `<deployment-name>` with your foundation deployment name. Use the following command to run the playbook.
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 # Export the volume paths
 $ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
@@ -144,7 +144,7 @@ $ docker run --rm \
 
 . After successfully running the playbook, the playbook will return something like this
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_aws_upgrade : [upgrade] [LOG] upgrade version] ***
 ok: [localhost] => {

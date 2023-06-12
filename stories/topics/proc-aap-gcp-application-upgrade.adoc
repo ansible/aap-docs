@@ -28,7 +28,7 @@ Prepare a fresh directory to be used for this process.
 .Procedure
 . Create the directories used to configure the upgrade process using the following commands:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 # Secrets directory. Store the GCP credentials file.
 $ mkdir secrets
@@ -68,7 +68,7 @@ For example, the filestore instance location might be `us-east1-d`
 For example, if your `gcp_compute_zone` location is `us-east1-d`, your region is `us-east1`.
 =====
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 gcp_service_account_credentials_json_path: "/secrets/<service-account-creds-json-filename>"
 gcp_deployment_name: "" 
@@ -78,7 +78,7 @@ gcp_compute_zone: ""
 +
 . The final result should look similar to the following:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ tree
 tree
@@ -103,7 +103,7 @@ The `ansible-on-clouds-ops` container image tag must match the version of your f
 For example, if your foundation deployment version is 2.2.1, pull the `ansible-on-clouds-ops` image with tag 2.2.1.
 =====
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export IMAGE=quay.io/ansible-on-clouds/ansible-on-clouds-ops:2.2.1
 $ docker pull $IMAGE
@@ -115,7 +115,7 @@ $ docker pull $IMAGE
 .Procedure
 . Set the `GOOGLE_APPLICATION_CREDENTIALS` variable to the Google cloud credential JSON file path.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ export GOOGLE_APPLICATION_CREDENTIALS=<path to the Google credential JSON file>
 ----
@@ -126,7 +126,7 @@ $ export GOOGLE_APPLICATION_CREDENTIALS=<path to the Google credential JSON file
 . Replace `<deployment-name>` with your foundation deployment name.
 . Use the following command to run the playbook.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm \
   --env PLATFORM=GCP \
@@ -143,7 +143,7 @@ $ docker run --rm \
 +
 . After successfully running the playbook, the playbook returns something similar to the following:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_gcp_upgrade : [upgrade] Show GCP current version] ***
 ok: [localhost] => {
