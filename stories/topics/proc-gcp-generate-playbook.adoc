@@ -4,7 +4,7 @@
 
 To generate the playbook, run the command generator to generate the CLI command.
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 docker run --rm -v /tmp:/data $IMAGE command_generator gcp_setup_logging_monitoring \
 --data-file /data/logging-monitoring.yaml
@@ -12,7 +12,7 @@ docker run --rm -v /tmp:/data $IMAGE command_generator gcp_setup_logging_monitor
 
 Provides the following command:
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=mu-deployment \
@@ -24,7 +24,7 @@ monitoring_enabled=True logging_enabled=True default_collector_interval=60s'
 
 Run the supplied command to run the playbook.
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm --env PLATFORM=GCP -v /path/to/credentials:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=mu-deployment \
@@ -36,7 +36,7 @@ monitoring_enabled=True logging_enabled=True default_collector_interval=60s'
 
 The process may take some time, and provides output similar to the following:
 
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 TASK [redhat.ansible_on_clouds.setup_logging_monitoring : Update runtime variable logging_enabled] ***
 changed: [<user_name> -> localhost]

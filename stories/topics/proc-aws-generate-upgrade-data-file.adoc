@@ -9,13 +9,13 @@ Run the following commands to generate the required data file.
 .Procedure
 . Create a folder to hold the configuration files.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 command_generator_vars aws_upgrade \
@@ -24,7 +24,7 @@ command_generator_vars aws_upgrade \
 . After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
 This template file resembles the following: 
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 aws_upgrade:
   ansible_config_path:

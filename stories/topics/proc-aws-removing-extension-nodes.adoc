@@ -5,14 +5,14 @@
 .Procedure
 . To remove a set of extension nodes, run the command generator to generate the CLI command.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
 ----
 +
 The command generator output provides the following command:
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro\
  --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_remove_extension_nodes -e\ 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
@@ -20,7 +20,7 @@ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/crede
 ----
 . Run the supplied upgrade command to remove a set of extension nodes.
 +
-[source,bash]
+[literal, options="nowrap" subs="+quotes,attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro\
  --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_remove_extension_nodes -e\ 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 <
