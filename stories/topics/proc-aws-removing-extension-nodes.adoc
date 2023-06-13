@@ -1,0 +1,145 @@
+[id="proc-aws-removing-extension-nodes"]
+
+[IMPORTANT]
+====
+This is a Techical Preview feature. Technology Preview features are not supported with Red Hat production service-level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them for production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+====
+
+It's recommended to create a backup of the {PlatformNameShort} deployment before removing extension nodes.
+
+Follow these steps to remove execution nodes from your {AAPonAWS} environment.
+
+.Prerequisites
+* Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
+* Docker
+
+.Steps
+. Prepare the environment and the configuration files.
+. Run the `ansible-on-clouds-ops` container to remove the extension nodes.
+
+= Preparing the environment
+
+The extension nodes removal process requires a few volumes to be mounted, so *prepare a new directory*.
+
+.Procedure
+. Create a new directory for the extension nodes removal process.
+. Create the AWS credentials and config files in the `secrets` directory.
+. Create the `extra_vars/extra_vars.yml` file in the `extra_vars` directory with the removal configuration.
+
+First, you need to create some directories where the configuration files will be placed:
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+# Secrets directory. Store the AWS credentials and config files.
+$ mkdir secrets
+# Extra vars directory. All the configuration variables for the extension nodes removal process.
+$ mkdir extra_vars
+----
+
+Create the `secrets/config` file and add the following content. Remember to replace the `us-east-1` with your respective region.
+
+[source,ini]
+----
+[default]
+region = us-east-1
+output = json
+----
+
+Create the `secrets/credentials` file and add the following content. Remember to replace the `aws_access_key_id` and `aws_secret_access_key` with your respective credentials.
+
+[NOTE]
+=====
+To create the AWS credentials, see https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-methods[Configuring the AWS CLI].
+=====
+
+[source,ini]
+----
+[default]
+aws_access_key_id=AKIAIOSFODNN7EXAMPLE
+aws_secret_access_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+----
+
+Create the `extra_vars/extra_vars.yml` file and add the following content to it.
+
+[NOTE]
+=====
+See the next session for more details on the variables.
+=====
+
+[source,yaml]
+----
+# Main vars
+aws_foundation_stack_name: "mydeployment"
+aws_region: us-east-1
+
+# Extension node vars
+aws_offer_type: "100"
+aws_launch_template_name: "mydeployment-lt"
+aws_autoscaling_group_name: "mydeployment-asg"
+aws_asg_min_size: 2
+aws_asg_desired_capacity: 2
+----
+
+Variables description:
+
+.Setting up the `extra_vars/extra_vars.yaml` configuration file
+* Main variables
+** *aws_foundation_stack_name*: The name of the foundation deployment. This is the same name you used when you deployed the foundation.
+** *aws_region*: The region where the foundation deployment is located.
+* The extension node variables.
+** *aws_offer_type*: The offer type of the extension nodes. Must be *100*, *200*, or *400*.
+** *aws_launch_template_name*: The name of the AWS EC2 launch template to create.
+** *aws_autoscaling_group_name*: The name of the AWS AutoScaling Group to create for the extension nodes.
+** *aws_asg_min_size*: The AutoScaling Group minimum capacity. (Max is set by offer_type)
+** *aws_asg_desired_capacity*: The AutoScaling Group desired capacity.
+
+The final result should look like this:
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ tree
+.
+├── extra_vars/
+│   └── extra_vars.yml
+└── secrets/
+    ├── config
+    └── credentials
+----
+
+= Removing the extension nodes
+
+Assuming you ran the *Preparing the environment* section.
+
+The following instructions describe how to run the playbook to remove the extension nodes.
+
+Pull the Docker image for `ansible-on-clouds-ops` container image having tag with the version you're currently using.
+
+[NOTE]
+=====
+The `ansible-on-clouds-ops` container image tag must match the current installed version of {AAPonAWS}
+=====
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ export IMAGE=<image-path>
+$ docker pull $IMAGE
+----
+
+Running the upgrade playbook as a container. Replace `<removal-name>` with your foundation deployment name. Use the following command to run the playbook.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+# Export the volume paths
+$ export VOLUME_AWS_CREDENTIALS_DIR=<absolute path to workdir>/secrets
+$ export VOLUME_EXTRA_VARS_DIR=<absolute path to workdir>/extra_vars
+
+# Run the playbook
+$ docker run --rm \
+    --env PLATFORM=AWS \
+    --env removal_NAME=<removal-name> \
+    -v ${VOLUME_AWS_CREDENTIALS_DIR}:/home/runner/.aws/:rw \
+    -v ${VOLUME_EXTRA_VARS_DIR}:/extra_vars:ro \
+    ${IMAGE} \
+      redhat.ansible_on_clouds.aws_remove_extension_nodes \
+      -e @/extra_vars/extra_vars.yml
+----
