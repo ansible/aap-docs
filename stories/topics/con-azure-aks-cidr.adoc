@@ -27,13 +27,24 @@ Do not accept the default values suggested in the Azure user interface.
 Instead, use the CIDR blocks that you have planned.
 The settings have the following requirements:
 
-[cols="25%,75%"]
+[cols="20%,40%,40%"]
 |===
-|Network |Requirements
+|Network | Description | Requirements
+| Service CIDR | A CIDR notation IP range from which to assign service cluster IPs.
 
-|Service CIDR | Requires a /26 block at minimum. A larger block is not necessary.
-|DNS Service IP | Must be an IP address in the Service CIDR other than the first IP in that range.
-|Pod CIDR | Requires a /20 or larger block.
+It must not overlap with any Subnet IP ranges. |  Requires a /26 block at minimum. A larger block is not necessary.
+
+This CIDR block must not intersect with the CIDR of the Pod CIDR block.
+
+This CIDR block also must not intersect with the CIDR of the VNET CIDR block.
+| DNS Service IP | An IP address assigned to the Kubernetes DNS service.
+
+It must be within the Kubernetes service address range specified in `serviceCidr`. |  Must be an IP address in the Service CIDR other than the first IP in that range.
+
+Red Hat recommends using the first `.10` IP address within the Service CIDR block.
+| Pod CIDR | A CIDR notation IP range from which to assign pod IPs when kubenet is used. |  Requires a /20 or larger block.
+
+Red Hat recommends using the first .10 IP address within the Service CIDR block.
 
 |===
 
