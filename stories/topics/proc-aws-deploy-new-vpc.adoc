@@ -10,13 +10,14 @@ This procedure creates a new VPC network and deploys the application in the crea
 . In the *Software version* field, confirm the latest version available in the list is selected.
 . In the *Region* field, select the region with your EC2 key pair. 
 The CloudFormation Stack deploys in the same region. 
-. Click btn:[Continue to Launch].
-. On the following screen, click btn:[Launch]. 
+. Click btn:[Continue to Launch]. 
+. On the following screen, in the *Choose Action* field, select *Launch CloudFormation*.
+. Click btn:[Launch]. 
 This launches the AWS CloudFormation Console in a new browser tab.
 . For Step 1, *Specify template*, click btn:[Next].
 . For Step 2, *Specify stack details* 
 .. In the *Stack name* field, enter a unique stack name.
-.. In the *EC2 KeyPair* field, select your previously created EC2 keypair.  
+.. Under *Basic configuration*, in the *EC2 KeyPair* field, select your previously created EC2 keypair.
 .. In the *Select VPC* field, select *New*.
 .. In the *New Network Configuration* field, enter the required 
 ** *VPC CIDR Range*
@@ -41,7 +42,13 @@ All configurations are optional or have the correct default values.
 . For Step 4, *Review*.
 Scroll to the bottom. 
 In the *Capabilities section*, check to acknowledge that CloudFormation may create IAM resources.  
-. Click btn:[Create stack].
+. Click btn:[Submit].
 . The application begins provisioning. 
 It can take some time for the infrastructure and application to fully provision.
 
+If you want to modify your CIDR ranges post deployment, your current deployment must be deleted, then follow the instructions in xref:proc-aws-deploy-new-vpc[Deploying an application with a new VPC].
+
+[IMPORTANT]
+====
+These CIDR ranges cannot be changed following deployment.
+====
