@@ -1,10 +1,23 @@
 [id="con-gcp-use-container-image"]
 
-= Using the ansible-on-clouds-ops container image
+= Pulling the ansible-on-clouds-ops container image
+
+Pull the Docker image for the Ansible on Clouds operational container which aligns with the version of your foundation deployment.
+
+For example, if your foundation deployment version is 2.3.20230221-00, you must pull the operational image with tag 2.3.20230221.
 
 Use the following commands:
 
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ export IMAGE=registry.redhat.com/<image-path>
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.3.20230221
+$ docker pull $IMAGE --platform=linux/amd64
+----
+
+For EMEA regions (Europe, Middle East, Africa) run the following command instead:
+
+[source, bash]
+----
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-emea-rhel8:2.3.20230221
+$ docker pull $IMAGE --platform=linux/amd64
 ----
