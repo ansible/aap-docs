@@ -17,34 +17,39 @@ Resulting in the following ouput:
 -----------------------------------------------
 Command to run playbook: 
 
-docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
+docker run --rm --env PLATFORM=GCP -v  </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name --env GENERATE_INVENTORY=true  \
+$IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
-gcp_deployment_name=<deployment_name> gcp_compute_region=<region> \
-gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>'
+gcp_deployment_name=<deployment_name> gcp_compute_region=<region> gcp_compute_zone=<zone> \
+gcp_bucket_backup_name=<bucket> backup_prefix=aoc-backup'
 ----
 . Run the supplied backup command to trigger the backup.
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
+$ docker run --rm --env PLATFORM=GCP -v  </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name --env GENERATE_INVENTORY=true  \
+$IMAGE redhat.ansible_on_clouds.gcp_backup_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
-gcp_deployment_name=<deployment_name> gcp_compute_region=<region> \
-gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket>'
+gcp_deployment_name=<deployment_name> gcp_compute_region=<region> gcp_compute_zone=<zone> \
+gcp_bucket_backup_name=<bucket> backup_prefix=aoc-backup'
 ----
 . When the playbook has finished running, the output resembles the following:
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-TASK [redhat.ansible_on_clouds.standalone_gcp_backup : [backup_deployment] Print vars required for restore process] ***
-ok: [localhost] => 
-  msg:
-  - AAP on GCP Backup successful. Please note below the bucket name which is required for restore process.
-  - <bucket_name>
+TASK [redhat.ansible_on_clouds.standalone_gcp_backup : [backup_deployment] Print the variable required to restore deployment dvernier1] ***
+ok: [localhost] => {
+    "msg": [
+        "AAP on GCP Backup successful. Please note below the bucket name and backup name which are required for restore process.",
+        "gcp_bucket_backup_name: dvernier-test",
+        "backup_name: aoc-backup-dvernier1-20230616T134002"
+    ]
+}
 
-PLAY RECAP **********************************************************************************************
-localhost          : ok=33   changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+PLAY RECAP *********************************************************************
+localhost                  : ok=38   changed=6    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
 ----
 
 

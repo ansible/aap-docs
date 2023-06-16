@@ -20,7 +20,8 @@ Description: This playbook is used to restore the Ansible Automation Platform fr
 -----------------------------------------------
 This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
 For more information regarding backup and restore, visit our official documentation - 
-https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-gcp-backup-and-restore
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-aap-gcp-backup-and-recovery
+
 -----------------------------------------------
 Command generator template: 
 
@@ -35,6 +36,7 @@ gcp_restore_deployment:
   cloud_credentials_path:
   deployment_name:
   extra_vars:
+    backup_name:
     gcp_bucket_backup_name:
     gcp_cloud_sql_peering_network:
     gcp_compute_region:
@@ -43,5 +45,4 @@ gcp_restore_deployment:
     gcp_existing_vpc:
     gcp_filestore_ip_range:
     gcp_hub_internal_ip_address:
-    gcp_restored_deployment_name:
 ----
