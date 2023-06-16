@@ -7,7 +7,7 @@
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-docker run --rm -v /tmp:/data $IMAGE command_generator_vars gcp_restore_deployment --output-data-file /data/restore.yml
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator_vars gcp_restore_deployment --output-data-file /data/restore.yml
 ----
 +
 Providing the following output:
@@ -16,15 +16,15 @@ Providing the following output:
 ----
 ===============================================
 Playbook: gcp_restore_deployment
-Description: This playbook is used to restore the AoC Self-managed GCP environment.
+Description: This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
 -----------------------------------------------
-This playbook is used to restore the AoC Self-managed GCP environment.
+This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
 For more information regarding backup and restore, visit our official documentation - 
-
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-gcp-backup-and-restore
 -----------------------------------------------
 Command generator template: 
 
-docker run --rm -v /tmp:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
+docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----
 +
 The template resembles the following:
