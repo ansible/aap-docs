@@ -14,7 +14,7 @@ As `/tmp` is used, the `<local_data_file_directory>` must be set to `/tmp` unles
 +
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
-$ docker run --rm -v /tmp:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----
 +
 This generates a new command containing all needed volumes, environment variables and parameters.
@@ -27,7 +27,7 @@ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
 gcp_deployment_name=<former_deployment_name> gcp_restored_deployment_name=<new_deployment_name> \
-gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=True'
+gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=False'
 ----
 . Run the generated command.
 +
@@ -37,7 +37,7 @@ $ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gc
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
 gcp_deployment_name=<former_deployment_name> gcp_restored_deployment_name=<new_deployment_name> \
-gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=True'
+gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=False'
 ----
 . When the playbook has completed, the output resembles the following:
 +
