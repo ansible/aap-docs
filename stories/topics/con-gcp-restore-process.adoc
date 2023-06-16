@@ -6,10 +6,9 @@ The restore process deploys a new deployment, and restores the filestore and SQL
 
 [IMPORTANT]
 =====
-* You must restore with the same operational image version as the backup.
+* You must restore with the same operational image version which was used for the backup.
 
-* You can restore using either a new VPC network or an existing one.
-You must configure additional parameters to restore on an existing VPC network.
+* Backup and restore into an existing VPC network is not currently supported.
 
 * You cannot delete the backed up environment before a restore because the database backups are stored in the deployment.
 Deleting your deployment therefore deletes the database backups.
@@ -22,6 +21,7 @@ The following procedures describe how to restore the {AAPonGCP} deployment.
 
 :context: restore
 include::proc-gcp-backup-container-image.adoc[leveloffset=+1]
+include::proc-gcp-setup-environment.adoc[leveloffset=+1]
 include::proc-gcp-generate-restore-yml-file.adoc[leveloffset=+1]
 include::ref-gcp-populate-restore-file.adoc[leveloffset=+1]
 include::proc-gcp-run-restore-command.adoc[leveloffset=+1]
