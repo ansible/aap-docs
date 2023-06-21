@@ -7,13 +7,13 @@ The following commands create a directory, and populate it with an empty data te
 .Procedure
 . Create a folder to hold the configuration 
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   command_generator_vars aws_restore_stack \
@@ -23,7 +23,7 @@ $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 . After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
 This template file resembles the following:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ---- 
 aws_restore_stack:
   cloud_credentials_path:

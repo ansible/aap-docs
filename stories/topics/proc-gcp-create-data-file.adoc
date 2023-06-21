@@ -5,14 +5,14 @@
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 ----
 +
 Produces the following output:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
 command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
@@ -28,7 +28,7 @@ https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat
 ----
 . Run the supplied command:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
 command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
@@ -36,7 +36,7 @@ command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 . After running the command, a `/tmp/backup.yml` template file is created. 
 This template file resembles the following: 
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 gcp_backup_deployment:
   cloud_credentials_path:

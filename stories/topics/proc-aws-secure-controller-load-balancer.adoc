@@ -10,7 +10,7 @@ The following procedure describes how to secure the {ControllerName} load balanc
 .Procedure
 . Generate the {ControllerName} certificate with the following command:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ openssl req -x509 -nodes -newkey rsa:4096 -keyout controller_key.pem -out controller_cert.pem -sha256 -days 365 -addext "subjectAltName = DNS:<CONTROLLER_DNS_NAME>"
 ----
@@ -60,21 +60,21 @@ Ensure you are in the correct region.
 . Select the {ControllerName} instance(s)
 . Paste the {ControllerName} key in the following location:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ sudo vi /efs/certificates/controller_key.pem # Paste key. This step only needs to be done on the first controller node.
 ----
 +
 . Paste the controller certificate in the following location -
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ sudo vi /efs/certificates/controller_cert.pem # Paste cert. This step only needs to be done on the first controller node.
 ----
 +
 . Copy the certificte and keys to the ca-trust directory. Then update the ca-trust directory using the following commands:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ sudo cp /efs/certificates/controller_key.pem /etc/pki/ca-trust/source/anchors/controller-key.pem # Copy key
 $ sudo cp /efs/certificates/controller_cert.pem /etc/pki/ca-trust/source/anchors/controller-cert.pem # Copy cert
