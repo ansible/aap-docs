@@ -7,14 +7,14 @@ The following procedure runs the backup playbook as a container.
 .Procedure
 . To run the backup, run the command generator.
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_backup_stack --data-file /data/extra_vars.yaml
 ----
 +
 This generates the backup CLI command  
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 ----------------------------------------------
 docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
@@ -26,7 +26,7 @@ aws_s3_bucket=AnsibleAutomationPlatform-bucket'
 ----
 . Run the generated command to trigger the backup.
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
 --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backup_stack \
@@ -37,7 +37,7 @@ aws_backup_iam_role_arn=arn:aws:iam::123456789012:role/service-role/AWSBackupDef
 . The backup can take several minutes to complete, depending on the database size. 
 A successful backup returns a log similar to the following:
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 {
     "efs_restore_points": [

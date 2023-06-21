@@ -7,14 +7,14 @@ The following procedure runs the restore playbook as a container.
 .Procedure
 . To run the restore, run the command generator.
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_restore_stack --data-file /data/extra_vars.yml
 ----
 +
 This generates the restore CLI command  
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 ----------------------------------------------
 docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
@@ -24,7 +24,7 @@ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/crede
 ----
 . Run the generated command to trigger the restore.
 +
-[source, bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
 --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_restore_stack \
