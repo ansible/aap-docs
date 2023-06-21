@@ -5,14 +5,14 @@
 .Procedure
 . To deploy the extension nodes, run the command generator to generate the CLI command.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ---- 
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
 ----
 +
 Provides the following command:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
 docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials \
@@ -25,7 +25,7 @@ aws_asg_min_size=1 aws_asg_desired_capacity=1 aws_offer_type=100'
 
 . Run the supplied command to add the extension nodes.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials \
 --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
