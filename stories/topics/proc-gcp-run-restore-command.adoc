@@ -12,7 +12,7 @@ When `restore.yml` is populated, you can use the command generator to create the
 As `/tmp` is used, the `<local_data_file_directory>` must be set to `/tmp` unless you chose a different location for `restore.yml`.
 ====
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----
@@ -21,7 +21,7 @@ This generates a new command containing all needed volumes, environment variable
 +
 The generated command resembles the following:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
@@ -31,7 +31,7 @@ gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<buck
 ----
 . Run the generated command.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
@@ -41,7 +41,7 @@ gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<buck
 ----
 . When the playbook has completed, the output resembles the following:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_gcp_restore : Display internal IP addresses] ***
 ok: [localhost] =>
