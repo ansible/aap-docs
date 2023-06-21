@@ -2,17 +2,17 @@
 
 = Deploying an application with an existing VPC
 
+[NOTE]
+====
+The following procedure assumes that you have a marketplace offer. 
+The instructions are a continuation from xref:proc-aws-marketplace[{Market}].
+Complete the procedure in that section before continuing with this section.
+====
+
 The following procedure uses an existing VPC network to deploy an application.
 
 .Procedure
-. In the *Fulfillment option* field, select *Ansible Platform CloudFormation Topology*.
-. In the *Software version* field, confirm the latest version available in the list is selected.
-. In the *Region* field, select the region with your EC2 key pair. 
-The CloudFormation Stack deploys in the same region.
-. Click btn:[Continue to Launch].
-. On the following screen, click btn:[Launch]. 
-This launches the AWS CloudFormation Console in a new browser tab.
-. For Step 1, *Specify template*, click btn:[Next].
+. For Step 1, *Create stack*, click btn:[Next].
 . For Step 2, *Specify stack details*
 .. In the *Stack name* field, enter a unique stack name.
 .. In the *EC2 KeyPair* field, select your previously created EC2 keypair.
@@ -23,6 +23,9 @@ This launches the AWS CloudFormation Console in a new browser tab.
 ** *Existing VPC CIDR Range* 
 ** *Existing Private Subnet 1 ID*
 ** *Existing Private Subnet 2 ID*
++
+Note that copying and pasting these from the AWS console introduces hidden characters, and cause the entries to fail.
++
 . Click btn:[Next] to move to Step 3.
 . For Step 3, *Configure stack options*, no changes are necessary. 
 All configurations are optional or have the correct default values.
@@ -32,3 +35,7 @@ In the *Capabilities* section, check to acknowledge that CloudFormation can crea
 . Click btn:[Submit].
 . The application begins provisioning. 
 It can take some time for the infrastructure and application to fully provision.
+<<<<<<< HEAD
+=======
+
+>>>>>>> a4927509 (More corrections to AWS procedures)
