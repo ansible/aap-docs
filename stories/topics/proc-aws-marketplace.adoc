@@ -8,17 +8,40 @@ Follow these steps to purchase and deploy the public offer.
 
 .Procedure
 
-. In the AWS Console, navigate to the *{Market}*.
+. In the AWS Console, navigate to menu:AWS Marketplace Subscriptions[].
 . Click btn:[Discover Products].
-. Search for {PlatformNameShort}.
-. Click the listing for *{AAPonAWS}*.
-Ensure that you have selected the offer where Red Hat is the publisher.
+
+. Click the listing for *{PlatformName}2 - Up to 110 Managed Nodes*.
 . Click btn:[Continue to Subscribe].
 . Click btn:[Continue to Configuration].
 Select the appropriate fulfillment options.
 Note that some selectors may have only one option.
+. In the *Fulfillment option* field, ensure *{PlatformNameShort} CloudFormations Topology* is selected.
+. In the *Software version* field, select the latest available version from the list.
+. In the *Region* field, select the region with your EC2 key pair. 
+The CloudFormation stack deploys in the same region.
 . Click btn:[Continue to Launch].
-
+. In the *Choose Action* field, select *Launch CloudFormation*.
+. Click btn:[Launch].
+. In the *Specify Templates* section, select *View in Designer*.
+. Hover over the file symbol to reveal a dropdown.
+. Click btn:[Save].
+. Select *Local File* and supply a name.
+. In your saved template locate the `controlleralbsecuritygroupEFD044E7` and `hubalbsecuritygroup4C1C53F8` CIDR ranges. 
+In *SecurityGroupIngress* change the CidlrIP to your desired CIDR range.
+. Create a new {AAPonAWS} CloudFormation stack using the modified CIDR range template for the load balancers.
+.. In the AWS Console, navigate to menu:CloudFormation[].
+.. Click btn:[Create Stack].
+.. Select *With new resources (standard)* from the dropdown.
+.. In the *Specify template* section under *Template source* click btn:[Upload a template file] and select the template you have modified.
+.. Click btn:[Next] to go to the next step.
+.. Enter a stack name and select an EC2 KeyPair to use for the deployment.
+.. For *Select VPC*, select *New* or *Existing*. 
+For more information, see xref:proc-aws-application-deploy[Application deployment].
+.. Click btn:[Next] to go to the *Configure stack options* page.
+.. Optional: Configure stack options and 
+.. Click btn:[Next] to review the stack.
+.. Click btn:[Submit] to create your new deployment with the updated CIDR range for the load balancers.
 
 .Private Offer
 If you have worked with Red Hat Sales to enable a private offer of {AAPonAWS}, follow these steps to accept your offer and deploy the solution.
