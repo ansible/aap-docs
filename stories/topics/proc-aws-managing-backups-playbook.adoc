@@ -1,0 +1,78 @@
+[id="proc-aws-managing-backups-playbook"]
+
+= Managing backups playbook
+
+There is two playbooks to manage your backups, the first one aws_backup_delete which delete one backup and the second one aws_backups_delete which allows to delete multiple backups at once. We will explain the aws_backups_delete in this chapter. The difference is the aws_backups_delete takes a array of string ["backup1","backup2",...] but the aws_backup_delete take only one string which is the name of a specifc backup "backup1"
+
+== Delete backups
+.Procedure
+. Populate the `command_generator_data` directory with the configuration file template.
++
+[source,bash]
+----
+docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars aws_backups_delete --output-data-file /data/backups.yml
+----
++
+Produces the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_backups_delete
+Description: This playbook delete a specified backup.
+-----------------------------------------------
+This playbook delete a specified backup
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator aws_backups_delete --data-file /data/backups.yml
+----
+. After running the command, a `/tmp/backups.yml` template file is created. 
+This template file resembles the following: 
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+aws_backups_delete:
+  cloud_credentials_path:
+  extra_vars:
+    aws_backup_names:
+    aws_region:
+    aws_s3_bucket:
+    delete:
+----
+
+With backup_names like ["backup1","backup2"]
+
+. To run the deletion of the backups, run the command generator to generate the deletion backup command.
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_backups_delete --data-file /data/backups.yml
+----
++
+Resulting in the following ouput:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+Command to run playbook: 
+
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backups_delete \
+-e 'aws_region=<region> aws_s3_bucket=<bucket> aws_backup_names=["mybackup"] delete=True'
+===============================================
+----
+. Run the supplied backup command to trigger the backup deletion.
++
+. When the playbook has finished running, the output resembles the following:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+TASK [redhat.ansible_on_clouds.standalone_aws_backup_delete : [delete_backup] Dry-run message] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=21   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0    
+----
+
+
