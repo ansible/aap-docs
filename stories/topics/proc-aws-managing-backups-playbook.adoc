@@ -76,3 +76,18 @@ localhost                  : ok=21   changed=2    unreachable=0    failed=0    s
 ----
 
 
+= Troubleshootig
+
+== Failed to delete a backup
+
+If the deletion of backup failed, take the following steps.
+
+1. Go to the bucket containing the backup and locate the directory having the backup name.
+2. Open that directory
+3. Open the file names "restore-vars.json" and note last part of the "Recovery_Point_Arn" and the "Backup_Vault_Name"
+4. On the AWS Console, go to AWS Backup
+5. Open Backup Vault and click on the vault with the name you noted from "Backup_Vault_Name"
+6. Search for the "Recovery_Point_Arn".
+7. Delete it if not already deleted.
+8. Go back to the bucket
+9. Delete the directory having the name of the backup.
