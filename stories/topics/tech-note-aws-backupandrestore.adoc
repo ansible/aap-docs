@@ -1,0 +1,12 @@
+[id="tech-note-aws-backupandrestore"]
+
+= Backup and Restore
+
+{AAPonAWS} can be backed up and restored using the operational container. To ensure a successful restore, ensure that the following secrets in secret manager do not have the special character '\' contained within it. Updating the secret value of the noted secrets to remove the '\' character is necessary to ensure a successful backup and restore.
+
+The following secrets should be updated:
+
+* <DEPLOYMENT_NAME>-pulp_key
+* <DEPLOYMENT_NAME>-pulp_cert
+
+Replace the <DEPLOYMENT_NAME> value with the name of your {AAPonAWS} CloudFormation deployment and ensure the correct region is selected.
