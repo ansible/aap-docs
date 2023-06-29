@@ -16,6 +16,7 @@ Which generates the following output:
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
 Playbook: gcp_aap_health_check
+Playbook: gcp_add_labels
 Playbook: gcp_backup_delete
 Playbook: gcp_backup_deployment
 Playbook: gcp_backup_list
@@ -28,6 +29,7 @@ Playbook: gcp_get_aoc_version
 Playbook: gcp_health_check
 Playbook: gcp_list_deployments
 Playbook: gcp_nodes_health_check
+Playbook: gcp_remove_labels
 Playbook: gcp_restore_deployment
 Playbook: gcp_setup_logging_monitoring
 Playbook: gcp_upgrade
@@ -45,6 +47,7 @@ Which generates the following output:
 [literal, options="nowrap" subs="+quotes,attributes"]
 ----
 Playbook: aws_add_extension_nodes
+Playbook: aws_add_labels
 Playbook: aws_backup_delete
 Playbook: aws_backup_stack
 Playbook: aws_backups_delete
@@ -52,6 +55,7 @@ Playbook: aws_check_aoc_version
 Playbook: aws_deployment_inventory
 Playbook: aws_get_aoc_version
 Playbook: aws_remove_extension_nodes
+Playbook: aws_remove_labels
 Playbook: aws_restore_stack
 Playbook: aws_upgrade
 ----
@@ -95,6 +99,40 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=29   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ----
 A "failed" not equal zero would mean an issue with Ansible on Cloud deployment.
++
+
+. gcp_add_labels
+This playbook adds labels to the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_add_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_add_labels
+Description: This playbook adds labels to the deployment.
+-----------------------------------------------
+Add labels to the Ansible Automation Platform from GCP Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_add_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
+===============================================
+----
+The parameter gcp_labels is a comma separated list of key=value pairs to add or update.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
 +
 
 . gcp_check_aoc_version
@@ -322,9 +360,78 @@ localhost                  : ok=47   changed=1    unreachable=0    failed=0    s
 A "failed" not equal zero would mean an issue with nodes in the deployment.
 +
 
+. gcp_remove_labels
+This playbook removes labels from the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_remove_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_remove_labels
+Description: This playbook removes labels from the deployment.
+-----------------------------------------------
+Remove labels from the Ansible Automation Platform from GCP Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
+===============================================
+----
+The parameter gcp_labels is a comma separated list of keys to remove.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
 endif::product_GCP[]
 
 ifdef::product_AWS[]
++
+. aws_add_labels
+This playbook adds labels to the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_add_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_add_labels
+Description: This playbook adds labels to the deployment.
+-----------------------------------------------
+Add labels to the Ansible Automation Platform from AWS Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_add_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_labels=<aws_labels>'
+===============================================
+----
+The parameter aws_labels is a comma separated list of key=value pairs to add or update.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
 +
 . aws_check_aoc_version
 This playbook checks if the Ansible on Cloud version is the same as this command generator container. The check is done each time a playbook is called.
@@ -401,6 +508,39 @@ ok: [localhost] => {
 
 PLAY RECAP *********************************************************************
 localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+----
++
+. aws_remove_labels
+This playbook removes labels from the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_remove_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_remove_labels
+Description: This playbook removes labels to the deployment.
+-----------------------------------------------
+Remove labels from the Ansible Automation Platform from AWS Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_labels=<aws_labels>'
+===============================================
+----
+The parameter aws_labels is a comma separated list of keys to remove.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ----
 +
 
