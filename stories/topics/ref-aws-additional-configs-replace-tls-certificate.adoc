@@ -3,19 +3,21 @@
 = Replacing {ControllerName} and {HubName} EC2 instances SSL/TLS certificate and key
 
 By default, EC2 instances are secured with a self-signed SSL/TLS certificate with a validity period of ten years.
-Once the certificate expires or you want EC2 instances to use your own certificate, you are required to replace the SSL/TLS certificate and key.
+When the certificate expires or you want EC2 instances to use your own certificate, you are required to replace the SSL/TLS certificate and key.
 
 .Procedure
-. Locate the correct secret for the CloudFormation Stack by opening the AWS Secrets Manager console and selecting the secret with the name _<stack_name>-pulp_cert_.
-. Select *Retrieve secret value* to view the secret value.
-. Select *Edit* and provide new SSL/TLS certificate value.
-. Click btn:[Save].
-. Select the secret with the name _<stack_name>-pulp_key_.
-. Select *Retrieve secret value* to view the secret value.
-. Select *Edit* and provide new SSL/TLS key value.
-. Click btn:[Save].
-. Replace the running {PlatformNameShort} EC2 instances to use the new SSL/TLS certificate and key.
+. Navigate to the AWS Secrets Manager console.
+.. Locate and open the secret for the CloudFormation Stack with the name `*<stack_name>*-pulp_cert`.
+.. Select *Retrieve secret value* to view the secret value.
+.. Select *Edit* and provide new SSL/TLS certificate value.
+.. Click btn:[Save].
+. Navigate to the AWS Secrets Manager console.
+.. Locate and open the secret for the CloudFormation Stack with the name `*<stack_name>*-pulp_key`.
+.. Select *Retrieve secret value* to view the secret value.
+.. Select *Edit* and provide new SSL/TLS key value.
+.. Click btn:[Save].
+. Change the running {PlatformNameShort} EC2 instances to use the new SSL/TLS certificate and key.
 .. Navigate to the AWS EC2 Instances console.
-.. Identify and Terminate all {ControllerName} and {HubName} instances for the CloudFormation Stack.
+.. Identify and terminate all {ControllerName} and {HubName} instances for the CloudFormation Stack.
 .. Wait for the {ControllerName} and {HubName} Auto Scaling Groups to create new EC2 instances.
-. The new certificate is in used when the new {ControllerName} and {HubName} EC2 instances reach a _Running_ instance state.
+. The new certificate is in use when the new {ControllerName} and {HubName} EC2 instances reach a _Running_ instance state.
