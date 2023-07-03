@@ -1,6 +1,6 @@
-[id="proc-aap-aws-secure-controller-load-balancer"]
+[id="ref-aws-additional-configs-secure-controller-load-balancer"]
 
-== Securing the controller load balancer
+= Securing the controller load balancer
 
 The following procedure describes how to secure the {ControllerName} load balancer.
 
@@ -50,33 +50,3 @@ Ensure you are in the correct region.
 . Select the *Inbound rules* tab and click btn:[Edit inbound rules].
 . Add a rule of Type: `HTTPS`, with Source: `Anywhere-IPv4`.
 . Delete the old HTTP rule and click btn:[Save rules].
-
-[discrete]
-== Adding certificates to the EC2 Instances
-
-.Procedure
-. In the {AWS} UI, navigate to menu:EC2 Instances[]. 
-Ensure you are in the correct region.
-. Select the {ControllerName} instance(s)
-. Paste the {ControllerName} key in the following location:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo vi /efs/certificates/controller_key.pem # Paste key. This step only needs to be done on the first controller node.
-----
-+
-. Paste the controller certificate in the following location -
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo vi /efs/certificates/controller_cert.pem # Paste cert. This step only needs to be done on the first controller node.
-----
-+
-. Copy the certificte and keys to the ca-trust directory. Then update the ca-trust directory using the following commands:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo cp /efs/certificates/controller_key.pem /etc/pki/ca-trust/source/anchors/controller-key.pem # Copy key
-$ sudo cp /efs/certificates/controller_cert.pem /etc/pki/ca-trust/source/anchors/controller-cert.pem # Copy cert
-$ sudo update-ca-trust
-----
