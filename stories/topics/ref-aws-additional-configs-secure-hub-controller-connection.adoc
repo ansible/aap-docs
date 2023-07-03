@@ -1,4 +1,4 @@
-[id="proc-aws-secure-hub-controller-connection"]
+[id="ref-aws-additional-configs-secure-hub-controller-connection"]
 
 = Securing the connection between {HubName} and {ControllerName}
 
@@ -51,34 +51,3 @@ Ensure you are in the correct region.
 . Select the *Inbound rules* tab and click btn:[Edit inbound rules].
 . Add a rule of Type: `HTTPS`, with Source: `Anywhere-IPv4`.
 . Delete the old HTTP rule and click btn:[Save rules].
-
-[discrete]
-== Adding certificates to the EC2 Instances
-
-.Procedure
-. In the {AWS} UI, navigate to menu:EC2 Instances[]. 
-Ensure you are in the correct region.
-. Select the {HubName} instance(s)
-. Paste the {HubName} key in the following location:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo vi /efs/certificates/hub_key.pem # Paste key
-----
-+
-. Paste the {HubName} certificate in the following location: 
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo vi /efs/certificates/hub_cert.pem # Paste cert
-----
-+
-. Copy the certificate and keys to the ca-trust directory. 
-Then update the ca-trust using the following commands:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo cp /efs/certificates/hub_key.pem /etc/pki/ca-trust/source/anchors/hub-key.pem # Copy key
-$ sudo cp /efs/certificates/hub_cert.pem /etc/pki/ca-trust/source/anchors/hub-cert.pem # Copy cert
-$ sudo update-ca-trust
-----
