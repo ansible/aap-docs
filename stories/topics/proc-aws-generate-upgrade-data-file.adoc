@@ -1,16 +1,16 @@
 [id="proc-aws-generate-upgrade-data-file_{context}"]
 
-= Generating the upgrade data file
+= Generating the data file
 
-The commands in this section create a directory and populate it with an empty data template that, when completed, is used during the upgrade. 
-
-Run the following commands to generate the required data file. 
+The commands in this section create a directory and populate it with an empty data template that, when populated, is used during the upgrade. 
 
 .Procedure
-. Create a folder to hold the configuration files.
+
+. Run the following commands to generate the required data file. 
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
+# Create a folder to hold the configuration files
 $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
@@ -31,6 +31,8 @@ aws_upgrade:
   cloud_credentials_path:
   deployment_name:
   extra_vars:
+    aws_backup_taken:
     aws_region:
     aws_ssm_bucket_name:
+    seller_name:
 ----

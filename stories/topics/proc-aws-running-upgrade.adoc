@@ -1,6 +1,6 @@
 [id="proc-aws-running-upgrade"]
 
-= Running the ansible-on-clouds-ops 2.3 container to upgrade your {AAPonAWS} deployment
+= Running the ansible-on-clouds-ops 2.4 container to upgrade your {PlatformNameShort} deployment
 
 . To run the upgrade, run the command generator to generate the upgrade CLI command:
 +
@@ -14,18 +14,14 @@ This generates the following upgrade command:
 [literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
-docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro --env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform --env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_upgrade -e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_ssm_bucket_name=AnsibleAutomationPlatform-bucket'
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro --env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform --env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_upgrade -e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_ssm_bucket_name=aap-ssm-bucket aws_backup_taken=True seller_name=redhatinc'
 ===============================================
 ----
 . Run the given upgrade command to trigger the upgrade.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
---env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
---env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_upgrade \
--e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \
-aws_ssm_bucket_name=AnsibleAutomationPlatform-bucket'
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro --env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform --env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_upgrade -e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 aws_ssm_bucket_name=aap-ssm-bucket aws_backup_taken=True seller_name=redhatinc'
 ----
 . The upgrade can take some time to complete, but can take longer depending on the number of extension nodes on the system. 
 A successful upgrade is marked by the log below.
@@ -34,7 +30,7 @@ A successful upgrade is marked by the log below.
 ----
 TASK [redhat.ansible_on_clouds.standalone_aws_upgrade : [upgrade] [LOG] upgrade version] ***
 ok: [localhost] => {
-    "msg": "Successfully upgraded from '2.2.20230215-00' -> '2.3.20230221-00'."
+    "msg": "Successfully upgraded from '2.3.20230221-00' -> '2.4.xxxxxxxx-00'."
 }
 ----
 . Your {AAPonAWS} deployment is now upgraded to a newer version and you can log in to {PlatformName} {ControllerName} and {HubName} using your deployment credentials.
