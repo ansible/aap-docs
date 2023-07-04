@@ -1,9 +1,9 @@
 [id="proc-gcp-upgrade-pull-container-image"]
 
-= Pulling the ansible-on-clouds-ops 2.3 container image
+= Pulling the ansible-on-clouds-ops 2.4 container image
 
 .Procedure
-* Pull the docker image for the `ansible-on-clouds-ops` 2.3 container with the same tag as the version you want to upgrade to.
+* Pull the Docker image for Ansible on Clouds operational container with the same tag as the version you want to upgrade to.
 +
 [NOTE]
 ====
@@ -17,20 +17,11 @@ For more information about registry login, see link:https://access.redhat.com/Re
 +
 [NOTE]
 =====
-The `ansible-on-clouds-ops` container image tag must match the version that you want to upgrade to. 
-For example, if your foundation deployment version is 2.2.20230215-00, pull the `ansible-on-clouds-ops` image with tag 2.3.20230221 to upgrade to version 2.3.20230221.
+The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is 2.3.20230221, pull the operational image with tag 2.4.xxxxxxxx to upgrade to version 2.4.xxxxxxxx.
 =====
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.3.20230221
-$ docker pull $IMAGE --platform=linux/amd64
-----
-
-For EMEA regions (Europe, Middle East, Africa) run the following command instead:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-emea-rhel8:2.3.20230221
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.4.xxxxxxxx
 $ docker pull $IMAGE --platform=linux/amd64
 ----

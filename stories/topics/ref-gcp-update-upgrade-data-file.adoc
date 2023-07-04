@@ -2,13 +2,12 @@
 
 = Updating the data file
 
-You must populate the data file before triggering the upgrade. 
-The following variables are parameters listed in the data file.
+You must populate the data file before triggering the upgrade. Each parameter is required unless it is noted as optional. If the parameter is noted as optional, both its key and value can be removed from the data file.
 
-* `ansible_config_path` (Optional) Only use if overriding with a custom ansible_config.
+* `ansible_config_path` (Optional) Only use if overriding with a custom `ansible_config`.
 * `cloud_credentials_path` is the path to your GCP credentials file.
 * `deployment_name` is the name of the foundation deployment. 
-This is the same name you used when you deployed the foundation.
+** This is the same name you used when you deployed the foundation.
 * `gcp_backup_taken` is the verification that a manual backup of the current deployment was recently created prior to running this upgrade.
 Use `true` here to verify a recent backup was created.
 * `gcp_compute_region` is the GCP region that you provided when deploying foundation deployment. 
