@@ -1,88 +1,30 @@
 [id="ref-gcp-install-permissions"]
 
-= Permissions
+= IAM Permissions
 
-Your GCP account must have the following permissions to successfully create an {PlatformNameShort} deployment on _{GCP}_.
+Your GCP account must have the following _Identity and Access Management_ (IAM) permissions to successfully create and manage {PlatformNameShort} deployments as well as the resources described in xref:con-gcp-application-architecture[Application architecture].
+
+Your GCP account must also be licensed to deploy {AAPonAWS}.
+
+The application can fail to deploy if your IAM policies restrict deployment and management of these resources. 
+
+The application has two deployment options:
 
 
-* Cloud SQL Permissions
-** cloudsql.databases.create
-** cloudsql.databases.delete
-** cloudsql.databases.get
-** cloudsql.databases.list
-** cloudsql.instances.connect
-** cloudsql.instances.create
-** cloudsql.instances.delete
-** cloudsql.instances.get
-** cloudsql.instances.list
-** cloudsql.instances.login
-* Compute Permissions
-** compute.addresses.create
-** compute.addresses.get
-** compute.addresses.list
-** compute.addresses.use
-** compute.forwardingRules.create
-** compute.forwardingRules.get
-** compute.globalAddresses.get
-** compute.globalOperations.get
-** compute.instances.delete
-** compute.instances.get
-** compute.instances.getGuestAttributes
-** compute.instances.list
-** compute.projects.get
-** compute.projects.setCommonInstanceMetadata
-** compute.regionBackendServices.create
-** compute.regionBackendServices.get
-** compute.regionBackendServices.update
-** compute.regionBackendServices.use
-** compute.regionHealthChecks.create
-** compute.regionHealthChecks.get
-** compute.regionHealthChecks.useReadOnly
-** compute.regionOperations.get
-** compute.regionTargetHttpProxies.create
-** compute.regionTargetHttpProxies.get
-** compute.regionTargetHttpProxies.use
-** compute.regionUrlMaps.create
-** compute.regionUrlMaps.get
-** compute.regionUrlMaps.use
-** compute.regions.list
-** compute.zoneOperations.get
-* Deployment Manager Permissions
-** deploymentmanager.deployments.create
-** deploymentmanager.deployments.delete
-** deploymentmanager.deployments.get
-** deploymentmanager.deployments.list
-** deploymentmanager.manifests.get
-** deploymentmanager.operations.get
-** deploymentmanager.resources.list
-* IAM Permissions
-** iam.serviceAccounts.actAs
-* Logging Permissions:
-** logging.logEntries.create
-* Monitoring Permissions:
-** monitoring.metricDescriptors.get
-** monitoring.timeSeries.create
-* Resource Manager Permissions
-** resourcemanager.projects.get
-* Runtime Configurator Permissions
-** runtimeconfig.configs.list
-** runtimeconfig.variables.create
-** runtimeconfig.variables.get
-** runtimeconfig.variables.list
-** runtimeconfig.variables.update
-* Secret Manager Permissions
-** secretmanager.secrets.create
-** secretmanager.secrets.delete
-** secretmanager.secrets.get
-** secretmanager.secrets.list
-** secretmanager.versions.access
-** secretmanager.versions.add
-** secretmanager.versions.destroy
-** secretmanager.versions.disable
-** secretmanager.versions.get
-** secretmanager.versions.list
-* Service Networking Permissions
-** servicenetworking.operations.get
-** servicenetworking.services.addPeering
-* Service Usage Permissions
-** serviceusage.services.list
+[cols="30%,40%",options="header"]
+|====
+| For deployment with a new VPC | For deployment with an existing VPC
+a| * Minimum Permissions
+** Cloud SQL Client
+** Cloud SQL Instance User
+** Compute Network Admin
+** Editor
+** Logs Writer
+** Secret Manager Secret Accessor a| * Minimum Permissions
+** Cloud SQL Client
+** Cloud SQL Instance User
+** Compute Network Admin
+** Editor
+** Logs Writer
+** Secret Manager Secret Accessor
+|====
