@@ -1,8 +1,8 @@
 [id="ref-aws-iam-upgrade-minimum-permissions"]
 
-= IAM minimum upgrade permissions
+= Required permissions
 
-You must have the following ASW IAM permissions to upgrade the stack:
+You must have the following AWS IAM permissions to upgrade the stack:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -79,6 +79,8 @@ required-roles:
       - autoscaling:CreateLaunchConfiguration
       - autoscaling:DisableMetricsCollection
       - autoscaling:DeleteLaunchConfiguration
+      - autoscaling:DetachLoadBalancerTargetGroups
+      - autoscaling:AttachLoadBalancerTargetGroups
     resources:
       - "*"
   s3:
@@ -103,6 +105,17 @@ required-roles:
       - elasticloadbalancing:DescribeTargetHealth
       - elasticloadbalancing:DescribeTargetGroups
       - elasticloadbalancing:ModifyTargetGroup
+      - elasticloadbalancing:DescribeLoadBalancers
+      - elasticloadbalancing:DescribeLoadBalancerAttributes
+      - elasticloadbalancing:DescribeListeners
+      - elasticloadbalancing:CreateListener
+      - elasticloadbalancing:DeleteListener
+      - elasticloadbalancing:DescribeRules
+      - elasticloadbalancing:DeleteTargetGroup
+      - elasticloadbalancing:CreateTargetGroup
+      - elasticloadbalancing:ModifyTargetGroupAttributes
+      - elasticloadbalancing:AddTags
+      - elasticloadbalancing:RemoveTags
     resources:
       - "*"
 ----

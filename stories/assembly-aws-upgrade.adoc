@@ -1,8 +1,8 @@
 ifdef::context[:parent-context: {context}]
 
-[id="assembly-gcp-upgrade"]
+[id="assembly-aws-application-upgrade"]
 
-:context: gcp-upgrade
+:context: aws-application-upgrade
 
 = Upgrade
 
@@ -13,7 +13,7 @@ You are required to create a backup before running the upgrade.
 
 [NOTE]
 =====
-{AAPonGCP} supports sequential upgrades. 
+{AAPonAWS} supports sequential upgrades. 
 All upgrades should be no more than one major version behind the version you are currently upgrading to. 
 For example, to upgrade {PlatformNameShort} to 2.4.xxxxxxxx, you must be on version 2.3.20230221.
 =====
@@ -25,8 +25,8 @@ For example, to upgrade {PlatformNameShort} to 2.4.xxxxxxxx, you must be on vers
 
 The following procedures form the upgrade process:
 
-. Backup your {PlatformNameShort} 2.3 stack.
-.. Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-aap-gcp-backup-and-recovery#con-gcp-backup-process[Ansible on Clouds 2.3 backup instructions].
+. Backup your {PlatformNameShort} 2.3 stack
+.. Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aws-backup-and-restore#con-aws-backup-process[Ansible on Clouds 2.3 backup instructions]
 
 . Upgrade {PlatformNameShort}
 .. Pull the ansible-on-clouds-ops 2.4 container image
@@ -36,12 +36,12 @@ The following procedures form the upgrade process:
 .. Begin upgrading {PlatformNameShort} by running the operational container
 
 . (Optional) Restore the stack from a backup. 
-.. Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-aap-gcp-backup-and-recovery#con-gcp-restore-process[Ansible on Clouds 2.3 restore instructions].
+.. Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aws-backup-and-restore#con-aws-restore-process[Ansible on Clouds 2.3 restore instructions].
 
-//context labels are here in case modules need to be reused within these container files.
+//Context label added in case modules are reused.
 :context: backup
-include::topics/con-gcp-upgrade-backup-process.adoc[leveloffset=+1]
+include::topics/con-aws-upgrade-backup-process.adoc[leveloffset=+1]
 :context: upgrade
-include::topics/con-gcp-upgrade-upgrading.adoc[leveloffset=+1]
+include::topics/con-aws-upgrade-upgrading.adoc[leveloffset=+1]
 :context: restore
-include::topics/con-gcp-upgrade-restore-from-stack.adoc[leveloffset=+1]
+include::topics/con-aws-upgrade-restore-from-stack.adoc[leveloffset=+1]

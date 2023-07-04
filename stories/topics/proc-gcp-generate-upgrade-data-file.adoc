@@ -2,26 +2,31 @@
 
 = Generating the data file
 
+The commands in this section create a directory and populate it with an empty data template that, when populated, is used during the upgrade. 
+
 .Procedure
 
-. Run the following commands  to generate the required data file. 
-These commands create a directory, and populate it with an empty data template that, when populated, is used during the upgrade. 
+. Run the following commands to generate the required data file. 
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 # Create a folder to hold the configuration files
 $ mkdir command_generator_data
-# Populate command_generator_data folder with configuration file template
-$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
-command_generator_vars gcp_upgrade \
---output-data-file /data/extra_vars.yml
 ----
-. After running the previous commands, a `command_generator_data/extra_vars.yml` template is created. 
-This template file should resemble:
+. Populate the `command_generator_data` folder with the configuration file template.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-  gcp_upgrade:
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+command_generator_vars gcp_upgrade \
+--output-data-file /data/extra_vars.yml
+----    
+. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+This template file resembles the following: 
++
+[literal, options="nowrap" subs="+attributes"]
+----
+gcp_upgrade:
   ansible_config_path:
   cloud_credentials_path:
   deployment_name:
@@ -30,4 +35,3 @@ This template file should resemble:
     gcp_compute_region:
     gcp_compute_zone:
 ----
-
