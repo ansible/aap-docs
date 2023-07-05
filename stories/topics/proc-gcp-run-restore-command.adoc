@@ -24,10 +24,11 @@ The generated command resembles the following:
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm --env PLATFORM=GCP -v <local_credential_file>:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name> --env GENERATE_INVENTORY=true -\
+-env CHECK_GENERATED_INVENTORY=false  $IMAGE redhat.ansible_on_clouds.gcp_restore_deployment \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  \
-gcp_deployment_name=<former_deployment_name> gcp_restored_deployment_name=<new_deployment_name> \
-gcp_compute_region=<region> gcp_compute_zone=<zone> gcp_bucket_backup_name=<bucket> gcp_existing_vpc=False'
+gcp_deployment_name=<deployment_name> gcp_compute_region=<region> gcp_compute_zone=u<zone> \
+gcp_bucket_backup_name=<bucket> backup_name=<backup_name>'
 ----
 . Run the generated command.
 +
@@ -52,3 +53,17 @@ ok: [localhost] =>
 PLAY RECAP *********************************************************************
 localhost                  : ok=33   changed=8    unreachable=0    failed=0    skipped=6    rescued=0    ignored=2
 ----
++
+
+= Troubleshooting
+
+== Failed to restore
+
+If a message similar to this one appears during the restore, please contact the support as the restore must be done manually.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+TASK [redhat.ansible_on_clouds.standalone_gcp_restore : [restore_deployment] Restore awx db] ***
+fatal: [localhost -> dvernier-restore1-aap-cntrlr-x2c6]: FAILED!
+----
+
