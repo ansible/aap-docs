@@ -1,12 +1,9 @@
-[id="proc-aws-set-container-image_{context}"]
+[id="proc-aws-backup-platform-stack"]
 
-= Setting the ansible-on-clouds-ops container image
-
-The `ansible-on-clouds-ops` image tag should match the version of your foundation deployment.
-For example, if your foundation deployment version is 2.3.20230221-00, pull the `ansible-on-clouds-ops` image with tag 2.3.20230221.
+= Backing up your {PlatformNameShort} stack
 
 .Procedure
-. Pull the `ansible-on-clouds-ops` container image with the same tag version as the foundation deployment.
+. Pull the `ansible-on-clouds-ops 2.2` container image.
 +
 [NOTE]
 ====
@@ -18,9 +15,15 @@ $ docker login registry.redhat.io
 For more information about registry login, see link:https://access.redhat.com/RegistryAuthentication[Registry Authentication]
 ====
 +
+[NOTE]
+=====  
+The `ansible-on-clouds-ops` image tag must match the version of the foundation deployment. 
+For example, if your foundation deployment version is 2.2.20230215-00, pull the `ansible-on-clouds-ops` image with tag 2.2.20230215
+=====
++
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.3.20230221
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel8:2.2.20230215
 $ docker pull $IMAGE --platform=linux/amd64
 ----
 
@@ -28,6 +31,6 @@ For EMEA regions (Europe, Middle East, Africa) run the following command instead
 
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-emea-rhel8:2.3.20230221
+$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-emea-rhel8:2.2.20230215
 $ docker pull $IMAGE --platform=linux/amd64
 ----
