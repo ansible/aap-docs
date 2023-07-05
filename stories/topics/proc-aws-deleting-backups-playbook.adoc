@@ -1,4 +1,4 @@
-[id="proc-aws-managing-backups-playbook"]
+[id="proc-aws-deleting-backups-playbook"]
 
 = Managing backups playbook
 
@@ -15,7 +15,7 @@ docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator
 +
 Produces the following output:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="attributes"]
 ----
 ===============================================
 Playbook: aws_backups_delete
@@ -31,7 +31,7 @@ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator aw
 . After running the command, a `/tmp/backups.yml` template file is created. 
 This template file resembles the following: 
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="attributes"]
 ----
 aws_backups_delete:
   cloud_credentials_path:
@@ -53,7 +53,7 @@ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator 
 +
 Resulting in the following ouput:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="attributes"]
 ----
 Command to run playbook: 
 
@@ -66,7 +66,7 @@ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/crede
 +
 . When the playbook has finished running, the output resembles the following:
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_aws_backup_delete : [delete_backup] Dry-run message] ***
 skipping: [localhost]
@@ -74,20 +74,3 @@ skipping: [localhost]
 PLAY RECAP *********************************************************************
 localhost                  : ok=21   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0    
 ----
-
-
-= Troubleshootig
-
-== Failed to delete a backup
-
-If the deletion of backup failed, take the following steps.
-
-1. Go to the bucket containing the backup and locate the directory having the backup name.
-2. Open that directory
-3. Open the file names "restore-vars.json" and note last part of the "Recovery_Point_Arn" and the "Backup_Vault_Name"
-4. On the AWS Console, go to AWS Backup
-5. Open Backup Vault and click on the vault with the name you noted from "Backup_Vault_Name"
-6. Search for the "Recovery_Point_Arn".
-7. Delete it if not already deleted.
-8. Go back to the bucket
-9. Delete the directory having the name of the backup.
