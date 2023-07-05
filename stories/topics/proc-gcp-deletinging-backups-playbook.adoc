@@ -1,0 +1,77 @@
+[id="proc-gcp-deleting-backups-playbook"]
+
+= Delete backups
+There is two possible way to delete backups, the first one gcp_backup_delete which delete one backup and the second one gcp_backups_delete which allows to delete multiple backups at once. We will explain the gcp_backups_delete in this chapter. The difference is the gcp_backups_delete takes a array of string ["backup1","backup2",...] but the gcp_backup_delete take only one string which is the name of a specifc backup "backup1"
+
+.Procedure
+. Populate the `command_generator_data` directory with the configuration file template.
++
+[source,bash]
+----
+docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backups_delete --output-data-file /data/backups.yml
+----
++
+Produces the following output:
++
+[literal, options="nowrap" subs="attributes"]
+----
+docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
+command_generator_vars gcp_backup_delete --output-data-file /data/backup.yml
+
+===============================================
+Playbook: gcp_backups_delete
+Description: This playbook delete a list of backups.
+-----------------------------------------------
+This playbook delete a list of backups
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups.yml
+----
+. After running the command, a `/tmp/backups.yml` template file is created. 
+This template file resembles the following: 
++
+[literal, options="nowrap" subs="attributes"]
+----
+gcp_backups_delete:
+  cloud_credentials_path:
+  extra_vars:
+    backup_names:
+    delete:
+    gcp_bucket_backup_name:
+----
+
+With backup_names like ["backup1","backup2"]
+
+. To run the backup, run the command generator to generate the backup command.
++
+[literal, options="nowrap" subs="attributes"]
+----
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups.yml
+----
++
+Resulting in the following ouput:
++
+[literal, options="nowrap" subs="attributes"]
+----
+-----------------------------------------------
+Command to run playbook: 
+
+docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backups_delete \
+-e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_bucket_backup_name=<bucket> \
+backup_names=<backup_names> delete=True'
+----
+. Run the supplied backup command to trigger the backup.
++
+. When the playbook has finished running, the output resembles the following:
++
+[literal, options="nowrap" subs="attributes"]
+----
+TASK [redhat.ansible_on_clouds.standalone_gcp_backup_delete : [delete_backup] Dry-run message] ***
+skipping: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=23   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+----
