@@ -5,6 +5,7 @@
 You must populate the data file before triggering the operation. 
 The variables listed in the data file are defined below.
 
+* `ansible_config_path` (Optional) is a value that overrides the default Ansible configuration used to run the playbook.
 * `cloud_credentials_path` is the path to your AWS credentials file.
 For example, `~/.aws/credentials`
 * `deployment_name` is the name of the foundation deployment. 
@@ -12,10 +13,16 @@ This is the same name you used when you deployed the foundation.
 * `aws_autoscaling_group_name` is the name of the AWS AutoScaling Group to create for the extension nodes.
 * `aws_launch_template_name` is the name of the AWS EC2 launch template to create.
 * `aws_region` is the region where the foundation deployment is located.
+* `aws_ssm_bucket_name` is the name of the S3 bucket where the configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
 
 After populating the data file, it should resemble the following:
 
 The values below are provided as examples.
+
+[NOTE]
+====
+The optional value `ansible_config_path` in this data file example has been removed. If you do not wish to use this optional value and want to use the default value for these variable, you 'must' also remove it for your data file like it was done in the example below. If you wish to use this optional variable, then it 'must' be included in the data file and be assigned a value. 
+====
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -23,8 +30,9 @@ aws_remove_extension_nodes:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
   extra_vars:
-    aws_autoscaling_group_name: ext-node-asg-1
-    aws_launch_template_name: ext-node-lt-1
+    aws_autoscaling_group_name: AnsibleAutomationPlatform-ext-asg1-100
+    aws_launch_template_name: AnsibleAutomationPlatform-ext-lt1-100
     aws_region: us-east-1
+    aws_ssm_bucket_name: aap-ssm-bucket
 ----
 
