@@ -12,16 +12,16 @@ The following commands create a directory, and populate it with an empty data te
 $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
-This creates the `extra-vars.yaml` file within the `command-generator_data` directory with `root:root_user` and `group` permissions.
+This creates the `extra-vars.yml` file within the `command-generator_data` directory with `root:root_user` and `group` permissions.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   command_generator_vars aws_backup_stack \
-  --output-data-file /data/extra_vars.yaml
+  --output-data-file /data/extra_vars.yml
 ----
 
-. After running these commands, a `command_generator_data/extra_vars.yaml` template file is created. 
+. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
 This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
