@@ -15,11 +15,14 @@ Provides the following command:
 [literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
-docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials \
---env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
--e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ aws_launch_template_name=AnsibleAutomationPlatform-ext-lt1-100 \ 
+docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ 
+aws_launch_template_name=AnsibleAutomationPlatform-ext-lt1-100 \
 aws_autoscaling_group_name=AnsibleAutomationPlatform-ext-asg1-100 \
-aws_asg_min_size=1 aws_asg_desired_capacity=1 aws_offer_type=100'
+aws_extension_node_subscription=True aws_offer_type=100 \
+aws_ssm_bucket_name=aap-ssm-bucket'
 ===============================================
 ----
 
@@ -27,9 +30,12 @@ aws_asg_min_size=1 aws_asg_desired_capacity=1 aws_offer_type=100'
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials \
---env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
--e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ aws_launch_template_name=AnsibleAutomationPlatform-ext-lt1-100 \
+$ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
+--env ANSIBLE_CONFIG=../aws-ansible.cfg --env DEPLOYMENT_NAME=AnsibleAutomationPlatform \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.aws_add_extension_nodes \
+-e 'aws_foundation_stack_name=AnsibleAutomationPlatform aws_region=us-east-1 \ 
+aws_launch_template_name=AnsibleAutomationPlatform-ext-lt1-100 \
 aws_autoscaling_group_name=AnsibleAutomationPlatform-ext-asg1-100 \
-aws_asg_min_size=1 aws_asg_desired_capacity=1 aws_offer_type=100'
+aws_extension_node_subscription=True aws_offer_type=100 \
+aws_ssm_bucket_name=aap-ssm-bucket'
 ----

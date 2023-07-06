@@ -5,20 +5,27 @@
 You must populate the data file before triggering the operation. 
 The variables listed in the data file are defined below.
 
+* `ansible_config_path` (Optional) is a value that overrides the default Ansible configuration used to run the playbook.
 * `cloud_credentials_path` is the path to your AWS credentials file.
 For example, `~/.aws/credentials`
 * `deployment_name` is the name of the foundation deployment. 
 This is the same name you used when you deployed the foundation.
-* `aws_asg_desired_capacity` is the AutoScaling Group desired capacity.
-* `aws_asg_min_size` is the AutoScaling group minimum capacity. The maximum is set by `aws_offer_type`.
 * `aws_autoscaling_group_name` is the name of the AWS AutoScaling Group to create for the extension nodes.
+* `aws_extension_node_subscription` is a boolean value either `true` or `false` specifying whether or not you have an extension node subscription
 * `aws_launch_template_name` is the name of the AWS EC2 launch template to create.
 * `aws_offer_type` is the offer type of the extension nodes. This must be `100`, `200`, or `400`.
 * `aws_region` is the region where the foundation deployment is located.
+* `aws_ssm_bucket_name` is the name of the S3 bucket where the configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
+* `seller_name` (Optional) is used to designate the AWS Marketplace Seller. The default value is `redhatinc`. If you are based in EMEA and purchased this offering through the `redhatlimited` AWS Marketplace seller, ensure that this value is set to `redhatlimited`. 
 
 After populating the data file, it resembles the following:
 
 The values are provided as examples.
+
+[NOTE]
+====
+The optional values `ansible_config_path` and `seller_name` in this data file example have been removed. If you do not wish to use these optional values and want to use the default values for these variables, you 'must' also remove them for your data file like it was done in the example below. If you wish to use these optional variables, they 'must' be included in the data file and be assigned a value. 
+====
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -26,10 +33,10 @@ aws_add_extension_nodes:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
   extra_vars:
-    aws_asg_desired_capacity: "1"
-    aws_asg_min_size: "1"
     aws_autoscaling_group_name: AnsibleAutomationPlatform-ext-asg1-100
+    aws_extension_node_subscription: true
     aws_launch_template_name: AnsibleAutomationPlatform-ext-lt1-100
     aws_offer_type: "100"
     aws_region: us-east-1
+    aws_ssm_bucket_name: aap-ssm-bucket
 ----
