@@ -2,6 +2,7 @@
 
 = List backups
 This playbook allows you to list the existing backups in a specific buckets
+
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
@@ -13,7 +14,7 @@ docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator
 Produces the following output:
 +
 [literal, options="nowrap" subs="attributes"]
-===============================================
+----
 Playbook: gcp_backup_list
 Description: This playbook list the backups in a given bucket.
 -----------------------------------------------
@@ -56,8 +57,6 @@ backup_names=<backup_names> delete=True'
 ----
 . Run the supplied backup command to trigger the list of backups.
 +
-[literal, options="nowrap" subs="attributes"]
-----
 . When the playbook has finished running, the output resembles the following:
 +
 [literal, options="nowrap" subs="attributes"]
