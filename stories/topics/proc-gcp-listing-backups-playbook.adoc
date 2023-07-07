@@ -6,14 +6,14 @@ This playbook allows you to list the existing backups in a specific buckets
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
-[source,bash]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_list --output-data-file /data/backups_list.yml
 ----
 +
 Produces the following output:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 Playbook: gcp_backup_list
 Description: This playbook list the backups in a given bucket.
@@ -28,7 +28,7 @@ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gc
 . After running the command, a `/tmp/backups_list.yml` template file is created. 
 This template file resembles the following: 
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 gcp_backup_list:
   cloud_credentials_path:
@@ -38,14 +38,14 @@ gcp_backup_list:
 
 . To run the backup, run the command generator to generate the backup command.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backup_list --data-file /data/backups_list.yml
 ----
 +
 Resulting in the following ouput:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
 Command to run playbook: 
@@ -59,7 +59,7 @@ backup_names=<backup_names> delete=True'
 +
 . When the playbook has finished running, the output resembles the following:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_gcp_backup_list : [list_backup] Display list of backups] ***
 ok: [localhost] => {
