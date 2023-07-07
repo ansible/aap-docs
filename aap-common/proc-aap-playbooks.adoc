@@ -1,0 +1,547 @@
+[id="proc-aap-playbooks"]
+
+= Playbooks
+
+== Get available playbook
+
+The list of available playbook can be retrieve running the following command:
++
+ifdef::product_GCP[]
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars | grep "Playbook: gcp"
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+Playbook: gcp_aap_health_check
+Playbook: gcp_add_labels
+Playbook: gcp_backup_delete
+Playbook: gcp_backup_deployment
+Playbook: gcp_backup_list
+Playbook: gcp_backups_delete
+Playbook: gcp_check_aoc_version
+Playbook: gcp_create_external_load_balancer
+Playbook: gcp_delete_external_load_balancer
+Playbook: gcp_deployment_inventory
+Playbook: gcp_get_aoc_version
+Playbook: gcp_health_check
+Playbook: gcp_list_deployments
+Playbook: gcp_nodes_health_check
+Playbook: gcp_remove_labels
+Playbook: gcp_restore_deployment
+Playbook: gcp_setup_logging_monitoring
+Playbook: gcp_upgrade
+----
+endif::product_GCP[]
+
+ifdef::product_AWS[]
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars | grep "Playbook: aws" 
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+Playbook: aws_add_extension_nodes
+Playbook: aws_add_labels
+Playbook: aws_backup_delete
+Playbook: aws_backup_stack
+Playbook: aws_backups_delete
+Playbook: aws_check_aoc_version
+Playbook: aws_deployment_inventory
+Playbook: aws_get_aoc_version
+Playbook: aws_remove_extension_nodes
+Playbook: aws_remove_labels
+Playbook: aws_restore_stack
+Playbook: aws_upgrade
+----
+endif::product_AWS[]
++
+
+== Use playbooks
+
+The playbooks are explained in different chapters of this documentation but not all of them. Here those which are used either to retrieve information from the Ansible on Clouds deployment or to check it. These playbooks are not modifying the deployment.
+
+ifdef::product_GCP[]
++
+. gcp_aap_health_check
+This playbook checks if the Ansible application is healthy.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_aap_health_check
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_aap_health_check
+Description: This playbook checks if the deployment is healthy using the Ansible health service.
+-----------------------------------------------
+The health check consists of checking the Ansible Automation Platform from GCP Marketplace environemnt to verify it is healthy.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_aap_health_check [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone>'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=29   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+----
+A "failed" not equal zero would mean an issue with Ansible on Cloud deployment.
++
+
+. gcp_add_labels
+This playbook adds labels to the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_add_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_add_labels
+Description: This playbook adds labels to the deployment.
+-----------------------------------------------
+Add labels to the Ansible Automation Platform from GCP Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_add_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
+===============================================
+----
+The parameter gcp_labels is a comma separated list of key=value pairs to add or update.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
+. gcp_check_aoc_version
+This playbook checks if the Ansible on Cloud version is the same as this command generator container. The check is done each time a playbook is called.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_check_aoc_version
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_check_aoc_version
+Description: Check the operational container version matches the Ansible on Clouds version.
+-----------------------------------------------
+Check the operational container version matches the Ansible on Clouds version.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [redhat.ansible_on_clouds.standalone_check_aoc_version : Verify operational playbook and Ansible on Clouds deployment versions] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "This operation playbook version and the Ansible on Clouds deployment version are identical: 2.4.20230606-00"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+----
+A "failed" not equal zero means the Ansible on Clouds deployment version doesn't match the command_generator container and a diffirent version is needed for the command generator in order to manage that deployment.
++
+
+. gcp_get_aoc_version
+This playbook retrieves the version of the Ansible on Clouds deployment. 
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_get_aoc_version
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_get_aoc_version
+Description: Get the current Ansible on Clouds version.
+-----------------------------------------------
+Get the current Ansible on Clouds version.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_get_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [Print version] ***********************************************************
+ok: [localhost] => {
+    "msg": "The AOC version is 2.4.20230606-00"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+----
++
+
+. gcp_check_aoc_version
+This playbook checks if the Ansible on Cloud version is the same as this command generator container. The check is done each time a playbook is called.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_check_aoc_version
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_check_aoc_version
+Description: Retrieve the Ansible on Clouds version.
+-----------------------------------------------
+Retrieve the Ansible on Clouds version.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [redhat.ansible_on_clouds.standalone_check_aoc_version : Verify operational playbook and Ansible on Clouds deployment versions] ***
+ok: [localhost] => {
+    "changed": false,
+    "msg": "This operation playbook version and the Ansible on Clouds deployment version are identical: 2.4.20230606-00"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+----
+A "failed" not equal zero means the Ansible on Clouds deployment version doesn't match the command_generator container and a diffirent version is needed for the command generator in order to manage that deployment.
++
+
+. gcp_health_check
+This playbook checks if the nodes and Ansible application are healthy.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_health_check
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_health_check
+Description: This playbook checks if the Ansible Automation Platform from GCP Marketplace deployment is healthy.
+-----------------------------------------------
+The health check consists of checking the Ansible Automation Platform from GCP Marketplace heatlh checks
+and the health of the monitoring exporter.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_health_check [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone>'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+----
+A "failed" not equal zero would mean an issue with nodes or Ansible on Cloud deployment.
++
+
+. gcp_list_deployments
+This playbook list the deployments, the region and zone are optional.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_list_deployments
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_list_deployments
+Description: This playbook is used to generate a list of available Ansible Automation Platform from GCP Marketplace deployments.
+-----------------------------------------------
+This playbook is used to generate a list of available Ansible Automation Platform from GCP Marketplace deployments.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_list_deployments -c <cloud_credentials_path> --extra-vars '[gcp_compute_region=<gcp_compute_region>] [gcp_compute_zone=<gcp_compute_zone>]'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [Show deployment list] ****************************************************
+ok: [localhost] => {
+    "msg": [
+        "Deployment list: ['dep1', 'dep2', 'dep3']"
+    ]
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+----
++
+
+. gcp_nodes_health_check
+This playbook checks if the nodesare healthy.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_nodes_health_check
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_nodes_health_check
+Description: This role runs a health check on a group of nodes in the Ansible Automation Platform from GCP Marketplace deployment
+-----------------------------------------------
+The playbook checks if the Ansible Automation Platform from GCP Marketplace monitoring exporter is up and running.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator gcp_nodes_health_check [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'check_monitoring=True'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+----
+A "failed" not equal zero would mean an issue with nodes in the deployment.
++
+
+. gcp_remove_labels
+This playbook removes labels from the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_remove_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: gcp_remove_labels
+Description: This playbook removes labels from the deployment.
+-----------------------------------------------
+Remove labels from the Ansible Automation Platform from GCP Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
+===============================================
+----
+The parameter gcp_labels is a comma separated list of keys to remove.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
+endif::product_GCP[]
+
+ifdef::product_AWS[]
++
+. aws_add_labels
+This playbook adds labels to the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_add_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_add_labels
+Description: This playbook adds labels to the deployment.
+-----------------------------------------------
+Add labels to the Ansible Automation Platform from AWS Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_add_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_labels=<aws_labels>'
+===============================================
+----
+The parameter aws_labels is a comma separated list of key=value pairs to add or update.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
++
+. aws_check_aoc_version
+This playbook checks if the Ansible on Cloud version is the same as this command generator container. The check is done each time a playbook is called.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_check_aoc_version
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_check_aoc_version
+Description: Check the operational container version matches the Ansible on Clouds version.
+-----------------------------------------------
+Check the operational container version matches the Ansible on Clouds version.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator aws_check_aoc_version [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_ssm_bucket_name=<aws_ssm_bucket_name>'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [redhat.ansible_on_clouds.standalone_check_aoc_version : Verify operational playbook and Ansible on Clouds deployment versions] ***
+fatal: [localhost]: FAILED! => {
+    "assertion": "ops_version == aoc_version",
+    "changed": false,
+    "evaluated_to": false,
+    "msg": "This operation playbook version 2.4.20230606-00 is not valid for the Ansible on Clouds deployment version 2.4.20230531-00"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=7    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+----
+A "failed" not equal zero means the Ansible on Clouds deployment version doesn't match the command_generator container and a diffirent version is needed for the command generator in order to manage that deployment.
++
+
+. aws_get_aoc_version
+This playbook retrieves the version of the Ansible on Clouds deployment. 
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_get_aoc_version
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_get_aoc_version
+Description: Get the current Ansible on Clouds version.
+-----------------------------------------------
+Get the current Ansible on Clouds version.
+
+-----------------------------------------------
+Command generator template: 
+
+docker run --rm $IMAGE command_generator aws_get_aoc_version [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_ssm_bucket_name=<aws_ssm_bucket_name>'
+===============================================
+----
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+TASK [Print version] ***********************************************************
+ok: [localhost] => {
+    "msg": "The AOC version is 2.4.20230531-00"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+----
++
+. aws_remove_labels
+This playbook removes labels from the deployment.
+
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_remove_labels
+----
+Which generates the following output:
++
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+===============================================
+Playbook: aws_remove_labels
+Description: This playbook removes labels to the deployment.
+-----------------------------------------------
+Remove labels from the Ansible Automation Platform from AWS Marketplace deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_labels=<aws_labels>'
+===============================================
+----
+The parameter aws_labels is a comma separated list of keys to remove.
+
+Launching this command by replacing the parameters will generate a new command to launch and will output:
+[literal, options="nowrap" subs="+quotes,attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
++
+
+endif::product_AWS[]
