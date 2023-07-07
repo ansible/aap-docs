@@ -5,6 +5,7 @@
 You must populate the data file before triggering the backup. 
 The following variables are parameters listed in the data file.
 
+* `ansible_config_path` (Optional) Only use if overriding with a customer `ansible_config`.
 * `cloud_credentials_path` is the path to your AWS credentials file.
 * `deployment_name` is the name of the foundation deployment. This is the same name you used when you deployed the foundation.
 * `aws_backup_iam_role_arn` is the _Amazon Resource Name_ (ARN) of the AWS IAM Role that has permissions to perform backup operations.
@@ -27,9 +28,16 @@ This creates a new bucket if one does not already exist.
 Only the most recent backup is stored in the bucket. 
 Every subsequent backup to the same bucket overwrites the backup files with the latest backup.
 For guidance on bucket naming, see link:https://www.google.com/url?q=https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html&sa=D&source=docs&ust=1682584492105680&usg=AOvVaw0WgUwkieoKwP4tRrvSpFBC[Bucket naming rules]
+* `aws_ssm_bucket_name` is the name of the S3 bucket where the configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
+* `backup_prefix` is a prefix you would like to add to the backup name (default: aoc-backup)
 
 When you have populated the data file, it should resemble the following. 
 The values in this file are provided as examples:
+
+[NOTE]
+====
+The optional value `ansible_config_path` has been removed. If you do not wish to use this optional value and want to use the default value for this variables, you 'must' also remove it for your data file like it was done in the example below. If you wish to use this optional variable, it 'must' be included in the data file and be assigned a value. 
+====
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -41,5 +49,7 @@ aws_backup_stack:
     aws_backup_vault_name: Default
     aws_region: us-east-1
     aws_s3_bucket: ansible-automation-platform-bucket
+    aws_ssm_bucket_name: aap-ssm-bucket
+    backup_prefix: aoc-backup
 ----
 

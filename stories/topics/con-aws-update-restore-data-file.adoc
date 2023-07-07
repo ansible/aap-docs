@@ -5,16 +5,18 @@
 You must populate the data file before triggering the restore. 
 The following variables are parameters listed in the data file.
 
+* `ansible_config_path` (Optional) Only use if overriding with a custom `ansible_config`.
 * `cloud_credentials_path` is the path to your AWS credentials file.
-* `deployment_name` is the name of the foundation deployment. This is the same name you used when you deployed the foundation.
-* `aws_backup_iam_role_arn` is the _Amazon Resource Name_ (ARN) of the AWS IAM Role that has permissions to perform backup operations.
+* `deployment_name` is the name you want for your restored deployment
+* `aws_backup_iam_role_arn` (Optional) is the _Amazon Resource Name_ (ARN) of the AWS IAM Role that has permissions to perform backup operations.
 +
 [NOTE]
 ====
 If provided, the playbook defaults to this value over the value of the IAM role referenced in the backup file on S3. For further information, see xref:con-aws-backup-process[Backing up the {PlatformNameShort} deployment]
 ====
 +
-* `aws_backup_restore_point_arn` is the optional ARN of the of the EFS recovery point you want to use for restore.
+* `aws_backup_name` is the name of the backup folder stored on S3. This value was outputted after running the backup playbook. 
+* `aws_backup_restore_point_arn` (Optional) is the ARN of the of the EFS recovery point you want to use for restore.
 +
 [NOTE]
 ====
@@ -24,7 +26,7 @@ You must also ensure that the provided restore point is from a version of Ansibl
 For example, a restore point taken from a deployment on AoC version 2.4.20230630-00 needs to use the `ansible-on-clouds-ops` container image version `2.4.20230630`.
 ====
 +
-* `aws_backup_vault_name` is the name of the backup vault that holds the EFS recovery points.
+* `aws_backup_vault_name` (Optional) is the name of the backup vault that holds the EFS recovery points.
 +
 [NOTE]
 ====
@@ -32,7 +34,7 @@ If provided, the playbook defaults to this value over the backup vault reference
 You must also ensure that this backup vault matches the one used to backup the deployment.
 ====
 +
-* `aws_rds_db_snapshot_arn` is the optional ARN of the RDS snapshot you want to use for restore.
+* `aws_rds_db_snapshot_arn` (Optional) is the ARN of the RDS snapshot you want to use for restore.
 +
 [NOTE]
 ====
@@ -42,12 +44,18 @@ For example, an RDS snapshot taken from a deployment on AoC version 2.4.20230630
 ====
 +
 * `aws_region` is the region where the foundation deployment is deployed.
-* `aws_restored_stack_name` is the desired name of the restored deployment.
 * `aws_s3_bucket` is the name of the S3 bucket where the backup files are stored.
 This must be the same bucket used for backup.
+* `aws_ssm_bucket_name` is the name of the S3 bucket where the configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
 +
 When you have populated the data file, it should resemble the following. 
 The values in this file are provided as examples. 
++
++
+[NOTE]
+====
+The optional values in this data file example have been removed. If you do not wish to use these optional values and want to use the default values for these variables, you 'must' also remove them for your data file like it was done in the example below. If you wish to use these optional variables, they 'must' be included in the data file and be assigned a value. 
+====
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -55,8 +63,9 @@ aws_restore_stack:
   cloud_credentials_path: ~/.aws/credentials
   deployment_name: AnsibleAutomationPlatform
   extra_vars:
+    aws_backup_name: ansible-automation-platform-bucket-20230706T163309
     aws_region: us-east-1
-    aws_restored_stack_name:AnsibleAutomationPlatform-restore
     aws_s3_bucket: ansible-automation-platform-bucket
+    aws_ssm_bucket_name: aap-ssm-bucket
 ----
 
