@@ -21,25 +21,24 @@ Provide values for the following parameters:
 
 * `gcp_existing_vpc` must be set to `false`.
 * `cloud_credentials_path` is the path for your Google Cloud service account credentials file.
-* `gcp_deployment_name` is the name of the AAP deployment manager deployment you want to back up.
-* `gcp_restored_deployment_name` is the name under which the deployment must be restored. A new deployment will be created with this name. A deployment must not already exist with this name.
+* `deployment_name` is the name under which the deployment must be restored. A new deployment will be created with this name. A deployment must not already exist with this name.
 * `gcp_bucket_backup_name` is the bucket name you used for the backup.
 * `gcp_compute_region` is the region where the backup was taken.
 This can be retrieved by checking the Deployments config in Deployment Manager.
 * `gcp_compute_zone` is the zone where the backup was taken.
 This can be retrieved by checking the Deployments config in Deployment Manager.
 
-// .For an existing VPC
+.For an existing VPC
 
-// If you want to restore using an existing VPC, you must set the parameters shown above.
+If you want to restore using an existing VPC, you must set the parameters shown above.
 
-// You must also set the following additional parameters:
+You must also set the following additional parameters:
 
-// * `gcp_existing_vpc` is set to `true`.
-// * `gcp_filestore_ip_range` must be set to a free ip/29 range of your VPC.
-// For example: 192.168.245.0/29.
-// You must not use 192.168.243.0/29 as this the default used when deploying {AAPonGCP}.
-// * `gcp_cloud_sql_peering_network` must be set to a free `/24` subnet.
-// You must not use 192.168.241.0/24 as this is used during the original deployment.
-// * `gcp_controller_internal_ip_address` must be set to a free IP in your VPC network.
-// * `gcp_hub_internal_ip_address` must set to a free IP in your VPC network.
+* `gcp_existing_vpc` is set to `true`.
+* `gcp_filestore_ip_range` must be set to a free ip/29 range of your VPC.
+For example: 192.168.245.0/29.
+You must not use 192.168.243.0/29 as this the default used when deploying {AAPonGCP}.
+* `gcp_cloud_sql_peering_network` must be set to a free `/24` subnet.
+You must not use 192.168.241.0/24 as this is used during the original deployment.
+* `gcp_controller_internal_ip_address` must be set to a free IP in your VPC network.
+* `gcp_hub_internal_ip_address` must set to a free IP in your VPC network.
