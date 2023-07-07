@@ -1,7 +1,15 @@
 [id="proc-gcp-deleting-backups-playbook"]
 
 = Delete backups
-There is two possible way to delete backups, the first one gcp_backup_delete which delete one backup and the second one gcp_backups_delete which allows to delete multiple backups at once. We will explain the gcp_backups_delete in this chapter. The difference is the gcp_backups_delete takes a array of string ["backup1","backup2",...] but the gcp_backup_delete take only one string which is the name of a specifc backup "backup1"
+
+There are two possible ways to delete backups:
+
+* Use the `gcp_backup_delete` playbook which deletes one backup.
+* Use the `gcp_backups_delete` playbook which deletes multiple backups at once. 
+
+`gcp_backups_delete`` takes a array of strings ["backup1","backup2",...], while `gcp_backup_delete` takes only one string, that being the name of a specifc backup "backup1".
+
+The use of `gcp_backups_delete` is described in this section.
 
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
@@ -64,7 +72,6 @@ docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/
 backup_names=<backup_names> delete=True'
 ----
 . Run the supplied backup command to trigger the backup.
-+
 . When the playbook has finished running, the output resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]

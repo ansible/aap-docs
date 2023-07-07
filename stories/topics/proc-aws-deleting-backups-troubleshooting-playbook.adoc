@@ -1,19 +1,19 @@
 [id="proc-aws-deleting-backups-troubleshooting-playbook"]
 
-= Managing backups playbook
-.Procedure
 
-== Failed to delete a backup
+== Failing to delete a backup
 
 If the deletion of backup fails, take the following steps.
 
-Locate the bucket, or Navigate to the bucket containing the backup.
-Locate the directory that has the name of the backup.
-Open the backup directory
-Open the file names "restore-vars.json" and note last part of the "Recovery_Point_Arn" and the "Backup_Vault_Name"
-navigate to * AWS backup *
-Open Backup Vault and click on the vault with the name you noted from "Backup_Vault_Name"
-Search for the "Recovery_Point_Arn".
-Delete it if not already deleted.
-Go back to the bucket
-Delete the directory having the name of the backup.
+.Procedure
+. Navigate to the bucket containing the backup.
+. Locate the directory that has the name of the backup.
+. Open the backup directory
+. Open the file names `restore-vars.json` and note last part of the `Recovery_Point_ARN` and the `Backup_Vault_Name`.
+. Navigate to *AWS backup*.
+. Select *Backup Vault*.
+. Select the vault with the name you noted from `Backup_Vault_Name`.
+. Search for the `Recovery_Point_ARN`.
+. Delete the `Recovery_Point_ARN` if not already deleted.
+. Navigate to the bucket containing the backup.
+. Delete the directory having the name of the backup.
