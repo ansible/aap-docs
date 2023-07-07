@@ -5,17 +5,19 @@
 There is two playbooks to manage your backups, the first one aws_backup_delete which delete one backup and the second one aws_backups_delete which allows to delete multiple backups at once. We will explain the aws_backups_delete in this chapter. The difference is the aws_backups_delete takes a array of string ["backup1","backup2",...] but the aws_backup_delete take only one string which is the name of a specifc backup "backup1"
 
 == Delete backups
+
 .Procedure
+
 . Populate the `command_generator_data` directory with the configuration file template.
 +
-[source,bash]
+[options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars aws_backups_delete --output-data-file /data/backups.yml
 ----
 +
 Produces the following output:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 ===============================================
 Playbook: aws_backups_delete
@@ -31,7 +33,7 @@ docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator aw
 . After running the command, a `/tmp/backups.yml` template file is created. 
 This template file resembles the following: 
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 aws_backups_delete:
   cloud_credentials_path:
@@ -46,14 +48,14 @@ With backup_names like ["backup1","backup2"]
 
 . To run the deletion of the backups, run the command generator to generate the deletion backup command.
 +
-[literal, options="nowrap" subs="+quotes,attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_backups_delete --data-file /data/backups.yml
 ----
 +
 Resulting in the following ouput:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 Command to run playbook: 
 
@@ -66,7 +68,7 @@ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/crede
 +
 . When the playbook has finished running, the output resembles the following:
 +
-[literal, options="nowrap" subs="attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 TASK [redhat.ansible_on_clouds.standalone_aws_backup_delete : [delete_backup] Dry-run message] ***
 skipping: [localhost]
