@@ -2,7 +2,7 @@
 
 = Using the playbooks
 
-The playbooks are explained in different chapters of this documentation but not all of them. 
+The playbooks are explained in different chapters of this documentation but not all of them.
 Here, those which are used either to retrieve information from the Ansible on Clouds deployment or to check it are described. These playbooks do not modify the deployment.
 
 ifdef::product_GCP[]
@@ -28,7 +28,7 @@ Description: This playbook checks if the deployment is healthy using the Ansible
 The health check consists of checking the {AAPonGCP} environemnt to verify it is healthy.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator gcp_aap_health_check [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone>'
 ===============================================
@@ -40,7 +40,7 @@ Launching this command by replacing the parameters generates a new command to la
 ----
 ...
 PLAY RECAP *********************************************************************
-localhost                  : ok=29   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=29   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
 A _failed_ not equal zero indicates an issue with Ansible on Cloud deployment.
@@ -72,7 +72,7 @@ docker run --rm $IMAGE command_generator gcp_add_labels -d <deployment_name> -c 
 ===============================================
 ----
 
-The parameter `gcp_labels` is a comma separated list of `key=value` pairs to add or update.
+The parameter `gcp_labels` is a comma separated list of `key=value` pairs to add or update. For example: key1=value1,key2=value2
 
 Launching this command by replacing the parameters generates a new command to launch and outputs:
 
@@ -86,7 +86,7 @@ localhost                  : ok=22   changed=2    unreachable=0    failed=0    s
 [discrete]
 == gcp_check_aoc_version
 
-This playbook checks if the Ansible on Cloud version is the same as the command generator container. 
+This playbook checks if the Ansible on Cloud version is the same as the command generator container.
 The check is done each time a playbook is called.
 
 [literal, options="nowrap" subs="+attributes"]
@@ -105,9 +105,9 @@ Description: Check the operational container version matches the Ansible on Clou
 Check the operational container version matches the Ansible on Clouds version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
-docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name>
 ===============================================
 ----
 
@@ -123,7 +123,7 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 ----
 
@@ -132,7 +132,7 @@ A _failed_ not equal zero means the Ansible on Clouds deployment version does no
 [discrete]
 == gcp_get_aoc_version
 
-This playbook retrieves the version of the Ansible on Clouds deployment. 
+This playbook retrieves the version of the Ansible on Clouds deployment.
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -150,9 +150,9 @@ Description: Get the current Ansible on Clouds version.
 Get the current Ansible on Clouds version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
-docker run --rm $IMAGE command_generator gcp_get_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+docker run --rm $IMAGE command_generator gcp_get_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name>
 ===============================================
 ----
 
@@ -167,13 +167,13 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
 [discrete]
 == gcp_check_aoc_version
 
-This playbook checks if the Ansible on Cloud version is the same as the command generator container. 
+This playbook checks if the Ansible on Cloud version is the same as the command generator container.
 The check is done each time a playbook is called.
 
 [literal, options="nowrap" subs="+attributes"]
@@ -192,9 +192,9 @@ Description: Retrieve the Ansible on Clouds version.
 Retrieve the Ansible on Clouds version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
-docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> 
+docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name>
 ===============================================
 ----
 
@@ -210,7 +210,7 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 ----
 
@@ -238,7 +238,7 @@ The health check consists of checking the {AAPonGCP} heatlh checks
 and the health of the monitoring exporter.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator gcp_health_check [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone>'
 ===============================================
@@ -248,7 +248,7 @@ Launching this command by replacing the parameters will generate a new command t
 ----
 ...
 PLAY RECAP *********************************************************************
-localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 ----
 
@@ -275,7 +275,7 @@ Description: This playbook generates a list of available {AAPonGCP} deployments.
 This playbook is used to generate a list of available {AAPonGCP} deployments.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator gcp_list_deployments -c <cloud_credentials_path> --extra-vars '[gcp_compute_region=<gcp_compute_region>] [gcp_compute_zone=<gcp_compute_zone>]'
 ===============================================
@@ -294,7 +294,7 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
 [discrete]
@@ -318,7 +318,7 @@ Description: This role runs a health check on a group of nodes in the {AAPonGCP}
 The playbook checks if the {AAPonGCP} monitoring exporter is up and running.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator gcp_nodes_health_check [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'check_monitoring=True'
 ===============================================
@@ -330,7 +330,7 @@ Launching this command by replacing the parameters generates a new command to la
 ----
 ...
 PLAY RECAP *********************************************************************
-localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=47   changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 ----
 
@@ -363,7 +363,7 @@ docker run --rm $IMAGE command_generator gcp_remove_labels -d <deployment_name> 
 ===============================================
 ----
 
-The parameter `gcp_labels` is a comma separated list of keys to remove.
+The parameter `gcp_labels` is a comma separated list of keys to remove. For example: key1,key2
 
 Launching this command by replacing the parameters generates a new command to launch and outputs:
 
@@ -404,7 +404,7 @@ docker run --rm $IMAGE command_generator aws_add_labels -d <deployment_name> -c 
 ===============================================
 ----
 
-The parameter `aws_labels` is a comma separated list of `key=value` pairs to add or update.
+The parameter `aws_labels` is a comma separated list of `key=value` pairs to add or update. For example: key1=value1,key2=value2
 
 Launching this command by replacing the parameters generates a new command to launch and outputs:
 
@@ -418,7 +418,7 @@ localhost                  : ok=22   changed=2    unreachable=0    failed=0    s
 [discrete]
 == aws_check_aoc_version
 
-This playbook checks if the Ansible on Cloud version is the same as the command generator container. 
+This playbook checks if the Ansible on Cloud version is the same as the command generator container.
 The check is done each time a playbook is called.
 
 [literal, options="nowrap" subs="+attributes"]
@@ -437,7 +437,7 @@ Description: Check the operational container version matches the Ansible on Clou
 Check the operational container version matches the Ansible on Clouds version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator aws_check_aoc_version [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_ssm_bucket_name=<aws_ssm_bucket_name>'
 ===============================================
@@ -457,7 +457,7 @@ fatal: [localhost]: FAILED! => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=7    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=7    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0
 ----
 
 A _failed_ not equal zero indicates that the Ansible on Clouds deployment version does not match the `command_generator` container and a different version is required for the command generator to manage that deployment.
@@ -465,7 +465,7 @@ A _failed_ not equal zero indicates that the Ansible on Clouds deployment versio
 [discrete]
 == aws_get_aoc_version
 
-This playbook retrieves the version of the Ansible on Clouds deployment. 
+This playbook retrieves the version of the Ansible on Clouds deployment.
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -483,7 +483,7 @@ Description: Get the current Ansible on Clouds version.
 Get the current Ansible on Clouds version.
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm $IMAGE command_generator aws_get_aoc_version [--ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_ssm_bucket_name=<aws_ssm_bucket_name>'
 ===============================================
@@ -500,7 +500,7 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
 [discrete]
@@ -530,7 +530,7 @@ docker run --rm $IMAGE command_generator aws_remove_labels -d <deployment_name> 
 ===============================================
 ----
 
-The parameter `aws_labels` is a comma separated list of keys to remove.
+The parameter `aws_labels` is a comma separated list of keys to remove. For example: key1,key2
 
 Launching this command by replacing the parameters generates a new command to launch and outputs:
 
@@ -542,4 +542,3 @@ localhost                  : ok=22   changed=2    unreachable=0    failed=0    s
 ----
 
 endif::product_AWS[]
-
