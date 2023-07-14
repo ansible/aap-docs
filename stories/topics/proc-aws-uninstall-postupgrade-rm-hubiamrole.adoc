@@ -1,0 +1,21 @@
+[id="proc-aws-uninstall-postupgrade-rm-hubiamrole"]
+
+= Removing the hub IAM role
+
+Use the following procedure to remove the hub IAM role. This step is necessary if you are uninstalling your {PlatformNameShort} environment after an upgrade and your CloudFormation stack has a status of `DELETE_FAILED`
+
+.Procedure
+. In the AWS UI, navigate to the link:https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1[CloudFormation page]. 
+Ensure you are in the same region as your stack.
+. Select the stack for your {PlatformNameShort} deployment.
+. Click btn:[Delete].
+. If a popup appears listing your hub IAM role as failing to delete, click the link below the hub IAM role open the IAM role page in a new tab
+. Delete the hub IAM role
+.. Click btn:[Delete]
+.. Confirm the deletion
+.. Ensure the deletion is successful
+. Return to your CloudFormation page in the previous tab
+.. Ensure the checkbox next to the hub IAM role is unchecked
+.. Click btn:[Delete] to confirm the stack deletion
+.. Confirm the deletion
+
