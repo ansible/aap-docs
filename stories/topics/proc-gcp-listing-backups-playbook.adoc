@@ -51,9 +51,8 @@ Resulting in the following ouput:
 Command to run playbook: 
 
 docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
---env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backups_delete \
--e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_bucket_backup_name=<bucket> \
-backup_names=<backup_names> delete=True'
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_list \
+-e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_bucket_backup_name=<bucket>'
 ----
 . Run the supplied backup command to trigger the list of backups.
 +
