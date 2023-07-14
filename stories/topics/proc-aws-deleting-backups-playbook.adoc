@@ -1,10 +1,15 @@
 [id="proc-aws-deleting-backups-playbook"]
 
-= Managing backups playbook
+= Deleting backups
 
-There is two playbooks to manage your backups, the first one aws_backup_delete which delete one backup and the second one aws_backups_delete which allows to delete multiple backups at once. We will explain the aws_backups_delete in this chapter. The difference is the aws_backups_delete takes a array of string ["backup1","backup2",...] but the aws_backup_delete take only one string which is the name of a specifc backup "backup1"
+There are two playbooks to manage your backups:
 
-== Delete backups
+* `aws_backup_delete` that delete one backup.
+* `aws_backups_delete` that enables you to delete multiple backups. 
+
+'aws_backups_delete takes a array of strings ["backup1","backup2",...], while `aws_backup_delete` takes only one string, that being the name of a specific backup, "backup1"
+
+The use of `aws_backups_delete` is desscribed in this section.
 
 .Procedure
 
@@ -44,7 +49,7 @@ aws_backups_delete:
     delete:
 ----
 
-With backup_names like ["backup1","backup2"]
+With `aws_backup_names` such as "backup1" and "backup2".
 
 . To run the deletion of the backups, run the command generator to generate the deletion backup command.
 +
