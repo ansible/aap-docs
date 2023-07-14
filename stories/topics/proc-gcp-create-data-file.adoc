@@ -3,37 +3,14 @@
 = Creating the backup data file
 
 .Procedure
-. Populate the `command_generator_data` directory with the configuration file template.
+. Run the command generator `command_generator_vars` to generate the `backup.yml`.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 ----
 +
-Produces the following output:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
-command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
-
-===============================================
-Playbook: gcp_backup_deployment
-Description: This playbook is used to backup the Ansible Automation Platform from GCP Marketplace environment.
------------------------------------------------
-This playbook is used to backup the Ansible Automation Platform from GCP Marketplace environment.
-For more information regarding backup and restore, visit our official documentation - 
-https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-gcp-backup-and-restore
------------------------------------------------
-----
-. Run the supplied command:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
-command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
-----
-. After running the command, a `/tmp/backup.yml` template file is created. 
+. After running the command, a `$(pwd)/command_generator_data/backup.yml` template file is created. 
 This template file resembles the following: 
 +
 [literal, options="nowrap" subs="+attributes"]

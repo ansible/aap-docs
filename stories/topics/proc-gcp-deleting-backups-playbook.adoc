@@ -18,26 +18,7 @@ The use of `gcp_backups_delete` is described in this section.
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backups_delete --output-data-file /data/backups.yml
 ----
-+
-Produces the following output:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
-command_generator_vars gcp_backup_delete --output-data-file /data/backup.yml
-
-===============================================
-Playbook: gcp_backups_delete
-Description: This playbook delete a list of backups.
------------------------------------------------
-This playbook delete a list of backups
-
------------------------------------------------
-Command generator template: 
-
-docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups.yml
-----
-. After running the command, a `/tmp/backups.yml` template file is created. 
+. After running the command, a `$(pwd)/command_generator_data/backups.yml` template file is created. 
 This template file resembles the following: 
 +
 [literal, options="nowrap" subs="+attributes"]
