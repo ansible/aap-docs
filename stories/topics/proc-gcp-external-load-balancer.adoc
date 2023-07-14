@@ -23,7 +23,7 @@ These load balancers direct traffic within local VPCs and must remain part of th
 If you do not see *Network Services*, then select *View All Products*.
 . Select *Load Balancing*. 
 . In the top menu, select *CREATE LOAD BALANCER*.
-. Select the *HTTP(S) Load Balancing* tile and click btn:[START CONFIGURATION].
+. Select the *Application Load Balancer (HTTP/S)* tile and click btn:[START CONFIGURATION].
 . Select *From Internet to my VMs or serverless services* and *Global HTTP(s) Load Balancer*.
 . Click btn:[CONTINUE].
 . Give your load balancer a name, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb`
@@ -41,7 +41,7 @@ If you do not see *Network Services*, then select *View All Products*.
 .. Give your backend service a name, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-bknd-svc`
 .. Set *Backend type* to *Instance group*.
 .. Set *Protocol* to `HTTPS` and *Named Port* to `https`.
-.. Change *Timeout* to `300`.
+.. Change *Timeout* to `86400`.
 .. Scroll down to the *Backends* section and in the *New backend* field, select the *Instance group* drop-down. 
 Select the correct instance group.
 +
@@ -51,16 +51,21 @@ For the {HubName} load balancer, the correct instance group has the suffix `-aap
 .. In the resulting dialog box, select *USE EXISTING PORT NAME*.
 .. Set *Balancing mode* to *Rate*.
 .. Set *Maximum RPS* to 300.
+.. Scroll down until you see *Cloud CDN*. Unselect the checkbox for *Cloud CDN*.
 .. Scroll down until you see a text box showing *Health check*. 
 .. Select the drop-down menu and click btn:[CREATE A HEALTH CHECK].
 .. Enter a name for your health check, for example, `<DeploymentName>-aap-<cntrlr/hub>-ext-lb-hc`
 .. For {Controllername}, use the following health check settings
-* In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8052`.
+* In the *Health Check* dialog box, set *Protocol* to `HTTPS`, and *Port* to `8052`.
 * Set *Request* to `/api/v2/ping/`.
 .. For {HubName}, use the following health check settings
-* In the *Health Check* dialog box, set *Protocol* to `TCP`, and *Port* to `8080`.
+* In the *Health Check* dialog box, set *Protocol* to `HTTPS`, and *Port* to `8080`.
 * Set *Request* to `/api/galaxy/pulp/api/v3/status/`.
-* Keep all other default settings. 
+.. Scroll down to *Health criteria* section.
+.. In the *Check interval* field, enter the value 15.
+.. In the *Timeout* field, enter the value 10.
+.. In the *Healthy threshold* field, enter the value 2.
+.. In the *Unhealthy threshold* field, enter the value 10.
 .. Click btn:[SAVE].
 +
 This returns you to the *Backend services & backend buckets* window.
