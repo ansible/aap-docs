@@ -19,8 +19,8 @@ Certificates can also be requested or imported into AWS.
 . In the {AWS} UI, navigate to menu:ACM[]. 
 Ensure you are in the correct region.
 . Click btn:[Import] to start the import of the generated certificate.
-. Paste the contents of `cert.pem` into the *Certificate body* field.
-. Paste the contents of `key.pem` into the *Certificate private key* field.
+. Paste the contents of `controller_cert.pem` into the *Certificate body* field.
+. Paste the contents of `controller_key.pem` into the *Certificate private key* field.
 . Click btn:[Next]
 . Optional: Add any additional tags you require. 
 . Click btn:[Next].
@@ -34,11 +34,12 @@ Ensure you are in the correct region.
 Ensure you are in the correct region.
 . Select the internal load balancer for {ControllerName}.
 . Click the *Listeners* tab.
-. Select the Listener, and then click btn:[Edit].
+. Select the Listener, and then click btn:[Add listener].
 . Select *HTTPS* for the protocol, and ensure the port is `443`.
+. Select *Forward* for the default actions, and ensure the target group is `{ControllerName}` instance.
 . Select *listener settings > Default SSL/TLS certificate* and ensure that *From ACM* is selected.
 . Select your imported ACM certificate.
-. Click btn:[Save changes].
+. Click btn:[Add].
 
 [discrete]
 == Updating the load balancer security group
