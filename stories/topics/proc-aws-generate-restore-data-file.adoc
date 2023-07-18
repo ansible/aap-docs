@@ -2,7 +2,7 @@
 
 = Generating the restore data file
 
-The following commands create a directory, and populate it with an empty data template that, when completed, will be used during the backup. 
+The following commands create a directory, and populate it with an empty data template that, when completed, will be used during the restore. 
 
 .Procedure
 . Create a folder to hold the configuration 
@@ -11,16 +11,16 @@ The following commands create a directory, and populate it with an empty data te
 ----
 $ mkdir command_generator_data
 ----
-. Populate the `command_generator_data` folder with the configuration file template.
+. Populate the `$(pwd)/command_generator_data` folder with the configuration file template.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   command_generator_vars aws_restore_stack \
-  --output-data-file /data/extra_vars.yml
+  --output-data-file /data/restore.yml
 ----
 
-. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+. After running these commands, a `$(pwd)/command_generator_data/restore.yml` template file is created. 
 This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
