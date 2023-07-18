@@ -9,15 +9,6 @@ ifdef::context[:parent-context: {context}]
 =====
 * You must restore with the same operational image version as the backup.
 
-* You can only restore using a new VPC network. 
-Backup and restore into an existing VPC network is not currently supported.
-
-* You cannot delete the backed up environment before a restore because the database backups are stored in the deployment.
-Deleting your deployment therefore deletes the database backups.
-
-* Versioned or point-in-time backups are not supported by the `ansible-on-clouds-op` container.
-Only the most recent backup of a deployment is used to restore the deployment.
-
 * To backup and restore your {PlatformNameShort} deployment, it is vital to have your existing {PlatformNameShort} administration secret name and value recorded somewhere safe.
 
 * It is also important to take regular manual backups of the Cloud SQL database instance and filestore backups, to ensure a deployment can be restored as close as possible to its previous working state.
