@@ -2,11 +2,11 @@
 
 = Generating the data file
 
-The commands in this section create a directory and populate it with an empty data template that, when populated, is used during the upgrade. 
+The commands in this section create a directory and populate it with an empty data template that, when populated, is used during the upgrade.
 
 .Procedure
 
-. Run the following commands to generate the required data file. 
+. Run the following commands to generate the required data file.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -20,9 +20,21 @@ $ mkdir command_generator_data
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 command_generator_vars aws_upgrade \
 --output-data-file /data/extra_vars.yml
-----    
-. After running these commands, a `command_generator_data/extra_vars.yml` template file is created. 
-This template file resembles the following: 
+----
+
+. (Linux users) Fix user's permissions:
+[literal, options="nowrap" subs="+attributes"]
++
+----
+# Change the owner of the command_generator_data directory
+sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+ls -la command_generator_data/
+----
+
+. After running these commands, a `command_generator_data/extra_vars.yml` template file is created.
+This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----

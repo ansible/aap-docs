@@ -5,7 +5,7 @@
 There are two playbooks to delete backups:
 
 * Use the `aws_backup_delete` playbook which deletes a single backup.
-* Use the `aws_backups_delete` playbook which deletes multiple backups at once. 
+* Use the `aws_backups_delete` playbook which deletes multiple backups at once.
 
 `aws_backups_delete` takes a array of strings ["backup1","backup2",...], while `aws_backup_delete` takes only one string, that being the name of a specific backup, "backup1".
 
@@ -31,12 +31,12 @@ Description: This playbook delete a specified backup.
 This playbook delete a specified backup
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator aws_backups_delete --data-file /data/backups_delete.yml
 ----
-. After running the command, a `$(pwd)/command_generator_data/backups_delete.yml` template file is created. 
-This template file resembles the following: 
+. After running the command, a `$(pwd)/command_generator_data/backups_delete.yml` template file is created.
+This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -63,13 +63,25 @@ Resulting in the following ouput:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-Command to run playbook: 
+Command to run playbook:
 
 docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/credentials:ro \
 --env ANSIBLE_CONFIG=../aws-ansible.cfg  $IMAGE redhat.ansible_on_clouds.aws_backups_delete \
 -e 'aws_region=<region> aws_s3_bucket=<bucket> aws_backup_names=["backup1","backup2"] delete=True'
 ===============================================
 ----
+
+. (Linux users) Fix user's permissions:
+[literal, options="nowrap" subs="+attributes"]
++
+----
+# Change the owner of the command_generator_data directory
+sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+ls -la command_generator_data/
+----
+
 . Run the supplied backup command to delete the backups.
 +
 . When the playbook has finished running, the output resembles the following:
@@ -80,5 +92,5 @@ TASK [redhat.ansible_on_clouds.standalone_aws_backup_delete : [delete_backup] Dr
 skipping: [localhost]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=21   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0    
+localhost                  : ok=21   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 ----
