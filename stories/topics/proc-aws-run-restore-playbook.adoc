@@ -9,7 +9,7 @@ The following procedure runs the restore playbook as a container.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_restore_stack --data-file /data/extra_vars.yml
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator aws_restore_stack --data-file /data/restore.yml
 ----
 +
 This generates the restore CLI command  
@@ -36,4 +36,4 @@ aws_s3_bucket=ansible-automation-platform-bucket aws_ssm_bucket_name=aap-ssm-buc
 
 ----
 . The playbook can take some time to create a restored deployment.
-After you have run the playbook successfully, a restored deployment is available in AWS CloudFormation matching the name provided for it in the `extra_vars.yml` file.
+When you have run the playbook successfully, a restored deployment is available in AWS CloudFormation matching the name provided for it in the `restore.yml` file.
