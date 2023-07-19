@@ -9,9 +9,21 @@
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_deployment --output-data-file /data/backup.yml
 ----
+
+. (Linux users) Fix user's permissions:
+[literal, options="nowrap" subs="+attributes"]
 +
-. After running the command, a `$(pwd)/command_generator_data/backup.yml` template file is created. 
-This template file resembles the following: 
+----
+# Change the owner of the command_generator_data directory
+sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+ls -la command_generator_data/
+----
+
++
+. After running the command, a `$(pwd)/command_generator_data/backup.yml` template file is created.
+This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----

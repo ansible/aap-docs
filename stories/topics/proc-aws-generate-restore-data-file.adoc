@@ -2,10 +2,10 @@
 
 = Generating the restore data file
 
-The following commands create a directory, and populate it with an empty data template that, when completed, is used during the restore. 
+The following commands create a directory, and populate it with an empty data template that, when completed, is used during the restore.
 
 .Procedure
-. Create a folder to hold the configuration 
+. Create a folder to hold the configuration
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -20,11 +20,22 @@ $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   --output-data-file /data/restore.yml
 ----
 
-. After running these commands, a `$(pwd)/command_generator_data/restore.yml` template file is created. 
+. (Linux users) Fix user's permissions:
+[literal, options="nowrap" subs="+attributes"]
++
+----
+# Change the owner of the command_generator_data directory
+sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+ls -la command_generator_data/
+----
+
+. After running these commands, a `$(pwd)/command_generator_data/restore.yml` template file is created.
 This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
----- 
+----
 aws_restore_stack:
   ansible_config_path:
   cloud_credentials_path:

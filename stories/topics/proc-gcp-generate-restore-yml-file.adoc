@@ -9,8 +9,20 @@
 ----
 docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator_vars gcp_restore_deployment --output-data-file /data/restore.yml
 ----
+
+. (Linux users) Fix user's permissions:
+[literal, options="nowrap" subs="+attributes"]
 +
-After running the command, a `$(pwd)/command_generator_data/restore.yml` template file is created. This template file resembles the following:
+----
+# Change the owner of the command_generator_data directory
+sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+ls -la command_generator_data/
+----
+
++
+. After running the command, a `$(pwd)/command_generator_data/restore.yml` template file is created. This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -19,11 +31,11 @@ Playbook: gcp_restore_deployment
 Description: This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
 -----------------------------------------------
 This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
-For more information regarding backup and restore, visit our official documentation - 
+For more information regarding backup and restore, visit our official documentation -
 https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/index
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----
