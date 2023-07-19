@@ -3,10 +3,6 @@
 = Deploying an application with an existing VPC
 
 The following procedure uses an existing VPC network to deploy an application.
-[NOTE]
-====
-The existing proxy subnet must be of type *Regional Managed Proxy*, which is the reserved proxy-only subnet for load balancing.
-====
 
 .Procedure
 . In the *Deployment* page, select the *Service Usage API* link below the *Confirm Service Usage API is enabled* checkbox.
@@ -19,8 +15,14 @@ For further information, see xref:con-gcp-service-account[Your service account].
 The zone must be in the Region you selected.
 . In the *Observability* section, you can enable logging and metrics to be sent to Cloud Logging and Cloud Monitoring. See link:https://cloud.google.com/stackdriver/pricing[Operations Suite Pricing] for the financial cost of enabling these services. See xref:assembly-gcp-monitoring-logging[Monitoring and logging] for more information on configuring this feature.
 . In the *Network Selection* section, select *Existing network*. 
-. In the *Existing Network* section, provide your existing VPC network name, existing subnet name and existing proxy subnet name. 
-Select *cloud NAT router* to create a *NAT router* in your VPC network. 
+. In the *Existing Network* section, provide your existing VPC network name, existing subnet name and existing proxy subnet name.  
++
+[NOTE]
+====
+The existing proxy subnet must be of type *Regional Managed Proxy*, which is the reserved proxy-only subnet for load balancing.
+====
++
+Select *cloud NAT router* to create a *NAT router* in your VPC network.
 . The *Networking section* provides defaults for all of the network ranges used in the deployment. 
 Provide these values based on your existing network configuration. 
 If you want to modify these values, see xref:ref-gcp-networking-options[Networking Options] 
