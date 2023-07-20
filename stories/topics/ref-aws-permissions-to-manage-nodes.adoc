@@ -23,7 +23,8 @@ required-roles:
       - ec2:DescribeVpcs
       - ec2:DescribeInstanceTypes
       - ec2:DescribeSubnets
-      - iam:GetRolePolicy
+      - ec2:DescribeInstances
+      - ec2:DescribeRegions
     resources:
       - "*"
   iam:
@@ -31,6 +32,7 @@ required-roles:
       - iam:PassRole
       - iam:GetRole
       - iam:GetInstanceProfile
+      - iam:GetRolePolicy
     resources:
       - "*"
   autoscaling:
@@ -62,6 +64,20 @@ required-roles:
     actions:
       - elasticloadbalancing:DescribeLoadBalancers
       - elasticloadbalancing:DescribeTargetGroups
+    resources:
+      - "*"
+  s3:
+    actions:
+      - s3:GetBucketLocation
+      - s3:DeleteObject
+      - s3:PutObject
+    resources:
+      - "*"
+  ssm:
+    actions:
+      - ssm:StartSession
+      - ssm:SendCommand
+      - ssm:TerminateSession
     resources:
       - "*"
 ----
