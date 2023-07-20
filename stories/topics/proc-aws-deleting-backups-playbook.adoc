@@ -15,6 +15,13 @@ The use of `aws_backups_delete` is desscribed in this section.
 
 . Populate the `command_generator_data` directory with the configuration file template.
 +
+
+[NOTE]
+====
+On Linux, any file or directory created by the command generator will be owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. Check the xref:tech-note-linux-files-owned-by-root[tech notes] for more information.
+====
+
++
 [options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars aws_backups_delete --output-data-file /data/backups_delete.yml
@@ -70,11 +77,6 @@ docker run --rm --env PLATFORM=AWS -v ~/.aws/credentials:/home/runner/.aws/crede
 -e 'aws_region=<region> aws_s3_bucket=<bucket> aws_backup_names=["backup1","backup2"] delete=True'
 ===============================================
 ----
-
-[NOTE]
-====
-On Linux, any file or directory created by the command generator will be owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. Check the xref:tech-note-linux-files-owned-by-root[tech notes] for more information.
-====
 
 . Run the supplied backup command to delete the backups.
 +
