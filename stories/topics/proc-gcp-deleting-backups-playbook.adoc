@@ -14,20 +14,16 @@ The use of `gcp_backups_delete` is described in this section.
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
+
+[NOTE]
+====
+On Linux, any file or directory created by the command generator will be owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. Check the xref:tech-note-linux-files-owned-by-root[tech notes] for more information.
+====
+
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backups_delete --output-data-file /data/backups_delete.yml
-----
-
-. (Linux users) Fix user's permissions:
-[literal, options="nowrap" subs="+attributes"]
-+
-----
-# Change the owner of the command_generator_data directory
-sudo chown -R $USER:$USER command_generator_data/
-
-# Check the permissions
-ls -la command_generator_data/
 ----
 
 . After running the command, a `$(pwd)/command_generator_data/backups_delete.yml` template file is created.

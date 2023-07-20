@@ -6,20 +6,16 @@ This playbook enables you to list the existing backups in a specific bucket.
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
+
+[NOTE]
+====
+On Linux, any file or directory created by the command generator will be owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. Check the xref:tech-note-linux-files-owned-by-root[tech notes] for more information.
+====
+
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_list --output-data-file /data/backups_list.yml
-----
-
-. (Linux users) Fix user's permissions:
-[literal, options="nowrap" subs="+attributes"]
-+
-----
-# Change the owner of the command_generator_data directory
-sudo chown -R $USER:$USER command_generator_data/
-
-# Check the permissions
-ls -la command_generator_data/
 ----
 
 . After running the command, a `$(pwd)/command_generator_data/backups_list.yml` template file is created.
