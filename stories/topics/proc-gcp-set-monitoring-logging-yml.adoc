@@ -11,11 +11,11 @@ If you do not require a parameter, remove that parameter from the configuration 
 * `cloud_credentials_path` is the absolute path toward your credentials. 
 This must be an absolute path.
 * `deployment_name` is the name of the deployment.
-* `components` is an array containing the type of component where you want to do the setup. 
+* `components` (Optional) is an array containing the type of component where you want to do the setup. 
 The default is [ “controller”, “hub” ] which means that the logging monitoring will be enabled on both {controllerName} and {HubName}.
-* `monitoring_enabled` is set to `true` to enable the monitoring, `false` otherwise. Default = `false`.
-* `logging_enabled` is set to `true` to enable the logging, `false` otherwise. Default = `false`.
-* `default_collector_interval` is the periodicity at which the monitoring data must be send to the Google Cloud. 
+* `monitoring_enabled` (Optional) is set to `true` to enable the monitoring, `false` otherwise. Default = `false`.
+* `logging_enabled` (Optional) is set to `true` to enable the logging, `false` otherwise. Default = `false`.
+* `default_collector_interval` (Optional) is the periodicity at which the monitoring data must be send to the Google Cloud. 
 Default = 59s.
 +
 [NOTE]
@@ -29,3 +29,20 @@ Do not set values less than 59 seconds.
 ====
 If monitoring and logging is disabled, the value of 'default_collector_interval' is automatically set to `0`.
 ====
+
+After populating the data file, it should resemble the following.
+
+The following values are provided as examples:
+
+[NOTE]
+====
+The optional parameters listed above are ommitted in the data file example below. The playbook will use the default value for any optional parameter that is ommitted from the data file. If you wish to override a default value for an optional parameter, then it must be included in the data file and assigned a value. 
+====
+
+[literal, options="nowrap" subs="+attributes"]
+----
+gcp_setup_logging_monitoring:
+  cloud_credentials_path: ~/secrets/GCP-secrets.json
+  deployment_name: AnsibleAutomationPlatform
+  extra_vars:
+----

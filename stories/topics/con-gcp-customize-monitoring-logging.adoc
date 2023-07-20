@@ -3,9 +3,9 @@
 = Customizing monitoring and logging
 
 Metrics are provided by link:https://docs.ansible.com/automation-controller/latest/html/administration/metrics.html[Ansible], link:https://github.com/containers/prometheus-podman-exporter[Podman] and link:https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent[Google Ops Agent].
-Ansible metrics is only installed on {HubName}, the Google Ops Agent and Podman are also installed on {ControllerName}s.
+Ansible metrics is only installed on {HubName}, while the Google Ops Agent and Podman are installed on both {ControllerName} and {HubName} VM instances.
 
-A configurable process (collector) runs on each {ControllerName} and {HubName} to export the collected Ansible and Podman metrics to {GCP} Monitoring.
+A configurable process (collector) runs on each {ControllerName} VM instance and {HubName} VM instance to export the collected Ansible and Podman metrics to {GCP} Monitoring.
 As the Google Ops Agent is part of the Google Cloud solution, it has its own configuration file.
 
 The Google Ops Agent is also responsible for the logging configuration.
