@@ -6,7 +6,7 @@
 
 //== GCP infrastructure
 
-image::aap-on-gcp-architecture.png[GCP application architecture]
+image::GCP-existing-deployment.png[GCP existing deployment architecture]
 
 //== Architecture description
 
@@ -22,6 +22,8 @@ The VM instances run a customized RHEL (RedHat Enterprise Linux) Google Cloud Ma
 This Google Cloud Machine Image is preloaded with all the required container images and packages to run the {PlatformNameShort} ({HubName}, {ControllerName}, and Execution Node components). 
 A shared Google File Store (GFS) volume is mounted into each VM instance provisioned by the product and is utilized for shared access to common files and resources. 
 A Google Cloud SQL Service is provisioned by the product at deployment time and contains databases for both the {ControllerName} and {HubName}.
+
+image::GCP-full-deployment.png[GCP full deployment architecture]
 
 The Foundation product includes two Execution Nodes running on the same VM instances as the {ControllerName} components (this is called a Hybrid Node configuration in {PlatformNameShort}). 
 Additional Execution Node offerings can be purchased to increase the scale (total number of managed nodes) the {PlatformNameShort} deployment is licensed to automate.  
