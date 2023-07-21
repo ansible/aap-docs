@@ -1,0 +1,5 @@
+[id="tech-note-aws-upgrade"]
+
+= Upgrade note
+
+Upgrading {PlatformNameShort} to 2.4.20230630 will update the protocol of the listeners attached to the internal load balancers from HTTP to HTTPs. In order to update the listener protocol in AWS, the listener must be deleted and recreated properly. In order for this operation to succeed there must not have been an added resource dependancy on the listener. If there is a resource dependancy on the listener, this will halt the upgrade, and the dependancy must be manually alleviated for the upgrade to succeed. After the upgrade has suceeded, the dependant resource can be recreated. It is recommended to revalidate additional added networking configurations after upgrade.
