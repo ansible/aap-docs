@@ -1,0 +1,38 @@
+[id="proc-gcp-removing-extension-nodes"]
+
+= Running the ansible-on-clouds-ops container to remove the extension nodes
+
+.Procedure
+. To remove a set of extension nodes, run the command generator to generate the CLI command.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
+----
++
+The command generator output provides the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+d-----------------------------------------------
+Command to run playbook: 
+
+docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name> \
+--env GENERATE_INVENTORY=true $IMAGE redhat.ansible_on_clouds.gcp_remove_extension_nodes \
+-e 'gcp_deployment_name=<deployment_name> gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_compute_region=<region> gcp_instance_template_name=<instance_template_name> \
+gcp_instance_group_name=<instance_group_name>'
+===============================================
+----
+. Run the supplied command to remove a set of extension nodes.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name> \
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_remove_extension_nodes \
+-e 'gcp_deployment_name=<deployment_name> gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_compute_region=<region> gcp_instance_template_name=<instance_template_name> \
+gcp_instance_group_name=<instance_group_name>'
+----
+
+If there are no errors, the extension node is removed successfully.

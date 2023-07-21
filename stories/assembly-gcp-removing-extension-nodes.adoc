@@ -1,0 +1,26 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-gcp-removing-extension-nodes"]
+= Removing extension nodes
+
+:context: gcp-extension-nodes
+
+You must create a backup of the {PlatformNameShort} deployment before removing extension nodes.
+
+Follow these steps to remove execution nodes from your {AAPonGCP} environment.
+
+.Prerequisites
+* Linux or macOS system (where the `ansible-on-clouds-ops` container image will run)
+* Docker
+
+.Steps
+. Pull the `ansible-on-clouds-ops` container image.
+. Generate data files by running the ansible-on-clouds-ops container.
+. Update the data file.
+. Run the `ansible-on-clouds-ops` container to remove the extension nodes.
+
+:context: remove
+include::topics/con-gcp-pull-remove-container-image.adoc[leveloffset=+1]
+include::topics/proc-gcp-generate-remove-data-files.adoc[leveloffset=+1]
+include::topics/proc-gcp-update-remove-data-file.adoc[leveloffset=+1]
+include::topics/proc-gcp-removing-extension-nodes.adoc[leveloffset=+1]
