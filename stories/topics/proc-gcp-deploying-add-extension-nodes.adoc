@@ -1,0 +1,48 @@
+[id="proc-gcp-deploying-add-extension-nodes"]
+
+= Deploying the extension node
+
+.Procedure
+. To deploy the extension nodes, run the command generator to generate the CLI command.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
+----
++
+Provides the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+-----------------------------------------------
+Command to run playbook: 
+
+docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro /
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=<deployment_name> /
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_add_extension_nodes /
+-e 'gcp_deployment_name=<deployment_name> gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_compute_region=<region> gcp_instance_template_name=<instance_template_name> /
+gcp_instance_group_name=<instance_group_name> gcp_offer_type=100 gcp_extension_node_subscription=True'
+===============================================
+----
+. Run the supplied command to add the extension nodes.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro /
+--env ANSIBLE_CONFIG=../gcp-ansible.cfg --env DEPLOYMENT_NAME=leena1 /
+--env GENERATE_INVENTORY=true  $IMAGE redhat.ansible_on_clouds.gcp_add_extension_nodes /
+-e 'gcp_deployment_name=<deployment_name> gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_compute_region=<region> gcp_instance_template_name=<instance_template_name> /
+gcp_instance_group_name=<instance_group_name> gcp_offer_type=100 gcp_extension_node_subscription=True'
+----
+. When the playbook has finished running, the output resembles the following:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+TASK [redhat.ansible_on_clouds.standalone_gcp_add_extension_nodes : [deploy_extension_nodes] Extension node created] ***
+ok: [localhost] => {
+    "msg": "Extension node is created for deployment test-ext1."
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=39   changed=5    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0
+----
