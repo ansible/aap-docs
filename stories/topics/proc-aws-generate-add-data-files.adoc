@@ -2,8 +2,8 @@
 
 = Generating data files by running the ansible-on-clouds-ops container
 
-The following commands generate the required data file. 
-These commands create a directory, and  an empty data template that, when populated, is used during the deployment of the extension nodes. 
+The following commands generate the required data file.
+These commands create a directory, and  an empty data template that, when populated, is used during the deployment of the extension nodes.
 
 .Procedure
 . Create a folder to hold the configuration files.
@@ -14,6 +14,11 @@ $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
 +
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:con-tech-note-linux-files-owned-by-root[technical notes].
+====
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
@@ -21,12 +26,12 @@ command_generator_vars aws_add_extension_nodes \
 --output-data-file /data/extra_vars.yml
 ----
 
-. When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created. 
+. When you have run these commands, a `command_generator_data/extra_vars.yml` template file is created.
 This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-# Create 
+# Create
 aws_add_extension_nodes:
   ansible_config_path:
   cloud_credentials_path:
