@@ -12,7 +12,13 @@ The following variables are parameters listed in the data file:
 ** This is the same name you used when you deployed the foundation.
 * `aws_backup_taken` is the verification that a manual backup of the current deployment was recently created prior to running this upgrade.
 * `aws_region` is the AWS region where the foundation deployment is located.
-* `aws_ssm_bucket_name` is the name of the S3 bucket where temporary configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one. 
+* `aws_ssm_bucket_name` is the name of the S3 bucket where temporary configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
++
+[NOTE]
+====
+The `aws_ssm_bucket_name` parameter is ONLY used to store temporary config files. It does NOT need to be saved for use in other playbooks. Any valid existing bucket can be used.
+====
++
 The bucket name must not contain uppper case letters.
 * `seller_name` (Optional) is used to designate the AWS Marketplace Seller. The default value is `redhatinc`. If you are based in EMEA and purchased this offering through the `redhatlimited` AWS Marketplace seller, ensure that this value is set to `redhatlimited`. 
 
