@@ -37,3 +37,8 @@ aws_s3_bucket=ansible-automation-platform-bucket aws_ssm_bucket_name=aap-ssm-buc
 ----
 . The playbook can take some time to create a restored deployment.
 When you have run the playbook successfully, a restored deployment is available in AWS CloudFormation matching the name provided for it in the `restore.yml` file.
+
+[NOTE]
+====
+A restored deployment will contain the same VPC networking setup as the original backed up deployment. If a backed up deployment was deployed within an existing VPC, its restored deployment will also be deployed into that VPC. If a backed up deployment was deployed with a new VPC, its restored deployment will also be deployed with a new VPC.  
+====
