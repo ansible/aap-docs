@@ -6,27 +6,18 @@ This playbook enables you to list the existing backups in a specific bucket.
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:tech-note-linux-files-owned-by-root[technical notes].
+====
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backup_list --output-data-file /data/backups_list.yml
 ----
-+
-Produces the following output:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-Playbook: gcp_backup_list
-Description: This playbook list the backups in a given bucket.
------------------------------------------------
-This playbook list the backups in a given bucket.
 
------------------------------------------------
-Command generator template: 
-
-docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_backup_list --data-file /data/backups_list.yml
-----
-. After running the command, a `$(pwd)/command_generator_data/backups_list.yml` template file is created. 
-This template file resembles the following: 
+. After running the command, a `$(pwd)/command_generator_data/backups_list.yml` template file is created.
+This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -48,7 +39,7 @@ Resulting in the following ouput:
 [literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
-Command to run playbook: 
+Command to run playbook:
 
 docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backup_list \
@@ -71,5 +62,5 @@ ok: [localhost] => {
 }
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=11   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=11   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
