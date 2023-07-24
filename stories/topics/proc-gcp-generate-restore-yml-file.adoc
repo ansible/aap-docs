@@ -3,14 +3,20 @@
 = Generating the restore.yml file
 
 .Procedure
-. Run the command generator `command_generator_vars`` to generate `restore.yml`.
+. Run the command generator `command_generator_vars` to generate `restore.yml`.
++
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:tech-note-linux-files-owned-by-root[technical notes].
+====
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator_vars gcp_restore_deployment --output-data-file /data/restore.yml
 ----
+
 +
-Providing the following output:
+. After running the command, a `$(pwd)/command_generator_data/restore.yml` template file is created. This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -19,11 +25,11 @@ Playbook: gcp_restore_deployment
 Description: This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
 -----------------------------------------------
 This playbook is used to restore the Ansible Automation Platform from GCP Marketplace environment from a backup.
-For more information regarding backup and restore, visit our official documentation - 
-https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/assembly-aap-gcp-backup-and-recovery
+For more information regarding backup and restore, visit our official documentation -
+https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_from_gcp_marketplace_guide/index
 
 -----------------------------------------------
-Command generator template: 
+Command generator template:
 
 docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_restore_deployment --data-file /data/restore.yml
 ----

@@ -1,0 +1,18 @@
+[id="tech-note-linux-files-owned-by-root"]
+
+= Command generator - Linux files owned by root
+
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+# Change the owner of the command_generator_data directory recursively
+$ sudo chown -R $USER:$USER command_generator_data/
+
+# Check the permissions
+$ ls -la command_generator_data/
+----
+
+The command generator currently expects to use the Docker CLI in the link:https://docs.docker.com/config/daemon/[daemon mode]. The default Docker installation does not have User namespace mapping for Discretionary access control (DAC). So, for any file created by `root` from the container will also be owned by `root` on the host if the file is located in a shared volume.
+
+You can learn more about the Linux namespaces, including the User namespace at the article link:https://www.redhat.com/sysadmin/7-linux-namespaces[The 7 most used Linux namespaces].

@@ -2,8 +2,8 @@
 
 = Generating data files by running the ansible-on-clouds-ops container
 
-The following commands generate the required data file. 
-These commands create a directory, and  an empty data template that, when populated, is used to generate the playbook. 
+The following commands generate the required data file.
+These commands create a directory, and  an empty data template that, when populated, is used to generate the playbook.
 
 .Procedure
 . Create a folder to hold the configuration files.
@@ -14,37 +14,28 @@ $ mkdir command_generator_data
 ----
 . Populate the `command_generator_data` folder with the configuration file template.
 +
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:tech-note-linux-files-owned-by-root[technical notes].
+====
++
 [options="nowrap" subs="+attributes"]
 ----
 $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
 command_generator_vars gcp_setup_logging_monitoring \
 --output-data-file /data/logging-monitoring.yml
 ----
-+
-Creates the following command file:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-===============================================
-Playbook: gcp_setup_logging_monitoring
-Description: This playbook setup the logging and monitoring.
------------------------------------------------
-Install monitoring tools and configure them to send data to the Google Cloud Monitoring service.
------------------------------------------------
-Command generator template: 
 
-docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator \
-gcp_setup_logging_monitoring --data-file /data/logging-monitoring.yml
-----
 
-. When you have run these commands, a `command_generator_data/logging-monitoring.yml` template file is created. 
+. When you have run these commands, a `command_generator_data/logging-monitoring.yml` template file is created.
+
 +
 [NOTE]
 ====
-In the following example file, `ansible_config_path` is optional. 
+In the following example file, `ansible_config_path` is optional.
 ====
 +
-This template file resembles the following:- 
+This template file resembles the following:-
 +
 [literal, options="nowrap" subs="+attributes"]
 ----

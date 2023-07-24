@@ -2,10 +2,10 @@
 
 = Delete backups
 
-There are two possible ways to delete backups:
+There are two playbooks to delete backups:
 
 * Use the `gcp_backup_delete` playbook which deletes a single backup.
-* Use the `gcp_backups_delete` playbook which deletes multiple backups at once. 
+* Use the `gcp_backups_delete` playbook which deletes multiple backups at once.
 
 `gcp_backups_delete` takes a array of strings ["backup1","backup2",...], while `gcp_backup_delete` takes only one string, that being the name of a specific backup, "backup1".
 
@@ -14,31 +14,18 @@ The use of `gcp_backups_delete` is described in this section.
 .Procedure
 . Populate the `command_generator_data` directory with the configuration file template.
 +
-[literal, options="nowrap" subs="+attributes"]
-----
-docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backups_delete --output-data-file /data/backups.yml
-----
-+
-Produces the following output:
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default. To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:tech-note-linux-files-owned-by-root[technical notes].
+====
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE \
-command_generator_vars gcp_backup_delete --output-data-file /data/backup.yml
-
-===============================================
-Playbook: gcp_backups_delete
-Description: This playbook delete a list of backups.
------------------------------------------------
-This playbook delete a list of backups
-
------------------------------------------------
-Command generator template: 
-
-docker run --rm -v <local_data_file_directory>:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups.yml
+docker run --rm -v $(pwd)/command_generator_data/:/data $IMAGE command_generator_vars gcp_backups_delete --output-data-file /data/backups_delete.yml
 ----
-. After running the command, a `/tmp/backups.yml` template file is created. 
-This template file resembles the following: 
+
+. After running the command, a `$(pwd)/command_generator_data/backups_delete.yml` template file is created.
+This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -50,13 +37,14 @@ gcp_backups_delete:
     gcp_bucket_backup_name:
 ----
 
-With backup_names like ["backup1","backup2"]
+The `backup_names` parameter must specify an array of strings, for example, `["backup1","backup2"]`.
+The `delete` parameter must be set to `true` to successfully delete.
 
-. To run the backup, run the command generator to generate the backup command.
+. To delete the backups, run the command generator to generate the `gcp_backups_delete`` command.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups.yml
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backups_delete --data-file /data/backups_delete.yml
 ----
 +
 Resulting in the following ouput:
@@ -64,14 +52,14 @@ Resulting in the following ouput:
 [literal, options="nowrap" subs="+attributes"]
 ----
 -----------------------------------------------
-Command to run playbook: 
+Command to run playbook:
 
 docker run --rm --env PLATFORM=GCP -v </path/to/gcp/service-account.json>:/home/runner/.gcp/credentials:ro \
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg  $IMAGE redhat.ansible_on_clouds.gcp_backups_delete \
 -e 'gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials  gcp_bucket_backup_name=<bucket> \
 backup_names=<backup_names> delete=True'
 ----
-. Run the supplied backup command to trigger the backup.
+. Run the supplied backup command to delete the backups.
 . When the playbook has finished running, the output resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
@@ -80,5 +68,5 @@ TASK [redhat.ansible_on_clouds.standalone_gcp_backup_delete : [delete_backup] Dr
 skipping: [localhost]
 
 PLAY RECAP *********************************************************************
-localhost                  : ok=23   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+localhost                  : ok=23   changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
 ----
