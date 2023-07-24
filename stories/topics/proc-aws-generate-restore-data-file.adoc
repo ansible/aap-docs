@@ -2,16 +2,22 @@
 
 = Generating the restore data file
 
-The following commands create a directory, and populate it with an empty data template that, when completed, is used during the restore. 
+The following commands create a directory, and populate it with an empty data template that, when completed, is used during the restore.
 
 .Procedure
-. Create a folder to hold the configuration 
+. Create a folder to hold the configuration
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 $ mkdir command_generator_data
 ----
 . Populate the `$(pwd)/command_generator_data` folder with the configuration file template.
++
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default.
+To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:tech-note-linux-files-owned-by-root[Command generator - Linux files owned by root].
+====
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -20,11 +26,11 @@ $ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
   --output-data-file /data/restore.yml
 ----
 
-. After running these commands, a `$(pwd)/command_generator_data/restore.yml` template file is created. 
+. After running these commands, a `$(pwd)/command_generator_data/restore.yml` template file is created.
 This template file resembles the following:
 +
 [literal, options="nowrap" subs="+attributes"]
----- 
+----
 aws_restore_stack:
   ansible_config_path:
   cloud_credentials_path:
