@@ -2,35 +2,49 @@ ifdef::context[:parent-context: {context}]
 
 [id="ap-release-notes"]
 
-= Release notes
+= Release notes for Ansible on Clouds 2.4
+
+ifdef::product_AWS[]
+This release includes a number of enhancements, additions, and fixes that have been implemented for {AAPonAWS}.
+endif::product_AWS[]
+ifdef:product_GCP[]
+This release includes a number of enhancements, additions, and fixes that have been implemented for {AAPonGCP}.
+endif::product_GCP[]
+
+[NOTE]
+====
+Automation Mesh and Event Driven Automation are not yet supported by the self-managed Ansible on Cloud offerings at this time.
+====
 
 [discrete]
-== What’s new in Ansible Automation Platform?
+== Enhancements
 
-Check out the newest features and enhancements we've just released.
+ifdef::product_AWS[]
+The release version2.4.20230630 of {AAPonAWS} includes the following enhancements:
+endif::product_AWS[]
+ifdef::product_GCP[]
+The release version2.4.20230630 of {AAPonGCP} includes the following enhancements:
+endif::product_GCP[]
 
-This release includes a number of enhancements, additions, and fixes that have been implemented in the {PlatformNameShort}.
-
-[discrete]
-== New features and enhancements
-
-These releases of {AAPonAWS} and {AAPonGCP} of version 2.4.20230630-00 include the following enhancements:
-
-* {PlatformNameShort} 2.4 support
-** Automation Mesh and Event Driven Automation are not yet supported via the self-managed Ansible on Cloud offerings at this time
+* Support for {PlatformNameShort} 2.4 has been added.
 * Added internal encryption to the web servers
-** Custom certificates can be added
-* Custom tagging/labelling support
-** AWS add/remove tag support for resources owned by the deployment
-** GCP add/remove label support for resources owned by the the deployment
-* {AAPonGCP} now has add/remove extension node operational playbooks
-* Backup and restore enhancements
-** Added support for taking multiple backups
-** Added operational playbook to list available backups
-** Added operational playbook to delete a selected backup
-** Added existing VPC restore capability
-* Added operational functionality to check current version
+** Addition of custom certificates is now supported.
+* Support has been added for custom tagging and labelling.
+ifdef::product_AWS[]
+** Support has been added to AWS to add or remove tag support for resources owned by the deployment.
+endif::product_AWS[]
+ifdef::product_GCP[]
+** Support has been added to GCP to add or remove tag support for resources owned by the deployment.
+* {AAPonGCP} now has operational playbooks to add and remove extension nodes.
+endif::product_GCP[]
+* There are improvements to backup and restore functionality.
+** Support has been added for taking multiple backups.
+** An operational playbook has been added to list available backups.
+** An operational playbook has been added to delete a selected backup.
+** The capability to restore an existing VPC has been added.
+* Operational functionality to check the current version has been added.
 ** Operational playbooks now check to ensure that the {PlatformNameShort} environment they are operating upon is at the same version before beginning their operation.
+
 
 [discrete]
 == Deprecated and removed features
