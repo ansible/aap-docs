@@ -8,7 +8,7 @@ image::AWS-existing-deployment.png[AWS existing deployment architecture]
 
 {AAPonAWS} is designed to be private, with no public access allowed by default. 
 
-This requires customers to expose the deployed internal _Application Load Balancers_ (ALBs) themselves pursuant to their own network requirements and security practices (some potential ways to expose the ALBs include VPC Peering, Transit Gateway, VPN, External Load Balancers, amongst others). 
+This requires customers to expose the deployed internal _Application Load Balancers_ (ALBs) themselves pursuant to their own network requirements and security practices. Some potential ways to expose the ALBs include VPC Peering, Transit Gateway, VPN, External Load Balancers, amongst others. 
 
 All cloud infrastructure components are deployed in a Virtual Private Cloud (VPC). 
 
@@ -42,7 +42,9 @@ SELinux is enabled on the VM instances and is supported down to the container le
 Additional operational automations are provided by the offering, available as a separate docker container for download from registry.redhat.io.  
 These additional operational automations include backup, restore, and upgrade.
 
-Any _Common Vulnerabilities and Exposures_ (CVEs) found in the RHEL OS base image, the {PlatformNameShort} containers, or any included packages are addressed during upgrade of the {PlatformNameShort} offering by swapping out the base RHEL AMI with a newer version including all required software, packages, and containers, this is done automatically for you through the use of the included upgrade automation. 
+Any _Common Vulnerabilities and Exposures_ (CVEs) found in the RHEL OS base image, the {PlatformNameShort} containers, or any included packages are addressed during upgrade of the {PlatformNameShort} offering by swapping out the base RHEL AMI with a newer version including all required software, packages, and containers. 
+
+This is done automatically for you through the use of the included upgrade automation. 
 
 Customers can take advantage of these operational automations to simplify the operational readiness of {PlatformNameShort} within their own corporate standards freeing themselves up to focus on developing Ansible Automation to manage their own infrastructure and applications rather than spending time developing automations to manage {PlatformNameShort}.
 
