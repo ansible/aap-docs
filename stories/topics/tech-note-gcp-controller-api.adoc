@@ -1,0 +1,5 @@
+[id="tech-note-gcp-controller-api"]
+
+= Ansible Automation Platform Controller API
+
+API endpoints for Controller must contain a trailing slash in order for requests to go through. Automatic trailing slash redirects are not supported in this current offering of {AAPonGCP}. For example a request such as `<controller_base_url>/api/v2/metrics` times out while `<controller_base_url>/api/v2/metrics/` goes through.
