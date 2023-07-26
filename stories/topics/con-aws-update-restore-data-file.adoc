@@ -22,6 +22,7 @@ If provided, the playbook defaults to this value over the value of the IAM role 
 ====
 If provided, the playbook defaults to this value over the EFS restore point referenced in the backup file on S3. 
 See xref:ref-aws-permissions[AWS permissions].
+
 You must also ensure that the provided restore point is from a version of Ansible on Clouds (AoC) that matches the version of the ansible-on-clouds-ops container image running the restore. 
 For example, a restore point taken from a deployment on AoC version 2.4.20230630-00 needs to use the `ansible-on-clouds-ops` container image version `2.4.20230630`.
 ====
@@ -53,10 +54,8 @@ This must be the same bucket used for backup.
 The `aws_ssm_bucket_name` parameter is ONLY used to store temporary config files. It does NOT need to be saved for use in other playbooks. Any valid existing bucket can be used.
 ====
 +
-+
 When you have populated the data file, it should resemble the following. 
 The values in this file are provided as examples. 
-+
 +
 [NOTE]
 ====
