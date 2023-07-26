@@ -26,12 +26,12 @@ Please ensure the referenced backup vault exists and the AWS Backup IAM role pro
 * `aws_s3_bucket` is the name of the S3 bucket where the backup files are stored. 
 This creates a new bucket if one does not already exist. 
 Every backup is stored in the bucket. 
-For guidance on bucket naming, see link:https://www.google.com/url?q=https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html&sa=D&source=docs&ust=1682584492105680&usg=AOvVaw0WgUwkieoKwP4tRrvSpFBC[Bucket naming rules]
+For guidance on bucket naming, see link:https://www.google.com/url?q=https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html&sa=D&source=docs&ust=1682584492105680&usg=AOvVaw0WgUwkieoKwP4tRrvSpFBC[Bucket naming rules]. For more information on creating S3 buckets, see link:https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html[AWS Creating A Bucket] in the AWS documentation.
 * `aws_ssm_bucket_name` is the name of the S3 bucket where temporary configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one.
 +
 [NOTE]
 ====
-The `aws_ssm_bucket_name` parameter is ONLY used to store temporary config files. It does NOT need to be saved for use in other playbooks. Any valid existing bucket can be used.
+The `aws_ssm_bucket_name` parameter is ONLY used to store temporary config files. It does NOT need to be saved for use in other playbooks. Any valid existing bucket can be used. For more information on creating S3 buckets, read link:https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html[AWS Creating A Bucket] in the AWS documentation.
 ====
 +
 * `backup_prefix` is a prefix you would like to add to the backup name (default: aoc-backup)
