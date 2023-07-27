@@ -4,4 +4,6 @@
 
 Tags are custom fields that you assign to an AWS resource to help organize and identify your instances. {AAPonAWS} supports stack-level tagging during stack deployment time. A stack-level tag, when applied to the stack itself, is also applied to all tag supported components that make up the stack.
 
-Using the add or remove tags playbooks only updates the tags for the individual components of a stack and not the tag applied to the stack itself. Stack-level tags are never modified after deployment.
+Using the add or remove labels playbooks only updates the tags for the individual components of a stack and not the tag applied to the stack itself. Stack-level tags are never modified after deployment.  
+
+The `aws_remove_labels` playbook only supports removing a single AWS tag at a time.  The parameter `aws_labels` is a single key to remove.  To remove multiple keys, run the command multiple times.
