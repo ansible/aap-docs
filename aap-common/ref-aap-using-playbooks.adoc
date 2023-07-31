@@ -171,52 +171,6 @@ localhost                  : ok=5    changed=0    unreachable=0    failed=0    s
 ----
 
 [discrete]
-== gcp_check_aoc_version
-
-This playbook checks if the Ansible on Cloud version is the same as the command generator container.
-The check is done each time a playbook is called.
-
-[literal, options="nowrap" subs="+attributes"]
-----
-$ docker run --rm $IMAGE command_generator_vars gcp_check_aoc_version
-----
-
-Which generates the following output:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-===============================================
-Playbook: gcp_check_aoc_version
-Description: Retrieve the Ansible on Clouds version.
------------------------------------------------
-Retrieve the Ansible on Clouds version.
-
------------------------------------------------
-Command generator template:
-
-docker run --rm $IMAGE command_generator gcp_check_aoc_version [--ansible-config ansible_config_path>] -c <cloud_credentials_path> -d <deployment_name>
-===============================================
-----
-
-Launching this command by replacing the parameters generates a new command to launch and outputs:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-...
-TASK [redhat.ansible_on_clouds.standalone_check_aoc_version : Verify operational playbook and Ansible on Clouds deployment versions] ***
-ok: [localhost] => {
-    "changed": false,
-    "msg": "This operation playbook version and the Ansible on Clouds deployment version are identical: 2.4.20230606-00"
-}
-
-PLAY RECAP *********************************************************************
-localhost                  : ok=8    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-
-----
-
-A _failed_ not equal zero means the Ansible on Clouds deployment version does not match the command_generator container and a different version is required for the command generator to manage that deployment.
-
-[discrete]
 == gcp_health_check
 
 This playbook checks if the nodes and Ansible application are healthy.
