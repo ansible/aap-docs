@@ -83,6 +83,46 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 ----
 
+
+[discrete]
+== gcp_remove_labels
+
+This playbook removes labels from the deployment.
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_remove_labels
+----
+
+Which generates the following output:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+===============================================
+Playbook: gcp_remove_labels
+Description: This playbook removes labels from the deployment.
+-----------------------------------------------
+Remove labels from the {AAPonGCP} deployment.
+
+-----------------------------------------------
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
+===============================================
+----
+
+The parameter `gcp_labels` is a comma separated list of keys to remove. For example: key1,key2
+
+Launching this command by replacing the parameters generates a new command to launch and outputs:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+...
+PLAY RECAP *********************************************************************
+localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
+
+
 [discrete]
 == gcp_check_aoc_version
 
@@ -170,6 +210,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
+
 [discrete]
 == gcp_health_check
 
@@ -251,6 +292,7 @@ PLAY RECAP *********************************************************************
 localhost                  : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ----
 
+
 [discrete]
 == gcp_nodes_health_check
 
@@ -290,43 +332,6 @@ localhost                  : ok=47   changed=1    unreachable=0    failed=0    s
 
 A _failed_ not equal zero indicates an issue with nodes in the deployment.
 
-[discrete]
-== gcp_remove_labels
-
-This playbook removes labels from the deployment.
-
-[literal, options="nowrap" subs="+attributes"]
-----
-$ docker run --rm $IMAGE command_generator_vars gcp_remove_labels
-----
-
-Which generates the following output:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-===============================================
-Playbook: gcp_remove_labels
-Description: This playbook removes labels from the deployment.
------------------------------------------------
-Remove labels from the {AAPonGCP} deployment.
-
------------------------------------------------
-Command generator template:
-
-docker run --rm $IMAGE command_generator gcp_remove_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
-===============================================
-----
-
-The parameter `gcp_labels` is a comma separated list of keys to remove. For example: key1,key2
-
-Launching this command by replacing the parameters generates a new command to launch and outputs:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-...
-PLAY RECAP *********************************************************************
-localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
-----
 
 endif::product_GCP[]
 ifdef::product_AWS[]
