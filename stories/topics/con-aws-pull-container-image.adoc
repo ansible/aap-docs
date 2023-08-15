@@ -6,20 +6,21 @@ Pull the Docker image for the Ansible on Clouds operational container which alig
 
 [NOTE]
 ====
-Before pulling the docker image, ensure you are logged in to registry.redhat.io using docker. Use the following command to login to registry.redhat.io.
+Before pulling the docker image, ensure you are logged in to {Registry} using docker. Use the following command to login to {Registry}.
+
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ docker login registry.redhat.io
+$ docker login {Registry}
 ----
 For more information about registry login, see link:https://access.redhat.com/RegistryAuthentication[Registry Authentication]
 ====
 
-For example, if your foundation deployment version is 2.4.20230630-00, you must pull the operational image with tag 2.4.20230630.
+For example, if your foundation deployment version is {ImageRef}-00, you must pull the operational image with tag {ImageRef}.
 
 Use the following commands:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
-$ export IMAGE=registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel9:2.4.20230630
+$ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
 $ docker pull $IMAGE --platform=linux/amd64
 ----
