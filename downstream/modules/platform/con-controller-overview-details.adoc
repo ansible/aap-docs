@@ -26,18 +26,18 @@ For more information, see Role-Based Access Controls.
 = Cloud and Autoscaling Flexibility
 {ControllerNameStart} features a powerful optional provisioning callback feature that enables nodes to request configuration on demand. 
 This is an ideal solution for a cloud auto-scaling scenario, integrating with provisioning servers like Cobbler, or when dealing with managed systems with unpredictable uptimes. 
-It requires no management software to be installed on remote nodes, the callback solution can be triggered by a simple call to `curl` or `wget`, and can be easily embeddable in `init` scripts, kickstarts, or preseeds. 
+It requires no management software to be installed on remote nodes, the callback solution can be triggered by a call to `curl` or `wget`, and can be embedded in `init` scripts, kickstarts, or preseeds. 
 Access is controlled such that only machines listed in the inventory can request configuration.
 
 = The ideal RESTful API
 The {ControllerName} REST API is the ideal RESTful API for a systems management application, with all resources fully discoverable, paginated, searchable, and well modeled. A styled API browser enables API exploration from the API root at `\http://<server name>/api/`, showing off every resource and relation. Everything that can be done in the user interface can be done in the API - and more.
 
 = Backup and restore
-{PlatformNameShort} can backup and restore your systems or systems, making it easy for you to backup and replicate your instance as needed.
+{PlatformNameShort} can backup and restore your systems or systems, making it easy for you to backup and replicate your instance as required.
 
 = Ansible Galaxy integration
 By including an {Galaxy} `requirements.yml` file in your project directory, {ControllerName} automatically fetches the roles your playbook needs from Galaxy, GitHub, or your local source control. 
-For more information, see Ansible Galaxy Support.
+For more information, see {Galaxy} Support.
 
 = Inventory support for OpenStack
 Dynamic inventory support is available for OpenStack. This enables you to easily target any of the virtual machines or images  running in your OpenStack cloud.
@@ -115,7 +115,7 @@ Examples include combining provisioning and application deployment workflows int
 This makes it possible to pause workflows in between playbooks so that a user can give approval (or denial) for continuing on to the next step in the workflow.
 
 = Job distribution
-{ControllerNameStart} offers the ability to take a fact gathering or configuration job running across thousands of machines and divide it into slices that can be distributed across your automation controller cluster for increased reliability, faster job completion, and improved cluster usetilization. 
+{ControllerNameStart} offers the ability to take a fact gathering or configuration job running across thousands of machines and divide it into slices that can be distributed across your automation controller cluster for increased reliability, faster job completion, and improved cluster use. 
 If you need to change a parameter across 15,000 switches at scale, or gather information across your multi-thousand-node RHEL estate, automation controller provides the means.
 
 = Support for deployment in a FIPS-enabled environment
@@ -123,7 +123,7 @@ If you need to change a parameter across 15,000 switches at scale, or gather inf
 
 = Limit the number of hosts per organization
 Many large organizations have instances shared among many organizations. 
-So that one organization cannot use all the licensed hosts, this feature enables superusers to set a specified upper limit on how many licensed hosts canmay be allocated to each organization. 
+So that one organization cannot use all the licensed hosts, this feature enables superusers to set a specified upper limit on how many licensed hosts can be allocated to each organization. 
 The {ControllerName} algorithm factors changes in the limit for an organization and the number of total hosts across all organizations. 
 Inventory updates fail if an inventory synchronization brings an organization out of compliance with the policy. 
 Additionally, superusers are able to over-allocate their licenses, with a warning.
