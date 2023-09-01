@@ -1,0 +1,32 @@
+:_content-type: PROCEDURE
+
+[id="installing-containerized-aap_{context}"]
+
+= Installing Containerized {PlatformNameShort}
+
+[role="_abstract"]
+Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+
+.Preparing the RHEL host for installation
+
+.Procedure
+
+Containerized AAP runs the component services as podman based containers on top of a RHEL host. The installer will take care of this once the underlying host has been prepared. Use the following instructions for this.
+
+. Log into your RHEL host as your non-root user.
+. Run *dnf repolist* to validate only the BaseOS and appstream repos are setup and enabled on the host:
+
+----
+$ dnf repolist
+Updating Subscription Management repositories.
+repo id                                                    repo name
+rhel-9-for-x86_64-appstream-rpms                           Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
+rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
+----
+
+.Verification
+
+Ensure that these repos and only these repos are available to the host OS. If you need to know how to do this, please see:
+link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/package_manifest/repositories[Chapter 2. Repositories Red Hat Enterprise Linux].
+
+Ensure that the host has DNS configured and can resolve hostnames and IPs using FQDNs. This is essential to ensure services can talk to one another.
