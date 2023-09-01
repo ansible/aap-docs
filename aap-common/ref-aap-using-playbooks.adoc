@@ -332,6 +332,49 @@ localhost                  : ok=47   changed=1    unreachable=0    failed=0    s
 
 A _failed_ not equal zero indicates an issue with nodes in the deployment.
 
+[discrete]
+== gcp_sos_report
+
+This playbook generates the sos report for controllers and/or hub.
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars gcp_sos_report
+----
+
+Which generates the following output:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+===============================================
+Playbook: gcp_sos_report
+Description: Generate and upload the sos report of a GCP deployemnt
+Generate and upload the sos report of a GCP deployemnt to Red Hat support team
+
+Options:
+deployment_name - Ansible Automation Platform from GCP Marketplace deployment name
+cloud_credentials_path - GCP service account credentials json file. See https://cloud.google.com/iam/docs/creating-managing-service-account-keys
+destination_type - The location where to upload the report (customer-support or bucket)
+report_bucket_name - The name of the bucket where the report will be uploaded (Optional)
+controller_ids -
+Generates the sos report for these specific controllers in format [“c1”,“c2”]. The name of the controllers are the name of the virtual machines.
+An empty list skips all controllers sos report.
+If the value is omitted then sos reports are generated for all controllers. (Optional)
+hub - If true then the sos report for the hub is generated.
+case_id - The support team case id. (Optional)
+
+Command generator template:
+
+docker run --rm $IMAGE command_generator gcp_sos_report [-ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'destination_type=<customer-support|bucket> [report_bucket_name=<report_bucket_name>] [controller_ids=<controller_ids>] hub=<true|false> [case_id=<case_id>]'
+----
+
+Launching this command by replacing the parameters generates a new command to launch and outputs:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+PLAY RECAP *********************************************************************
+localhost : ok=32 changed=0 unreachable=0 failed=0 skipped=13 rescued=0 ignored=0
+----
 
 endif::product_GCP[]
 ifdef::product_AWS[]
@@ -498,6 +541,54 @@ Launching this command by replacing the parameters generates a new command to la
 ...
 PLAY RECAP *********************************************************************
 localhost                  : ok=22   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+----
+
+[discrete]
+== aws_sos_report
+
+This playbook generates the sos report for controllers and/or hub.
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm $IMAGE command_generator_vars aws_sos_report
+----
+
+Which generates the following output:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+===============================================
+Playbook: aws_sos_report
+Description: Generate and upload the sos report of a AWS deployemnt
+-----------------------------------------------
+Generate and upload the sos report of a AWS deployemnt to Red Hat support team
+
+Options:
+
+deployment_name - Name of CloudFormation Ansible Automation Platform from AWS Marketplace foundation stack
+cloud_credentials_path - AWS Credentials path. Example: ~/.aws/credentials
+aws_region - Name of AWS region
+aws_ssm_bucket_name - The name of the S3 bucket where temporary configuration files for the AWS SSM are stored. You can use an existing bucket or create a new one
+controller_ids -
+Generates the sos report for these specific controllers in format ["c1:,"c2"]. The name of the controllers are the names of the virtual machines.
+An empty list skips all controllers sos report.
+If the value is omitted then sos reports are generated for all controllers. (Optional)
+hub - If true then the sos report for the hub is generated.
+destination_type - The location where to upload the report (customer-support or bucket)
+report_bucket_name - The name of the bucket where the report will be uploaded (Optional)
+case_id - The support team case id. (Optional)
+
+Command generator template:
+
+docker run --rm $IMAGE command_generator aws_sos_report [-ansible-config ansible_config_path>] -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'aws_region=<aws_region> aws_ssm_bucket_name=<aws_ssm_bucket_name> [controller_ids=<controller_ids>] hub=<true|false> destination_type=<customer-support|bucket> [report_bucket_name=<report_bucket_name>] [case_id=<case_id>]'
+----
+
+Launching this command by replacing the parameters generates a new command to launch and outputs:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+PLAY RECAP *********************************************************************
+localhost : ok=32 changed=0 unreachable=0 failed=0 skipped=13 rescued=0 ignored=0
 ----
 
 endif::product_AWS[]

@@ -3,9 +3,9 @@
 = Running the upgrade playbook
 
 [NOTE]
-=====
+====
 {PlatformNameShort} upgrade to {ImageRef} updates the protocol of its internal load balancers. If additional networking configurations were added after installation, they can also require updating to ensure connectivity. For more information, read the xref:tech-note-gcp-upgrade[Upgrade note].
-=====
+====
 
 . To run the upgrade, run the command generator to generate the upgrade CLI command:
 +
@@ -18,7 +18,7 @@ This generates the following command:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
------------------------------------------------
+================================================
 docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.gcp/credentials:ro 
 --env ANSIBLE_CONFIG=../gcp-ansible.cfg 
 --env DEPLOYMENT_NAME=AnsibleAutomationPlatform 
@@ -26,7 +26,7 @@ docker run --rm --env PLATFORM=GCP -v ~/secrets/GCP-secrets.json:/home/runner/.g
 -e 'gcp_deployment_name=AnsibleAutomationPlatform \
 gcp_service_account_credentials_json_path=/home/runner/.gcp/credentials \
 gcp_compute_region=us-east1 gcp_compute_zone=us-east1-b gcp_backup_taken=True'
-===============================================
+=================================================
 ----
 . Run the given upgrade command to trigger the upgrade.
 +
