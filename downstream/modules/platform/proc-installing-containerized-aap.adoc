@@ -6,11 +6,11 @@
 [role="_abstract"]
 
 
-Installation is based around an  *inventory* file. This file defines the hosts/containers to be used and created, along with the variables for components and other information. This allows you to customize the installation.
+Installation of {PlatformNameShort} is controlled with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
 
-For convenience we have added an example inventory file, which you can copy and simply amend to get started quicker.
+For convenience an example inventory file is provided, that you can copy and modify to quidkly get started.
 
-In the collection directory you will find the boilerplate inventory file. Follow the instructions within the file to complete your configuration.
+The boilerplate inventory file is included in the collection directory. Follow the instructions in the file to complete your configuration.
 
 * Edit the inventory file by replacing the *< >* placeholders with your specific variables, and uncommenting any lines specific to your needs.
 
@@ -21,6 +21,7 @@ In the collection directory you will find the boilerplate inventory file. Follow
 # For all optional variables please consult the included README.md
 
 # This section is for your AAP Controller host(s)
+# If one of these components is not being installed, comment out the <fqdn> line.
 # -------------------------------------------------
 [automationcontroller]
 fqdn_of_your_rhel_host ansible_connection=local
@@ -53,8 +54,8 @@ postgresql_admin_password=<set your own>
 registry_username=<your RHN username>
 registry_password=<your RHN password>
 # If using the bundled installer, you need to alter defaults by using:
-#bundle_install: true
-#bundle_dir: <full path to the bundle directory>
+#bundle_install= true
+#bundle_dir: <full path to the bundle directory/bundle name>
 
 # AAP Controller - mandatory
 # ------------------------------
@@ -68,6 +69,7 @@ controller_pg_password=<set your own>
 #controller_postinstall=true
 #controller_license_file=<full path to your manifest .zip file>
 #controller_postinstall_dir=<full path to your config-as-code directory>
+#controller_postinstall_repo_url=<git based config-as-code source URL>
 
 # AAP Automation Hub - mandatory
 # ------------------------------
@@ -89,7 +91,7 @@ controller_main_url=https://fqdn_of_your_rhel_host
 # -----------------------------
 ----
 
-You are now ready to install containerized AAP using this command:
+Use the following command to install containerized AAP{PlatformNameShort}:
 
 ----
 ansible-playbook -i </path/to/inventory> ansible.containerized_installer.install
@@ -98,4 +100,6 @@ ansible-playbook -i </path/to/inventory> ansible.containerized_installer.install
 
 NOTE: If your privilege escalation requires a password to be entered, append *-K* to the command line. You will then be prompted for the *BECOME* password. 
 
-To receive more information than the standard output, you can increse the verbosity, up to a four v depth, *-vvvv*. This can significantly increase installation time so we recommend only using it when needed or requested by Red Hat support.
+You can use increasing verbosity, up to 4 v's (-vvvv) to see the details of the installation process.
+
+NOTE: This can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
