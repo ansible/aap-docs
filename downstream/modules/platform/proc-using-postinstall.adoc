@@ -1,0 +1,48 @@
+:_content-type: PROCEDURE
+
+[id="using-postinstall_{context}"]
+= Using postinstall
+
+[role="_abstract"]
+
+
+The postinstaller is an experimental new feature in containerized [ShortPlatformName] which allows you to define and load AAP configuration at the same time as the initial installation. This uses a configuration-as-code approach, where you simply define your configuration to be loaded as simple YAML files. 
+
+. In order to use this optional feature, you need to uncomment these vars to the inventory file:
+
+----
+controller_postinstall=true
+----
++
+
+. The default is false, so this must be enabled to activate the postinstaller. An AAP license is required for this feature and must reside on the local filesystem so it can be automatically loaded:
+
+----
+controller_license_file=/full_path_to/manifest_file.zip
+----
++
+
+. We can pull your configuration-as-code from a Git based repo. To do this, set the following variables. These dictate where we pull the content from and where it will be stored for upload to AAP controller:
++
+----
+controller_postinstall_repo_url=https://your_cac_scm_repo
+controller_postinstall_dir=/full_path_to_where_you_want_the pulled_content_to_reside
+----
+
+These definition files use the link:https://console.redhat.com/ansible/automation-hub/namespaces/infra/[infra certified collections]. The link:https://console.redhat.com/ansible/automation-hub/repo/validated/infra/controller_configuration/[controller_configuration] collection is preloaded as part of the installation for you and will use the installation controller credentials you supply in the inventory file for access into the AAP controller, so you simply need to provide the YAML configuration files. Refer to the likes of the YAML Example for instance for automatically creating a local link:https://console.redhat.com/ansible/automation-hub/repo/validated/infra/controller_configuration/content/role/users/[user account]. You can setup just about any AAP configuration attribute such as credentials, LDAP settings, users/teams, organizations, projects, inventory/hosts, job and workflow templates.
+
+Here is an example for defining and loading controller job templates. Example of *your-config.yml* file. This example simply changes the preloaded demo example that comes with an AAP installation to give you an idea of how this works.
+
+----
+/full_path_to_your_configuration_as_code/
+├── controller
+    	└── job_templates.yml
+
+---
+controller_templates:
+ - name: Demo Job Template
+   execution_environment: Default execution environment
+   instance_groups:
+ 	- default
+   inventory: Demo Inventory
+----

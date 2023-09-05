@@ -1,32 +1,101 @@
 :_content-type: PROCEDURE
 
 [id="installing-containerized-aap_{context}"]
-
-= Installing Containerized {PlatformNameShort}
+= installing containerized aap
 
 [role="_abstract"]
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
 
-.Preparing the RHEL host for installation
 
-.Procedure
+Installation is based around an  *inventory* file. This file defines the hosts/containers to be used and created, along with the variables for components and other information. This allows you to customize the installation.
 
-Containerized AAP runs the component services as podman based containers on top of a RHEL host. The installer will take care of this once the underlying host has been prepared. Use the following instructions for this.
+For convenience we have added an example inventory file, which you can copy and simply amend to get started quicker.
 
-. Log into your RHEL host as your non-root user.
-. Run *dnf repolist* to validate only the BaseOS and appstream repos are setup and enabled on the host:
+In the collection directory you will find the boilerplate inventory file. Follow the instructions within the file to complete your configuration.
+
+* Edit the inventory file by replacing the *< >* placeholders with your specific variables, and uncommenting any lines specific to your needs.
+
 
 ----
-$ dnf repolist
-Updating Subscription Management repositories.
-repo id                                                    repo name
-rhel-9-for-x86_64-appstream-rpms                           Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
-rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
+# This is the AAP installer inventory file
+# Please consult the docs if you're unsure what to add
+# For all optional variables please consult the included README.md
+
+# This section is for your AAP Controller host(s)
+# -------------------------------------------------
+[automationcontroller]
+fqdn_of_your_rhel_host ansible_connection=local
+
+# This section is for your AAP Automation Hub host(s)
+# -----------------------------------------------------
+[automationhub]
+fqdn_of_your_rhel_host ansible_connection=local
+
+# This section is for your AAP EDA Controller host(s)
+# -----------------------------------------------------
+[automationeda]
+fqdn_of_your_rhel_host ansible_connection=local
+
+# This section is for the AAP database(s)
+# -----------------------------------------
+# Uncomment the lines below and amend appropriately if you want AAP to install and manage the postgres databases
+# Leave commented out if you intend to use your own external database and just set appropriate _pg_hosts vars
+# see mandatory sections under each AAP component
+#[database]
+#fqdn_of_your_rhel_host ansible_connection=local
+
+[all:vars]
+
+# Common variables needed for installation
+# ----------------------------------------
+postgresql_admin_username=postgres
+postgresql_admin_password=<set your own>
+# If using the online (non-bundled) installer, you need to set RHN registry credentials
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+# If using the bundled installer, you need to alter defaults by using:
+#bundle_install: true
+#bundle_dir: <full path to the bundle directory>
+
+# AAP Controller - mandatory
+# ------------------------------
+controller_admin_password=<set your own>
+controller_pg_host=fqdn_of_your_rhel_host
+controller_pg_password=<set your own>
+
+# AAP Controller - optional
+# ------------------------------
+# To use the postinstall feature you need to set these variables
+#controller_postinstall=true
+#controller_license_file=<full path to your manifest .zip file>
+#controller_postinstall_dir=<full path to your config-as-code directory>
+
+# AAP Automation Hub - mandatory
+# ------------------------------
+hub_admin_password=<set your own>
+hub_pg_host=fqdn_of_your_rhel_host
+hub_pg_password=<set your own>
+
+# AAP Automation Hub - optional
+# -----------------------------
+
+# AAP EDA Controller - mandatory
+# ------------------------------
+eda_admin_password=<set your own>
+eda_pg_host=fqdn_of_your_rhel_host
+eda_pg_password=<set your own>
+controller_main_url=https://fqdn_of_your_rhel_host
+
+# AAP EDA Controller - optional
+# -----------------------------
 ----
 
-.Verification
+You are now ready to install containerized AAP using this command:
 
-Ensure that these repos and only these repos are available to the host OS. If you need to know how to do this, please see:
-link:https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/package_manifest/repositories[Chapter 2. Repositories Red Hat Enterprise Linux].
+----
+ansible-playbook -i </path/to/inventory> ansible.containerized_installer.install
+----
 
-Ensure that the host has DNS configured and can resolve hostnames and IPs using FQDNs. This is essential to ensure services can talk to one another.
+
+NOTE: If your privilege escalation requires a password to be entered, append *-K* to the command line. You will then be prompted for the *BECOME* password. 
+
+To receive more information than the standard output, you can increse the verbosity, up to a four v depth, *-vvvv*. This can significantly increase installation time so we recommend only using it when needed or requested by Red Hat support.
