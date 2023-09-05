@@ -17,7 +17,7 @@ Make the following configuration changes in {ControllerName} to minimize downtim
 
 .Procedure
 
-. Enable `RECEPTOR_KUBE_SUPPORT_RECONNECT` in AutomationController spec:
+. Enable `RECEPTOR_KUBE_SUPPORT_RECONNECT` in AutomationController specification:
 +
 -----
 apiVersion: automationcontroller.ansible.com/v1beta1
@@ -32,13 +32,13 @@ spec:
     ```
 -----
 +
-. Enable the graceful termination feature in AutomationController spec:
+. Enable the graceful termination feature in AutomationController specification:
 +
 -----
 termination_grace_period_seconds: <time to wait for job to finish>
 -----
 +
-. Configure `podAntiAffinity` for web and task pod to spread out the deployment in AutomationController spec:
+. Configure `podAntiAffinity` for web and task pod to spread out the deployment in AutomationController specification:
 +
 -----
 task_affinity:
