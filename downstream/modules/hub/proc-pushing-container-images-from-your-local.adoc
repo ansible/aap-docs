@@ -1,10 +1,10 @@
 
 [id="pushing-container-images-from-your-local"]
 
-= Pushing container images from your local
+= Pushing container images from your local environment
 
 .Procedure
-. From a terminal, log into podman, or any container client currently in use.
+. From a terminal, log into podman, or any container client currently in use:
 +
 ----
 > podman pull <__container-name__>
@@ -23,8 +23,7 @@
 --tls-verify=false --sign-by<reference to the gpg key on your local>
 ----
 +
-If the image is not signed, it can only be pushed with any current signature
-embedded.
+If the image is not signed, it can only be pushed with any current signature embedded.
 
 . Push the image without signing it:
 +
@@ -33,27 +32,26 @@ embedded.
 --tls-verify=false
 ----
 +
-. Navigate to the automation hub and click on *Execution Environments* if that
-window is not open.
+. Navigate to {HubName}. 
 
-. Click the *Refresh* icon to refresh the page to show the new execution
-environment.
+. From the navigation panel, select menu:Execution Environments[Execution Environments].
+
+. Click the *Refresh* icon to refresh the page to show the new {ExecEnvShort}.
 
 . Click the name of the image.
 
-In the details page, below the image name, will be displayed whether or not the
-image has been signed. In this case, it displays "Unsigned."
-
-To sign the image from automation hub:
+The details page displays whether or not the image has been signed. 
+If it displays *Unsigned* you can sign the image from {HubName} with the following steps:
 
 . Click the image name to open the details page.
 
-. Click the three dots in the upper right hand corner of the details page.
+. Click the btn:[More Actions] icon *{MoreActionsIcon}*.
 Three options are available:
-* Use in Controller
-* Delete
-* Sign
+* *Use in Controller*
+* *Delete*
+* *Sign*
 
 . Click *sign* from the drop-down menu.
 
-The signing service signs the image. Once the image is signed, the status changes to "signed".
+The signing service signs the image. 
+Once the image is signed, the status changes to "signed".
