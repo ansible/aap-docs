@@ -1,5 +1,4 @@
-// Module included in the following assemblies:
-// assembly-disconnected-installation.adoc
+// this info is duplicated here: https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/1.2/html/installing_and_upgrading_private_automation_hub/installing_online_or_offline#doc-wrapper
 
 [id="installing-the-aap-setup-bundle_{context}"]
 
@@ -61,7 +60,6 @@ automationhub_pg_username='automationhub'
 automationhub_pg_password='dbpassword123'
 automationhub_pg_sslmode='prefer'
 ----
-NOTE: The inventory should be kept intact after installation because it is used for backup, restore, and upgrade functions. Consider keeping a backup copy in a secure location, given that the inventory file contains passwords.
 +
 . Run the {PlatformNameShort} setup bundle executable as the root user:
 +
@@ -74,3 +72,8 @@ $ sudo -i
 . When installation is complete, navigate to the Fully Qualified Domain Name (FQDN) for the {ControllerName} node that was specified in the installation inventory file.
 
 . Log in using the administrator credentials specified in the installation inventory file.
+
+[NOTE]
+====
+The inventory must be kept intact after installation because it is used for backup, restore, and upgrade functions. Consider keeping a backup copy in a secure location, given that the inventory file contains passwords.
+====

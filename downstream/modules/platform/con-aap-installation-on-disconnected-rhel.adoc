@@ -1,27 +1,14 @@
-// Module included in the following assemblies:
-// assembly-disconnected-installation.adoc
 
 [id="con-aap-installation-on-disconnected-rhel_{context}"]
 
 = Installing {PlatformNameShort} on disconnected RHEL
 
 [role="_abstract"]
-You can install {PlatformNameShort} {ControllerName} and a {PrivateHubName} without an internet connection using the installer-managed database located on the {ControllerName}.
-
-== Prerequisites
-
-To install {PlatformNameShort} on a disconnected network, complete the following prerequisites:
-
-. Create a subscription manifest.
-. Download the {PlatformNameShort} setup bundle.
-. Create DNS records for the {ControllerName} and {PrivateHubName} servers.
-
-NOTE: The setup bundle includes additional components that make installing {PlatformNameShort} easier in a disconnected environment. These include the {PlatformNameShort} Red Hat package managers (RPMs) and the default execution environment (EE) images.
+You can install {PlatformNameShort} {ControllerName} and a {PrivateHubName} without an internet connection using the installer-managed database located on the {ControllerName}. The setup bundle is recommended for disconnected installation because it includes additional components that make installing {PlatformNameShort} easier in a disconnected environment. These include the {PlatformNameShort} Red Hat package managers (RPMs) and the default {ExecEnvShort} (EE) images.
 
 == System Requirements
 
 Hardware requirements are documented in the link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_installation_guide/platform-system-requirements#ref-controller-system-requirements[{PlatformNameShort} Installation Guide].
-
 
 == RPM Source
 
@@ -31,4 +18,8 @@ RPM dependencies for {PlatformNameShort} that come from the BaseOS and AppStream
 * Reposync makes full copies of the required RPM repositories and hosts them on the disconnected network.
 * The RHEL Binary DVD contains RPMs available for use. 
 
-NOTE: The RHEL Binary DVD method requires the DVD for supported versions of RHEL, including version 8.6 or higher. See link:https://access.redhat.com/support/policy/updates/errata[Red Hat Enterprise Linux Life Cycle] for information on which versions of RHEL are currently supported.
+[NOTE]
+
+====
+The RHEL Binary DVD method requires the DVD for supported versions of RHEL, including version 8.6 or higher. See link:https://access.redhat.com/support/policy/updates/errata[Red Hat Enterprise Linux Life Cycle] for information on which versions of RHEL are currently supported.
+====
