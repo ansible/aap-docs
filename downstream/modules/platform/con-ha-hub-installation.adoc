@@ -4,9 +4,7 @@
 
 Configure the {PlatformNameShort} installer to install {HubName} in a highly available (HA) configuration. Install HA {HubName} on SELinux by creating mount points and adding the appropriate SELinux contexts to your {PlatformNameShort} environment.
 
-== Highly available {HubName} installation
-
-Use this example to populate the inventory file to install a highly available {HubName}. This inventory file includes a highly available {HubName} with a clustered setup and implements Red Hat Single Sign-On in your environment. 
+Use this example to populate the inventory file to install a highly available {HubName}. This inventory file includes a highly available {HubName} with a clustered setup and implements Red Hat Single Sign-On in your environment.
 
 .Specify database host IP
 
@@ -33,10 +31,10 @@ automationhub3.testing.ansible.com ansible_user=cloud-user ansible_host=192.0.2.
 -----
 
 .Next steps
-Check to ensure the directives below are present in ``/etc/pulp/settings.py`` in each of the Private Automation Hub servers:
+Check that the directives below are present in ``/etc/pulp/settings.py`` in each of the {PrivateHubName} servers:
 ----
 USE_X_FORWARDED_PORT = True
-USE_X_FORWARDED_HOST = True 
+USE_X_FORWARDED_HOST = True
 ----
 [NOTE]
 If `automationhub_main_url` is not specified, the first node in the [automationhub] group will be used as default.
