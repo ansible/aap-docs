@@ -1,12 +1,12 @@
-// Module included in the following assemblies:
-// assembly-deploying-high-availability-hub.adoc
-
-
 [id="ha-hub-installation"]
 
-= Highly available {HubName} installation
+= Installing a high availability automation hub
 
-Install a highly available {HubName} by making the following changes to the `inventory` file in the {PlatformNameShort} installer, then running the `./setup.sh` script:
+Configure the {PlatformNameShort} installer to install {HubName} in a highly available (HA) configuration. Install HA {HubName} on SELinux by creating mount points and adding the appropriate SELinux contexts to your {PlatformNameShort} environment.
+
+== Highly available {HubName} installation
+
+Use this example to populate the inventory file to install a highly available {HubName}. This inventory file includes a highly available {HubName} with a clustered setup and implements Red Hat Single Sign-On in your environment. 
 
 .Specify database host IP
 
@@ -32,13 +32,7 @@ automationhub2.testing.ansible.com ansible_user=cloud-user ansible_host=192.0.2.
 automationhub3.testing.ansible.com ansible_user=cloud-user ansible_host=192.0.2.22
 -----
 
-.Red Hat Single Sign-On requirements
-If you are implementing Red Hat Single Sign-On on your {HubName} environment, specify the main {HubName} URL that clients will connect to, using the `automationhub_main_url` inventory variable. For example:
------
-automationhub_main_url = 'https://automationhub.ansible.com'
------
-
-.Post installation
+.Next steps
 Check to ensure the directives below are present in ``/etc/pulp/settings.py`` in each of the Private Automation Hub servers:
 ----
 USE_X_FORWARDED_PORT = True
