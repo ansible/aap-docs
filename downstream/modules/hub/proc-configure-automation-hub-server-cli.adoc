@@ -1,7 +1,7 @@
 [id="proc-configure-automation-hub-server-cli"]
-= Using the CLI to configure Red Hat automation hub as the primary content source
+= Using the CLI to configure Red Hat {HubName} as the primary content source
 
-To configure automation hub, you must modify the `ansible.cfg` configuration file. By default, the `ansible.cfg` configuration file is located in the `/etc/ansible/` directory. With automation hub, you have access to certified, supported collections.
+To configure {HubName}, you must modify the `ansible.cfg` configuration file. By default, the `ansible.cfg` configuration file is located in the `/etc/ansible/` directory. With {HubName}, you have access to certified, supported collections.
 
 .Prerequisites
 
@@ -29,12 +29,12 @@ Creating a new token revokes any previous tokens generated for {HubName}. Update
 -----
 https://__<server_fully_qualified_domain_name>__/api/galaxy/
 -----
-. Optional: Set the `auth_url` option. The community Ansible Galaxy does not require an `auth_url`.
+. Optional: Set the `auth_url` option. The community {Galaxy} does not require an `auth_url`.
 . Set the API token for the {HubName} server.
 
 .Example
 
-The following `ansible.cfg` configuration file example shows how to configure multiple servers in prioritized order. {HubNameStart} is configured as your primary source and an Ansible Galaxy server as a secondary source:
+The following `ansible.cfg` configuration file example shows how to configure multiple servers in prioritized order. {HubNameStart} is configured as your primary source and an {Galaxy} server as a secondary source:
 
 .ansible.cfg
 
@@ -61,8 +61,8 @@ password=my_pass
 ====
 To prevent a 301 redirect, all API URLs must end with a trailing slash */*.
 ====
-You have now configured automation hub as your primary server. You can begin to download and install supported collections.
+You have now configured {HubName} as your primary server. You can begin to download and install supported collections.
 
 [role="_additional-resources"]
 .Additional resources
-For more information on server list configuration options and using Ansible Galaxy as an Ansible content source, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[Ansible Galaxy User Guide].
+For more information about server list configuration options and using {Galaxy} as an Ansible content source, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[{Galaxy} User Guide].
