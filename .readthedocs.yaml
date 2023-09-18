@@ -1,0 +1,20 @@
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# RTD API version
+version: 2
+
+build:
+  os: ubuntu-22.04
+  tools:
+    python: >-
+      3.11
+    nodejs: >-
+      20
+
+  # Build preview site with asciidoctor
+  commands:
+    - npm i -g asciidoctor
+    - sh generate-preview.sh
+    - asciidoctor index.asciidoc
+    - mkdir -pv _readthedocs/html && mv index.html _readthedocs/html
