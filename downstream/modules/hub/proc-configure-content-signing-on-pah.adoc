@@ -7,7 +7,7 @@ To successfully sign and publish {CertifiedName}, you must configure {PrivateHub
 .Prerequisites
 
 * Your GnuPG key pairs have been securely set up and managed by your organization.
-* Your public/private key pair has proper access for configuring content signing on {PrivateHubName}.
+* Your public-private key pair has proper access for configuring content signing on {PrivateHubName}.
 
 .Procedure
 
@@ -18,15 +18,15 @@ To successfully sign and publish {CertifiedName}, you must configure {PrivateHub
 This script acts as the signing service and must generate an ascii-armored detached `gpg` signature for that file using the key specified through the `PULP_SIGNING_KEY_FINGERPRINT` environment variable.
 ====
 +
-The script then prints out a JSON structure with the following format.
+The script prints out a JSON structure with the following format.
 +
 ----
 {"file": "filename", "signature": "filename.asc"}
 ----
 +
-All the file names are relative paths inside the current working directory. The file name must remain the same for the detached signature, as shown.
+All the file names are relative paths inside the current working directory. The file name must remain the same for the detached signature.
 +
-The following example shows a script that produces signatures for content:
+The following script produces signatures for content:
 +
 [source,shell]
 ----
@@ -53,7 +53,7 @@ fi
 ----
 
 +
-After you deploy a {PrivateHubName} with signing enabled to your {PlatformNameShort} cluster, new UI additions display when you interact with collections.
+After you deploy a {PrivateHubName} with signing enabled to your {PlatformNameShort} cluster, new UI additions are displayed in collections.
 
 . Review the {PlatformNameShort} installer inventory file for options that begin with `automationhub_*`.
 +
@@ -70,4 +70,4 @@ automationhub_collection_signing_service_key = /abs/path/to/galaxy_signing_servi
 automationhub_collection_signing_service_script = /abs/path/to/collection_signing.sh
 ----
 +
-The two new keys (*automationhub_auto_sign_collections* and *automationhub_require_content_approval*) indicate that the collections must be signed and require approval after they are uploaded to {PrivateHubName}.
+The two new keys (*automationhub_auto_sign_collections* and *automationhub_require_content_approval*) indicate that the collections must be signed and approved after they are uploaded to {PrivateHubName}.
