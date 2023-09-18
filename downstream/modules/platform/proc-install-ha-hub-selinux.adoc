@@ -1,12 +1,17 @@
 
 = Install a high availability (HA) deployment of {HubName} on SELinux
 
-To set up a high availability (HA) deployment of {HubName} on SELinux, create two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, then assign the appropriate SELinux contexts to each. You must add the context for `/var/lib/pulp/pulpcore_static` and run the {PlatformNameShort} installer before adding the context for `/var/lib/pulp`.
+You can configure the inventory file further to enable high availability deployment of {HubName} on SELinux by creating two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, then assigning the appropriate SELinux contexts to each. 
+
+[NOTE] 
+===
+You must add the context for `/var/lib/pulp` pulpcore_static and run the {PlatformNameShort}installer before adding the context for `/var/lib/pulp`.
+===
 
 .Prerequisites
 * You have already configured a NFS export on your server.
 
-.Pre-installation procedure
+.Procedure
 . Create a mount point at `/var/lib/pulp`:
 +
 ----
@@ -44,9 +49,10 @@ $ mount -a
 $ setup.sh -- -b --become-user root
 ----
 
+.Next steps
 Once the installation is complete, unmount the `/var/lib/pulp/` mount point then apply the appropriate SELinux context:
 
-.Post-installation procedure
+.Applying the SELinux context
 . Shut down the Pulp service:
 +
 ----
@@ -73,7 +79,7 @@ srv_rhel8:/data /var/lib/pulp nfs defaults,_netdev,nosharecache,context="system_
 $ mount -a
 ----
 
-.Configure pulpcore.service:
+.Configure pulcore.serivce
 . With the two mount points set up, shut down the Pulp service to configure `pulpcore.service`:
 +
 ----
@@ -101,12 +107,14 @@ $ systemctl enable remote-fs.target
 $ systemctl reboot
 ----
 
-.Troubleshooting
+[NOTE] 
+===
 A bug in the pulpcore SELinux policies can cause the token authentication public/private keys in `etc/pulp/certs/` to not have the proper SELinux labels, causing the pulp process to fail. When this occurs, run the following command to temporarily attach the proper labels:
 ----
 $ chcon system_u:object_r:pulpcore_etc_t:s0 /etc/pulp/certs/token_{private,public}_key.pem
 ----
-NOTE: You must repeat this command to reattach the proper SELinux labels whenever you relabel your system.
+Repeat this command to reattach the proper SELinux labels whenever you relabel your system.
+===
 
 .Additional Resources
 * See the link:https://docs.pulpproject.org/en/2.16/user-guide/scaling.html#selinux-requirements[SELinux Requirements on the Pulp Project documentation] for a list of SELinux contexts.
