@@ -1,14 +1,15 @@
 [id="proc-configure-automation-hub-server-cli"]
-= Configuring Red Hat automation hub as the primary source for content using the CLI
+= Using the CLI to configure Red Hat {HubName} as the primary content source
 
-Configure Red Hat automation hub as your primary source of content by using the CLI. To configure automation hub, you must modify the `ansible.cfg` configuration file. By default, the `ansible.cfg` configuration file is located in the `/etc/ansible/` directory. With automation hub, you have access to certified, supported collections.
+To configure {HubName}, you must modify the `ansible.cfg` configuration file. By default, the `ansible.cfg` configuration file is located in the `/etc/ansible/` directory. With {HubName}, you have access to certified, supported collections.
 
 .Prerequisites
 
 * You have obtained the API token for the {HubName} server. See xref:hub-create-api-token[Creating the Red Hat {HubName} API token] for more information.
+
 [IMPORTANT]
 ====
-Creating a new token revokes any previous tokens generated for {PrivateHubName}. Ensure that you update any {ControllerName} or scripts that you created with the previous token.
+Creating a new token revokes any previous tokens generated for {HubName}. Update any {ControllerName} or scripts created with the previous token.
 ====
 
 .Procedure
@@ -28,12 +29,15 @@ Creating a new token revokes any previous tokens generated for {PrivateHubName}.
 -----
 https://__<server_fully_qualified_domain_name>__/api/galaxy/
 -----
-. Optional: Set the `auth_url` option. The community Ansible Galaxy does not require an `auth_url`.
+. Optional: Set the `auth_url` option. The community {Galaxy} does not require an `auth_url`.
 . Set the API token for the {HubName} server.
 
-The following `ansible.cfg` configuration file example shows how to configure multiple servers in prioritized order, with {HubName} configured as your primary source and an Ansible Galaxy server as a secondary source:
+.Example
+
+The following `ansible.cfg` configuration file example shows how to configure multiple servers in prioritized order. {HubNameStart} is configured as your primary source and an {Galaxy} server as a secondary source:
 
 .ansible.cfg
+
 -----
 [galaxy]
 server_list = automation_hub, my_org_hub
@@ -53,10 +57,12 @@ password=my_pass
 <2> Include the `/api/galaxy/` subdirectory in the Ansible Galaxy server URL.
 <3> Include the `/api/galaxy/` subdirectory in the {HubName} server URL.
 
-NOTE: All API URLs must end with a trailing slash */* in order to prevent receiving a 301 redirect.
-
-You have now configured automation hub as your primary server using CLI, and can proceed to download and install supported collections.
+[NOTE]
+====
+To prevent a 301 redirect, all API URLs must end with a trailing slash */*.
+====
+You have now configured {HubName} as your primary server. You can begin to download and install supported collections.
 
 [role="_additional-resources"]
 .Additional resources
-For more information on server list configuration options and using Ansible Galaxy as an Ansible content source, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[Ansible Galaxy User Guide].
+For more information about server list configuration options and using {Galaxy} as an Ansible content source, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[{Galaxy} User Guide].
