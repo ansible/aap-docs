@@ -3,16 +3,19 @@
 
 = Keeping your offline token active
 
-Keeping an offline token active is useful when an application needs to perform an action on behalf of the user, like a routine data backup, even when the user is offline.
-
 Offline tokens expire after 30 days of inactivity. You can keep your offline token from expiring by periodically refreshing your offline token.
+
+Keeping an offline token active is useful when an application performs an action on behalf of the user; when the user is offline, such as a routine data backup.
 
 [NOTE]
 ====
-Once your offline token expires, you must request a new one.
+If your offline token expires, you must request a new one.
 ====
 
-Run the following command to prevent your token from expiring:
+.Procedure
+
+* Run the following command to prevent your token from expiring:
++
 ----
 curl https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token -d grant_type=refresh_token -d client_id="cloud-services" -d refresh_token="{{ user_token }}" --fail --silent --show-error --output /dev/null
 ----
