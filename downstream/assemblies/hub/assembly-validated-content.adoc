@@ -40,13 +40,7 @@ This variable is set to `true` by the installer.
 |====
 
 .Procedure
-* To obtain the tarball, navigate to the link:{PlatformDownloadUrl}[{PlatformName} download] page and select *Ansible Validated Content*.
-
-[NOTE]
-====
-Use either `automationhub_admin_password` or `automationhub_api_token`, not both.
-====
-
+. To obtain the tarball, navigate to the link:{PlatformDownloadUrl}[{PlatformName} download] page and select *Ansible Validated Content*.
 . Upload the content and define the variables (this example uses `automationhub_api_token`):
 +
 [options="nowrap" subs="+quotes,attributes"]
@@ -56,6 +50,11 @@ ansible-playbook collection_seed.yml
 -e automationhub_main_url=https://automationhub.example.com
 -e automationhub_require_content_approval=true
 ----
++
+[NOTE]
+====
+Use either `automationhub_admin_password` or `automationhub_api_token`, not both.
+====
 
 When complete, the collections are visible in the validated collection section of {PrivateHubName}.
 Users can now view and download collections from your {PrivateHubName}.
