@@ -3,7 +3,7 @@
 
 = Configuring the client to verify signatures
 
-.Prerequsites
+.Prerequisites
 * The client must have sudo privileges configured to verify signatures.
 
 .Procedure
@@ -14,7 +14,7 @@
 >  sudo <name of editor> __/etc/containers/policy.json
 ----
 +
-The file may look similar to this:
+The file that is displayed is similar to this:
 +
 ----
     {
@@ -31,14 +31,14 @@ The file may look similar to this:
     }
 ----
 +
-This shows there will be no verification from either `quay.io`, or `docker.io` since the type is `insecureAcceptAnything` which overrides the default type of `reject`. However, there will be verification from `_<server-address>_` as the parameter `type` has been set to `"signedBy"``.
+This file shows that neither `quay.io`, or `docker.io` will perform the verification, because the type is `insecureAcceptAnything` which overrides the default type of `reject`. However, `_<server-address>_` will perform the verification, because the parameter `type` is set to `"signedBy"`.
 +
 [NOTE]
 ====
 The only `keyType`` currently supported is GPG keys.
 ====
 +
-. Under the `_<server-address>_` entry, modify the `keyPath` <1> to reflect the
+. Under the `_<server-address>_` entry, modify the `keyPath` <1> to include the
 name of your key file.
 +
 ----
@@ -62,11 +62,12 @@ name of your key file.
 +
 . Save and close the file.
 
-. Pull the file using podman, or your client of choice:
+.Verification
+* Pull the file using Podman, or your client of choice:
 
 ----
 > podman pull _<server-address>_/<container-name>:<tag name>
 --tls-verify=false
 ----
 
-This verifies the signature with no errors.
+This response verifies the signature with no errors.
