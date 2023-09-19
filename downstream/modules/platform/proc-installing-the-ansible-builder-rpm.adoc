@@ -87,7 +87,7 @@ gpgcheck = 1
 
 .. If an internal certificate authority was used to request and sign the {PrivateHubName} web server certificate, make a copy of that CA certificate called *hub-root.crt*.
 
-. Create your python requirements.txt and ansible collection requirements.yml with the content needed for your custom {ExecEnvShort} image.  Note that any collections you require should already be uploaded into your {PrivateHubName}.
+. Create your python requirements.txt and ansible collection requirements.yml with the content needed for your custom {ExecEnvShort} image. Note that any collection required must already be uploaded into your {PrivateHubName}.
 
 . Use ansible-builder to create the context directory used to build the {ExecEnvShort} image.
 +
@@ -170,7 +170,7 @@ COPY --from=builder /output/ /output/
 RUN /output/install-from-bindep && rm -rf /output/wheels
 ----
 +
-. Create the {ExecEnvShort} image in the local podman cache using the `podman` command.
+. Create the {ExecEnvShort} image in the local podman cache by using the `podman` command.
 +
 ----
 $ podman build -f context/Containerfile \

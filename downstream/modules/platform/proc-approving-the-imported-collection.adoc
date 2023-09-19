@@ -6,11 +6,11 @@ After you have imported collections with either the GUI or the CLI method, you m
 
 .Procedure
 
-. Login to link:https://console.redhat.com/ansible/automation-hub/[{HubName} Hybrid Cloud Console].
+. Log in to link:https://console.redhat.com/ansible/automation-hub/[{HubName} Hybrid Cloud Console].
 
-. Go to menu:Collections[Approval].
+. From the navigation panel, select menu:Collections[Approval].
 
-. Click btn:[Approve] for the collection you wish to approve.
+. Click btn:[Approve] for the collection you want to approve.
 
 . The collection is now available for use in your {PrivateHubName}.
 
@@ -44,7 +44,7 @@ A custom {ExecEnvShort} image can be built on an internet-facing machine using t
 $ podman image save localhost/custom-ee:latest | gzip -c custom-ee-latest.tar.gz
 ----
 
-. Transfer the file across the disconnected boundary by using an existing mechanism such as sneakernet, one-way diode, etc. After the image is available on the disconnected side, import it into the local podman cache, tag it, and push it to the disconnected hub:
+. Transfer the file across the disconnected boundary by using an existing mechanism such as sneakernet or one-way diode. After the image is available on the disconnected side, import it into the local podman cache, tag it, and push it to the disconnected hub:
 ----
 $ podman image load -i custom-ee-latest.tar.gz
 $ podman image tag localhost/custom-ee <hub_fqdn>/custom-ee:latest
