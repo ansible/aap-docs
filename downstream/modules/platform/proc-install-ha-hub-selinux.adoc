@@ -1,12 +1,13 @@
+[id="proc-install-ha-hub-selinux"]
 
-= Install a high availability (HA) deployment of {HubName} on SELinux
+= Enabling a high availability (HA) deployment of {HubName} on SELinux
 
-You can configure the inventory file further to enable high availability deployment of {HubName} on SELinux by creating two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, then assigning the appropriate SELinux contexts to each. 
+You can configure the inventory file further to enable high availability deployment of {HubName} on SELinux by creating two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, then assigning the appropriate SELinux contexts to each.
 
-[NOTE] 
-===
-You must add the context for `/var/lib/pulp` pulpcore_static and run the {PlatformNameShort}installer before adding the context for `/var/lib/pulp`.
-===
+[NOTE]
+====
+You must add the context for `/var/lib/pulp` pulpcore_static and run the {PlatformNameShort} installer before adding the context for `/var/lib/pulp`.
+====
 
 .Prerequisites
 * You have already configured a NFS export on your server.
@@ -50,72 +51,10 @@ $ setup.sh -- -b --become-user root
 ----
 
 .Next steps
-Once the installation is complete, unmount the `/var/lib/pulp/` mount point then apply the appropriate SELinux context:
-
-.Applying the SELinux context
-. Shut down the Pulp service:
-+
-----
-$ systemctl stop pulpcore.service
-----
-. Unmount `/var/lib/pulp/pulpcore_static`:
-+
-----
-$ umount /var/lib/pulp/pulpcore_static
-----
-. Unmount `/var/lib/pulp/`:
-+
-----
-$ umount /var/lib/pulp/
-----
-. Open `/etc/fstab` using a text editor, then replace the existing value for `/var/lib/pulp` with the following:
-+
-----
-srv_rhel8:/data /var/lib/pulp nfs defaults,_netdev,nosharecache,context="system_u:object_r:pulpcore_var_lib_t:s0" 0 0
-----
-. Run the mount command:
-+
-----
-$ mount -a
-----
-
-.Configure pulcore.serivce
-. With the two mount points set up, shut down the Pulp service to configure `pulpcore.service`:
-+
-----
-$ systemctl stop pulpcore.service
-----
-. Edit `pulpcore.service` using `systemctl`:
-+
-----
-$ systemctl edit pulpcore.service
-----
-. Add the following entry to `pulpcore.service` to ensure that {HubName} services starts only after starting the network and mounting the remote mount points:
-+
-----
-[Unit]
-After=network.target var-lib-pulp.mount
-----
-. Enable `remote-fs.target`:
-+
-----
-$ systemctl enable remote-fs.target
-----
-. Reboot the system:
-+
-----
-$ systemctl reboot
-----
-
-[NOTE] 
-===
-A bug in the pulpcore SELinux policies can cause the token authentication public/private keys in `etc/pulp/certs/` to not have the proper SELinux labels, causing the pulp process to fail. When this occurs, run the following command to temporarily attach the proper labels:
-----
-$ chcon system_u:object_r:pulpcore_etc_t:s0 /etc/pulp/certs/token_{private,public}_key.pem
-----
-Repeat this command to reattach the proper SELinux labels whenever you relabel your system.
-===
+* After the installation is complete, unmount the `/var/lib/pulp/` mount point.
+* xref:proc-apply-selinux-context[Apply the appropriate SELinux context].
+* xref:proc-configure-pulpcore-service[Configure the pulpcore.serivce].
 
 .Additional Resources
 * See the link:https://docs.pulpproject.org/en/2.16/user-guide/scaling.html#selinux-requirements[SELinux Requirements on the Pulp Project documentation] for a list of SELinux contexts.
-* See the link:https://docs.pulpproject.org/pulpcore/installation/hardware-requirements.html#filesystem-layout[Filesystem Layout] for a full description of Pulp folders. 
+* See the link:https://docs.pulpproject.org/pulpcore/installation/hardware-requirements.html#filesystem-layout[Filesystem Layout] for a full description of Pulp folders.
