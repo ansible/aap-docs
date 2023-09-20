@@ -1,0 +1,28 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-smazure-backup-and-recovery"]
+= Backup and Restore
+
+:context: smazure-backup-restore
+
+[IMPORTANT]
+=====
+* You must restore with the same operational image version as the backup.
+
+* To backup and restore your {PlatformNameShort} deployment, it is vital to have your existing {PlatformNameShort} administration secret name and value recorded somewhere safe.
+
+* It is also important to take regular manual backups of the Cloud SQL database instance and filestore backups, to ensure a deployment can be restored as close as possible to its previous working state.
+=====
+
+The playbooks backup and restore provides backup and restore support for the {smAAPonAzure} foundation deployment. 
+
+[NOTE]
+====
+The restore process deploys a new {PlatformNameShort} with the filestore and SQL database instance being restored to the specified backup.
+====
+
+//context markers here are for any modules which are reused
+//:context: backup
+//include::topics/con-smazure-backup-process.adoc[leveloffset=+1]
+//:context: restore
+//include::topics/con-smazure-restore-process.adoc[leveloffset=+1]
