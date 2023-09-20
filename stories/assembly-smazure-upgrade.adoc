@@ -1,0 +1,47 @@
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-smazure-application-upgrade"]
+
+:context: smazure-application-upgrade
+
+= Upgrading
+
+You can upgrade your existing {PlatformNameShort} deployment to the newer version. 
+The upgrade process covers upgrading the {HubName}, {ControllerName}, and extension nodes.
+The upgrade process takes roughly the same amount of time as a {PlatformNameShort} deployment install. 
+You are required to create a backup before running the upgrade.
+
+[NOTE]
+=====
+{smAAPonAzure} supports sequential upgrades. 
+All upgrades should be no more than one major version behind the version you are currently upgrading to. 
+For example, to upgrade {PlatformNameShort} to {ImageRef}, you must be on version 2.3.20230221.
+=====
+
+.Prerequisites
+* Docker must be installed to run the upgrade playbook.
+* A Linux or macOS system, where the `ansible-on-clouds-ops` container image will run.
+* The upgrade process requires several volumes to be mounted. Prepare a fresh directory to be used for this process.
+
+The following procedures form the upgrade process:
+
+. Backup your {PlatformNameShort} 2.3 stack
+* Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.3/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aws-backup-and-restore#con-aws-backup-process[Ansible on Clouds 2.3 backup instructions]
+
+. Upgrade {PlatformNameShort}
+.. Pull the ansible-on-clouds-ops 2.4 container image
+.. Ensure minimum required permissions are met
+.. Generate the data file
+.. Update the data file
+.. Begin upgrading {PlatformNameShort} by running the operational container
+
+. (Optional) Restore the stack from a backup. 
+//* Follow the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.3/html/red_hat_ansible_automation_platform_from_aws_marketplace_guide/assembly-aws-backup-and-restore#con-aws-restore-process[Ansible on Clouds 2.3 restore instructions].
+
+//Context label added in case modules are reused.
+//:context: backup
+//include::topics/con-aws-upgrade-backup-process.adoc[leveloffset=+1]
+//:context: upgrade
+//include::topics/con-aws-upgrade-upgrading.adoc[leveloffset=+1]
+//:context: restore
+//include::topics/con-aws-upgrade-restore-from-stack.adoc[leveloffset=+1]
