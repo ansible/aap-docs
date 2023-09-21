@@ -1,0 +1,62 @@
+[id="con-smazure-application-architecture"]
+
+{smAAPonAzure} is installed into infrastructure resources running within your {Azure} account.
+
+//image::SMA-existing-deployment.png[AWS existing deployment architecture]
+
+{smAAPonAzure} is designed to be private, with no public access allowed by default. 
+
+This requires customers to expose the deployed internal _Application Load Balancers_ (ALBs) themselves pursuant to their own network requirements and security practices. Some potential ways to expose the ALBs include VPC Peering, Transit Gateway, VPN, External Load Balancers, amongst others. 
+
+All cloud infrastructure components are deployed in a Virtual Private Cloud (VPC). 
+
+Customers can choose between deploying into an existing VPC, or have the product deploy a new VPC for them.
+All VM instances and Cloud infrastructure have private IP addresses (allocation determined by the VPC and subnetworks specified at deployment time) by default. 
+
+All internal traffic is encrypted using self-signed certificates generated at deployment time. External traffic can also be encrypted by deploying your own certificate on the Application Load Balancers deployed by the product. 
+
+The {PlatformNameShort} software runs as containers on the deployed VM instances.
+
+_Autoscaling Groups_ (ASG) manage VM instances and monitor the health of each service running on the VM instances. ASGs will automatically cycle the VM instances down and replace them with new VM instances if the health check fails to respond ensuring that the {PlatformNameShort} services stay up and available to process requests.
+
+//The VM instances run a customized _RedHat Enterprise Linux_ (RHEL) _Amazon Machine Image_ (AMI) as their base image. 
+//This AMI is preloaded with all the required container images and packages to run the {PlatformNameShort} ({HubName}, {ControllerName}, and Execution Node components).
+
+//A shared EFS (Elastic File Store) volume is mounted into each VM instance provisioned by the product and is used for shared access to common files and resources.  
+
+A Relational Database Service (RDS) is provisioned by the product at deployment time and contains databases for both the {ControllerName} and {HubName}.  
+
+//image::AWS-full-deployment.png[AWS full deployment architecture]
+
+The Foundation product includes two Execution Nodes running on the same VM instances as the {ControllerName} components (this is called a Hybrid Node configuration in {PlatformNameShort}).
+Additional Execution Node offerings can be purchased to increase the scale (total number of managed nodes) the {PlatformNameShort} deployment is licensed to automate. 
+When deploying the Execution Node offerings into an existing {PlatformNameShort} Foundation deployment, additional Execution Node VM instances can be deployed and automatically connected to the {ControllerName} of the Foundation deployment, where they immediately begin processing automation tasks. 
+
+The {PlatformNameShort} components are run as containers using the Podman container runtime on the VM instances. 
+The Podman runtime configuration is managed as a system service using `systemd` to ensure uptime and availability, and restarting any failed containers automatically. 
+
+SELinux is enabled on the VM instances and is supported down to the container level.
+
+Additional operational automations are provided by the offering, available as a separate docker container for download from {Registry}.  
+These additional operational automations include backup, restore, and upgrade.
+
+Any _Common Vulnerabilities and Exposures_ (CVEs) found in the RHEL OS base image, the {PlatformNameShort} containers, or any included packages are addressed during upgrade of the {PlatformNameShort} offering by swapping out the base RHEL AMI with a newer version including all required software, packages, and containers. 
+
+This is done automatically for you through the use of the included upgrade automation. 
+
+Customers can take advantage of these operational automations to simplify the operational readiness of {PlatformNameShort} within their own corporate standards freeing themselves up to focus on developing Ansible Automation to manage their own infrastructure and applications rather than spending time developing automations to manage {PlatformNameShort}.
+
+= Service descriptions
+
+[cols="30%,30%",options="header"]
+|====
+| Service Name | Description
+| TBD | TBD
+| TBD | TBD
+| TBD | TBD.
+|  | 
+|  | 
+|  | 
+|  | 
+|  | 
+|====
