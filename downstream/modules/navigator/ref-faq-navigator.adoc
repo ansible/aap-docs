@@ -14,7 +14,7 @@ Where should the `ansible.cfg` file go when not using an {ExecEnvNameSing}?::
 Ansible looks for the `ansible.cfg` in the typical locations when not using an {ExecEnvNameSing}. See link:https://docs.ansible.com/ansible/latest/reference_appendices/config.html[Ansible configuration settings] for details.
 
 Where should Ansible collections be placed when using an {ExecEnvNameSing}?:: The easiest place to have Ansible collections is in the project directory, in a playbook adjacent collections directory (for example, `ansible-galaxy collections install ansible.utils -p ./collections`).  
-The playbook directory is automatically mounted in the {ExecEnvNameSing} and {Navigator} finds the collections there. Another option is to build the collections into an {ExecEnvNameSing} using {Builder}. This helps content creators author playbooks that are production ready, since {ControllerName} supports playbook adjacent collection directories. If the collections are in another directory, set the `ANSIBLE_COLLECTIONS_PATHS` variable  and configure a custom volume mount for the directory. (See xref:ref-navigator-general-settings_settings-navigator[Automation content navigator general settings] for `execution-environment-volume-mounts`).
+The playbook directory is automatically mounted in the {ExecEnvNameSing} and {Navigator} finds the collections there. Another option is to build the collections into an {ExecEnvNameSing} using {Builder}. This helps content creators author playbooks that are production ready, since {ControllerName} supports playbook adjacent collection directories. If the collections are in another directory, set the `ANSIBLE_COLLECTIONS_PATHS` variable and configure a custom volume mount for the directory. (See xref:ref-navigator-general-settings_settings-navigator[Automation content navigator general settings] for `execution-environment-volume-mounts`).
 
 Where should Ansible collections be placed when not using an {ExecEnvNameSing}?:: When not using an {ExecEnvNameSing}, Ansible looks in the default locations for collections. See the link:https://docs.ansible.com/ansible/latest/collections_guide/index.html[Using Ansible collections] guide.
 
@@ -66,4 +66,4 @@ What is the order in which configuration settings are applied?:: The {Navigator}
 . Flags and arguments specified on the command line
 . While issuing `:` commands within the text-based user interface
 
-Something didn't work, how can I troubleshoot it?:: {Navigator} has reasonable logging messages. You can enable `debug` logging  with `--log-level debug`. If you think you might have found a bug, log an issue and include the details from the log file.
+Something didn't work, how can I troubleshoot it?:: {Navigator} has reasonable logging messages. You can enable `debug` logging with `--log-level debug`. If you think you might have found a bug, log an issue and include the details from the log file.
