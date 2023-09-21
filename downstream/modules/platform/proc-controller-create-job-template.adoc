@@ -14,7 +14,7 @@ Most prompted values will override any values set in the job template.
 Exceptions are noted in the following table.
 ====
 +
-[cols="50%,50%,50%",options="header"]
+[cols="33%,33%,33%",options="header"]
 |===
 | *Field* | *Options* | *Prompt on Launch* 
 | Name | Enter a name for the job.| N/A
@@ -24,7 +24,7 @@ Exceptions are noted in the following table.
 - Run: Execute the playbook when launched, running Ansible tasks on the selected hosts.
 
 - Check: Perform a "dry run" of the playbook and report changes that would be made without actually making them. 
-Tasks that do not support check mode will be skipped and will not report potential changes. 
+Tasks that do not support check mode are missed and do not not report potential changes. 
 
 For more information on job types see the link:http://docs.ansible.com/playbooks_special_topics.html[Playbooks: Special Topics] section of the Ansible documentation.| Yes
 | Inventory | Choose the inventory to be used with this job template from the inventories available to the currently logged in user. 
@@ -119,7 +119,7 @@ For more information and examples see link:https://docs.ansible.com/ansible/late
 . Specify the following *Options* for launching this template, if necessary:
 * *Privilege Escalation*: If checked, you enable this playbook to run as an administrator. 
 This is the equivalent of passing the `--become` option to the `ansible-playbook` command.
-* *Provisioning Callbacks*: If checked, you enable a host to call back to {ControllerName} via the REST API and invoke the launch of a job from this job template. 
+* *Provisioning Callbacks*: If checked, you enable a host to call back to {ControllerName} through the REST API and invoke the launch of a job from this job template. 
 For more information, see link:https://docs.google.com/document/d/1lzlLLP-4eIRPSs4LsHeRoerKHcVWALvGE5uyIXd_rz4/edit[Provisioning Callbacks].
 * *Enable Webhook*: If checked, you turn on the ability to interface with a predefined SCM system web service that is used to launch a job template. 
 GitHub and GitLab are the supported SCM systems.

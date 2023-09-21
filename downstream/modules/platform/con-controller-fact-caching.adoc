@@ -14,10 +14,10 @@ After launching a job that uses fact cache (`use_fact_cache=True`), each host's 
 
 The Ansible Fact Cache plugin that ships with {ControllerName} is enabled on jobs with fact cache enabled (`use_fact_cache=True`).
 
-When a job that has fact cache enabled (`use_fact_cache=True`) finishes running, the controller restores all records for the hosts in the inventory. 
-Any records with update times newer than the currently stored facts per-host will be updated in the database.
+When a job that has fact cache enabled (`use_fact_cache=True`) has run, {ControllerName} restores all records for the hosts in the inventory. 
+Any records with update times newer than the currently stored facts per-host are updated in the database.
 
-New and changed facts will be logged through the controller's logging facility. 
+New and changed facts are logged through {ControllerName}'s logging facility. 
 Specifically, to the `system_tracking namespace` or logger. 
 The logging payload includes the following fields:
 
@@ -25,7 +25,7 @@ The logging payload includes the following fields:
 * `inventory_id`
 * `ansible_facts`
 
-`ansible facts` is a dictionary of all Ansible facts for `host_name` in the controller inventory, `inventory_id`.
+`ansible facts` is a dictionary of all Ansible facts for `host_name` in the {ControllerName} inventory, `inventory_id`.
 
 [NOTE]
 ====
