@@ -8,7 +8,7 @@ When setting up job slices consider the following:
 * A job slice consists of a job template, an inventory, and a slice count.
 * When executed, a sliced job splits each inventory into a number of "slice size" chunks. 
 It then queues jobs of ansible-playbook runs on each chunk of the appropriate inventory. 
-The inventory fed into ansible-playbook is a pared-down version of the original inventory that only contains the hosts in that particular slice. 
+The inventory fed into ansible-playbook is a shortened version of the original inventory that only contains the hosts in that particular slice. 
 The completed sliced job that displays on the *Jobs* list are labeled accordingly, with the number of sliced jobs that have run:
 +
 image::ug-sliced-job-shown-jobs-list-view.png[Sliced jobs list view]
@@ -20,7 +20,7 @@ image::ug-sliced-job-shown-jobs-list-view.png[Sliced jobs list view]
 Job slicing is intended to scale job executions horizontally. Enabling job slicing on a job template divides an inventory to be acted upon in the number of slices configured at launch time and then starts a job for each slice.
 
 Normally, the number of slices is  equal to or less than the number of {ControllerName} nodes. 
-Setting an extremely high number of job slices, such as thousands, while allowed, can cause performance degradation as the job scheduler is not designed to simultaneously schedule thousands of workflow nodes, which are what the sliced jobs become.
+Setting an extremely high number of job slices, such as thousands, while permitted, can cause performance degradation as the job scheduler is not designed to simultaneously schedule thousands of workflow nodes, which are what the sliced jobs become.
 
 * Sliced job templates with prompts or extra variables behave the same as standard job templates, applying all variables and limits to the entire set of slice jobs in the resulting workflow job. 
 However, when passing a limit to a sliced job, if the limit causes slices to have no hosts assigned, those slices will fail, causing the overall job to fail.
