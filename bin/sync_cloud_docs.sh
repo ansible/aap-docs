@@ -32,20 +32,29 @@ rm -rf $target/aap-on-gcp/images
 rm -rf $target/aap-on-gcp/stories
 rm -rf $target/aap-on-gcp/stories.adoc
 
+rm -rf $target/sm-aap-on-azure/aap-common
+rm -rf $target/sm-aap-on-azure/attributes
+rm -rf $target/sm-aap-on-azure/images
+rm -rf $target/sm-aap-on-azure/stories
+rm -rf $target/sm-aap-on-azure/stories.adoc
+
 # Copy aap-common to the target directories.
 cp -r $source/aap-common/ $target/aap-on-azure/
 cp -r $source/aap-common/ $target/aap-on-aws/
 cp -r $source/aap-common/ $target/aap-on-gcp/
+cp -r $source/aap-common/ $target/sm-aap-on-azure/
 
 # Copy attributes to the target directories.
 cp -r $source/attributes/ $target/aap-on-azure/
 cp -r $source/attributes/ $target/aap-on-aws/
 cp -r $source/attributes/ $target/aap-on-gcp/
+cp -r $source/attributes/ $target/sm-aap-on-azure/
 
 # Copy images to the target directories.
 cp -r $source/images/ $target/aap-on-azure/
 cp -r $source/images/ $target/aap-on-aws/
 cp -r $source/images/ $target/aap-on-gcp/
+cp -r $source/images/ $target/sm-aap-on-azure/
 
 # Copy user stories to the target directories.
 cp -r $source/stories/ $target/aap-on-azure/
@@ -54,3 +63,5 @@ cp -r $source/stories/ $target/aap-on-aws/
 cp -r $source/titles/aap-on-aws/stories.adoc $target/aap-on-aws/
 cp -r $source/stories/ $target/aap-on-gcp/
 cp -r $source/titles/aap-on-gcp/stories.adoc $target/aap-on-gcp/
+cp -r $source/titles/sm-aap-on-azure/stories.adoc $target/sm-aap-on-azure/
+cp -r $source/stories/ $target/sm-aap-on-azure/
