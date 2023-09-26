@@ -1,0 +1,55 @@
+[id="controller-create-job-template"]
+
+= Creating a workflow template
+
+To create a new workflow job template, complete the following steps:
+
+.Procedure
+
+. On the *Templates* list view, click menu:Add[Add workflow template].
++
+image::ug-create-new-wf-template.png.[Create workflow template]
++
+. Enter the appropriate details in the following fields:
++
+[NOTE]
+====
+If a field has the *Prompt on launch* checkbox selected, launching the workflow template, or when the workflow template is used within another workflow template, you are prompted for the value for that field.
+Most prompted values override any values set in the job template.
+Exceptions are noted in the following table.
+====
++
++
+[cols="33%,33%,33%",options="header"]
+|===
+| *Field* | *Options* | *Prompt on Launch* 
+| Name | Enter a name for the job.| N/A
+| Description| Enter an arbitrary description as appropriate (optional). | N/A
+| Organization | Choose the organization to be used with this template from the organizations available to the logged in user. | N/A
+| Inventory | Optionally, choose the inventory to be used with this template from the inventories available to the logged in user. | Yes
+| Limit | A host pattern to further constrain the list of hosts managed or affected by the playbook. Multiple patterns can be separated by colons (:).
+As with core Ansible, a:b means "in group a or b", a:b:&c means "in a or b but must be in c", and a:!b means "in a, and definitely not in b".
+For more information see, link:http://docs.ansible.com/intro_patterns.html[Patterns] in the Ansible documentation. | Yes
+| Source control branch | Select a branch for the workflow. This branch is applied to all workflow job template nodes that prompt for a branch. | Yes
+| Labels 
+a| 
+- Optionally, supply labels that describe this workflow job template, such as `dev` or `test`. 
+Labels can be used to group and filter workflow job templates and completed jobs in the display. 
+
+- Labels are created when they are added to the workflow template. 
+Labels are associated to a single Organization using the Project that is provided in the workflow template. 
+Members of the Organization can create labels on a workflow template if they have edit permissions (such as the admin role).
+
+- Once the job template is saved, the labels appear in the workflow job templates *Details* view.
+
+- Labels are only applied to the workflow templates not the job template nodes that are used in the workflow.
+
+- Select image:disassociate.png[Disassociate,10,10] beside a label to remove it. 
+When a label is removed, it is no longer associated with that particular Job or Job Template, but it will remain associated with any other jobs that reference it.
+
+
+
+
+
+
+|===
