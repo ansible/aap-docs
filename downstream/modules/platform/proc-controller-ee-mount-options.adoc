@@ -16,7 +16,7 @@ Use the following procedure if you encounter this error, or have upgraded from a
 
 .Procedure
 . Change the container ownership on the mounted volume to `root`.
-. In the *Paths to expose to isolated jobs* field of the Job Settings page, using the current example, expose the path as such:
+. In the *Paths to expose to isolated jobs* field of the Job Settings page, using the current example, expose the path as follows:
 +
 image:settings-paths2expose-iso-jobs.png[Paths]
 +
@@ -24,7 +24,7 @@ image:settings-paths2expose-iso-jobs.png[Paths]
 ====
 The `:O` option is only supported for directories. 
 Be as detailed as possible, especially when specifying system paths. 
-Mounting `/etc` or `/usr` directly have an impact that make it difficult to troubleshoot.
+Mounting `/etc` or `/usr` directly has an impact that make it difficult to troubleshoot.
 ====
 +
 This informs Podman to run a command similar to the following example, where the configuration is mounted and the `ssh` command works as expected.
@@ -38,7 +38,7 @@ To expose isolated paths in OpenShift or Kubernetes containers as HostPath, use 
 
 image:settings-paths2expose-iso-jobs-mount-containers.png[Expose isolated jobs]
 
-Use the *Expose host paths for Container Groups* toggle to enable it.
+Set *Expose host paths for Container Groups* to *On* to enable it.
 
 When the playbook runs, the resulting Pod specification is similar to the following example. 
 Note the details of the `volumeMounts` and `volumes` sections.
