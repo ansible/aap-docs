@@ -38,6 +38,15 @@ The content would be equivalent to the file passed through the `--vars` flag of 
 
 . Click btn:[Create rulebook activation].
 
+[IMPORTANT]
+====
+To avoid potential saturation on {ControllerName}, note that each activation rulebook might potentially send numerous requests to the {ControllerName} and trigger multiple jobs, depending on how rules in your rulebook are defined and the volume of incoming events. Each rulebook activation (ansible-rulebook process) has a default throttling mechanism set at 30 connections when connecting to the {ControllerName}. 
+
+You can adjust this value using the environment variable `EDA_CONTROLLER_CONNECTION_LIMIT`. If you anticipate that your rulebook might trigger more jobs on the {ControllerName} than it can process, consider reducing this value. 
+
+Also note that, currently, {EDAcontroller} does not yet support the customization of environment variables per activation. As a workaround, you can define `EDA_CONTROLLER_CONNECTION_LIMIT` during the image build step.
+====
+
 Your rulebook activation is now created and can be managed in the *Rulebook Activations* screen.
 
 After saving the new rulebook activation, the rulebook activation's details page is displayed. 
