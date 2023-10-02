@@ -1,0 +1,33 @@
+[id="controller-jobs"]
+
+= Jobs in {ControllerName}
+
+A job is an instance of {ControllerName} launching an Ansible playbook against an inventory of hosts.
+
+The *Jobs* list view displays a list of jobs and their statuses, shown as completed successfully, failed, or as an active (running) job. 
+The default view is collapsed (Compact) with the job name, status, job type, start, and finish times. 
+But you can click the arrow (image:arrow.png[Arrow,15,15]) to expand and see more information. 
+You can sort this list by various criteria, and perform a search to filter the jobs of interest.
+
+image::ug-jobs-list-all-expanded.png[Jobs list expanded]
+
+From this screen you can complete the following tasks:
+
+* View details and standard output of a particular job 
+* Re-launch (image:rightrocket.png[Rightrocket,15,15]) jobs
+* Remove selected jobs
+
+The relaunch operation only applies to relaunches of playbook runs and does not apply to project or inventory updates, system jobs, and workflow jobs.
+When a job relaunches, you are directed to the *Jobs Output* screen as the job runs.
+Selecting any type of job also takes you to the *Job Output* view for that job, where you can filter jobs by various criteria:
+
+image::ug-job-details-view-filters.png[Job details view filters]
+
+* The *Stdout* options is the default display that shows the job processes and output
+* The *Event* option allows you to filter by the events of interest, such as errors, host failures, host retries, and items skipped. 
+You can include as many events in the filter as necessary.
+* The *Advanced* option is a refined search that allows you a combination of including or excluding criteria, searching by key, or by lookup type. 
+For more information on using the search, refer to the xref:assembly-controller-search[Search] section.
+
+include::platform/con-controller-inventory-sync-jobs.adoc[leveloffset=+1]
+include::platform/ref-controller-inventory-sync-details.adoc[leveloffset=+2]
