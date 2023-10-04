@@ -7,24 +7,24 @@ Before {ControllerName} can use {HubName} as the default source for collections 
 Use the following procedure to connect to {PrivateHubName} or a public collection, the only difference is which URL you specify.
 
 .Procedure
-. Navigate to https://console.redhat.com/ansible/automation-hub/token 
+. Navigate to https://console.redhat.com/ansible/automation-hub/token
 . Click btn:[Load token].
 . Click the copy image:copy.png[Copy,15,15] icon to copy the API token to the clipboard.
 
 //image:projects-ah-loaded-token-shown.png[image]
 
-. To use the public {HubName}, create an credential using the copied token and pointing to the URLs shown in the *Server URL* and *SSO URL* fields of the token page:
+. To use {HubName}, create an {HubName} credential using the copied token and pointing to the URLs shown in the *Server URL* and *SSO URL* fields of the token page:
 
 * *Galaxy Server URL* = `https://console.redhat.com/api/automation-hub/`
 * *AUTH SEVER URL* = `https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token`
 
-. To use a {PrivateHubName}, create an {HubName} credential using a token retrieved from the Repo Management dashboard of your {PrivateHubName} and pointing to the published repository URL as shown:
+. To use {PrivateHubName}, create an {HubName} credential using a token retrieved from the *Repo Management* dashboard of your {PrivateHubName} and pointing to the published repository URL as shown:
 //+
 //image:projects-ah-repo-mgmt-get-token.png[image]
 +
 image:projects-ah-repo-mgmt-repos-published.png[image]
 +
-You can create different repositories with different namespaces orcollections in them. 
+You can create different repositories with different namespaces or collections in them. 
 For each repository in {Hubname} you must create a different credential.
 +
 Copy the *Ansible CLI URL* from the UI in the format of `/https://$<hub_url>/api/galaxy/content/<repo you want to pull from>` into the *Galaxy Server URL* field of the _Create Credential_ form:

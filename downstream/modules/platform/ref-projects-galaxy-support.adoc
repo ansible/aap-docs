@@ -15,7 +15,7 @@ ansible-galaxy role install -r roles/requirements.yml -p <project-specific cache
 This file enables you to reference {Galaxy} roles or roles within other repositories which can be checked out in conjunction with your own
 project. 
 The addition of {Galaxy} support eliminates the need to create git submodules to achieve this result. 
-Given that SCM projects (along with roles/collections) are pulled into and executed from a private job environment, a `<private job directory>` specific to the project within `/tmp` is created by default. 
+Given that SCM projects, along with roles or collections, are pulled into and executed from a private job environment, a `<private job directory>` specific to the project within `/tmp` is created by default. 
 However, you can specify another *Job Execution Path* based on your environment in the *Jobs Settings* tab of the *Settings* window:
 
 image:configure-controller-jobs-execution-path.png[Configure execution path]
@@ -35,7 +35,7 @@ Project updates download the roles inside the update.
 If jobs need to pick up a change made to an upstream role, updating the project ensures that this happens. 
 A change to the role means that a new commit was pushed to the _provision-role_ source control. 
 
-To make this change take effect in a job, you do not have to push a new commit to the _playbooks_ repo, but you must update the project,which downloads roles to a local cache. 
+To make this change take effect in a job, you do not have to push a new commit to the _playbooks_ repo, but you must update the project, which downloads roles to a local cache. 
 
 For instance, say you have two git repositories in source control. 
 The first one is _playbooks_ and the project in {ControllerName} points to this URL. 
