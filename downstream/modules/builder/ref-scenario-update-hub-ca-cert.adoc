@@ -11,20 +11,16 @@ version: 3
 
 images:
   base_image:
-    name: quay.io/centos/centos:stream9  # vanilla image
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest  # vanilla image
 
 dependencies:
-  # Use Python 3.9
-  python_interpreter:
-    package_system: python39
-    python_path: /usr/bin/python3.9
   # Collections to be installed
   galaxy:
     collections:
       - ansible.utils
 
 additional_build_files:
-  # copy arbitrary files next to this EE def into the build context - we can refer to them later...
+  # copy the CA public key into the build context, we will copy and use it in the base image later"
   - src: files/rootCA.crt
     dest: configs
 

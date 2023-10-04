@@ -2,11 +2,11 @@
 
 = System
 
-The `system` entry in the definition points to a https://docs.opendev.org/opendev/bindep/latest/readme.html[bindep] requirements file, which will install system-level dependencies that are outside of what the collections already include as their dependencies. It can be listed as a relative path from the directory of the {ExecEnvNameSing} definition’s folder, or an absolute path. A minimum expectation is that the collection(s) specify necessary requirements for `[platform:rpm]`.
+The `system` entry in the definition points to a https://docs.opendev.org/opendev/bindep/latest/readme.html[bindep] requirements file or to an inline list of bindep entries, which will install system-level dependencies that are outside of what the collections already include as their dependencies. It can be listed as a relative path from the directory of the {ExecEnvNameSing} definition’s folder, or an absolute path. A minimum expectation is that the collection(s) specify necessary requirements for `[platform:rpm]`.
 
 To demonstrate this, the following is an example `bindep.txt` file that adds the `libxml2` and `subversion` packages to a container:
 
-.A `bindep.txt` file
+.System entry
 [example]
 ====
 ----
