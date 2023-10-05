@@ -4,9 +4,35 @@
 
 == Contributing to Lightspeed documentation
 
-. Checkout a topic branch from the `lightspeed-latest` branch:
+. Checkout a new topic branch from the `lightspeed-latest` branch:
 
-= Repository Organization
+  git fetch upstream
+  git checkout -b aap-123
+
+. Make the required modifications in your topic branch.
+. Stage and commit your topic branch:
+
+  git add filename.adoc
+  git commit -m "Commit message for aap-123"
+
+. Push your local topic branch to your fork:
+
+  git push origin HEAD
+
+. Create a PR to the upstream `lightspeed-latest` branch from the topic branch on your fork.
+. Add the Lightspeed label to your PR.
+. If you wish to make further changes, add the Draft label to your PR.
+. When your PR is ready for review, remove the Draft label and add the `Ready for review` label
+. Request a review from SMEs and the AAP docs team.
+. Implement the changes suggested in the reviews. Add the `Peer review done` label.
+. Request a merge from the AAP docs team.
+. After your PR is merged, delete your topic branch from your fork.
+. Delete your local topic branch:
+
+  git checkout <another-branch>
+  git branch -D aap-123
+
+== Repository Organization
 
 ----
 ├── aap-common
