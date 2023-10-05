@@ -6,7 +6,7 @@ Signing a project involves an Ansible project directory.
 For more information more sophisticated examples of project directory
 structures, see link:https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html[Sample Ansible setup] in the Ansible documentation.
 
-The following sample project has a very simple structure. An inventory file, and two small playbooks under a playbooks directory:
+The following sample project has a very simple structure: an inventory file, and two small playbooks under a playbooks directory:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -24,7 +24,7 @@ $ tree -a .
 [NOTE]
 ====
 The commands used assume that your working directory is the root of your project. 
-As a rule, `ansible-sign project` commands always take the project root directory as their last argument. 
+`ansible-sign project` commands take the project root directory as their last argument. 
 
 Use `.` to indicate the current working directory.
 ====
@@ -33,10 +33,10 @@ Use `.` to indicate the current working directory.
 
 To sign content, create a `MANIFEST.in` file in the project root directory that tells `ansible-sign` which files to protect. 
 
-Internally, `ansible-sign` makes use of the `distlib.manifest` module of Python's distlib library, and thus `MANIFEST.in` must follow the syntax that this library specifies. 
-For an explanation of the 'MAANIFEST.in` file directives, see the link:https://packaging.python.org/en/latest/guides/using-manifest-in/#manifest-in-commands[Python Packaging User Guide]
+Internally, `ansible-sign` uses the `distlib.manifest` module of Python's distlib library, therefore `MANIFEST.in` must follow the syntax that this library specifies. 
+For an explanation of the 'MANIFEST.in` file directives, see the link:https://packaging.python.org/en/latest/guides/using-manifest-in/#manifest-in-commands[Python Packaging User Guide].
 
-In the sample project, included are two directives, resulting in a `MANIFEST.in` file that looks like this:
+In the sample project, two directives are included, resulting in the following `MANIFEST.in` file:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -51,7 +51,7 @@ Both of these steps are achieved in a single `ansible-sign` command:
 ----
 $ ansible-sign project gpg-sign .
 ----
-Producing output similar to the following:
+Successful execution displays output similar to the following:
 [literal, options="nowrap" subs="+attributes"]
 ---- 
 [OK   ] GPG signing successful!
@@ -77,7 +77,7 @@ If you are using a desktop environment, GnuPG automatically prompts you for your
 If this functionality does not work, or you are working without a desktop environment, for example, through SSH, you can use the `-p --prompt-passphrase` flag after `gpg-sign` , which causes `ansible-sign` to prompt for the password instead.
 ====
 
-When viewing the structure of the project directory, note that an `.ansible-sign` directory was created. 
+Note that an `.ansible-sign` directory was created in the project directory. 
 This directory contains the checksum manifest and a detached GPG signature for it.
 
 [literal, options="nowrap" subs="+attributes"]
