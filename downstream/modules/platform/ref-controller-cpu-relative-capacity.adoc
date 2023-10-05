@@ -3,10 +3,10 @@
 = CPU relative capacity
 
 Ansible workloads are often CPU-bound.
-In these cases, you can reduce the simultaneous workload to enable more tasks to run faster and reduce the average time-to-completion of those jobs.
+In such cases, you can reduce the simultaneous workload to enable more tasks to run faster and reduce the average time-to-completion of those jobs.
 
-Just as the `mem_capacity` algorithm uses the amount of memory required per fork, the `cpu_capacity` algorithm looks at the amount of CPU resources required per fork. 
-The baseline value for this is 4 forks per core. 
+Just as the `mem_capacity` algorithm adjusts the amount of memory required per fork, the `cpu_capacity` algorithm adjusts the amount of CPU resources required per fork. 
+The baseline value for this is four forks per core. 
 The algorithm formula for this is:
 
 ----
@@ -19,4 +19,4 @@ For example, a 4-core system looks like the following:
 4 * 4 == 16
 ----
 
-You can control the value fork_per_cpu by setting the value of `SYSTEM_TASK_FORKS_CPU` which defaults to 4.
+You can control the value `fork_per_cpu` by setting the value of `SYSTEM_TASK_FORKS_CPU` which defaults to 4.
