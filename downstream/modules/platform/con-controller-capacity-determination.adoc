@@ -11,15 +11,15 @@ The algorithm used to determine this is based entirely on the following two thin
 * How much CPU is available to the system (`cpu_capacity`)
 
 Capacity also impacts instance groups. 
-Since groups are made up of instances, likewise, instances can be assigned to multiple groups. 
-This means that impact to one instance can potentially affect the overall capacity of other groups.
+Since groups are made up of instances, instances can also be assigned to multiple groups. 
+This means that impact to one instance can affect the overall capacity of other groups.
 
 Instance groups, not instances themselves, can be assigned to be used by jobs at various levels. 
 For more information, see link:http://docs.ansible.com/automation-controller/4.4/html/administration/clustering.html#ag-clustering[Clustering] in the Automation Controller Administration Guide.
 
 When the Task Manager prepares its graph to determine which group a job runs on, it commits the capacity of an instance group to a job that has not or is not ready to start yet.
 
-In smaller configurations, if only one instance is available for a job to run, the Task Manager allows that job to run on the instance even if it pushes the instance over capacity. 
+In smaller configurations, if only one instance is available for a job to run, the Task Manager enables that job to run on the instance even if it pushes the instance over capacity. 
 This guarantees that jobs do not get stuck as a result of an under-provisioned system.
 
 .Additional resources
