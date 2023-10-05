@@ -2,7 +2,7 @@
 
 = Sign a project
 
-As the name suggests, signing a project involves an Ansible project directory. 
+Signing a project involves an Ansible project directory. 
 For more information more sophisticated examples of project directory
 structures, see link:https://docs.ansible.com/ansible/latest/tips_tricks/sample_setup.html[Sample Ansible setup] in the Ansible documentation.
 
@@ -23,16 +23,15 @@ $ tree -a .
 
 [NOTE]
 ====
-The commands used in this section assume that your working directory is the root of your project. 
+The commands used assume that your working directory is the root of your project. 
 As a rule, `ansible-sign project` commands always take the project root directory as their last argument. 
 
 Use `.` to indicate the current working directory.
 ====
 
-The way that `ansible-sign` protects content from tampering is by taking checksums (SHA256) of all of the secured files in the project, compiling those into a checksum manifest file, and then finally signing that manifest file.
+`ansible-sign` protects content from tampering by taking checksums (SHA256) of all of the secured files in the project, compiling those into a checksum manifest file, and then signing that manifest file.
 
-The first step toward signing content is to create a file that tells `ansible-sign` which files to protect. 
-This file is named `MANIFEST.in` and is found in the project root directory.
+To sign content, create a `MANIFEST.in` file in the project root directory that tells `ansible-sign` which files to protect. 
 
 Internally, `ansible-sign` makes use of the `distlib.manifest` module of Python's distlib library, and thus `MANIFEST.in` must follow the syntax that this library specifies. 
 For an explanation of the 'MAANIFEST.in` file directives, see the link:https://packaging.python.org/en/latest/guides/using-manifest-in/#manifest-in-commands[Python Packaging User Guide]
@@ -62,14 +61,13 @@ Producing output similar to the following:
 
 The project has now been signed.
 
-Notice that the `gpg-sign` subcommand resides under the `project` subcommand. 
+Note that the `gpg-sign` subcommand resides under the `project` subcommand. 
 
 For signing project content, every command starts with `ansible-sign project`. 
 
-As noted, every `ansible-sign project` command takes the project root directory `.` as its final argument.
+Every `ansible-sign project` command takes the project root directory `.` as its final argument.
 
-By default, `ansible-sign` makes use of your default keyring and looks for the first available secret key that it can
-find, to sign your project. 
+`ansible-sign` makes use of your default keyring and looks for the first available secret key that it can find, to sign your project. 
 You can specify a specific secret key to use with the `--fingerprint` option, or even a completely independent GPG home directory with the `--gnupg-home` option.
 
 [NOTE]
@@ -79,7 +77,7 @@ If you are using a desktop environment, GnuPG automatically prompts you for your
 If this functionality does not work, or you are working without a desktop environment, for example, through SSH, you can use the `-p --prompt-passphrase` flag after `gpg-sign` , which causes `ansible-sign` to prompt for the password instead.
 ====
 
-When viewing the structure of the project directory, notice that an `.ansible-sign` directory was created. 
+When viewing the structure of the project directory, note that an `.ansible-sign` directory was created. 
 This directory contains the checksum manifest and a detached GPG signature for it.
 
 [literal, options="nowrap" subs="+attributes"]
