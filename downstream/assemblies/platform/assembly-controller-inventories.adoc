@@ -1,5 +1,7 @@
 [id="controller-inventories"]
 
+:inventories:
+
 = Inventories
 
 ifdef::controller-GS[]
@@ -18,8 +20,12 @@ include::platform/proc-controller-add-groups-hosts.adoc[leveloffset=+2]
 endif::controller-GS[]
 ifdef::controller-UG[]
 
-An `Inventory` is a collection of hosts against which jobs may be launched. 
-Inventories are divided into groups and these groups contain the hosts. 
+{PlatformName} works against a list of managed nodes or hosts in your infrastructure that are logically organized, using an inventory file.
+You can use the {PlatformName} installer inventory file to specify your installation scenario and describe host deployments to Ansible.
+By using an inventory file, Ansible can manage a large number of hosts with a single command.
+Inventories also help you use Ansible more efficiently by reducing the number of command line options you have to specify.
+Inventories are divided into groups and these groups contain the hosts.
+
 Groups may be sourced manually, by entering host names into {Controllername}, or from one of its supported cloud providers.
 
 [NOTE]
@@ -60,6 +66,9 @@ inventory's groups and hosts.
 //Smort inventories are deprecated. 
 include::platform/ref-controller-smart-inventories.adoc[leveloffset=+1]
 include::platform/ref-controller-constructed-inventories.adoc[leveloffset=+1]
+include::platform/ref-controller-inventory-plugins.adoc[leveloffset=+1]
+include::platform/proc-controller-adding-new-inventory.adoc[leveloffset=+1]
+
 
 
 endif::controller-UG[]
