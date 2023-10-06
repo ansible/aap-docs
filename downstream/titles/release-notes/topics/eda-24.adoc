@@ -19,9 +19,9 @@ Event-Driven Ansible is included in Ansible Automation Platform, making the plat
 
 * Users cannot filter through a list of tokens under the Controller Token tab. 
 
-* Only the users with administrator rights can set or modify their passwords. 
+* Only the users with administrator rights can set or change their passwords. 
 
-* In the event of a failure, an activation with restart policy set to `Always` is unable to restart the failed activation. 
+* If there is a failure, an activation with restart policy set to `Always` is unable to restart the failed activation. 
 
 * Disabling and enabling an activation causes the restart count to increase by one count. This behavior results in an incorrect `restart` count. 
 
@@ -58,3 +58,70 @@ Event-Driven Ansible is included in Ansible Automation Platform, making the plat
 * Bulk deletion of rulebook activation lists is not consistent, and the deletion can be either successful or unsuccessful.
 
 * When users access the detail screen of a rule audit, the related rulebook activation link is broken. 
+
+.New features and enhancements
+//
+// Errata Release - Aug 28 2023
+* automation-eda-controller has been updated to 1.0.1.
+//
+// Errata Release - Aug 10 2023
+* ansible-rulebook has been updated to 1.0.1. (AAP-14454)
+
+.Security fixes
+//
+// Errata Release - Aug 28 2023
+* automation-eda-controller: token exposed at importing project (CVE-2023-4380).
+
+* python3-cryptography/python39-cryptography: memory corruption via immutable objects (CVE-2023-23931).
+
+* python3-django/python39-django: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator (CVE-2023-36053).
+
+* python3-requests/python39-requests: Unintended leak of Proxy-Authorization header (CVE-2023-32681).
+
+.Bug fixes
+//
+// Errata Release - Aug 28 2023
+* Contributor and editor roles now have permissions to access users and set the AWX token. (AAP-11573)
+
+* The onboarding wizard now requests controller token creation. (AAP-11907)
+
+* Corrected the filtering capability of the *Rule Audit* screens so that a search yields results with the `starts with` function. (AAP-11987)
+
+* Enabling or disabling rulebook activation no longer increases the restarts counter by 1. (AAP-12042)
+
+* Filtering by a text string now displays all applicable items in the UI, including those that are not visible in the list at that time. (AAP-12446)
+
+* Audit records are no longer missing when running activations with multiple jobs. (AAP-12522)
+
+* The event payload is no longer missing key attributes when a job template fails. (AAP-12529)
+
+* Fixed the Git token leak that occurs when importing a project fails. (AAP-12767)
+
+* The restart policy in Kubernetes (k8s) now restarts a successful activation that is incorrectly marked as failed. (AAP-12862)
+
+* Activation statuses are now reported correctly, whether you are disabling or enabling them. (AAP-12896)
+
+* When the `run_job_template` action fails, ansible-rulebook prints an error log in the activation output and creates an entry in rule audit so the user is alerted that the rule has failed. (AAP-12909)
+
+* When a user tries to bulk delete rulebook activations from the list, the request now completes successfully and consistently. (AAP-13093)
+
+* The *Rulebook Activation* link now functions correctly in the *Rule Audit Detail* UI. (AAP-13182)
+
+* Fixed a bug where ansible-rulebook prevented the execution if the connection with the controller was not successful when controller was not required by the rulebook. (AAP-13209)
+
+* Fixed a bug where some audit rule records had the wrong rulebook link. (AAP-13844)
+
+* Fixed a bug where only the first 10 audit rules had the right link. (AAP-13845)
+
+* Before this update, project credentials could not be updated if there was a change to the credential used in the project. With this update credentials can be updated in a project with a new or different credential. (AAP-13983)
+
+* The *User Access* section of the navigation panel no longer disappears after creating a decision environment. (AAP-14273)
+
+* Fixed a bug where filtering for audit rules did not work properly on OpenShift Container Platform. (AAP-14512)
+//
+// Errata Release - Aug 10 2023
+* Fixed an issue where the `rule_run_at` field was not sent to the websocket.
+
+* Do not try to connect with AWX when the no `run_job_template` action is used.
+
+* The number of simultaneously open connections to controller is now limited to 30.

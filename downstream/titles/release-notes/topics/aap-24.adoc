@@ -5,13 +5,13 @@
 
 = Ansible Automation Platform 2.4
 
-Red Hat Ansible Automation Platform simplifies the development and operation of automation workloads for managing enterprise application infrastructure lifecycles. It works across multiple IT domains including operations, networking, security, and development, as well as across diverse hybrid environments. Simple to adopt, use, and understand, Red Hat Ansible Automation Platform provides the tools needed to rapidly implement enterprise-wide automation, no matter where you are in your automation journey.
+Red Hat Ansible Automation Platform simplifies the development and operation of automation workloads for managing enterprise application infrastructure lifecycles. It works across many IT domains including operations, networking, security, and development, as well as across diverse hybrid environments. Simple to adopt, use, and understand, Red Hat Ansible Automation Platform provides the tools needed to rapidly implement enterprise-wide automation, no matter where you are in your automation journey.
 
 == New features and enhancements
 
 This release of Ansible Automation Platform features the following enhancements:
 
-* Previously, the Execution Environment container images were based on RHEL 8 only. With Ansible Automation Platform 2.4 onwards, the Execution Environment container images are now also available on RHEL 9. 
+* Before this update, the Execution Environment container images were based on RHEL 8 only. With Ansible Automation Platform 2.4 onwards, the Execution Environment container images are now also available on RHEL 9. 
 The Execution Environment includes the following container images:
 ** ansible-python-base
 ** ansible-python-toolkit
@@ -43,11 +43,13 @@ link:https://ansible.readthedocs.io/projects/builder/en/stable/[Ansible Builder 
 * Updated sqlparse for ReDOS vulnerability (CVE-2023-30608).
 
 * Updated django for potential denial-of-service in Accept-Language headers (CVE-2023-23969).
-
+//
+// Errata Release - Jul 26 2023
+* Initial release of aap-metrics-utility. (AAP-14059)
 
 == Deprecated and removed features
 
-Some features available in previous releases have been deprecated or removed. Deprecated functionality is still included in Ansible Automation Platform and continues to be supported; however, it will be removed in a future release of this product and is not recommended for new deployments. 
+Some features available in earlier releases have been deprecated or removed. Deprecated functionality is still included in Ansible Automation Platform and continues to be supported. However, it will be removed in a future release of this product and is not recommended for new deployments. 
 
 The following is a list of major functionality deprecated and removed within Ansible Automation Platform 2.4:
 
@@ -57,7 +59,7 @@ The following is a list of major functionality deprecated and removed within Ans
 
 * Although you can still synchronize content, the use of synclists is deprecated and will be removed in a later release. Instead, private automation hub administrators can upload manually-created requirements files from the `rh-certified` remote.
 
-* You can now configure the Controller Access Token for each resource with the `connection_secret` parameter, rather than the old `tower_auth_secret` parameter.  This change is backwards compatible, but the `tower_auth_secret` parameter is now deprecated and will be removed in a future release.
+* You can now configure the Controller Access Token for each resource with the `connection_secret` parameter, rather than the old `tower_auth_secret` parameter. This change is compatible with earlier versions, but the `tower_auth_secret` parameter is now deprecated and will be removed in a future release.
 
 * Smart inventories have been deprecated in favor of constructed inventories and will be removed in a future release.
 
@@ -92,12 +94,46 @@ The following bugs were fixed in this release of Ansible Automation Platform:
 * Fixed the *setup.sh* script to escalate privileges if necessary for installing Ansible Automation Platform. 
 
 * Fixed an issue when restoring a backup to an automation hub with a different hostname.
+//
+// Errata Release - Sep 25 2023
+* Podman configurations are now correctly aligned to the Event-Driven Ansible home directory. (AAP-13289)
+
+* Fixed an issue where the restore process failed to stop `pulpcore-worker` services on RHEL 9. (AAP-13297)
+
+* Fixed an issue with the `awx-rsyslogd` process where it starts with the wrong user. (AAP-13664)
+
+* Updated the inventory file to include SSL key and cert parameters for provided SSL web certificates. (AAP-13854)
+
+* Fixed postgres sslmode for `verify-full` that affected external postgres and postgres signed for 127.0.0.1 for internally managed postgres. (AAP-13962)
+
+* Subject alt names for component hosts will now only be checked for signing certificates when https is enabled. (AAP-14235)
+
+* Fixed the values used for signing installer managed certificates for internal postgres installations. (AAP-14236)
+
+* Fixed the linger configuration for an Event-Driven Ansible user. (AAP-14745)
+
+* You can now mount the `/var/lib/awx` directory as a separate filesystem on execution nodes. (AAP-15065)
+
+* *awx* user configuration now supports rootless Podman. (AAP-15072)
+
+* You are now able to sync execution environment images in automation hub to automation controller on upgrade. (AAP-15121)
+
+* Installer now correctly enforces only 1 Event-Driven Ansible host per Ansible Automation Platform installation. (AAP-15122)
+
+* Added new variables for additional nginx configurations per component. (AAP-15124)
+
+* Added temporary file cleanup for Podman to prevent `cannot re-exec process` error during job execution. (AAP-15248)
+
+* Installer will now properly generate a new `SECRET_KEY` for controller when running `setup.sh` with the `-k` option. (AAP-15565)
+//
+// Errata Release - Jul 26 2023
+* Fixed file permissions in setup bundle. (AAP-13611)
 
 == Technology Preview
 
-Some features in this release are currently classified as Technology Preview. Technology Preview features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. Please note that Red Hat does not recommend using technology preview features for production, and Red Hat SLAs do not support technology preview functions.
+Some features in this release are currently classified as Technology Preview. Technology Preview features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. Note that Red Hat does not recommend using Technology Preview features for production, and Red Hat SLAs do not support Technology Preview functions.
 
-Following are the technology preview features: 
+Following are the Technology Preview features: 
 
 * Ansible Automation Platform 2.4 adds the ability to install the automation controller for IBM Power (ppc64le), IBM Z (s390x), and IBM(R) LinuxONE (s390x) architectures.
 
@@ -110,14 +146,14 @@ Following are the technology preview features:
 ** Workflow Job Templates
 ** Launch Workflows
 
-One notable change is that you can now configure the Controller Access Token for each resource with the `connection_secret` parameter, rather than the old `tower_auth_secret` parameter. This change is backwards compatible, but the `tower_auth_secret` parameter is now deprecated and will be removed in a future release.
+One notable change is that you can now configure the Controller Access Token for each resource with the `connection_secret` parameter, rather than the old `tower_auth_secret` parameter. This change is compatible with earlier versions, but the `tower_auth_secret` parameter is now deprecated and will be removed in a future release.
 
 [role="_additional-resources"]
 .Additional resources
 
-* For the most recent list of technology preview features, see link:https://access.redhat.com/articles/ansible-automation-platform-preview-features[Ansible Automation Platform - Preview Features].
+* For the most recent list of Technology Preview features, see link:https://access.redhat.com/articles/ansible-automation-platform-preview-features[Ansible Automation Platform - Preview Features].
 
-* For more information about support for technology preview features, see link:https://access.redhat.com/support/offerings/techpreview[Red Hat Technology Preview Features Support Scope].
+* For more information about support for Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview[Red Hat Technology Preview Features Support Scope].
 
 * For information regarding execution node enhancements on OpenShift deployments, see link:https://docs.ansible.com/automation-controller/latest/html/administration/instances.html[Managing Capacity With Instances].
 

@@ -5,13 +5,26 @@
 
 Ansible Automation Platform Operator provides cloud-native, push-button deployment of new Ansible Automation Platform instances in your OpenShift environment.
 
+.New features and enhancements
+//
+// Errata Release - Aug 10 2023
+* Added support for scaling Automation Controller down to replicas 0 for maintenance. (AAP-14550)
+
+* Added the ability to provision Mesh and Execution nodes in limited network connectivity environments. (AAP-12849)
+
 .Bug fixes
 
 * Enabled configuration of resource requirements for automation controller `init` containers.
 
-* Added *securityContext* for EDA Operator deployments to be Pod Security Admission compliant.
+* Added *securityContext* for Event-Driven Ansible Operator deployments to be Pod Security Admission compliant.
 
 * Resolved error `Controller: Error 413 Entity too large` when doing bulk updates.
 
 * Ansible token is now obfuscated in YAML job details.
+//
+// Errata Release - Jul 26 2023
+* Resolved an issue where the Hub Operator Ansible signing key was not mounted in the hub worker container. (AAP-6068)
 
+* Updated the `ansible.eda` collection to 1.4.2 in `de-supported` container image. (AAP-13959)
+
+* Updated `automation-hub` 4.7.1-2 to add the pinentry dependency for signing collections with a passphrase. (AAH-2445)

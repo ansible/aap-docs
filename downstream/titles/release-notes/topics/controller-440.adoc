@@ -9,4 +9,128 @@ The name change reflects these enhancements and the overall position within the 
 
 Automation controller provides a standardized way to define, operate and delegate automation across the enterprise. It also introduces new, exciting technologies and an enhanced architecture that enables automation teams to scale and deliver automation rapidly to meet ever-growing business demand.
 
+.New features and enhancements
+//
+// Errata Release - Sep 25 2023
+* automation-controller has been updated to 4.4.4. (AAP-15594)
+//
+// Errata Release - Sep 12 2023
+* automation-controller has been updated to 4.4.3. (AAP-15549)
+//
+// Errata Release - Aug 28 2023
+* automation-controller has been updated to 4.4.2. (AAP-14609)
+//
+// Errata Release - Aug 10 2023
+* automation-controller has been updated to 4.4.1.
+
+* automation-controller 4.4.1 RPM updates.
+
+.Security fixes
+//
+// Errata Release - Sep 25 2023
+* python3-django/python39-django: Potential denial of service vulnerability in django.utils.encoding.uri_to_iri() (CVE-2023-41164).
+//
+// Errata Release - Sep 12 2023
+* automation-controller: cryptography: memory corruption via immutable objects (CVE-2023-23931).
+
+* automation-controller: GitPython: Insecure non-multi options in clone and clone_from is not blocked (CVE-2023-40267).
+
+* python3-gitpython/python39-gitpython: Insecure non-multi options in clone and clone_from is not blocked (CVE-2023-40267).
+//
+// Errata Release - Aug 28 2023
+* automation-controller: python-django: Potential regular expression denial of service vulnerability in EmailValidator/URLValidator (CVE-2023-36053).
+
+* automation-controller: python-django: Potential denial-of-service vulnerability in file uploads (CVE-2023-24580).
+//
+// Errata Release - Aug 10 2023
+* automation controller: HTML injection in custom login info (CVE-2023-3971).
+
+.Bug fixes
+//
+// Errata Release - Sep 25 2023
+* Fixed job error handling so that error text from `ansible-runner` or Receptor is correctly reported in cases that were previously shown as `Job terminated due to error`. (AAP-12917)
+
+* The constructed inventory edit form no longer hangs indefinitely in the loading state for users with edit permissions. (AAP-15099)
+
+* Added views for a monthly summary of host metrics. (AAP-15677)
+
+* Added host metrics to exported analytics data. (AAP-15677)
+
+* Introduced a periodic task and management command for cleaning up old host metrics. (AAP-15677)
+
+* Fixed a bug where rapidly clicking the *launch* button in the preview step would start many jobs. (AAP-15689)
+
+* Fixed incorrect capacity allocation for remote execution nodes when resource limits are set in OpenShift. (AAP-15736)
+//
+// Errata Release - Sep 12 2023
+* Fixed a bug that caused a deadlock on shutdown when Redis was unavailable. (AAP-14203)
+
+* The login form no longer supports autocomplete on the password field due to security concerns. (AAP-15545)
+//
+// Errata Release - Aug 28 2023
+* Changing credential types by using the drop-down list in the *Launch prompt* window no longer causes the screen to disappear. (AAP-11444)
+
+* Upgraded python dependencies which include upgrades from Django 3.2 to 4.2.3, psycopg2 to psycopg3, and additional libraries as needed. Also added a new setting in the UI exposing the `CSRF_TRUSTED_ORIGIN` settings. (AAP-12345)
+
+* Fixed slow database UPDATE statements on the job events table which could cause a task manager timeout. (AAP-12586)
+
+* Adding new labels to a job through prompting now works as expected. (AAP-14204)
+
+* Added `noopener` and `noreferrer` attributes to controller UI links that were missing these attributes. (AAP-14345)
+
+* Fixed the broken *User Guide* link in the *Edit Subscription Details* page. (AAP-14375)
+
+* Turned off auto-complete on the remaining controller UI forms that were missing that attribute. (AAP-14442)
+
+* The *Add* button on the credentials page is now accessible for users with the correct permissions. (AAP-14525)
+
+* Fixed an unexpected error that occurred when adding a new host while using a manifest with size 10. (AAP-14675)
+
+* Fixed the *Trial* toggle when using a manifest file. (AAP-14675) 
+
+* Applied environment variables from the `AWX_TASK_ENV` setting when running credential lookup plugins. (AAP-14683)
+
+* Interrupted jobs (such as canceled jobs) no longer clear facts from hosts if the job ran on an execution node. (AAP-14878)
+
+* Using a license that is missing a `usage` attribute no longer returns a 400 error. (AAP-14880)
+
+* Fixed sub-keys under `data` from HashiCorp Vault Secret Lookup responses to check for secrets, if found. (AAP-14946)
+
+* Fixed Ansible facts to retry saving to hosts if there is a database deadlock. (AAP-15021)
+//
+// Errata Release - Aug 10 2023
+* Organization admin users are no longer shown an error on the *Instances* list. (AAP-11195)
+
+* Fixed the workflow job within workflow approval to display the correct details. (AAP-11433)
+
+* Credential name search in the ad hoc commands prompt no longer requires case-sensitive input. (AAP-11442)
+
+* The *Back to list* button in the controller UI now maintains previous search filters. (AAP-11527)
+
+* *Topology view* and *Instances* are only available as sidebar menu options to System Administrators and System Auditors. (AAP-11585)
+
+* Fixed the frequency of the scheduler to run on the correct day of the week as specified by the user. (AAP-11776)
+
+* Fixed an issue with slow database UPDATE statements when using nested tasks (include_tasks) causing task manager timeout. (AAP-12586)
+
+* Added a setting to enable the queuing for Rsyslog to handle higher work volumes (LOG_AGGREGATOR_ACTION_MAX_DISK_USAGE_GB). (AAP-12726)
+
+* Added the ability to add execution and hop nodes to VM-based Controller installations from the UI. (AAP-12849)
+
+* Added the `awx-manage` command for creating future events table partitions. (AAP-12907)
+
+* Re-enabled Pendo support by providing the correct Pendo API key. (AAP-13415)
+
+* Added the ability to filter teams by using partial names in the dialog for granting teams access to a resource. (AAP-13557)
+
+* Fixed a bug where a weekly rrule string without a BYDAY value would result in the UI throwing a TypeError. (AAP-13670)
+
+* Fixed a server error that happened when deleting workflow jobs ran before event partitioning migration. (AAP-13806)
+
+* Added API reference documentation for the new bulk API endpoint. (AAP-13980)
+
+* Fixed a bug where forms provided in the custom login information would render and run. (AAP-14013)
+
+* Fixed an issue where related items were not visible in some cases. For example, job template instance groups, organization galaxy credentials, and organization instance groups. (AAP-14057)
+
 See link:https://docs.ansible.com/automation-controller/latest/html/release-notes/relnotes.html#release-notes-for-4-x[Automation Controller Release Notes for 4.x] for a full list of new features and enhancements.
