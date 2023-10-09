@@ -7,7 +7,7 @@ When selecting the capacity, it is important to understand how each job type aff
 The default forks value for Ansible is five. 
 However, if you set up {ControllerName} to run against fewer systems than that, then the actual concurrency value is lower.
 
-When a job is run in {ControllerName}, an additional 1 is added to the number of forks selected to compensate for the Ansible parent process. 
+When a job is run in {ControllerName}, the number of forks selected  is incremented by 1, to compensate for the Ansible parent process.  
 
 .Example
-If you run a playbook against five systems with forks value = 5, then the actual forks value from the Job Impact perspective =6.
+If you run a playbook against five systems with forks value of 5, then the actual forks value from the Job Impact perspective is 6.

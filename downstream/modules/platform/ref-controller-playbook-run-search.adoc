@@ -2,10 +2,10 @@
 
 = Search
 
-Use Search to look up specific events, hostnames, and their statuses. 
+Use *Search* to look up specific events, hostnames, and their statuses. 
 To filter only certain hosts with a particular status, specify one of the following valid statuses:
 
-ok:: The playbook task returned *ok*.
+ok:: Indicates that a task completed successfully but no change was executed on the host.
 changed:: The playbook task executed. 
 Since Ansible tasks should be written to be idempotent, tasks may exit successfully without executing anything on the host. 
 In these cases, the task returns *ok*, but not *changed*.
@@ -13,8 +13,8 @@ failed:: The task failed.
 Further playbook execution stopped for this host.
 unreachable:: The host is unreachable from the network or has another fatal error associated with it.
 skipped:: The playbook task skipped because no change was necessary for the host to reach the target state.
-rescued:: Introduced in Ansible 2.8, this shows the tasks that failed and then executes a rescue section.
-ignored:: Introduced in Ansible 2.8, this shows the tasks that failed and have `ignore_errors: yes configured`.
+rescued:: This shows the tasks that failed and then executes a rescue section.
+ignored:: This shows the tasks that failed and have `ignore_errors: yes configured`.
 
 These statuses also display in each *Stdout* pane, in a group of "stats" called the host summary fields:
 
@@ -53,6 +53,6 @@ This window shows the host that was affected by that particular event.
 ====
 Upgrading to the latest versions of {PlatformNameShort} involves progressively migrating all historical playbook output and events.
 This migration process is gradual, and happens automatically in the background after installation is complete. 
-Installations with very large amounts of historical job output (tens or hundreds of GB of output) can notice missing job output until migration is complete. 
+Installations with very large amounts of historical job output (tens or hundreds of GB of output) can have missing job output until migration is complete. 
 The most recent data shows up at the top of the output, followed by older events.
 ====
