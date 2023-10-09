@@ -2,25 +2,28 @@
 
 = Group name and variables filtering
 
-Two different conditions are demonstrated here to describe the input inventory content:
+= Filtering on group name and variables
 
-* The first condition is that the `state` variable defined on the host is set to `shutdown`
-* The second condition is that membership in a group with `account_alias` variable set to `product_dev`
+You can filter on a combination of groups and variables.
+For example, you can filter hosts that match a group variable value and also match a host variable value.
 
-The variable `account_alias` demonstrates a group variable. 
-In this example, each account has its own group, with group variables giving metadata about those accounts. 
-This is common in cloud-source inventories. 
-These variables are shown in the general hostvars namespace in Ansible, which is why they have no special treatment in `source_vars`.
+There are two approaches to executing this filter:
 
-The hosts inside the input inventory will fit one condition, the other condition, neither, or both. 
-This results in four hosts total for demonstration purposes.
+. Define two groups: one group to matche the group variable and the other group to matche the host variable value.
+Use the `limit` pattern to return the hosts that are in both groups. 
+This is the recommended approach.
+. Define one group. In the definition, include the condition that the group and host variables must match specific values.
+Use the `limit` pattern to return all the hosts in the new group.
 
-image:inventories-constructed-inventory-venn.png[image]
+.Example:
 
-This folder defines the inventory as an ini type named
-`two_conditions.ini`:
+The inventory file below defines four hosts and sets group and host variables.
+Effectively, it defines a product group, a sustaining group, and it sets two hosts to a shutdown state.
 
-....
+The goal is to create a filter that returns only production hosts that are shutdown.
+
+[literal, options="nowrap" subs="+attributes"]
+----
 [account_1234]
 host1
 host2 state=shutdown
@@ -34,54 +37,47 @@ account_alias=product_dev
 
 [account_4321:vars]
 account_alias=sustaining
-....
+----
 
-The goal here is to return only shutdown hosts that are present in the
-group with the `account_alias` variable of `product_dev`. There are two
-approaches to this, both shown in yaml format. The first one suggested
-is recommended.
+The goal here is to return only shutdown hosts that are present in the group with the `account_alias` variable equal to `product_dev`. 
+There are two approaches to this, both shown in yaml format. The first one suggested is recommended.
 
-[[constr_inv_example]]
-[arabic]
 . *Construct 2 groups, limit to intersection*
 
-`source_vars`:
+[literal, options="nowrap" subs="+attributes"]
+----
+source_vars:
 
-....
 plugin: constructed
 strict: true
 groups:
   is_shutdown: state | default("running") == "shutdown"
   product_dev: account_alias == "product_dev"
-....
 
-`limit`: `is_shutdown:&product_dev`
+limit: is_shutdown:&product_dev
+----
 
-This constructed inventory input creates a group for both of the
-categories and uses the `limit` (host pattern) to only return hosts that
-are in the intersection of those two groups, which is documented in
-https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html[host
-patterns in Ansible].
+This constructed inventory input creates a group for both categories and uses the `limit` (host pattern) to only return hosts that
+are in the intersection of those two groups, which is documented in link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.htm[Patterns: targeting hosts and groups].
 
-Also, when a variable may or may not be defined (depending on the host),
-you can give a default, like with `| default("running")` if you know
-what value it should have when it is not defined. This helps with
-debugging, as described in the `constr_inv_debugging` section.
+When a variable is or is not defined (depending on the host), you can give a default.
+For example, use `| default("running")` if you know what value it should have when it is not defined. 
+This helps with debugging, as described in [Debugging tips].
 
-[arabic, start=2]
 . *Construct 1 group, limit to group*
 
-`source_vars`:
+[literal, options="nowrap" subs="+attributes"]
+----
+source_vars:
 
-....
 plugin: constructed
 strict: true
 groups:
   shutdown_in_product_dev: state | default("running") == "shutdown" and account_alias == "product_dev"
-....
 
-`limit`: `shutdown_in_product_dev`
+limit: shutdown_in_product_dev
+----
 
-This input creates one group that only includes hosts that match both
-criteria. The limit is then just the group name by itself, returning
-just *host2*, same as the previous approach.
+This input creates one group that only includes hosts that match both criteria. 
+The limit is then just the group name by itself, returning *host2*. 
+The same as the previous approach.
