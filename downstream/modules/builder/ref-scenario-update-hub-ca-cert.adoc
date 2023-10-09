@@ -4,20 +4,15 @@
 
 
 [role="_abstract"]
-Use this example to populate the definition file to include a CA certificate to the `additional-build-files` section, move the file to the appropriate directory and, finally, run the command to update the dynamic configuration of CA certificates.
+Use this example to customize the default definition file to include a CA certificate to the `additional-build-files` section, move the file to the appropriate directory and, finally, run the command to update the dynamic configuration of CA certificates.
+
+[NOTE]
+====
+Customizing the CA certificate using `prepend_base` means that the resulting CA configuration appears in all other build stages and the final image, because all other build stages inherit from the base image.
+====
 
 -----
 version: 3
-
-images:
-  base_image:
-    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest  # vanilla image
-
-dependencies:
-  # Collections to be installed
-  galaxy:
-    collections:
-      - ansible.utils
 
 additional_build_files:
   # copy the CA public key into the build context, we will copy and use it in the base image later"

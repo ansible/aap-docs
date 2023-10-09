@@ -6,6 +6,8 @@ After you have {Builder} installed, you can create a definition file that {Build
 
 The following is an example of a version 3 definition file. Each definition file should specify the major version number of the Ansible Builder feature set it uses. If not specified, the default version is 1, and most new features and definition keywords will be unavailable.
 
+// ddacosta - there is a Ansible Builder version 3 Porting Guide in progress that discusses the changes from v1/2 to v3. A link should be included to that document once its published.
+
 .Definition file example
 ====
 ----
@@ -27,9 +29,9 @@ dependencies: <2>
 
 images: <3>
   base_image:
-    name: docker.io/redhat/ubi9:latest
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
     # Other available base images:
-    #   - registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
+    #   - docker.io/redhat/ubi9:latest
     #   - quay.io/rockylinux/rockylinux:9
     #   - quay.io/centos/centos:stream9
     #   - registry.fedoraproject.org/fedora:38
@@ -50,7 +52,7 @@ additional_build_steps: <6>
     # - RUN $PKGMGR module enable postgresql:15 -y
     # - RUN $PKGMGR install -y postgresql
   prepend_galaxy:
-    - ADD _build/configs/ansible.cfg /etc/ansible/ansible.cfg
+    - COPY _build/configs/ansible.cfg /etc/ansible/ansible.cfg
 
   prepend_final: |
     RUN whoami
@@ -61,9 +63,13 @@ additional_build_steps: <6>
 ----
 ====
 
-<1> Lists default values for build arguments
+<1> Lists default values for build arguments.
 <2> Specifies the location of various requirements files
 <3> Specifies the base image to be used
+[NOTE]
+====
+Red Hat support is only provided for the redhat.registry.io base image.
+====
 <4> Specifies options that can affect builder runtime functionality
 <5> Specifies files to be added to the build context directory
 <6> Commands for additional custom build steps
