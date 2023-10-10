@@ -7,7 +7,7 @@ Job status information (pending, error, success) can be sent back only for pull 
 If you do not need {ControllerName} to post job statuses back to the webhook service, go directly to step 3.
 
 .Procedure
-. Generate a personal access token (PAT) for use with {ControllerName}:
+. Generate a _ Personal Access Token _ (PAT) for use with {ControllerName}:
 .. From the navigation panel in GitLab, select your avatar and menu:Edit profile[].
 .. From the navigation panel, select menu:Access tokens[].
 .. Complete the following fields:
@@ -16,8 +16,13 @@ Expiration date:: Skip this field unless you want to set an expiration date for 
 Select scopes:: Select those that are applicable to your integration. 
 For {ControllerName}, *api* is the only selection necessary.
 .. Click btn:[Create personal access token].
-.. When the token is generated, ensure that you copy the PAT, as you need it in step 2. 
++
+[IMPORTANT]
+====
+When the token is generated, ensure that you copy the PAT, as you need it in step 2. 
 You cannot access this token again in GitLab.
+====
++
 . Use the PAT to optionally create a GitLab credential:
 .. Go to your instance, and xref:ref-controller-credential-gitLab-pat[create a new credential for the GitLab PAT] using the generated token.
 .. Make note of the name of this credential, as you use it in the job template that posts back to GitLab.
@@ -42,7 +47,7 @@ Any such event will trigger the job or workflow.
 To have job status (pending, error, success) sent back to GitLab, you must select *Merge request events* in the *Trigger* section.
 SSL verification:: Leave *Enable SSL verification* selected.
 . Click btn:[Add webhook].
-. When your webhook is configured, it displays in the list *Project Webhooks* for your repository, along with the ability to test events, edit or delete the webhook. 
+. When your webhook is configured, it is displayed in the list *Project Webhooks* for your repository, along with the ability to test events, edit or delete the webhook. 
 Testing a webhook event displays the results on each page whether it succeeded or failed.
 
 .Additional resources
