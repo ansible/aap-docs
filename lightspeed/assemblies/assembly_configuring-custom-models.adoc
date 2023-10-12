@@ -1,35 +1,30 @@
-ifdef::context[:parent-context-of-configuring-custom-models: {context}]
+ifdef::context[:parent-context: {context}]
 
 :_content-type: ASSEMBLY
 
-ifndef::context[]
-[id="configuring-custom-models"]
-endif::[]
-ifdef::context[]
 [id="configuring-custom-models_{context}"]
-endif::[]
-= configuring-custom-models
+
+= Configuring Custom Models
 
 :context: configuring-custom-models
 
-This paragraph is the assembly introduction. It explains what the user will accomplish by working through the modules in the assembly and sets the context for the user story the assembly is based on.
+[role="_abstract"]
+As an organization administrator, you can train custom models using your organization's existing Ansible content. This capability enables you to improve the code recommendation experience and tune the model to your organization's automation patterns. For example, you can use intellectual property information, or private collections of Ansible data that are not open source, to train a custom model. As a result, the code recommendations are tailored to your business requirements and processes. 
 
-== Prerequisites
+You can configure multiple custom models for your organization. For example, you can create a custom model for your corporate IT automation team and a different model for your engineering team's infrastructure. 
 
-* A bulleted list of conditions that must be satisfied before the user starts following this assembly.
-* You can also link to other modules or assemblies the user must follow before starting this assembly.
-* Delete the section title and bullets if the assembly has no prerequisites.
-* X is installed. For information about installing X, see <link>.
-* You can log in to X with administrator privileges.
+To configure a custom model for your organization, perform the following tasks:
+//add xrefs to the list below
 
-Include modules here.
+. Create a custom model training dataset using the [AnsibleContentParser]
+. Create a custom model using IBM watsonx Code Assistant
+. Configure [lightspeedShortName] to use the custom model 
 
-[role="_additional-resources"]
-== Additional resources (or Next steps)
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing assemblies, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
+include::{_content-type}
+include::..
 
-ifdef::parent-context-of-configuring-custom-models[:context: {parent-context-of-configuring-custom-models}]
-ifndef::parent-context-of-configuring-custom-models[:!context:]
+
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
 
