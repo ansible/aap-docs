@@ -1,0 +1,44 @@
+:_content-type: CONCEPT
+
+[id="content-parser_{context}"]
+= Create a custom model training dataset using [AnsibleContentParser]
+
+[AnsibleContentParser] is a command-line interface (CLI) tool that scans your existing Ansible files and generates a custom model training dataset. You can use this custom model training dataset in IBM watsonx Code Assistant to create a custom model. 
+
+[AnsibleContentParser] uses the rules that are configured in ansible-lint to ensure that the content scans match Ansible best practices. The generated output includes a list of Ansible files and their paths relative to the project root. 
+
+[AnsibleContentParser] finds and excludes files with ansible-lint rule violations from the dataset generation. Therefore, Red Hat recommends that you fix any files with ruile violations before uploading the training dataset to IBM watsonx Code Assistant. Alternatively, you can also run the [AnsibleCodeBot] on your files or content repository, which oepns a pull request with code suggestions to resolve any existing issues. 
+
+== Data sources
+The content parser scans the following file types and directories: 
+
+* The local directory 
+* Archived files such as '.zip', '.tar', '.tar.gz', '.tar.bz2', and '.tar.xz' files
+* The git repository URL (including both private and public repositories)
+
+== Data output
+After the content parser scans your Ansible files, the generated data is available in an output subdirectory within your local directory. 
+
+The output directory contains the following file structure: 
+----
+output/
+  |-- ftdata.json  # Training dataset
+  |-- report.txt   # A human-readable report
+  |
+  |-- repository/
+  |     |-- (files copied from the source repository)
+  |
+  |-- metadata/
+        |-- (metadata files generated during the execution)
+----
+Where:
+
+* *ftdata.json*: A training dataset file, which is the main output of the content parser. The file is available in JSON Lines files format, where each line entry represents a JSON object. 
+* *report.txt*: A human-readable report that provides a summary of content parser operations. 
+* *repository*: A directory that contains files from the source repository. The file contents can be different from the source repository, because ansible-lint can update them according to the configured rules. 
+* *metadata*: A directory that contains multiple metadata files that are generated during the content parser executions. 
+
+
+
+
+
