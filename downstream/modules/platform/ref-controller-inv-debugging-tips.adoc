@@ -10,7 +10,7 @@ When encountering errors, increase verbosity to get more details.
 Giving a default, such as `| default("running")` is a generic use of Jinja2 templates in Ansible. 
 Doing this avoids errors from the template when you set `strict: true`. 
 
-You can also set `strict: false`, and so allow the template to produce an error, which results in the host not getting included in that group. However, doing this makes it difficult to debug issues in the future if your templates continue to grow in complexity.
+You can also set `strict: false`, and so enable the template to produce an error, which results in the host not getting included in that group. However, doing this makes it difficult to debug issues in the future if your templates continue to grow in complexity.
 
 You might still have to debug the intended function of the templates if they are not producing the expected inventory content. 
 For example, if a `groups` group has a complex filter (like `shutdown_in_product_dev`) but does not contain any hosts in the resultant constructed inventory, then use the `compose` parameter to help debug. 

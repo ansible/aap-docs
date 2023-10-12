@@ -13,24 +13,24 @@ Use the following procedure to configure the source for the inventory:
 .Procedure
 . Select the Inventory name you want to add a source to.
 . In the Inventory *Details* page, select menu:Sources[].
-. Click btn:[Add]. This opens the Create Source window.
+. Click btn:[Add]. This opens the *Create Source* window.
 +
 image:inventories-create-source.png[Inventories create source]
 
 . Enter the appropriate details:
 
 * *Name*: Required
-* Optional: *Description*: Enter a description as appropriate
+* Optional: *Description*: Enter a description as appropriate.
 * Optional: *Execution Environment*: Click the image:search.png[Search,15,15] icon or enter the name of the execution environment with which you want to run your inventory imports. For more information on buildding an {ExecEnvShort}, see xref:assembly-controller-execution-environments[Execution environments].
 * *Source*: Choose a source for your inventory. 
 For more information on sources, and supplying the appropriate information, see [Inventory sources].
 
 . When the information for your chosen [Inventory sources] is complete, you can optionally specify other common parameters, such as verbosity, host filters, and variables.
 
-. Use the *Verbosity* menu  to select the level of output on any inventory source'sm update jobs from the .
-. Use the *Host Filter* field to specify only matching host names to be imported into the controller.
+. Use the *Verbosity* menu to select the level of output on any inventory source's update jobs.
+. Use the *Host Filter* field to specify only matching host names to be imported into {ControllerName}.
 . In the *Enabled Variable* field, specify that {ControllerName} retrieves the enabled state from the dictionary of host variables. 
-The enabled variable can be specified using dot notation as 'foo.bar', in which case the lookup searches nested dicttionaries, equivalent to: `from_dict.get('foo', {}).get('bar', default)`.
+You can specify the enabled variable using dot notation as 'foo.bar', in which case the lookup searches nested dictionaries, equivalent to: `from_dict.get('foo', {}).get('bar', default)`.
 . If you specified a dictionary of host variables in the *Enabled Variable* field, you can provide a value to enable on import. 
 For example, if `enabled_var='status.power_state'` and `enabled_value='powered_on'` in the following host variables, the host is marked `enabled`:
 +
@@ -54,7 +54,7 @@ If the key is not found, then the host is enabled.
 
 * *Overwrite*: If checked, any hosts and groups that were previously present on the external source but are now removed, are removed from
 the {ControllerName} inventory. 
-Hosts and groups that were not managed by the inventory source are promoted to the next manually created group, or,  if there is no manually created group to promote them into, they are left in the "all" default group for the inventory.
+Hosts and groups that were not managed by the inventory source are promoted to the next manually created group, or, if there is no manually created group to promote them into, they are left in the "all" default group for the inventory.
 +
 When not checked, local child hosts and groups not found on the external source remain untouched by the inventory update process.
 * *Overwrite Variables*: If checked, all variables for child groups and hosts are removed and replaced by those found on the external source. 
@@ -66,10 +66,12 @@ To avoid job overflows if jobs are spawned faster than the inventory can synchro
 
 
 The *Update on Launch* setting refers to a dependency system for projects and inventory, and does not specifically exclude two jobs from running at the same time. 
-If a cache timeout is specified, then the dependencies for the second job are created, and it uses the project and  inventory update that the first job spawned. 
++
+If a cache timeout is specified, then the dependencies for the second job are created, and it uses the project and inventory update that the first job spawned.
++ 
 Both jobs then wait for that project or inventory update to finish before proceeding. 
 If they are different job templates, they can then both start and run at the same time, if the system has the capacity to do so. 
-If you intend to {ControllerName}'s provisioning callback feature with a dynamic inventory source, *Update on Launch* should be set for the inventory
+If you intend to use {ControllerName}'s provisioning callback feature with a dynamic inventory source, *Update on Launch* must be set for the inventory
 group.
 
 If you synchronize an inventory source that uses a project that has *Update On Launch* set, then the project might automatically update (according to
@@ -86,7 +88,9 @@ schedule preferences.
 
 = Configuring notifications for the source
 
-Use the following procedure to configure notifications for the source, click the *Notifications* tab.
+Use the following procedure to configure notifications for the source.
+
+. In the Inventory *Details* page, select menu:Notifications[].
 +
 [NOTE]
 ====
@@ -94,9 +98,8 @@ The *Notifications* tab is only present when you have saved the newly-created so
 
 image:inventories-create-source-with-notifications-tab.png[+Notification tab]
 ====
-. In the Inventory *Details* page, select menu:Notifications[].
 . If notifications are already set up, use the toggles to enable or disable the notifications to use with your particular source. 
-For more detail, see [Enable and Disable Notifications].
+For more information, see [Enable and Disable Notifications].
 . If notifications have not been set up, see [Notifications] for more information.
 . Review your entries and selections. 
 . Click btn:[Save].
