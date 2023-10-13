@@ -45,7 +45,8 @@ Facts::
 Facts are things that are discovered about remote nodes. 
 While they can be used in playbooks and templates just like variables, facts are things that are inferred, rather than set. 
 Facts are automatically discovered when running plays by executing the internal setup module on the remote nodes. 
-You never have to call the setup module explicitly, it just runs, but it can be disabled to save time if it is not required. 
+You never have to call the setup module explicitly: it just runs. 
+It can be disabled to save time if it is not required. 
 For the convenience of users who are switching from other configuration management systems, the fact module also pulls in facts from the `ohai` and `facter` tools if they are installed, which are fact libraries from Chef and Puppet, respectively.
 
 Forks::
@@ -57,7 +58,7 @@ Group::
 A set of hosts in Ansible that can be addressed as a set, of which many can exist within a single Inventory.
 
 Group Vars::
-The `group_vars/` files are files that live in a directory alongside an inventory file, with an optional filename named after each group.
+The `group_vars/` files are files that are stored in a directory with an inventory file, with an optional filename named after each group.
 This is a convenient place to put variables that are provided to a given group, especially complex data structures, so that these variables do not have to be embedded in the inventory file or playbook.
 
 Handlers::
@@ -105,7 +106,7 @@ The combination of an Ansible playbook and the set of parameters required to lau
 
 JSON::
 JSON is a text-based format for representing structured data based on JavaScript object syntax. 
-Ansible and use JSON for return data from remote modules. 
+Ansible and {Controllername} use JSON for return data from remote modules. 
 This enables modules to be written in any language, not just Python.
 
 Mesh::
@@ -147,7 +148,7 @@ Handlers are run in the order they are listed, not in the order that they are no
 
 Organization::
 A logical collection of Users, Teams, Projects, and Inventories. 
-The highest level in the object hierarchy is the Organization.
+Organization is the highest level in the object hierarchy.
 
 Organization Administrator::
 An user with the rights to modify the Organization's membership and settings, including making new users and projects within that organization. 
@@ -195,7 +196,7 @@ Ansible can log in and perform many operations wrapped in a `sudo` command, and 
 Some operations that do not normally work with `sudo` (such as `scp` file transfer) can be achieved with Ansible's _copy_, _template_, and _fetch_ modules while running in `sudo` mode.
 
 Superuser::
-An administratror of the server who has permission to edit any object in the system, whether associated to any organization. 
+An administrator of the server who has permission to edit any object in the system, whether or not it is associated with any organization. 
 Superusers can create organizations and other superusers.
 
 Survey::
