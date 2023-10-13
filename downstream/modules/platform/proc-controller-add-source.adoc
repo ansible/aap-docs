@@ -21,7 +21,7 @@ image:inventories-create-source.png[Inventories create source]
 
 * *Name*: Required
 * Optional: *Description*: Enter a description as appropriate.
-* Optional: *Execution Environment*: Click the image:search.png[Search,15,15] icon or enter the name of the execution environment with which you want to run your inventory imports. For more information on buildding an {ExecEnvShort}, see xref:assembly-controller-execution-environments[Execution environments].
+* Optional: *Execution Environment*: Click the image:search.png[Search,15,15] icon or enter the name of the execution environment with which you want to run your inventory imports. For more information on building an {ExecEnvShort}, see xref:assembly-controller-execution-environments[Execution environments].
 * *Source*: Choose a source for your inventory. 
 For more information on sources, and supplying the appropriate information, see [Inventory sources].
 
@@ -32,7 +32,7 @@ For more information on sources, and supplying the appropriate information, see 
 . In the *Enabled Variable* field, specify that {ControllerName} retrieves the enabled state from the dictionary of host variables. 
 You can specify the enabled variable using dot notation as 'foo.bar', in which case the lookup searches nested dictionaries, equivalent to: `from_dict.get('foo', {}).get('bar', default)`.
 . If you specified a dictionary of host variables in the *Enabled Variable* field, you can provide a value to enable on import. 
-For example, if `enabled_var='status.power_state'` and `enabled_value='powered_on'` in the following host variables, the host is marked `enabled`:
+For example, for `enabled_var='status.power_state'` and `'enabled_value='powered_on'` in the following host variables, the host is marked `enabled`:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -62,7 +62,7 @@ When not checked, local child hosts and groups not found on the external source 
 When not checked, a merge is performed, combining local variables with those found on the external source.
 * *Update on Launch*: Each time a job runs using this inventory, refresh the inventory from the selected source before executing job tasks. 
 +
-To avoid job overflows if jobs are spawned faster than the inventory can synchronize, selecting this enables you to configure a *Cache Timeout* to previous cache inventory synchrinizations for a certain number of seconds.
+To avoid job overflows if jobs are spawned faster than the inventory can synchronize, selecting this enables you to configure a *Cache Timeout* to previous cache inventory synchronizations for a certain number of seconds.
 
 
 The *Update on Launch* setting refers to a dependency system for projects and inventory, and does not specifically exclude two jobs from running at the same time. 
@@ -78,12 +78,11 @@ If you synchronize an inventory source that uses a project that has *Update On L
 cache timeout rules) before the inventory update starts.
 
 You can create a job template that uses an inventory that sources from the same project that the template uses. 
-In such a case, the project updates and then the inventory updates (if updates are not already in-progress, or if the cache timeout has not already expired).
+In such a case, the project updates and then the inventory updates (if updates are not already in progress, or if the cache timeout has not already expired).
 . Review your entries and selections. 
 This enables you to configure additional details, such as schedules and notifications.
 . To configure schedules associated with this inventory source, click the *Schedules* tab.
-. If schedules are already set up; review, edit, or enable/disable your
-schedule preferences.
+. If schedules are already set up, then review, edit, enable or disable your schedule preferences.
 . If schedules have not been set up, for more information about setting up schedules, see [Schedules].
 
 = Configuring notifications for the source
