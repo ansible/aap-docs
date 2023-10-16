@@ -34,7 +34,7 @@ Note that some conditions, such as unreachable hosts can still prevent handlers 
 * `timeout` - (int) The amount of time, in seconds, to run before the task is canceled.
 * `type` - (choice) The data type for this job.
 * `url` - (string) The URL for this job.
-* `use_fact_cache` - (boolean) If enabled for the job, {ControllerName} acts as an Ansible Fact Cache Plugin, persisting facts at the end of a playbook run to the database and caching facts for use by Ansible.
+* `use_fact_cache` - (boolean) If enabled for the job, {ControllerName} acts as an Ansible Fact Cache Plugin at the end of a playbook run to the database and caches facts for use by Ansible.
 * `verbosity` - (choice) 0 through 5 (corresponding to Normal through WinRM Debug).
 ** `host_status_counts` (The count of hosts uniquely assigned to each status)
 *** `skipped` (integer)
@@ -103,7 +103,7 @@ Custom messages can include a number of variables throughout the message:
 {{ job_friendly_name }} {{ job.id }} ran on {{ job.execution_node }} in {{ job.elapsed }} seconds.
 ----
 
-There are other variables that can be added to the template:
+The following are additional variables that can be added to the template:
 
 * `approval_node_name` - (string) The approval node name.
 * `approval_status` - (choice) One of `approved`, `denied`, and `timed_out`.
