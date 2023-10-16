@@ -2,26 +2,27 @@
 
 = Best practices for {ControllerName}
 
-The following describe best practice for the use of {ControllerName}
+The following describe best practice for the use of {ControllerName}:
 
 == Use Source Control
 
-Because {ControllerName} supports playbooks stored directly on the server, recommended best practice is to store your playbooks, roles, and any associated details in source control. 
+{ControllerName} supports playbooks stored directly on the server. Therefore, it is recommended to store your playbooks, roles, and any associated details in source control. 
 This way you have an audit trail describing when and why you changed the rules that are automating your infrastructure. 
 Additionally, it permits sharing of playbooks with other parts of your infrastructure or team.
 
 == Ansible file and directory structure
 
-For more information, see the link https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html[General tips] from the Ansible documentation. 
 If you are creating a common set of roles to use across projects, these should be accessed through source control submodules, or a common location such as `/opt`. 
 Projects should not expect to import roles or content from other projects.
 
+For more information, see the link https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html[General tips] from the Ansible documentation. 
+
 [NOTE]
 ====
-* Playbooks should not use the `vars_prompt` feature, as {ControllerName} does not interactively permit `vars_prompt` questions. 
+* Avoid using the playbooks `vars_prompt` feature, as {ControllerName} does not interactively permit `vars_prompt` questions. 
 If you cannot avoid using `vars_prompt`, see the xref:controller-surveys-in-job-templates[Surveys] functionality.
 
-* Playbooks should not use the `pause` feature of Ansible without a timeout, as {ControllerName} does not permit cancelling a pause interactively.
+* Avoid using the playbooks `pause` feature without a timeout, as {ControllerName} does not permit cancelling a pause interactively.
 If you cannot avoid using `pause`, you must set a timeout.
 ====
 
