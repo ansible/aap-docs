@@ -1,40 +1,30 @@
 :_content-type: PROCEDURE
 
 [id="configure-vscode-extension_{context}"]
-= configure-vscode-extension
+= Configure the Ansible VS Code extension
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+[role="_abstract"]
+You can configure the Ansible VS Code extension to enable Ansible Lightspeed with inline suggestions, and to specify the Ansible Lightspeed portal URL. 
+// You can also use the model-override setting to override the default model and connect to a custom model instead.//
 
-.Prerequisites
-
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
+[NOTE]
+====
+If you have an assigned seat license for Ansible Lightspeed but your organization administrator has not configured an [ibmwatsonxcodeassistant] model for your organization, you will encounter a `Failure on completion requests` error when you  makde inference requests in VS Code.  
+====
 
 .Procedure
 
-. Make each step an instruction.
+. Log in to the VS Code application with your [RHSSO] account.
+. From the menu, select menu:Code[Settings > Settings].
+. In the *Search* field, enter *Lightspeed*. 
+. Specify the following settings: 
+.. Select the *Enable Ansible Lightspeed* check box.
+.. In the *URL for Ansible Lightspeed* field, enter the following URL: \https://c.ai.ansible.redhat.com/.
 
-. Include one command or action for each step with the exception of simple follow-step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing and then select *Next*.
+// .. Optional: If you want to use the custom model instead of the default model, in the *Model ID Override* field, enter the custom model ID. The *model-override* setting enables you to override the default model and use the custom model after your organization administrator has created a custom model and has shared the model ID with you separately. //
+. Save your settings.
 
-. Use an unnumbered bullet (*) if the procedure includes only one step.
+The following illustration displays the configured settings for the Ansible VS Code extension: 
+Image:: 
 
-.Verification
-
-. Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
-
-. List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
-
-. Make each step an instruction.
-
-. Include one command or action per step.
-
-. Use an unnumbered bullet (*) if the verification includes only one step.
-
-[role="_additional-resources"]
-.Additional resources
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing procedure modules, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
 
