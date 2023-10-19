@@ -1,0 +1,21 @@
+[id="con-smazure-restore-process"]
+
+= Restore Process
+
+The restore process creates a new deployment, and restores the filestore and SQL database instance to the specified backup.
+
+[IMPORTANT]
+=====
+* You must restore with the same operational image version which was used for the backup.
+=====
+
+The following procedures describe how to restore the {Azure} deployment.
+
+include::ref-smazure-iam-restore-minimum-permissions.adoc[leveloffset=+1]
+:context: restore
+include::proc-smazure-backup-container-image.adoc[leveloffset=+1]
+:!context: restore
+include::proc-smazure-generate-restore-yml-file.adoc[leveloffset=+1]
+include::ref-smazure-populate-restore-file.adoc[leveloffset=+1]
+include::proc-smazure-run-restore-command.adoc[leveloffset=+1]
+

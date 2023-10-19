@@ -1,0 +1,70 @@
+[id="proc-smazure-deleting-backups-playbook"]
+
+= Deleting backups
+
+There are two playbooks to delete backups:
+
+* Use the `???` playbook which deletes a single backup.
+* Use the `????` playbook which deletes multiple backups at once.
+
+`????` takes a array of strings ["backup1","backup2",...], while `???` takes only one string, that being the name of a specific backup, "backup1".
+
+The use of `????` is desscribed in this section.
+
+.Procedure
+
+. Populate the `command_generator_data` directory with the configuration file template.
++
+[NOTE]
+====
+On Linux, any file or directory created by the command generator is owned by `root:root` by default.
+To change the ownership of the files and directories, you can run the `sudo chmod` command after the files are created. For more information, read xref:con-tech-note-linux-files-owned-by-root[Command generator - Linux files owned by root].
+====
++
+[options="nowrap" subs="+attributes"]
+----
+??????
+----
++
+Produces the following output:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+===============================================
+???????
+----
+. After running the command, a `$(pwd)/command_generator_data/backups_delete.yml` template file is created.
+This template file resembles the following:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?????
+----
+
+The `?????` parameter must specify an array of strings, for example, `["backup1","backup2"]`.
+The `delete` parameter must be set to `true` to successfully delete.
+
+. To delete the backups, run the command generator to generate the `?????` command.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?????
+----
++
+Resulting in the following ouput:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+Command to run playbook:
+
+??????
+----
+
+. Run the supplied backup command to delete the backups.
++
+. When the playbook has finished running, the output resembles the following:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?-?-?
+----

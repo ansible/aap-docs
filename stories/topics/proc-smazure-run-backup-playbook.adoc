@@ -1,0 +1,34 @@
+[id="proc-smazure-run-backup-playbook"]
+
+= Running the backup playbook
+
+.Procedure
+. To run the backup, run the command generator to generate the backup command.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator gcp_backup_deployment --data-file /data/backup.yml
+----
++
+Resulting in the following ouput:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+-----------------------------------------------
+Command to run playbook: 
+
+????
+----
+. Run the supplied backup command to trigger the backup.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ ?????
+----
+. When the playbook has finished running, the output resembles the following:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?????
+----
+
