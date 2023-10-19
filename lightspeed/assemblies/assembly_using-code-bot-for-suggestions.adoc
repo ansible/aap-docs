@@ -1,35 +1,45 @@
-ifdef::context[:parent-context-of-using-code-bot-for-suggestions: {context}]
+ifdef::context[:parent-context: {context}]
 
 :_content-type: ASSEMBLY
 
-ifndef::context[]
-[id="using-code-bot-for-suggestions"]
-endif::[]
-ifdef::context[]
 [id="using-code-bot-for-suggestions_{context}"]
-endif::[]
-= using-code-bot-for-suggestions
+
+= Installing and configuring Ansible code bot
 
 :context: using-code-bot-for-suggestions
 
-This paragraph is the assembly introduction. It explains what the user will accomplish by working through the modules in the assembly and sets the context for the user story the assembly is based on.
+[role="_abstract"]
 
-== Prerequisites
+The Ansible code bot scans existing content collections, roles, and playbooks through git repositories, and proactively creates pull requests whenever best practices or quality improvement recommendations are available. The bot automatically submits pull requests to the repository, which proactively alerts the repository owner to a recommended change to their content. You can configure Ansible code bot to scan your existing git repositories (both public and private), as well as repositories from {Galaxy}. Your organization must have a valid {LightspeedFullName} subscription to use Ansible code bot. 
 
-* A bulleted list of conditions that must be satisfied before the user starts following this assembly.
-* You can also link to other modules or assemblies the user must follow before starting this assembly.
-* Delete the section title and bullets if the assembly has no prerequisites.
-* X is installed. For information about installing X, see <link>.
-* You can log in to X with administrator privileges.
+{LightspeedShortName} also integrates with ansible-lint to recommend code quality improvements through the Ansible code bot. Ansible Lint is a command-line tool for linting playbooks, roles, and collections aimed toward any Ansible users. Its main goal is to promote proven practices, patterns, and behaviors while avoiding common pitfalls that can easily lead to bugs or make code harder to maintain. Ansible-lint scans your content based on the configured rules to ensure that your content adheres to Ansible best practices. For more information, see the link:https://ansible.readthedocs.io/projects/lint/[Ansible Lint documentation].
 
-Include modules here.
+The following are a few examples of code recommendations that the Ansible code bot can suggest:
 
-[role="_additional-resources"]
-== Additional resources (or Next steps)
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing assemblies, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
+* Available alternatives for deprecated legacy syntax or implementation patterns
+* Module version changes and updates, such as:
+** Adding any new required parameters
+** Flagging deprecated parameters
+** Removing unused parameters
+* Applying YAML best practices
+* Adding comment blocks
+* Fixing casing issues in name fields
 
-ifdef::parent-context-of-using-code-bot-for-suggestions[:context: {parent-context-of-using-code-bot-for-suggestions}]
-ifndef::parent-context-of-using-code-bot-for-suggestions[:!context:]
+The following image shows the Ansible code bot login screen:
+
+image::code_bot_login_screen.png[Ansible code bot login screen]
+
+== Handling duplicate pull requests
+
+* If the Ansible code bot has created a pull request on the latest commit default branch, it does not scan the repository. Ansible code bot skips scanning the repository because the pull request was committed on the latest default branch, and no new commit was made after that pull request. 
+* If there is an existing pull request that is not on the latest commit default branch, Ansible code bot does a pull request difference to compare the changes in both the branches. The following scenarios are possible:
+** *There is no difference in the existing and new scan results*: Ansible code bot does not push the scan results as a new pull request. 
+** *There are differences found in the existing and the new scan results*: Ansible code bot creates a new pull request. The newly-created pull request does not close the existing pull request, against which the pull request difference was noted. This behavior makes it easier for the repository administrator to review only the latest pull request created by the Ansible code bot scan, and the administrator can avoid reviewing the older pull requests created by Ansible code bot. If required, the administrator can close the older pull requests.
+
+include::modules/install-code-bot.adoc[leveloffset=+1]
+include::modules/configure-repo-scan.adoc[leveloffset=+1]
+include::modules/manually-scan-repo.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
 
