@@ -1,0 +1,31 @@
+:_content-type: PROCEDURE
+
+[id="configure-repo-scan_{context}"]
+
+= Configure Ansible code bot to scan your repository at regular intervals
+
+You can schedule the Ansible code bot to scan your repositories at daily, weekly, or monthly intervals. To specify the scan schedule, use the configuration file `ansible-lightspeed-bot.yml` that was created automatically when Ansible code bot was installed. 
+
+.Procedure
+
+. In Github, navigate to the configuration file in the repository that you want to scan.
+. Create a `.yml` configuration file named `ansible-code-bot.yml` in your repository `.github` folder. For example, `.github/ansible-code-bot.yml`.
+. In the configuration file, specify the `interval` parameter as follows:
+----
+schedule:
+interval: “<daily | weekly | monthly>”
+----
+You can specify the `interval` as *daily*, *weekly*, or *monthly*. 
++
+image::schedule_interval_daily.png[Interval schedule]
++
+. The frequency of the interval cadence is as follows:
+.. Daily: Runs every day from Monday to Sunday.
+.. Weekly: Runs once a week. By default, this is on Monday. 
+.. Monthly: Runs on the first day of the month, once each month.
+. Save your changes. 
++
+Ansible code bot starts scanning your repository per the schedule you configured at 9 am UTC time. 
+
+
+

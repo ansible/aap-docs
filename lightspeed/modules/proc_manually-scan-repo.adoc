@@ -1,0 +1,26 @@
+:_content-type: PROCEDURE
+
+[id="manually-scan-repo_{context}"]
+
+= Manually scan your git repositories
+
+You can manually scan your git repositories when you prefer not to to wait for the scheduled interval to trigger the scan. In such instances, the administrator can trigger a manual scan.  
+
+.Procedure
+
+. In GitHub, navigate to the main page of the repository that you want to scan.
+. Click the image::Settings icon.
+. In the *Topics* field, enter the keyword topic *ansible-code-bot-scan* to the repository. 
++
+The following illustration shows the keyword topic for starting a manual scan: 
+image::lightspeed-ansible-code-bot-manual-trigger-setting.png[Code bot settings] 
+. Click *Save changes*. 
++
+Based on the repository webhook event, Ansible code bot starts a manual scan of your repository.
+If the avoid duplicate pull requests condition is not met, then the manual scan results in a new pull request with all the necessary Ansible code bot recommendations. 
+
+BOT avoid duplicate condition:
+
+* Verify that the Ansible Lightspeed bot pull request already exists, and is on the latest commit main branch. If this is true, you can skip the scan directly.
+* If there is a pull request that is present and not on the latest commit branch, the bot takes a pull request diff. If there is no diff then the bot skips pushing the scan results as a new pull request.
+
