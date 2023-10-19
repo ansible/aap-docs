@@ -1,10 +1,10 @@
 // This is the release notes file for AAP 2.4 errata bundle dated August 28 2023.
 
-= Ansible Automation Platform 2.4 - August 28, 2023
+= {PlatformNameShort} 2.4 - August 28, 2023
 
 link:https://access.redhat.com/errata/RHBA-2023:4782[Red Hat Errata Release]
 
-== Automation controller
+== {ControllerNameStart}
 
 .New features and enhancements
 
@@ -24,7 +24,7 @@ link:https://access.redhat.com/errata/RHBA-2023:4782[Red Hat Errata Release]
 
 * Fixed slow database UPDATE statements on the job events table which could cause a task manager timeout.
 
-* Adding new labels to a job through prompting now works as expected.
+* Fixed an issue where adding a new label to a job through the *Prompt On Launch* option would not add the label to the job details.
 
 * Added `noopener` and `noreferrer` attributes to controller UI links that were missing these attributes.
 
@@ -48,7 +48,7 @@ link:https://access.redhat.com/errata/RHBA-2023:4782[Red Hat Errata Release]
 
 * Fixed Ansible facts to retry saving to hosts if there is a database deadlock.
 
-== Event-Driven Ansible
+== {EDAName}
 
 .New features and enhancements
 
@@ -92,7 +92,7 @@ link:https://access.redhat.com/errata/RHBA-2023:4782[Red Hat Errata Release]
 
 * The *Rulebook Activation* link now functions correctly in the *Rule Audit Detail* UI.
 
-* Fixed a bug where ansible-rulebook prevented the execution if the connection with the controller was not successful when controller was not required by the rulebook.
+* The ansible-rulebook now only connects to the controller if the rulebook being processed has a `run_job_template` action.
 
 * Fixed a bug where some audit rule records had the wrong rulebook link.
 
@@ -102,4 +102,4 @@ link:https://access.redhat.com/errata/RHBA-2023:4782[Red Hat Errata Release]
 
 * The *User Access* section of the navigation panel no longer disappears after creating a decision environment.
 
-* Fixed a bug where filtering for audit rules did not work properly on OpenShift Container Platform.
+* Fixed a bug where filtering for audit rules did not work properly on {OCPShort}.
