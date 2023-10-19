@@ -1,0 +1,53 @@
+:_content-type: CONCEPT
+
+[id="overview-and-best-practices_{context}"]
+= Overview and best practices
+
+To create task recommendations in Ansible playbooks, you can: 
+
+* Create single task or multitask requests using natural language prompts. 
++
+For example, you can enter the prompt *Install ssh & Start the service*. The Ansible lightspeed service reads the test, interacts wtih the {ibmwatsonxcodeassistant} model, and generates code recommendations to automate a multitask to install SSH and start the SSH service. 
+
+* View generated code recommendations. 
++
+The Ansible code bot scans existing content collections (tasks, roles, and playbooks) through selected git repositories, and makes code recommendations whenever best practices or quality improvement recommendations are available.
+
+* View content source matching in existing Ansible content for the generated code recommendations.
+
+* Provide feedback on the Ansible Lightspeed service. 
++
+The Ansible Lightspeed service learns your organizational patterns and improves the code recommendation experience over time. You can provide feedback on whether the generated code recommendations were suitable for your task intent. This feedback enables {LightspeedFullName} to improve on the quality of its suggestions. 
+
+== Impact of accepting or rejecting code recommendations on the training model
+
+The way you interact with code recommendations impacts the overall training process of the {ibmwatsonxcodeassistant} model. 
+
+For each code recommendation that the Ansible Lightspeed Service generates, you can perform one of the following tasks: 
+
+* Accept the code recommendation
++
+To accept a code recommendation as-is, press the *Enter* key. The data telemetry logs this event as an acceptance of the recommendation, and concludes that you found the code recommendation suitable for your task intent. 
++
+If you accept a code recommendation and make further edits in the recommended code, the data telemetry logs this event as a modification of the code recommendation, and concludes that the code recommendation required extra action to match your task intent. 
+
+* Reject the code recommendation. 
++
+To reject a code recommendation, press the *Esc* key. The data telemetry logs this event as a rejection of the recommendation, and concludes that you did not find the code recommendation suitable for your task intent. 
+
+[NOTE]
+====
+The telemetry data is first anonymized, which means personal user details are removed, and then sent whenever you switch to a different file in VS Code or create a task within the same Ansible playbook. 
+====
+
+== Best practices to improve the recommended guidance
+Follow these guidelines to improve the likelihood of a quality code recommendation. 
+
+* Ensure that your YAML file is properly formatted. See the link:https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html[Ansible YAML syntax guidelines] for details. 
+
+* Avoid context switching within a single playbook file. Ansible Lightspeed attempts to correlate earlier tasks to the active recommendation, and context switching may lead to incorrect recommendations. 
+
+* If you get a recommendation that does not align with the intent of your task name, then rewording your statement to provide more information on what is dedsired may lead to different results. Try adding or removing context to see if you get a better response. 
+
+* Enable COP rules using ansible-lint.
+

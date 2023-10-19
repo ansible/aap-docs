@@ -1,0 +1,86 @@
+:_content-type: PROCEDURE
+
+[id="multi-task-recs_{context}"]
+= Request code recommendations for multiple tasks
+
+You can request multitask code recommendations by entering a sequence of natural language task prompts separated by ampersand (*&*) symbols. For example, you can enter the prompt “*Install ssh & Start the service*”. The Ansible Lightspeed service reads the text, interacts with the {ibmwatsonxcodeassistant} models, and generates code recommendations to automate a multitask that installs SSH and starts the SSH service.
+
+.Prerequisites
+
+* You have an assigned seat license allowing you to access {LightspeedFullName}.
+
+.Procedure
+
+. Log in to VS Code with your Red Hat login credentials.
+. Create a new YAML file or use an existing YAML file: 
+.. Create a YAML file: 
+... Select menu:File[New Text File].
+... On the bottom right of the screen, click *Plain Text*, and in the language mode, select *Ansible*. 
+... Save the file as a YAML file format extension (`.yml` or `.yaml`).
+.. Use an existing YAML file: 
+... On the bottom right of the screen, click the existing language mode, and in the language mode settings, select *Ansible*. 
++
+NOTE: If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Langauge Mode[Ansible].
++
+. Verify that you see an entry for *Lightspeed* on the status bar at the bottom right of VS Code.
++
+If *Ansible* is already selected as the desired language but the *Lightspeed* entry is not displayed, re-select *Ansible* as the language mode. The following illustration shows *Lightspeed* and *Ansible* entries on the VS Code status bar. 
++
+image::lightspeed-vs-code.png[Settings show Ansible and Lightspeed as selected language mode]
++
+[NOTE]
+====
+If you see an error message about missing ansible-lint, you can install the missing module or disable it. To install ansible-lint, see the link:https://ansible.readthedocs.io/projects/lint/installing/[Installing] section of the Ansible Lint documentation. To disable ansible-lint, go to *Code > Settings > Settings > Ansible > Validation > Lint : Enabled* and clear the *Enabled* checkbox.
+====
++
+. Create a playbook or use an existing playbook. 
++
+For more information, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_creator_guide/index#creating-playbooks[Creating playbooks] in the {PlatformNameShort} Creator Guide.
++
+. In the playbook, enter the Pound key (#) and then add a task using a natural language prompt, separating the tasks using an ampersand (&) symbol to separate the tasks. 
++
+For example, you can enter the following multitask natural language prompt: 
++
+`Install ssh & Start the service`
++
+. Engage the Ansible Lightspeed service to generate code recommendations: 
+.. Press *Enter* after the natural language prompt that starts with a Pound key (#). 
++
+IMPORTANT: You can see a code recommendation only when you press *Enter* at the end of your task description. 
++
+.. Ensure that your cursor is at the same indentation level as that of the previous line hyphen. 
++
+IMPORTANT: If the cursor is not at the same indentation level, then the Ansible Lightspeed Service will not start.
++
+.. Keep the cursor at the same location in your file, and wait for the code recommendation results to populate. 
++
+IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you have multiple tasks, the Ansible Lightspeed Service takes a bit longer (that is, the number of tasks times five seconds) to populate the results. You must keep the cursor at the same location while the results are being generated.
++
+The Ansible Lightspeed with {ibmwatsonxcodeassistant} service is engaged. A *Lightspeed* processing status indicator appears in the bottom right of the screen to denote that {LightspeedFullName} is preparing your code recommendation.
++
+. View your code recommendations and ensure that the recommendations match your task intent.
++
+image::lightspeed-multitask-requests.png[multitask request code recommendations]
++
+. Accept or reject the code recommendations: 
+.. To accept a code recommendation, press *Enter*.
+.. To reject a code recommendation, press *Esc*. 
++
+NOTE: If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. For more information, see xref:con_overview-and-best-practices.adoc[Impact of accepting or rejecting code recommendations on the training model].
++
+. In the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results in your existing Ansible content. 
++
+The following illustration shows the training matches found in your existing Ansible content for the multitask prompt *Install ssh & Start the service*:
++
+image::lightspeed-multitask-content-matches.png[Multitask training matches in existing content]
++
+. Click *Save* to save the code recommendations in your playbook.
+
+[role="_additional-resources"]
+== Additional resources 
+
+* xref:module[Troubleshooting Ansible Visual Studio Code extension errors]
+* xref:module[Troubleshooting {AnsibleCodeBot} errors]
+
+
+
