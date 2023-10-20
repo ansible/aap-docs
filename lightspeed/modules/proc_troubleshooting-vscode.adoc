@@ -1,0 +1,25 @@
+:_content-type: PROCEDURE
+
+[id="troubleshooting-vscode_{context}"]
+= Troubleshooting Ansible Visual Studio Code extension errors
+
+== Issue: Cannot view the generated code recommendations using the Ansible VS Code extension
+
+The following scenarios are possible: 
+
+* You receive a `403 error` message.
++
+To resolve this error, ensure that:
+
+** Your organization administrator has configured {LightspeedShortName} for your organization. 
+** You have a valid {LightspeedShortName} seat license. 
+* You have not configured the required Ansible VS code extension settings.
+** To resolve this error, ensure that you have enabled the *Lightspeed:Enabled* and menu:Lightspeed[Suggestions:Enabled] settings. For more information, see xref:proc_configure-vscode-extension.adoc[Configure the Ansible VS Code extension].
+* You are logged in using an account that does not have a valid {LightspeedShortName} seat license. 
++
+If you logged in using an account that does not have an assigned seat license, you must log out and log in again. In VS Code, click the *Accounts* icon and sign in using your Red Hat account with an assigned seat license. 
+* Your VS Code Workspace settings override user settings.
++
+If your Workspace settings are configured, they can override our user settings even if you have configured the Ansible VS Code extension correctly. The Workspace settings can disable your VS Code extension settings, and therefore you cannot access the Ansible Lightspeed service. 
++
+To resolve this error, ensure that there are no Workspace settings configured in VS Code. For more information, see link:https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings[Workspace settings] in the VS Code documentation. 

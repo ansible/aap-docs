@@ -1,0 +1,39 @@
+:_content-type: PROCEDURE
+
+[id="troubleshooting-lightspeed-config_{context}"]
+= Troubleshooting {LightspeedShortName} configuration errors
+
+== Issue: Cannot access the Ansible Lightspeed administrator portal
+
+The Ansible Lightspeed administrator portal can only be accessed by the Red Hat organization administrator.
+
+If you are the Red Hat organization administrator, before you access the Ansible Lightspeed administrator portal, ensure that: 
+
+* You have a valid {PlatformNameShort} subscription.
+* Your organization has a valid {LightspeedShortName} subscription.
+
+== Issue: Cannot upload the WCA key
+
+When you enter the Watsonx Code Assistant (WCA) key, authentication fails and shows the following error message: 
+
+`IBM Cloud API key is invalid`
+
+{LightspeedShortName} verifies the WCA key by generating an associated access token. To resolve the error, ensure that you have not accidentally included any extra spaces when obtaining the WCA key from {ibmwatsonxcodeassistant}. If you still cannot upload the WCA key, contact IBM support. 
+
+== Issue: Cannot configure the model ID due to authentication failure
+
+When you enter the model ID in the {LightspeedShortName} administrator portal, the authentication fails. 
+
+To resolve the error, ensure that: 
+
+* You have configured a valid WCA key before you upload the model ID.
+* You have not accidentally included any extra spaces when entering the model ID. 
+
+== Issue: Cannot configure the model ID due to inference failure
+
+While validating the model ID, {LightspeedShortName} performs a test inference. If {LightspeedShortName} detects an error, the validation fails and an `Inference failed` message is displayed. 
+
+To resolve the error, ensure that: 
+
+* You have a valid WCA key and model ID. 
+* You have not accidentally included any extra spaces when obtaining the WCA key and model ID from {ibmwatsonxcodeassistant}.
