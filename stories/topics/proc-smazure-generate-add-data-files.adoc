@@ -1,0 +1,29 @@
+[id="proc-smazure-generate-add-data-files"]
+
+= Generating data files by running the ansible-on-clouds-ops container
+
+The following commands generate the required data file. 
+These commands create a directory, and  an empty data template that, when populated, is used during the deployment of the extension nodes. 
+
+.Procedure
+. Create a folder to hold the configuration files.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ mkdir command_generator_data
+----
+. Populate the `command_generator_data` folder with the configuration file template.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE \
+command_generator_vars ????_add_extension_nodes \    
+--output-data-file /data/extra_vars.yml
+----
+. These commands create a `command_generator_data/extra_vars.yml` template file. 
+This template file resembles the following:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?????
+----

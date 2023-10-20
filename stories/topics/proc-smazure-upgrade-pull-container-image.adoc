@@ -1,0 +1,28 @@
+[id="proc-smazure-upgrade-pull-container-image"]
+
+= Pulling the ansible-on-clouds-ops container image
+
+.Procedure
+* Pull the Docker image for Ansible on Clouds operational container with the same tag as the version you want to upgrade to.
++
+[NOTE]
+====
+Before pulling the docker image, ensure you are logged in to {Registry} using docker. Use the following command to login to {Registry}.
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker login {Registry}
+----
+For more information about registry login, see link:https://access.redhat.com/RegistryAuthentication[Registry Authentication].
+====
++
+[NOTE]
+=====
+The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is 2.3.20230221, pull the operational image with tag {ImageRef} to upgrade to version {ImageRef}.
+=====
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
+$ docker pull $IMAGE --platform=linux/amd64
+----

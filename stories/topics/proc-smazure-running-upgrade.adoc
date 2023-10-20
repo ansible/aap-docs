@@ -1,0 +1,38 @@
+[id="proc-smazure-running-upgrade"]
+
+= Running the upgrade playbook
+
+[NOTE]
+====
+{PlatformNameShort} upgrade to {ImageRef} updates the protocol of its internal load balancers. If additional networking configurations were added after installation, they can also require updating to ensure connectivity. 
+====
+
+. To run the upgrade, run the command generator to generate the upgrade CLI command:
++
+[literal, options="nowrap" subs="+attributes"]
+---- 
+$ docker run --rm -v $(pwd)/command_generator_data:/data $IMAGE command_generator --data-file /data/extra_vars.yml
+----
++
+This generates the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+================================================
+??????
+=================================================
+----
+. Run the given upgrade command to trigger the upgrade.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ ?????
+----
+. The upgrade can take some time to complete, but can take longer depending on the number of extension nodes on the system. 
+A successful upgrade is marked by the log below.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+?????
+----
+. Your {smAAPonAzure} deployment is now upgraded to a newer version and you can log in to {PlatformName}, {ControllerName}, and {HubName} using your deployment credentials.
