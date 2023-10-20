@@ -1,40 +1,39 @@
 :_content-type: PROCEDURE
 
 [id="troubleshooting-lightspeed-config_{context}"]
-= troubleshooting-lightspeed-config
+= Troubleshooting {LightspeedShortName} configuration errors
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+== Issue: Cannot access the Ansible Lightspeed administrator portal
 
-.Prerequisites
+The Ansible Lightspeed administrator portal can only be accessed by the Red Hat organization administrator.
 
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
+If you are the Red Hat organization administrator, before you access the Ansible Lightspeed administrator portal, ensure that: 
 
-.Procedure
+* You have a valid {PlatformNameShort} subscription.
+* Your organization has a valid {LightspeedShortName} subscription.
 
-. Make each step an instruction.
+== Issue: Cannot upload the WCA key
 
-. Include one command or action for each step with the exception of simple follow-step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing and then select *Next*.
+When you enter the Watsonx Code Assistant (WCA) key, authentication fails and shows the following error message: 
 
-. Use an unnumbered bullet (*) if the procedure includes only one step.
+`IBM Cloud API key is invalid`
 
-.Verification
+{LightspeedShortName} verifies the WCA key by generating an associated access token. To resolve the error, ensure that you have not accidentally included any extra spaces when obtaining the WCA key from {ibmwatsonxcodeassistant}. If you still cannot upload the WCA key, contact IBM support. 
 
-. Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
+== Issue: Cannot configure the model ID due to authentication failure
 
-. List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
+When you enter the model ID in the {LightspeedShortName} administrator portal, the authentication fails. 
 
-. Make each step an instruction.
+To resolve the error, ensure that: 
 
-. Include one command or action per step.
+* You have configured a valid WCA key before you upload the model ID.
+* You have not accidentally included any extra spaces when entering the model ID. 
 
-. Use an unnumbered bullet (*) if the verification includes only one step.
+== Issue: Cannot configure the model ID due to inference failure
 
-[role="_additional-resources"]
-.Additional resources
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing procedure modules, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
+While validating the model ID, {LightspeedShortName} performs a test inference. If {LightspeedShortName} detects an error, the validation fails and an `Inference failed` message is displayed. 
 
+To resolve the error, ensure that: 
+
+* You have a valid WCA key and model ID. 
+* You have not accidentally included any extra spaces when obtaining the WCA key and model ID from {ibmwatsonxcodeassistant}.
