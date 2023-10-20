@@ -1,40 +1,25 @@
 :_content-type: PROCEDURE
 
 [id="troubleshooting-vscode_{context}"]
-= troubleshooting-vscode
+= Troubleshooting Ansible Visual Studio Code extension errors
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+== Issue: Cannot view the generated code recommendations using the Ansible VS Code extension
 
-.Prerequisites
+The following scenarios are possible: 
 
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
+* You receive a `403 error` message.
++
+To resolve this error, ensure that:
 
-.Procedure
-
-. Make each step an instruction.
-
-. Include one command or action for each step with the exception of simple follow-step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing and then select *Next*.
-
-. Use an unnumbered bullet (*) if the procedure includes only one step.
-
-.Verification
-
-. Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
-
-. List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
-
-. Make each step an instruction.
-
-. Include one command or action per step.
-
-. Use an unnumbered bullet (*) if the verification includes only one step.
-
-[role="_additional-resources"]
-.Additional resources
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing procedure modules, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-
+** Your organization administrator has configured {LightspeedShortName} for your organization. 
+** You have a valid {LightspeedShortName} seat license. 
+* You have not configured the required Ansible VS code extension settings.
+** To resolve this error, ensure that you have enabled the *Lightspeed:Enabled* and menu:Lightspeed[Suggestions:Enabled] settings. For more information, see xref:proc_configure-vscode-extension.adoc[Configure the Ansible VS Code extension].
+* You are logged in using an account that does not have a valid {LightspeedShortName} seat license. 
++
+If you logged in using an account that does not have an assigned seat license, you must log out and log in again. In VS Code, click the *Accounts* icon and sign in using your Red Hat account with an assigned seat license. 
+* Your VS Code Workspace settings override user settings.
++
+If your Workspace settings are configured, they can override our user settings even if you have configured the Ansible VS Code extension correctly. The Workspace settings can disable your VS Code extension settings, and therefore you cannot access the Ansible Lightspeed service. 
++
+To resolve this issue, ensure that there are no Workspace settings configured in VS Code. For more information, see link:https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings[Workspace settings] in the VS Code documentation. 
