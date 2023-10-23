@@ -1,0 +1,37 @@
+:_content-type: CONCEPT
+
+[id="training-data_{context}"]
+
+= Data gathered to train the {ibmwatsonxcodeassistant} models
+
+== Models
+
+{LightspeedFullName} uses single-tenant Ansible-specific IBM watsonx Granite models unique to your organization. These models are provided, managed, and maintained by IBM. 
+
+You can use the Ansible-specific IBM watsonx Granite model as the default model for{LightspeedShortName}, so that all Ansible Lightspeed users in your organization can use the fine-tuned model. 
+
+== Data sources
+
+{ibmwatsonxcodeassistant} models are trained on Ansible content from {Galaxy}, data from public Git repositories, and Red Hat Ansible subject matter expert examples. 
+
+If you publish content to {Galaxy} and want to restrict your {Galaxy} content from being used to train the models, you can opt out of sharing your {Galaxy} data in the {Galaxy} namespace configuration. 
+
+== Data telemetry
+
+The Ansible VS Code extension, with {LightspeedFullName} features enabled, automatically collects recommendations, usage telemetry, and playbook state through automated events. This data is eventually shared with {LightspeedShortName} and {ibmwatsonxcodeassistant} to generate code recommendations. 
+
+The following table lists the data that the Ansible VS Code extension collects. 
+
+[cols="30%,70%",options="header"]
+|====
+| *Metric* | *Description*
+| Recommendation accepted | An indicator that a code recommendation was accepted by an Ansible user and included in the Ansible playbook.
+| Recommendation rejected | An indicator that a code recommendation was rejected by an Ansible user and excluded from the Ansible playbook.
+| Prompt | The contents of the name property of the task used to request a task recommendation or the text string of a multitask recommendation.
+| Ansible YAML file context | The contents of a playbook file that exist prior to the prompt used in the current recommendation. This information is used to provide additional context for a recommendation beyond the text of the prompt.
+| Anonymized document URI | The string that helps to determine the document type (playbook, role, or task).
+| Request and response timestamps | The request and response times captured in UTC format.
+| Anonymized user ID | A random anonymous user ID that is stored locally on `~/.redhat/anonymousid`.
+| Anonymized suggestion ID | A random auto-generated session ID associated with the suggestion request.
+|{ibmwatsonxcodeassistant} metadata | Contextual information about the suggestion returned from the {ibmwatsonxcodeassistant} model such as the recommended Ansible module, recommended parameter keys, and length of the suggestion.
+|====
