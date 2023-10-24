@@ -4,23 +4,35 @@
 
 = Installing the Ansible code bot
 
-Install the Ansible code bot to get code recommendations.
+Install the {AnsibleCodeBot} to get code recommendations.
 
 .Procedure
 
 . Log in to Github by using the account associated with your organization.
 . Install the Github app for the organization that you are a member of. 
-. Navigate to the Github app link:https://github.com/apps/ansible-code-bot[Ansible Lightspeed bot].
-. Select the repositories that you want the app to access:
-.. *All repositories*: Provides access to read the metadata of all repositories.
-.. *Only select repositories*: Provides access to read the metadata of only the repositories that you select. 
-. Optional: If you selected *Only select repositories* in the previous step, select the repositories that you want Ansible code bot to access from the *Select repositories* list. 
+. Go to the link:https://github.com/apps/ansible-code-bot[Ansible code bot] GitHub app. 
+. Select the repositories that you want the app to access: 
+* *All repositories*: Provides access to read the metadata of all repositories.
+* *Only select repositories*: Provides access to read the metadata of only the repositories that you select. 
+. Optional: If you selected *Only select repositories* in the previous step, select the repositories that you want the {AnsibleCodeBot} to access from the *Select repositories* list. 
++
 NOTE: You can select the repositories associated with your Red Hat organization only. 
++
 . Click *Install & Authorize*. 
 A message is displayed that specifies the following permissions are granted automatically to the bot during installation: 
-.. Read access to actions and metadata
-.. Read and write access to code and pull requests
-. When prompted, log in to your {RHSSOshort} account.
-. When prompted, enter your Github password. 
+* Read access to metadata
+* Read and write access to code and pull requests
+. When prompted, log in to your {RHSSO} account. You are logged in to {AnsibleCodeBot}.
 
-The Ansible code bot is installed for the repositories you selected, and scans your repository within the first hour of installation. If it identifies any best practices or code improvement recommendations, Ansible code bot proactively creates a pull request for the connected Github repositories. For future scans, you can configure a schedule to scan your git repositories at regular intervals.  
+The following image shows the {AnsibleCodeBot} login screen with a message stating `Your subscription is active`: 
+
+.{AnsibleCodeBot} login screen
+image::code_bot_login_screen.png[Ansible Code bot login screen]
+
+After the {AnsibleCodeBot} is installed for the Git repositories you selected, you can configure a schedule to scan your Git repositories at regular intervals. You can also manually scan your Git repositories if you have not set up a scanning schedule for your {AnsibleCodeBot} or if you do not want to wait for the next scheduled scan.
+
+[role="_additional-resources"]
+.Additional resources
+* xref:proc_configure-repo-scan[Configuring Ansible code bot to scan your repository at regular intervals]
+* xref:proc_manually-scan-repo[Manually scanning your Git repositories]
+* xref:proc_troubleshooting-code-bot[Troubleshooting Ansible code bot errors]

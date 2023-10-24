@@ -4,21 +4,28 @@
 
 = Manually scan your Git repositories
 
-You can manually scan your Git repositories when you prefer not to to wait for the scheduled interval to trigger the scan. In such instances, the administrator can trigger a manual scan.  
+You can manually scan your Git repositories if you did not set up a scanning schedule for your {AnsibleCodeBot} or if you do not want to wait for the next scheduled scan.
+
+If the avoid duplicate PRs condition is not met, then a manual scan results in a new PR with all the necessary Ansible code bot recommendations.
+
+Following are the avoid duplicate conditions: 
+
+* Verify that the {AnsibleCodeBot} pull request (PR) already exists, and is on the latest commit main branch. If this condition is met, you can skip the scan.
+* If there is an existing PR but it is not on the latest commit branch, the Ansible code bot takes a PR difference. If there is no difference, then the bot skips pushing the scan results as a new pull request.
 
 .Procedure
 
-. In GitHub, navigate to the main page of the repository that you want to scan.
-. Click the image:settings icon_Ansible VS Code extension.png[Settings icon] icon.
+. In GitHub, go to the main page of the repository that you want to scan.
+. Click the *Settings* icon image:settings icon_Ansible VS Code extension.png[Settings icon].
 . In the *Topics* field, enter the keyword topic *ansible-code-bot-scan* to the repository. 
 +
 The following illustration shows the keyword topic for starting a manual scan:
 +
-image::lightspeed-ansible-code-bot-manual-trigger-setting.png[Code bot settings]
+image::lightspeed-ansible-code-bot-manual-trigger-setting.png[Ansible code bot settings]
 +
 . Click *Save changes*. 
 +
-Based on the repository webhook event, Ansible code bot starts a manual scan of your repository.
+Based on the repository webhook event, {AnsibleCodeBot} starts a manual scan of your repository.
 If the avoid duplicate pull requests condition is not met, then the manual scan results in a new pull request with all the necessary Ansible code bot recommendations. 
 
 [role="_additional-resources"]
