@@ -3,7 +3,7 @@
 [id="troubleshooting-code-bot_{context}"]
 = Troubleshooting Ansible code bot errors
 
-== Issue: Cannot access Ansible code bot
+== Cannot access Ansible code bot
 
 After you install Ansible code bot and attempt to log in, you receive the following error message: 
 
@@ -11,30 +11,27 @@ After you install Ansible code bot and attempt to log in, you receive the follow
 
 After you install Ansible code bot, you are redirected to a page that shows an active subscription status, as shown in the following image: 
 
+.Ansible code bot login screen with an active subscription
 image::code_bot_login_screen.png[Ansible code bot login screen with an active subscription]
 
-If the login screen displays an inactive subscription status, Ansible code bot does not scan your git repositories. The following scenarios are possible: 
+If the login screen displays an inactive subscription status, Ansible code bot does not scan your Git repositories. The error occurs because your organization does not have a valid {PlatformNameShort} subscription. To resolve this error, ensure that you are part of an organization that has a valid {PlatformName} subscription.
 
-* Your organization does not have a valid {LightspeedShortName} subscription. 
-* You do not have an assigned {LightspeedShortName} seat license. 
-* You have an assigned seat license but you installed Ansible code bot using a different account. To resolve this error, uninstall Ansible code bot and reinstall it using your account with an assigned {LightspeedShortName} seat license. 
+== Cannot scan your Git repository using Ansible code bot
 
-== Issue: Cannot scan your git repository using Ansible code bot
-
-If the Ansible code bot is not configured correctly, it does not scan your git repositories or does not create pull requests. 
+If the Ansible code bot is not configured correctly, it does not scan your Git repositories or does not create pull requests. 
 
 To resolve Ansible code bot errors, ensure that: 
 
-* You have selected all the git repositories that you want to scan. 
+* You have selected all the Git repositories that you want to scan. 
 * You have a `.yml` configuration file named `ansible-code-bot.yml` in your repository `.github` folder. For example, `.github/ansible-code-bot.yml`.
 
 Run a manual scan on your git repositories by adding the *ansible-code-bot-scan* topic to your repository. For more information, see xref:proc_manually-scan-repo[Manually scan your Git repositories].
 
-If the Ansible code bot still cannot scan your git repository, the following scenarios are possible: 
+If the Ansible code bot still cannot scan your Git repository, the following scenarios are possible: 
 
-* The Ansible code bot did not identify any ansible-lint violations in the git repository.
-* The Ansible code bot does not have permission to scan the git repository. 
-* Your organizationdoes not have a valid {LightspeedShortName} subscription.
+* The Ansible code bot did not identify any ansible-lint violations in the Git repository.
+* The Ansible code bot does not have permission to scan the Git repository. 
+* Your organization does not have a valid {PlatformName} subscription.
 
 
 
