@@ -16,7 +16,7 @@ While these environments cover many automation use cases, you can add additional
 ----
 $ podman login -u="[username]" -p="[token/hash]" registry.redhat.io
 ----
-. Ensure that you can pull the desired {ExecEnvNameSing} base image
+. Ensure that you can pull the desired {ExecEnvNameSing} base image:
 +
 -----
 podman pull registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
@@ -61,13 +61,13 @@ Since this example uses the community version of `kubernetes.core` and not a cer
 $ ansible-builder build -t _[username]_/_new-ee_
 ----
 where `[username]` specifies your username, and `new-ee` specifies the name of your new container image.
-
++
 [NOTE]
 ====
 If you do not use `-t` with `build`, an image called `ansible-execution-env` is created and loaded into the local container registry.
 ====
-
-.. Use the `podman images` command to confirm that your new container image is in that list:
++
+* Use the `podman images` command to confirm that your new container image is in that list:
 +
 .Output of a `podman images` command with the image `new-ee`
 ====
