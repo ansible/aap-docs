@@ -3,28 +3,32 @@
 [id="configure-vscode-extension_{context}"]
 = Configure the Ansible VS Code extension
 
-[role="_abstract"]
-You can configure the Ansible VS Code extension to enable Ansible Lightspeed with inline suggestions, and to specify the Ansible Lightspeed portal URL. 
+You can configure the Ansible VS Code extension to enable Ansible Lightspeed, and to specify the Ansible Lightspeed portal URL and WCA model ID.
 
-[NOTE]
-====
-If you have an assigned seat license for Ansible Lightspeed but your organization administrator has not configured an {ibmwatsonxcodeassistant} model for your organization, you will encounter a `Failure on completion requests` error when you  makde inference requests in VS Code.  
-====
+.Prerequisites
+
+* Your organization administrator has configured an {ibmwatsonxcodeassistant} model for your organization.
+* You are assigned a {LightspeedShortName} seat license by your organization administrator. 
 
 .Procedure
 
-. Log in to the VS Code application with your [RHSSO] account.
-. From the menu, select menu:Code[Settings > Settings].
-. In the *Search* field, enter *Lightspeed*. 
-. Specify the following settings: 
+. Open the VS Code application.
+. From the Activity bar, click the image:Extensions icon_VS Code.png[Extensions] icon.
+. From the Installed Extensions list, select *Ansible*.
+. From the *Ansible* extension page, click the image:settings icon_Ansible VS Code extension.png[Settings icon] and select *Extension Settings*. 
+. Select *Ansible Lightspeed* settings, and specify the following information:
 .. Select the *Enable Ansible Lightspeed* check box.
-.. In the *URL for Ansible Lightspeed* field, enter the following URL: \https://c.ai.ansible.redhat.com/.
+.. In the *URL for Ansible Lightspeed* field, verify that you have the following URL: \https://c.ai.ansible.redhat.com/.
+. Optional: If you want to use a different {ibmwatsonxcodeassistant} model, enter the model ID of the model you want to use in the *Model ID Override* field. 
 +
-. Save your settings.
+Your settings are automatically saved in VS Code. 
 
-The following illustration displays the configured settings for the Ansible VS Code extension.
+The following illustration displays the configured settings for the Ansible VS Code extension:
 
 image::lightspeed-vs-code-settings.png[Configured settings for the Ansible VS Code extension]
 
+[role="_additional-resources"]
+.Additional resources
 
+* xref:proc_troubleshooting-vscode.adoc[Troubleshooting Ansible Visual Studio Code extension errors]
 
