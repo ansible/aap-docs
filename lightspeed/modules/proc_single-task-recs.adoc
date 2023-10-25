@@ -1,96 +1,86 @@
 :_content-type: PROCEDURE
 
 [id="single-task-recs_{context}"]
-= Request code recommendations for a single task
+= Requesting code recommendations for a single task
 
-You can request code recommendations for a single task by entering natural language prompts in Ansible VS Code extension. For example, you can enter the prompt *"Add new user"*. The Ansible Lightspeed service reads the text, interacts with the IBM watsonx Code Assistant model, and generates code recommendations to automate a task that adds new users to an organization.
+You can request code recommendations for a single task by entering natural language prompts in Ansible VS Code extension. For example, to automate a task of installing a PostgreSQL server, you can enter the prompt `- name: Install postgresql-server`. The Ansible Lightspeed service reads the text, interacts with the {ibmwatsonxcodeassistant} model, and generates the code recommendations.
+
 
 .Prerequisites
 
-* You have an assigned seat license allowing you to access {LightspeedFullName}.
+* You have an assigned seat license to access {LightspeedFullName}.
+* You have xref:assembly_configuring-vscode-extension_lightspeed-user-guide[installed and configured Ansible VS Code extension].
 
 .Procedure
 
-. Log in to VS Code with your Red Hat login credentials.
+. Log in to VS Code with your Red Hat account.
 . Create a new YAML file or use an existing YAML file: 
-.. Create a YAML file: 
+* Create a YAML file: 
 ... Select menu:File[New Text File].
-... On the bottom right of the screen, click *Plain Text*, and in the language mode, select *Ansible*. 
+... From the lower right of the screen, click *Plain Text*, and in the language mode, select *Ansible*. 
 ... Save the file as a YAML file format extension (`.yml` or `.yaml`).
-.. Use an existing YAML file: 
+* Use an existing YAML file: 
 ... On the bottom right of the screen, click the existing language mode, and in the language mode settings, select *Ansible*. 
 +
 NOTE: If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Langauge Mode[Ansible].
 +
-. Verify that you see an entry for *Lightspeed* on the status bar at the bottom right of VS Code.
+. Verify that you see an entry for *Lightspeed* on the status bar at the lower right of VS Code.
 +
 If *Ansible* is already selected as the desired language but the *Lightspeed* entry is not displayed, re-select *Ansible* as the language mode. The following illustration shows *Lightspeed* and *Ansible* entries on the VS Code status bar. 
 +
 
 .Ansible and Lightspeed set as selected language mode
 image::lightspeed-vs-code.png[Settings show Ansible and Lightspeed as selected language mode]
-+
-[NOTE]
-====
-If you see an error message about missing ansible-lint, you can install the missing module or disable it. To install ansible-lint, see the link:https://ansible.readthedocs.io/projects/lint/installing/[Installing] section of the Ansible Lint documentation. To disable ansible-lint, go to *Code > Settings > Settings > Ansible > Validation > Lint : Enabled* and clear the *Enabled* checkbox.
-====
-+
+
+. Optional: If you see an error message about missing Ansible lint, you can install the missing module or disable it. Perform any one of the following tasks:
+* Install Ansible lint: For installation information, see the link:https://ansible.readthedocs.io/projects/lint/installing/[Installing] section of the Ansible Lint documentation. 
+* Disable Ansible lint: 
+... From the Activity bar, click the *Extensions* icon image:Extensions icon_VS Code.png[Extensions].
+... From the *Installed* extensions list, select *Ansible*.
+... From the *Ansible* extension page, click the *Settings* icon image:settings icon_Ansible VS Code extension.png[Settings icon] and select *Extension Settings*.
+... Clear the *Ansible › Validation › Lint: Enabled* checkbox.   
+
 . Create a playbook or use an existing playbook. 
 +
 For more information, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_creator_guide/index#creating-playbooks[Creating playbooks] in the {PlatformNameShort} Creator Guide.
-. In the playbook, enter `- n` for the task name and then add a task using a natural language prompt.
-+
-For example, you can specify the following single task prompts, one task at a time: 
-+
-----
-- name: Create random password
-- name: Add new user
-- name: Permit user access to resources
-- name: Add to groups
-----
-+
-. Engage the Ansible Lightspeed service to generate code recommendations: 
-.. Press *Enter* after the natural language prompt that starts with a Pound key (#). 
-+
-IMPORTANT: You can see a code recommendation only when you press *Enter* at the end of your task description. 
-+
-.. Ensure that your cursor is at the same indentation level as that of the previous line hyphen. 
-+
-IMPORTANT: If the cursor is not at the same indentation level, then the Ansible Lightspeed Service will not start.
-+
-.. Keep the cursor at the same location in your file, and wait for the code recommendation results to populate. 
-+
-IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you have multiple tasks, the Ansible Lightspeed Service takes a bit longer (that is, the number of tasks times five seconds) to populate the results. You must keep the cursor at the same location while the results are being generated.
-+
-The Ansible Lightspeed with {ibmwatsonxcodeassistant} service is engaged. A *Lightspeed* processing status indicator appears in the bottom right of the screen to denote that {LightspeedFullName} is preparing your code recommendation.
-+
-The following illustration shows an example of single task prompts and Ansible Lightspeed service populating the code recommendations:
-+
 
-.Ansible Lightspeed generating code recommendations
-image::lightspeed-single-task-in-progress.png[Ansible Lightspeed generating code recommendations]
-+
-. View your code recommendations and ensure that the recommendations match your task intent. 
-+
-The following illustration shows the code recommendations generated by the Ansible Lightspeed service for a single task:
-+
+. In the playbook, provide the following information to request code recommendations for a single task:
+... Add a new Ansible task by starting a new line with `- name:` at the correct indentation.
+... Add a detailed natural language prompt in the task description after `- name:` on the same line. 
+For example, you can specify the following single task prompt:
+`- name: Install postgresql-server`
+... Press *Enter* directly after the task description. Keep the cursor at the same location in your file, and wait for the code recommendation results to populate.
 
-.Single task code recommendations
-image::lightspeed-single-task-in-progress.png[single task code recommendations]
+The Ansible Lightspeed service is engaged, and it starts generating code recommendations for a single task. 
 +
-. Accept or reject the code recommendations: 
-.. To accept a code recommendation, press *Enter*.
-.. To reject a code recommendation, press *Esc*. 
+IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you are using a multitask prompt, the Ansible Lightspeed service takes a bit longer (number of tasks times 5 seconds) to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the Ansible Lightspeed service does not process your request.
++
+When the Ansible Lightspeed service is engaged, a *Lightspeed* processing status indicator is displayed in the lower right of the screen to denote that your code recommendation is being generated.
++
+image:lightspeed-task-in-progress.png[Lightspeed icon] 
+
+. View your code recommendations and ensure that the recommendations match your task intent.
++
+The following illustration shows the code recommendations generated by the Ansible Lightspeed service for the single task *Install postgresql-server*:
++
+image:lightspeed-single-task-in-progress.png[Lightspeed single task in progress] 
+
+. Accept or reject the code recommendations:
+* To accept a code recommendation, press *Tab*.
+* To reject a code recommendation, press *Esc*. 
 +
 NOTE: If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. 
-+
-. In the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results in your existing Ansible content. 
-+
-The following illustration shows the training matches found in your existing Ansible content: 
-+
 
-.Training matches in your existing content
+. On the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results. 
++
+The following illustration shows the training matches found in existing Ansible Galaxy content for the task prompt *Install postgresql-server*:
++
 image::single-task-training-content-match.png[training matches in existing content]
-+
-. Click *Save* to save the code recommendation changes in your playbook. 
 
+. Click *Save* to save the code recommendation changes in your Ansible YAML file. 
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:proc_troubleshooting-vscode[Troubleshooting Ansible Visual Studio Code extension errors]
+* xref:proc_troubleshooting-code-bot[Troubleshooting {AnsibleCodeBot} errors]
