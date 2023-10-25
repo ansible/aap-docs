@@ -1,4 +1,4 @@
-ifdef::context[:parent-context-of-ppah-installation: {context}]
+ifdef::context[:parent-context: {context}]
 
 :_content-type: ASSEMBLY
 
@@ -12,20 +12,21 @@ This guide contains an Ansible collection of playbooks to install the containeri
 
 == Prerequisites
 
-* A bulleted list of conditions that must be satisfied before the user starts following this assembly.
-* You can also link to other modules or assemblies the user must follow before starting this assembly.
-* Delete the section title and bullets if the assembly has no prerequisites.
-* X is installed. For information about installing X, see <link>.
-* You can log in to X with administrator privileges.
+* Install ansible-core using the following command: 
 
-Include modules here.
+[source,bash]
+----
+$ dnf install ansible-core
+or
+$ pip install --user ansible-core
+----
 
-[role="_additional-resources"]
-== Additional resources (or Next steps)
-* A bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* For more details on writing assemblies, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles. For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
+include::hub/proc_ppah-pre-install.adoc[leveloffset=+1]
+include::hub/proc_ppah-install-dev.adoc[leveloffset=+1]
+include::hub/proc_ppah-install-ha.adoc[leveloffset=+1]
+include::hub/ref_ppah-config.adoc[leveloffset=+1]
 
-ifdef::parent-context-of-ppah-installation[:context: {parent-context-of-ppah-installation}]
-ifndef::parent-context-of-ppah-installation[:!context:]
+
+
+ifdef::parent-context[:context: {parent-context}]
 
