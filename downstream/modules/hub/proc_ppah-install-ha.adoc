@@ -1,9 +1,9 @@
 :_content-type: PROCEDURE
 
 [id="ppah-install-ha_{context}"]
-= Installing a high availability {HubName}
+= Installing a production {HubName}
 
-Use the playbook `install_prod` to install a production-ready, highly available {HubName}. This option requires that all supporting services are managed by the user.
+Use the playbook `install_prod` to install a production-ready, highly available {HubName}. This option requires the user to manage all supporting services.
 
 .Prerequisites
 
@@ -14,21 +14,48 @@ Use the playbook `install_prod` to install a production-ready, highly available 
 The playbook requires the following parameters:
 
 * PostgreSQL
-** See xref:tk[Database]
+** See xref:ppah-config[Database]
 * LDAP
 ** hub_authentication_backend must be set to `ldap`
-** see xref:tk[LDAP]
+** see xref:ppah-config[LDAP]
 * NFS 
-** See xref:tk[Shared storage]
+** See xref:ppah-config[Shared storage]
 
-NOTE: See xref:tk[Online vs. Offline Installation] for instructions on fetching the container images. You can use the link:https://gitlab.cee.redhat.com/ansible/private-partner-automation-hub-installer/-/blob/main/all-in-one-sample-values.yml[Sample] as a reference.
+NOTE: See xref:ppah-online-offline-install[Online vs. Offline Installation] for instructions on fetching the container images. You can use the link:https://gitlab.cee.redhat.com/ansible/private-partner-automation-hub-installer/-/blob/main/all-in-one-sample-values.yml[Sample] as a reference.
+
+Below is an example of a configured YAML file:
+----
+# External PostgreSQL Params
+hub_pg_host: < FQDN of the PostgreSQL server >
+postgresql_admin_username: < User name of admin of the PostgreSQL server >
+postgresql_admin_password: < Password of admin of the PostgreSQL server >
+# LDAP params
+hub_authentication_backend: ldap
+hub_ldap_server_uri: "ldap://< FQDN of the LDAP server >:< Port of the LDAP server >"
+## The sample values are based on https://github.com/rroemhild/docker-test-openldap
+hub_ldap_bind_dn: cn=admin,dc=planetexpress,dc=com
+hub_ldap_bind_password: GoodNewsEveryone
+hub_ldap_user_search_base_dn: ou=people,dc=planetexpress,dc=com
+hub_ldap_group_search_base_dn: ou=people,dc=planetexpress,dc=com
+hub_ldap_extra_settings:
+  AUTH_LDAP_ALWAYS_UPDATE_USER: true
+  AUTH_LDAP_USER_ATTR_MAP__first_name: givenName
+  AUTH_LDAP_USER_ATTR_MAP__last_name: sn
+  AUTH_LDAP_USER_ATTR_MAP__email: mail
+  AUTH_LDAP_MIRROR_GROUPS: true
+  AUTH_LDAP_USER_FLAGS_BY_GROUP__is_staff: "cn=ship_crew,ou=people,dc=planetexpress,dc=com"
+  AUTH_LDAP_USER_FLAGS_BY_GROUP__is_superuser: "cn=admin_staff,ou=people,dc=planetexpress,dc=com"
+# NFS Params
+hub_shared_data_path: "< FQDN of the NFS server >:< Share on the NFS server >"
+...
+----
 
 .Procedure
 
-Run the installation playbook using the following command: 
+. Run the installation playbook using the following command: 
 ----
 ansible-playbook -i </path/to/inventory> -e @</path/to/values> ansible.private_partner_automation_hub_installer.install_prod
 ----
-
+NOTE: The production option mandates a three-node installation, and installs automation hub on all hosts. Therefore, the `path/to/inventory` variable should be `node1.ansible.com`, `node2.ansible.com`, and `node3.ansible.com`.
 
 

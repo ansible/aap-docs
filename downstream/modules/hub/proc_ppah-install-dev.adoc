@@ -7,8 +7,10 @@ Use the playbook `install_devel` to install an all-in-one {HubName} for developm
 
 This option supports only optional parameters:
 
-* xref:tk[Common]. See xref:tk[Online vs Offline Installation] for details.
+* xref:ppah-config[Common]. See xref:ppah-online-offline-install[Online vs Offline Installation] for details.
 * `hub_admin_password`: if not set, the installer will set one and print it as part of its output. 
+
+NOTE: See xref:ppah-online-offline-install[Online vs. Offline Installation] for instructions on fetching the container images. You can use the link:https://gitlab.cee.redhat.com/ansible/private-partner-automation-hub-installer/-/blob/main/all-in-one-sample-values.yml[Sample] as a reference.
 
 .Procedure
 
@@ -18,3 +20,4 @@ This option supports only optional parameters:
 ansible-playbook -i </path/to/inventory> ansible.private_partner_automation_hub_installer.install_devel
 ----
 
+NOTE: The development option installs automation hub and the database on the same host. Therefore, the `path/to/inventory` variable should be node.ansible.com.
