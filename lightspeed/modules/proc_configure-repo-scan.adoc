@@ -4,7 +4,7 @@
 
 = Configuring Ansible code bot to scan your repository at regular intervals
 
-You can schedule the {AnsibleCodeBot} to scan your repositories at daily, weekly, or monthly intervals. To specify the scan schedule, use the configuration file `ansible-code-bot.yml` that was created automatically when {AnsibleCodeBot} was installed. 
+You can schedule the {AnsibleCodeBot} to scan your repositories at daily, weekly, or monthly intervals. To specify the scan schedule, use the configuration file `ansible-code-bot.yml` that was created automatically when {AnsibleCodeBot} was installed. If the file is not created automatically, use the procedure below to create the `ansible-code-bot.yml` file and specify your scan schedule. 
 
 You can specify one of following interval cadence to scan your Git repositories:
 
@@ -17,8 +17,8 @@ For each interval cadence, {AnsibleCodeBot} starts scanning your Git repositorie
 .Procedure
 
 . In Github, navigate to the configuration file in the repository that you want to scan.
-. Create a `.yml` configuration file named `ansible-code-bot.yml` in your repository `.github` folder. For example, `.github/ansible-code-bot.yml`.
-. In the configuration file, specify the `interval` parameter. You can specify the `interval` parameter as *daily*, *weekly*, or *monthly*. Example:
+. Optional: If the `ansible-code-bot.yml` file was not created automatically, manually create a `.yml` configuration file named `ansible-code-bot.yml` in your repository `.github` folder. For example, `.github/ansible-code-bot.yml`.
+. In the configuration file, specify the `interval` parameter. You can specify the `interval` parameter as *daily*, *weekly*, or *monthly*. For example:
 +
 ----
 schedule:
