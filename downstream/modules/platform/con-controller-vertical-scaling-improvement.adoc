@@ -1,0 +1,15 @@
+[id="con-controller-vertical-scaling-improvement"]
+
+= Vertical scaling improvements
+
+Control nodes are responsible for processing the output of jobs and writing them to the database. 
+The process that does this is called the callback receiver. 
+
+The callback receiver has a configurable number of workers, controlled by the setting `JOB_EVENT_WORKERS`. 
+In the past, the default for this setting was always 4, regardless of the CPU or memory capacity of the node. 
+Now, in traditional virtual machines, the `JOB_EVENT_WORKERS` is set to the number of processors if that is greater than 4. 
+This means administrators who provision larger control nodes see greater ability for those nodes to keep up with the job output created by jobs without having to manually adjust `JOB_EVENT_WORKERS`. 
+
+//Out of date reference
+For more information, see the link:https://www.ansible.com/blog/enhancing/maximizing-your-scaling-capability-with-automation-controller-2.3[Enhancing Maximizing your Scaling capability with Automation Controller] support blog.
+
