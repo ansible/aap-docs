@@ -55,3 +55,20 @@ For the example workload on 300 managed hosts, executing 1000 tasks/hour per hos
 * Use the capacity adjustment feature on the control node to reduce the capacity down to 16 (lowest value) to reserve more of the Control node's capacity for processing events.
 
 image:perf-capacity-adj-instances.png[image]
+
+.Additional Resources
+
+For more information on workloads with high levels of API interaction, see link: https://www.ansible.com/blog/scaling-automation-controller-for-api-driven-workloads[Scaling Automation Controller for API Driven Workloads]. 
+
+To summarize the guidance, best practices include:
+
+* Use a load balancer
+* Limit the rate
+* Set max connections per controller to 100
+* Use dynamic inventory sources instead of individually creating
+inventory hosts via the API
+* Use webhook notifications instead of polling for job status
+
+Since the published blog, additional observations have been made in the field regarding authentication methods. 
+For automation clients that make many requests in rapid succession, using tokens is a best practice, because, depending on the type of user, there can be additional overheads when using basic authentication. 
+For example, LDAP users using basic authentication trigger a process to reconcile if the LDAP user is correctly mapped to particular organizations, teams and roles. 
