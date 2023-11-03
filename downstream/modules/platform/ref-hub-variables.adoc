@@ -328,12 +328,24 @@ Scope to search for groups in an LDAP tree using the django framework for LDAP a
 Used for installing {HubName} with LDAP.
 
 Default = `SUBTREE`
+| *`automationhub_ldap_group_type`* | 
+
+Describes the type of group returned by *automationhub_ldap_group_search*.
+
+This is set dynamically based on the the values of *automationhub_ldap_group_type_params* and *automationhub_ldap_group_type_class*, otherwise it is the default value coming from django-ldap which is 'None'
+
+Default  = `django_auth_ldap.config:GroupOfNamesType`
 | *`automationhub_ldap_group_type_class`* | _Optional_
+
+The importable path for the django-ldap group type class.
 
 Variable identifies the group type used during group searches within the django framework for LDAP authentication.
 Used for installing {HubName} with LDAP.
 
 Default =`django_auth_ldap.config:GroupOfNamesType`
+| *`automationhub_ldap_group_type_params`* | 
+
+Default = "name_attr": "cn"
 | *`automationhub_ldap_server_uri`* | The URI of the LDAP server.
 This can be any URI that is supported by your underlying LDAP libraries.
 | *`automationhub_ldap_user_search_base_dn`* | An LDAPSearch object that locates a user in the directory.
