@@ -26,7 +26,9 @@ Known factors:
 * To run the 10 concurrent jobs, you must have at least (10 jobs * 5 forks) + (10 jobs * 1 base task impact of a job) = 60 execution capacity
 * To control 10 concurrent jobs, you must have at least 10 control capacity.
 * Running 1000 tasks * 300 managed hosts/hour produces at least 300,000 events/hour. 
++
 You might have to run the job to see exactly how many events it produces because this is dependent on the specific task and verbosity. 
++
 For example, a debug task printing “Hello World” produces six job events with the verbosity of `1` on one host. 
 With a verbosity of `3`, it produces 34 job events on one host. 
 Therefore, the task produces at least six events. That means, closer to 3,000,000 events/hour or approximately 833 events/second.
@@ -35,7 +37,7 @@ To determine how many execution and control nodes you require, reference experim
 
 The default “forks” setting of job templates is five, so using this default the maximum number of jobs a control node can dispatch to execution nodes makes five execution nodes of equal CPU/RAM use 100% of their capacity, arriving at the previously mentioned 1:5 ratio of control to execution capacity.
 
-[cols="26%,15%,7%,7%,15%,15%,15%",options="header",]
+[cols="26%,15%,12%,12%,12%,12%,12%",options="header",]
 |===
 | Node | API Capacity | Default Execution Capacity | Default Control Capacity | Mean Event Processing Rate at 100% capacity usage | Mean Events
 Processing Rate at 50% capacity usage | Mean Events Processing Rate at 40% capacity usage
@@ -52,7 +54,7 @@ For the example workload on 300 managed hosts, executing 1000 tasks/hour per hos
 
 * Deploy 1 execution node, 1 control node, 1 DB node of 4 CPU @ 2.5Ghz, 16 GB RAM with disk having ~3000 IOPs.
 * Keep default fork setting of 5 on job templates.
-* Use the capacity adjustment feature on the control node to reduce the capacity down to 16 (lowest value) to reserve more of the Control node's capacity for processing events.
+* Use the capacity adjustment feature on the control node to reduce the capacity down to 16 (lowest value) to reserve more of the control node's capacity for processing events.
 
 image:perf-capacity-adj-instances.png[image]
 

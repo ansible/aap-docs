@@ -12,10 +12,10 @@ One way to limit how much work the task manager attempts to do in one run is to 
 The default is 100 jobs, which is a safe default. 
 If there are remaining jobs to schedule, a new run of the task manager is scheduled to run immediately after the current run. 
 If you are willing to risk potentially longer individual runs of the task manager to start more jobs in individual runs, you can consider increasing the value of `START_TASK_LIMIT`. 
-The Prometheus metrics, available in `/api/v2/metrics` observe how long individual runs of the task manager take in “task_manager__schedule_seconds”.
+The Prometheus metrics, available in `/api/v2/metrics` observe how long individual runs of the task manager take in `task_manager__schedule_seconds`.
 
 For more information, see xref:assembly-controller-metrics[Metrics]
 
-As a safeguard against excessively long runs of the task manager, there is a timeout which is determined by the setting “TASK_MANAGER_TIMEOUT”.
+As a safeguard against excessively long runs of the task manager, there is a timeout which is determined by the setting `TASK_MANAGER_TIMEOUT``.
 This is when the task manager begins to exit any loops and attempts to commit any progress it made. 
 The task is not killed until `TASK_MANAGER_TIMEOUT` + `TASK_MANAGER_TIMEOUT_GRACE_PERIOD` seconds have passed.

@@ -2,14 +2,14 @@
 
 = Monitoring {ControllerName}
 
-It is a best practice to monitor your hosts both from a system level as well as at the application level. 
+It is best practice to monitor your hosts both from a system level as well as at the application level. 
 System level monitoring would include information about disk I/O, RAM utilization, CPU utilization, and network traffic.
 
 For application level monitoring, {ControllerName} provides Prometheus-style metrics on an API endpoint `/api/v2/metrics`. 
 This can be used to monitor aggregate data about job status as well as subsystem performance such as for job output processing or job scheduling.
 For more information, see xref:assembly-controller-metrics[Metrics].
 
-Monitoring the actual CPU and memory use of your hosts is important because capacity management for instances does not dynamically view the resource use of hosts. 
+Monitoring the CPU and memory use of your hosts is important because capacity management for instances does not dynamically view the resource use of hosts. 
 The resource impact of automation varies based on what exactly the playbooks are doing.
 For example, many cloud or networking modules do most of the actual processing on the node running the Ansible playbook (the execution node), which can have a significantly different impact on {ControllerName} than running `yum update` across many hosts, where the execution node spends much of the time during this task waiting on results.
 
