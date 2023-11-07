@@ -22,10 +22,22 @@ This can be used to specify a preferred instance group on the job template or in
 * If you associate `group_a` with a job template and also associate the `default` group with its inventory, you allow the `default` group to be used as a fallback in case `group_a` gets out of capacity.
 * In addition, it is possible to not associate an instance group with one resource but designate another resource as the fallback. 
 For example, not associating an instance group with a job template and have it fall back to the inventory or the organization's instance group.
+
 This presents the following two examples:
 
 . Associating instance groups with an inventory (omitting assigning the job template to an instance group) allows the user to ensure that any playbook run against a specific inventory runs only on the group associated with it. 
 This useful in the situation where only those instances have a direct link to the managed nodes.
 . An administrator can assign instance groups to organizations. 
 This effectively allows the administrator to segment out the entire infrastructure and guarantee that each organization has capacity to run jobs without interfering with any other organization's ability to run jobs.
++
+An administrator can assign multiple groups to each organization, as in the following scenario:
++
+* There are three instance groups: _A_, _B_, and _C_. 
+There are two organizations: _Org1_ and _Org2_.
+* The administrator assigns group _A_ to _Org1_, group _B_ to _Org2_ and then assign group _C_ to both _Org1_ and _Org2_ as an overflow for any extra capacity that may be needed.
+* The organization administrators are then free to assign inventory or job templates to whichever group they want, or let them inherit the default order from the organization.
 
+image::ag-instance-groups-scenarios.png[Instance groups scenarios]
+
+Arranging resources this way offers you flexibility.
+You can also create instance groups with only one instance, allowing you to direct work towards a very specific Host in the controller cluster.
