@@ -61,4 +61,5 @@ TASK [ansible.automation_platform_installer.check_config_static : Validate mesh 
 ok: [126-addr.tatu.home -> localhost] => {"changed": false, "mesh": {"110-addr.tatu.home": {"node_type": "execution", "peers": [], "receptor_control_filename": "receptor.sock", "receptor_control_service_name": "control", "receptor_listener": true, "receptor_listener_port": 8928, "receptor_listener_protocol": "tcp", "receptor_log_level": "info"}, "126-addr.tatu.home": {"node_type": "control", "peers": ["110-addr.tatu.home"], "receptor_control_filename": "receptor.sock", "receptor_control_service_name": "control", "receptor_listener": false, "receptor_listener_port": 27199, "receptor_listener_protocol": "tcp", "receptor_log_level": "info"}}}
 ----
 
-After you upgrade from {ControllerName} 4.0 or earlier, the legacy `instance_group_` member most likely has the awx code installed, which causes that node to be placed in the `automationcontroller` group.
+After you upgrade from {ControllerName} 4.0 or earlier, the legacy `instance_group_` member likely has the awx code installed.
+This places that node in the `automationcontroller` group.

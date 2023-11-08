@@ -2,14 +2,14 @@
 
 = Creating a container group
 
-A `ContainerGroup` is a type of `InstanceGroup` that has an associated credential that allows for connecting to an OpenShift cluster. 
+A `ContainerGroup` is a type of `InstanceGroup` that has an associated credential that enables you to connect to an OpenShift cluster. 
 
 .Prerequisites
 
 * A namespace that you can launch into.
-Every cluster has a "default" namespace, but you might want to use a specific namespace).
-* A service account that has the roles that allow it to launch and manage pods in this namespace.
-* If you are using {ExecEnvShort}s in a private registry, and have a container registry credential associated to them in {ControllerName}, the service account also needs the roles to get, create, and delete secrets in the namespace. 
+Every cluster has a "default" namespace, but you can use a specific namespace.
+* A service account that has the roles that enable it to launch and manage pods in this namespace.
+* If you are using {ExecEnvShort}s in a private registry, and have a container registry credential associated with them in {ControllerName}, the service account also needs the roles to get, create, and delete secrets in the namespace. 
 If you do not want to give these roles to the service account, you can pre-create the `ImagePullSecrets` and specify them on the pod spec for the `ContainerGroup`. 
 In this case, the {ExecEnvShort} should not have a container registry credential associated, or {ControllerName} attempts to create the secret for you in the namespace.
 * A token associated with that service account. 
