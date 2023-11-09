@@ -18,7 +18,7 @@ For more information about registry login, see link:https://access.redhat.com/Re
 +
 [NOTE]
 =====
-The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is 2.3.20230221, pull the operational image with tag {ImageRef} to upgrade to version {ImageRef}.
+The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is {PrevImageRef}, pull the operational image with tag {ImageRef} to upgrade to version {ImageRef}.
 =====
 +
 [literal, options="nowrap" subs="+attributes"]
@@ -26,3 +26,8 @@ The Ansible on Clouds operational image tag must match the version that you want
 $ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
 $ docker pull $IMAGE --platform=linux/amd64
 ----
+
+[NOTE]
+====
+If your foundation deployment version is not {ImageRef}-00, refer to the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/ansible-automation-platform-from-gcp-release-notes/assembly-gcp-release-notes-24[Previous version listing] to search the tables for a matching deployment version, in the column *Ansible on Clouds version*, and find the corresponding operational image to use, in the column *Ansible-on-clouds-ops container image*, for the IMAGE environment variable.
+====
