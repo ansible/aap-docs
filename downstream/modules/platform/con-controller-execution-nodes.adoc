@@ -12,8 +12,8 @@ If monitoring data reveals the node to be over-used, decreasing the capacity adj
 
 Vertically scaling execution increases the number of concurrent jobs an instance can run. 
 
-One disadvantage is that concurrently running jobs on the same execution node, while isolated from each other (in the sense that they cannot access the other's data) can impact the other's performance, if a particular job is very resource-consumptive and overwhelms the node to the extent that it degrades performance of the entire node. 
+One disadvantage is that concurrently running jobs on the same execution node, while isolated from each other, and unable to access the other's data, can impact the other's performance. For example, if a particular job is very resource-consumptive and overwhelms the node it can degrade the performance of the entire node. 
 
-Horizontal scaling the execution plane, for example, by deploying more execution nodes, can provide additional isolation of workloads, and enable administrators to assign different instances to different instance groups, which can then be assigned to Organizations, Inventories, or Job Templates. 
-This, for example, might enable an instance group that can only be used for running jobs against a “production” Inventory. 
-In this way jobs for development do not end up eating up capacity and causing higher priority jobs to queue waiting for capacity.
+Horizontally scaling the execution plane, for example, by deploying more execution nodes, can provide additional isolation of workloads, and enable administrators to assign different instances to different instance groups, which can then be assigned to Organizations, Inventories, or Job Templates. 
+This might enable an instance group that can only be used for running jobs against a “production” Inventory. 
+In this way, jobs for development do not end up eating up capacity and causing higher priority jobs to queue waiting for capacity.
