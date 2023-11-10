@@ -7,7 +7,7 @@ running jobs, thus reducing memory consumption by PostgreSQL.
 
 Each job in {ControllerName} has a _worker_ process, called the dispatch worker, on the control node that started the process.
 
-The dispatch worker:
+The dispatch worker completes the following actions:
 
 * Submits the work to the execution node through the Receptor.
 * Consumes the output of the job. 
@@ -16,7 +16,7 @@ The dispatch worker:
 The dispatch worker is also responsible for noticing if the job has been canceled by the user to then cancel the receptor work unit. 
 In the past, the worker maintained multiple open database connections per job. 
 
-This caused used two main problems:
+This caused two main problems:
 
 * PostgreSQL is configured with a maximum number of connections at startup, which the installer sets to 1024 by default. 
 However, given that the previous version of {ControllerName} had up to three database connections open per job, this means that the application began to experience errors attempting to open new database connections (for API calls or other essential processes) when there were more than 350 jobs running concurrently, unless users increased the maximum number of connections.
