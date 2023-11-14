@@ -51,7 +51,7 @@ You will use a simple playbook to launch the automation with sleep defined to al
         dest: "{{ myfile }}_write"
         content: |
           This is the file I've just written to.
-
+          
     - name: "Read written out file..."
       ansible.builtin.debug:
         msg: "{{ lookup('file', '{{ myfile }}_write') }}"
