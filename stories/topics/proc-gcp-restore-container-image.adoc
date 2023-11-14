@@ -1,0 +1,28 @@
+[id="proc-gcp-restore-pull-container-image_{context}"]
+
+= Pulling the ansible-on-clouds-ops container image
+
+.Procedure
+* Pull the docker image for the `ansible-on-clouds-ops` container with the same tag as the backup was created with. If you are unsure of the version backed up, you can look in the backup json file for the key *restore_properties.aoc_version*.
++
+[NOTE]
+====
+Before pulling the docker image, ensure you are logged in to {Registry} using docker. Use the following command to login to {Registry}. 
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ docker login {Registry}
+----
+For more information about registry login, see link:https://access.redhat.com/RegistryAuthentication[Registry Authentication]
+====
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
+$ docker pull $IMAGE --platform=linux/amd64
+----
+
+[NOTE]
+====
+If your backup version is not {ImageRef}-00, refer to the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/ansible-automation-platform-from-gcp-release-notes/assembly-gcp-release-notes-24[Previous version listing] to search the tables for a matching version, in the column *Ansible on Clouds version*, and find the corresponding operational image to use, in the column *Ansible-on-clouds-ops container image*, for the IMAGE environment variable.
+====
