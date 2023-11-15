@@ -29,7 +29,7 @@ curl -X POST \
     http://<controller>/api/o/token/ -i
 ----
 
-Where `refresh_token` is provided by `refresh_token` field of the access token above that. 
+Where `refresh_token` is provided by `refresh_token` field of the preceding access token. 
 
 The authentication information is of format `<client_id>:<client_secret>`, where `client_id` and `client_secret` are the corresponding fields of the underlying related application of the access token.
 
@@ -60,4 +60,4 @@ Strict-Transport-Security: max-age=15768000
 
 The refresh operation replaces the existing token by deleting the original and then immediately creating a new token with the same scope and related application as the original one. 
 
-Verify that new token is present and the old one is deleted in the `/api/v2/tokens/` endpoint.
+Verify that the new token is present and the old one is deleted in the `/api/v2/tokens/` endpoint.
