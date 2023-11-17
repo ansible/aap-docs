@@ -10,11 +10,29 @@ ifdef::context[:parent-context: {context}]
 
 Red Hat Ansible private partner automation hub enables Red Hat partners to curate, host, and serve their own Ansible content to their consultants, customers, or users. Private partner automation hub gives partners the ability to serve content to multiple different parties simultaneously using comprehensive role-based access controls. This offering is designed to help partners expedite their solutions using Ansible's proven automation technology.
 
-This guide contains a collection of Ansible playbooks that install a containerized private partner automation hub. You can choose from two types of installation, based on your organization's needs:
+This guide contains a collection of Ansible playbooks that install a containerized private partner automation hub. You can choose from two types of installation based on your organization's needs:
 
 * a xref:ppah-install-dev[development option]
 * a xref:ppah-install-ha[production option]
 
+.Prerequisites
+
+* A RHEL 9.2 based host. A minimal OS base install is recommended.
+* A non-root user for the RHEL host, with sudo or other Ansible supported privilege escalation (sudo recommended). This user is responsible for the installation of the containerized {PlatformNameShort}.
+* It is recommended to set up an *SSH public key authentication* for the non-root user. For guidelines on setting up an SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
+* SSH keys are only required when installing on remote hosts. If doing a self contained local VM based installation, you can use *ansible_connection: local* as per the example which does not require SSH.
+
+== System requirements
+
+Your system must meet the following minimum system requirements to install and run private partner automation hub. 
+
+[cols=2]
+|======================
+| Memory     | 16Gb RAM
+| CPU        | 4 CPU   
+| Disk space | 40Gb    
+| Disk IOPs  | 1500    
+|======================
 
 include::hub/proc_ppah-pre-install.adoc[leveloffset=+1]
 //include::platform/proc-preparing-the-rhel-host-for-containerized-installation.adoc[leveloffset=+1]
