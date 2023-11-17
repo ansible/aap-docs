@@ -4,7 +4,7 @@
 
 SAML enables the exchange of authentication and authorization data between an Identity Provider (IdP - a system of servers that provide the Single Sign On service) and a service provider, in this case, {ControllerName}. 
 
-You can configure {ControllerName} to talk with SAML to authenticate (create/login/logout) {ControllerName} users. 
+You can configure {ControllerName} to communicate with SAML to authenticate (create/login/logout) {ControllerName} users. 
 You can embed User, Team, and Organization membership in the SAML response to {ControllerName}.
 
 image::ag-configure-auth-saml-topology.png[SAML topology]
@@ -19,7 +19,7 @@ To authenticate users through RHSSO (keycloak), see link:https://www.ansible.com
 +
 [NOTE]
 ====
-The *SAML Assertion Consume Service (ACS) URL* and *SAML Service Provider Metadata URL* fields are pre-populated and are non-editable. Contact the IdP administrator and provide the information contained in these fields
+The *SAML Assertion Consume Service (ACS) URL* and *SAML Service Provider Metadata URL* fields are pre-populated and are non-editable. Contact the IdP administrator and provide the information contained in these fields.
 ====
 . Click btn:[Edit] and set the *SAML Service Provider Entity ID* to be the same as the *Base URL* of the {ControllerName} host field, found in the *Miscellaneous System settings* screen.
 You can view it through the API in the `/api/v2/settings/system`, under the `CONTROLLER_BASE_URL` variable. 
@@ -300,13 +300,13 @@ The following attributes are valid in this field:
 ** `is_superuser_value`: Specifies one or more values required for `is_superuser_attr` that is required for the user to be a superuser.
 ** `remove_superusers`: Boolean indicating if the superuser flag should be removed for users or not. 
 This defaults to `true`. 
-** `is_system_auditor_role`: Specifies one or more SAML roles which will grant a user the system auditor flag
-** `is_system_auditor_attr`: Specifies a SAML attribute which will grant a user the system auditor flag
+** `is_system_auditor_role`: Specifies one or more SAML roles which will grant a user the system auditor flag.
+** `is_system_auditor_attr`: Specifies a SAML attribute which will grant a user the system auditor flag.
 ** `is_system_auditor_value`: Specifies one or more values required for `is_system_auditor_attr` that is required for the user to be a system auditor.
 ** `remove_system_auditors`: Boolean indicating if the `system_auditor` flag should be removed for users or not. 
 This defaults to `true`. 
 +
-The `role` and `value` fields are lists and are _or_ logic. 
+The `role` and `value` fields are lists and are 'OR' logic. 
 If you specify two roles: [ “Role 1”, “Role 2” ] and the SAML user has either role, the logic considers them to have the required role for the flag.
 This is the same with the `value` field, if you specify: [ “Value 1”, “Value 2”] and the SAML user has either value for their attribute the logic considers their attribute value to have matched.
 +
@@ -356,7 +356,7 @@ The following table describes how the logic works:
 + 
 Each time a SAML user authenticates to {ControllerName}, these checks are performed and the user flags are altered as needed.
 If `System Administrator` or `System Auditor` is set for a SAML user within the UI, the SAML adapter overrides the UI setting based on the preceding rules. 
-If you prefer that the user flags for SAML users do not get removed when a SAML user logs in, you can set the `remove_`flag to `false`. 
+If you prefer that the user flags for SAML users do not get removed when a SAML user logs in, you can set the `remove_` flag to `false`. 
 With the `remove` flag set to `false`, a user flag set to `true` through either the UI, API or SAML adapter is not removed. 
 However, if a user does not have the flag, and the preceding rules determine the flag should be added, it is added, even if the flag is `false`.
 +
