@@ -14,14 +14,9 @@ Use the playbook `install_prod` to install a production-ready, highly available 
 The playbook requires the following parameters:
 
 * PostgreSQL
-** See xref:ppah-config[Database]
-* LDAP
-** hub_authentication_backend must be set to `ldap`
-** see xref:ppah-config[LDAP]
+* LDAP: hub_authentication_backend must be set to `ldap`
 * NFS 
-** See xref:ppah-config[Shared storage]
 
-NOTE: See xref:ppah-online-offline-install[Online vs. Offline Installation] for instructions on fetching the container images. You can use the link:https://gitlab.cee.redhat.com/ansible/private-partner-automation-hub-installer/-/blob/main/all-in-one-sample-values.yml[Sample] as a reference.
 
 Below is an example of a configured YAML file:
 ----
@@ -56,6 +51,6 @@ hub_shared_data_path: "< FQDN of the NFS server >:< Share on the NFS server >"
 ----
 ansible-playbook -i </path/to/inventory> -e @</path/to/values> ansible.private_partner_automation_hub_installer.install_prod
 ----
-NOTE: The production option mandates a three-node installation, and installs automation hub on all hosts. Therefore, the `path/to/inventory` variable should be `node1.ansible.com`, `node2.ansible.com`, and `node3.ansible.com`.
+NOTE: The production option mandates a three-node installation, and installs automation hub on all hosts, so there is no need to assign the nodes to a group in the inventory file. 
 
 
