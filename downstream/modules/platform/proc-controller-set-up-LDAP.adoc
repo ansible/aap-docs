@@ -1,16 +1,16 @@
-[id="controller-set-up-LDAP-authentication"]
+[id="controller-set-up-LDAP"]
 
 = Setting up LDAP authentication
 
 When configured, a user who logs in with an LDAP username and password automatically gets an {ControllerName} account created for them and they can be automatically placed into organizations as either regular users or organization administrators.
 
 Users created through an LDAP login cannot change their username, first name, last name, or set a local password for themselves. 
-This is also tunable to restrict editing of other field names.
+You can also configure this to restrict editing of other field names.
 
 [NOTE]
 ====
 If the LDAP server you want to connect to has a certificate that is self-signed or signed by a corporate internal certificate authority (CA), 
-the CA certificate must be added to the system's trusted CAs. 
+you must add the CA certificate to the system's trusted CAs. 
 Otherwise, connection to the LDAP server results in an error that the certificate issuer is not recognized. 
 For more information, see link:https://access.redhat.com/solutions/5136201[How Do I Import CA Certificate (openldap, AD, IDM, FreeIPA) Required for LDAPS Integration?]. 
 If prompted, use your Red Hat customer credentials to login.
@@ -32,15 +32,16 @@ In this example, `CN=josie,CN=users,DC=website,DC=com` is the distinguished name
 +
 [NOTE]
 ====
-The `ldapsearch` utility is not automatically pre-installed with {ControllerName}. however, you can install it from the `openldap-clients` package.
+The `ldapsearch` utility is not automatically pre-installed with {ControllerName}. 
+However, you can install it from the `openldap-clients` package.
 ====
 +
-. In the {ControllerName} UI, click menu:Settings[] from the navigation panel.
+. From the navigation panel, select menu:Settings[] in the {ControllerName} UI.
 . Select *LDAP settings* in the list of *Authentication* options.
 +
 You do not need multiple LDAP configurations per LDAP server, but you can configure multiple LDAP servers from this page, otherwise, leave the server at *Default*.
 +
-The equivalent API endpoints show `AUTH_LDAP_*` repeated: `AUTH_LDAP_1_*`, `AUTH_LDAP_2_*`, …, `AUTH_LDAP_5_*` to denote server designations.
+The equivalent API endpoints show `AUTH_LDAP_*` repeated: `AUTH_LDAP_1_*`, `AUTH_LDAP_2_*`, `AUTH_LDAP_5_*` to denote server designations.
 . To enter or modify the LDAP server address, click btn:[Edit] and enter in the *LDAP Server URI* field using the same format as the one pre-populated in the text field.
 +
 [NOTE]
@@ -86,7 +87,7 @@ The third line specifies the key name where the user name is stored.
 +
 For multiple search queries, use the following correct syntax:
 +
-  [literal, options="nowrap" subs="+attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 [
   [
@@ -109,7 +110,7 @@ For multiple search queries, use the following correct syntax:
 +
 . In the *LDAP Group Search* text field, specify which groups to search and how to search them. In this example, use:
 +
-  [literal, options="nowrap" subs="+attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 [
 "dc=example,dc=com",
@@ -125,8 +126,7 @@ For multiple search queries, use the following correct syntax:
 . Enter the user attributes in the *LDAP User Attribute Map* the text field. 
 In this example, use:
 +
-+
-  [literal, options="nowrap" subs="+attributes"]
+[literal, options="nowrap" subs="+attributes"]
 ----
 {
 "first_name": "givenName",
@@ -136,9 +136,38 @@ In this example, use:
 ----
 +
 The previous example retrieves users by last name from the key `sn`. 
-You can use the same LDAP query for the user to figure out what keys they are stored under.
+You can use the same LDAP query for the user to determine what keys they are stored under.
 +
+Depending on the selected *LDAP Group Type*, different parameters are available in the *LDAP Group Type Parameters* field to account for this. 
+`LDAP_GROUP_TYPE_PARAMS` is a dictionary that is converted by {ControllerName} to `kwargs` and passed to the *LDAP Group Type* class selected. 
+There are two common parameters used by any of the *LDAP Group Type*; `name_attr` and `member_attr`. 
+Where `name_attr defaults` to cn and `member_attr` defaults to member:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+{"name_attr": "cn", "member_attr": "member"}
+----
++
+To determine what parameters a specific *LDAP Group Type* expects, see the link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django_auth_ldap] documentation around the classes `init` parameters.
++
+. Enter the user profile flags in the *LDAP User Flags by Group* text field. 
+The following example uses the syntax to set LDAP users as "Superusers" and "Auditors":
++
+[literal, options="nowrap" subs="+attributes"]
+----
+{
+"is_superuser": "cn=superusers,ou=groups,dc=website,dc=com",
+"is_system_auditor": "cn=auditors,ou=groups,dc=website,dc=com"
+}
+----
++
+. For more information on completing the mapping fields, *LDAP Organization Map* and *LDAP Team Map*, see the [ADD XREF]LDAP Organization and Team Mapping section.
+. Click btn:[Save].
 
+[NOTE]
+====
+{ControllerNameStart} does not actively sync users, but they are created during their initial login. To improve performance associated with LDAP authentication, see LDAP authentication performance tips at the end of this chapter.
+====
 
 
 
