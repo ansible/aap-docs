@@ -2,7 +2,7 @@
 
 = Setting up LDAP authentication
 
-When configured, a user who logs in with an LDAP username and password automatically gets an {ControllerName} account created for them and they can be automatically placed into organizations as either regular users or organization administrators.
+When configured, a user who logs in with an LDAP username and password automatically has an {ControllerName} account created for them and can be automatically placed into organizations as either regular users or organization administrators.
 
 Users created through an LDAP login cannot change their username, first name, last name, or set a local password for themselves. 
 You can also configure this to restrict editing of other field names.
@@ -20,7 +20,7 @@ If prompted, use your Red Hat customer credentials to login.
 
 . Create a user in LDAP that has access to read the entire LDAP structure.
 . Use the `ldapsearch`` command to test if you can make successful queries to the LDAP server.
-This is a command line tool that you can install on the {ControllerName} system's command line as well as on other Linux and OSX systems.
+You can install this tool from {ControllerNames}'s system command line, and by using other Linux and OSX systems.
 +
 .Example
 +
@@ -50,6 +50,7 @@ You can specify multiple LDAP servers by separating each with spaces or commas. 
 ====
 +
 . Enter the password to use for the binding user in the *LDAP Bind Password* text field. 
+For more information on LDAP variables, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html/red_hat_ansible_automation_platform_installation_guide/appendix-inventory-files-vars#ref-hub-variables[Ansible automation hub variables].
 . Click to select a group type from the *LDAP Group Type* menu.
 +
 The LDAP group types that are supported by {ControllerName} use the underlying link:https://django-auth-ldap.readthedocs.io/en/latest/groups.html#types-of-groups[django-auth-ldap library].
@@ -57,7 +58,7 @@ To specify the parameters for the selected group type, see step 15.
 . The *LDAP Start TLS* is disabled by default. 
 To enable TLS when the LDAP connection is not using SSL, set the toggle to *On*.
 . Enter the distinguished name in the *LDAP Bind DN* text field to specify the user that {ControllerName} uses to connect (Bind) to the LDAP server. 
-*  If that name is stored in key `sAMAccountName`, the *LDAP User DN Template* populates with `(sAMAccountName=%(user)s)`. 
+*  If that name is stored in key `sAMAccountName`, the *LDAP User DN Template* is populated from `(sAMAccountName=%(user)s)`. 
 Active Directory stores the username to `sAMAccountName`. 
 Similarly, for OpenLDAP, the key is `uid` and the line becomes `(uid=%(user)s)`.
 . Enter the distinguished group name to enable users within that group to access {ControllerName} in the *LDAP Require Group* field, using the same format as the one shown in the text field, `CN=controller Users,OU=Users,DC=website,DC=com`.
@@ -166,9 +167,6 @@ The following example uses the syntax to set LDAP users as "Superusers" and "Aud
 
 [NOTE]
 ====
-{ControllerNameStart} does not actively sync users, but they are created during their initial login. To improve performance associated with LDAP authentication, see LDAP authentication performance tips at the end of this chapter.
+{ControllerNameStart} does not actively synchronize users, but they are created during their initial login. 
+To improve performance associated with LDAP authentication, see xref:controller-LDAP-authentication[LDAP authentication performance tips] at beginning of this chapter.
 ====
-
-
-
-

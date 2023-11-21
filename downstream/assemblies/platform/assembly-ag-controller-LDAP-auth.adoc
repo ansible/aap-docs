@@ -4,7 +4,7 @@
 
 Administrators use LDAP as a source for account authentication information for {ControllerName} users. 
 User authentication is provided, but not the synchronization of user permissions and credentials. 
-Organization membership, as well as the organization administrator, and team memberships can be synchronized.
+Organization membership and team membership can be synchronized by the organization administrator.
 
 .LDAP authentication performance tips
 
@@ -12,11 +12,11 @@ By default, when an LDAP user authenticates, all user-related attributes are upd
 In some environments, you can skip this operation due to performance issues. 
 To avoid it, you can disable the option *AUTH_LDAP_ALWAYS_UPDATE_USER*.
 For more information, see link:https://access.redhat.com/solutions/5823061[How can I prevent the LDAP attributes to be updated on each login?].
-Note that new users are still created and get their attributes pushed to the database on their first login.
+Note that new users are created and their attributes are pushed to the database on their first login.
 
 [WARNING]
 ====
-With this option set to `False`, no changes to LDAP user's attributes are updated. 
+Set this option to `false` to not update the LDAP user's attributes. 
 Attributes are only updated the first time the user is created.
 ====
 
