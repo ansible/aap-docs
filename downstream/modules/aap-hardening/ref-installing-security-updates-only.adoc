@@ -1,0 +1,24 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-aap-security-use-cases.adoc
+
+[id="ref-installing-security-updates-only_{context}"]
+
+= Installing security updates only
+
+[role="_abstract"]
+
+For organizations with a policy requiring that all RPMs including security errata be kept up to date, the following playbook might be used in a regularly scheduled job template.
+
+-----
+---
+- name: Install all security-related RPM updates
+  hosts: target_hosts
+  become: true
+
+  tasks:
+    - name: Install latest RPMs with security errata
+      ansible.builtin.dnf:
+        name: '*'
+        security: true
+        state: latest
+-----

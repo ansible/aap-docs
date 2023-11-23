@@ -1,0 +1,23 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-aap-security-use-cases.adoc
+
+[id="ref-keeping-everything-up-to-date_{context}"]
+
+= Keeping everything up to date
+
+[role="_abstract"]
+
+For some RHEL servers, such as lab or other non-production systems, there may be a desire to install all available patches on a regular cadence.  The following example playbook might be used in a job template that is scheduled to run weekly, and will update the system with all of the latest RPMs.
+
+-----
+---
+- name: Install all available RPM updates
+  hosts: target_hosts
+  become: true
+
+  tasks:
+    - name: Install latest RPMs
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+-----

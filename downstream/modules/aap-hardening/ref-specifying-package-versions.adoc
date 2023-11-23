@@ -1,0 +1,38 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-aap-security-use-cases.adoc
+
+[id="ref-specifying-package-versions_{context}"]
+
+= Specifying package versions
+
+[role="_abstract"]
+
+For production systems, a well-established configuration management practice is deploying only known, tested combinations of software to help ensure systems are configured correctly and perform as expected.  This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications.  The following example playbook specifies certain RPM versions to be installed when the target host uses the RHEL 9 operating system, and will not take action if the specified versions are already in place or if a different version of RHEL is installed.
+
+-----
+---
+- name: Install specific RPM versions
+  hosts: target_hosts
+  gather_facts: true
+  become: true
+
+  vars:
+    
+  tasks:
+    - name: Get list of services
+      ansible.builtin.service_facts:
+
+    - name: Stop httpd service if currently running
+      ansible.builtin.service:
+        name: httpd
+        state: stoped
+      when: ansible_facts.services['httpd'].state == "running"
+-----
+
+NOTE: because the RPM versions are specified, if a RHEL server has a newer version of an RPM installed, it will be downgraded on that system. 
+
+// More
+
+Complex patching scenarios
+
+// More content
