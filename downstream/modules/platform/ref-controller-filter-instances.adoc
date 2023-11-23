@@ -2,9 +2,9 @@
 
 = Filtering instances returned by the dynamic inventory sources in the controller
 
-By default, the dynamic inventory sources in {ControllerName} (AWS, Google, etc) return all instances available to the cloud credentials being used. 
+By default, the dynamic inventory sources in {ControllerName} (such as AWS and Google) return all instances available to the cloud credentials being used. 
 They are automatically joined into groups based on various attributes. 
-For example, AWS instances are grouped by region, by tag name, value, and security groups, etc. 
+For example, AWS instances are grouped by region, by tag name, value, and security groups. 
 To target specific instances in your environment, write your playbooks so that they target the generated group names. 
 
 For example:
@@ -21,4 +21,4 @@ You can also use the `Limit` field in the Job Template settings to limit a playb
 The syntax is the same as the `--limit parameter` on the ansible-playbook command line.
 
 You can also create your own groups by copying the auto-generated groups into your custom groups. 
-Make sure that the `Overwrite` option is disabled on your dynamic inventory source, otherwise subsequent synchronization operations will delete and replace your custom groups.
+Make sure that the `Overwrite` option is disabled on your dynamic inventory source, otherwise subsequent synchronization operations delete and replace your custom groups.
