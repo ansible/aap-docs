@@ -1,0 +1,22 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-aap-security-use-cases.adoc
+
+[id="con-eda-security-related-events{context}"]
+
+= {EDAName} for reacting to security-related events
+
+[role="_abstract]
+
+Ansible security automation is about integrating security technologies with each other. One part of this challenge is the technical complexity: different products, interfaces, workflows, etc. But, another equally important part is getting the processes of different teams in the security organization aligned. One solution to this challenge is the use of Event-driven automation.
+
+Event-driven automation is the process of responding automatically to changing conditions in an IT environment, to help resolve issues faster and reduce routine, repetitive tasks. {EDAName} connects sources of events with corresponding actions using rules. Its decision-making capabilities receive an “event” from a monitoring tool and trigger the required action. Ansible Rulebooks define the source of the event and explain the action to take—in the form of “if-this-then-that” instructions—when the event is encountered. Ansible Rulebooks map event conditions to an action, like running a playbook or directly executing a module.
+
+We will carry that concept further into security-related events for Event-Driven Security through Ansible. Any security risk must be promptly identified and addressed. This requirement is one of the reasons for an extensive set of monitoring tools. When these tools flag an issue or concern, an event-driven automation solution can deliver log sources back to a security information and event management (SIEM) system for human intervention and triage or even to resolve the issue. Automated event-driven threat response can be as simple as shutting ports, IPs or devices when a risk is encountered and notifies the Security Operations Center (SOC) that the risk exists.
+
+For example, if your event source is watching network routers and discovers that a router is not responding, it recognizes this as an event. Event-Driven Ansible receives this event and matches the event to the condition defined by the rule in the Rulebook, which in this case would be when an event indicating “no response” is encountered, reset the router. Event-Driven Ansible triggers the instructions in the Rulebook and the router is reset, restoring it to normal function. This can happen at any time, day or night, even when the network engineer is asleep.
+
+Let’s dive deeper into more examples with responses to network intrusions and log events.
+
+
+
+
