@@ -3,7 +3,8 @@
 = Pulling the ansible-on-clouds-ops container image
 
 .Procedure
-* Pull the Docker image for Ansible on Clouds operational container with the same tag as the version you want to upgrade to.
+* Pull the Docker image for Ansible on Clouds operational container with the tag based on the version you want to upgrade to.
+If you are unsure of the version you have deployed and the one you need to upgrade to, see xref:ref-aap-using-playbooks[Command Generator] and playbook *gcp_get_aoc_version* for more information on finding the current version of Ansible on Clouds deployment and the version to upgrade to.
 +
 [NOTE]
 ====
@@ -18,7 +19,7 @@ For more information about registry login, see link:https://access.redhat.com/Re
 +
 [NOTE]
 =====
-The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is 2.3.20230221, pull the operational image with tag {ImageRef} to upgrade to version {ImageRef}.
+The Ansible on Clouds operational image tag must match the version that you want to upgrade to. For example, if your foundation deployment version is {PrevImageRef}, pull the operational image with tag {ImageRef} to upgrade to version {ImageRef}.
 =====
 +
 [literal, options="nowrap" subs="+attributes"]
@@ -26,3 +27,8 @@ The Ansible on Clouds operational image tag must match the version that you want
 $ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
 $ docker pull $IMAGE --platform=linux/amd64
 ----
+
+[NOTE]
+====
+If your foundation deployment version is not {ImageRef}-00, refer to the tables on the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/ansible-automation-platform-from-gcp-release-notes/assembly-gcp-release-notes-24[Released versions] page for a matching deployment version, in the *Upgrade from version* column. Find the corresponding operational image to use, in the *Ansible-on-clouds-ops container image* column, for the IMAGE environment variable.
+====
