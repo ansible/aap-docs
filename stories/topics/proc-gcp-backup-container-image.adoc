@@ -4,6 +4,7 @@
 
 .Procedure
 * Pull the docker image for the `ansible-on-clouds-ops` container with the same tag as the foundation deployment.
+If you are unsure of the version you have deployed, see xref:ref-aap-using-playbooks[Command Generator] and playbook *gcp_get_aoc_version* for more information on finding the current version of Ansible on Clouds deployment.
 +
 [NOTE]
 ====
@@ -21,3 +22,8 @@ For more information about registry login, see link:https://access.redhat.com/Re
 $ export IMAGE={Registry}/ansible-on-clouds/{OpImageName}
 $ docker pull $IMAGE --platform=linux/amd64
 ----
+
+[NOTE]
+====
+If your foundation deployment version is not {ImageRef}-00, refer to the tables on the link:https://access.redhat.com/documentation/en-us/ansible_on_clouds/2.x/html/ansible-automation-platform-from-gcp-release-notes/assembly-gcp-release-notes-24[Released versions] page for a matching deployment version, in the *Ansible on Clouds version* column. Find the corresponding operational image to use, in the *Ansible-on-clouds-ops container image* column, for the IMAGE environment variable.
+====

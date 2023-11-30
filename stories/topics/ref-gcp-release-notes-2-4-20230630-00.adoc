@@ -1,0 +1,42 @@
+[id="gcp-release-notes-2-4-20230630-00_{context}"]
+
+= Self-managed version 2.4.20230630-00 (Aug 3, 2023)
+
+[cols="15%,15%,15%,15%,15%,25%",options="header"]
+|====
+| Ansible on Clouds version | AAP version | Controller UI version | Hub UI version | Upgrade from version | Ansible-on-clouds-ops container image
+| 2.4.20230630-00 | 2.4 | 4.4.0 | 4.7.1 | 2.4.20230221-00-00 | registry.redhat.io/ansible-on-clouds/ansible-on-clouds-ops-rhel9:2.4.20230630
+|====
+
+[discrete]
+== New features and enhancements
+
+* Support for {PlatformNameShort} 2.4 has been added.
+* Added internal encryption to the web servers.
+** Addition of custom certificates is now supported.
+* Support has been added for custom tagging and labelling.
+** Support has been added to GCP to add or remove tag support for resources owned by the deployment.
+* {AAPonGCP} now has operational playbooks to add and remove extension nodes.
+* There are improvements to backup and restore functionality.
+** Support has been added for taking multiple backups.
+** An operational playbook has been added to list available backups.
+** An operational playbook has been added to delete a selected backup.
+** The capability to restore an existing VPC has been added.
+* Operational functionality to check the current version has been added.
+** Operational playbooks now check to ensure that the {PlatformNameShort} environment they are operating upon is at the same version before beginning their operation.
+
+[discrete]
+== Security fixes
+
+[discrete]
+== Bug fixes
+
+[discrete]
+== Deprecated and removed features
+
+Some features available in previous releases have been deprecated or removed. Deprecated functionality is still included in {PlatformNameShort} and continues to be supported; however, it will be removed in a future release of this product and is not recommended for new deployments.
+The following is a list of major functionality deprecated and removed within {PlatformNameShort} 2.4:
+
+* On-premise component Automation Services Catalog is now removed from {PlatformNameShort} 2.4 onwards.
+* With the {PlatformNameShort} 2.4 release, the Execution Environment container image for Ansible 2.9 (ee-29-rhel-8) is no longer loaded into the {ControllerName} configuration by default.
+* The process of deploying the application using a new VPC has been deprecated, and the functionality will be removed from {AAPonGCP} in a future release.
