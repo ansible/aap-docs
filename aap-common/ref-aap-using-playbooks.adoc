@@ -48,7 +48,7 @@ A _failed_ not equal zero indicates an issue with Ansible on Cloud deployment.
 [discrete]
 == gcp_manage_labels
 
-This playbook adds/removes labels to the deployment.
+This playbook adds labels to or removes labels from the deployment.
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -71,9 +71,12 @@ Command generator template:
 docker run --rm $IMAGE command_generator gcp_manage_labels -d <deployment_name> -c <cloud_credentials_path> --extra-vars 'gcp_compute_region=<gcp_compute_region> gcp_compute_zone=<gcp_compute_zone> gcp_labels=<gcp_labels>'
 ===============================================
 ----
-To add or update labels, the parameter `gcp_labels` is a comma separated list of `key=value` pairs. For example: gcp_labels="key1=value1,key2=value2"
+To add labels, the `gcp_labels` parameter is a comma separated list of `key=value` pairs.
+For example: `gcp_labels="key1=value1,key2=value2"`.
+To add or update labels, add or modify `key=value` pairs.
 
-To remove labels, the parameter `gcp_labels` is a list of comma separated `keys`. For example: gcp_labels="key1,key2"
+To remove labels, the `gcp_labels` parameter is a list of comma separated `keys`.
+For example: gcp_labels="key1,key2".
 
 Launching this command by replacing the parameters generates a new command to launch and outputs:
 
