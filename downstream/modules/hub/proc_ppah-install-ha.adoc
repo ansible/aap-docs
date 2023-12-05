@@ -11,39 +11,11 @@ Use the playbook `install_prod` to install a production-ready, highly available 
 * LDAP server
 * NFS server
 
-The playbook requires the following parameters:
+The playbook requires the following parameters. For more detail, refer to the `production-sample-values` template in the tarball.
 
 * PostgreSQL
 * LDAP: hub_authentication_backend must be set to `ldap`
 * NFS 
-
-
-Below is an example of a configured YAML file:
-----
-# External PostgreSQL Params
-hub_pg_host: < FQDN of the PostgreSQL server >
-postgresql_admin_username: < User name of admin of the PostgreSQL server >
-postgresql_admin_password: < Password of admin of the PostgreSQL server >
-# LDAP params
-hub_authentication_backend: ldap
-hub_ldap_server_uri: "ldap://< FQDN of the LDAP server >:< Port of the LDAP server >"
-## The sample values are based on https://github.com/rroemhild/docker-test-openldap
-hub_ldap_bind_dn: cn=admin,dc=planetexpress,dc=com
-hub_ldap_bind_password: GoodNewsEveryone
-hub_ldap_user_search_base_dn: ou=people,dc=planetexpress,dc=com
-hub_ldap_group_search_base_dn: ou=people,dc=planetexpress,dc=com
-hub_ldap_extra_settings:
-  AUTH_LDAP_ALWAYS_UPDATE_USER: true
-  AUTH_LDAP_USER_ATTR_MAP__first_name: givenName
-  AUTH_LDAP_USER_ATTR_MAP__last_name: sn
-  AUTH_LDAP_USER_ATTR_MAP__email: mail
-  AUTH_LDAP_MIRROR_GROUPS: true
-  AUTH_LDAP_USER_FLAGS_BY_GROUP__is_staff: "cn=ship_crew,ou=people,dc=planetexpress,dc=com"
-  AUTH_LDAP_USER_FLAGS_BY_GROUP__is_superuser: "cn=admin_staff,ou=people,dc=planetexpress,dc=com"
-# NFS Params
-hub_shared_data_path: "< FQDN of the NFS server >:< Share on the NFS server >"
-...
-----
 
 .Procedure
 
@@ -51,6 +23,11 @@ hub_shared_data_path: "< FQDN of the NFS server >:< Share on the NFS server >"
 ----
 ansible-playbook -i </path/to/inventory> -e @</path/to/values> ansible.private_partner_automation_hub_installer.install_prod
 ----
-NOTE: The production option mandates a three-node installation, and installs automation hub on all hosts, so there is no need to assign the nodes to a group in the inventory file. 
 
+[NOTE]
 
+====
+
+The production option mandates a three-node installation, and installs automation hub on all hosts, so there is no need to assign the nodes to a group in the inventory file.
+
+====
