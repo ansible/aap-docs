@@ -12,29 +12,38 @@ This workflow is controlled via the `bundle_install` variable.
 
 == Online installation
 
+Online installation is the default install scenario (`bundle_install: false`) and pulls the container images from `registry.redhat.io`, which requires authentication.
+
+.Procedure
+
+. Provide the registry username and password for authentication.
+----
+registry_username: foo@ansible.com
+registry_password: bar
+...
+----
+. Optional: as an alternative, you can use the internal registry (without authentication) as in the following example: 
+----
+registry_auth: false
+registry_url: registry-proxy.engineering.redhat.com
+registry_ns_aap: rh-osbs
+registry_ns_rhel: rh-osbs
+registry_tls_verify: false
+controller_image: 'ansible-automation-platform-23-controller-rhel8:latest'
+ee_29_image: 'ansible-automation-platform-23-ee-29-rhel8:latest'
+ee_minimal_image: 'ansible-automation-platform-23-ee-minimal-rhel8:latest'
+ee_supported_image: 'ansible-automation-platform-23-ee-supported-rhel8:latest'
+hub_image: 'ansible-automation-platform-23-hub-rhel8:latest'
+hub_web_image: 'ansible-automation-platform-23-hub-web-rhel8:latest'
+postgresql_image: 'rhel8-postgresql-13:latest'
+redis_image: 'rhel8-redis-6:latest'
+...
+----
+
 == Offline installation
 
 .Procedure
 
-. Export the container images from the registry before running the installer.
-+
-----
-$ ansible-playbook ansible.containerized_installer.bundle
-----
-+
-. Optional: The default decompression tool is gzip, but you can use pigz to reduce the execution time.
-+
-----
-$ ansible-playbook ansible.containerized_installer.bundle -e container_compress=pigz
-----
-+
-. By default, container images are pulled from the public registry. If you want to use images from `registry.redhat.io`, set extra variables to that command:
-+
-----
-$ ansible-playbook ansible.containerized_installer.bundle -e registry_auth=true -e registry_username=foo -e registry_password=bar
-----
-+
-You have created a `bundle/images` directory with all container images compressed into a tarball. 
 . Set `bundle_install: true` in in your Ansible configuration and `bundle_dir`` with the path to the bundle directory without the images subdirectory:
 ----
 $ ansible-playbook -i </path/to/inventory> ansible.containerized_installer.install -e bundle_install=true -e bundle_dir=$(pwd)/bundle
