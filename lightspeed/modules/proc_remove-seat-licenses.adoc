@@ -5,10 +5,12 @@
 = Removing seat licenses
 
 [role="_abstract"]
-You can remove users who no longer need to access {LightspeedShortName}, which makes licenses available for others to use.
-[NOTE]
+You can remove users who no longer need to access {LightspeedShortName}, which makes licenses available for others to use. When you remove a user, the Ansible user's {LightspeedShortName} seat license only is removed; it does not remove the user from your Red Hat Customer Portal organization. 
+
+[IMPORTANT]
 ====
-This task removes the Ansible user's {LightspeedShortName} seat license only; it does not remove the user from your Red Hat Customer Portal organization.
+To prevent deactivated RH-SSO users from accessing {LightspeedShortName}, you must remove their {LightspeedShortName} seat licenses. When RH-SSO users are deactivated, their {LightspeedShortName} seat licenses are not removed automatically. These users can continue accessing {LightspeedShortName} until the next time they are forced to reauthenticate with RH-SSO. Removing the users' seat licenses revokes their access to {LightspeedShortName} immediately. 
+
 ====
 
 .Procedure
