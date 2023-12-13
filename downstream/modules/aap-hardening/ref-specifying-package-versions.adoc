@@ -7,7 +7,7 @@
 
 [role="_abstract"]
 
-For production systems, a well-established configuration management practice is deploying only known, tested combinations of software to help ensure systems are configured correctly and perform as expected.  This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications.  The following example playbook specifies certain RPM versions to be installed when the target host uses the RHEL 9 operating system, and will not take action if the specified versions are already in place or if a different version of RHEL is installed.
+For production systems, a well-established configuration management practice is deploying only known, tested combinations of software to help ensure systems are configured correctly and perform as expected.  This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications.  The following example playbook installs a specific version of the httpd RPM and its dependencies when the target host uses the RHEL 9 operating system, and will not take action if the specified versions are already in place or if a different version of RHEL is installed.
 
 -----
 ---
@@ -17,22 +17,23 @@ For production systems, a well-established configuration management practice is 
   become: true
 
   vars:
+     httpd_packages_rhel9:
+      - httpd-2.4.53-11.el9_2.5
+      - httpd-core-2.4.53-11.el9_2.5
+      - httpd-filesystem-2.4.53-11.el9_2.5
+      - httpd-tools-2.4.53-11.el9_2.5
+      - mod_http2-1.15.19-4.el9_2.4
+      - mod_lua-2.4.53-11.el9_2.5
     
   tasks:
-    - name: Get list of services
-      ansible.builtin.service_facts:
-
-    - name: Stop httpd service if currently running
-      ansible.builtin.service:
-        name: httpd
-        state: stoped
-      when: ansible_facts.services['httpd'].state == "running"
+     - name: Install httpd and dependencies
+      ansible.builtin.dnf:
+        name: '{{ httpd_packages_rhel9 }}'
+        state: present
+        allow_downgrade: true
+    when:
+      - ansible_distribution == "RedHat"
+      - ansible_distribution_major_version == "9"
 -----
 
-NOTE: because the RPM versions are specified, if a RHEL server has a newer version of an RPM installed, it will be downgraded on that system. 
-
-// More
-
-Complex patching scenarios
-
-// More content
+NOTE: By setting `allow_downgrade`: *true*, if a newer version of any defined package is installed on the system, it will be downgraded to the specified version instead.
