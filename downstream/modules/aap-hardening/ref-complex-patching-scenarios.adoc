@@ -1,0 +1,26 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-aap-security-use-cases.adoc
+
+[id="ref-complex-patching-scenarios_{context}"]
+
+= Complex patching scenarios
+
+[role="_abstract"]
+
+In {PlatformNameShort}, multiple automation jobs can be chained together into workflows, which can be used to coordinate multiple steps in a complex patching scenario. 
+
+In the following example complex patching scenario, a workflow orchestrates taking virtual machine snapshots, patching the virtual machines, and creates a ticket when an error is encountered in the workflow: 
+
+. Run a project sync to ensure the latest playbooks are available.  In parallel, run an inventory sync to make sure the latest list of target hosts is available.
+. Take a snapshot of each target host.
+.. If the snapshot task fails, submit a ticket with the relevant information.
+. Patch each of the target hosts.
+.. If the patching task fails, restore the snapshot and submit a ticket with the relevant information.
+. Delete each snapshot where the patching task was successful.
+
+The following workflow visualization describes how the components of the example complex patching scenario are executed:
+
+image::aap-workflow-example.png[Workflow visualization for example complex patching scenario]
+
+.Additional resources
+For more information on workflows, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/controller-workflows[Workflows in {ControllerName}].
