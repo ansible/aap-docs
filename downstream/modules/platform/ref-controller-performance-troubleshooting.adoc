@@ -10,7 +10,7 @@
 *Long wait times for job output to load.*
 
 * Job output streams from the execution node where the ansible-playbook is actually run to the associated control node. Then the callback receiver serializes this data and writes it to the database. Relevant settings to observe and tune can be found in xref:con-controller-job-events-processing[Job Event Processing (Callback Receiver) Settings] and xref:ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}].
-* In general, to resolve this symptom it is important to observe the CPU and memory utilization of the control nodes. If CPU or memory utilization is very high, it is possible to either horizontally scale the control plane by deploying more virtual machines to be control nodes naturally spreads out work more, or to modify the number of jobs a control node will manage at a time. For more information, see xref:ref-capacity-settings-control-execution[Capacity settings for control and execution nodes ] for more information.
+* In general, to resolve this symptom it is important to observe the CPU and memory use of the control nodes. If CPU or memory use is very high, you can either horizontally scale the control plane by deploying more virtual machines to be control nodes naturally spreads out work more, or to modify the number of jobs a control node will manage at a time. For more information, see xref:ref-capacity-settings-control-execution[Capacity settings for control and execution nodes ] for more information.
 
 *What can I do to increase the number of jobs that {ControllerName} can run concurrently?*
 
@@ -22,7 +22,7 @@
 
 *Jobs run more slowly on {ControllerName} than on a local machine.*
 
-* Some additional overhead is expected, because {ControllerName} may be dispatching your job to a separate node. In this case, {ControllerName} is starting a container and running ansible-playbook there, serializing all output and writing it to a database. 
+* Some additional overhead is expected, because {ControllerName} might be dispatching your job to a separate node. In this case, {ControllerName} is starting a container and running ansible-playbook there, serializing all output and writing it to a database. 
 * Project update on launch and inventory update on launch behavior can cause additional delays at job start time.
 * Size of projects can impact how long it takes to start the job, as the project is updated on the control node and transferred to the execution node.
 Internal cluster routing can impact network performance. For more information, see xref:ref-controller-internal-cluster-routing[Internal cluster routing].
@@ -32,4 +32,4 @@ Internal cluster routing can impact network performance. For more information, s
 *Database storage does not stop growing.*
 
 * {ControllerNameStart} has a management job titled “Cleanup Job Details”. By default, it is set to keep 120 days of data and to run once a week. Job data can be voluminous. To reduce the amount of data in the database, you can shorten the retention time. For more information, see xref:proc-controller-remove-old-activity-stream[Removing Old Activity Stream Data].
-* Running the cleanup job will delete the data in the database. However, it is necessary that the database at some point performs its vacuuming operation which reclaims storage. See xref:ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for more information about database vacuuming.
+* Running the cleanup job deletes the data in the database. However, the database must at some point performs its vacuuming operation which reclaims storage. See xref:ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for more information about database vacuuming.
