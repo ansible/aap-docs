@@ -1,0 +1,92 @@
+:_content-type: PROCEDURE
+
+[id="multi-task-recs_{context}"]
+= Requesting code recommendations for multiple tasks
+
+You can request multitask code recommendations by entering a sequence of natural language task prompts in Ansible VS Code extension. In a YAML file, start a comment by using a Pound key (#), and separate each prompt by using Ampersand (&) symbols. 
+
+For example, to automate a multitask of installing PostgreSQL server and running the initial PostgreSQL setup command, you can enter the prompt `# Install postgresql-server & run postgresql-setup command`. The Ansible Lightspeed service reads the text, interacts with the {ibmwatsonxcodeassistant} models, and generates the code recommendations.
+
+.Prerequisites
+
+* You have an assigned seat license to access {LightspeedFullName}.
+* You have xref:configuring-with-code-assistant_lightspeed-user-guide[installed and configured Ansible VS Code extension].
+
+.Procedure
+
+. Log in to VS Code with your Red Hat account.
+. Create a new YAML file or use an existing YAML file.
+* Create a YAML file: 
+... Select menu:File[New Text File].
+... From the lower right of the screen, click *Plain Text*, and in the language mode, select *Ansible*. 
+... Save the file as a YAML file format extension (`.yml` or `.yaml`).
+* Use an existing YAML file: 
+... On the bottom right of the screen, click the existing language mode, and in the language mode settings, select *Ansible*. 
++
+NOTE: If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Langauge Mode[Ansible].
++
+. Verify that you see an entry for *Lightspeed* on the status bar at the lower right of VS Code.
++
+If *Ansible* is already selected as the desired language but the *Lightspeed* entry is not displayed, re-select *Ansible* as the language mode. The following illustration shows *Lightspeed* entry on the VS Code status bar. 
++
+
+.Ansible and Lightspeed set as selected language mode
+image::lightspeed-multitask-vs-code.png[Settings show Lightspeed as selected language mode]
+
+. Optional: If you see an error message about missing Ansible lint, you can install the missing module or disable it. Perform any one of the following tasks:
+* Install Ansible lint: For installation information, see the link:https://ansible.readthedocs.io/projects/lint/installing/[Installing] section of the Ansible Lint documentation. 
+* Disable Ansible lint: 
+... From the Activity bar, click the *Extensions* icon image:extensions-icon-vscode.png[Extensions].
+... From the *Installed* extensions list, select *Ansible*.
+... From the *Ansible* extension page, click the *Settings* icon and select *Extension Settings*.
+... Clear the *Ansible › Validation › Lint: Enabled* checkbox.   
+
+. Create a playbook or use an existing playbook. 
++
+For more information, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_creator_guide/index#creating-playbooks[Creating playbooks] in the {PlatformNameShort} Creator Guide.
+
+. In the playbook, provide the following information to request multitask code recommendations:
+... Start a new YAML file comment by entering a Pound key (#) at the correct indentation.
+... Add a detailed natural language prompt in a sequence, separating each task by using an Ampersand (&) symbol.
+For example, to automate the multitask of installing PostgreSQL server and running the PostgreSQL setup command, enter the following  natural language prompt `# Install postgresql-server & run postgresql-setup command`. 
+... Press *Enter* directly after the task description. Keep the cursor at the same location in your file, and wait for the code recommendation results to populate.
++
+The Ansible Lightspeed service is engaged, and it starts generating code recommendations for multiple tasks. 
++
+IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you are using a multitask prompt, the Ansible Lightspeed service takes a bit longer (number of tasks times 5 seconds) to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the Ansible Lightspeed service does not process your request.
++
+When the Ansible Lightspeed service is engaged, a *Lightspeed* processing status indicator is displayed in the lower right of the screen to denote that your code recommendation is being generated.
++
+image:lightspeed-task-in-progress.png[Lightspeed icon] 
+
+. Optional: If multitask code recommendations are not being generated, log out of VS Code and log in again using your Red Hat account. 
+
+. View your code recommendations and ensure that the recommendations match your task intent.
++
+The following illustration shows the code recommendations generated by the Ansible Lightspeed service for the multitask prompt *Install postgresql-server & run postgresql-setup command*:
+:
++
+image:lightspeed-multitask-requests.png[Lightspeed single task in progress] 
+
+. Accept or reject the code recommendations:
+* To accept a code recommendation, press *Tab*.
+* To reject a code recommendation, press *Esc*. 
++
+NOTE: If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. 
+
+. On the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results. 
++
+The following illustration shows the training matches found in existing Ansible Galaxy content for the task prompt multitask prompt *Install postgresql-server & run postgresql-setup command*:
++
+image::lightspeed-multitask-content-matches.png[training matches in existing content]
+
+. Click *Save* to save the code recommendation changes in your Ansible YAML file. 
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:troubleshooting-vscode_troubleshooting-lightspeed[Troubleshooting Ansible Visual Studio Code extension errors]
+* xref:troubleshooting-code-bot_troubleshooting-lightspeed[Troubleshooting {AnsibleCodeBot} errors]
+
+
+
