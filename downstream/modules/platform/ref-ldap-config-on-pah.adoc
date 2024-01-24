@@ -120,6 +120,8 @@ ldap_extra_settings:
 +
 * Use the following examples to grant or deny access based on LDAP group membership:
 ** To grant {PrivateHubName} access (for example, members of the `cn=pah-nosoupforyou,ou=groups,dc=example,dc=com` group):
+<<<<<<< HEAD
+=======
 +
 ----
 #ldapextras.yml
@@ -129,6 +131,17 @@ ldap_extra_settings:
 ...
 ----
 ** To deny {PrivateHubName} access (for example, members of the `cn=pah-nosoupforyou,ou=groups,dc=example,dc=com` group):
+>>>>>>> c7daa782 (As part of AAP-19350, typos in LDAP group corrected and steps reformatted (#966))
++
+----
+#ldapextras.yml
+---
+ldap_extra_settings:
+  AUTH_LDAP_REQUIRE_GROUP: 'cn=pah-nosoupforyou,ou=groups,dc=example,dc=com'
+...
+----
+<<<<<<< HEAD
+** To deny {PrivateHubName} access (for example, members of the `cn=pah-nosoupforyou,ou=groups,dc=example,dc=com` group):
 +
 ----
 #ldapextras.yml
@@ -137,6 +150,8 @@ ldap_extra_settings:
   AUTH_LDAP_REQUIRE_GROUP: 'cn=pah-users,ou=groups,dc=example,dc=com'
 ...
 ----
+=======
+>>>>>>> c7daa782 (As part of AAP-19350, typos in LDAP group corrected and steps reformatted (#966))
 * Use this example to enable LDAP debug logging.
 +
 ----
