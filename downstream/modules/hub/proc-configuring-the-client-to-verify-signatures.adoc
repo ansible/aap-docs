@@ -3,12 +3,14 @@
 
 = Configuring the client to verify signatures
 
+In order to ensure a container image pulled from the remote registry is properly signed, you must first configure the image with the proper public key in a policy file. 
+
 .Prerequisites
 * The client must have sudo privileges configured to verify signatures.
 
 .Procedure
 
-. In a terminal type:
+. Open your terminal and use the following command: 
 +
 ----
 >  sudo <name of editor> __/etc/containers/policy.json
@@ -70,4 +72,4 @@ name of your key file.
 --tls-verify=false
 ----
 
-This response verifies the signature with no errors.
+This response verifies the image has been signed with no errors. If the image is not signed, the command will fail.
