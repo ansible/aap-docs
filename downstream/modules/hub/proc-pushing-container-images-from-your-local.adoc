@@ -9,27 +9,25 @@ Use the following procedure to sign images on a local system and push those sign
 . From a terminal, log into podman, or any container client currently in use:
 +
 ----
-> podman pull <__container-name__>
+> podman pull <container-name>
 ----
 +
 . After the image is pulled, add tags (for example: latest, rc, beta, or version numbers, such as 1.0; 2.3, and so on):
 +
 ----
-> podman tag <container-name> _<server-address>_/<container-name>:<tag name>
+> podman tag <container-name> <server-address>/<container-name>:<tag name>
 ----
 +
 . Sign the image after changes have been made, and push it back up to the {HubName} registry:
 +
 ----
-> podman push _<server-address>_/<container-name>:<tag name>
---tls-verify=false --sign-by<reference to the gpg key on your local>
+> podman push <server-address>/<container-name>:<tag name> --tls-verify=false --sign-by <reference to the gpg key on your local>
 ----
 +
 If the image is not signed, it can only be pushed with any current signature embedded. Alternatively, you can use the following script to push the image without signing it:
 +
 ----
-> podman push _<server-address>_/<container-name>:<tag name>
---tls-verify=false
+> podman push <server-address>/<container-name>:<tag name> --tls-verify=false
 ----
 +
 . Once the image has been pushed, navigate to your {HubName}.
