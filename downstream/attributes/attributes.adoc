@@ -134,77 +134,75 @@
 // Linux platforms
 :RHEL: Red Hat Enterprise Linux
 
-// Side B Gateway Menu selections
-:menu_ac-projects: menu:Automation Controller[Resources > Projects]
-:menu_eda-projects: menu:Event-Driven Ansible[Resources > Projects]
-:menu_ac-credentials: menu:Automation Controller[Resources > Credentials]
-:menu_eda-credentials: menu:Event-Driven Ansible[Resources > Credentials]
+// 2.5 Gateway Menu selections
+// These menu selections were based on the UI build environment dated 1/17/24 and should be verified against the final build before GA
+// Top level menu definitions for use only when selections go 3 levels deep.
+:MenuAE: Automation Execution
+:MenuAC: Automation Content
+
+:MenuTopAE: From the {MenuAE} menu on the navigation panel, select
+:MenuTopAC: From the {MenuAC} menu on the navigation panel, select 
 
 // Automation Execution (aka automation controller menu items)
-:menu_jobs: menu:Automation Controller[Views > Jobs]
-:menu_templates: menu:Automation Controller[Resources > Templates]
-:menu_schedules: menu:Automation Controller[Views > Schedules]
-:menu_ac-execution-env: menu:Automation Controller[Administration > Execution Environments]
+:MenuAEJobs: menu:{MenuTopAE}[Jobs]
+:MenuAETemplates: menu:{MenuTopAE}[Templates]
+:MenuAESchedules: menu:{MenuTopAE}[Schedules]
+
+// Automation Execution > Infrastructure
+:MenuInfrastructureTopology: menu:Infrastructure[Topology View]
+:MenuInfrastructureInventories: menu:Infrastructure[Inventories]
+:MenuInfrastructureHosts: menu:Infrastructure[Hosts]
+:MenuInfrastructureInstanceGroups: menu:Infrastructure[Instance Groups]
+:MenuInfrastructureInstances: menu:Infrastructure[Instances]
+:MenuInfrastructureExecEnvironments: menu:Infrastructure[Execution Environments]
+
+// Automation Execution > Administration
+:MenuAEAdminActivityStream: menu:Administration[Activity Stream]
+:MenuAEAdminWorkflowApprovals: menu:Administration[Workflow Approvals]
+:MenuAEAdminJobNotifications: menu:Administration[Job Notifications]
+:MenuAEAdminManageJobs: menu:Administration[Management Jobs]
+:MenuAEAdminOauthApps: menu:Administration[OAuth Applications]
+:MenuAEAdminSettings: menu:Administration[Settings]
 
 // Automation Decisions (aka event driven automation menu selections)
-:menu_rule-audit: menu:Automation Decisions[Views > Rule Audit]
-:menu_rulebook-activations: menu:Automation Decisions[Views > Rulebook Activations]
-:menu_decision-environments: menu:Automation Decisions[Resources > Decision Environments]
-
-// Automation Infrastructure
-:menu_infrastructure-topology: menu:Automation Controller[Resources > Topology View]
-:menu_infrastructure-instance-groups: menu:Automation Controller[Resources > Instance Groups]
-:menu_infrastructure-instances: menu:Automation Controller[Administration > Instances]
-:menu_infrastructure-inventories: menu:Automation Controller[Resources > Inventories]
-:menu_infrastructure-hosts: menu:Automation Controller[Administration > Hosts]
+:MenuADRuleAudit: menu:Automation Decisions[Rule Audit]
+:MenuADRulebookActivations: menu:Automation Decisions[Rulebook Activations]
+:MenuADProjects: menu:Automation Decisions[Projects]
+:MenuADDecisionEnvironments: menu:Automation Decisions[Decision Environments]
 
 // Automation Content (aka automation hub menu selections)
-:menu_namespaces: menu:Automation Hub[Automation Content > Namespaces]
-:menu_collections: menu:Automation Hub[Automation Content > Collections]
-:menu_ah-execution-env: menu:Automation Hub[Automation Content > Execution Environments]
-:menu_api-token: menu:Automation Hub[Access > API Token]
+:MenuACNamespaces: menu:{MenuTopAC}[Namespaces]
+:MenuACCollections: menu:{MenuTopAC}[Collections]
+:MenuACExecEnvironments: menu:{MenuTopAC}[Execution Environments]
+
+// Automation Content > Administration
+:MenuACAdminSignatureKeys: menu:Administration[Signature Keys]
+:MenuACAdminRepositories: menu:Administration[Repositories]
+:MenuACAdminRemoteRegistries: menu:Administration[Remote Registries]
+:MenuACAdminTasks: menu:Administration[tasks]
+:MenuACAdminCollectionApproval: menu:Administration[Collection Approvals]
+:MenuACAdminRemotes: menu:Administration[Remotes]
 
 // Automation Analytics menu selections
-:menu_reports: menu:Automation Analytics[Reports]
-:menu_savings-plan: menu:Automation Analytics[Savings Planner]
-:menu_automation-calc: menu:Automation Analytics[Automation Calculator]
-:menu_org-status: menu:Automation Analytics[Organization Status]
-:menu_job-explorer: menu:Automation Analytics[Job Explorer]
-:menu_administration-activity-stream: menu:Automation Controller[Views > Activity Stream]
-:menu_host-metrics: menu:Automation Analytics[Host Metrics]
-:menu_clusters: menu:Automation Analytics[Clusters]
+// --- the following are not in the current build but may be added later ---
+//:menu_job-explorer: menu:Automation Analytics[Job Explorer]
+//:MenuADministration-activity-stream: menu:Automation Controller[Views > Activity Stream]
+//:menu_savings-plan: menu:Automation Analytics[Savings Planner]
+//:menu_clusters: menu:Automation Analytics[Clusters]
+:MenuAAReports: menu:Automation Analytics[Reports]
+:MenuAAAutomationCalc: menu:Automation Analytics[Automation Calculator]
+:MenuAAAnalyticsBuilder: menu:Automation Analytics[Analytics builder]
+:MenuAAHostMetrics: menu:Automation Analytics[Host Metrics]
+:MenuAAHostSubscriptionUse: menu:Automation Analytics[Subscription Usage]
+
+// Access Management menu selections
+:MenuAMAuthentication: menu:Access Management[Authentication]
+:MenuAMOrganizations: menu:Access Management[Organizations]
+:MenuAMTeams: menu:Access Management[Teams]
+:MenuAMUsers: menu:Access Management[Users]
+:MenuAMRoles: menu:Access Management[Roles]
 
 
-// Ansible Lightspeed
-:menu_seat-management: menu:Ansible Lightspeed[Seat Management]
-
-// Utilities menu selections
-:menu_access-stream: menu:Utilities[Access Stream]
-:menu_signature-keys: menu:Automation Hub[Automation Content > Signature Keys]
-:menu_repositories: menu:Automation Hub[Automation Content > Repositories]
-:menu_remotes: menu:Automation Hub[Automation Content > Remotes]
-:menu_remote-registries: Automation Hub[Automation Content > Remote Registries]
-:menu_remote-repositories: menu:Utilities[Remote Repositories]
-:menu_task-management: menu:Automation Hub[Automation Content > Tasks]
-:menu_notifications: menu:Automation Controller[Resources > Notification]
-:menu_notifiers: menu:Utilities[Notifiers]
-:menu_management-jobs: menu:Automation Controller[Resources > Management Jobs]
-:menu_applications: menu:Automation Controller[Resources > Applications]
-:menu_credential-types: menu:Automation Controller[Administration > Credential Types]
-:menu_subscription: menu:Utilities[Subscription]
-:menu_auth-types: menu:Utilities[Authentication Types]
-
-
-// Access menu selections
-:menu_organizations: menu:Access[Organizations]
-:menu_teams: menu:Access[Teams]
-:menu_users: menu:Access[Users]
-:menu_roles: menu:Access[Roles]
-:menu_authentication: menu:Access[Authentication]
-
-// Global Settings menu selections
-:menu_login-settings: menu:Access[Log In Settings]
-:menu_jobs-settings: menu:Access[Jobs Settings]
-:menu_system-settings: menu:Access[System Settings]
-:menu_ui-settings: menu:Access[User Interface Settings]
-:menu_license-settings: menu:Access[License Settings]
+// Ansible Lightspeed menu selections
+// --- the following is not in the current build but may be added later ---
+//:MenuALSeatManagement: menu:Ansible Lightspeed[Seat Management]
