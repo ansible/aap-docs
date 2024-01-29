@@ -7,9 +7,16 @@
 
 To deploy your system so that it is ready for container signing, create a signing script.
 
+[NOTE]
+==== 
+Installer will look for the script and key on the same server where installer is located.
+====
+
 .Procedure
-. Use the following script to produce signatures for content:
-+
+. From a terminal, create create a signing script, and pass the script path as an installer parameter.
+
+*Example*:
+
 ----
 #!/usr/bin/env bash
 
@@ -37,9 +44,9 @@ else
   exit $STATUS
 fi
 ----
-+
+
 . Review the {PlatformNameShort} installer inventory file for options for container signing that begin with `automationhub_*`. 
-+
+
 ----
 [all:vars]
 .
@@ -50,7 +57,7 @@ automationhub_create_default_container_signing_service = True
 automationhub_container_signing_service_key = /absolute/path/to/key/to/sign
 automationhub_container_signing_service_script = /absolute/path/to/script/that/signs
 ----
-+
+
 . Once installation is complete, navigate to your {HubName}.
 
 . From the navigation panel, select menu:Signature Keys[].
