@@ -3,56 +3,67 @@
 
 = Configuring the client to verify signatures
 
-.Prerequsites
+To ensure a container image pulled from the remote registry is properly signed, you must first configure the image with the proper public key in a policy file. 
+
+.Prerequisites
 * The client must have sudo privileges configured to verify signatures.
 
 .Procedure
 
-. In a terminal type:
-
-    > sudo <name of editor> __/etc/containers/policy.json__
-
-The file may look similar to this:
-
+. Open your terminal and use the following command: 
++
 ----
-    {
-        "default": [{"type": "reject"}],
-        "transports": {
-            "docker": {
-              "quay.io": [{"type": "insecureAcceptAnything}],
-              "docker.io": [{"type": "insecureAcceptAnything}],
-              "_<server-address>_": [
-                {
-                    "type": "signedBy",
-                    "keyType": "GPGKeys",
-                    "keyPath": "/tmp/containersig.txt"
-    }
+>  sudo <name of editor> /etc/containers/policy.json
 ----
-
-This shows there will be no verification from either `quay.io`, or `docker.io` since the type is `insecureAcceptAnything` which overrides the default type of `reject`. However, there will be verification from `_<server-address>_` as the parameter `type` has been set to `"signedBy"``.
-
-NOTE: The only `keyType` currently supported is GPG keys.
-
-. Under the `_<server-address>_` entry, modify the `keyPath` <1> to reflect the
++
+The file that is displayed is similar to this:
++
+----
+{
+  "default": [{"type": "reject"}],
+  "transports": {
+  	"docker": {
+    	"quay.io": [{"type": "insecureAcceptAnything"}],
+    	"docker.io": [{"type": "insecureAcceptAnything"}],
+    	"<server-address>": [
+      	{
+          	    "type": "signedBy",
+          	    "keyType": "GPGKeys",
+          	    "keyPath": "/tmp/containersig.txt"
+      	}]
+  	}
+  }
+}
+----
++
+This file shows that neither `quay.io`, or `docker.io` will perform the verification, because the type is `insecureAcceptAnything` which overrides the default type of `reject`. However, `_<server-address>_` will perform the verification, because the parameter `type` is set to `"signedBy"`.
++
+[NOTE]
+====
+The only `keyType` currently supported is GPG keys.
+====
++
+. Under the `_<server-address>_` entry, modify the `keyPath` <1> to include the
 name of your key file.
 +
 ----
-    {
-        "default": [{"type": "reject"}],
-        "transports": {
-            "docker": {
-              "quay.io": [{"type": "insecureAcceptAnything}],
-              "docker.io": [{"type": "insecureAcceptAnything}],
-              "_<server-address>_1": [
-                {
-                    "type": "signedBy",
-                    "keyType": "GPGKeys",
-                    "keyPath": "/tmp/<key file name", <1>
-                    "signedIdentity": {
-                      "type": "remapIdentity",
-                      "prefix": "_<server-address>_",
-                      "signedPrefix": "0.0.0.0:8002"
-    }
+{
+    	"default": [{"type": "reject"}],
+    	"transports": {
+        	"docker": {
+          	  "quay.io": [{"type": "insecureAcceptAnything"}],
+          	  "docker.io": [{"type": "insecureAcceptAnything"}],
+          	  "<server-address>": [{
+                	"type": "signedBy",
+                	"keyType": "GPGKeys",
+                	"keyPath": "/tmp/<key file name>",
+                	"signedIdentity": {
+                  	  "type": "matchExact"
+                    }
+            	  }]
+            }
+    	}
+}
 ----
 +
 . Save and close the file.
@@ -60,8 +71,10 @@ name of your key file.
 . Pull the file using podman, or your client of choice:
 
 ----
-> podman pull _<server-address>_/<container-name>:<tag name>
---tls-verify=false
+> podman pull <server-address>/<container-name>:<tag name> --tls-verify=false
 ----
 
-This verifies the signature with no errors.
+This response verifies the image has been signed with no errors. If the image is not signed, the command fails.
+
+.Additional resources
+* For more information about policy.json, see link:https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#signedby[documentation for containers-policy.json]. 
