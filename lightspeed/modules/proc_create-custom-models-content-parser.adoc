@@ -1,92 +1,258 @@
 :_content-type: PROCEDURE
 
 [id="multi-task-recs_{context}"]
-= Requesting code recommendations for multiple tasks
+= Creating a custom model training data set by using the Ansible content parser 
 
-You can request multitask code recommendations by entering a sequence of natural language task prompts in Ansible VS Code extension. In a YAML file, start a comment by using a Pound key (#), and separate each prompt by using Ampersand (&) symbols. 
+Use the Ansible content parser, a command-line interface (CLI) tool, to scan your existing Ansible files and generate a custom model training data set. This generated output includes a list of Ansible files and their paths relative to the project root. You can then upload the generated custom model training data set to {ibmwatsonxcodeassistant} and create a custom model for your organization.
 
-For example, to automate a multitask of installing PostgreSQL server and running the initial PostgreSQL setup command, you can enter the prompt `# Install postgresql-server & run postgresql-setup command`. The Ansible Lightspeed service reads the text, interacts with the {ibmwatsonxcodeassistant} models, and generates the code recommendations.
+Use one of the following methods to create a custom model training data set:
+
+* *With ansible-lint preprocessing* 
++
+By default, Ansible content parser uses ansible-lint rules to scan your Ansible files and ensure that the content adheres to Ansible best practices. If rule violations are found, the content parser excludes these files from the generated output. In such scenarios, you must resolve the rule violations, and run the content parser once again so that the generated output includes all the files. 
+
+
+* *Without ansible-lint preprocessing*
++
+You can run the content parser without ansible-lint preprocessing. In this method, the content parser creates a training data set that includes all files and does not scan the files for ansible-lint rule violations. While the training data set includes all Ansible files, the generated data set might not adhere to Ansible best practices. Furthermore, this might affect the quality of code recommendation experience of custom models that are trained on such data sets. 
+
+To create a custom model training data set, perform the following tasks:
+
+. Install Ansible content parser on your computer (URL)
+. Generate a custom model training data set (URL)
+. View the generated output files (URL)
+. (Optional) Resolve ansible-lint file violations, if any (URL)
+. (Optional) If you have multiple training data sets, merge them into a single JSONL file (URL)
+
+== Supported data sources 
+Ansible content parser can scan the following directories and file formats:
+
+* Local directories
+* Archived files, such as `.zip`, `.tar`, `.tar.gz`, `.tar.bz2`, and `.tar.xz` files
+* Git repository URL (includes both private and public repositories)
+
+== Step 1: Installing the Ansible content parser 
+
+Install the Ansible content parser, a command-line interface (CLI) tool, on your computer. 
 
 .Prerequisites
 
-* You have an assigned seat license to access {LightspeedFullName}.
-* You have xref:configuring-with-code-assistant_lightspeed-user-guide[installed and configured Ansible VS Code extension].
+You must have installed one of the following OS on your computer:
+
+* Python version 3.10 or later.  
+* UNIX OS, such as Linux or Mac OS.  
++
+NOTE: Installation on Microsoft Windows OS is not supported.
++
 
 .Procedure
 
-. Log in to VS Code with your Red Hat account.
-. Create a new YAML file or use an existing YAML file.
-* Create a YAML file: 
-... Select menu:File[New Text File].
-... From the lower right of the screen, click *Plain Text*, and in the language mode, select *Ansible*. 
-... Save the file as a YAML file format extension (`.yml` or `.yaml`).
-* Use an existing YAML file: 
-... On the bottom right of the screen, click the existing language mode, and in the language mode settings, select *Ansible*. 
+. Create a working directory and set up venv Python virtual environment:
 +
-NOTE: If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Langauge Mode[Ansible].
-+
-. Verify that you see an entry for *Lightspeed* on the status bar at the lower right of VS Code.
-+
-If *Ansible* is already selected as the desired language but the *Lightspeed* entry is not displayed, re-select *Ansible* as the language mode. The following illustration shows *Lightspeed* entry on the VS Code status bar. 
-+
+`$ python -m venv ./venv`
++ 
+`$ source ./venv/bin/activate`
 
-.Ansible and Lightspeed set as selected language mode
-image::lightspeed-multitask-vs-code.png[Settings show Lightspeed as selected language mode]
-
-. Optional: If you see an error message about missing Ansible lint, you can install the missing module or disable it. Perform any one of the following tasks:
-* Install Ansible lint: For installation information, see the link:https://ansible.readthedocs.io/projects/lint/installing/[Installing] section of the Ansible Lint documentation. 
-* Disable Ansible lint: 
-... From the Activity bar, click the *Extensions* icon image:extensions-icon-vscode.png[Extensions].
-... From the *Installed* extensions list, select *Ansible*.
-... From the *Ansible* extension page, click the *Settings* icon and select *Extension Settings*.
-... Clear the *Ansible › Validation › Lint: Enabled* checkbox.   
-
-. Create a playbook or use an existing playbook. 
+. Install the Ansible content parser from the `pip` repository:
 +
-For more information, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_creator_guide/index#creating-playbooks[Creating playbooks] in the {PlatformNameShort} Creator Guide.
-
-. In the playbook, provide the following information to request multitask code recommendations:
-... Start a new YAML file comment by entering a Pound key (#) at the correct indentation.
-... Add a detailed natural language prompt in a sequence, separating each task by using an Ampersand (&) symbol.
-For example, to automate the multitask of installing PostgreSQL server and running the PostgreSQL setup command, enter the following  natural language prompt `# Install postgresql-server & run postgresql-setup command`. 
-... Press *Enter* directly after the task description. Keep the cursor at the same location in your file, and wait for the code recommendation results to populate.
+`$ pip install --upgrade pip`
 +
-The Ansible Lightspeed service is engaged, and it starts generating code recommendations for multiple tasks. 
+`$ pip install --upgrade ansible-content-parser`
 +
-IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you are using a multitask prompt, the Ansible Lightspeed service takes a bit longer (number of tasks times 5 seconds) to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the Ansible Lightspeed service does not process your request.
+The Ansible content parser gets installed on your computer. To generate a custom model training data set without using ansible-lint preprocessing, you can *run the Ansible content parser* (URL). To generate a custom model training data set by using ansible-lint preprocessing, proceed to the next step. 
+
+. Optional: To use ansible-lint preprocessing for generating a custom model training data set, perform the following tasks:
+.. View the ansible-lint versions that are installed on your computer.
 +
-When the Ansible Lightspeed service is engaged, a *Lightspeed* processing status indicator is displayed in the lower right of the screen to denote that your code recommendation is being generated.
+`$ ansible-content-parser --version`
 +
-image:lightspeed-task-in-progress.png[Lightspeed icon] 
-
-. Optional: If multitask code recommendations are not being generated, log out of VS Code and log in again using your Red Hat account. 
-
-. View your code recommendations and ensure that the recommendations match your task intent.
+`$ ansible-lint --version`
 +
-The following illustration shows the code recommendations generated by the Ansible Lightspeed service for the multitask prompt *Install postgresql-server & run postgresql-setup command*:
-:
+A list of application versions and their dependencies are displayed.
+
+.. In the output, verify that the version of ansible-lint that was installed with the content parser is the same as that of the previously-installed ansible-lint. 
 +
-image:lightspeed-multitask-requests.png[Lightspeed single task in progress] 
-
-. Accept or reject the code recommendations:
-* To accept a code recommendation, press *Tab*.
-* To reject a code recommendation, press *Esc*. 
+A mismatch in the installed ansible-lint versions  causes inconsistent results from the content parser and ansible-lint.
 +
-NOTE: If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. 
-
-. On the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results. 
+For example, in the following output, the content parser installation includes ansible-lint version 6.20.0 which is a mismatch from previously-installed ansible-lint version 6.13.1:
 +
-The following illustration shows the training matches found in existing Ansible Galaxy content for the task prompt multitask prompt *Install postgresql-server & run postgresql-setup command*:
+....
+$ ansible-content-parser --version
+ansible-content-parser 0.0.1 using ansible-lint:6.20.0 ansible-core:2.15.4
+$ ansible-lint --version
+ansible-lint 6.13.1 using ansible 2.15.4
+A new release of ansible-lint is available: 6.13.1 → 6.20.0
+....
+
+.. If there is a mismatch in the ansible-lint versions, deactivate and reactivate `venv` Python virtual environment: 
 +
-image::lightspeed-multitask-content-matches.png[training matches in existing content]
+`$ deactivate`
++
+`$ source ./venv/bin/activate`
 
-. Click *Save* to save the code recommendation changes in your Ansible YAML file. 
+.. Verify that the version of ansible-lint that is installed with the content parser is the same as that of the previously-installed ansible-lint:: 
++
+`$ ansible-content-parser --version`
++
+`$ ansible-lint --version`
++
+For example, the following output shows that both ansible-lint installations on your computer are of version 6.20.0:
++
+....
+$ ansible-content-parser --version
+ansible-content-parser 0.0.1 using ansible-lint:6.20.0 ansible-core:2.15.4
+$ ansible-lint --version
+ansible-lint 6.20.0 using ansible-core:2.15.4 ansible-compat:4.1.10 ruamel-yaml:0.17.32 ruamel-yaml-clib:0.2.7
+....
 
-[role="_additional-resources"]
-.Additional resources
+== Step 2: Generating a custom model training data set
 
-* xref:troubleshooting-vscode_troubleshooting-lightspeed[Troubleshooting Ansible Visual Studio Code extension errors]
-* xref:troubleshooting-code-bot_troubleshooting-lightspeed[Troubleshooting {AnsibleCodeBot} errors]
+After installing the Ansible content parser, run it to scan your custom Ansible files and generate a custom model training data set. The generated output includes a list of Ansible files and their paths relative to the project root. 
+
+You can generate a training data set by using one of the following methods:
+
+* *With ansible-lint preprocessing* 
++
+By default, Ansible content parser uses ansible-lint rules to scan your Ansible files and ensure that the content adheres to Ansible best practices. If rule violations are found, the content parser excludes these files from the generated output. In such scenarios, you must resolve the rule violations, and run the content parser once again so that the generated output includes all the files. 
+
+* *Without ansible-lint preprocessing*
++
+You can run the content parser without ansible-lint preprocessing. In this method, the content parser creates a training data set that includes all files and does not scan the files for ansible-lint rule violations. While the training data set includes all Ansible files, the generated data set might not adhere to Ansible best practices. Furthermore, this might affect the quality of code recommendation experience of custom models that are trained on such data sets. 
+
+.Prerequisites
+You must have installed Ansible content parser on your computer.
+
+.Procedure
+
+* Run the Ansible content parser by using one of the following methods: 
+
+** With ansible-lint preprocessing: 
++
+`$ ansible-content-parser source output`
+
+** Without ansible-lint preprocessing: 
++
+`$ ansible-content-parser source output -S`
++
+For example:
+If the source is a Github URL such as https://github.com/ansible/ansible-tower-samples.git, and the output directory is `/tmp/out`, the command is as follows:
++
+`$ ansible-content-parser https://github.com/ansible/ansible-tower-samples.git /tmp/out`
++
+The training data set gets generated in the output directory that you specified. You can then upload the generated output to {ibmwatsonxcodeassistant}  and create a custom model for your organization. If you used ansible-lint preprocessing and encountered rule violations, you must resolve the rule violations (URL) before uploading the data to {ibmwatsonxcodeassistant}. 
+
+* Optional: If required, specify the following additional parameters to generate the training data set.
++
+.List of additional parameters
+[cols="1,2"] 
+|===
+|Parameter |Description
+
+|`source`
+|Specifies the source of the training data set.
+
+|`output`
+|Specifies the output directory where the training data set is stored. 
+
+|`-S` or `--skip-ansible-lint`
+|Specifies to skip ansible-lint preprocessing while generating the training data set. 
+
+|`--source-license`
+|Specifies to include the licensing information of the source directory in the training data set.
+
+|`--source-description`
+|Specifies to include the descriptions of the source directory in the training data set.
+
+|`--repo-name`
+|Specifies to include the repository name in the training data set. If you do not specify the  repository name, the content parser automatically generates it from the source name.
+
+|`--repo-url`
+|Specifies to include the repository URL in the training data set. If you do not specify the repository URL, the content parser automatically generates it from the source URL.
+
+|`-v` or `--verbose` 
+|Displays the console logging information.
+|===
+
++
+The following is an example of a command prompt for ansible-tower-samples Github repository: 
+
++
+....
+$ ansible-content-parser --profile min \
+--source-license undefined \
+--source-description Samples \
+--repo-name ansible-tower-samples \
+--repo-url 'https://github.com/ansible/ansible-tower-samples' \
+git@github.com:ansible/ansible-tower-samples.git /var/tmp/out_dir
+....
+
++
+The following is an example training data set output generated for the ansible-tower-samples repository. The training data set is formatted with Jeff Goldblum (jg), a command-line JSON processing tool:
+
++
+....
+$ cat out_dir/ftdata.jsonl| jq
+{
+"data_source_description": "Samples",
+"input": "---\n- name: Hello World Sample\n hosts: all\n tasks:\n - name: Hello Message",
+"license": "undefined",
+"module": "debug",
+"output": " debug:\n msg: Hello World!",
+"path": "hello_world.yml",
+"repo_name": "ansible-tower-samples",
+"repo_url": "https://github.com/ansible/ansible-tower-samples"
+}
+....
+
+== Step 3: Viewing the generated output
+
+After the content parser scans your Ansible files, it generates the training data set in an output subdirectory within your local directory. 
+
+The generated output includes a training data set file, `ftdata.jsonl`, which is the main output of the content parser. The file is available in JSON Lines files format, where each line entry represents a JSON object. You will need to upload this JSONL file in {ibmwatsonxcodeassistant} for creating a custom model. 
+For example, if you specified the output directory as `/tmp/out`, the output will be generated at the following location on your computer:
+<Give example of output location> (URL)
+
+=== Structure of a custom model training data set
+
+The following is the file structure of an output subdirectory:
+----
+output/
+  |-- ftdata.jsonl  # Training dataset // <1>
+  |-- report.txt   # A human-readable report // <2>
+  |
+  |-- repository/ // <3>
+  |     |-- (files copied from the source repository)
+  |
+  |-- metadata/ // <4>
+        |-- (metadata files generated during the execution)
+----
+ 
+<1> `ftdata.jsonl` file: A training data set file, which is the main output of the content parser. The file is available in JSON Lines files format, where each line entry represents a JSON object. You must upload this JSONL file in {ibmwatsonxcodeassistant} for creating a custom model. 
+<2> `report.txt` file: A human-readable report that provides a summary of content parser operations.
+<3> Repository: A directory that contains files from the source repository. Sometimes, ansible-lint updates the directory according to the configured rules, so the file contents of the output directory might differ from the source repository.
+<4> Metadata: A directory that contains multiple metadata files that are generated during each content parser execution.
+
+The `report.txt` file, that can be used to resolve ansible-lint rule violations, contains the following information:
+
+* File counts per type: Displays a list of files according to their file types, such as playbooks, tasks, handlers, and jinja2. 
+* List of Ansible files that were identified: Displays a list of files identified by ansible-lint with a file name, a file type, and whether the file was excluded from further processing, or autofixed by ansible-lint.
+* List of Ansible modules found in tasks: Displays a list of modules identified by ansible-lint with a module name, a module type, and whether the file was excluded from further processing, or autofixed by ansible-lint.
+* Issues found by ansible-lint: Displays a list of issues along with a brief summary of ansible-lint execution results. If ansible-lint encounters files with syntax-check errors in the first execution, then ansible-runs initiates a second execution and  excludes the files with errors from the scan. You can use this information to resolve ansible-lint rule violations. 
+
+== Step 4: (Optional) Resolving ansible-lint rule violations
 
 
+== Step 5: (Optional) Merge multiple training data sets into a single file
+For every execution, Ansible content parser creates a training data set JSONL file named `ftdata.jsonl` that you upload to {ibmwatsonxcodeassistant} for creating a custom model. If the content parser runs multiple times, multiple `ftdata.jsonl files are created. 
+
+{ibmwatsonxcodeassistant} supports a single JSONL file upload only; therefore, if you have multiple JSONL files, you must merge them into a single, concatenated file. You can also merge the multiple JSONL files that are generated in multiple subdirectories within a parent directory into a single file.
+
+.Procedure 
+. Using the command prompt, go to the parent directory.
+. Run the following command to create a single, concatenated file:
++
+`find . -name ftdata.json | xargs cat > concatenated.json`
+. Optional: For easy identification, rename the concatenated file.
++
+After a single JSONL file is created, you can upload it to {ibmwatsonxcodeassistant} for custom model creation. 
 
