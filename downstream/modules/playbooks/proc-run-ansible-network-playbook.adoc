@@ -2,11 +2,12 @@
 
 = Running a network Ansible Playbook
 
-If you want to run the previous command every day, you can save it in a playbook and run it with `ansible-playbook` instead of ansible. 
+If you want to run a particular command every day, you can save it in a playbook and run it with `ansible-playbook` instead of ansible. 
 The playbook can store a lot of the parameters you provided with flags at the command line, leaving less to type at the command line. 
 You need two files for this, a playbook and an inventory file.
 
-. Download `first_playbook.yml` from link:https://docs.ansible.com/ansible/latest/_downloads/588d4b6e9316c8eb903fbe2485b14d64/first_playbook.yml[here].
+.Prerequisites
+Download `first_playbook.yml` from link:https://docs.ansible.com/ansible/latest/_downloads/588d4b6e9316c8eb903fbe2485b14d64/first_playbook.yml[here].
 
 The playbook looks like this:
 ----
@@ -121,6 +122,7 @@ $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos
 ----
 
 . The output shows you the change Ansible made to the configuration:
++
 ----
 $ ansible-playbook -i vyos.example.net, -u ansible -k -e ansible_network_os=vyos.vyos.vyos first_playbook_ext.yml
 

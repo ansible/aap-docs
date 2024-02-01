@@ -4,7 +4,8 @@
 
 Inventories organize managed nodes in centralized files that provide Ansible with system information and network locations. Using an inventory file, Ansible can manage a large number of hosts with a single command.
 To complete the following steps, you need the IP address or fully qualified domain name (FQDN) of at least one host system. For demonstration purposes, the host could be running locally in a container or a virtual machine. 
-You must also ensure that your public SSH key is added to the authorized_keys file on each host.
+
+You must also ensure that your public SSH key is added to the `authorized_keys` file on each host.
 Use the following procedure to build an inventory.
 
 .Procedure
@@ -24,13 +25,13 @@ Verify your inventory, using:
 ansible-inventory -i inventory.ini --list
 ----
 
-Ping the myhosts group in your inventory, using:
+Ping the `myhosts` group in your inventory, using:
 
 ----
 ansible myhosts -m ping -i inventory.ini
 ----
 
-Pass the `-u` option with the ansible command if the username is different on the control node and the managed node(s).
+Pass the `-u` option with the Ansible command if the username is different on the control node and the managed node(s).
 
 ----
 192.0.2.50 | SUCCESS => {
@@ -63,7 +64,7 @@ You can create inventories in either INI files or in YAML.
 In most cases, such as the preceding example, INI files are straightforward and easy to read for a small number of managed nodes.
 Creating an inventory in YAML format becomes a sensible option as the number of managed nodes increases. 
 
-For example, the following is an equivalent of the `inventory.ini` that declares unique names for managed nodes and uses the ansible_host field:
+For example, the following is an equivalent of the `inventory.ini` that declares unique names for managed nodes and uses the `ansible_host` field:
 
 ----
 myhosts:
@@ -80,7 +81,7 @@ myhosts:
 
 * Ensure that group names are meaningful and unique. 
 * Group names are also case sensitive.
-* Avoid spaces, hyphens, and preceding numbers (use floor_19, not 19th_floor) in group names.
+* Do not use spaces, hyphens, or preceding numbers (use floor_19, not 19th_floor) in group names.
 * Group hosts in your inventory logically according to their What, Where, and When:
 
 ** What: Group hosts according to the topology, for example: db, web, leaf, spine.
