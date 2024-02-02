@@ -1,18 +1,15 @@
 [id="ref-single-controller-hub-eda-with-managed-db"]
 
-=  Single controller, single automation hub, and single event-driven ansible controller node with external (installer managed ) database
+=  Single {ControllerName}, single {HubName}, and single {EDAController} node with external (installer managed ) database
 
 [role="_abstract"]
-Use this example to populate the inventory file to deploy single instances of {ControllerName} and {HubName} with an external (installer managed) database.
+Use this example to populate the inventory file to deploy single instances of {ControllerName}, {HubName}, and {EDAController} with an external (installer managed) database.
 
 [IMPORTANT]
 ====
-This scenario requires a minimum of {ControllerName} 2.4 for successful deployment of {EDAcontroller}.
-====
+* This scenario requires a minimum of {ControllerName} 2.4 for successful deployment of {EDAcontroller}.
 
-[IMPORTANT]
-====
-{EDAcontroller} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
+* {EDAController} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
 ====
 
 -----
@@ -41,7 +38,7 @@ registry_url='registry.redhat.io'
 registry_username='<registry username>'
 registry_password='<registry password>'
 
-# Automation hub configuration
+# {HubNameStart} configuration
 
 automationhub_admin_password= <PASSWORD>
 
@@ -53,7 +50,7 @@ automationhub_pg_username='automationhub'
 automationhub_pg_password=<PASSWORD>
 automationhub_pg_sslmode='prefer'
 
-# Automation EDA controller configuration
+# Automation {EDAController} configuration
 
 automationedacontroller_admin_password='<eda-password>'
 
