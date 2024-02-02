@@ -15,11 +15,6 @@ export ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN=$(cat <token.txt>)
 ----
 
 -----
-additional_build_files:
-  # copy arbitrary files next to this EE def into the build context- we can refer to them later.
-  - src: files
-    dest: configs
-
 additional_build_steps:
   prepend_galaxy:
     # define a custom build arg env passthru- we still also have to pass
@@ -28,7 +23,4 @@ additional_build_steps:
     - ENV ANSIBLE_GALAXY_SERVER_LIST=automation_hub
     - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL=https://console.redhat.com/api/automation-hub/content/<yourhuburl>-synclist/
     - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
-
-options:
-  package_manager_path: /usr/bin/microdnf  # downstream images use non-standard package manager
 -----
