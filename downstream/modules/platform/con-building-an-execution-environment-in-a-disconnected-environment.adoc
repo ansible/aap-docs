@@ -1,6 +1,9 @@
+//Used in downstream/titles/aap-installation-guide/platform/assembly-disconnected-installation.adoc
+
+
 [id="building-an-execution-environment-in-a-disconnected-environment_{context}"]
 
-= Custom {ExecEnvShort} in a disconnected environment
+= Building an {ExecEnvShort} in a disconnected environment
 
 When building a custom {ExecEnvShort}, the ansible-builder tool defaults
 to downloading the following requirements from the internet:
@@ -12,7 +15,6 @@ to downloading the following requirements from the internet:
 * registry.redhat.io for access to the ansible-builder-rhel8 container image.
 
 Building an {ExecEnvShort} image in a disconnected environment requires a subset of all of these requirements mirrored, or otherwise made available on the disconnected network.
-
 
 Mirrored PyPI content when transferred into the high-side network can be made available using a web server or an artifact repository like Nexus.
 
@@ -28,3 +30,23 @@ When all of the prerequisites are available on the high-side network, you can us
 .Additional Resources
 
 * See xref:importing-collections-into-private-automation-hub_disconnected-installation[Importing Collections into {PrivateHubName}] for information on importing collections from {Galaxy} or {HubName} into a {PrivateHubName}.
+
+//New content
+
+
+link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html/creating_and_consuming_execution_environments/index[Creating execution environments] for AAP is a common task which works differently in disconnected environments. When building a custom execution environment, the ansible-builder tool defaults to downloading content from the following locations on the internet:
+
+* Red Hat {HubNameStart} (console.redhat.com) or Ansible Galaxy (galaxy.ansible.com) for any Ansible content collections added to the execution environment image.
+
+* PyPI (pypi.org) for any python packages required as collection dependencies.
+
+* RPM repositories such as the RHEL or UBI repositories (cdn.redhat.com) for adding or updating RPMs to the execution environment image, if needed. registry.redhat.io for access to the base container images.
+
+* Building an execution environment image in a disconnected environment requires a mirror of content from these locations. See Importing Collections into private automation hub for information on importing collections from Ansible Galaxy or automation hub into a private automation hub.
+
+Mirrored PyPI content once transferred into the disconnected network can be made available using a web server or an artifact repository like Nexus.  The RHEL and UBI repository content can be exported from an internet-facing Red Hat Satellite server, copied into the disconnected environment, then imported into a disconnected Satellite so it is available for building custom execution environments.  See ISS Export Sync in an Air-Gapped Scenario for details.
+
+The default base container image, ee-minimal-rhel8, is used to create custom execution environment images and is included with the bundled installer. This image  will be added to the private automation hub at install time.  If a different base container image such as ee-minimal-rhel9 is required, it will need to be imported to the disconnected network and added to the private automation hub container registry.
+
+Once all of the prerequisites are available on the disconnected network, the ansible-builder command can be used to create custom execution environment images.
+
