@@ -20,7 +20,7 @@ For more information about autofixes, see link:https://ansible.readthedocs.io/pr
 * *Using syntax-checks*
 +
 Ansible-lint also performs syntax checks while scanning your Ansible files. If any syntax-check errors are found, ansible-lint stops processing the files. 
-For more information about syntax-check errors, link:https://ansible.readthedocs.io/projects/lint/rules/syntax-check/[syntax-check] in Ansible Lint Documentation.
+For more information about syntax-check errors, see link:https://ansible.readthedocs.io/projects/lint/rules/syntax-check/[syntax-check] in Ansible Lint Documentation.
 +
 The {AnsibleContentParser} handles syntax-check rule violations in the following manner:
 
@@ -34,10 +34,10 @@ Use one of the following methods to resolve ansible-lint rule violations:
 * Run the {AnsibleContentParser} with the  `--no-exclude` option
 If any rule violations, including syntax-check errors, are found, the execution is aborted with an error and no training data set is created.
 
-* Limit the set of rules that ansible-lint uses to scan your data with the  `--profile` option
+* Limit the set of rules that ansible-lint uses to scan your data with the `--profile` option
 +
 It is recommended that you fix the files with rule violations. However, if you do not want to modify the source files, you can limit the set of rules that ansible-lint uses to scan your data. 
-To limit the set of rules that ansible-lint uses to scan your data, specify the --profile option with a predefined profile (for example, minimum, basic, moderate, safety, shared, or production profiles) or by using ansible-lint configuration files. For more information, see the link:https://ansible.readthedocs.io/projects/lint/[Ansible Lint documentation]. 
+To limit the set of rules that ansible-lint uses to scan your data, specify the `--profile` option with a predefined profile (for example, minimum, basic, moderate, safety, shared, or production profiles) or by using ansible-lint configuration files. For more information, see the link:https://ansible.readthedocs.io/projects/lint/[Ansible Lint documentation]. 
 
 * Run the {AnsibleContentParser} by skipping ansible-lint preprocessing
 You can run the content parser without ansible-lint preprocessing. The {AnsibleContentParser} generates a training data set without scanning for ansible-lint rule violations. 
@@ -48,6 +48,6 @@ To run {AnsibleContentParser} without ansible-lint preprocessing, execute the fo
 Where:
 +
 *** `_source_`: Specifies the source of the training data set.
-*** `_output_`: Specifies the source of the training data set.
+*** `_output_`: Specifies the output of the training data set.
 *** `_-S_` or `_--skip-ansible-lint_`: Specifies to skip ansible-lint preprocessing while generating the training data set.
 
