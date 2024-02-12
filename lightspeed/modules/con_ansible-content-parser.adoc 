@@ -1,0 +1,40 @@
+:_content-type: CONCEPT
+
+[id="ansible-content-parser_{context}"]
+
+= Creating a training data set by using {AnsibleContentParser}
+
+:context: using-content-parser
+
+[role="_abstract"]
+
+Use the {AnsibleContentParser}, a command-line interface (CLI) tool, to scan your existing Ansible files and generate a custom model training data set. The training data set includes a list of Ansible files and their paths relative to the project root. You can then upload this data set to {ibmwatsonxcodeassistant}, and use it to create a custom model that is trained on your organization's existing Ansible content. 
+
+== Methods of creating training data sets
+You can generate a training data set by using one of the following methods:  
+
+* *With ansible-lint preprocessing* 
++
+By default, the {AnsibleContentParser} generates training data sets by using ansible-lint preprocessing. The {AnsibleContentParser} uses ansible-lint rules to scan your Ansible files and ensure that the content adheres to Ansible best practices. If rule violations are found, the {AnsibleContentParser} excludes these files from the generated output. In such scenarios, you must resolve the rule violations, and run the {AnsibleContentParser} once again so that the generated output includes all your Ansible files. 
+
+* *Without ansible-lint preprocessing*
++
+You can specify to generate a training data set without ansible-lint preprocessing. In this method, the {AnsibleContentParser} does not scan your Ansible files for ansible-lint rule violations; therefore, the training data set includes all files. Although the training data set includes all files, it might not adhere to Ansible best practices and could affect the quality of your code recommendation experience. 
+
+== Supported data sources 
+
+The {AnsibleContentParser} scans the following directories and file formats:
+
+* Local directories
+* Archived files, such as `.zip`, `.tar`, `.tar.gz`, `.tar.bz2`, and `.tar.xz` files
+* Git repository URL (includes both private and public repositories)
+
+== Process of creating a training data set
+To create a custom model training data set, perform the following tasks:
+
+. Install {AnsibleContentParser} on your computer (xref)
+. Generate a custom model training data set (xref)
+. View the generated training data set (xref)
+. (Optional) Resolve ansible-lint file violations (xref)
+. (Optional) Merge multiple training data sets into a single JSONL file (xref)
+
