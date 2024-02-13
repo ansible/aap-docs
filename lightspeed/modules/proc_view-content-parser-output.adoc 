@@ -1,0 +1,35 @@
+:_content-type: PROCEDURE
+
+[id="view-content-parser-output_{context}"]
+
+= Viewing the generated training data set
+
+After {AnsibleContentParser} scans your Ansible files, it generates the training data set in an output subdirectory within your local directory. The training data set includes a *ftdata.jsonl* file, which is the main output of the {AnsibleContentParser}. The file is available in JSON Lines files format, where each line entry represents a JSON object. You must upload this JSONL file to {ibmwatsonxcodeassistant} to create a custom model. 
+
+== Structure of custom model training data set 
+
+The following is the file structure of an output subdirectory: 
+....
+output/
+  |-- ftdata.jsonl  # Training dataset <1>
+  |-- report.txt   # A human-readable report <2>
+  |
+  |-- repository/ <3>
+  |     |-- (files copied from the source repository)
+  |
+  |-- metadata/ <4>
+        |-- (metadata files generated during the execution)
+....
+.Where:
+<1> *ftdata.jsonl*: A training data set file, which is the main output of the {AnsibleContentParser}. The file is available in JSON Lines files format, where each line entry represents a JSON object. You must upload this JSONL file in {ibmwatsonxcodeassistant} to create a custom model.
+<2> *report.txt*: A human-readable text file that provides a summary of all {AnsibleContentParser} executions.
+<3> *repository*: A directory that contains files from the source repository. Sometimes, ansible-lint updates the directory according to the configured rules, so the file contents of the output directory might differ from the source repository.
+<4> *metadata*: A directory that contains multiple metadata files that are generated during each {AnsibleContentParser} execution.
+
+=== Using report.txt file to resolve ansible-lint rule violations
+The *report.txt* file, that can be used to resolve ansible-lint rule violations, contains the following information:
+
+* File counts per type: A list of files according to their file types, such as playbooks, tasks, handlers, and jinja2. 
+* List of Ansible files that were identified: A list of files identified by ansible-lint with a file name, a file type, and whether the file was excluded from further processing, or automatically fixed by ansible-lint.
+* List of Ansible modules found in tasks: A list of modules identified by ansible-lint with a module name, a module type, and whether the file was excluded from further processing, or automatically fixed by ansible-lint.
+* Issues found by ansible-lint: A list of issues along with a brief summary of ansible-lint execution results. If ansible-lint encounters files with syntax-check errors in the first execution, then ansible-runs initiates a second execution and  excludes the files with errors from the scan. You can use this information to resolve ansible-lint rule violations. 

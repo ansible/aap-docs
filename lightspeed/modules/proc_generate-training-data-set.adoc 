@@ -1,0 +1,102 @@
+:_content-type: PROCEDURE
+
+[id="generate-training-data-set_{context}"]
+
+= Generating a custom model training data set
+
+After installing {AnsibleContentParser}, run it to scan your custom Ansible files and generate a custom model training data set. The training data set includes a list of Ansible files and their paths relative to the project root. You can then upload the training data set to {ibmwatsonxcodeassistant} and create a custom model for your organization. If you used ansible-lint preprocessing and encountered rule violations, you must xref:resolve-ansible-lint-rule-violations_configuring-custom-models[resolve the rule violations] before uploading the training data set to {ibmwatsonxcodeassistant}.
+
+== Methods of generating a training data set
+You can generate a training data set by using one of the following methods:
+
+* *With ansible-lint preprocessing* 
++
+By default, the {AnsibleContentParser} generates training data sets by using ansible-lint preprocessing. The {AnsibleContentParser} uses ansible-lint rules to scan your Ansible files and ensure that the content adheres to Ansible best practices. If rule violations are found, the {AnsibleContentParser} excludes these files from the generated output. In such scenarios, you must resolve the rule violations, and run the {AnsibleContentParser} once again so that the generated output includes all your Ansible files. 
+
+* *Without ansible-lint preprocessing*
++
+You can generate a training data set without ansible-lint preprocessing. In this method, the {AnsibleContentParser} does not scan your Ansible files for ansible-lint rule violations; therefore, the training data set includes all files. Although the training data set includes all files, it might not adhere to Ansible best practices and could affect the quality of your code recommendation experience. 
+
+.Prerequisites
+
+* You must have installed {AnsibleContentParser} on your computer.
+* You must have verified that the version of ansible-lint that is installed with the content parser tool is the same as that of the previously-installed ansible-lint.
+
+.Procedure
+
+. Run the {AnsibleContentParser} to generate a training data set: 
+** With ansible-lint preprocessing: `$ ansible-content-parser _source_ _output_`
+** Without ansible-lint preprocessing: `$ ansible-content-parser _source_ _output_ _-S_`
++
+The following table lists the required parameters.
++
+[cols="30%,70%",options="header"]
+|===
+|Parameter |Description
+|`_source_` 
+|Specifies the source of the training data set. 
+
+|`_output_`
+|Specifies the output of the training data set.
+
+|`_-S_` or `_--skip-ansible-lint_`
+|Specifies to skip ansible-lint preprocessing while generating the training data set.
+
+|===
+
++
+For example:
+If the source is a Github URL https://github.com/ansible/ansible-tower-samples.git, and the output directory is `/tmp/out`, the command prompt is as follows: +
+`$ ansible-content-parser https://github.com/ansible/ansible-tower-samples.git /tmp/out`
+
+. Optional: To generate a training data set with additional information, specify the following parameters while running the {AnsibleContentParser}.
++
+[cols="30%,70%",options="header"]
+|===
+|Parameter |Description
+
+|`--source-license`
+|Specifies to include the licensing information of the source directory in the training data set.
+
+|`--source-description`
+|Specifies to include the descriptions of the source directory in the training data set.
+
+|`--repo-name`
+|Specifies to include the repository name in the training data set. If you do not specify the repository name, the {AnsibleContentParser} automatically generates it from the source name.
+
+|`--repo-url`
+|Specifies to include the repository URL in the training data set. If you do not specify the repository URL, the {AnsibleContentParser} automatically generates it from the source URL.
+
+|`-v` or `--verbose` 
+|Displays the console logging information.
+|===
+
++
+.Example of a command prompt for Github repository *ansible-tower-samples*
+....
+$ ansible-content-parser --profile min \
+--source-license undefined \
+--source-description Samples \
+--repo-name ansible-tower-samples \
+--repo-url 'https://github.com/ansible/ansible-tower-samples' \
+git@github.com:ansible/ansible-tower-samples.git /var/tmp/out_dir
+....
+
++
+.Example of a generated training data set for Github repository *ansible-tower-samples*
+The training data set is formatted with Jeff Goldblum (jg), a command-line JSON processing tool.
+
++
+....
+$ cat out_dir/ftdata.jsonl| jq
+{
+"data_source_description": "Samples",
+"input": "---\n- name: Hello World Sample\n hosts: all\n tasks:\n - name: Hello Message",
+"license": "undefined",
+"module": "debug",
+"output": " debug:\n msg: Hello World!",
+"path": "hello_world.yml",
+"repo_name": "ansible-tower-samples",
+"repo_url": "https://github.com/ansible/ansible-tower-samples"
+}
+....

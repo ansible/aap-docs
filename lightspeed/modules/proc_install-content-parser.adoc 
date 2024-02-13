@@ -1,0 +1,76 @@
+:_content-type: PROCEDURE
+
+[id="install-content-parser_{context}"]
+
+= Installing {AnsibleContentParser}
+
+Install the {AnsibleContentParser}, a command-line interface (CLI) tool, on your computer. 
+
+.Prerequisites
+
+Ensure that your computer has one of the following supported OS:
+
+* Python version 3.10 or later.  
+* UNIX OS, such as Linux or Mac OS.  
++
+NOTE: Installation of the {AnsibleContentParser} on Microsoft Windows OS is not supported.
++
+
+.Procedure
+
+. Create a working directory and set up `venv` Python virtual environment:
++
+`$ python -m venv ./venv`
++
+`$ source ./venv/bin/activate`
+
+. Install the latest version of {AnsibleContentParser} from the `pip` repository:
++
+`$ pip install --upgrade pip`
++
+`$ pip install --upgrade ansible-content-parser`
+
+. Perform one of the following tasks:
+** To generate a training data set without ansible-lint preprocessing, go to section xref:generate-training-data-set_configuring-custom-models[Generating a custom model training data set]. 
+** To generate a training data set with ansible-lint preprocessing, ensure that you have the latest version of ansible-lint installed on your computer:
+... View the ansible-lint versions that are installed on your computer.
++
+`$ ansible-content-parser --version`
++
+`$ ansible-lint --version`
++
+A list of application versions and their dependencies are displayed.
+
+... In the output, verify that the version of ansible-lint that was installed with the {AnsibleContentParser} is the same as that of the previously-installed ansible-lint. A mismatch in the installed ansible-lint versions causes inconsistent results from the {AnsibleContentParser} and ansible-lint.
++
+For example, in the following output, the {AnsibleContentParser} installation includes ansible-lint version 6.20.0 which is a mismatch from previously-installed ansible-lint version 6.13.1:
++
+....
+$ ansible-content-parser --version
+ansible-content-parser 0.0.1 using ansible-lint:6.20.0 ansible-core:2.15.4
+$ ansible-lint --version
+ansible-lint 6.13.1 using ansible 2.15.4
+A new release of ansible-lint is available: 6.13.1 → 6.20.0
+....
+
+... If there is a mismatch in the ansible-lint versions, deactivate and reactivate `venv` Python virtual environment: 
++
+`$ deactivate`
++
+`$ source ./venv/bin/activate`
+
+... Verify that the version of ansible-lint that is installed with the {AnsibleContentParser} is the same as that of the previously-installed ansible-lint: 
++
+`$ ansible-content-parser --version`
++
+`$ ansible-lint --version`
++
+For example, the following output shows that both ansible-lint installations on your computer are of version 6.20.0:
++
+....
+$ ansible-content-parser --version
+ansible-content-parser 0.0.1 using ansible-lint:6.20.0 ansible-core:2.15.4
+$ ansible-lint --version
+ansible-lint 6.20.0 using ansible-core:2.15.4 
+ansible-compat:4.1.10 ruamel-yaml:0.17.32 ruamel-yaml-clib:0.2.7
+....

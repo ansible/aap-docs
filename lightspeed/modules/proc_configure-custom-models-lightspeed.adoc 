@@ -1,0 +1,45 @@
+:_content-type: PROCEDURE
+
+[id="configure-custom-models-lightspeed_{context}"]
+
+= Configuring {LightspeedshortName} to use custom models
+
+After you create and deploy a custom model in {ibmwatsonxcodeassistant}, you must configure {LightspeedshortName} so that you can use the custom model for your organization. 
+
+You can specify one of the following configurations for using the custom model:
+
+* *Enable access for all users in your organization*
++
+You can configure the custom model as the default model for your organization. All users in your organization who have a {LightspeedshortName} seat assigned can use the custom model. 
+
+* *Enable access for select Ansible users in your organization*
++
+Using the *model-override* setting, you can configure the custom model and make it available for select Ansible users only. For example, if you are using {LightspeedshortName} both as an organization administrator and an end user, you can test the custom model for select Ansible users before making it available for all users in your organization. 
+
+== Configuring the custom model for all Ansible users in your organization
+
+You can configure the custom model as the default model for your organization, so that all users in your organization can use the custom model.
+
+.Procedure
+. Log in to the link:https://console.redhat.com/preview/ansible/seats-administration[Ansible Lightspeed with {ibmwatsonxcodeassistant} Hybrid Cloud Console] as an organization administrator.
+. Specify the model ID of the custom model:
+.. Click *Model Settings*. 
+.. Under *Model ID*, click *Add Model ID*. A screen to enter the *Model ID* is displayed. 
+.. Enter the *Model ID* of the custom model.
+.. Optional: Click *Test model ID* to validate the model ID.
+.. Click *Save*.  
+
+== Configuring the custom model for select Ansible users in your organization
+Using the *model-override* setting in Ansible Visual Studio (VS) Code, you can configure the custom model and make it available for select Ansible users only. For example, If you are using {LightspeedshortName} as both an organization administrator and an end user, you can test the custom model for select Ansible users before making it available for all users in your organization. 
+
+.Procedure
+
+. Log in to the VS Code application using your Red Hat account.
+. From the Activity bar, click the *Extensions* icon image:extensions-icon-vscode.png[Extensions].
+. From the Installed Extensions list, select *Ansible*.
+. From the *Ansible* extension page, click the *Settings* icon and select *Extension Settings*. 
+. From the list of settings, select *Ansible Lightspeed*.
+. In the *Model ID Override* field, enter the model ID of the custom model. 
++
+Your settings are automatically saved in VS Code, and you can now use the custom model. 
+
