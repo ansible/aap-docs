@@ -12,17 +12,13 @@ The following scenarios are possible:
 To resolve this error, ensure that:
 
 ** Your organization administrator has configured {LightspeedShortName} for your organization. 
-** You have a valid {LightspeedShortName} seat license. 
+** You are part of an organization that has a trial or paid subscription to both {PlatformNameShort} and {ibmwatsonxcodeassistant}.
 * You have not configured the required Ansible VS code extension settings.
 ** To resolve this error, ensure that you have enabled the *Lightspeed:Enabled* and menu:Lightspeed[Suggestions:Enabled] settings. For more information, see xref:configure-vscode-extension_configuring-with-code-assistant[Configure the Ansible VS Code extension].
 
 * You receive a `Failure on completion requests` error when you make inference requests in VS Code.
 +
-If you have an assigned seat license for {LightspeedShortName} but your organization administrator has not configured an {ibmwatsonxcodeassistant} model for your organization, you will encounter a `Failure on completion requests` error when you make inference requests in VS Code. 
-
-* You are logged in using an account that does not have a valid {LightspeedShortName} seat license. 
-+
-If you logged in using an account that does not have an assigned seat license, you must log out and log in again. In VS Code, click the *Accounts* icon and sign in using your Red Hat account with an assigned seat license. 
+If you are part of an organization that has a trial or paid subscription to both {PlatformNameShort} and {ibmwatsonxcodeassistant}, but your organization administrator has not configured an {ibmwatsonxcodeassistant} model for your organization, you will encounter a `Failure on completion requests` error when you make inference requests in VS Code. 
 
 * Your VS Code Workspace settings override user settings.
 +
@@ -36,5 +32,11 @@ To resolve this error, log out of VS Code and log in again using your Red Hat ac
 
 * You clicked a different location or switched to a different window; therefore, the populated code recommendations disappeared. 
 +
-{LightspeedShortName} service could take multiple seconds per task to populate the code recommendations. If you are using a multitask prompt, the {LightspeedShortName} service takes a bit longer to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the {LightspeedShortName} service does not process your request. In this scenario, you must get the cursor back to its original position and repopulate the results.  
+The {LightspeedShortName} service could take multiple seconds per task to populate the code recommendations. If you are using a multitask prompt, the {LightspeedShortName} service takes a bit longer to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, the Ansible VS Code extension cancels the request and the {LightspeedShortName} service does not process your request. In this scenario, you must get the cursor back to its original position and repopulate the results.  
 
+== Cannot request code recommendations by using the Ansible VS Code extension
+
+The following error message is displayed: +
+`Your trial to the generative AI model has expired. Refer to your IBM Cloud Account to re-enable access to the {ibmwatsonxcodeassistant}.`
+
+To resolve this error, refer to your IBM Cloud account and select an upgrade option. 
