@@ -1,0 +1,43 @@
+[id="creating-collection-local"]
+
+= Creating a collection locally
+
+[role="_abstract"]
+The following steps describe the process for developing a new collection locally, using tools available in the Ansible VSCode extension.
+
+The `ansible-creator` tool helps you write your own collections. You create the collection using Ansible Creator in the Ansible VSCode extension.
+You can run playbooks from VSCode with either the ansible-playbook or ansible-navigator tool.
+
+.Procedure
+
+. Install the Ansible VSCode extension.
+. Create a workspace in VSCode.
+. Create a virtual environment to develop your collection locally. >>>>> Aine CHECK THIS
+. Open your workspace in VSCode.
+. Click the Ansible icon in the VSCode activity bar to open the Ansible extension in VSCode.
+. In the *ANSIBLE CREATOR* section of the Ansible extension, click btn:[Get started].
+. Check that the system requirements are met.
+All requirements that are satisfied have green ticks next to them.
+You can check your installed versions of the Ansible components by running `pip freeze | grep ansible` in a terminal.
+. Scroll past the system requirements and click btn:[Initialize Ansible collection].
+. In the *Ansible Creator: Init* tab, enter a namespace and collection name for your new collection. 
+The collection is created in the default location, which is specified in the *Init path*. 
+Modify this path if you want your collection to be created in another location.
+>>> Aine: Link to VSCode instructions here.
+. Click btn:[Create]
+. When your new collection has been created, the following message is displayed in the *Ansible Content Creator* tab in VSCode:
++
+```
+    Note: collection sample_ns.devtools_demo created at
+          /Users/username/.ansible/collections/ansible_collections
+   Debug: exiting ansible-creator
+
+Process exited with status: success and code: 0
+```
++
+Your new collection is located in the `/<namespace>/<collection_name>/` subdirectory that you specified before you initialized the collection.
+To check that your collection has been created, run `ansible-galaxy collection list | grep <namespace>`.
+. Click btn:[Open Collection] to view your new collection. This action also adds your new collection to your workspace. 
+You can view the content that Ansible Content Creator has created by clicking the *File Explorer* icon in the VSCode activity bar.
+
+
