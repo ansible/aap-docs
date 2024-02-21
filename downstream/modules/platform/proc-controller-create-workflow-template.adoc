@@ -4,6 +4,12 @@
 
 To create a new workflow job template, complete the following steps:
 
+[IMPORTANT]
+====
+If you set a limit to a workflow template, it is not passed down to the job template unless you check *Prompt on launch* for the limit. 
+This can lead to playbook failures if the limit is mandatory for the playbook that you are running.
+====
+
 .Procedure
 
 . On the *Templates* list view, click menu:Add[Add workflow template].
@@ -24,24 +30,26 @@ Exceptions are noted in the following table.
 | *Field* | *Options* | *Prompt on Launch* 
 | Name | Enter a name for the job.| N/A
 | Description| Enter an arbitrary description as appropriate (optional). | N/A
-| Organization | Choose the organization to be used with this template from the organizations available to the logged in user. | N/A
-| Inventory | Optionally, choose the inventory to be used with this template from the inventories available to the logged in user. | Yes
-| Limit a| A host pattern to further constrain the list of hosts managed or affected by the playbook. Multiple patterns can be separated by colons (:). As with core Ansible: 
+| Organization | Choose the organization to use with this template from the organizations available to the logged in user. | N/A
+| Inventory | Optionally, select the inventory to use with this template from the inventories available to the logged in user. | Yes
+| Limit a| A host pattern to further constrain the list of hosts managed or affected by the playbook. You can separate many patterns by colons (:). As with core Ansible: 
 
 - a:b means "in group a or b"
 - a:b:&c means "in a or b but must be in c"
 - a:!b means "in a, and definitely not in b"
 
-For more information see, link:http://docs.ansible.com/intro_patterns.html[Patterns] in the Ansible documentation. | Yes
+For more information see, link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_patterns.html[Patterns: targeting hosts and groups ] in the Ansible documentation. | Yes
+
+If selected, even if a default value is supplied, you are prompted upon launch to select a limit.
 | Source control branch | Select a branch for the workflow. This branch is applied to all workflow job template nodes that prompt for a branch. | Yes
 | Labels a| - Optionally, supply labels that describe this workflow job template, such as `dev` or `test`. 
-Labels can be used to group and filter workflow job templates and completed jobs in the display. 
+Use labels to group and filter workflow job templates and completed jobs in the display. 
 
 - Labels are created when they are added to the workflow template. 
 Labels are associated to a single Organization using the Project that is provided in the workflow template. 
 Members of the Organization can create labels on a workflow template if they have edit permissions (such as the admin role).
 
-- Once the job template is saved, the labels appear in the workflow job templates *Details* view.
+- Once you save the job template, the labels appear in the workflow job templates *Details* view.
 
 - Labels are only applied to the workflow templates not the job template nodes that are used in the workflow.
 
@@ -55,13 +63,13 @@ If selected, even if a default value is supplied, you are prompted when launchin
 | Variables a| - Pass extra command line variables to the playbook. 
 
 This is the "-e" or "-extra-vars" command line parameter for ansible-playbook that is documented in the Ansible documentation at link:http://docs.ansible.com/playbooks_variables.html#passing-variables-on-the-command-line[Passing Variables on the Command Line].
-- Provide key or value pairs using either YAML or JSON. These variables have a maximum value of precedence and overrides other variables specified elsewhere. The following is an example value:
+- Provide key or value pairs by using either YAML or JSON. These variables have a maximum value of precedence and overrides other variables specified elsewhere. The following is an example value:
 `git_branch: production
 release_version: 1.5` | Yes
 
 If you want to be able to specify extra_vars on a schedule, you must select *Prompt on launch* for Variables on the workflow job template, or enable a survey on the job template. Those answered survey questions become `extra_vars`.
-For more information about extra variables, seexref:controller-extra-variables[Extra Variables]. 
-| Job tags | Type and select the *Create* drop-down to specify which parts of the playbook should be executed.
+For more information about extra variables, see xref:controller-extra-variables[Extra Variables]. 
+| Job tags | Type and select the *Create* drop-down to specify which parts of the playbook should run.
 For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes 
 | Skip Tags | Type and select the *Create* drop-down to specify certain tasks or parts of the playbook to skip.
 For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
@@ -79,7 +87,7 @@ For more information, see link:https://docs.ansible.com/automation-controller/la
 *** *Webhook URL*: Automatically populated with the URL for the webhook service to POST requests to.
 *** *Webhook Key*: Generated shared secret to be used by the webhook service to sign payloads sent to {ControllerName}.
 You must configure this in the settings on the webhook service so that webhooks from this service are accepted in {ControllerName}.
-For additional information on setting up webhooks, see xref:controller-work-with-webhooks[Working with Webhooks].
+For additional information about setting up webhooks, see xref:controller-work-with-webhooks[Working with Webhooks].
 +
 Check *Enable Concurrent Jobs* to allow simultaneous runs of this workflow. 
 For more information, see xref:controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
@@ -88,7 +96,7 @@ For more information, see xref:controller-capacity-determination[{ControllerName
 
 Saving the template exits the workflow template page and the workflow visualizer opens to allow you to build a workflow. 
 For more information, see the xref:controller-workflow-visualizer[Workflow visualizer] section.
-Otherwise, choose one of these methods:
+Otherwise, select one of these methods:
 
 * Close the workflow visualizer to return to the *Details* tab of the newly saved template. 
 There you can complete the following tasks:
@@ -97,7 +105,7 @@ There you can complete the following tasks:
 ** View completed jobs
 ** Build a workflow template
 
-* Click btn:[Launch] to launch the workflow.
+* Click btn:[Launch] to start the workflow.
 +
 [NOTE]
 ====
