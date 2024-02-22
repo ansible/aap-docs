@@ -11,7 +11,7 @@ Pods have a life cycle.
 They are defined, then they are assigned to run on a node, then they run until their containers exit or they are removed for some other reason.
 Pods, depending on policy and exit code, can be removed after exiting, or can be retained to enable access to the logs of their containers.
 
-{PlatformName} provides a simple default Pod specification, however, you can provide a custom YAML, or JSON document that overrides the default pod specification.
+{PlatformName} provides a simple default pod specification, however, you can provide a custom YAML, or JSON document that overrides the default pod specification.
 This custom document uses custom fields, such as `ImagePullSecrets`, that can be serialized as valid Pod JSON or YAML.
 
 A full list of options can be found in the link:https://docs.openshift.com/online/pro/architecture/core_concepts/pods_and_services.html[Openshift Online] documentation.
@@ -93,7 +93,7 @@ In this case, there is a volume for storing the registry’s data, and one for a
 | `ImagePullSecrets` | A pod can contain one or more containers, which must be pulled from some registry.
 If containers come from registries that require authentication, you can give a list of `ImagePullSecrets:` that refer to `ImagePullSecrets` present in the namespace.
 Having these specified enables {OCP} to authenticate with the container registry when pulling the image.
-For further information, see link:https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/[Managing resource containers] in the kubernetes documentation.
+For further information, see link:https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/[Managing resource containers] in the Kubernetes documentation.
 | `restartPolicy:` | The pod restart policy with possible values `Always`, `OnFailure`, and `Never`.
 The default value is `Always`.
 | `serviceAccount:` | Pods making requests against the OpenShift Online API is a common enough pattern that there is a `serviceAccount` field for specifying which service account user the pod should authenticate as when making the requests. This enables fine-grained access control for custom infrastructure components.
