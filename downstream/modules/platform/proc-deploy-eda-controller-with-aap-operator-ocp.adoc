@@ -16,7 +16,24 @@
 
 . Under *Provided APIs*, locate the {EDAName} modal and click *Create instance*. 
 +
-This takes you to the Form View to customize your installation.
+This takes you to the Form View to customize your installation. 
++
+[IMPORTANT]
+====
+To ensure that you can run concurrent {EDAName} activations efficiently, you must set your maximum number of activations to 12 in the YAML view. 
+====
++
+. Click btn:[YAML view] to update your YAML key values. 
+
+. Copy and paste the following string at the end of the `spec` key value section the `worker` key:
++
+----
+extra_settings:
+  - setting: EDA_MAX_RUNNING_ACTIVATIONS
+    value: '12'
+----
++
+. Click btn[Reload] and btn[Save]. Return to the Form view.
 
 . In the *Name* field, enter the name you want for your new {EDAcontroller} deployment. 
 +
