@@ -23,7 +23,7 @@ ssh ec2-user@10.0.0.6
 This can be a temporary key used just for the automation mesh configuration, or a long-lived key. 
 The SSH user and key are used in later steps.
 
-. Enable RHEL subscription with `baseos` and `appstream` repositories. 
+. Enable your RHEL subscription with `baseos` and `appstream` repositories. 
 {PlatformNameShort} RPM repositories are only available through subscription-manager, not the _Red Hat Update Infrastructure_ (RHUI).  
 If you attempt to use any other Linux footprint, including RHEL with RHUI, this causes errors. 
 +
@@ -36,8 +36,10 @@ If Simple Content Access is enabled for your account, use:
 ----
 sudo subscription-manager register
 ----
++
+For more information about Simple Content Access, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
 
-. Enable Ansible Automation Platform subscriptions and the proper Red Hat Ansible Automation Platform channel using:
+. Enable Ansible Automation Platform subscriptions and the proper {PlatformName} channel:
 +
 ----
 # subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms for RHEL 8
@@ -45,13 +47,13 @@ sudo subscription-manager register
 # subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms for RHEL 9
 ----
 
-. Ensure the  packages are up to date, using:
+. Ensure the  packages are up to date:
 +
 ---- 
 sudo dnf upgrade -y
 ----
 
-. Install the ansible-core packages, using:
+. Install the ansible-core packages:
 +
 ----
 sudo dnf install -y ansible-core
