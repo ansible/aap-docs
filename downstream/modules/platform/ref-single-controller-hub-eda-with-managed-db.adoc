@@ -10,6 +10,9 @@ Use this example to populate the inventory file to deploy single instances of {C
 * This scenario requires a minimum of {ControllerName} 2.4 for successful deployment of {EDAcontroller}.
 
 * {EDAController} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
+
+* When activating an {EDAName} rulebook under standard conditions, it typically utilizes approximately 250 MB of memory. However, the actual memory consumption can vary significantly based on the complexity of your rules and the volume and size of the events processed. In scenarios where a large number of events are anticipated or the rulebook complexity is high, conduct a preliminary assessment of resource usage in a staging environment. This ensures that your maximum number of activations is based on the capacity of your resources. In the following example, the default `automationedacontroller_max_running_activations` setting is 12, but you can adjust according to your capacity. 
+
 ====
 
 -----
@@ -100,5 +103,62 @@ sso_keystore_password=''
 # Certificate and key to install in Automation {EDAcontroller} node
 # automationedacontroller_ssl_cert=/path/to/automationeda.crt
 # automationedacontroller_ssl_key=/path/to/automationeda.key
+
+## Operational parameters
+automationedacontroller_postgresql_version: '13'
+automationedacontroller_redis_database: '4'
+
+automationedacontroller_allowed_addresses:
+  - "{{ ansible_all_ipv4_addresses | default([]) }}"
+  - "{{ ansible_all_ipv6_addresses | default([]) }}"
+
+_automationedacontroller_trusted_origins: "{{ [automationedacontroller_disable_https | ternary('http://', 'https://')] | product(_automationedacontroller_allowed_hostnames | flatten) | map('join') | list | join(',') }}"
+
+automationedacontroller_container_registry_credential: "Decision Environment Container Registry"
+decision_environments:
+  - name: "Default Decision Environment"
+    image: "{{ _ee_image_base }}de-supported-rhel8:latest"
+    credential_name: "{{ automationedacontroller_container_registry_credential }}"
+
+automationedacontroller_db_settings:
+  DB_NAME: '{{ automationedacontroller_install_pg_database }}'
+  DB_HOST: '{{ automationedacontroller_install_pg_host }}'
+  DB_PORT: '{{ automationedacontroller_install_pg_port | int }}'
+  DB_USER: '{{ automationedacontroller_install_pg_username }}'
+  DB_PASSWORD: '{{ automationedacontroller_install_pg_password }}'
+  DB_SSL_MODE: '{{ _automationedacontroller_pg_sslmode }}'
+
+automationedacontroller_gw_settings:
+  ANSIBLE_BASE_JWT_VALIDATE_CERT: true
+  ANSIBLE_BASE_JWT_REDIRECT_TYPE: 'eda'
+  REST_FRAMEWORK:
+    DEFAULT_AUTHENTICATION_CLASSES:
+      - 'rest_framework.authentication.SessionAuthentication'
+      - 'ansible_base.jwt_consumer.eda.auth.EDAJWTAuthentication'
+      - 'rest_framework.authentication.BasicAuthentication'
+
+## Configurable parameters
+
+automationedacontroller_admin_username: admin        # Username used by django to identify and create the admin superuser in Automation EDA Controller.
+automationedacontroller_admin_email: admin@example.com        # Email address used by django for the admin user for Automation EDA Controller.
+
+automationedacontroller_disable_https: false        # Boolean flag to disable HTTPS Automation EDA Controller.
+automationedacontroller_disable_hsts: false        # Boolean flag to disable HSTS Automation EDA Controller.
+automationedacontroller_user_headers: []        # List of additional nginx headers to add to Automation EDA Controller's nginx configuration.
+automationedacontroller_nginx_tls_files_remote: false        # Boolean flag to specify whether cert sources are on the remote host (true) or local (false).
+automationedacontroller_allowed_hostnames: []        # List of additional addresses to enable for user access to Automation EDA Controller.
+automationedacontroller_trusted_origins: []        # List of host addresses in the form: [scheme]//:[address]:[port] for trusted CSRF origins. By default, the installer will add the same allowed hostnames and addresses list with the configured scheme and port for EDA.
+
+automationedacontroller_controller_verify_ssl: true        # Boolean flag used to verify Automation Controller's web certificates when making calls from Automation EDA Controller. Default is true to ensure SSL connection is verified.
+
+automationedacontroller_websocket_ssl_verify: true       # SSL verification for the Daphne websocket used by podman to communicate from the pod to the host. Default is true to enable SSL connection is verified.
+
+automationedacontroller_max_running_activations: 12       # The number of running activations per worker. By default, this is set to 12.
+
+automationedacontroller_gunicorn_workers: "{{ ansible_processor_vcpus | int * 2 + 1 }}"        # Number of workers for the API served through gunicorn. The default: (# of cores or threads) * 2 + 1
+automationedacontroller_rq_workers: "{{ ansible_processor_vcpus | int }}"        # Number of rq workers used in EDA for application work. The default: (# of cores or threads)
+automationedacontroller_activation_workers: "{{ ansible_processor_vcpus | int * 2 + 1 }}"        # Number of workers used for ansible-rulebook activation pods in EDA. The default: (# of cores or threads) * 2 + 1
+
+automationedacontroller_debug: false        # Boolean flag to enable django debug mode for applications such as rqworker. By default this is set to false which disables django debug level logging.
 
 -----
