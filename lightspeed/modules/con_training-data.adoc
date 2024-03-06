@@ -22,19 +22,23 @@ If you publish content to {Galaxy} and want to restrict your {Galaxy} content fr
 
 == Data telemetry
 
-The Ansible VS Code extension, with {LightspeedFullName} features enabled, automatically collects recommendations, usage telemetry, and playbook state through automated events. This data is eventually shared with {LightspeedShortName} and {ibmwatsonxcodeassistant} to generate code recommendations. 
+{LightspeedshortName} collects the following telemetry data by default:
 
-The following table lists the data that the Ansible VS Code extension collects. 
+* *Operational telemetry data*
++
+This is the data that is required to operate and troubleshoot the Ansible Lightspeed service. For more information, refer the Enterprise Agreement. You cannot disable the collection of operational telemetry data. 
 
-.Data collected by the Ansible VS Code extension
-[cols="30%,70%",options="header"]
-|====
-| *Metric* | *Description*
-| Recommendation accepted | An indicator that a code recommendation was accepted by an Ansible user and included in the Ansible playbook.
-| Recommendation rejected | An indicator that a code recommendation was rejected by an Ansible user and excluded from the Ansible playbook.
-| Anonymized document URI | The string that helps to determine the document type (playbook, role, or task).
-| Request and response timestamps | The request and response times captured in UTC format.
-| Anonymized user ID | A random anonymous user ID that is stored locally on `~/.redhat/anonymousid`.
-| Anonymized suggestion ID | A random auto-generated session ID associated with the suggestion request.
-|{ibmwatsonxcodeassistant} metadata | Contextual information about the suggestion returned from the {ibmwatsonxcodeassistant} model such as the recommended Ansible module, recommended parameter keys, and length of the suggestion.
-|====
+* *Admin dashboard telemetry data*
++
+This is the data that provides insight into how your organization users are using the Ansible Lightspeed service, and the metrics are displayed on the Admin dashboard. You can also disable the Admin dashboard telemetry if you no longer want to collect and monitor the telemetry data.
+
+== What telemetry data is collected?
+Following is the list of telemetry data that Red Hat Ansible Lightspeed collects:
+
+* Details of the organization that you are logged into, such as organization ID and account number
+* Large language models that you are connected to 
+* Inline suggestions that were accepted, rejected, or ignored by your organization users
+* User sentiment feedback
+* Top 10 modules returned in code recommendations
+
+For more information about Admin dashboard telemetry, see xref:managing-admin-dashboard-telemetry_lightspeed-user-guide[Viewing and managing Admin dashboard telemetry]. 
