@@ -2,16 +2,15 @@
 
 [id="install-code-bot_{context}"]
 
-= Installing Ansible code bot
+= Installing the {AnsibleCodeBot}
 
-Install the {AnsibleCodeBot} to get code recommendations.
+Install the {AnsibleCodeBot} to get code recommendations for your repositories, and then log in to the {AnsibleCodeBot} dashboard to monitor and manage your repository scans. 
 
 .Procedure
 
 . Log in to GitHub by using the account associated with your organization.
-. Install the GitHub app for the organization that you are a member of. 
-. Go to the link:https://github.com/apps/ansible-code-bot[Ansible code bot] GitHub app. 
-. Select the repositories that you want the app to access: 
+. Go to the link:https://github.com/apps/ansible-code-bot[{AnsibleCodeBot}] GitHub app. 
+. Select the Ansible repositories that you want the app to access: 
 * *All repositories*: Provides access to read the metadata of all repositories.
 * *Only select repositories*: Provides access to read the metadata of only the repositories that you select. 
 . Optional: If you selected *Only select repositories* in the previous step, select the repositories that you want the {AnsibleCodeBot} to access from the *Select repositories* list. 
@@ -19,17 +18,31 @@ Install the {AnsibleCodeBot} to get code recommendations.
 A message is displayed that specifies the following permissions are granted automatically to the bot during installation: 
 * Read access to metadata
 * Read and write access to code and pull requests
-. When prompted, log in to your {RH-SSO} account as an organization administrator. You are logged in to {AnsibleCodeBot}.
+. When prompted, log in to your {RHSSO} account as an organization administrator. 
+. Log in to the {AnsibleCodeBot} dashboard:
+.. On the *Authorize Ansible code bot* page, verify your account and repository permissions. 
+.. Click *Authorize Ansible*. 
++
+From the *Authorize Ansible code bot* page, the following actions occur:
++
+* {AnsibleCodeBot} verifies that you are a part of an organization that has an active subscription to {PlatformName}. 
+* GitHub requests read permissions to access the repositories associated with your account.
 
-The following image shows the {AnsibleCodeBot} login screen with a message stating `Your subscription is active`: 
-
-.{AnsibleCodeBot} login screen
-image::code_bot_login_screen.png[Ansible Code bot login screen]
-
-After the {AnsibleCodeBot} is installed for the Git repositories you selected, you can configure a schedule to scan your Git repositories at regular intervals. You can also manually scan your Git repositories if you have not set up a scanning schedule for your {AnsibleCodeBot} or if you do not want to wait for the next scheduled scan.
+On successful authorization, you are logged in to {AnsibleCodeBot} dashboard that displays all your repositories that have the {AnsibleCodeBot} installed along with their scan status. If you did not set up a scan schedule earlier, the dashboard displays the repositories without any associated scan history. You can scan your Git repository by starting a manual scan, or configure a schedule to scan your repository at regular intervals. You can also add a repository for scanning or remove an existing repository from being scanned. For more information, see xref:manage-repo-scans_using-code-bot-for-suggestions[Managing repository scans]. 
 
 [role="_additional-resources"]
 .Additional resources
-* xref:configure-repo-scan_using-code-bot-for-suggestions[Configuring Ansible code bot to scan your repository at regular intervals]
-* xref:manually-scan-repo_using-code-bot-for-suggestions[Manually scanning your Git repositories]
-* xref:troubleshooting-code-bot_troubleshooting-lightspeed[Troubleshooting Ansible code bot errors]
+* xref:troubleshooting-code-bot_troubleshooting-lightspeed[Troubleshooting {AnsibleCodeBot} errors]
+
+== Uninstalling the {AnsibleCodeBot}
+
+If you no longer want to use the {AnsibleCodeBot}, you can uninstall it from GitHub. Once uninstalled, you can still access the {AnsibleCodeBot} dashboard but you cannot see the repositories on the dashboard or scan your repositories.
+
+.Procedure
+. Log in to GitHub by using the account associated with your organization.
+. In GitHub, click your profile photo > *Settings*.  
+. Under Integrations, click *Applications* > *Installed GitHub Apps*.
+. Click *Configure* beside the {AnsibleCodeBot} app. 
+. Under the *Danger zone* area, click *Uninstall*. 
++
+The {AnsibleCodeBot} app is uninstalled from your GitHub account. 
