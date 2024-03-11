@@ -7,7 +7,7 @@ Every resource is guaranteed to have its primary key number alone as a unique ke
 A resource can generate an identifier format and, therefore, have a named URL if it has at least one unique key that satisfies the following rules:
 
 . The key must contain only fields that are either the `name` field, or text fields with a finite number of possible choices (such as credential type resource's `kind` field).
-. The only allowed exceptional fields that breaks the preceding rule is a many-to-one related field relating to a resource other than itself, which is also allowed to have a slug.
+. The only permitted exceptional fields that breaks the preceding rule is a many-to-one related field relating to a resource other than itself, which is also allowed to have a slug.
 
 If there are resources `Foo` and `Bar`, both `Foo` and `Bar` contain a name field and a choice field that can only have value "yes" or "no". 
 Additionally, resource `Foo` has a many-to-one field (a foreign key) relating to `Bar`, for example `fk`. 
