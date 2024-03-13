@@ -5,13 +5,13 @@
 [id="persisting-data-from-auto-runs_{context}"]
 = Persisting data from auto runs
 
-Consider the local {ControllerName} filesystem as counterproductive since that ties the data to that host. If you have a multi-node cluster, then you can contact a different host each time causing issues if you are creating workflows that depend upon each other and created directories. For example, if a directory was only created in one node, while another node runs the playbook, the results would be inconsistent.
+Consider the local {ControllerName} filesystem as counterproductive since that ties the data to that host. If you have a multi-node cluster, then you can contact a different host each time, causing issues if you are creating workflows that depend on each other and created directories. For example, if a directory was only created in one node while another node runs the playbook, the results would be inconsistent.
 
 The solution is to use some form of shared storage solution, such as Amazon S3, Gist, or a role to rsync data to your data endpoint. 
 
 The option exists of injecting data or a configuration into a container at runtime. This can be achieved by using the {ControllerName}'s isolated jobs path option.
 
-This provides a way to mount directories and files into an {ExecEnvShort} at runtime. This is achieved through the {AutomationMesh}, utilizing ansible-runner to inject them into a Podman container to start the automation. What follows are some of the use cases for using isolated job paths:
+This provides a way to mount directories and files into an {ExecEnvShort} at runtime. This is achieved through the {AutomationMesh}, using ansible-runner to inject them into a Podman container to start the automation. What follows are some of the use cases for using isolated job paths:
 
 * Providing SSL certificates at runtime, rather than baking them into an {ExecEnvShort}.
 
