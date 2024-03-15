@@ -5,6 +5,11 @@
 When you pass survey variables, they are passed as extra variables (`extra_vars`) within {ControllerName}.
 However, passing extra variables to a job template (as you would do with a survey) can override other variables being passed from the inventory and project.
 
+By default, `extra_vars` are marked as `!unsafe` unless you specify them on the Job Template's Extra Variables section. 
+These are trusted, because they can only be added by users with enough privileges to add or edit a Job Template. 
+For example, nested variables do not expand when entered as a prompt, as the Jinja brackets are treated as a string.
+For more information on unsafe variables, see: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_advanced_syntax.html#unsafe-or-raw-strings. 
+
 [NOTE]
 ====
 `extra_vars` passed to the job launch API are only honored if one of the following is true:
@@ -24,7 +29,7 @@ If you are specifying the `ALLOW_JINJA_IN_EXTRA_VARS` parameter, see the link:ht
 
 The job template extra variables dictionary is merged with the survey variables.
 
-The following are some simplified examples of extra_vars in YAML and JSON formats:
+The following are some simplified examples of `extra_vars` in YAML and JSON formats:
 
 * The configuration in YAML format:
 ----
