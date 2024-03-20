@@ -4,9 +4,9 @@
 
 An Ansible Playbook is a blueprint for automation tasks, which are actions executed with limited manual effort across an inventory of solutions. 
 Playbooks tell Ansible what to do on which devices. 
-Instead of manually applying the same action to hundreds or thousands of similar technologies across IT environments, executing a playbook automatically completes the same action for the specified type of inventory—such as a set of routers.
+Instead of manually applying the same action to hundreds or thousands of similar technologies across IT environments, executing a playbook automatically completes the same action for the specified type of inventory, such as a set of routers.
 
-Playbooks are regularly used to automate IT infrastructure—such as operating systems and Kubernetes platforms—networks, security systems, and code repositories like GitHub. 
+Playbooks are regularly used to automate IT infrastructure—such as operating systems and Kubernetes platforms, networks, security systems, and code repositories like GitHub. 
 
 You can use playbooks to program applications, services, server nodes, and other devices, without the manual overhead of creating everything from scratch. 
 
@@ -14,7 +14,30 @@ Playbooks, and the conditions, variables, and tasks within them, can be saved, s
 
 This makes it easier for you to codify operational knowledge and ensure that the same actions are performed consistently.
 
-This guide describes the commands, techniques and aspects of use you can use to make your playbooks more efficient. 
+[discrete]
+== Task execution
 
-include::playbooks/con-playbooks-task-execution.adoc[leveloffset=+1]
-include::playbooks/con-playbooks-desired-state-idempotent.adoc[leveloffset=+1]
+By default, Ansible executes each task in order, one at a time, against all machines matched by the host pattern. 
+Each task executes a module with specific arguments. 
+When a task has been executed on all target machines, Ansible moves on to the next task. 
+You can use xref:[strategies] to change this default behavior. 
+
+Within each play, Ansible applies the same task directives to all hosts. 
+If a task fails on a host, Ansible takes that host out of the rotation for the rest of the playbook.
+
+When you run a playbook, Ansible returns information about connections, the name lines of all your plays and tasks, whether each task has succeeded or failed on each machine, and whether each task has made a change on each machine. 
+
+At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed. 
+
+General failures and fatal “unreachable” communication attempts are kept separate in the counts.
+
+[discrete]
+== Desired state and idempotency
+
+Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state. 
+Modules that behave this way are often called 'idempotent'. 
+Whether you run a playbook once, or multiple times, the outcome should be the same. 
+However, not all playbooks and not all modules behave this way. 
+If you are unsure, test your playbooks in a sandbox environment before running them multiple times in production.
+
+This guide describes the commands, techniques and aspects of use that you can use to make your playbooks more efficient. 
