@@ -2,10 +2,10 @@
 
 = Customizing an existing {ExecEnvName} image
 
-Ansible Controller ships with three default execution environments:
+Ansible Controller includes three default {ExecEnvShort}s:
 
 * `Ansible 2.9` - no collections are installed other than Controller modules
-* `Minimal` - contains the latest Ansible 2.13 release along with Ansible Runner, but contains no collections or other additional content
+* `Minimal` - contains the latest Ansible 2.13 release along with {Runner}, but contains no collections or other additional content
 * `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
 
 While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. The following procedure adds the `kubernetes.core` collection to the `ee-minimal` default image:
@@ -22,7 +22,7 @@ $ podman login -u="[username]" -p="[token/hash]" registry.redhat.io
 podman pull registry.redhat.io/ansible-automation-platform-22/ee-minimal-rhel8:latest
 -----
 +
-. Configure your {Builder} files to specify the desired base image and any additional content to add to the new execution environment image.
+. Configure your {Builder} files to specify the desired base image and any additional content to add to the new {ExecEnvShort} image.
 .. For example, to add the link:https://galaxy.ansible.com/kubernetes/core[Kubernetes Core Collection from Galaxy] to the image, fill out the `requirements.yml` file as follows:
 +
 ====
@@ -90,7 +90,7 @@ $ podman tag registry.redhat.io/[username]/new-ee [automation-hub-IP-address]/[u
 +
 [NOTE]
 =====
-You must have `admin` or appropriate container repository permissions for {HubName} to push a container. See _Managing containers in private automation hub_ in the link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform[Red Hat Ansible Automation Platform documentation] for more information.
+You must have `admin` or appropriate container repository permissions for {HubName} to push a container. See _Managing containers in {PrivateHubName}_ in the link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform[{PlatformName} documentation] for more information.
 =====
 +
 -----
