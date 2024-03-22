@@ -1,3 +1,11 @@
 [id="proc-use-controller-resource-operator_{context}"]
 
-= Using {ControllerName} resource operator 
+= Using {ControllerName} Resource Operator 
+
+The {ControllerName} Resource Operator itself does not do anything until the user creates an object. So as soon as the user creates an AutomationControllerProject or AnsibleJob resource, the resource operator will start processing that object. 
+
+.Prerequisites
+* Install the Kubernetes-based cluster of your choice
+* Deploy {ControllerName} using the `automation-controller-operator`
+
+After installing the `automation-controller-resource-operator` in your cluster, you must create a Kubernetes (k8s) secret with the connection information for your {ControllerName} instance. Then you can use Resource Operator to create a k8s resource to manage your {ControllerName} instance.
