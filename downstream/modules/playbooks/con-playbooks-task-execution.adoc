@@ -1,0 +1,17 @@
+[id="con-playbooks-task-execution"]
+
+= Task execution
+
+By default, Ansible executes each task in order, one at a time, against all machines matched by the host pattern. 
+Each task executes a module with specific arguments. 
+When a task has been executed on all target machines, Ansible moves on to the next task. 
+You can use xref:[strategies] to change this default behavior. 
+
+Within each play, Ansible applies the same task directives to all hosts. 
+If a task fails on a host, Ansible takes that host out of the rotation for the rest of the playbook.
+
+When you run a playbook, Ansible returns information about connections, the name lines of all your plays and tasks, whether each task has succeeded or failed on each machine, and whether each task has made a change on each machine. 
+
+At the bottom of the playbook execution, Ansible provides a summary of the nodes that were targeted and how they performed. 
+
+General failures and fatal “unreachable” communication attempts are kept separate in the counts.

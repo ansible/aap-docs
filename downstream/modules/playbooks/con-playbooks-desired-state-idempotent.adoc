@@ -1,0 +1,9 @@
+[id="con-playbooks-desired-state-idempotent"]
+
+= Desired state and idempotency
+
+Most Ansible modules check whether the desired final state has already been achieved, and exit without performing any actions if that state has been achieved, so that repeating the task does not change the final state. 
+Modules that behave this way are often called 'idempotent'. 
+Whether you run a playbook once, or multiple times, the outcome should be the same. 
+However, not all playbooks and not all modules behave this way. 
+If you are unsure, test your playbooks in a sandbox environment before running them multiple times in production.
