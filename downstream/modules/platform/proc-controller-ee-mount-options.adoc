@@ -3,16 +3,16 @@
 = Execution environment mount options
 
 Rebuilding an {ExecEnvShort} is one way to add certificates, but inheriting certificates from the host provides a more convenient solution. 
-For VM-based installs, {ControllerName} automatically mounts the system trust store in the {ExecEnvShort} when jobs run.
+For VM-based installations, {ControllerName} automatically mounts the system truststore in the {ExecEnvShort} when jobs run.
 
-Additionally, you can customize {ExecEnvShort} mount options and mount paths in the *Paths to expose to isolated jobs* field of the *Job Settings* page, where it supports podman-style volume mount syntax. 
+You can customize {ExecEnvShort} mount options and mount paths in the *Paths to expose to isolated jobs* field of the *Job Settings* page, where it supports Podman-style volume mount syntax. 
 
 For more information, see the link:https://docs.podman.io/en/latest/markdown/podman-run.1.html#volume-v-source-volume-host-dir-container-dir-options[Podman documentation].
 
 In some cases where the `/etc/ssh/*` files were added to the {ExecEnvShort} image due to customization of an {ExecEnvShort}, an SSH error can occur. 
 For example, exposing the `/etc/ssh/ssh_config.d:/etc/ssh/ssh_config.d:O` path enables the container to be mounted, but the ownership permissions are not mapped correctly.
 
-Use the following procedure if you encounter this error, or have upgraded from an older version of {ControllerName}:
+Use the following procedure if you meet this error, or have upgraded from an older version of {ControllerName}:
 
 .Procedure
 . Change the container ownership on the mounted volume to `root`.
