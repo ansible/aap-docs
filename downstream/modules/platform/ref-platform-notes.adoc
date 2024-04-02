@@ -7,7 +7,7 @@
 [role="_abstract"]
 .Installing {PlatformName} on systems with FIPS mode enabled
 
-* Only Red Hat Enterprise Linux 7+ is supported. The standard python that ships with RHEL must be used for {ControllerName} to work in FIPS mode. Using any non-standard, non-system python for {ContollerName} is therefore, unsupported.
+* Only {RHEL} 7+ is supported. The standard Python that ships with RHEL must be used for {ControllerName} to work in FIPS mode. Using any non-standard, non-system Python for {ContollerName} is therefore, unsupported.
 
 * By default, {ContollerName} configures PostgreSQL using password-based authentication, and this process relies on the usage of `md5` when `CREATE USER` is run at install time.  To run the {ContollerName} installer from a FIPS-enabled system, specify `pg_password` in your inventory file. **DO NOT** use special characters in `pg_password` as it may cause the setup to fail:
 
@@ -32,9 +32,9 @@ For more details, see: https://access.redhat.com/solutions/1519083
 
 *  The RADIUS protocol uses `md5` to encrypt passwords in `Access-Request` queries; link:https://docs.ansible.com/ansible-tower/3.8.3/html/administration/ent_auth.html#radius[RADIUS Authentication] is not supported for systems where FIPS mode is enabled.
 
-.Notes for Red Hat Enterprise Linux setups
+.Notes for {RHEL} setups
 
-* PackageKit can frequently interfere with the installation/update mechanism. Consider disabling or removing PackageKit if installed prior to running the setup process.
+* PackageKit can frequently interfere with the installation/update mechanism. Consider disabling or removing PackageKit if installed before running the setup process.
 * Only the "targeted" SELinux policy is supported. The targeted policy can be set to disabled, permissive, or enforcing.
 * When performing a bundled install, refer to _Choosing and obtaining a {PlatformName} installer_ for more information.
 * When installing {ControllerName}, you only need to run `setup.sh`, any repositories needed by Tower are installed automatically.
