@@ -11,7 +11,7 @@ Use this information when planning your {PlatformName} installations and designi
 
 Your system must meet the following minimum system requirements to install and run {PlatformName}.
 
-.Red Hat Ansible Automation Platform system requirements
+.{PlatformName} system requirements
 
 .Base system
 
@@ -19,11 +19,11 @@ Your system must meet the following minimum system requirements to install and r
 |===
 |  | Required | Notes
 
-h| Subscription | Valid Red Hat Ansible Automation Platform |
+h| Subscription | Valid {PlatformName} |
 
-h| OS | Red Hat Enterprise Linux 8.4 or later 64-bit (x86) |{PlatformName} is also supported on OpenShift, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/{PlatformVers}/html/deploying_the_red_hat_ansible_automation_platform_operator_on_openshift_container_platform/index[Deploying the Red Hat Ansible Automation Platform operator on OpenShift Container Platform] for more information.
+h| OS | {RHEL} 8.4 or later 64-bit (x86) |{PlatformName} is also supported on OpenShift, see link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/{PlatformVers}/html/deploying_the_red_hat_ansible_automation_platform_operator_on_openshift_container_platform/index[Deploying the {PlatformName} operator on {OCPShort}] for more information.
 
-h| Ansible | version 2.11 (to install) | {PlatformNameShort} ships with execution environments that contain ansible-core {AnsibleCoreVers}.
+h| Ansible | version 2.11 (to install) | {PlatformNameShort} includes {ExecEnvShort}s that contain ansible-core {AnsibleCoreVers}.
 
 h| Python | 3.8 or later |
 |===
@@ -37,7 +37,7 @@ The following are necessary for you to work with project updates and collections
 ** `sso.redhat.com`
 * SSL inspection must be disabled either when using self signed certificates or for the Red Hat domains.
 
-== Automation controller
+== {ControllerNameStart}
 
 {ControllerNameStart} is a distributed system, where different software components can be co-located or deployed across multiple compute nodes.
 In the installer, node types of control, hybrid, execution, and hop are provided as abstractions to help the user design the topology appropriate for their use case.
@@ -45,7 +45,7 @@ The following table provides recommendations for node sizing:
 
 [NOTE]
 ====
-On control and hybrid nodes, allocate a minimum of 20 GB to `/var/lib/awx` for execution environment storage.
+On control and hybrid nodes, allocate a minimum of 20 GB to `/var/lib/awx` for {ExecEnvShort} storage.
 ====
 
 [cols="a,a,a"]
@@ -93,7 +93,7 @@ h| RAM | 16 GB  |
 
 h| CPUs | 4|
 
-* Serves to route traffic from one part of the Automation Mesh to another (for example, could be a bastion host into another network). RAM could affect throughput, CPU activity is low. Network bandwidth and latency generally a more important factor than either RAM/CPU.
+* Serves to route traffic from one part of the {AutomationMesh} to another (for example, could be a bastion host into another network). RAM could affect throughput, CPU activity is low. Network bandwidth and latency generally a more important factor than either RAM/CPU.
 
 h| Disk: service node | 40 GB dedicated hard disk space |
 
@@ -132,12 +132,12 @@ Optional. Delete if not used.
 * To authorize the use of {ControllerName}, see link:https://docs.ansible.com/automation-controller/latest/html/userguide/import_license.html?extIdCarryOver=true&sc_cid=7013a00000388B5AAI[Import a subscription].
 
 
-== Automation hub
+== {HubNameStart}
 
 {HubNameStart} enables you to discover and use new certified automation content from Red Hat Ansible and Certified Partners. 
 On {HubNameMain}, you can discover and manage Ansible Collections, which are supported automation content developed by Red Hat and its partners for use cases such as cloud automation, network automation, and security automation.
 
-Automation hub has the following system requirements:
+{HubNameStart} has the following system requirements:
 
 [cols="a,a,a"]
 |===
