@@ -33,7 +33,7 @@ $ cd custom-ee/
 ----
 +
 . Create an __execution-environment.yml__ file that defines the requirements for your custom EE following the documentation at
-https://ansible-builder.readthedocs.io/en/stable/definition/.  Override the `EE_BASE_IMAGE` and `EE_BUILDER_IMAGE` variables to point to the EEs available in your private automation hub.
+https://ansible-builder.readthedocs.io/en/stable/definition/.  Override the `EE_BASE_IMAGE` and `EE_BUILDER_IMAGE` variables to point to the EEs available in your {PrivateHubName}.
 +
 ----
 $ cat execution-environment.yml
@@ -48,7 +48,7 @@ dependencies:
   galaxy: requirements.yml
 ----
 +
-. Create an __ansible.cfg__ file that points to your private automation hub and contains credentials that allow uploading, such as an admin user token.
+. Create an __ansible.cfg__ file that points to your {PrivateHubName} and contains credentials that allow uploading, such as an admin user token.
 +
 ----
 $ cat ansible.cfg
@@ -81,13 +81,13 @@ gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 gpgcheck = 1
 ----
 
-. Add the CA certificate used to sign the private automation hub web server certificate.
+. Add the CA certificate used to sign the {PrivateHubName} web server certificate.
 
-.. For self-signed certificates (the installer default), make a copy of the file __/etc/pulp/certs/root.crt__ from your private automation hub and name it *hub-root.crt*.
+.. For self-signed certificates (the installer default), make a copy of the file __/etc/pulp/certs/root.crt__ from your {PrivateHubName} and name it *hub-root.crt*.
 
-.. If an internal certificate authority was used to request and sign the private automation hub web server certificate, make a copy of that CA certificate called *hub-root.crt*.
+.. If an internal certificate authority was used to request and sign the {PrivateHubName} web server certificate, make a copy of that CA certificate called *hub-root.crt*.
 
-. Create your python requirements.txt and ansible collection requirements.yml with the content needed for your custom EE image.  Note that any collections you require should already be uploaded into your private automation hub.
+. Create your python requirements.txt and ansible collection requirements.yml with the content needed for your custom EE image.  Note that any collections you require should already be uploaded into your {PrivateHubName}.
 
 . Use ansible-builder to create the context directory used to build the EE image.
 +
@@ -178,7 +178,7 @@ $ podman build -f context/Containerfile \
 ----
 +
 . Once the custom EE image builds successfully, push it to the private
-automation hub.
+{HubName}.
 +
 ----
 $ podman push <hub_fqdn>/custom-ee:latest
