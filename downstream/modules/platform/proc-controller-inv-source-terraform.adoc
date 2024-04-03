@@ -1,0 +1,38 @@
+[id="proc-controller-inv-source-terraform"]
+
+= Terraform State
+
+Configure an inventory sourced from a Terraform State file.
+
+.Procedure
+
+. From the navigation panel, select {MenuAEProjects}.
+. On the *Projects* page, click btn:[Create project] to start the *Create Project* window.
+** Enter the appropriate details according to the steps in xref:proc-controller-adding-a-project[Adding a new project].
+** Use the configuration files at link:https://github.com/hakbailey/terraform-aap-demo[terraform-aap-demo].
+. From the navigational panel, select {MenuInfrastructureInventories}.
+. Select the inventory that you want to add a source to.
+. In the *Sources* tab, click btn:[Add Source].
+. From the menu:Source[] menu, select *Terraform State*.
+. The *Add new source* window expands with the required *Credential* field. 
++
+Choose from an existing Terraform backend configuration credential. For more information, see xref:ref-controller-credential-terraform[Terraform backend configuration].
+. Enable the options to *Overwrite* and *Update on Launch*.
+. Use the *Source Variables* field to override variables used by the `terraform_state` inventory plugin. 
+Enter variables by using either JSON or YAML syntax. 
+Use the radio button to toggle between the two. For more information about these variables, see link:https://github.com/ansible-collections/cloud.terraform/blob/main/plugins/inventory/terraform_state.py[cloud.terraform].
++
+The `backend_type` variable is required by the `terraform_state` inventory plugin. 
+This should match the remote backend configured in the *Terraform backend credential*.
+The following is an example s3 backend:
++
+----
+backend_type: s3
+----
++
+//The current 2.5 test environment does not have the following option yet:
+. Select an *Execution Environment* that has a Terraform binary. 
+This is required for the inventory plugin to run the Terraform commands that read inventory data from the Terraform state file.
+
+
+
