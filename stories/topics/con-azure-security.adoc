@@ -1,0 +1,31 @@
+[id="con-aap-security_{context}"]
+
+= Security
+
+{AAPonAzureNameShort} follows security best practices from both the Red Hat and Microsoft product.
+The following are a few topics to highlight the security posture of the application and the infrastructure.
+
+* Data encryption in flight and at rest
+** link:https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest#azure-storage[All Azure Storage Services enable server-side encryption by default using service-managed keys]
+** link:https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest#conclusion[All Azure hosted services are committed to providing Encryption at Rest options]
+** link:https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-overview[Azure encryption overview]
+** All communications between services within AKS (AAP, Postgres, storage accounts, etc) use TLS v1.2 or higher.
+** link:https://learn.microsoft.com/en-us/security/benchmark/azure/baselines/azure-kubernetes-service-aks-security-baseline[Azure security baseline for Azure Kubernetes Service (AKS)]
+* Password storage
+** Customer supplied AAP admin password is encrypted in transit.
+It is accessible to SREs from the kubernetes API and can be reset by the SREs upon customer request.
+* Keys generated with industry standards
+** link:https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-overview#azure-storage-service-encryption[Data in Azure Storage is encrypted and decrypted transparently using 256-bit AES encryption, one of the strongest block ciphers available, and is FIPS 140-2 compliant]
+* Key installation, rotation
+** link:https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-models#key-access[Microsoft manages key rotation, backup, and redundancy]
+* SSL/TLS traffic encryption
+** All communications between services within AKS (AAP, Postgres, storage accounts, etc) use TLS v1.2 or higher.
+** All communications to AAP UIs either via the application gateway for public deployments or the nginx ingress for private deployments use TLS v1.2 or higher.
+* API security
+** Any parts of the AAP APIs that could leak any sensitive information are only accessible via authenticating as a known AAP user and requires that user to have the right level of authorization to use those APIs.
+In a private deployment, access to the AAP APIs is only accessible to the customer via the route they choose to connect to the private deployment.
+SREs have access to the customer AAP though because we are managing it for the customers.
+** The kubernetes API is private and only accessible from a private endpoint
+** Workload identity is enabled and it allows Kubernetes applications to access Azure cloud resources securely with Azure AD.
+* Updates and patching
+** The Red Hat SREs regularly update both the kubernetes version, underlying node OS, and AAP version to the latest available stable versions to get the latest features, bug fixes, and security fixes.
