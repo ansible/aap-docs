@@ -4,6 +4,11 @@
 
 Control and hybrid nodes provide control capacity. They provide the ability to start jobs and process their output into the database. Every job is assigned a control node. In the default configuration, each job requires one capacity unit to control. For example, a control node with 100 capacity units can control a maximum of 100 jobs.
 
+[NOTE]
+====
+In an operator-based installation of {ControllerName}, there are no hybrid or control nodes. There are container groups, which make up containers running on the Kubernetes cluster. That comprises the control plane. That control plane is local to the kubernetes cluster in which Red Hat Ansible Automation Platform is deployed.
+====
+
 Vertically scaling a control node by deploying a larger virtual machine with more resources increases the following capabilities of the control plane:
 
 * The number of jobs that a control node can perform control tasks for, which requires both more CPU and memory.
