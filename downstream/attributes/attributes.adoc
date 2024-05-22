@@ -7,10 +7,12 @@
 :CentralAuthStart: Central authentication
 :CentralAuth: central authentication
 :PlatformVers: 2.4
-:AnsibleCoreVers: 2.15
-:AnsibleInstallVers: 2.4-1
+//The Ansible-core version required to install AAP
+:CoreInstVers: 2.14 
+//The Ansible-core version used by the AAP control plane and EEs
+:CoreUseVers: 2.15 
 :PlatformDownloadUrl: https://access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software
-:BaseURL: https://access.redhat.com/documentation/en-us
+:BaseURL: https://docs.redhat.com/en/documentation
 :VMBase: VM-based installation
 :OperatorBase: operator-based installation
 :ContainerBase: container-based installation
@@ -18,6 +20,14 @@
 // Event-Driven Ansible
 :EDAName: Event-Driven Ansible
 :EDAcontroller: Event-Driven Ansible controller
+
+// Ansible Lightspeed
+:LightspeedFullName: Red Hat Ansible Lightspeed with IBM watsonx Code Assistant
+:LightspeedShortName: Red Hat Ansible Lightspeed
+:LightspeedTechPreview: Ansible Lightspeed Technical Preview
+:AnsibleCodeBot: Ansible code bot
+:AnsibleContentParser: content parser tool
+:ibmwatsonxcodeassistant: IBM watsonx Code Assistant
 
 // AAP on Clouds
 :AAPonAzureName: Red Hat Ansible Automation Platform on Microsoft Azure
@@ -89,6 +99,7 @@
 :ExecEnvNameStart: Automation execution environments
 :ExecEnvName: automation execution environments
 :ExecEnvNameSing: automation execution environment
+:ExecEnvNameStartSing: Automation execution environment
 :ExecEnvShort: execution environment
 :RHEL8: RHEL 8 UBI
 :RHEL9: RHEL 9 UBI
@@ -100,10 +111,12 @@
 :ToolsName: Ansible developer tools
 :Test: Ansible-test
 :Builder: Ansible Builder
-:Navigator: Automation content navigator
+:Navigator: automation content navigator
+:NavigatorStart: Automation content navigator
 :IDEplugin: Ansible IDE plugins
 :IDEcollection: Ansible IDE collection explorer
 :IDElanguage: Ansible IDE language server
+:VSCode: VS Code
 
 // Content Collections
 :CertifiedName: Ansible Certified Content Collections
@@ -114,10 +127,13 @@
 :Valid: Ansible validated content
 :Console: console.redhat.com
 
+// Satellite attributes
+:SatelliteVers: 6.15
+
 // OpenShift attributes
 :OCP: Red Hat OpenShift Container Platform
 :OCPShort: OpenShift Container Platform
-:OCPLatest: 4.12
+:OCPLatest: 4.15
 :ODF: Red Hat OpenShift Data Foundation
 :ODFShort: OpenShift Data Foundation
 
@@ -138,74 +154,96 @@
 :RHEL: Red Hat Enterprise Linux
 
 // 2.5 Gateway Menu selections
-// These menu selections were based on the UI build environment dated 1/17/24 and should be verified against the final build before GA
+// These menu selections were based on the UI build environment dated 05/03/24 and should be verified against the final build before GA
 // Top level menu definitions for use only when selections go 3 levels deep.
-:MenuAE: Automation Execution
-:MenuAC: Automation Content
+:MenuTopAE: Automation Execution
 :MenuAD: Automation Decisions
-:MenuAA: Automation MenuAnalytics
+// Not yet used but looks to be future scoped and might replace Automation Execution > Infrastructure
+//:MenuAI: Automation Infrastructure
+:MenuTopAC: Automation Content
+:MenuAA: Automation Analytics
+:MenuAL: Ansible Lightspeed with IBM watsonx Code Assistant
+:MenuQS: Quick Starts
+// Not yet used but looks to be future scoped and will include a blend of menu selections that currently exist.
+//:MenuU: Utilities
 :MenuAM: Access Management
-:MenuAL: Ansible Lightspeed
+//Might become Global Settings in the future with a few changed/new selections?
+:MenuAEAdminSettings: Settings
 
 // Automation Execution (aka automation controller menu items)
-:MenuAEJobs: menu:{MenuAE}[Jobs]
-:MenuAETemplates: menu:{MenuAE}[Templates]
-:MenuAESchedules: menu:{MenuAE}[Schedules]
-:MenuAEProjects: menu:{MenuAE}[Projects]
+:MenuAEJobs: menu:{MenuTopAE}[Jobs]
+:MenuAETemplates: menu:{MenuTopAE}[Templates]
+:MenuAESchedules: menu:{MenuTopAE}[Schedules]
+// FYI Automation Execution and Automation Decisions Projects will be under 1 selection in the 2.5-next or later.
+:MenuAEProjects: menu:{MenuTopAE}[Projects]
 
 // Automation Execution > Infrastructure
-// first add attribute for MenuTopAE, for example {MenuTopAE} {MenuACInfrastructureTopology}.
-:MenuInfrastructureTopology: menu:Infrastructure[Topology View]
-:MenuInfrastructureInventories: menu:Infrastructure[Inventories]
-:MenuInfrastructureHosts: menu:Infrastructure[Hosts]
-:MenuInfrastructureInstanceGroups: menu:Infrastructure[Instance Groups]
-:MenuInfrastructureInstances: menu:Infrastructure[Instances]
-:MenuInfrastructureExecEnvironments: menu:Infrastructure[Execution Environments]
+:MenuInfrastructureTopology: menu:{MenuTopAE}[Infrastructure > Topology View]
+:MenuInfrastructureInventories: menu:{MenuTopAE}[Infrastructure > Inventories]
+:MenuInfrastructureHosts: menu:{MenuTopAE}[Infrastructure > Hosts]
+:MenuInfrastructureInstanceGroups: menu:{MenuTopAE}[Infrastructure > Instance Groups]
+:MenuInfrastructureInstances: menu:{MenuTopAE}[Infrastructure > Instances]
+:MenuInfrastructureExecEnvironments: menu:{MenuTopAE}[Infrastructure > Execution Environments]
 
 // Automation Execution > Administration
-// first add attribute for MenuTopAE, for example {MenuTopAE} {MenuAEAdminSettings}.
-:MenuAEAdminActivityStream: menu:Administration[Activity Stream]
-:MenuAEAdminWorkflowApprovals: menu:Administration[Workflow Approvals]
-:MenuAEAdminJobNotifications: menu:Administration[Job Notifications]
-:MenuAEAdminManageJobs: menu:Administration[Management Jobs]
-:MenuAEAdminOauthApps: menu:Administration[OAuth Applications]
-:MenuAEAdminSettings: menu:Administration[Settings]
+:MenuAEAdminActivityStream: menu:{MenuTopAE}[Administration > Activity Stream]
+:MenuAEAdminWorkflowApprovals: menu:{MenuTopAE}[Administration > Workflow Approvals]
+:MenuAEAdminJobNotifications: menu:{MenuTopAE}[Administration > Notifiers]
+:MenuAEAdminManageJobs: menu:{MenuTopAE}[Administration > Management Jobs]
+:MenuAEAdminOauthApps: menu:{MenuTopAE}[Administration > OAuth Applications]
+
+//Each of the services previously had selections for access which will be centralized in 2.5, ultimately these should be changed to use the attributes in Access Management menu selections but I'm leaving these for later cleanup to avoid possible errors:
+:MenuControllerOrganizations: menu:{MenuAM}[Organizations]
+:MenuControllerUsers: menu:{MenuAM}[Users]
+:MenuControllerTeams: menu:{MenuAM}[Teams]
 
 // Automation Decisions (aka event driven automation menu selections)
 :MenuADRuleAudit: menu:{MenuAD}[Rule Audit]
 :MenuADRulebookActivations: menu:{MenuAD}[Rulebook Activations]
+// FYI Automation Execution and Automation Decisions Projects will be under 1 selection in the 2.5-next or later.
 :MenuADProjects: menu:{MenuAD}[Projects]
 :MenuADDecisionEnvironments: menu:{MenuAD}[Decision Environments]
-:MenuADDecisionEnvironments: menu:{MenuAD}[Event Sources]
+:MenuADWebhooks: menu:{MenuAD}[Webhooks]
 
 // Automation Content (aka automation hub menu selections)
-:MenuACNamespaces: menu:{MenuAC}[Namespaces]
-:MenuACCollections: menu:{MenuAC}[Collections]
-:MenuACExecEnvironments: menu:{MenuAC}[Execution Environments]
+// In 2.5EA the Automation Content selection will open a hub ui instance in a new tab/browser so the menu definitions will not change until 2.5-next
+:MenuACNamespaces: menu:Collections[Namespaces]
+:MenuACCollections: menu:Collections[Collections]
+:MenuACExecEnvironments: menu:Execution Environments[Execution Environments]
 
 // Automation Content > Administration
-// first add attribute for MenuTopAC, for example {MenuTopAC} {MenuACAdminRemotes}.
-:MenuACAdminSignatureKeys: menu:Administration[Signature Keys]
-:MenuACAdminRepositories: menu:Administration[Repositories]
-:MenuACAdminRemoteRegistries: menu:Administration[Remote Registries]
-:MenuACAdminTasks: menu:Administration[Tasks]
-:MenuACAdminCollectionApproval: menu:Administration[Collection Approvals]
-:MenuACAdminRemotes: menu:Administration[Remotes]
+:MenuACAdminSignatureKeys: menu:Signature Keys[]
+:MenuACAdminRepositories: menu:Collections[Repositories]
+:MenuACAdminRemoteRegistries: menu:Execution Environments[Remote Registries]
+:MenuACAdminTasks: menu:Task Management[]
+:MenuACAdminCollectionApproval: menu:Collections[Approval]
+:MenuACAdminRemotes: menu:Collections[Remotes]
+:MenuACAPIToken: menu:Collections[API token]
+//Each of the services previously had selections for access which will be centralized, ultimately these should be changed to use the attributes in Access Management menu selections once automation hub is provide in the full ui platform experience in 2.5-next
+:MenuHubUsers: menu:User Access[Users]
+:MenuHubGroups: menu:User Access[Groups]
+:MenuHubRoles: menu:User Access[Roles]
 
-// Automation Analytics menu selections
-// --- the following are not in the current build but may be added later ---
-//:MenuAAJobExplorer: menu:{MenuAA}[Job Explorer]
-//:MenuAASavingsPlanner: menu:{MenuAA}[Savings Planner]
-//:MenuAAClusters: menu:{MenuAA}[Clusters]
-//:MenuAAReports: menu:{MenuAA}[Reports]
-//:MenuAAAnalyticsBuilder: menu:{MenuAA}[Analytics builder]
+// Automation Analytics menu selections - According to mockups, analytics will be included in the Gateway nav but they are currently on the Ansible dashboard on the Hybrid Cloud Console https://console.redhat.com/ansible/ansible-dashboard
+:MenuAAReports: menu:{MenuAA}[Reports]
+:MenuAASavingsPlanner: menu:{MenuAA}[Savings Planner]
 :MenuAAAutomationCalc: menu:{MenuAA}[Automation Calculator]
-:MenuAAHostMetrics: menu:{MenuAA}[Host Metrics]
-:MenuAAHostSubscriptionUse: menu:{MenuAA}[Subscription Usage]
+:MenuAAOrgStats: menu:{MenuAA}[Organization Statistics]
+:MenuAAJobExplorer: menu:{MenuAA}[Job Explorer]
+:MenuAAClusters: menu:{MenuAA}[Clusters]
+:MenuAANotifications: menu:{MenuAA}[Notification]
+//The following currently don't exist in the console but may be included in the 2.5 platform
+//:MenuAAActivityStream: menu:{MenuAA}[Activity Stream]
+//:MenuAAHostMetrics: menu:{MenuAA}[Host Metrics]
+//:MenuAAAnalyticsBuilder: menu:{MenuAA}[Analytics builder]
+//:MenuAAHostSubscriptionUse: menu:{MenuAA}[Subscription Usage]
+
+// Ansible Lightspeed menu selections
+// --- the following is not in the current build but may be added later ---
+//:MenuALSeatManagement: menu:{MenuAL}[Seat Management]
 
 // Access Management menu selections
-// First include attribute
-:MenuAMAuthentication: menu:{MenuAM}[Authentication]
+:MenuAMAuthentication: menu:{MenuAM}[Authentication Methods]
 :MenuAMOrganizations: menu:{MenuAM}[Organizations]
 :MenuAMTeams: menu:{MenuAM}[Teams]
 :MenuAMUsers: menu:{MenuAM}[Users]
@@ -214,6 +252,15 @@
 :MenuAMCredentialType: menu:{MenuAM}[Credential Types]
 
 
-// Ansible Lightspeed menu selections
-// --- the following is not in the current build but may be added later ---
-//:MenuALSeatManagement: menu:{MenuAL}[Seat Management]
+//Settings menu selections
+// --Previously settings was a single menu selection, in 2.5 it's a top level selection with sub selections see above for the attribute {MenuAEAdminSettings}
+:MenuSetSubscription: menu:{MenuAEAdminSettings}[Subscription]
+:MenuSetGateway: menu:{MenuAEAdminSettings}[Gateway]
+:MenuSetUserPref: menu:{MenuAEAdminSettings}[User Preferences]
+:MenuSetSystem: menu:{MenuAEAdminSettings}[System]
+:MenuSetJob: menu:{MenuAEAdminSettings}[Job]
+:MenuSetLogging: menu:{MenuAEAdminSettings}[Logging]
+:MenuSetTroubleshooting: menu:{MenuAEAdminSettings}[Troubleshooting]
+// Not yet implemented but look to be in the future scope 2.5-next plan
+//:MenuSetLogin: {MenuAEAdminSettings}[Log In Settings]
+//:MenuSetUI: {MenuAEAdminSettings}[User Interface Settings]
