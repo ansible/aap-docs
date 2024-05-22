@@ -25,6 +25,15 @@ Default = 443
 Default = 63072000 seconds, or two years.
 | *`nginx_tls_protocols`* | Defines support for `ssl_protocols` in Nginx.
 
+Values available `TLSv1`, `TLSv1.1, `TLSv1.2`, `TLSv1.3`
+
+The TLSv1.1 and TLSv1.2 parameters only work when OpenSSL 1.0.1 or higher is used.
+
+The TLSv1.3 parameter only works when OpenSSL 1.1.1 or higher is used.
+
+If `nginx_tls-protocols = ['TLSv1.3']` only TLSv1.3  is enabled.
+To set more than one protocol use `nginx_tls_protocols = ['TLSv1.2', 'TLSv.1.3']`
+
 Default = `TLSv1.2`.
 | *`nginx_user_headers`* | List of nginx headers for the {ControllerName} web server.
 
@@ -104,9 +113,13 @@ Default = `awx`.
 
 `/path/to/pgsql.key`
 | *`postgres_use_ssl`* | Use this variable if postgreSQL uses SSL.
-// The postgres_max_connections variable is for Controller v4.5: Do not include it until v4.5 is released.
-// | *`postgres_max_connections`* | Max database connections setting to apply if you are using installer-managed postgreSQL. See the administration guide for help selecting a value.
-| *`receptor_listener_port`* | Port to use for recptor connection.
+| *`postgres_max_connections`* | Maximum database connections setting to apply if you are using installer-managed postgreSQL.
+
+See link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index#ref-controller-database-settings[PostgreSQL database configuration] in the {ControllerName} administration guide for help selecting a value.
+
+Default for VM-based installations = 200 for a single node 
+and 1024 for a cluster.
+| *`receptor_listener_port`* | Port to use for receptor connection.
 
 Default = 27199
 | *`supervisor_start_retry_count`* | When specified, it adds `startretries = <value specified>` to the supervisor config file (/etc/supervisord.d/tower.ini).
