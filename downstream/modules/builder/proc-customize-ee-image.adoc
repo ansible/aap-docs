@@ -2,10 +2,9 @@
 
 = Customizing an existing {ExecEnvName} image
 
-Ansible Controller includes three default execution environments:
+Ansible Controller includes the following default execution environments:
 
-* `Ansible 2.9` - Includes Controller modules only
-* `Minimal` - Includes the latest Ansible 2.15 release along with {Runner}, but does not include collections or other content
+* `Minimal` - Includes the latest Ansible-core 2.15 release along with {Runner}, but does not include collections or other content
 * `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
 
 While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. The following procedure adds the `kubernetes.core` collection to the `ee-minimal` default image:
@@ -92,7 +91,7 @@ $ podman tag [username]/new-ee [automation-hub-IP-address]/[username]/new-ee
 +
 [NOTE]
 =====
-You must have `admin` or appropriate container repository permissions for {HubName} to push a container. For more information, see the _Manage containers in {PrivateHubName}_ section in link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/{PlatformVers}/html-single/managing_content_in_automation_hub/index#managing-containers-hub[Managing content in automation hub].
+You must have `admin` or appropriate container repository permissions for {HubName} to push a container. For more information, see the _Manage containers in {PrivateHubName}_ section in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/managing_content_in_automation_hub/index#managing-containers-hub[Managing content in automation hub].
 =====
 +
 -----
@@ -107,7 +106,7 @@ $ podman push [automation-hub-IP-address]/[username]/new-ee
 +
 . Pull your new image into your {ControllerName} instance:
 .. Go to {ControllerName}.
-.. From the navigation panel, click menu:Administration[Execution Environments].
+.. From the navigation panel, select {MenuInfrastructureExecEnvironments}.
 .. Click btn:[Add].
 .. Enter the appropriate information then click btn:[Save] to pull in the new image.
 +
