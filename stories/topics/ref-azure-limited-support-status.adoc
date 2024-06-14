@@ -1,0 +1,30 @@
+:_content-type: REFERENCE
+
+[id="azure-limited-support-status_{context}"]
+= Limited support status
+
+[role="_abstract"]
+Customers may implement Azure infrastructure changes or policies that negatively affect the functionality of the service and Red Hat’s ability to monitor and service it.
+In such scenarios, the deployment can transition into a Limited Support Status.
+A deployment may move to a Limited Support status for many reasons, including the following scenarios:
+
+Inactive Ansible Subscription(s)::
+Red Hat issues subscription entitlements through the application deployment process.  The entitlement expires one year after it is issued.  Customers are emailed prior to expiration to renew the entitlement.  This process will issue a new entitlement for the next year and can be imported into Ansible Automation Platform.
+Failure to renew:::
+When an entitlement expires, customers can continue to use Ansible Automation Platform on Azure. However, Red Hat support will require a valid entitlement before assisting with support issues.
+Customized Policy::
+Ansible Automation Platform on Azure runs on infrastructure within a customer’s Azure tenant.  This means that customer Azure policies can affect the deployment and function of the platform.  Given the flexibility of Azure policy definitions, it is impossible to list all policies that can cause infrastructure or operational issues with the platform.  When those events happen, the Red Hat SRE team can help identify the policy causing the issue, and suggested remediation.  That remediation may require customer policy changes in order for the managed application to function correctly.
+Failure to remediate:::
+When a policy conflict arises, the Red Hat team will attempt to reach out to the customer to remediate. Some of these changes are time sensitive and can impact the platform’s operational function. Red Hat SRE team maintenance and upgrades tasks will be on hold until the customer resolves the policy issues.
+Firewall & Network Configurations::
+When configuring egress routes from Ansible Automation Platform on Azure, customers are required to route traffic to a set of domains on the public internet used for the deployment, monitoring and maintenance of the platform.
+Failure to set up:::
+The Ansible Automation Platform on Managed Azure will be in a state where it cannot be monitored or serviced by the Red Hat SRE team.
+Quota Limits::
+A prerequisite for Ansible Automation Platform on Azure requires adequate capacity to deploy the managed application in the selected region. Microsoft imposes restrictions on limits (CPU) in each region. It is expected that the customers set up their infrastructure with the specifications as listed in the Product Documentation.
+Failure to remediate:::
+As the Red Hat SRE team perform regular maintenance and improvements, the quota limitations in the region could prevent them to manage the deployment consistently and can eventually result in an inability to manage the offering.
+CIDR Range::
+During initial deployment, customers can configure networking address range (CIDR block) for the VNet the Ansible Automation Platform uses. Once configured, Azure does not allow CIDR blocks to be changed once a network is created, and so a change would requires a redeployment of the managed applicationAAP with the configurations specified in the documentation.
+Failure to remediate:::
+While the Azure user experiences allow customers to set CIDR blocks of choice, the use of the smaller CIDR ranges smaller than our guidelines can create the circumstance that your deployment is in limited supported state where the platform is unable to scale for both automation and management workloads.
