@@ -1,0 +1,70 @@
+:_content-type: PROCEDURE
+
+[id="update-redirect-uri_{context}"]
+
+= Updating the Redirect URIs
+
+When Ansible users log in or log out of Ansible Lightspeed service, the {PlatformName} redirects the user's browser to a specified URL. You must configure the redirect URLs so that users can log in and log out of the application successfully.  
+
+.Prerequisites
+* You have created and deployed a {LightspeedShortName} instance to your namespace.
+
+.Procedure
+. Get the URL of the Ansible Lightspeed instance:
+.. Go to {OCP}.
+.. Select *Networking → Routess*.
+.. Locate the {LightspeedShortName} instance that you created. 
+.. Copy the Location URL of the {LightspeedShortName} instance.
+
+. Update the *login* redirect URI:
+.. In the automation controller, go to *Administration → Applications*.
+.. Select the Lightspeed Oauth application that you created.
+.. In the *Redirect URIs* field of the Oauth application, enter the URL in the following format:
++
+`https://<lightspeed_route>/complete/aap/`
++
+An example of the URL is `https://lightspeed-on-prem-web-service.com/complete/aap/`.
++
+[IMPORTANT]
+====
+The Redirect URL must include the following information:
+
+* The prefix `https://`
+* The `<lightspeed_route>` URL, which is the URL of the {LightspeedShortName} instance that you copied earlier
+* The suffix `/complete/aap/` that includes a backslash sign (*/*) at the end
+====
+.. Click *Save*. 
+
+. Update the *logout* redirect URI:
+.. Log in to the cluster on which the {PlatformName} instance is running. 
+.. Identify the *AutomationController* custom resource.
+.. Add the following entry to the YAML file:
++
+....
+```yaml
+  spec:
+  ...
+  extra_settings:
+    - setting: LOGOUT_ALLOWED_HOSTS
+      value: "'<lightspeed_route-HostName>'"
+  ```
+....
++
+[IMPORTANT]
+====
+Ensure the following while specifying the `value:` parameter:
+
+* Specify the hostname without the network protocol, such as `https://`.
++
+For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`, and not `https://my-aiconnect-instance.somewhere.com`.
+
+* Use the single and double quotes exactly as specified in the codeblock.
++
+If you change the single quotes to double quotes and vice versa, you would encounter errors when logging out. 
+
+* Use a comma to specify multiple instances of {LightspeedShortName} deployment.
++
+If you are running multiple instances of Red Hat Ansible Lightspeed application with a single Red Hat Ansible Automation Platform deployment, add a comma (,) and then add the other hostname values. For example, you can add multiple hostnames, such as `"'my-lightspeed-instance1.somewhere.com','my-lightspeed-instance2.somewhere.com'"`
+====
+
+. Apply the revised YAML. This task restarts the automation controller pods.
