@@ -1,0 +1,64 @@
+:_content-type: CONCEPT
+
+[id="overview-lightspeed-onpremise_{context}"]
+
+= Overview
+
+This section provides information about the system requirements, prerequisites, and the process for setting up a {LightspeedshortName} on-premise deployment.
+
+== System requirements
+
+Your system must meet the following minimum system requirements to install and run the {LightspeedshortName} on-premise deployment.
+
+[cols="a,a",options="header"]
+|===
+|Requirement |Minimum requirement
+
+|RAM
+|5 GB
+
+|CPU
+|1
+
+|Local disk
+|40 GB
+|===
+
+To see the rest of the {PlatformName} system requirements, see _Chapter 4. System requirements_ in the link:https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.4/html-single/red_hat_ansible_automation_platform_planning_guide/index#platform-system-requirements[{PlatformName} Planning Guide].
+
+[NOTE]
+====
+You must also have a trial or paid subscription to {ibmwatsonxcodeassistant}, and have a model in the {ibmwatsonxcodeassistant} deployment space. For information about creating a {ibmwatsonxcodeassistant} model, see the link:https://cloud.ibm.com/docs/watsonx-code-assistant[{ibmwatsonxcodeassistant} documentation].
+====
+
+== Prerequisites
+
+* You have administrator privileges for {PlatformName}.
+
+* Your organization has a trial or paid subscription to both {PlatformName} and {ibmwatsonxcodeassistant}.
+
+* Your system meets the minimum system requirements to set up {LightspeedshortName} on-premise deployment.
+
+* You have obtained an API key and a model ID from {ibmwatsonxcodeassistant}. 
++
+For information about obtaining an API key and model ID from {ibmwatsonxcodeassistant}, see the link:https://cloud.ibm.com/docs/watsonx-code-assistant[{ibmwatsonxcodeassistant} documentation].
+
+* You have an existing external PostgreSQL database configured for the {PlatformName}, or have a database created for you when configuring the {LightspeedshortName} on-premise deployment. 
+
+== Process for configuring a {LightspeedshortName} on-premise deployment
+
+Perform the following tasks to install and configure a {LightspeedshortName} on-premise deployment:
+
+. xref:install-aap-lightspeed-operator_configuring-lightspeed-onpremise[Install the {PlatformName} operator]
+
+. xref:create-oauth-app_configuring-lightspeed-onpremise[Create an OAuth application]
+
+. xref:create-connection-secrets_configuring-lightspeed-onpremise[Create connections secrets for {PlatformName} and {ibmwatsonxcodeassistant} both]
+
+. xref:create-lightspeed-instance_configuring-lightspeed-onpremise[Create and deploy an {LightspeedshortName} instance]
+
+. xref:update-redirect-uri_configuring-lightspeed-onpremise[Update the Redirect URI to connect to your {LightspeedshortName} on-premise deployment]
+
+. xref:configure-vscode-extension-onpremise-deployment_configuring-lightspeed-onpremise[Install and configure Ansible Visual Studio Code extension to connect to {LightspeedShortName} on-premise deployment]
+
+. Optional: If you want to connect to a different {ibmwatsonxcodeassistant}, xref:update-connection-secrets_configuring-lightspeed-onpremise[update the connection secrets on an existing {PlatformName} operator]

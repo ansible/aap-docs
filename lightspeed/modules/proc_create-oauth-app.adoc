@@ -1,0 +1,39 @@
+:_content-type: PROCEDURE
+
+[id="create-oauth-app_{context}"]
+
+= Creating an OAuth application
+
+Use this procedure to create an OAuth application for your {LightspeedShortName} on-premise deployment. 
+
+.Prerequisites
+* You have an operational Ansible {ControllerName} instance.
+
+.Procedure
+. Log in to the {ControllerName} as an administrator.
+. Under *Administration*, click *Applications > Add*. 
+. Enter the following information:
+.. *Name*: Specify a unique name for your application.
+.. *Organization*: Select a preferred organization.
+.. *Authorization grant type*: Select *Authorization code*.
+.. *Redirect URIs*: Enter a temporary URL for now, for example, `https://temp/`.
++
+The exact {LightspeedShortName} application URL is generated after the on-premise deployment is completed. After the deployment is completed, you must change the Redirect URI to point to the generated {LightspeedShortName} application URL. For more information, see xref:update-redirect-uri_configuring-lightspeed-onpremise[Updating the Redirect URIs].
+
+.. From the *Client type* list, select *Confidential*.
+
+. Click *Save*. 
++
+A pop-up window is displayed along with the generated application client ID and client secret. 
+
+. Copy and save both the generated client ID and client secret for future use.
++
+[IMPORTANT]
+====
+This is the only time the pop-up window is displayed. Therefore, ensure that you copy both the client ID and client secret, as you need these tokens to create connections secrets for {PlatformName} and {ibmwatsonxcodeassistant} both.
+====
++
+The following image is an example of the generated client ID and client secret:
++
+[.thumb]
+image::popup-window-client-id-secret.png[{Example of a generated client ID and client secret]

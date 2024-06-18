@@ -1,0 +1,27 @@
+:_content-type: PROCEDURE
+
+[id="create-lightspeed-instance_{context}"]
+
+= Creating and deploying a {LightspeedShortName} instance
+
+Use this procedure to create and deploy a {LightspeedShortName} instance to your namespace.  
+
+.Prerequisites
+* You have created connection secrets for both {PlatformName} and {ibmwatsonxcodeassistant}.
+
+.Procedure
+
+. Go to {OCP}.
+. Select *Operators → Installed Operators*.
+. From the *Projects* list, select the namespace where you want to install the {LightspeedShortName} instance and where you created the connection secrets.
+. Locate and select the *{PlatformNameShort} (provided by Red Hat)* operator that you installed earlier.
+. Select *All instances → Create new*.
+. From the *Create new* list, select the *Ansible Lightspeed* modal.
+. Ensure that you have selected *Form view* as the configuration mode. 
+. Provide the following information:
+.. *Name*: Enter a unique name for your {LightspeedShortName} instance.
+.. *Secret where the authentication information can be found*: Select the authentication secret that you created to connect to the {PlatformName}.
+.. *Secret where the model configuration can be found*: Select the model secret that you created to connect to {ibmwatsonxcodeassistant}.
+. Click *Create*. 
++
+The {LightspeedShortName} instance takes a few minutes to deploy to your namespace. After the installation status is displayed as *Successful*, the Ansible Lightspeed portal URL is available under *Networking → Routes* in {OCP}.
