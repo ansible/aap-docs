@@ -12,7 +12,7 @@ When Ansible users log in or log out of Ansible Lightspeed service, the {Platfor
 .Procedure
 . Get the URL of the Ansible Lightspeed instance:
 .. Go to {OCP}.
-.. Select *Networking → Routess*.
+.. Select *Networking → Routes*.
 .. Locate the {LightspeedShortName} instance that you created. 
 .. Copy the Location URL of the {LightspeedShortName} instance.
 
@@ -38,6 +38,7 @@ The Redirect URL must include the following information:
 . Update the *logout* redirect URI:
 .. Log in to the cluster on which the {PlatformName} instance is running. 
 .. Identify the *AutomationController* custom resource.
+.. Select *[YAML view]*. 
 .. Add the following entry to the YAML file:
 +
 ....
@@ -60,11 +61,11 @@ For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`
 
 * Use the single and double quotes exactly as specified in the codeblock.
 +
-If you change the single quotes to double quotes and vice versa, you would encounter errors when logging out. 
+If you change the single quotes to double quotes and vice versa, you will encounter errors when logging out. 
 
 * Use a comma to specify multiple instances of {LightspeedShortName} deployment.
 +
-If you are running multiple instances of Red Hat Ansible Lightspeed application with a single Red Hat Ansible Automation Platform deployment, add a comma (,) and then add the other hostname values. For example, you can add multiple hostnames, such as `"'my-lightspeed-instance1.somewhere.com','my-lightspeed-instance2.somewhere.com'"`
+If you are running multiple instances of {LightspeedShortName} application with a single {PlatformName} deployment, add a comma (,) and then add the other hostname values. For example, you can add multiple hostnames, such as `"'my-lightspeed-instance1.somewhere.com','my-lightspeed-instance2.somewhere.com'"`
 ====
 
 . Apply the revised YAML. This task restarts the automation controller pods.
