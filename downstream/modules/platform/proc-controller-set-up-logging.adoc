@@ -34,9 +34,9 @@ Subsequent options vary depending on the selected protocol.
 * *TCP Connection Timeout*: Specify the connection timeout in seconds.
 This option is only applicable to HTTPS and TCP log aggregator protocols.
 * *Logging Aggregator Level Threshold*: Select the level of severity you want the log handler to report.
-* *Maximum number of messages that can be stored in the log action queue*:Defines how large the `rsyslog`` action queue can grow in number of messages stored. 
+* *Maximum number of messages that can be stored in the log action queue*:Defines how large the `rsyslog` action queue can grow in number of messages stored. 
 This can have an impact on memory use. 
-When the queue reaches 75% of this number, the queue will start writing to disk (`queue.highWatermark` in `rsyslog`). 
+When the queue reaches 75% of this number, the queue starts writing to disk (`queue.highWatermark` in `rsyslog`). 
 When it reaches 90%, `NOTICE`, `INFO`, and `DEBUG` messages start to be discarded (`queue.discardMark` with `queue.discardSeverity=5`).
 * *Maximum disk persistence for rsyslogd action queuing (in GB)*: The amount of data to store (in gigabytes) if an `rsyslog` action takes time to process an incoming message (defaults to 1). 
 Equivalent to the `rsyslogd queue.maxdiskspace` setting on the action (e.g. `omhttp`). 
