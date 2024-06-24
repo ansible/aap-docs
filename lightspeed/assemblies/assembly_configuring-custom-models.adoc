@@ -12,13 +12,22 @@ ifdef::context[:parent-context: {context}]
 
 As an organization administrator, you can create and use fine-tuned, custom models that are trained on your organization's existing Ansible content. With this capability, you can tune the models to your organization's automation patterns and improve the code recommendation experience.
 
-You can configure multiple custom models for your organization. For example, you can create a custom model for your corporate IT automation team and a different one for your engineering team's infrastructure. You can also configure a custom model to make it available for all Ansible users or select Ansible users in your organization. 
+After you create a custom model, you can specify one of the following access types:
+
+* Enable access for all users in your organization
++
+You can configure the custom model as the default model for your organization. All users in your organization can use the custom model.
+
+* Enable access for select Ansible users in your organization
++
+Using the model-override setting in the Ansible VS Code extension, select Ansible users only can override the default model setting and tune their Ansible Lightspeed service to use the custom model. 
+ 
 
 == Process for configuring custom models
 
 To configure a custom model, perform the following tasks: 
 
-. xref:ansible-content-parser_configuring-custom-models[Create a training data set by using {AnsibleContentParser}]
+. xref:ansible-content-parser_configuring-custom-models[Create a training data set by using the {AnsibleContentParser}]
 
 . xref:create-deploy-custom-model-ibm_configuring-custom-models[Create and deploy a custom model by using {ibmwatsonxcodeassistant}]
 
