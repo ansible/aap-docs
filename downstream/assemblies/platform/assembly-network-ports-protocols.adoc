@@ -28,6 +28,7 @@ The following default destination ports and installer inventory listed are confi
 | Port | Protocol | Service | Source | Destination | Required for | Installer Inventory Variable 
 | 22 | TCP | SSH | Installer node | {HubNameStart} | Installation (temporary) | `ansible_port`
 | 22 | TCP | SSH | Installer node | Controller node | Installation (temporary) | `ansible_port`
+| 22 | TCP | SSH | Installer node | EDA node | Installation (temporary) | `ansible_port`
 | 22 | TCP | SSH | Installer node | Execution node | Installation (temporary) | `ansible_port`
 | 22 | TCP | SSH | Installer node | Hop node | Installation (temporary) | `ansible_port`
 | 22 | TCP | SSH | Installer node | Hybrid node | Installation (temporary) | `ansible_port`
@@ -36,7 +37,6 @@ The following default destination ports and installer inventory listed are confi
 | 80/443 | TCP | HTTP/HTTPS | Execution node | {HubNameStart} | Allows execution nodes to pull the execution environment image from {HubName}. | Fixed value
 | 443 | TCP | HTTPS | Controller node | Client | Web UI/API
 
-//For 2.5 only
 This exposes the mesh ingress receptor entry point for inbound connections.| `nginx_https_port`
 | 443 | TCP | HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
 | 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
@@ -62,6 +62,14 @@ ENABLE connections from controllers to Receptor port if relayed through non-hop 
 
 `peers`
 | 27199 | TCP | Receptor | Execution node | Hop node | Configurable
+
+Mesh 27199 communication can be both ways (depending on installation inventory) for execution nodes
+
+ALLOW connection from controller(s) to Receptor port |
+`receptor_listener_port`
+
+`peers`
+| 27199 | TCP | Receptor | Execution node | Controller node | Configurable
 
 Mesh 27199 communication can be both ways (depending on installation inventory) for execution nodes
 
