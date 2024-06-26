@@ -2,32 +2,55 @@
 
 = Configuring system settings
 
-The *System* tab enables you to complete the following actions:
-
-* Define the base URL for the {ControllerName} host
-//* Configure alerts
-* Enable activity capturing
-* Control visibility of users
-* Set {ControllerName} analytics settings
-//* Enable certain {ControllerName} features and functionality through a license file
-//* Configure logging aggregation options
+You can use the System menu to define automation controller system settings.
 
 .Procedure
 
 . From the navigation panel, select {MenuSetSystem}.
+. The *System settings* page is displayed.
++
+image::system-settings-page.png[System settings page - unedited]
 . Click btn:[Edit].
-//. Choose from the following *System* options:
-//* *Miscellaneous System settings*: Enable activity streams, specify the default {ExecEnvShort}, define the base URL for the {ControllerName} host, enable {ControllerName} administration alerts, set user visibility, define analytics, specify usernames and passwords, and configure proxies.
-//* *Miscellaneous Authentication settings*: Configure options associated with authentication methods (built-in or SSO), sessions (timeout, number of sessions logged in, tokens), and social authentication mapping.
-//* *Logging settings*: Configure logging options based on the type you choose:
-//+
-//image::ag-configure-aap-system-logging-types.png[Logging settings]
-//+
-//For more information about each of the logging aggregation types, see the xref:assembly-controller-logging-aggregation[Logging and Aggregation] section.
-. Set the configurable options from the fields provided.
-Click the tooltip image:question_circle.png[Tool tip,15,15] icon next to the field that you need additional information about.
-//+
-//The following is an example of the *Miscellaneous System* settings:
-//+
-//image::ag-configure-aap-system.png[Misc. system settings]
-. Click btn:[Save] to apply the settings.
++ 
+image::system-settings-full.png[System settings - configurable fields]
+
+. You can configure the following options:
++
+* *Base URL of the service*: This setting is used by services like notifications to render a valid url to the service.
+* *Remote Host Headers*: HTTP headers and meta keys to search to determine remote host name or IP. 
+Add additional items to this list, such as `HTTP_X_FORWARDED_FOR`, if behind a reverse proxy. 
+For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_operations_guide/assembly-configuring-proxy-support[Configuring proxy support for {PlatformName}].
+* *Proxy IP allowed list*: If the service is behind a reverse proxy or load balancer, use this setting to configure the proxy IP addresses from which the service should trust custom `REMOTE_HOST_HEADERS`   header values. 
++
+If this setting is an empty list (the default), the headers specified by `REMOTE_HOST_HEADERS` are trusted unconditionally.
+* *CSRF Trusted Origins List*: If the service is behind a reverse proxy or load balancer, use this setting to configure the `schema://addresses` from which the service should trust Origin header values.
+* *Red Hat Customer Name*: This username is used to send data to Automation Analytics.
+* *Red Hat Customer Password*: This password is used to send data to Automation Analytics.
+* *Red Hat or Satellite Username*: This username is used to send data to Automation Analytics.
+* *Red Hat or Satellite password*: This password is used to send data to Automation Analytics.
+* *Global default {ExecEnvShort}*: The {ExecEnvShort} to be used when one has not been configured for a job template.
+* *Custom virtual environment paths*: Paths where {ControllerName} looks for custom virtual environments. 
++
+Enter one path per line.
++
+* *Last gather date for {Analytics}*: Set the date and time.
+* *{Analytics} Gather Interval*: Interval (in seconds) between data gathering. 
++
+If *Gather data for {Analytics}* is set to false, this value is ignored.
++
+* *Last gathered entries from the data collection service of {Analytics}*: -
+* *Last cleanup date for HostMetrics*: Set the date and time.
+* *Last computing date of HostMetricSummaryMonthly*: Set the date and time.
++
+You can select the following options:
++
+* *Enable activity stream*: Set to enable capturing activity for the activity stream.
+* *Enable activity stream for inventory sync*: Set to enable capturing activity for the activity stream when running inventory sync.
+* *All users visible to organization admins*: Set to control whether any organization administrator can view all users and teams, even those not associated with their organization.
+* *Organization Admins Can Manage Users and Teams*: Set to control whether any organization administrator has the privileges to create and manage users and teams. 
++
+You may want to disable this ability if you are using an LDAP or SAML integration.
+* *Gather Data for Automation Analytics*: Set to enable the service to gather data on automation and send it to {Analytics}.
+
+. Click btn:[Save]
+
