@@ -32,7 +32,7 @@ The settings have the following requirements:
 |Network | Description | Requirements
 | Service CIDR | A CIDR notation IP range from which to assign service cluster IPs.
 
-It must not overlap with any Subnet IP ranges. |  Requires a /26 block at minimum. A larger block is not necessary.
+It must not overlap with any Subnet IP ranges. |  Requires a /24 block at minimum. A larger block is not necessary.
 
 This CIDR block must not intersect with the CIDR of the Pod CIDR block.
 
@@ -42,7 +42,7 @@ This CIDR block also must not intersect with the CIDR of the VNET CIDR block.
 It must be within the Kubernetes service address range specified in `serviceCidr`. |  Must be an IP address in the Service CIDR other than the first IP in that range.
 
 Red Hat recommends using the first `.10` IP address within the Service CIDR block.
-| Pod CIDR | A CIDR notation IP range from which to assign pod IPs when kubenet is used. |  Requires a /20 or larger block.
+| Pod CIDR | A CIDR notation IP range from which to assign pod IPs when kubenet is used. |  Requires a /19 or larger block.
 
 Red Hat recommends using the first `.10` IP address within the Service CIDR block.
 
