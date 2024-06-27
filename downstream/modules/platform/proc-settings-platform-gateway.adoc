@@ -1,0 +1,82 @@
+[id="proc-settings-platform-gateway"]
+
+= Platform gateway
+
+//To be added to Donna's AAP/UI document for 2.5 
+
+The Platform gateway is the service that handles authentication and authorization for {PlatformNameShort}. 
+It provides a single ingress into the Platform and serves the Platform's user interface.
+
+Use the following procedure to configure the options.
+
+.Procedure
+. From the navigation panel, select {MenuSetGateway}.
+. The Platform gateway settings page is displayed. 
++
+image::platform_gateway_settings_page.png[Initial platform gateway settings page]
++
+. To configure the options, click btn:[Edit].
++
+image::platform_gateway_full.png[Platform gateway configurable options]
++
+. The following platform gateway options can be configured:
+
+* *Platform gateway proxy url*: URL to the platform gateway proxy layer.
+* *Platform gateway proxy url ignore cert*: Ignore the certificate to the platform gateway proxy layer.
+* *Allow admin to set insecure*: Whether a superuser account can save an insecure password when editing any local user account.
+* *Platform gateway basic auth enabled*: Enable basic authentication to the platform gateway API.
++
+Turning this off prevents all basic authentication (local users), so customers need to make sure they have their alternative authentication mechanisms correctly configured before doing so. 
++
+Turning it off with only local authentication configured also prevents all access to the UI.
++
+*Social auth username in full email*: Enabling this setting alerts social authentication to use the full email as username instead of the full name.
++
+*Platform gateway token name*: The header name to push from the proxy to the backend service. 
++
+[WARNING]
+==== 
+If this name is changed, backends must be updated to compensate.
+====
++
+* *Platform gateway access token expiration*: How long the access tokens are valid for.
+* *Jwt private key*: TBD
+* *Jwt public key*: (Read only) TBD
+
+You can configure the following Session options:
+
+* *Session cookie age*: Time in seconds before a session expires.
+
+You can configure the following Password security options:
+
+* *Password min upper*: How many uppercase characters need to be in a local password.
+* *Password min length*: How long does a local password have to be.
+* *Password min digits*: How many numerical characters need to be in a local password.
+* *Password min special*: How many special characters need to be in a local password.
+
+You can configure the following Custom login options:
+
+* *Custom login info*: Provide a specific information (such as a legal notice or a disclaimer) to a text box in the login modal.
+* *Custom logo* : Provide an image file for setting up a custom logo (must be a data URL with a base64-encoded GIF, PNG, or JPEG image).
+For more information, see xref:proc-custom-logos-images[Setting a custom logo].
+
+You can configure the following additional settings:
+
+* *Jwt expiration buffer in seconds*: The number of seconds before a JWT token's expiration to revoke from the cache.
++
+When authentication happens a JWT token is created for the user and that token is cached. 
+When subsequent calls happen to services such as automation controller or EDA, the token is taken from the cache and sent to the service. 
+Both the token and the cache of the token have an expiration time. 
+If the token expires while in the cache the authentication process attempts results in a 401 error (unauthorized). 
+This setting gives {PlatformName} a buffer by removing the JWT token from the cache before the token expires. 
+When a token is revoked from cache a new token with a new expiration is generated and cached for the user. 
+As a result, expired tokens from the cache are never used. 
+This setting defaults to 2 seconds. 
+If you have a large latency between platform gateway and your services and observe 401 responses you might want to increase this setting to combat the 401 responses.
+* *Status endpoint backend timeout seconds*: Timeout (in seconds) for the status endpoint to wait when trying to connect to a backend.
+* *Allow auth2 for external users*: For security reasons, users from external authentication providers, such as LDAP, SAML, SSO, Radius, and others, are not allowed to create OAuth2 tokens. 
+To change this behavior, enable this setting. 
+Existing tokens are not deleted when this setting is turned off.
+
+[start=5]
+. Click btn:[Save] to save your changes.
