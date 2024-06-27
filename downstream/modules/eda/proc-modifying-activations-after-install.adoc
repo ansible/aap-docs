@@ -1,0 +1,12 @@
+[id="modifying-activations-after-install"]
+
+= Modifying the number of simultaneous rulebook activations after {EDAcontroller} installation
+
+[role="_abstract"]
+By default, {EDAcontroller} allows 12 activations to run simultaneously. You can modify this default value after installation by using the following procedure:
+
+.Procedure
+. Navigate to the environment file at `/etc/ansible-automation-platform/eda`.
+. Choose the number of maximum running activations that you need. For example, `EDA_MAX_RUNNING_ACTIVATIONS = 16`
+. Use the following command to restart EDA services: `systemctl restart automation-eda-controller.target`
+
