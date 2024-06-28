@@ -9,7 +9,27 @@
 +
 {LightspeedFullName} uses Ansible-specific IBM watsonx Granite models unique to your organization, which are provided, managed, and maintained by IBM.
 
-* *Single tasks and multitask generation*
+* *Model customization*
++
+Organization administrators can now create and use fine-tuned, custom models that are trained on your organization's existing Ansible content. With this capability, you can tune the models to your organization's automation patterns and improve the code recommendation experience. 
++
+You can configure multiple custom models for your organization. For example, you can create a custom model for your corporate IT automation team and a different one for your engineering team's infrastructure. You can also configure a custom model to make it available for all Ansible users or select Ansible users in your organization.
+
+* *{LightspeedShortName} cloud service and on-premise deployments*
++
+{LightspeedShortName} is available both as a cloud service and as an on-premise deployment. 
+{LightspeedShortName} on-premise deployments provide the {PlatformName} customers more control over their data and supports compliance with enterprise security policies. For example, organizations in sensitive industries with data privacy or air-gapped requirements can use on-premise deployments of both {LightspeedShortName} and {ibmwatsonxcodeassistant} for {LightspeedShortName} on Cloud Pak for Data. {LightspeedShortName} on-premise deployments are supported on {PlatformName} version 2.4.
+
+* *Playbook and task generation*
+
++
+This includes the following capabilities:
+
+** *Playbook generation and explanations*
++
+Using the Ansible VS Code extension, you can create Ansible playbooks using a natural language interface in English. {LightspeedShortName} with {ibmwatsonxcodeassistant} reads the natural language prompts and generates an entire playbook recommendation based on your intent. You can also view the explanations for new or existing playbooks. The playbook explanations describe what the playbook or task within the playbook does and contextualize its impact. 
+
+** *Single and multitask generation*
 +
 Using natural language prompts, you can generate single task or multiple task recommendations for Ansible task files and playbooks. To request multitask code recommendations, you can enter a sequence of natural language task prompts in a YAML file comment separated by ampersand (*&*) symbols.
 +
@@ -26,3 +46,7 @@ For each generated code recommendation, {LightspeedShortName} lists content sour
 * *Content maintenance and modernization*
 +
 The {AnsibleCodeBot} scans existing content collections, roles, and playbooks through Git repositories, and proactively creates pull requests whenever best practices or quality improvement recommendations are available. The bot automatically submits pull requests to the repository, which proactively alerts the repository owner to a recommended change to their content. 
+
+* *Telemetry data collection on the Admin dashboard*
++
+{LightspeedShortName} now collects Admin dashboard telemetry data that provides insight into how your organization users are using the Ansible Lightspeed service, and displays the metrics on the Admin dashboard. If you no longer want to collect and manage the Admin dashboard telemetry, you can disable it for your organization.
