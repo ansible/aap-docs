@@ -13,10 +13,10 @@ For convenience an example inventory file is provided, that you can copy and mod
 
 [NOTE]
 ====
-There is no default database choice given in the inventory file. You must follow the instructions in the inventory file to make the appropriate choice between an internally provided postgres, or provide your own externally managed and supported database option.
+There is no default database choice given in the inventory file. You must follow the instructions in the inventory file to make the appropriate choice between an internally provided Postgres, or provide your own externally managed and supported database option.
 ====
 
-Edit the inventory file by replacing the `< >` placeholders with your specific variables, and uncommenting any lines specific to your needs.
+Edit the inventory file by replacing the `< >` placeholders with your specific variables, and uncommenting any lines specific to your needs. Refer to the `README.md` file for more information about optional and required variables.
 
 
 ----
@@ -37,6 +37,11 @@ fqdn_of_your_rhel_host ansible_connection=local
 # This section is for your AAP EDA Controller host(s)
 # -----------------------------------------------------
 [automationeda]
+fqdn_of_your_rhel_host ansible_connection=local
+
+# This section is for your AAP Gateway host(s)
+# -----------------------------------------------------
+[automationgateway]
 fqdn_of_your_rhel_host ansible_connection=local
 
 # This section is for your AAP Execution host(s)
@@ -140,6 +145,18 @@ eda_pg_password=<set your own>
 # To use custom TLS certificate/key you need to set these variables
 #eda_tls_cert=<full path to your TLS certificate file>
 #eda_tls_key=<full path to your TLS key file>
+
+# AAP Gateway - mandatory
+# ------------------------------
+gateway_admin_password=<set your own>
+gateway_pg_host=fqdn_of_your_rhel_host
+gateway_pg_password=<set your own>
+
+# AAP Gateway - optional
+# -----------------------------
+# To use custom TLS certificate/key you need to set these variables
+#gateway_tls_cert=<full path to your TLS certificate file>
+#gateway_tls_key=<full path to your TLS key file>
 
 # AAP Execution Nodes - optional
 # -----------------------------
