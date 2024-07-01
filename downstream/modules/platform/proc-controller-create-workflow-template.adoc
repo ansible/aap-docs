@@ -1,6 +1,6 @@
 [id="controller-create-workflow-template"]
 
-= Creating a workflow template
+= Creating a workflow job template
 
 To create a new workflow job template, complete the following steps:
 
@@ -61,6 +61,10 @@ a| Yes
 
 If selected, even if a default value is supplied, you are prompted when launching to supply additional labels, if needed.
 - You cannot delete existing labels, selecting image:disassociate.png[Disassociate,10,10] only removes the newly added labels, not existing default labels.
+| Job tags | Type and select the *Create* drop-down to specify which parts of the playbook should run.
+For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
+| Skip Tags | Type and select the *Create* drop-down to specify certain tasks or parts of the playbook to skip.
+For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
 | Extra variables a| - Pass extra command line variables to the playbook.
 
 This is the "-e" or "-extra-vars" command line parameter for ansible-playbook that is documented in the Ansible documentation at link:https://docs.ansible.com/ansible/latest/reference_appendices/general_precedence.html[Controlling how Ansible behaves: precedence rules].
@@ -70,27 +74,24 @@ release_version: 1.5` | Yes
 
 If you want to be able to specify `extra_vars` on a schedule, you must select *Prompt on launch* for *Extra variables* on the workflow job template, or enable a survey on the job template. Those answered survey questions become `extra_vars`.
 For more information about extra variables, see xref:controller-extra-variables[Extra Variables].
-| Job tags | Type and select the *Create* drop-down to specify which parts of the playbook should run.
-For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
-| Skip Tags | Type and select the *Create* drop-down to specify certain tasks or parts of the playbook to skip.
-For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
 |===
 +
 . Specify the following *Options* for launching this template, if necessary:
+
 * Check *Enable webhook* to turn on the ability to interface with a predefined SCM system web service that is used to launch a workflow job template.
 GitHub and GitLab are the supported SCM systems.
 ** If you enable webhooks, other fields display, prompting for additional information:
 *** *Webhook service*: Select which service to listen for webhooks from.
-*** *Webhook credential*: Optionally, provide a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service.
-For more information, see TBD[Credential Types] to create one.
-+
-** When you click btn:[Create workflow job template], additional fields populate and the workflow visualizer automatically opens.
 *** *Webhook URL*: Automatically populated with the URL for the webhook service to POST requests to.
+//*** *Webhook credential*: Optionally, provide a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service.
+//For more information, see TBD[Credential Types] to create one.
 *** *Webhook key*: Generated shared secret to be used by the webhook service to sign payloads sent to {ControllerName}.
 You must configure this in the settings on the webhook service so that webhooks from this service are accepted in {ControllerName}.
 For additional information about setting up webhooks, see xref:controller-work-with-webhooks[Working with Webhooks].
 +
-Check *Enable concurrent jobs* to allow simultaneous runs of this workflow.
+//** When you click btn:[Create workflow job template], the workflow visualizer automatically opens.
+//*** *Webhook URL*: Automatically populated with the URL for the webhook service to POST requests to.
+* Check *Enable concurrent jobs* to allow simultaneous runs of this workflow.
 For more information, see xref:controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
 +
 . When you have completed configuring the workflow template, click btn:[Create workflow job template].
@@ -110,7 +111,7 @@ There you can complete the following tasks:
 +
 [NOTE]
 ====
-Save  the template before launching, or btn:[Launch template] remains disabled.
+Save the template before launching, or btn:[Launch template] remains disabled.
 The *Notifications* tab is only present after you save the template.
 ====
 
