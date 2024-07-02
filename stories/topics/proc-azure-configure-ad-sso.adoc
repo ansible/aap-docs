@@ -1,9 +1,9 @@
 [id="proc-azure-configure-ad-sso_{context}"]
 
-= Azure Active Directory (Azure AD) SSO configuration
+= {MSEntraID} SSO configuration
 
 [role="_abstract"]
-Follow the procedures below to configure SSO with Azure Active Directory (Azure AD). If your organization does not use Azure AD for application authorization, you can create users in the user management system in {PlatformNameShort}.
+Follow the procedures below to configure SSO with {MSEntraID}. If your organization does not use {MSEntraID} for application authorization, you can create users in the user management system in {PlatformNameShort}.
 
 .Configuring the base URL for the {PlatformNameShort} deployment
 
@@ -17,7 +17,7 @@ Follow the procedures below to configure SSO with Azure Active Directory (Azure 
 
 .Configuring authentication for {PlatformNameShort}
 
-To set up enterprise authentication for Microsoft Azure Active Directory (Azure AD), you must obtain an OAuth2 key and secret by registering your {PlatformNameShort} deployment in Azure.
+To set up enterprise authentication for {MSEntraID}, you must obtain an OAuth2 key and secret by registering your {PlatformNameShort} deployment in Azure.
 
 To register the {ControllerName} instance in Azure, you must supply the _Azure AD OAuth2 Callback URL_ from the {ControllerName} settings.
 
@@ -26,14 +26,14 @@ To register the {ControllerName} instance in Azure, you must supply the _Azure A
 . In a web browser, open the {ControllerName} console.
 . Click *Settings* in the menu to open the main settings page.
 . Click *Azure AD settings* in the *Authentication* category to open the *Details* page.
-. Copy the value for _Azure AD OAuth2 Callback URL_. You will need this value when you register your deployed application in Azure AD.
+. Copy the value for _Azure AD OAuth2 Callback URL_. You will need this value when you register your deployed application in {MSEntraID}.
 
-.Creating a registered application in Azure AD
+.Creating a registered application in {MSEntraID}
 
 . In a web browser, open the Azure portal.
 . Ensure that you are using the tenant where you deployed {PlatformNameShort}.
-. Type `Azure Active Directory` in the search bar.
-. Select *Azure Active Directory* from the search results.
+. Type `Microsoft Entra ID` in the search bar.
+. Select *{MSEntraID}* from the search results.
 . Under *Manage* in the menu options, click *App registrations*.
 . In the *App registrations* page, click *+ New registration*.
 . Configure the new registration as follows:
@@ -70,7 +70,7 @@ Add the key _(Application (client) ID)_ and value (_Value_) of the secret that y
 . Open the {ControllerName} console in a web browser.
 . Click menu:Settings[Azure AD settings].
 . Click *Edit*.
-. Enter the information for the secret that you generated in Azure AD:
+. Enter the information for the secret that you generated in {MSEntraID}:
   . In *Azure AD OAuth2 Key*, paste the _Application (client) ID_.
   . In *Azure AD OAuth2 Secret*, paste the secret _Value_.
 . Click *Save*.
