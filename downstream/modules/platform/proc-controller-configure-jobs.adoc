@@ -7,7 +7,7 @@ You can use the *Job* option to define the operation of Jobs in {ControllerName}
 .Procedure
 
 . From the navigation panel, select {MenuSetJob}.
-. On the *Job settings* page, click btn:[Edit].
+. On the *Job Settings* page, click btn:[Edit].
 +
 image::job-settings-full.png[Jobs settings options]
 +
@@ -22,9 +22,7 @@ The directory in which the service creates new temporary directories for job exe
 This poses a potential security risk where users with the ability to specify extra vars at job launch time can use Jinja2 templates to run arbitrary Python. 
 +
 Set this value to either `template` or `never`.
-* *Job execution path*: Only in operator-based installations. 
 +
-The directory in which the service creates new temporary directories for job execution and isolation (such as credential files).
 * *Paths to expose to isolated jobs*: List of paths that would otherwise be hidden to expose to isolated jobs. 
 +
 Enter one path per line.
@@ -33,7 +31,7 @@ Volumes are mounted from the execution node to the container.
 +
 The supported format is `HOST-DIR[:CONTAINER-DIR[:OPTIONS]]`.
 +
-*Extra Environment Variables*: Additional environment variables set for playbook runs, inventory updates, project updates, and notification sending.
+* *Extra Environment Variables*: Additional environment variables set for playbook runs, inventory updates, project updates, and notification sending.
 * *K8S Ansible Runner Keep-Alive Message Interval*: Only applies to jobs running in a Container Group. 
 +
 If not 0, send a message every specified number of seconds to keep the connection open.
