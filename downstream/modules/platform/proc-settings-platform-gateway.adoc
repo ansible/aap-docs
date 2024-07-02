@@ -19,7 +19,7 @@ image::platform_gateway_settings_page.png[Initial platform gateway settings page
 +
 image::platform_gateway_full.png[Platform gateway configurable options]
 +
-. The following platform gateway options can be configured:
+. You can configure the following platform gateway options:
 
 * *Platform gateway proxy url*: URL to the platform gateway proxy layer.
 * *Platform gateway proxy url ignore cert*: Ignore the certificate to the platform gateway proxy layer.
@@ -40,9 +40,24 @@ If this name is changed, backends must be updated to compensate.
 ====
 +
 * *Platform gateway access token expiration*: How long the access tokens are valid for.
-* *Jwt private key*: TBD
-* *Jwt public key*: (Read only) TBD
-
+* *JWT private key*: The private key used to encrypt the JWT tokens sent to back end services. 
++
+This should be a private RSA key and one should be generated automatically on installation.
++
+[NOTE]
+==== 
+Use caution when rotating the key as it will cause current sessions to fail until their JWT keys are reset.
+====
++
+* (Read only) *JWT public key*: The private key used to encrypt the JWT tokens sent to back end services. 
++
+This should be a private RSA key and one should be generated automatically on installation. 
++
+[NOTE]
+==== 
+See other services' documentation on how they consume this key.
+====
++
 You can configure the following Session options:
 
 * *Session cookie age*: Time in seconds before a session expires.
@@ -50,19 +65,19 @@ You can configure the following Session options:
 You can configure the following Password security options:
 
 * *Password min upper*: How many uppercase characters need to be in a local password.
-* *Password min length*: How long does a local password have to be.
+* *Password min length*: The minimum length of a local password.
 * *Password min digits*: How many numerical characters need to be in a local password.
 * *Password min special*: How many special characters need to be in a local password.
 
 You can configure the following Custom login options:
 
-* *Custom login info*: Provide a specific information (such as a legal notice or a disclaimer) to a text box in the login modal.
+* *Custom login info*: Provide specific information (such as a legal notice or a disclaimer) to a text box in the login modal.
 * *Custom logo* : Provide an image file for setting up a custom logo (must be a data URL with a base64-encoded GIF, PNG, or JPEG image).
 For more information, see xref:proc-custom-logos-images[Setting a custom logo].
 
 You can configure the following additional settings:
 
-* *Jwt expiration buffer in seconds*: The number of seconds before a JWT token's expiration to revoke from the cache.
+* *JWT expiration buffer in seconds*: The number of seconds before a JWT token's expiration to revoke from the cache.
 +
 When authentication happens a JWT token is created for the user and that token is cached. 
 When subsequent calls happen to services such as automation controller or EDA, the token is taken from the cache and sent to the service. 
@@ -72,7 +87,7 @@ This setting gives {PlatformName} a buffer by removing the JWT token from the ca
 When a token is revoked from cache a new token with a new expiration is generated and cached for the user. 
 As a result, expired tokens from the cache are never used. 
 This setting defaults to 2 seconds. 
-If you have a large latency between platform gateway and your services and observe 401 responses you might want to increase this setting to combat the 401 responses.
+If you have a large latency between platform gateway and your services and observe 401 responses you m  increase this setting to lower the number of 401 responses.
 * *Status endpoint backend timeout seconds*: Timeout (in seconds) for the status endpoint to wait when trying to connect to a backend.
 * *Allow auth2 for external users*: For security reasons, users from external authentication providers, such as LDAP, SAML, SSO, Radius, and others, are not allowed to create OAuth2 tokens. 
 To change this behavior, enable this setting. 
