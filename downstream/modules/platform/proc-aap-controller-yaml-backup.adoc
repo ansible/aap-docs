@@ -1,0 +1,32 @@
+[id="aap-controller-yaml-backup"]
+
+= Using YAML to back up the {ControllerNameStart} deployment
+
+See the following procedure for how to back up a deployment of the {ControllerName} using YAML. 
+
+.Prerequisites
+
+* You must be authenticated with an Openshift cluster.
+* The {OperatorPlatform} has been installed to the cluster.
+* The {ControllerName} is deployed to using the {OperatorPlatform}.
+
+.Procedure
+
+. Create a file named "backup-awx.yml" with the following contents:
++
+----
+---
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AWXBackup
+metadata:
+  name: awxbackup-2021-04-22
+  namespace: my-namespace
+spec:
+  deployment_name: controller
+----
++
+NOTE: The "deployment_name" above is the name of the automation controller deployment you intend to backup from. 
+The namespace above is the one containing the automation controller deployment you intend to back up.
+. Use the `oc apply` command to create the backup object in your cluster:
+
+`$ oc apply -f backup-awx.yml`
