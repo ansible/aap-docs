@@ -2,17 +2,98 @@
 
 = Configuring jobs
 
-The *Jobs* tab enables you to configure the types of modules that can be used by the {ControllerName}'s Ad Hoc Commands feature, set limits on the number of jobs that can be scheduled, define their output size, and other details pertaining to working with jobs in {ControllerName}.
+You can use the *Job* option to define the operation of Jobs in {ControllerName}.
 
 .Procedure
 
-. From the navigation panel, select {MenuAEAdminSettings}.
-. Select *Jobs settings* in the *Jobs* option.
-. Click btn:[Edit].
-. Set the configurable options from the fields provided.
+. From the navigation panel, select {MenuSetJob}.
+. On the *Job Settings* page, click btn:[Edit].
++
+image::job-settings-full.png[Jobs settings options]
++
+. You can configure the following options:
+
+* *Ansible Modules Allowed For Ad Hoc Jobs*: List of modules allowed to be used by ad-hoc jobs.
+* *Job execution path*: Only available in operator-based installations. 
++
+The directory in which the service creates new temporary directories for job execution and isolation (such as credential files).
+*  *When can extra variables contain Jinja templates?*: Ansible allows variable substitution through the Jinja2 templating language for `--extra-vars`. 
++
+This poses a potential security risk where users with the ability to specify extra vars at job launch time can use Jinja2 templates to run arbitrary Python. 
++
+Set this value to either `template` or `never`.
++
+* *Paths to expose to isolated jobs*: List of paths that would otherwise be hidden to expose to isolated jobs. 
++
+Enter one path per line.
++
+Volumes are mounted from the execution node to the container. 
++
+The supported format is `HOST-DIR[:CONTAINER-DIR[:OPTIONS]]`.
++
+* *Extra Environment Variables*: Additional environment variables set for playbook runs, inventory updates, project updates, and notification sending.
+* *K8S Ansible Runner Keep-Alive Message Interval*: Only applies to jobs running in a Container Group. 
++
+If not 0, send a message every specified number of seconds to keep the connection open.
++
+* *Environment Variables for Galaxy Commands*: Additional environment variables set for invocations of ansible-galaxy within project updates. 
+Useful if you must use a proxy server for ansible-galaxy but not git.
+* *Sandard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display before requiring the output be downloaded.
+*  *Job Event Standard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display for a single job or ad hoc command event. stdout will end with `…` when truncated.
+* *Job Event Maximum Websocket Messages Per Second*: The maximum number of messages to update the UI live job output with per second. 
++
+A value of 0 means no limit.
+* *Maximum Scheduled Jobs*: Maximum number of the same job template that can be waiting to run when launching from a schedule before no more are created.
+* *Default Job Timeout*: If no output is detected from ansible in this number of seconds the execution will be terminated. 
++
+Use a value of 0 to indicate that no idle timeout should be imposed.
+* *Ansible Callback Plugins*: List of paths to search for extra callback plugins to be used when running jobs. 
++
+Enter one path per line.
+* *Default Job Idle Timeout*: If no output is detected from ansible in this number of seconds the execution will be terminated. 
++
+Use a value of 0 to indicate that no idle timeout should be imposed.
+* *Default Inventory Update Timeout*: Maximum time in seconds to allow inventory updates to run. 
++
+Use a value of 0 to indicate that no timeout should be imposed. 
++
+A timeout set on an individual inventory source will override this.
+* *Default Project Update Timeout*: Maximum time in seconds to allow project updates to run. 
++
+Use a value of 0 to indicate that no timeout should be imposed. 
++
+A timeout set on an individual project will override this.
+* *Per-Host Ansible Fact Cache Timeout*: Maximum time, in seconds, that stored Ansible facts are considered valid since the last time they were modified. 
++
+Only valid, non-stale, facts are accessible by a playbook. 
++
+This does not influence the deletion of `ansible_facts` from the database. 
++
+Use a value of 0 to indicate that no timeout should be imposed.
+* *Maximum number of forks per job*: Saving a Job Template with more than this number of forks results in an error.
++
+When set to 0, no limit is applied.
+* Container Run Options*: Only available in operator-based installations. 
++
+List of options to pass to podman run example: `['--network', 'slirp4netns:enable_ipv6=true', '--log-level', 'debug']`.
++
+You can set the following options:
++
+* *Run Project Updates With Higher Verbosity*: Select to add the CLI `-vvv` flag to playbook runs of `project_update.yml` used for project updates
+* *Enable Role Download*: Select to allow roles to be dynamically downloaded from a `requirements.yml` file for SCM projects.
+* *Enable Collection(s) Download*: Select to allow collections to be dynamically downloaded from a `requirements.yml` file for SCM projects.
+*Follow symlinks*: Select to follow symbolic links when scanning for playbooks. 
++
+Be aware that setting this to `True` can lead to infinite recursion if a link points to a parent directory of itself.
+* *Expose host paths for Container Groups*: Select to expose paths through hostPath for the Pods created by a Container Group. 
++
+HostPath volumes present many security risks, and it is best practice to avoid the use of HostPaths when possible.
++
+*Ignore Ansible Galaxy SSL Certificate Verification*: If set to `true`, certificate validation is not done when installing content from any Galaxy server.
++
 Click the tooltip image:question_circle.png[Tool tip,15,15] icon next to the field that you need additional information about.
 +
-For more information about configuring Galaxy settings, see the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#ref-projects-galaxy-support[Ansible Galaxy Support] section of the _{ControllerUG}_.
+For more information about configuring Galaxy settings, see the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#ref-projects-galaxy-support[Ansible Galaxy Support] section of _{ControllerUG}_.
 +
 [NOTE]
 ====
