@@ -7,7 +7,12 @@
 
 [role="_abstract"]
 
-For production systems, a well-established configuration management practice is deploying only known, tested combinations of software to help ensure systems are configured correctly and perform as expected.  This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications.  The following example playbook installs a specific version of the httpd RPM and its dependencies when the target host uses the RHEL 9 operating system, and will not take action if the specified versions are already in place or if a different version of RHEL is installed.
+For production systems, it is a well-established configuration management practice to deploy only known, tested combinations of software in order to ensure that systems are configured correctly and perform as expected.
+This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications.
+The following example playbook will install a specific version of the httpd RPM and its dependencies when the target host uses the RHEL 9 operating system. 
+
+[NOTE]
+This playbook will not take action if the specified versions are already in place or if a different version of RHEL is installed.
 
 -----
 ---
@@ -36,4 +41,5 @@ For production systems, a well-established configuration management practice is 
       - ansible_distribution_major_version == "9"
 -----
 
-NOTE: By setting `allow_downgrade: true`, if a newer version of any defined package is installed on the system, it will be downgraded to the specified version instead.
+[NOTE]
+By setting `allow_downgrade: true`, if a newer version of any defined package is installed on the system, it will be downgraded to the specified version instead.

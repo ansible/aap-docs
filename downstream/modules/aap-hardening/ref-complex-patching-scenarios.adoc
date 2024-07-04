@@ -9,9 +9,11 @@
 
 In {PlatformNameShort}, multiple automation jobs can be chained together into workflows, which can be used to coordinate multiple steps in a complex patching scenario. 
 
-In the following example complex patching scenario, a workflow orchestrates taking virtual machine snapshots, patching the virtual machines, and creates a ticket when an error is encountered in the workflow: 
+In the following example complex patching scenario demonstrates taking virtual machine snapshots, patching the virtual machines, and creating tickets when an error is encountered in the workflow. 
 
-. Run a project sync to ensure the latest playbooks are available.  In parallel, run an inventory sync to make sure the latest list of target hosts is available.
+.Procedure
+
+. Run a project sync to ensure the latest playbooks are available. In parallel, run an inventory sync to make sure the latest list of target hosts is available.
 . Take a snapshot of each target host.
 .. If the snapshot task fails, submit a ticket with the relevant information.
 . Patch each of the target hosts.
