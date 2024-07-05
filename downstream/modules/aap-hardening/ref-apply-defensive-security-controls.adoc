@@ -1,0 +1,49 @@
+// Module included in the following assemblies:
+// downstream/assemblies/assembly-hardening-aap.adoc
+
+[id="ref-apply-defensive-security-controls_{context}"]
+
+= Applying defensive security controls
+
+[role="_abstract"]
+
+The following set of defensive security controls are recommended to reduce operational risk of {PlatformNameShort} deployed on physical or virtual machines.
+These controls apply to all of the {PlatformNameShort} infrastructure nodes: the dedicated installation host, and any servers listed in the installation inventory such as controllers, hubs, EDA controllers, and the database server.
+Some of these controls are listed elsewhere in this document, but are repeated here for convenience.
+
+. Apply the appropriate compliance policy controls for your organization to the {PlatformNameShort} infrastructure nodes, such as CIS, HIPAA, PCI/DSS, or the DISA STIG.
+. Limit administrative access to the {PlatformNameShort} infrastructure nodes.
+** Only system administrators responsible for these servers and the installation and upgrade of {PlatformNameShort} should have accounts on the infrastructure nodes.
+** Each system administrator should log in with an individual account with appropriate sudo privileges.
+The root account should only be used for emergency situations such as when external authentication services are not available.
+Rotate the root password according to your organizational policies.
+. Limit remote SSH access to the {PlatformNameShort} infrastructure nodes.
+** Apply firewall or cloud security group rules to prevent remote SSH access to the infrastructure nodes except from the dedicated installation host and a subset of trusted hosts used by the system administrators for day-to-day tasks.
+** Disable direct root access over SSH.  Root access should only be allowed at the physical or virtual console of the infrastructure servers.
+** Optionally, apply Host-based Access Controls (HBAC) rules using an external authentication mechanism such as Red Hat Identity Management (IdM) to allow only select user accounts remote access to the {PlatformNameShort} infrastructure nodes. 
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/managing_idm_users_groups_hosts_and_access_control_rules/index#configuring-hbac-rules-in-an-idm-domain-using-the-webui_configuring-host-based-access-control-rules[46.1. Configuring HBAC rules in an IdM domain using the WebUI]
+. Optionally, if your organization uses a third-party privileged access management tool it may be used to control access to the credentials needed by {PlatformNameShort} system administrators to access the infrastructure nodes.
+. Enable audit rules to monitor and alert on any access or changes to the set of {PlatformNameShort} configuration files.
+This enables visibility, traceability and control and ensures no change to the files without triggering an audit event.
+See link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/auditing-the-system_security-hardening#defining-persistent-audit-rules_auditing-the-system[12.7 Defining persistent Audit rules] in the Red Hat Enterprise Linux documentation for additional details.
+.. In {ControllerName}, create the file `/etc/audit/rules.d/75-automation-controller.rules` with the following content, then run `augenrules --load` to load the new rules:
+
+-----
+-w /etc/tower/ -p warx -k aap-aac-mon-confdir
+-w /etc/supervisord.conf -p warx -k aap-aac-mon-supervisord
+-w /etc/supervisord.d/ -p warx -k aap-aac-mon-supervisord
+-w /etc/nginx/ -p warx -k aap-aac-mon-nginx
+-w /etc/receptor/ -p war -k aap-aac-mon-receptor
+-w /etc/redis/ -p war -k aap-aac-mon-redis
+-----
+
+. In {HubName}, create the file `/etc/audit/rules.d/75-automation-hub.rules` with the following content, then run `augenrules --load` to load the new rules:
+
+-----
+-w /etc/pulp/ -p warx -k aap-hub-mon-confdir
+-w /etc/redis/ -p war -k aap-hub-mon-redis
+-w /etc/nginx/ -p warx -k aap-hub-mon-nginx
+-----
+
+[NOTE] 
+If the audit rules are set to be immutable (that is, `-e 2` is set in `/etc/audit/audit.rules`), a reboot will be required for the new audit rules to take effect.
