@@ -1,11 +1,55 @@
 [id="controller-host-details"]
 
-= Host Details
+= Hosts
 
-The *Host Details* window displays the following information about the host affected by the selected event and its associated play and task:
+//Does this need to be a  procedure or can it be left a ref.
+
+A system managed by {PlatformNameShort}, which may include a physical, virtual, cloud-based server, or other device. 
+Typically a host is an operating system instance. 
+Hosts are grouped in inventories and are sometimes referred to as a “nodes”.
+
+Ansible works against multiple managed nodes or “hosts” in your infrastructure at the same time, using a list or group of lists known as an inventory. 
+
+Once your inventory is defined, you use patterns to select the hosts or groups you want Ansible to run against.
+
+== Viewing the host details
+
+To view the Host details for a job run.
+
+.Procedure
+
+From the navigation panel, select {MenuInfrastructureHosts}.
+The *Hosts* page displays the following information about the host affected by the selected event and its associated play and task:
 
 * The *Host*.
-* The *Status*.
+* The *Description*.
+* The *Inventory* associated with that host.
+
+Selecting a particular host displays the *Details* page for that host.
+
+== Creating a host
+
+To create a new host.
+From the navigation panel, select {MenuInfrastructureHosts}.
+Click btn:[Create host].
+On the *Create Host* page enter the following information:
+
+* *Name*: Enter a name for the host.
+* (Optional) *Description*: Enter a description for the host.
+* *Inventory*: Select the inventory to contain that host from the list.
+* *Variables*: Enter the inventory file variables associated with the host.
+
+Click btn:[Create host] to save your changes.
+
+
+.Procedure
+
+From the navigation panel, select {MenuInfrastructureHosts}.
+The *Hosts* page displays the following information about the host affected by the selected event and its associated play and task:
+
+
+
+
 * The type of run in the *Play* field.
 * The type of *Task*.
 * If applicable, the Ansible Module task, and any arguments for that module.
