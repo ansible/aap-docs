@@ -1,0 +1,61 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2024-07-05
+
+:_mod-docs-content-type: CONCEPT
+
+[id="eda-2-5-with-controller-2-4_{context}"]
+= {EDAName} 2.5 with controller 2.4
+
+Use the following example to populate the inventory file to deploy a new single instance of {EDAName} 2.5 with controller 2.4. For {EDAName}, the requirements for a connection to controller are the `automation_controller_main_url` pointing to the 2.4 controller URL.
+
+
+----
+[automationedacontroller]
+eda.example.org
+
+[automationgateway]
+eda.example.org
+
+[database]
+data.example.com
+
+[all:vars]
+
+automationedacontroller_admin_password='<admin_password>'
+
+automationedacontroller_pg_host='data.example.com'
+automationedacontroller_pg_port=5432
+
+automationedacontroller_pg_database='automationedacontroller'
+automationedacontroller_pg_username='automationedacontroller'
+automationedacontroller_pg_password='<password>'
+automationedacontroller_pg_sslmode='prefer'
+
+
+automation_controller_main_url='automationcontroller.example.org '
+#automationedacontroller_controller_verify_ssl=true <1>
+
+registry_url='registry.redhat.io'
+registry_username='<username>'
+registry_password='<password>'
+
+automationgateway_admin_password='<admin_password>'
+
+automationgateway_pg_host='data.example.com'
+automationgateway_pg_port=5432
+
+automationgateway_pg_database='automationgateway'
+automationgateway_pg_username='automationgateway'
+automationgateway_pg_password='<password>'
+automationgateway_pg_sslmode='prefer'
+----
+
+<1> This variable will set whether or not TLS will be verified. It is set to true by default, but if not needed be set to false.
+
+[NOTE]
+====
+* Keep `controller` out of the inventory file. Ensure that `[automationcontroller]` is an empty group.
+* Only add an {EDAName} 2.5 server. Do not add an {EDAName} 2.4 server since there is no upgrade option available. 
+====
+
+
