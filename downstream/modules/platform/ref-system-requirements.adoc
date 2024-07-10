@@ -14,9 +14,9 @@ Your system must meet the following minimum system requirements to install and r
 
 h| Subscription | Valid {PlatformName} |
 
-h| OS | {RHEL} 8.8 or later 64-bit (x86, ppc64le, s390x, aarch64) |{PlatformName} is also supported on OpenShift, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/deploying_the_red_hat_ansible_automation_platform_operator_on_openshift_container_platform/index[Deploying the Red Hat Ansible Automation Platform operator on OpenShift Container Platform] for more information.
+h| OS | {RHEL} 8.8 or later 64-bit (x86, ppc64le, s390x, aarch64) |{PlatformName} is also supported on OpenShift, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/deploying_the_red_hat_ansible_automation_platform_operator_on_openshift_container_platform/index[Deploying the {PlatformName} operator on {OCPShort}] for more information.
 
-h| Ansible-core | Ansible-core version {CoreInstVers} or later | {PlatformNameShort} includes execution environments that contain ansible-core {CoreUseVers}.
+h| Ansible-core | Ansible-core version {CoreInstVers} or later | {PlatformNameShort} uses the system-wide ansible-core package to install the platform, but uses ansible-core {CoreUseVers} for both its control plane and built-in execution environments.
 
 h| Python | 3.11 or later |
 
@@ -24,9 +24,6 @@ h| Browser | A currently supported version of Mozilla FireFox or Google Chrome |
 
 h| Database | PostgreSQL version 15 |
 
-h| RAM  | 16 GB minimum |
-
-h| CPUs | 4 |
 |===
 
 The following are necessary for you to work with project updates and collections:
@@ -53,5 +50,5 @@ See link:https://docs.ansible.com/ansible/latest/installation_guide/intro_instal
 [NOTE]
 ====
 You must install Ansible using a package manager such as `dnf`, and the latest stable version of the package manager must be installed for {PlatformName} to work properly.
-Ansible version 2.14 is required for versions {PlatformVers} and later.
+Ansible-core version {CoreInstVers} is required for versions {PlatformVers} and later.
 ====
