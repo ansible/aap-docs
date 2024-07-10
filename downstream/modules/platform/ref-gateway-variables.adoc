@@ -1,0 +1,52 @@
+
+[id="ref-gateway-variables"]
+= Platform gateway variables
+
+[cols="50%,50%",options="header"]
+|====
+| *Variable* | *Description*
+| *`automationgateway_admin_password`* | The admin password used by the platform gateway instance.
+
+Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
+
+| *`automationgateway_pg_host`* | The hostname of the Postgres database used by platform gateway, which can be an externally managed database.
+
+| *`automationgateway_pg_port`* | The port number of the Postgres database used by platform gateway.
+
+Default = `5432`.
+
+| *`automationgateway_pg_database`* | The Postgres database used by platform gateway.
+
+Default = `automationgateway`.
+
+| *`automationgateway_pg_username`* | The username for your platform gateway Postgres database.
+
+Default = `automationgateway`.
+
+| *`automationgateway_pg_password`* | The password for the Postgres database used by platform gateway.
+
+Use of special characters for `automationgateway_pg_password` is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+
+| *`automationgateway_pg_sslmode`* | Choose one of the two available modes: `prefer` and `verify-full`.
+
+Set to `verify-full` for client-side enforced SSL.
+
+Default = `prefer`.
+
+| *`automationgateway_main_url`* | The main platform gateway URL that clients will connect to (e.g. `https://<gateway-node>`).
+
+If not specified, the first node in the `[automationgateway]` group will be used when needed.
+
+| *`automationgateway_ssl_cert`* | Optional
+
+`/path/to/automationgateway.cert`
+
+Same as `automationhub_ssl_cert` but for platform gateway UI and API.
+
+| *`automationgateway_ssl_key`* | Optional
+
+`/path/to/automationgateway.key`
+
+Same as `automationhub_server_ssl_key` but for platform gateway UI and API.
+
+|====
