@@ -1,0 +1,129 @@
+[id="ref-gateway-controller-hub-eda-ext-db"]
+
+=  Single platform gateway, {ControllerName}, {HubName}, and {EDAcontroller} with an external (installer managed) database
+
+[role="_abstract"]
+Use this example to populate the inventory file to deploy single instances of platform gateway, {ControllerName}, {HubName}, and {EDAcontroller} with an external (installer managed) database.
+
+[IMPORTANT]
+====
+* This scenario requires a minimum of {ControllerName} 2.4 for successful deployment of {EDAcontroller}.
+
+* {EDAController} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
+
+* When you activate an {EDAName} rulebook under standard conditions, it uses approximately 250 MB of memory. However, the actual memory consumption can vary significantly based on the complexity of your rules and the volume and size of the events processed. In scenarios where a large number of events are anticipated or the rulebook complexity is high, conduct a preliminary assessment of resource usage in a staging environment. This ensures that your maximum number of activations is based on the capacity of your resources. In the following example, the default `automationedacontroller_max_running_activations` setting is 12, but you can adjust according to your capacity. 
+
+====
+
+-----
+[automationcontroller]
+controller.example.com
+
+[automationhub]
+automationhub.example.com
+
+[automationedacontroller]
+automationedacontroller.example.com
+
+[automationgateway]
+gateway.example.com
+
+[database]
+data.example.com
+
+[all:vars]
+admin_password='<password>'
+pg_host='data.example.com'
+pg_port='5432'
+pg_database='awx'
+pg_username='awx'
+pg_password='<password>'
+pg_sslmode='prefer'  # set to 'verify-full' for client-side enforced SSL
+
+registry_url='registry.redhat.io'
+registry_username='<registry username>'
+registry_password='<registry password>'
+
+# {HubNameStart} configuration
+
+automationhub_admin_password= <PASSWORD>
+
+automationhub_pg_host='data.example.com'
+automationhub_pg_port=5432
+
+automationhub_pg_database='automationhub'
+automationhub_pg_username='automationhub'
+automationhub_pg_password=<PASSWORD>
+automationhub_pg_sslmode='prefer'
+
+# Automation {EDAController} configuration
+
+automationedacontroller_admin_password='<eda-password>'
+
+automationedacontroller_pg_host='data.example.com'
+automationedacontroller_pg_port=5432
+
+automationedacontroller_pg_database='automationedacontroller'
+automationedacontroller_pg_username='automationedacontroller'
+automationedacontroller_pg_password='<password>'
+
+# Keystore file to install in SSO node
+# sso_custom_keystore_file='/path/to/sso.jks'
+
+# This install will deploy SSO with sso_use_https=True
+# Keystore password is required for https enabled SSO
+sso_keystore_password=''
+
+# This install will deploy a TLS enabled Automation Hub.
+# If for some reason this is not the behavior wanted one can
+# disable TLS enabled deployment.
+#
+# automationhub_disable_https = False
+# The default install will generate self-signed certificates for the Automation
+# Hub service. If you are providing valid certificate via automationhub_ssl_cert
+# and automationhub_ssl_key, one should toggle that value to True.
+#
+# automationhub_ssl_validate_certs = False
+# SSL-related variables
+# If set, this will install a custom CA certificate to the system trust store.
+# custom_ca_cert=/path/to/ca.crt
+# Certificate and key to install in Automation Hub node
+# automationhub_ssl_cert=/path/to/automationhub.cert
+# automationhub_ssl_key=/path/to/automationhub.key
+
+# Automation Gateway configuration
+automationgateway_admin_password=''
+
+automationgateway_pg_host=''
+automationgateway_pg_port=5432
+
+automationgateway_pg_database='automationgateway'
+automationgateway_pg_username='automationgateway'
+automationgateway_pg_password=''
+automationgateway_pg_sslmode='prefer'
+
+# The main automation gateway URL that clients will connect to (e.g. https://<load balancer host>).
+# If not specified, the first node in the [automationgateway] group will be used when needed.
+# automationgateway_main_url = ''
+
+# Certificate and key to install in Automation Gateway
+# automationgateway_ssl_cert=/path/to/automationgateway.cert
+# automationgateway_ssl_key=/path/to/automationgateway.key
+
+# Certificate and key to install in nginx for the web UI and API
+# web_server_ssl_cert=/path/to/tower.cert
+# web_server_ssl_key=/path/to/tower.key
+# Server-side SSL settings for PostgreSQL (when we are installing it).
+# postgres_use_ssl=False
+# postgres_ssl_cert=/path/to/pgsql.crt
+# postgres_ssl_key=/path/to/pgsql.key
+
+# Boolean flag used to verify Automation Controller's
+# web certificates when making calls from Automation {EDAcontroller}.
+# automationedacontroller_controller_verify_ssl = true
+#
+# Certificate and key to install in Automation {EDAcontroller} node
+# automationedacontroller_ssl_cert=/path/to/automationeda.crt
+# automationedacontroller_ssl_key=/path/to/automationeda.key
+
+-----
