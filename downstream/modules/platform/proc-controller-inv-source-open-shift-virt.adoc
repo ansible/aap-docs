@@ -1,0 +1,34 @@
+[id="proc-controller-inv-source-open-shift-virt"]
+
+= OpenShift Virtualization
+
+This inventory source uses a cluster that is able to deploy Red Hat OpenShift Container Platform Virtualization. 
+To configure a Red Hat OpenShift Container Platform Virtualization, you need a virtual machine deployed in a specific namespace and an OpenShift or Kubernetes API Bearer Token credential.
+
+.Procedure
+
+. From the navigational panel, select {MenuInfrastructureInventories}.
+. Select the inventory that you want to add a source to.
+. In the *Sources* tab, click btn:[Add source].
+. From the menu:Source[] menu, select *OpenShift Virtualization*.
+* The *Add new source* window expands with the required *Credential* field. 
++
+Choose from an existing Kubernetes API Bearer Token credential. 
+For more information, see the TBD[OpenShift or Kubernetes API Bearer Token credential type] section. 
+In this example, the `cmv2.engineering.redhat.com` credential is used.
+. You can optionally specify the *Verbosity*, *Host Filter*, *Enabled Variable/Value*, and *Update options* as described in the xref:proc-controller-add-source[Adding a source] steps.
+. Use the *Source Variables* field to override variables used by the `kubernetes` inventory plugin. 
+Enter variables by using either JSON or YAML syntax. 
+Use the radio button to toggle between the two. 
+For more information about these variables, see the link:https://kubevirt.io/kubevirt.core/main/plugins/kubevirt.html#parameters[kubevirt.core.kubevirt inventory source] documentation.
++
+In the following example, the connections variable is used to specify access to a particular namespace in a cluster:
++
+----
+---
+connections:
+- namespaces:
+  - hao-test
+----
++
+. Click btn:[Save] and then click btn:[Sync] to sync the inventory.
