@@ -5,10 +5,21 @@
 [cols="50%,50%",options="header"]
 |====
 | *Variable* | *Description*
-| *`automationgateway_admin_password`* | The admin password used by the platform gateway instance.
+| *`admin_username`* | The username for a platform-wide administration user to access the platform UI upon install completion.
+
+This account will have administrative access to all components as well, such as automation controller.
+
+Default = `admin`
+| *`admin_password`* | The password for the administration user account.
+
+This can be used to login to the platform UI, and also be used for direct access to any components, such as automation controller.
+
+Set to a blank string to leave the administrative account with an unusable password, which can still for allow social auth.
 
 Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
+| *`admin_email`* | The email associated with the administration user account.
 
+Default = `admin@example.com`
 | *`automationgateway_pg_host`* | The hostname of the Postgres database used by platform gateway, which can be an externally managed database.
 
 | *`automationgateway_pg_port`* | The port number of the Postgres database used by platform gateway.
