@@ -24,6 +24,10 @@ Before you begin the upgrade process, review the following considerations to pla
 == {HubNameStart}
 
 * When upgrading to {PlatformNameShort} {PlatformVers}, you can either add an existing {HubName} API token or generate a new one and invalidate any existing tokens.
+* Existing container images are removed when upgrading {PlatformNameShort}. 
+This is because, when upgrading {PlatformNameShort} with `setup.sh` script, podman `system reset -f` is executed. 
+This removes all container images on your {PlatformNameShort} nodes then pushes the new {ExecEnvShort} image that is bundled with installer.
+See xref:proc-running-setup-script-for-updates[Running the {PlatformName} installer setup script].
 
 [role="_additional-resources"]
 .Additional resources
