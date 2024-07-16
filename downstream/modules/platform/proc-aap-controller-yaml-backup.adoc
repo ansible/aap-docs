@@ -6,7 +6,9 @@ See the following procedure for how to back up a deployment of the {ControllerNa
 
 .Prerequisites
 
-* You must be authenticated with an Openshift cluster.
+
+* You must be authenticated with an OpenShift cluster.
+
 * The {OperatorPlatform} has been installed to the cluster.
 * The {ControllerName} is deployed to using the {OperatorPlatform}.
 
@@ -25,8 +27,10 @@ spec:
   deployment_name: controller
 ----
 +
-NOTE: The "deployment_name" above is the name of the automation controller deployment you intend to backup from. 
-The namespace above is the one containing the automation controller deployment you intend to back up.
+
+NOTE: The "deployment_name" above is the name of the {ControllerName} deployment you intend to backup from. 
+The namespace above is the one containing the {ControllerName} deployment you intend to back up.
+
 . Use the `oc apply` command to create the backup object in your cluster:
 
 `$ oc apply -f backup-awx.yml`
