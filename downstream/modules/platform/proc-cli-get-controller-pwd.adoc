@@ -4,24 +4,24 @@
 
 [id="proc-cli-get-controller-pwd{context}"]
 
-= Fetching {ControllerNameStart} login details from the {OCPShort} CLI
+= Fetching platform gateway login details from the {OCPShort} CLI
 
-To login to the {ControllerNameStart}, you need the web address and the password.
+To login to the platform gateway, you need the web address and the password.
 
-== Fetching the {ControllerName} web address
+== Fetching the platform gateway web address
 
 A {OCP} route exposes a service at a host name, so that external clients can reach it by name.
-When you created the {ControllerName} instance, a route was created for it.
-The route inherits the name that you assigned to the {ControllerName} object in the YAML file.
+When you created the platform gateway instance, a route was created for it.
+The route inherits the name that you assigned to the platform gateway object in the YAML file.
 
 Use the following command to fetch the routes:
 
 [subs="+quotes"]
 -----
-oc get routes -n __<controller_namespace>__
+oc get routes -n __<platform_namespace>__
 -----
 
-In the following example, the `_example_` {ControllerName} is running in the `_ansible-automation-platform_` namespace.
+In the following example, the `_example_` platform gateway is running in the `_ansible-automation-platform_` namespace.
 
 -----
 $ oc get routes -n ansible-automation-platform
@@ -30,26 +30,26 @@ NAME      HOST/PORT                                              PATH   SERVICES
 example   example-ansible-automation-platform.apps-crc.testing          example-service   http   edge/Redirect   None
 -----
 
-The address for the {ControllerName} instance is `example-ansible-automation-platform.apps-crc.testing`.
+The address for the platform gateway instance is `example-ansible-automation-platform.apps-crc.testing`.
 
-== Fetching the {ControllerName} password
+== Fetching the platform gateway password
 
-The YAML block for the {ControllerName} instance in [filename]`sub.yaml` assigns values to the _name_ and _admin_user_ keys.
-Use these values in the following command to fetch the password for the {ControllerName} instance.
+The YAML block for the platform gateway instance in [filename]`sub.yaml` assigns values to the _name_ and _admin_user_ keys.
+Use these values in the following command to fetch the password for the platform gateway instance.
 
 -----
-oc get secret/<controller_name>-<admin_user>-password -o yaml
+oc get secret/<your instance name>-<admin_user>-password -o yaml
 -----
 
 The default value for _admin_user_ is `_admin_`. Modify the command if you changed the admin username in [filename]`sub.yaml`.
 
-The following example retrieves the password for an {ControllerName} object called `_example_`: 
+The following example retrieves the password for a platform gateway object called `_example_`: 
 
 -----
 oc get secret/example-admin-password -o yaml
 -----
 
-The password for the {ControllerName} instance is listed in the `metadata` field in the output:
+The password for the platform gateway instance is listed in the `metadata` field in the output:
 
 -----
 $ oc get secret/example-admin-password -o yaml
