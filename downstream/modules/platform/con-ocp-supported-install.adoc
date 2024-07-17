@@ -7,7 +7,7 @@ You can use the OperatorHub on the {OCP} web console to install {OperatorPlatfor
 
 Alternatively, you can install {OperatorPlatform} from the {OCPShort} command-line interface (CLI), `oc`.
 
-After you have installed {OperatorPlatform} you must create an *AnsibleAutomationPlatform* custom resource (CR). This allows you to manage {PlatformNameShort} components from a single unified interface known as the platform gateway. As of version 2.5, you must create an {PlatformNameShort} CR, even if you have an existing automation controller,  automation hub, or Event-driven Ansible (EDA), components.
+After you have installed {OperatorPlatform} you must create an *AnsibleAutomationPlatform* custom resource (CR). This allows you to manage {PlatformNameShort} components from a single unified interface known as the platform gateway. As of version 2.5, you must create an {PlatformNameShort} CR, even if you have an existing {ControllerName},  {HubName}, or {{EDAName}}, components.
 
 If existing components have already been deployed, you must specify these components on the {PlatformNameShort} CR. You must create the custom resource in the same namespace as the existing components.
 
@@ -15,21 +15,21 @@ If existing components have already been deployed, you must specify these compon
 |===
 | *Supported scenarios* | *Supported scenarios with existing components*
 |
-* {PlatformNameShort} CR for blank slate install with automation controller, automation hub, and EDA enabled
+* {PlatformNameShort} CR for blank slate install with {ControllerName}, {HubName}, and {EDAName} enabled
 
-* {PlatformNameShort} CR with just automation controller enabled
+* {PlatformNameShort} CR with just {ControllerName} enabled
 
-* {PlatformNameShort} CR with just automation controller, automation hub enabled
+* {PlatformNameShort} CR with just {ControllerName}, {HubName} enabled
 
-* {PlatformNameShort} CR with just automation controller, EDA enabled
+* {PlatformNameShort} CR with just {ControllerName}, {EDAName} enabled
  |
- * {PlatformNameShort} CR created in the same namespace as an existing automation controller CR with the automation controller name specified on the {PlatformNameShort} CR spec
+ * {PlatformNameShort} CR created in the same namespace as an existing {ControllerName} CR with the {ControllerName} name specified on the {PlatformNameShort} CR spec
 
-* Same with automation controller and automation hub
+* Same with {ControllerName} and {HubName}
 
-* Same with automation controller, automation hub, and EDA
+* Same with {ControllerName}, {HubName}, and {EDAName}
 
-* Same with automation controller and EDA
+* Same with {ControllerName} and {EDAName}
 |===
 
 // Commenting out as upgrade is not included in EA [gmurray]
