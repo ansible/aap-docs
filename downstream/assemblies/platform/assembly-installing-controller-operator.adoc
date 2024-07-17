@@ -8,14 +8,13 @@ ifdef::context[:parent-context: {context}]
 
 
 [id="installing-controller-operator"]
-= Installing and configuring {ControllerName} on {OCP} web console
-
+= Configuring {ControllerName} on {OCP} web console
 
 :context: installing-contr-operator
 
 
 [role="_abstract"]
-You can use these instructions to install the {ControllerName} operator on {OCP}, specify custom resources, and deploy {PlatformNameShort} with an external database.
+You can use these instructions to configure the {ControllerName} operator on {OCP}, specify custom resources, and deploy {PlatformNameShort} with an external database.
 
 {ControllerNameStart} configuration can be done through the {ControllerName} extra_settings or directly in the user interface after deployment. However, it is important to note that configurations made in extra_settings take precedence over settings made in the user interface.
 
@@ -30,23 +29,26 @@ When an instance of {ControllerName} is removed, the associated PVCs are not aut
 == Prerequisites
 
 * You have installed the {PlatformName} catalog in Operator Hub.
-* For Controller, a default StorageClass must be configured on the cluster for the operator to dynamically create needed PVCs. This is not necessary if an external PostgreSQL database is configured.
+* For {ControllerName}, a default StorageClass must be configured on the cluster for the operator to dynamically create needed PVCs. This is not necessary if an external PostgreSQL database is configured.
 * For Hub a StorageClass that supports ReadWriteMany must be available on the cluster to dynamically created the PVC needed for the content, redis and api pods. If it is not the default StorageClass on the cluster, you can specify it when creating your AutomationHub object.
 
-== Installing the {ControllerName} operator
-Use this procedure to install the {ControllerName} operator.
+//Not relevant for 2.5 EA, commenting out section [gmurray]
+//== Installing the {ControllerName} operator
+//Use this procedure to install the {ControllerName} operator.
 
-.Procedure
+//.Procedure
 
-. Navigate to menu:Operators[Installed Operators], then click on the *Ansible Automation Platform* operator.
-. Locate the *Automation controller* tab, then click btn:[Create instance].
+//. Navigate to menu:Operators[Installed Operators], then click on the *Ansible Automation Platform* operator.
+//. Locate the *Automation controller* tab, then click btn:[Create instance].
 
-You can proceed with configuring the instance using either the Form View or YAML view.
+//You can proceed with configuring the instance using either the Form View or YAML view.
 
 
-include::platform/proc-creating-controller-form-view.adoc[leveloffset=+2]
+//include::platform/proc-creating-controller-form-view.adoc[leveloffset=+2]
 include::platform/proc-configuring-controller-image-pull-policy.adoc[leveloffset=+2]
-include::platform/proc-configuring-controller-ldap-security.adoc[leveloffset=+2]
+
+// removing this section until we add the new guide for gateway specific
+//include::platform/proc-configuring-controller-ldap-security.adoc[leveloffset=+2]
 include::platform/proc-configuring-controller-route-options.adoc[leveloffset=+2]
 include::platform/proc-controller-ingress-options.adoc[leveloffset=+2]
 include::platform/proc-operator-external-db-controller.adoc[leveloffset=+1]
