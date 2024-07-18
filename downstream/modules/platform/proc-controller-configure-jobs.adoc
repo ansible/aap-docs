@@ -13,8 +13,7 @@ image::job-settings-full.png[Jobs settings options]
 +
 . You can configure the following options:
 
-* *Ansible Modules Allowed For Ad Hoc Jobs*: List of modules allowed to be used by ad-hoc jobs.
-* *Job execution path*: Only available in operator-based installations. 
+* *Ansible Modules Allowed For Ad Hoc Jobs*: List of modules allowed to be used by ad hoc jobs.
 +
 The directory in which the service creates new temporary directories for job execution and isolation (such as credential files).
 *  *When can extra variables contain Jinja templates?*: Ansible allows variable substitution through the Jinja2 templating language for `--extra-vars`. 
@@ -38,16 +37,16 @@ If not 0, send a message every specified number of seconds to keep the connectio
 +
 * *Environment Variables for Galaxy Commands*: Additional environment variables set for invocations of ansible-galaxy within project updates. 
 Useful if you must use a proxy server for ansible-galaxy but not git.
-* *Sandard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display before requiring the output be downloaded.
-*  *Job Event Standard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display for a single job or ad hoc command event. stdout will end with `…` when truncated.
+* *Standard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display before requiring the output be downloaded.
+*  *Job Event Standard Output Maximum Display Size*: Maximum Size of Standard Output in bytes to display for a single job or ad hoc command event. stdout ends with `…` when truncated.
 * *Job Event Maximum Websocket Messages Per Second*: The maximum number of messages to update the UI live job output with per second. 
 +
 A value of 0 means no limit.
 * *Maximum Scheduled Jobs*: Maximum number of the same job template that can be waiting to run when launching from a schedule before no more are created.
+* *Ansible Callback Plugins*: List of paths to search for extra callback plugins to be used when running jobs. 
 * *Default Job Timeout*: If no output is detected from ansible in this number of seconds the execution will be terminated. 
 +
 Use a value of 0 to indicate that no idle timeout should be imposed.
-* *Ansible Callback Plugins*: List of paths to search for extra callback plugins to be used when running jobs. 
 +
 Enter one path per line.
 * *Default Job Idle Timeout*: If no output is detected from ansible in this number of seconds the execution will be terminated. 
@@ -73,9 +72,10 @@ Use a value of 0 to indicate that no timeout should be imposed.
 * *Maximum number of forks per job*: Saving a Job Template with more than this number of forks results in an error.
 +
 When set to 0, no limit is applied.
+* *Job execution path*: Only available in operator-based installations. 
 * *Container Run Options*: Only available in operator-based installations. 
 +
-List of options to pass to podman run example: `['--network', 'slirp4netns:enable_ipv6=true', '--log-level', 'debug']`.
+List of options to pass to Podman run example: `['--network', 'slirp4netns:enable_ipv6=true', '--log-level', 'debug']`.
 +
 You can set the following options:
 +
