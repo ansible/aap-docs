@@ -21,40 +21,51 @@ The *Inventories* window displays a list of the inventories that are currently a
 * *Name*: Enter a name appropriate for this inventory.
 * Optional: *Description*: Enter an arbitrary description as appropriate.
 * *Organization*: Required. Choose among the available organizations.
-//* Only applicable to Smart Inventories: *Smart Host Filter*: Click the image:search.png[Search,15,15] icon to open a separate window to filter hosts for this inventory.
-//These options are based on the organization you chose.
-//+
-//Filters are similar to tags in that tags are used to filter certain hosts that contain those names.
-//Therefore, to populate the *Smart Host Filter* field, specify a tag that contains the hosts you want, not the hosts themselves.
-//Enter the tag in the *Search* field and click btn:[Enter].
-//Filters are case-sensitive.
-//For more information, see xref:ref-controller-smart-host-filter[Smart host filters].
-* *Instance Groups*: Click the image:search.png[Search,15,15] icon to open a separate window.
-Select the instance group or groups for this inventory to run on.
-If the list is extensive, use the search to narrow the options.
+* Only applicable to Smart Inventories: *Smart Host Filter*: Populate the hosts for this inventory by using a search filter. 
++
+_Example_ 
++
+name__icontains=RedHat.
++
+These options are based on the organization you chose.
++
+Filters are similar to tags in that tags are used to filter certain hosts that contain those names.
+Therefore, to populate the *Smart Host Filter* field, specify a tag that contains the hosts you want, not the hosts themselves.
++
+Filters are case-sensitive.
+* *Instance Groups*: Select the instance group or groups for this inventory to run on.
+
 You can select multiple instance groups and sort them in the order that you want them run.
 +
 //image:select-instance-groups-modal.png[image]
 
 * Optional: *Labels*: Supply labels that describe this inventory, so they can be used to group and filter inventories and jobs.
 * Only applicable to constructed inventories: *Input inventories*: Specify the source inventories to include in this constructed inventory.
-Click the image:search.png[Search,15,15] icon to select from available inventories.
+//Click the image:search.png[Search,15,15] icon to select from available inventories.
 Empty groups from input inventories are copied into the constructed inventory.
-* Optional:(Only applicable to constructed inventories): *Cached timeout (seconds)*: Set the length of time you want the cache plugin
-data to timeout.
+* Optional:(Only applicable to constructed inventories): *Cached timeout (seconds)*: Set the length of time you want the cache plugin data to timeout.
 * Only applicable to constructed inventories: *Verbosity*: Control the level of output that Ansible produces as the playbook executes related to inventory sources associated with constructed inventories.
-Select the verbosity from Normal to various Verbose or Debug settings.
+Select the verbosity from:
+
+* *Normal*
+* *Verbose*
+* *More verbose*
+* *Debug*
+* *Connection Debug* 
+* *WinRM Debug* 
+
 This only appears in the "details" report view.
-** Verbose logging includes the output of all commands.
-** Debug logging is exceedingly verbose and includes information about SSH operations that can be useful in certain
-support instances. Most users do not need to see debug mode output.
+** *Verbose* logging includes the output of all commands.
+** *Debug* logging is exceedingly verbose and includes information about SSH operations that can be useful in certain support instances. Most users do not need to see debug mode output.
++
+Click the image:arrow.png[Expand,15,15] icon for information on *How to use the constructed inventory plugin*
 * Only applicable to constructed inventories: *Limit*: Restricts the number of returned hosts for the inventory source associated with the constructed inventory.
 You can paste a group name into the limit field to only include hosts in that group.
 For more information, see the *Source vars* setting.
 * Only applicable to standard inventories: *Options*: Check the *Prevent Instance Group Fallback* option to enable only the instance groups listed in the *Instance Groups* field to execute the job.
 If unchecked, all available instances in the execution pool are used based on the hierarchy described in
-link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index#controller-control-job-run[Control where a job runs] in _{ControllerAG}_.
-Click the image:question_circle.png[Help,15,15] icon for additional information.
+xref:controller-control-job-run[Control where a job runs].
+//Click the image:question_circle.png[Help,15,15] icon for additional information.
 +
 //[NOTE]
 //====
@@ -72,5 +83,4 @@ This is particularly useful because you can paste that group name into the limit
 //See Example 1 in xref:ref-controller-smart-host-filter[Smart host filters].
 . Click btn:[Create inventory].
 
-After saving the new inventory, you can proceed with configuring permissions, groups, hosts, sources, and view completed jobs, if
-applicable to the type of inventory.
+After saving the new inventory, you can proceed with configuring permissions, groups, hosts, sources, and view completed jobs, if applicable to the type of inventory.
