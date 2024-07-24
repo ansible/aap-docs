@@ -14,37 +14,36 @@ The following procedure simulates a scenario where you have {ControllerName} as 
 . Click btn:[YAML view] and copy in the following:
 +
 ----
-yaml
-apiVersion: aap.ansible.com/v1alpha1
-    kind: AnsibleAutomationPlatform
-    metadata:
-      name: example-aap
-      namespace: aap
-    spec:
-      # Platform
-      image_pull_policy: IfNotPresent
-      # Components
-      controller:
-        disabled: false
-        name: existing-controller-name
-      eda:
-        disabled: false
-      hub:
-        disabled: false
-        ## uncomment if using file storage for Content pod
-        storage_type: file
-        file_storage_storage_class: your-rwx-storage-class
-        file_storage_size: 10Gi
+    apiVersion: aap.ansible.com/v1alpha1
+        kind: AnsibleAutomationPlatform
+        metadata:
+          name: example-aap
+          namespace: aap
+        spec:
+          # Platform
+          image_pull_policy: IfNotPresent
+          # Components
+          controller:
+            disabled: false
+            name: existing-controller-name
+          eda:
+            disabled: false
+          hub:
+            disabled: false
+            ## uncomment if using file storage for Content pod
+            storage_type: file
+            file_storage_storage_class: your-rwx-storage-class
+            file_storage_size: 10Gi
 
-        ## uncomment if using S3 storage for Content pod
-        # storage_type: S3
-        # object_storage_s3_secret: example-galaxy-object-storage
+            ## uncomment if using S3 storage for Content pod
+            # storage_type: S3
+            # object_storage_s3_secret: example-galaxy-object-storage
 
-        ## uncomment if using Azure storage for Content pod
-        # storage_type: azure
-        # object_storage_azure_secret: azure-secret-name
-      lightspeed:
-        disabled: true
+            ## uncomment if using Azure storage for Content pod
+            # storage_type: azure
+            # object_storage_azure_secret: azure-secret-name
+          lightspeed:
+            disabled: true
 ----
 .. For new components, if you do not specify a name, a default name is generated.
 . Click btn:[Create].
