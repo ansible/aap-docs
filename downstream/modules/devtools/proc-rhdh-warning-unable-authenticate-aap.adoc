@@ -1,0 +1,22 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-warning-unable-authenticate-aap_{context}"]
+= Unable to authenticate to Ansible Automation Platform
+
+The following warning indicates that the Ansible plug-ins were not able to authenticate with {PlatformNameShort} to query the subscription status.
+
+----
+Unable to authenticate to Ansible Automation Platform
+Verify that the authentication details for Ansible Automation Platform are correctly configured in the Ansible plug-ins.
+For help, please refer to the Ansible plug-ins installation guide.
+----
+
+[discrete]
+== Remediation steps
+
+. Verify that the automation controller Personal Access Token (PAT) configured in the Ansible plug-ins is correct.
+For more information, refer to the
+link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_user_guide/index#assembly-controller-applications[Applications]
+section of the _Automation controller user guide_.
+. After correcting the authentication details, restart the {RHDH} pod to initiate a subscription query.
+

@@ -1,0 +1,22 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-configure-devtools-server_{context}"]
+= Configuring the Ansible Dev Tools Server
+
+The `creatorService` URL is required for the Ansible plug-ins to provision new projects using the provided software templates.
+
+.Procedure
+
+. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+. Add the following code to your {RHDH} `app-config-rhdh.yaml` file.
++
+----
+data:
+  app-config-rhdh.yaml: |-
+ansible:
+ creatorService:
+   baseUrl: 127.0.0.1
+   port: '8000'
+
+----
+
