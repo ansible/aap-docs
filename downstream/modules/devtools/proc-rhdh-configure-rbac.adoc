@@ -1,0 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-configure-rbac_{context}"]
+= Configuring Role Based Access Control
+
+{RHDH} offers Role-based Access Control (RBAC) functionality.
+RBAC can then be applied to the Ansible plug-ins content. 
+
+The following example adds RBAC to Red Hat Developer Hub.
+
+----
+data:
+  app-config-rhdh.yaml: |
+    plugins:
+    ...
+    permission:
+      enabled: true
+      rbac:
+        admin:
+          users:
+            - name: user:default/<user-scm-ida>
+          superUsers:
+            - name: user:default/<user-admin-idb>
+----
+
+
+For more information about permission policies and managing RBAC, refer to the
+link:{BaseURL}/red_hat_developer_hub/1.2/html-single/administration_guide_for_red_hat_developer_hub/con-rbac-overview_assembly-rhdh-integration-aks[Enabling authentication in Red Hat Developer Hub]
+chapter of the _Administration guide for Red Hat Developer Hub_.
+

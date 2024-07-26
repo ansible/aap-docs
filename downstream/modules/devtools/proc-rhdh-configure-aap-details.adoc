@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-configure-aap-details_{context}"]
+= Configuring Ansible Automation Platform details
+
+The Ansible plug-ins query your {PlatformNameShort} subscription status with the controller API using a token.
+
+[NOTE]
+====
+The Ansible plug-ins continue to function regardless of the {PlatformNameShort} subscription status.
+====
+
+.Procedure
+
+. Create a Personal Access Token (PAT) with “Read” scope in automation controller, following the
+link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_user_guide/index#assembly-controller-applications[Applications] section of the _Automation controller user guide_. 
+. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+. Add your {PlatformNameShort} details to `app-config-rhdh.yaml`.
+..  Set the `baseURL` key with your automation controller URL.
+..  Set the `token` key with the generated token value that you created in Step 1.
+..  Set the `checkSSL` key to `true` or `false`. 
++
+If `checkSSL` is set to `true`, the Ansible plug-ins verify whether the SSL certificate is valid.
++
+----
+data:
+  app-config-rhdh.yaml: |
+    ...
+    ansible:
+    ...
+      rhaap:
+        baseUrl: '<https://MyControllerUrl>'
+        token: '<AAP Personal Access Token>'
+        checkSSL: true
+----
+
+[NOTE]
+====
+You are responsible for protecting your {RHDH} installation from external and unauthorized access.
+Manage the backend authentication key like any other secret.
+Meet strong password requirements, do not expose it in any configuration files, and only inject it into configuration files as an environment variable.
+====
+
