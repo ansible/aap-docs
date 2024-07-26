@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-configure-pah-url_{context}"]
+= Configuring the private automation hub URL
+
+{PrivateHubNameStart} provides a centralized, on-premise repository for certified Ansible collections, execution environments and any additional, vetted content provided by your organization.
+
+If the {PrivateHubName} URL is not configured in the Ansible plug-ins, users are redirected to the
+link:https://console.redhat.com/ansible/automation-hub[Red Hat Hybrid Cloud Console automation hub].
+
+[NOTE]
+====
+The {PrivateHubName} configuration is optional but recommended.
+The Ansible plug-ins will function without it.
+====
+
+.Prerequisites: 
+* A {PrivateHubName} instance.
++
+For more information on installing {PrivateHubName},  refer to the
+link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}#Installation%20and%20Upgrade[Installation and Upgrade]
+guides in the {PlatformNameShort} documentation.
+
+.Procedure:
+
+. Edit your custom {RHDH} config map, fpr example `app-config-rhdh`.
+. Add the following code to your {RHDH} `app-config-rhdh.yaml` file. 
++
+----
+data:
+  app-config-rhdh.yaml: |-
+    ansible:
+    ...
+      automationHub:
+        baseUrl: '<https://MyOwnPAHUrl>'
+    ...
+
+----
+. Replace `<\https://MyOwnPAHUrl/>`  with your {PrivateHubName} URL.
+. In the OpenShift Developer UI, select the `Red Hat Developer Hub` pod.
+. Open *Actions*.
+. Click *Restart rollout*.
+
