@@ -1,0 +1,47 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-create-plugin-registry_{context}"]
+= Creating a plug-in registry
+
+Set up a plug-in registry in your OpenShift cluster to host the Ansible plug-ins and make them available for installation in Red Hat Developer Hub.
+
+.Procedure
+
+. Log in to your {OCPShort} instance with credentials to create a new application.
+. Open your {RHDH} OpenShift project.
++
+----
+$ oc project <YOUR_DEVELOPER_HUB_PROJECT>
+----
+. Run the following commands to create a plug-in registry build in the OpenShift cluster.
++
+----
+$ oc new-build httpd --name=plugin-registry --binary
+$ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+$ oc new-app --image-stream=plugin-registry
+----
+
+.Verification
+
+To verify that the plugin-registry was deployed successfully, open the Developer perspective on the {RHDH} application in the OpenShift Web console.
+
+. Click the plug-in registry to view the log. 
++
+image::rhdh-plugin-registry.png[Developer perspective]
++
+(1) Developer hub instance
++
+(2) Plug-in registry
+. Click the terminal tab and login to the container.
+. In the terminal, run `ls` to confirm that the .tar files are in the plugin registry.
++
+----
+sh-4.45 $1s -l
+total 3392
+-rw-rw-r-- 1 default root 3376269 Jul 22 13:48 ansible-plugin-backstagc-rhaap-1.0.0.tgz
+-rw-rw-r-- 1 default root 25156 Jul 22 13:48 ansible-plugin-backstage-rhaap-backend-1.0.0.tgz
+-rw-rw-r-- 1 default root 61520 Jul 22 13:48 ansible-plugin-scaffolder-backend-modulc-backstagc-rhaap-1.0.0.tgz
+----
++
+The version numbers and file names can differ.
+
