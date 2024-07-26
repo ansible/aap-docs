@@ -1,0 +1,28 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-add-plugin-software-templates_{context}"]
+= Adding Ansible plug-ins software templates
+
+Red Hat Ansible provides software templates for {RHDH} to provision new playbooks and collection projects based on Ansible best practices. 
+
+.Procedure
+
+. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+. Add the following code to your {RHDH} `app-config-rhdh.yaml` file. 
+----
+data:
+  app-config-rhdh.yaml: |
+    catalog:
+      ...
+      locations:
+        ...
+        - type: url
+          target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+          rules:
+            - allow: [Template]
+----
+
+For more information, refer to the
+link:{BaseURL}/red_hat_developer_hub/1.2/html-single/administration_guide_for_red_hat_developer_hub/assembly-admin-templates#assembly-admin-templates[Managing templates]
+section of the _Administration guide for Red Hat Developer Hub_.
+
