@@ -1,0 +1,18 @@
+[id="con-gs-build-decision-env"]
+
+= Build and use a decision environment
+
+{EDAName} includes an ansible.eda collection, which contains sample sources, event filters and rulebooks. 
+All the collections, ansible rulebooks and their dependencies use a decision environment, which is an image that can be run on either Podman or Kubernetes.
+
+In decision environments, sources, which are typically Python code, are distributed through ansible-collections. 
+They inject external events into a rulebook for processing. 
+The rulebook consists of the following:
+
+* The python interpreter
+* Java Runtime Environment for Drools rule engine
+* ansible-rulebook python package
+* ansible.eda collection
+
+You can use the base decision environment and build your own customized Decision Environments with additional collections and collection dependencies. 
+You can build a decision environment using a Dockerfile or optionally you can deploy your CA certificate into the image.
