@@ -4,11 +4,14 @@
 
 [role="_abstract"]
 By default, {EDAcontroller} allows 12 rulebook activations to run simultaneously.
-If any more than 12 rulebook activations are created, the expected behavior is that subsequent rulebook activations wait in pending until there is an available rulebook activation worker.
-In this case, the rulebook activation status will display as “pending” even if there is enough free memory and CPU on your {EDAcontroller} instance.
+If more than 12 rulebook activations are created, the expected behavior is that subsequent rulebook activations wait until there is an available rulebook activation worker.
+In this case, the rulebook activation status is displayed as *Pending* even if there is enough free memory and CPU on your {EDAcontroller} instance.
 To change this behavior, you must change the default maximum number of running rulebook activations.
 
-**Note:** The value for `EDA_MAX_RUNNING_ACTIVATIONS` doesn’t change with the change in instance size, so it needs to be adjusted manually.
+[NOTE]
+====
+The value for `MAX_RUNNING_ACTIVATIONS` does not change when you modify the instance size, so it needs to be adjusted manually.
+====
 
 include::proc-modifying-activations-during-install.adoc[leveloffset=+1]
 include::proc-modifying-activations-after-install.adoc[leveloffset=+1]
