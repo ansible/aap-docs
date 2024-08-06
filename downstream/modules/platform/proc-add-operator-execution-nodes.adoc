@@ -1,15 +1,15 @@
 [id="add-operator-execution-nodes_{context}"]
 
 .Prerequisites
-* An {ControllerName} instance
-* The receptor collection package is installed
-* The `ansible-runner` package is installed
+* An {ControllerName} instance.
+* The receptor collection package is installed.
+* AAP Repository `ansible-automation-platform-2.4-for-rhel-{RHEL-RELEASE-NUMBER}-x86_64-rpms` is enabled.
 
 .Procedure
 . Log in to {PlatformName}.
 . In the navigation panel, select {MenuInfrastructureInstances}.
 . Click btn:[Add].
-. Input the VM name in the *Host Name* field.
+. Input the Execution Node domain name or IP in the *Host Name* field.
 . Optional: Input the port number in the *Listener Port* field.
 . Click btn:[Save].
 . Click the download icon image:download.png[download,15,15]next to *Install Bundle*. This starts a download, take note of where you save the file
@@ -18,7 +18,7 @@
 [NOTE]
 ====
 To run the `install_receptor.yml` playbook you need to install  the receptor collection from {Galaxy}:
-`Ansible-galaxy collection install -r requirements.txt`
+`Ansible-galaxy collection install -r requirements.yml`
 ====
 . Update the playbook with your user name and SSH private key file. Note that `ansible_host` pre-populates with the hostname you input earlier.
 +
@@ -26,7 +26,7 @@ To run the `install_receptor.yml` playbook you need to install  the receptor col
 all:
    hosts:
       remote-execution:
-	        ansible_host: example_host_name
+	        ansible_host: example_host_name # Same with configured in AAP WebUI
 	        ansible_user: <username> #user provided
 	        Ansible_ssh_private_key_file: ~/.ssh/id_example
 ----
@@ -34,11 +34,17 @@ all:
 . To install the bundle run:
 +
 ----
-ansible-playbook install_receptor.yml -i inventory
+ansible-playbook install_receptor.yml -i inventory.yml
 ----
 . When installed you can now upgrade your execution node by downloading and re-running the playbook for the instance you created.
 
 .Verification
+To verify receptor service status run the following command:
+----
+sudo systemctl status receptor.service
+----
+Make sure the service is in `active (running)` state
+
 To verify if your playbook runs correctly on your new node run the following command:
 ----
 watch podman ps
