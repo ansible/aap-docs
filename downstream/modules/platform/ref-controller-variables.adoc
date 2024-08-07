@@ -5,15 +5,20 @@
 [cols="50%,50%",options="header"]
 |====
 | *Variable* | *Description*
-| *`admin_password`* | The password for an administration user to access the UI when the installation is complete.
+| *`admin_password`* | The admin password used to connect to the {ControllerName} instance.
 
 Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
-| *`automation_controller_main_url`* | For an alternative front end URL needed for SSO configuration, provide the URL.
 
-| *`automationcontroller_password`* | Password for your {ControllerName} instance.
+| *`automation_controller_main_url`* | The full URL used by {EDAName} to connect to a controller host. This URL is required if there is no {ControllerName} configured in the inventory file.
 
-Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
-| *`automationcontroller_username`* | Username for your {ControllerName} instance.
+Format example: `automation_controller_main_url='https://<hostname>'`
+
+| *`admin_username`* | 
+The username used to identify and create the admin superuser in {ControllerName}.
+
+| *`admin_email`* | 
+The email address used for the admin user for {ControllerName}.
+
 | *`nginx_http_port`* | The nginx HTTP server listens for inbound connections.
 
 Default = 80
