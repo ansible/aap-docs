@@ -41,22 +41,40 @@ For more information about Simple Content Access, see link:{BaseURL}/subscriptio
 
 . Enable {PlatformNameShort} subscriptions and the proper {PlatformName} channel:
 +
+For RHEL 8
++
 ----
-# subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms for RHEL 8
-
-# subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms for RHEL 9
+# subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
 ----
-
++
+For RHEL 9
++
+----
+# subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms
+----
++
+For ARM
++
+----
+# subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-aarch64-rpms
+----
++
 . Ensure the packages are up to date:
 +
 ---- 
 sudo dnf upgrade -y
 ----
 
-. Install the ansible-core packages:
+. Install the ansible-core packages on the machine where the downloaded bundle is to run:
 +
 ----
 sudo dnf install -y ansible-core
 ----
-
++
+[NOTE]
+====
+Ansible core is required on the machine that runs the {AutomationMesh} configuration bundle playbooks.  This document assumes that happens on the execution node. 
+However, this step can be omitted if you run the playbook from a different machine. 
+You cannot currently run directly from the control node, this is not currently supported, but future support would expect the control node has direct connectivity to the execution node.
+====
 
