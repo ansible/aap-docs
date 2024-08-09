@@ -1,0 +1,57 @@
+[id="proc-container-install-eda-controller"]
+
+= Installing {EDAcontroller} 1.1 and configuring {ControllerName} 4.4 or 4.5
+
+Perform a new {PlatformNameShort} 2.5 container-based installation of {EDAcontroller} 1.1 and configure it to work with an existing {PlatformNameShort} 2.4 installation of {ControllerName} 4.4 or 4.5.
+
+.Prerequisites
+
+* An existing installation of {PlatformNameShort} 2.4 with {ControllerName} version 4.4 or 4.5. 
+
+.Procedure
+
+. Follow the steps provided in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/containerized_installation/index[Containerized installation] until the section link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/containerized_installation/installing-containerized-aap_aap-containerized-installation[Installing containerized Ansible Automation Platform] and ensure you download the {PlatformNameShort} 2.5 version of the containerized installer.
+. Use the following example to populate the inventory file to deploy a new single instance of {EDAcontroller} 1.1:
++
+----
+[automationeda]
+eda.example.org
+
+[automationgateway]
+eda.example.org
+
+[database]
+data.example.com
+
+[all:vars]
+
+eda_admin_password=<admin_password>
+eda_pg_database=eda
+eda_pg_host=data.example.com
+eda_pg_password=<password>
+eda_pg_port=5432
+eda_pg_sslmode=prefer
+eda_pg_username=eda
+
+#eda_verify_ssl=true
+
+registry_url=registry.redhat.io
+registry_username=<username>
+registry_password=<password>
+
+gateway_admin_password=<admin_password>
+gateway_pg_database=gateway
+gateway_pg_host=data.example.com
+gateway_pg_password=<password>
+gateway_pg_port=5432
+gateway_pg_sslmode=prefer
+gateway_pg_username=gateway
+----
++
+[NOTE]
+====
+Do not include the `[automationcontroller]` group in your inventory file. 
+If you do, ensure it is an empty group. 	
+====
++
+. Continue with the steps in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/containerized_installation/installing-containerized-aap_aap-containerized-installation[Installing containerized Ansible Automation Platform].
