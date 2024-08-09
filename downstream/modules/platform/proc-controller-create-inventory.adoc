@@ -1,21 +1,76 @@
 [id="controller-creating-inventory"]
 
-= Creating a new Inventory
+= Browsing and creating inventories
 
 The Inventories window displays a list of the inventories that are currently available.
 You can sort the inventory list by name and searched type, organization, description, owners and modifiers of the inventory, or additional criteria.
 
 .Procedure
-. To view existing inventories, select {MenuInfrastructureInventories} from the navigation panel.
-** {ControllerNameStart} provides a demonstration inventory for you to use as you learn how the controller works.
-You can use it as it is or edit it later.
-You can create another inventory, if necessary.
-. To add another inventory, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#proc-controller-adding-new-inventory[Add a new inventory] in _{ControllerUG}_ for more information.
-. Click btn:[Demo Inventory] to view its details.
+. From the navigational panel, select {MenuInfrastructureInventories}.
+. Click btn:[Create inventory], and select the type of inventory to create.
+. Enter the appropriate details into the following fields:
 
-image::controller-inventories-demo-details.png[Demo inventory]
+* *Name*: Enter a name appropriate for this inventory.
+* Optional: *Description*: Enter an arbitrary description as appropriate.
+* *Organization*: Required. Choose among the available organizations.
+* Only applicable to Smart Inventories: *Smart Host Filter*: Populate the hosts for this inventory by using a search filter. 
++
+_Example_ 
++
+name__icontains=RedHat.
++
+These options are based on the organization you chose.
++
+Filters are similar to tags in that tags are used to filter certain hosts that contain those names.
+Therefore, to populate the *Smart Host Filter* field, specify a tag that contains the hosts you want, not the hosts themselves.
++
+Filters are case-sensitive.
+* *Instance Groups*: Select the instance group or groups for this inventory to run on.
++
+You can select many instance groups and sort them in the order that you want them run.
++
+//image:select-instance-groups-modal.png[image]
 
-As with organizations, inventories also have associated users and teams that you can view through the *Access* tab.
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#controller-inventories[Inventories] in _{ControllerUG}_.
+* Optional: *Labels*: Supply labels that describe this inventory, so they can be used to group and filter inventories and jobs.
+* Only applicable to constructed inventories: *Input inventories*: Specify the source inventories to include in this constructed inventory.
+//Click the image:search.png[Search,15,15] icon to select from available inventories.
+Empty groups from input inventories are copied into the constructed inventory.
+* Optional:(Only applicable to constructed inventories): *Cached timeout (seconds)*: Set the length of time you want the cache plugin data to timeout.
+* Only applicable to constructed inventories: *Verbosity*: Control the level of output that Ansible produces as the playbook executes related to inventory sources associated with constructed inventories.
++
+Select the verbosity from:
 
-A user with the role of *System Administrator* has been automatically populated for this.
+* *Normal*
+* *Verbose*
+* *More verbose*
+* *Debug*
+* *Connection Debug* 
+* *WinRM Debug* 
+
+** *Verbose* logging includes the output of all commands.
+** *More verbose* provides more detail than *Verbose*.
+** *Debug* logging is exceedingly verbose and includes information about SSH operations that can be useful in certain support instances. Most users do not need to see debug mode output.
+//Not sure of this
+** *Connection Debug* enables you to run ssh in verbose mode, providing debugging information about the SSH connection progress.
+//Not sure of this. 
+** *WinRM Debug* used for verbosity specific to windows remote management 
++
+Click the image:arrow.png[Expand,15,15] icon for information on *How to use the constructed inventory plugin*.
+* Only applicable to constructed inventories: *Limit*: Restricts the number of returned hosts for the inventory source associated with the constructed inventory.
+You can paste a group name into the limit field to only include hosts in that group.
+For more information, see the *Source vars* setting.
+* Only applicable to standard inventories: *Options*: Check the *Prevent Instance Group Fallback* option to enable only the instance groups listed in the *Instance Groups* field to execute the job.
+If unchecked, all available instances in the execution pool are used based on the hierarchy.
+
+* *Variables* (*Source vars* for constructed inventories):
+
+** *Variables* Variable definitions and values to apply to all hosts in this inventory.
+Enter variables by using either JSON or YAML syntax.
+Use the radio button to toggle between the two.
+** *Source vars* for constructed inventories creates groups, specifically under the `groups` key of the data.
+It accepts Jinja2 template syntax, renders it for every host, makes a `true` or `false` evaluation, and includes the host in the group (from the key of the entry) if the result is `true`.
+This is particularly useful because you can paste that group name into the limit field to only include hosts in that group.
+//See Example 1 in xref:ref-controller-smart-host-filter[Smart host filters].
+. Click btn:[Create inventory].
+
+After saving the new inventory, you can proceed with configuring permissions, groups, hosts, sources, and view completed jobs, if applicable to the type of inventory.
