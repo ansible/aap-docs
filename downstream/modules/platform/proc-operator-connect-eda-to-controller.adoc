@@ -1,0 +1,21 @@
+[id="proc-operator-connect-eda-to-controller_{context}"]
+
+= Connecting{ControllerName} to {EDAName} from {OperatorPlatform}
+
+.Prerequisites 
+. You have installed {OperatorPlatform} on {OCP}
+.. You have installed and configured an {EDAName} (EDA) instance.
+.. You have installed and configured an {ControllerName} instance.
+
+.Procedure
+* Navigate to menu:Operator[Installed Operators].
+* Locate and select your installation of *{PlatformNameShort}*.
+* Select the *All instances* tab. 
+* You can edit the YAML of the EDA instance by clicking {MoreActionsIcon} and then btn:[Edit EDA].
+* On the YAML view, locate the `automation_server_url` in the spec key value section. 
+* Paste in the URL in the OpenShift Navigation panel under menu:Networking[Routes]
+* Click Reload, ensure everything looks ok, then click btn:[Save].
+
+A confirmation message appears similar to the following:
+
+`<your EDA instance name> has been updated to version <version number>`
