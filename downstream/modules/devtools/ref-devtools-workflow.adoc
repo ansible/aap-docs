@@ -1,21 +1,28 @@
-[id="devtools-workflow_context"]
+[id="devtools-workflow_{context}"]
 
 = Workflow
 
 [role="_abstract"]
 
-In the build stage, you create a new playbook project within a virtual environment, using {VSCode}. The following is a typical workflow:
+== Create
+
+In the create  stage, you create a new playbook project locally, using {VSCode}. The following is a typical workflow:
 
 . Install and run the Ansible extension in {VSCode}.
-. Create or open a workspace for your playbooks directory in {VSCode}.
-. Create and activate a Python virtual environment for your workspace and select it in {VSCode}.
 . Scaffold a playbook project from {VSCode}.
-. Add the collection names that your playbook uses to the requirements file.
-// . Use ansible-dev-environment to create a virtual environment for your project. This installs any dependencies from the requirements file.
-. Edit your playbook. Ansible-lint suggests corrections.
-. Add roles in the roles directory.
-. Create an execution environment that reflects the environment that {PlatformNameShort} uses.
-. Run your playbooks from the Ansible extension.
-// . As you develop your playbooks and roles, you can incorporate new dependencies into your virtual environment by re-running ansible-dev-environment.
-// . Use `molecule` to test your playbooks. Create one scenario for every playbook in your project.
+. Add playbook files to your project and edit them in {VSCode}.
+
+== Test
+
+. Debug your playbook with the help of `ansible-lint`.
+. Select or create an {ExecEnvNameSing} so that your local environment replicates the environment on {PlatformNameShort}.
+. Run your playbooks from {VSCode}, using `ansible-playbook` or using `ansible-navigator` with an {ExecEnvShort}.
+. Test your playbooks by running them on an {ExecEnvShort} that replicates your production environment.
+
+== Deploy
+
+. Push your playbooks project to a source control repository.
+. Set up credentials on {PlatformNameShort} to pull from your source control repository and create a project for your playbook repository.
+. If you have created an {ExecEnvShort}, push it to {PrivateHubName}.
+. Create a job template on {PlatformNameShort} that runs a playbook from your project, and specify the {ExecEnvShort} that you want to use.
 
