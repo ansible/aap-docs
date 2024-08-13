@@ -1,0 +1,17 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-pluggable-authentication_{context}"]
+
+= Pluggable authentication
+
+Authentication is the process of verifying a user's identity to Ansible Automation Platform, which means establishing that a user is who they say they are. This can be done in a number of ways but would traditionally be associated with a username and password.
+
+In Ansible Automation Platform 2.4, you could configure external authentication sources such as LDAP or SAML, in automation controller. Ansible Automation Platform 2.5 uses a pluggable authentication system with a configuration wizard that provides a common, simplified method of configuring different types of authenticators, such as LDAP and SAML. The pluggable system also allows you to  configure multiple authenticators of the same type.  
+
+In the pluggable system we have three concepts:
+
+Authenticator plugin:: A plugin allows Ansible Automation Platform to connect to a source system, such as LDAP or SAML. Ansible Automation Platform is shipped with a variety of authenticator plugins and more can be added. Authenticator plugins are similar to Ansible collections, in that all of the required code is in a package and can be versioned independently if needed. You can write and add new custom plugins to the system
+
+Authenticator:: An authenticator is an instantiation of an authenticator plugin and allows users to form the specified source to login. For example, the LDAP authenticator plugin defines a required LDAP server setting. When you instantiate an authenticator from the LDAP authentication plugin, you must provide the authenticator the LDAP server URL it needs to connect to.
+
+Authenticator map:: Authenticator maps are applied to authenticators and tell Ansible Automation Platform what permissions to give a user logging in to the system. the authentication settings before creating the authentication method.
