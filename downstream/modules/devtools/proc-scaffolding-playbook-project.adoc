@@ -1,4 +1,4 @@
-[id="scaffolding-playbook-project"]
+[id="scaffolding-playbook-project_context"]
 
 = Scaffolding a playbook project
 
@@ -15,19 +15,32 @@ The following steps describe the process for scaffolding a new playbook project 
 
 .Procedure
 
+. Open {VSCode}.
 . Click the Ansible icon in the {VSCode} activity bar to open the Ansible extension.
-. Type kbd:[Ctrl+Shift+P] to display the VSCode command palette.
-. In the input field, enter `Create new Ansible project`. The **Create Ansible Project** tab opens.
-. Enter a name for the directory where you want to scaffold your new playbook project. 
+. Select *Get started* in the *Ansible content creator* section.
++
+The *Ansible content creator* tab opens.
+. In the *Create* section, click *Ansible playbook project*.
++
+The *Create Ansible project* tab opens. 
+. In the form in the *Create Ansible project* tab, enter the following:
++
+* *Destination directory*: Enter the path to the directory where you want to scaffold your new playbook project. 
 +
 [NOTE]
 ====
-If you enter a current directory name, the scaffolding process will overwrite the contents of that directory.
+If you enter an existing directory name, the scaffolding process overwrites the contents of that directory.
+The scaffold process only allows you to use an existing directory if you enable the `Force` option.
 ====
-. Add an organization name and a project name.
-. Click btn:[Create] to begin creating your project.
+** If you are using the containerized version of Ansible Dev tools, the destination directory path is relative to the container, not a path in your local system. To discover the current directory name in the container, run the `pwd` command in a terminal in VS Code. If the current directory in the container is `workspaces`, enter `workspaces/<destination_directory_name>`.
+** If you are using a locally installed version of Ansible Dev tools, enter the full path to the directory, for example `/user/<username>/projects/<destination_directory_name>`.
+* *SCM organization and SCM project*: Enter a name for the directory and subdirectory where you can store roles that you create for your playbooks. 
+. Enter a name for the directory where you want to scaffold your new playbook project. 
  
-After the project directory has been created, the following message appears in the Logs pane of the Create Ansible Project tab:
+.Verification
+
+After the project directory has been created, the following message appears in the *Logs* pane of the *Create Ansible Project* tab.
+In this example, the destination directory name is `destination_directory_name`.
 
 ----
 ------------------ ansible-creator logs ------------------
@@ -37,17 +50,34 @@ After the project directory has been created, the following message appears in t
 The following directories and files are created in your project directory:
 
 ----
+$ tree -a -L 5 .
+├── .devcontainer
+│   ├── devcontainer.json
+│   ├── docker
+│   │   └── devcontainer.json
+│   └── podman
+│       └── devcontainer.json
+├── .gitignore
 ├── README.md
 ├── ansible-navigator.yml
 ├── ansible.cfg
 ├── collections
-│   ├── ansible_collections
-│   └── requirements.yml
+│   ├── ansible_collections
+│   │   └── scm_organization_name
+│   │       └── scm_project_name
+│   └── requirements.yml
 ├── devfile.yaml
 ├── inventory
-│   ├── group_vars
-│   ├── host_vars
-│   └── hosts.yml
+│   ├── group_vars
+│   │   ├── all.yml
+│   │   └── web_servers.yml
+│   ├── host_vars
+│   │   ├── server1.yml
+│   │   ├── server2.yml
+│   │   ├── server3.yml
+│   │   ├── switch1.yml
+│   │   └── switch2.yml
+│   └── hosts.yml
 ├── linux_playbook.yml
 ├── network_playbook.yml
 └── site.yml
