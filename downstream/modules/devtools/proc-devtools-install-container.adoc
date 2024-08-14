@@ -1,0 +1,95 @@
+[id="devtools-install-container_{context}"]
+
+= Installing {ToolsName} on a container inside {VSCode}
+
+
+The Dev Containers {VSCode} extension requires a config file to store settings for your dev containers. 
+After you have created a config file for your dev container, reopen your directory in a container in {VSCode}.
+
+.Prerequisites
+
+. You have installed a containerization platform, for example Podman, Podman Desktop, Docker, or Docker Desktop.
+. You have a Red Hat login and you can login to the Red Hat registry at registry.redhat.io.
+. You have installed {VSCode}.
+. You have installed the Ansible extension in {VSCode}.
+. You have installed the link:https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers[Microsoft Dev Containers] extension in {VSCode}.
+
+.Procedure
+
+. In {VSCode}, open the directory where you want to store the configuration files for your development container.
+. Create a subdirectory called `.devcontainer`.
+. In the `.devcontainer` directory, create a file called `devcontainer.json`.
++
+You must use different settings depending on whether you are using Podman or Docker.
+
+** If you are using Podman or Podman desktop, add the following text to `devcontainer.json`:
++
+----
+{
+  "name": "ansible-dev-container-podman",
+  "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
+  "containerUser": "root",
+  "runArgs": [
+    "--cap-add=SYS_ADMIN",
+    "--cap-add=SYS_RESOURCE",
+    "--device",
+    "/dev/fuse",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--security-opt",
+    "label=disable",
+    "--security-opt",
+    "apparmor=unconfined",
+    "--userns=host",
+    "--hostname=ansible-dev-container",
+    "--volume",
+    "ansible-dev-tools-container-storage:/var/lib/containers"
+  ],
+  "customizations": {
+    "VS Codevscode": {
+      "extensions": ["redhat.ansible"]
+    }
+  }
+}
+----
+** If you are using Docker or Docker desktop, add the following text to `devcontainer.json`:
++
+----
+{
+  "name": "ansible-dev-container-docker",
+  "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
+  "containerUser": "podman",
+  "runArgs": [
+    "--security-opt",
+    "seccomp=unconfined",
+    "--security-opt",
+    "label=disable",
+    "--cap-add=SYS_ADMIN",
+    "--cap-add=SYS_RESOURCE",
+    "--device",
+    "/dev/fuse",
+    "--security-opt",
+    "apparmor=unconfined",
+    "--hostname=ansible-dev-container"
+  ],
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "VS Codevscode": {
+      "extensions": ["redhat.ansible"]
+    }
+  }
+}
+----
+. Reopen the directory in a container.
+** If {VSCode} detects that your directory contains the `devcontainer.json` file, the following notification appears:
++
+image::devtools-reopen-in-container.png[Reopen in container]
++
+Click *Reopen in Container*.
+** If the notification does not appear, click the `Remote` (image:vscode-remote-icon.png[Remote,15,15]) icon. In the dropdown menu that appears, select *Reopen in Container*.
+
+The *Remote ()* status in the {VSCode} Status bar displays `opening Remote` and a notification indicates the progress in opening the container.
+
+.Verification
+When the directory reopens in a container, the *Remote ()* status displays `Dev Container: ansible-dev-container`.
+
