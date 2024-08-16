@@ -1,55 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="ref-controller-organization-mapping"]
 
 = Organization mapping
 
-You must control which users are placed into which {ControllerName} organizations based on their username and email address (distinguishing your organization administrators and users from social or enterprise-level authentication accounts).
+You can control which users are placed into which {PlatformNameShort} organizations based on attributes like their username and email address or based on groups provided from an authenticator. 
 
-Dictionary keys are organization names. 
-Organizations are created, if not already present, and if the license permits multiple organizations. 
-Otherwise, the single default organization is used regardless of the key.
+When organization mapping is positively evaluated, a specified organization is created, if it does not exist if the authenticator tied to the map is allowed to create objects.
 
-Values are dictionaries defining the options for each organization's membership. 
-For each organization, you can specify which users are automatically users of the organization and also which users can administer the organization.
+.Procedure
 
-*admins*: None, True/False, string or list/tuple of strings:
+. After configuring the authentication details for your authentication type, select *Organization* from the *Add authentication mapping* list. 
+. Enter a unique rule *Name* to identify the rule.
+. Select a *Trigger* from the list. See xref:gw-authenticator-map-triggers[Authenticator map triggers] for more information about map triggers.
+. Select *Revoke* to deny user access to the system when none of the trigger conditions are matched. 
+. Select the *Organization* to which matching users are added or blocked.
+. Select a *Role* to be applied or removed for matching users (for example, *Organization Admin* or *Organization Member*).
+. Click btn:[Next].
++
+[NOTE]
+====
+The mapping precedence is determined by the order in which the mappings are listed. 
+====
++
+. Click btn:[Next] to review and verify the mapping configurations.
+. Click btn:[Finish].
 
-* If *None*, organization administrators are not updated.
-* If *True*, all users using account authentication are automatically added as administrators of the organization.
-* If *False*, no account authentication users are automatically added as administrators of the organization.
-* If a string or list of strings, specifies the usernames and emails for users to be added to the organization, strings beginning and ending with `/` are compiled into regular expressions.
-The modifiers `i` (case-insensitive) and `m` (multi-line) can be specified after the ending `/`.
 
-*remove_admins*: True/False. Defaults to *True*:
 
-* When *True*, a user who does not match is removed from the organization's administrative list.
-* *users*: None, True/False, string or list/tuple of strings. The same rules apply as for *admins*.
-* *remove_users*: True/False. Defaults to *True*. The same rules apply as for *remove_admins*.
-
-[literal, options="nowrap" subs="+attributes"]
-----
-{
-    "Default": {
-        "users": true
-    },
-    "Test Org": {
-        "admins": ["admin@example.com"],
-        "users": true
-    },
-    "Test Org 2": {
-        "admins": ["admin@example.com", "/^controller-[^@]+?@.*$/i"],
-        "users": "/^[^@].*?@example\\.com$/"
-    }
-}
-----
-
-Organization mappings can be specified separately for each account authentication backend. 
-If defined, these configurations take precedence over the global configuration above.
-
-[literal, options="nowrap" subs="+attributes"]
-----
-SOCIAL_AUTH_GOOGLE_OAUTH2_ORGANIZATION_MAP = {}
-SOCIAL_AUTH_GITHUB_ORGANIZATION_MAP = {}
-SOCIAL_AUTH_GITHUB_ORG_ORGANIZATION_MAP = {}
-SOCIAL_AUTH_GITHUB_TEAM_ORGANIZATION_MAP = {}
-SOCIAL_AUTH_SAML_ORGANIZATION_MAP = {}
-----
