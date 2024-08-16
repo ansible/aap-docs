@@ -1,0 +1,15 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-authenticator-map-examples"]
+
+= Authenticator map examples
+
+* Make this user a superuser if they have an attribute called `aap_superuser` with a value of `True`.
+* Add this user to a team if they have the group `cn=Administrators,ou=AAP,ou=example,o=com` or `cn=Operators,ou=AAP,ou=example,o=com`. 
+* Never allow access to the system if the user has an attribute called `disabled` with a value of `True`, `Yes` or `Until Further Notice`.
+
+Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Never allow access to the system if the user has an attribute called disabled with a value of `True`, `Yes` or `Until Further Notice`.
+
+You can add another rule with a higher order, such as, “Allow access to the system for a `disabled` user if they are in the group `Emergency Contacts`.”
+
+The first rule prevents the disabled user from accessing the system, but the second rule alters that decision to grant access to the system for the disabled user if they are in the `Emergency Contacts` group.
