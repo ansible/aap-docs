@@ -4,21 +4,30 @@
 
 .Prerequisites
 // [ddacosta] I'm not sure whether there will be an EDA specific dashboard in the gateway. Step 1 might need to change to something like "Log in to AAP".
-* You are logged in to the {EDAcontroller} Dashboard as a Content Consumer.
+* You are logged in to the {PlatformNameShort} Dashboard as a Content Consumer.
 * You have set up a project.
 * You have set up a decision environment.
 * You have set up an {ControllerName} token.
 
 .Procedure
 // [ddacosta] I'm not sure whether there will be an EDA specific dashboard in the gateway. Step 1 might need to change to something like "Log in to AAP".
-. Navigate to the {EDAcontroller} Dashboard.
-. From the navigation panel, select {MenuADRulebookActivations}.
+. Log in to the {PlatformNameShort} Dashboard.
+. Navigate to the {MenuADRulebookActivations}.
+. Click btn:[Create rulebook activation]. 
 . Insert the following:
 +
 Name:: Insert the name.
 Description:: This field is optional.
-Project:: Projects are a logical collection of rulebooks.
-Rulebook:: Rulebooks are shown according to the project selected.
+Organization:: This field is optional.
+Project:: Projects are a logical collection of rulebooks. This field is optional.
+Rulebook:: Rulebooks are displayed according to the project selected.
+Credential:: Select 0 or more credentials for this rulebook activation. This field is optional.
++
+[NOTE]
+====
+The credentials that display in this field are customized based on your rulebook activation and will only include the following credential types: Vault, {PlatformName}, or any custom credential types that you have created. For more information on credentials, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/event-driven_ansible_controller_user_guide/eda-credentials#eda-credentials[Setting up credentials for {EDAcontroller}].
+====
+//[J. Self] Might need to update the link above for the updated Credentials section.
 Decision environment:: Decision environments are a container image to run Ansible rulebooks.
 +
 [NOTE]
@@ -32,6 +41,7 @@ Restart policy:: This is a policy to decide when to restart a rulebook.
 ... Always: Restarts when a rulebook finishes
 ... Never: Never restarts a rulebook when it finishes
 ... On failure: Only restarts when it fails
+Service Name:: This defines a service name for Kubernetes to configure inbound connections if the activation exposes a port. This field is optional.
 Rulebook activation enabled?:: This automatically enables the rulebook activation to run.
 Variables:: The variables for the rulebook are in a JSON/YAML format.
 The content would be equivalent to the file passed through the `--vars` flag of ansible-rulebook command.

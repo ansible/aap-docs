@@ -7,13 +7,13 @@
 = Configuring a reverse proxy
 
 [role="_abstract"]
-You can support a reverse proxy server configuration by adding `HTTP_X_FORWARDED_FOR` to the *REMOTE_HOST_HEADERS* field in your {ControllerName} settings. The ``X-Forwarded-For`` (XFF) HTTP header field identifies the originating IP address of a client connecting to a web server through an HTTP proxy or load balancer.
+You can support a reverse proxy server configuration by adding `HTTP_X_FORWARDED_FOR` to the *Remote Host Headers* field in the Systems Settings. The ``X-Forwarded-For`` (XFF) HTTP header field identifies the originating IP address of a client connecting to a web server through an HTTP proxy or load balancer.
 
 
 .Procedure
-//[ddacosta] Need to verify that in 2.5 this is Settings[System]...
-. On your {ControllerName}, navigate to {MenuAEAdminSettings} and select *Miscellaneous System settings* from the list of *System* options.
-. In the *REMOTE_HOST_HEADERS* field, enter the following values:
+//[ddacosta] Settings > System are controller specific for 2.5EA so don't change ControllerName to PlatformName.
+. From the navigation panel, select {MenuSetSystem}.
+. In the *Remote Host Headers* field, enter the following values:
 +
 ----
 [
@@ -22,9 +22,11 @@ You can support a reverse proxy server configuration by adding `HTTP_X_FORWARDED
   "REMOTE_HOST"
 ]
 ----
++
 . Add the lines below to ``/etc/tower/conf.d/custom.py`` to ensure the application uses the correct headers:
-
++
 ----
 USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
 ----
+. Click btn:[Save] to save the settings.

@@ -1,0 +1,40 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="gw-define-rules-triggers_{context}"]
+
+= Defining authentication mapping rules and triggers
+
+{PlatformNameShort} supports the following rule types:
+
+Allow:: Determine if the user is allowed to log into the system
+Organization:: Determine if a user should be put into an organization
+Team:: Determine if the user should be a member of a team
+Role:: Determine if the user is a member of a role (for example System Auditor)
+Is Superuser:: Determine if the user is a superuser in the system 
+
+These authentication map types can be used with any type of authenticator. Each map has a trigger that defines when the map should be evaluated as true. Trigger types include:
+
+Always:: The trigger should always be fired.
+Never:: The trigger should never be fired.
+Group:: The trigger should fire based on a user having, not having or having multiple groups in the source system.
+Attribute:: The trigger should fire based on a user having some combination of attributes from the source system whose value might match, contain, end with, etc. some value.
+
+.Procedure
+
+. Click btn:[Add authentication mapping]: to see the list of available map types and select the map type you want to create. Options include:
++
+* Allow
+* Organization
+* Team
+* Role
+* Superuser
++
+. Enter a unique rule *Name* to identify the rule.
+. Select a *Trigger* from the list. See Triggers for more details.
+. Repeat steps 1-3 to add additional triggers to the authenticator.
+. Click btn:[Next] to optionally xref:gw-adjust-mapping-order_gw-auth-wizard[Adjust the Mapping order].
++
+[NOTE]
+====
+The mapping order setting is only available if there are one or more authenticator maps defined.
+====

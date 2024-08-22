@@ -1,37 +1,40 @@
-[id="assembly-controller-organizations"]
+ifdef::context[:parent-context: {context}]
 
-ifdef::controller-GS[]
-= Managing organizations in {ControllerName}
+:_mod-docs-content-type: ASSEMBLY
 
-An organization is a logical collection of users, teams, projects, and inventories. 
-It is the highest level object in the controller object hierarchy.
-After you have created an organization, {ControllerName} displays the organization details. 
-You can then manage access and execution environments for the organization.
+[id="assembly-my-user-story_{context}"]
 
-image::controller-tower-hierarchy.png[Hierarchy]
-
-include::platform/proc-controller-review-organizations.adoc[leveloffset=+1]
-include::platform/proc-controller-edit-an-organization.adoc[leveloffset=+1]
-endif::controller-GS[]
-ifdef::controller-UG[]
 = Organizations
 
-An organization is a logical collection of users, teams, projects, and inventories. 
-It is the highest level object in the controller object hierarchy.
+:context: access-mgmt-orgs
 
-image::controller-tower-hierarchy.png[Hierarchy]
+An organization is a logical collection of users, teams, and resources. It is the highest level object in the {PlatformNameShort} object hierarchy. After you have created an organization, {PlatformNameShort} displays the organization details. You can then manage access and execution environments for the organization.
+{PlatformNameShort} automatically creates a default organization and the system administrator is automatically assigned to this organization. If you have a Self-support level license, you have only the default organization available and must not delete it.
 
-From the navigation menu, select btn:[Organizations] to display the existing organizations for your installation. 
+[NOTE]
+====
+Only Enterprise or Premium licenses can add new organizations.
+====
 
-image:organizations-home-showing-example-organization.png[Organizations]
+Enterprise and Premium license users who want to add a new organization should refer to the xref:proc-controller-create-organization[Creating an organization].
 
-Organizations can be searched by *Name* or *Description*. 
-
-Modify organizations using the image:leftpencil.png[Edit,15,15] icon.
-Click btn:[Delete] to remove a selected organization.
+include::platform/proc-controller-review-organizations.adoc[leveloffset=+1]
 
 include::platform/proc-controller-create-organization.adoc[leveloffset=+1]
+
 include::platform/con-controller-access-organizations.adoc[leveloffset=+1]
 
-endif::controller-UG[]
+include::platform/proc-controller-add-organization-user.adoc[leveloffset=+2]
 
+include::platform/proc-gw-add-admin-organization.adoc[leveloffset=+2]
+
+include::platform/proc-gw-add-team-organization.adoc[leveloffset=+2]
+
+include::platform/proc-gw-delete-organization.adoc[leveloffset=+2]
+
+include::platform/ref-controller-organization-notifications.adoc[leveloffset=+1] 
+
+include::platform/proc-gw-organizations-exec-env.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

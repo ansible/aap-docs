@@ -1,15 +1,15 @@
-[id="devtools-install_context"]
+[id="devtools-install_{context}"]
 
-= Installing {ToolsName} from an RPM package
+= Installing {ToolsName} from a package on RHEL
 
 [role="_abstract"]
 
 {ToolsName} is bundled in the {PlatformNameShort} RPM (Red Hat Package Manager) package.
-// As an {PlatformNameShort} administrator, you can install {ToolsName} when you are installing {PlatformNameShort}.
-Refer to the {PlatformNameShort} guide for more information on installing {PlatformNameShort}.
+Refer to the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_installation_guide[_{PlatformName} Installation guide_] documentation for information on installing {PlatformNameShort}.
 
 .Prerequisites
-* You have installed RHEL
+
+* You have installed RHEL.
 * You have registered your system with Red Hat Subscription Manager.
 
 .Procedure
@@ -73,15 +73,16 @@ On successful installation, you can view the help documentation for ansible-crea
 ----
 $ ansible-creator --help
 
-usage: ansible-creator [-h] [--version] {init} ...
+usage: ansible-creator [-h] [--version] command ...
 
-Tool to scaffold Ansible Content. Get started by looking at the help text.
+The fastest way to generate all your ansible content.
 
-options:
-  -h, --help  show this help message and exit
-  --version   Print ansible-creator version and exit.
+Positional arguments:
+ command
+  add           Add resources to an existing Ansible project.
+  init          Initialize a new Ansible project.
 
-Commands:
-  {init}      The subcommand to invoke.
-    init      Initialize an Ansible Collection.
+Options:
+ --version      Print ansible-creator version and exit.
+ -h     --help  Show this help message and exit
 ----

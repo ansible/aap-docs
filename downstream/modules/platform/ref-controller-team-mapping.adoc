@@ -1,60 +1,35 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="ref-controller-team-mapping"]
 
 = Team mapping
 
-Team mapping is the mapping of team members (users) from social authentication accounts. 
-Keys are team names (which are created if not present). 
-Values are dictionaries of options for each team's membership, where each can contain the following parameters:
+Team mapping is the mapping of team members (users) from authenticators. 
 
-* *organization*: String. The name of the organization to which the team belongs. 
-The team is created if the combination of organization and team name does not exist. 
-The organization is created first if it does not exist. 
-If the license does not permit multiple organizations, the team is always assigned to the single default organization.
+You can define the options for each team’s membership. For each team, you can specify which users are automatically added as members of the team and also which users can administer the team.
 
-* *users*: None, True/False, string or list/tuple of strings.
+Team mappings can be specified separately for each account authentication.
 
-*** If *None*, team members are not updated.
-*** If *True*, all social authentication users are added as team members.
-*** If *False*, all social authentication users are removed as team members.
-* If a string or list of strings, specifies expressions used to match users, the user is added as a team member if the username or email matches. 
-Strings beginning and ending with `/` are compiled into regular expressions.
-The modifiers `i` (case-insensitive) and `m` (multi-line) can be specified after the ending `/`.
+When Team mapping is positively evaluated, a specified team and its organization are created, if they don’t exist if the related authenticator is allowed to create objects.
 
-*remove*: True/False. Defaults to *True*. When *True*, a user who does not match the preceding rules is removed from the team.
 
-[literal, options="nowrap" subs="+attributes"]
-----
-{
-    "My Team": {
-        "organization": "Test Org",
-        "users": ["/^[^@]+?@test\\.example\\.com$/"],
-        "remove": true
-    },
-    "Other Team": {
-        "organization": "Test Org 2",
-        "users": ["/^[^@]+?@test\\.example\\.com$/"],
-        "remove": false
-    }
-}
-----
+.Procedure
 
-Team mappings can be specified separately for each account authentication backend, based on which of these you set up. 
-When defined, these configurations take precedence over the preceding global configuration.
+. After configuring the authentication details for your authentication type, select *Team* from the *Add authentication mapping* list. 
+. Enter a unique rule *Name* to identify the rule.
+. Select a *Trigger* from the list. See xref:gw-authenticator-map-triggers[Authenticator map triggers] for more information about map triggers.
+. Select *Revoke* to deny user access to the system when none of the trigger conditions are matched. 
+. Select the *Team* and *Organization* to which matching users are added or blocked.
+. Select a *Role* to be applied or removed for matching users (for example, *Team Admin* or *Team Member*).
+. Click btn:[Next].
++
+[NOTE]
+====
+The mapping precedence is determined by the order in which the mappings are listed. 
+====
++
+. Click btn:[Next] to review and verify the mapping configurations.
+. Click btn:[Finish].
 
-[literal, options="nowrap" subs="+attributes"]
-----
-SOCIAL_AUTH_GOOGLE_OAUTH2_TEAM_MAP = {}
-SOCIAL_AUTH_GITHUB_TEAM_MAP = {}
-SOCIAL_AUTH_GITHUB_ORG_TEAM_MAP = {}
-SOCIAL_AUTH_GITHUB_TEAM_TEAM_MAP = {}
-SOCIAL_AUTH_SAML_TEAM_MAP = {}
-----
 
-Uncomment the following line, that is, set `SOCIAL_AUTH_USER_FIELDS` to an empty list, to prevent new user accounts from being created. 
 
-[literal, options="nowrap" subs="+attributes"]
-----
-SOCIAL_AUTH_USER_FIELDS = []
-----
-
-Only users who have previously logged in to {ControllerName} using social or enterprise-level authentication, or have a user account with a matching email address can then login.

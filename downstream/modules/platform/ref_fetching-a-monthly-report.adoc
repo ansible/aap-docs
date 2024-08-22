@@ -1,0 +1,162 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2024-07-15
+
+:_mod-docs-content-type: REFERENCE
+
+[id="fetching-a-monthly-report_{context}"]
+= fetching-a-monthly-report
+
+
+== On RHEL
+To fetch a monthly report on RHEL, run: 
+
+[source, ]
+----
+scp -r username@controller_host:$METRICS_UTILITY_SHIP_PATH/data/<YYYY>/<MM>/ /local/directory/
+----
+
+The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified.
+
+== On Openshift Container Platform from the AAP operator
+
+Use the following playbook to fetch a monthly consumption report for AAP on Openshift Container Platform:
+
+[source, ]
+----
+- name: Copy directory from Kubernetes PVC to local machine
+  hosts: localhost
+
+  vars:
+    report_dir_path: "/mnt/metrics/reports/{{ year }}/{{ month }}/"
+
+  tasks:
+    - name: Create a temporary pod to access PVC data
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: temp-pod
+            namespace: "{{ namespace_name }}"
+          spec:
+            containers:
+            - name: busybox
+              image: busybox
+              command: ["/bin/sh"]
+              args: ["-c", "sleep 3600"]  # Keeps the container alive for 1 hour
+              volumeMounts:
+              - name: "{{ pvc }}"
+                mountPath: "/mnt/metrics"
+            volumes:
+            - name: "{{ pvc }}"
+              persistentVolumeClaim:
+                claimName: automationcontroller-metrics-utility
+            restartPolicy: Never
+      register: pod_creation
+
+    - name: Wait for both initContainer and main container to be ready
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace_name }}"
+        name: temp-pod
+      register: pod_status
+      until: >
+        pod_status.resources[0].status.containerStatuses[0].ready
+      retries: 30
+      delay: 10
+
+    - name: Create a tarball of the directory of the report in the container
+      kubernetes.core.k8s_exec:
+        namespace: "{{ namespace_name }}"
+        pod: temp-pod
+        container: busybox
+        command: tar czf /tmp/metrics.tar.gz -C "{{ report_dir_path }}" .
+      register: tarball_creation
+
+    - name: Copy the report tarball from the container to the local machine
+      kubernetes.core.k8s_cp:
+        namespace: "{{ namespace_name }}"
+        pod: temp-pod
+        container: busybox
+        state: from_pod
+        remote_path: /tmp/metrics.tar.gz
+        local_path: "{{ local_dir }}/metrics.tar.gz"
+      when: tarball_creation is succeeded
+
+    - name: Ensure the local directory exists
+      ansible.builtin.file:
+        path: "{{ local_dir }}"
+        state: directory
+
+    - name: Extract the report tarball on the local machine
+      ansible.builtin.unarchive:
+        src: "{{ local_dir }}/metrics.tar.gz"
+        dest: "{{ local_dir }}"
+        remote_src: yes
+        extra_opts: "--strip-components=1"
+      when: tarball_creation is succeeded
+
+    - name: Delete the temporary pod
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Pod
+        namespace: "{{ namespace_name }}"
+        name: temp-pod
+        state: absent
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Labeled list
+Term 1:: Definition
+Term 2:: Definition
+
+.Table
+[options="header"]
+|====
+|Column 1|Column 2|Column 3
+|Row 1, column 1|Row 1, column 2|Row 1, column 3
+|Row 2, column 1|Row 2, column 2|Row 2, column 3
+|====
+
+
+
