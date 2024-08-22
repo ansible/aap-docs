@@ -1,0 +1,41 @@
+ifdef::context[:parent-context-of-rhdh-install-ocp-helm: {context}]
+[id="rhdh-install-ocp-helm_{context}"]
+
+= Installing the Ansible plug-ins with a Helm chart on {OCPShort}
+
+:context: rhdh-install-ocp
+[role="_abstract"]
+The following procedures describe how to install Ansible plug-ins in {RHDH} instances on {OCP} using a Helm chart.
+
+The workflow is as follows:
+
+. Download the Ansible plug-ins files.
+. Create a plug-in registry in your Openshift cluster to host the Ansible plug-ins.
+. Add the plug-ins to the Helm chart.
+. Create a custom ConfigMap.
+. Add your custom ConfigMap to your Helm chart.
+. Edit your custom ConfigMap and Helm chart according to the required and optional configuration procedures.
++
+[NOTE]
+====
+You can save changes to your Helm and ConfigMap after each update to your configuration.
+You do not have to make all the changes to these files in a single session.
+====
+
+include::devtools/ref-rhdh-install-ocp-prereqs.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-download-plugins.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-create-plugin-registry.adoc[leveloffset=+1]
+
+// Required config
+include::assembly-rhdh-ocp-required-installation.adoc[leveloffset=+1]
+//
+// Optional config 
+include::assembly-rhdh-ocp-configure-optional.adoc[leveloffset=+1]
+//
+// Full example configuration
+include::assembly-rhdh-ocp-full-examples.adoc[leveloffset=+1]
+//
+
+ifdef::parent-context-of-rhdh-install-ocp-helm[:context: {parent-context-of-rhdh-install-ocp-helm}]
+ifndef::parent-context-of-rhdh-install-ocp-helm[:!context:]
+

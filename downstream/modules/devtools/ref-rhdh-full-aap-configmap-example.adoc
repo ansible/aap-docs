@@ -1,0 +1,38 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="rhdh-full-aap-configmap-example_{context}"]
+= Full app-config-rhdh ConfigMap example for Ansible plug-ins entries
+
+----
+kind: ConfigMap
+...
+metadata:
+  name: app-config-rhdh
+  ...
+data:
+  app-config-rhdh.yaml: |-
+    ansible:
+      creatorService:
+        baseUrl: 127.0.0.1
+        port: '8000'
+      rhaap:
+       baseUrl: '<https://MyControllerUrl>'
+       token: '<AAP Personal Access Token>'
+       checkSSL: <true or false>
+      # Optional integrations 
+      devSpaces:
+        baseUrl: '<https://MyDevSpacesURL>'
+      automationHub:
+        baseUrl: '<https://MyPrivateAutomationHubURL>'
+
+    ...
+    catalog:
+      locations:
+        - type: url
+          target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+          rules:
+            - allow: [Template]
+    ...
+
+----
+
