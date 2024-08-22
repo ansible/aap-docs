@@ -2,22 +2,22 @@
 
 [id="gw-keycloak-authentication"]
 
-= Configuring local authentication
+= Configuring keycloak authentication
 
-As a platform administrator, you can configure local system authentication. With local authentication, users and their passwords are checked against local system accounts.
-
-[NOTE]
-====
-A local authenticator is automatically created by the {PlatformNameShort} installation process, and is configured with the specified admin credentials in the inventory file before installation. After successful installation, you can log in to the {PlatformNameShort} using those credentials. 
-====
+You can configure {PlatformNameShort} to integrate Keycloak to manage user authentication.
 
 .Procedure
 
 . From the navigation panel, select {MenuAMAuthentication}.
 . Click btn:[Create authentication].
-. Select *Local* from the *Authentication type* list.
+. Select *Keycloak* from the *Authentication type* list.
 . Click btn:[Next]. 
-. Enter a *Name* for this Local configuration. The configuration name is required, must be unique across all authenticators, and must not be longer than 512 characters. 
+. Enter a *Name* for this keycloak configuration. The configuration name is required, must be unique across all authenticators, and must not be longer than 512 characters. 
+. Enter the location where the user's token can be retrieved in the *Keycloak Access Token URL* field.
+. Optional: Enter the redirect location the user is taken to during the login flow in the *Keycloak Provider URL* field. 
+. Enter the Client ID from your Keycloak installation in the *Keycloak OIDC Key* field.
+. Enter the RS256 public key provided by your Keycloak realm in the *Keycloak Public Key* field. 
+. Enter the OIDC secret (Client Secret) from your Keycloak installation in the *Keycloak OIDC Secret* field.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
