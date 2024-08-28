@@ -9,8 +9,17 @@ When using plugins such as redhat.insights_eda or other similar plugins to run r
 
 . Create a directory for the safe plugin variable: `mkdir -p ./group_vars/automationedacontroller`
 . Create a file within that directory for your new setting (for example, `touch ./group_vars/automationedacontroller/custom.yml`)
-. Add the `automationedacontroller_safe_plugins` variable along with a comma-separated list of plugins to enable for {EDAcontroller}. For example: 
+. Add the variable `automationedacontroller_additional_settings` to extend the default `settings.yaml` template for {EDAcontroller} and add the *SAFE_PLUGINS* field with a list of plugins to enable. For example: 
 +
 ----
-automationedacontroller_safe_plugins: “ansible.eda.webhook, ansible.eda.alertmanager”
+automationedacontroller_additional_settings:
+   SAFE_PLUGINS:
+     - ansible.eda.webhook
+     - ansible.eda.alertmanager
 ----
++
+[NOTE]
+====
+You can also extend the  `automationedacontroller_additional_settings` variable beyond SAFE_PLUGINS in the django configuration file, /etc/ansible-automation-platform/eda/settings.yaml 
+====
+
