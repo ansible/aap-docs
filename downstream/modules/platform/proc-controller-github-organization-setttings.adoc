@@ -1,37 +1,37 @@
 [id="proc-controller-github-organization-setttings"]
 
-= GitHub Organization settings
+= Configuring GitHub organization authentication
 
-When defining account authentication with either an organization or a team within an organization, you should use the specific organization and team settings.
-Account authentication can be limited by an organization and by a team within an organization.
-
+When defining account authentication with either an organization or a team within an organization, you should use the specific organization and team settings. Account authentication can be limited by an organization and by a team within an organization.
 You can also choose to permit all by specifying non-organization or non-team based settings.
+You can limit users who can log in to the platform by limiting only those in an organization or on a team within an organization.
 
-You can limit users who can login to the controller by limiting only those in an organization or on a team within an organization.
+To set up social authentication for a GitHub organization, you must obtain an OAuth2 key and secret for a web application using the link:https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app[registering the new application with GitHub].
 
-To set up social authentication for a GitHub Organization, you must obtain an OAuth2 key and secret for a web application. To do this, you must first register your organization-owned application at \https://github.com/organizations/<yourorg>/settings/applications.
-
-To register the application, you must supply it with your Authorization callback URL, which is the *Callback URL* shown in the *Details* page.
-Each key and secret must belong to a unique application and cannot be shared or reused between different authentication backends.
-The OAuth2 key (Client ID) and secret (Client Secret) are used to supply the required fields in the UI.
+The OAuth2 key (Client ID) and secret (Client Secret) are used to supply the required fields in the UI. To register the application, you must supply it with your webpage URL, which is the Callback URL shown in the Authenticator details for your authenticator configuration. See xref:gw-display-auth-details[Displaying authenticator details] for instructions on accessing this information.
 
 .Procedure
-. From the navigation panel, select {MenuAEAdminSettings}.
-. On the *Settings* page, select *GitHub settings* from the list of *Authentication* options.
-. Select the *GitHub Organization* tab.
+. From the navigation panel, select {MenuAMAuthentication}.
+. Click btn:[Create authentication].
+. Select *GitHub organization* from the *Authentication type* list and click btn:[Next].
+. Enter a *Name* for this authentication configuration.
+. When the application is registered, GitHub displays the *Client ID* and *Client Secret*:
 +
-The *GitHub Organization OAuth2 Callback URL* field is already pre-populated and non-editable.
+.. Copy and paste the GitHub Client ID into the GitHub OAuth2 Key field. 
+.. Copy and paste the GitHub Client Secret into the GitHub OAuth2 Secret field. 
 +
-When the application is registered, GitHub displays the Client ID and Client Secret.
+. Enter the name of your GitHub organization, as used in your organization’s URL, for example, `https://github.com/<yourorg>/` in the *GitHub OAuth Organization Name* field.
++
+include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
++
+. Enter the authorization scope for users in the *GitHub OAuth2 Scope* field. The default is `read:org`.
++
+include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
++
+. Click btn:[Next].
 
-. Click btn:[Edit] and copy and paste GitHub's Client ID into the *GitHub Organization OAuth2 Key* field.
-. Copy and paste GitHub's Client Secret into the *GitHub Organization OAuth2 Secret* field.
-. Enter the name of your GitHub organization, as used in your organization's URL, for example, \https://github.com/<yourorg>/ in the *GitHub Organization Name* field.
-. For more information on completing the mapping fields, see xref:ref-controller-organization-mapping[Organization mapping] and xref:ref-controller-team-mapping[Team mapping].
-. Click btn:[Save].
+[role="_additional-resources"]
+.Next steps
+include::snippets/snip-gw-authentication-next-steps.adoc[]
 
-.Verification
-To verify that the authentication was configured correctly, logout of {ControllerName}.
-The login screen displays the GitHub Organization logo to enable logging in with those credentials.
-
-image:configure-controller-auth-github-orgs-logo.png[image]
+include::snippets/snip-gw-authentication-verification.adoc[]
