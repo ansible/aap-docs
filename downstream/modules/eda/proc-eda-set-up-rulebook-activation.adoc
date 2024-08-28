@@ -25,7 +25,7 @@ Credential:: Select 0 or more credentials for this rulebook activation. This fie
 +
 [NOTE]
 ====
-The credentials that display in this field are customized based on your rulebook activation and will only include the following credential types: Vault, {PlatformName}, or any custom credential types that you have created. For more information on credentials, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/event-driven_ansible_controller_user_guide/eda-credentials#eda-credentials[Setting up credentials for {EDAcontroller}].
+The credentials that display in this field are customized based on your rulebook activation and only include the following credential types: Vault, {PlatformName}, or any custom credential types that you have created. For more information about credentials, see xref:eda-credentials[Setting up credentials for {EDAcontroller}].
 ====
 //[J. Self] Might need to update the link above for the updated Credentials section.
 Decision environment:: Decision environments are a container image to run Ansible rulebooks.
@@ -36,24 +36,32 @@ In {EDAcontroller}, you cannot customize the pull policy of the decision environ
 By default, it follows the behavior of the *always* policy.
 Every time an activation is started, the system tries to pull the most recent version of the image.
 ====
-Restart policy:: This is a policy to decide when to restart a rulebook.
+Restart policy:: This is the policy that determines how an activation should restart after the container process running the source plugin ends.
 *** Policies:
-... Always: Restarts when a rulebook finishes
-... Never: Never restarts a rulebook when it finishes
-... On failure: Only restarts when it fails
+... Always: This restarts the rulebook activation immediately, regardless of whether it ends successfully or not, and occurs no more than 5 times.
+... Never: This never restarts a rulebook activation when the container process ends.
+... On failure: This restarts the rulebook activation after 60 seconds by default, only when the container process fails, and occurs no more than 5 times.
+Log level:: This field defines the severity and type of content in your logged events. 
+*** Levels:
+... Error: Logs that contain error messages that are displayed in the *History* tab of an activation. 
+... Info: Logs that contain useful information about rulebook activations, such as a success or failure, triggered action names and their related action events, and errors.
+... Debug: Logs that contain information that is only useful during the debug phase and might be of little value during production. 
+This log level includes both error and log level data. 
 Service Name:: This defines a service name for Kubernetes to configure inbound connections if the activation exposes a port. This field is optional.
 Rulebook activation enabled?:: This automatically enables the rulebook activation to run.
-Variables:: The variables for the rulebook are in a JSON/YAML format.
+Variables:: The variables for the rulebook are in a JSON or YAML format.
 The content would be equivalent to the file passed through the `--vars` flag of ansible-rulebook command.
 
 . Click btn:[Create rulebook activation].
 
 Your rulebook activation is now created and can be managed on the *Rulebook Activations* page.
 
-After saving the new rulebook activation, the rulebook activation's details page is displayed.
-From there or the *Rulebook Activations* list view, you can edit or delete it.
+After saving the new rulebook activation, the rulebook activation's details page is displayed, with either a *Pending*, *Running*, or *Failed* status
+From there or the *Rulebook Activations* list view, you can restart or delete it.
 
 [NOTE]
 ====
-Occasionally, when a source plugin shuts down, it causes a rulebook to exit gracefully after a certain amount of time. When a rulebook activation shuts down, any tasks that are waiting to be performed will be canceled, and an info level message will be sent to the activation log. For more information, see link:https://ansible.readthedocs.io/projects/rulebook/en/stable/rulebooks.html#[Rulebooks].
+Occasionally, when a source plugin shuts down, it causes a rulebook to exit gracefully after a certain amount of time. 
+When a rulebook activation shuts down, any tasks that are waiting to be performed will be canceled, and an info level message is sent to the activation log. 
+For more information, see link:https://ansible.readthedocs.io/projects/rulebook/en/stable/rulebooks.html#[Rulebooks].
 ====
