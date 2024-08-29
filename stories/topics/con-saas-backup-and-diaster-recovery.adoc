@@ -1,2 +1,22 @@
 [id="con-saas-backup-and-diaster-recovery"]
 = Backup and diaster recover
+
+Red{nbsp}Hat maintains daily database and file system snapshots in a separate region from each deployment.  
+
+|===
+| Component   | Snapshot Frequency | Retention Policy
+| Database    | Daily              | 7 days
+| File System | Daily              | 7 days
+|===
+
+This recovery data is used in the event that it becomes unlikely that an AWS regional outage will be recoverable within a reasonable period. 
+In the event of such a circumstance, the following process may be followed to recover an {PlatformNameShort} deployment in a different AWS region:
+
+* *Add Steps*
+
+[NOTE]
+====
+Backup data is not directly accessible to customers. 
+The data is only used in the event of an infrastructure failure and is not used in the event of customer configuration error. 
+Red{nbsp} encourages you to use configuration-as-code practices when deploying {PlatformNameShort} in order to have a customer-hosted backup of your configuration.
+====

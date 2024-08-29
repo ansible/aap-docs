@@ -1,3 +1,12 @@
 [id="con-saas-connectivity"]
 
 = Connectivity
+
+In general, the execution plane should be able to communicate to the control plane when the following conditions are met:
+
+* Polling (mesh-ingress): Execution nodes must be able to route stateful egress traffic to the domain of the {PlatformNameShort} deployment over port 443.
+* Push: A configurable firewall port must be opened within a customer’s remote networks to allow for {PlatformNameShort} to push information to execution nodes.
+
+You can configure automation mesh nodes behind firewalls, proxy servers, and similar services. 
+These services need to route or proxy traffic originating from {PlatformNameShort} without altering headers, payload, or other information that would affect functionality of the automation mesh.
+
