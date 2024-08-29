@@ -22,7 +22,7 @@ You must restart the database server after changing the value for `shared_buffer
 
 [NOTE]
 ====
-If you are compiling Postgres against OpenSSL 3.2, your system regresses to remove the parameter for User during startup. You can rectify this by using the BIO_get_app_data call instead of open_get_data. Only an administrator can make these changes, but it impacts all users connected to the PostgreSQL database.
+If you are compiling Postgres against OpenSSL 3.2, your system regresses to remove the parameter for User during startup. You can rectify this by using the `BIO_get_app_data` call instead of `open_get_data`. Only an administrator can make these changes, but it impacts all users connected to the PostgreSQL database.
 
 If you update your systems without the OpenSSL patch, you are not impacted, and you do not need to take action.
 ====
