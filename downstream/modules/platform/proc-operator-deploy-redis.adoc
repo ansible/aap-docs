@@ -1,0 +1,25 @@
+= Deploying clustered Redis on {OperatorPlatform}
+
+When you create an {PlatformNameShort} instance through the {OperatorPlatform}, standalone Redis is assigned by default. 
+To deploy clustered Redis, see the following procedure.
+
+//Add a link to the section when ready
+For more information about Redis, refer to Caching and queueing system in the _Planning_ _your_ _installation_ _guide_.
+
+.Prerequisites
+* You have installed an {OperatorPlatform} deployment.
+
+.Procedure
+. Log in to {OCP}. 
+. Navigate to menu:Operators[Installed Operators].
+. Select your {OperatorPlatform} deployment.
+. Select the *Details* tab. 
+. On the *{PlatformNameShort}* tile click btn:[Create instance].
+.. For existing instances, you can edit the YAML view by clicking the {MoreActionsIcon} icon and then btn:[Edit AnsibleAutomationPlatform].
+.. Edit the *redis_mode* value to "clustered".
+.. Click btn:[Reload], then btn:[Save].
+. Click to expand *Advanced configuration*.
+. For the *Redis Mode* list, select *Cluster*.
+. Configure the rest of your instance as necessary, then click btn:[Create].
+
+Your instance will deploy with a cluster Redis with 6 Redis replicas as default. 
