@@ -1,0 +1,16 @@
+
+[id="proc-add-eda-safe-plugin-var"]
+
+= Adding a safe plugin variable to {EDAcontroller}
+
+When using redhat.insights_eda or similar plug-ins to run rulebook activations in {EDAcontroller}, you must add a safe plugin variable to a directory in {PlatformNameShort}. This would ensure connecton between {EDAcontroller} and the source plugin, and display port mappings correctly. 
+
+.Procedure
+
+. Create a directory for the safe plugin variable: `mkdir -p ./group_vars/automationedacontroller`
+. Create a file within that directory for your new setting (for example, `touch ./group_vars/automationedacontroller/custom.yml`)
+. Add the variable `automationedacontroller_safe_plugins` to the file with a comma-separated list of plugins to enable for {EDAcontroller}. For example: 
++
+----
+automationedacontroller_safe_plugins: “ansible.eda.webhook, ansible.eda.alertmanager”
+----
