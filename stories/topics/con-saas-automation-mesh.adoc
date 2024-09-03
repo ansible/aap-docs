@@ -1,3 +1,16 @@
 [id="con-saas-automation-mesh"]
 
 = Automation mesh
+
+{SaaSonAWSShort} has “mesh-ingress” hop nodes available by default. 
+These are the hosted hop nodes that enable execution nodes to poll for automation work through egress from a customer’s private network, as opposed to opening an inbound firewall port. 
+Mesh ingress hop nodes use port 443 for inbound traffic.
+
+The following is an example of an execution node in a private address space with egress-only internet access connected to {SaaSonAWSShort} through this model.
+
+image:saas-exe-node-private.png[Execution node in a private address space ]
+
+It is also possible to configure automation mesh with outbound connectivity from the control plane to your execution plane. 
+In this model, you can configure the ports that are used by the automation mesh.
+
+You can use the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_automation_mesh_for_operator-based_installations/index[Red Hat Ansible Automation Platform automation mesh for operator-based installations] documentation for instructions.

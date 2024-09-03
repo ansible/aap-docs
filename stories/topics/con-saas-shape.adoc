@@ -1,3 +1,24 @@
 [id="con-saas-shape"]
 
 = Shape
+
+Your execution plane varies in size and shape based on the type of automation that is run and the locations that the mesh connects to. 
+Use the following to help guide your automation mesh implementation model:
+
+* {PlatformNameShort} minimum requirements:
+** Hop Nodes: Hop nodes are only required when not using mesh ingress. 
+Hop nodes typically require minimum resources. 
+The shape of a hop node depends on the number of execution nodes connected to it. 
+Typically a virtual machine (VM) with 2 vCPUs and 2 GB RAM can route traffic for 2-4 execution nodes.   
+** Execution Nodes: {PlatformNameShort} minimum requirements are 4 vCPUs and 8 GB RAM for execution nodes. 
+** {PlatformNameShort} performance and scale testing showed that 2 m4.xlarge execution nodes could effectively automate against 200 managed active nodes constantly with enough remaining CPU and RAM as a buffer to prevent job failures in the event of a spike on those machines. 
+You can use this as a baseline to consider the right machine shapes for your environment when dealing with a CPU-heavy consistent automation load.
+You must monitor and tune the execution plane based on the needs of your organization’s automation.
+* If you have automation in fewer locations (such as geographies or other clouds) must create a mesh with fewer VMs that can be scaled vertically. 
+Most clouds and hypervisors enable the ability to change shapes with minimal downtime.
+* If you require CPU or RAM intensive automation, you will require larger machine shapes.
+* If you have automation that spans multiple locations (such as geographies or other clouds), create a mesh with nodes that enable connectivity to those locations.
+* You can consider the use of different CPU architectures, like ARM, and reserved instances to reduce the cost of the execution plane.
+* If you are interested in configuring redundancy in the automation mesh, you  should configure at least two mesh nodes of the same shape in the same region, but in different availability zones, with each machine connected to both mesh ingress hop nodes.
+* Use OpenShift if auto-scaling the execution plane is necessary.
+
