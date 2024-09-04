@@ -1,0 +1,25 @@
+[id="ansible-inside-prereqs_{context}"]
+
+= Prerequisites
+
+{AnsibleInsideNameShort} requires a valid subscription to an {AnsibleInsideNameShort} SKU and enablement of the corresponding {RHSM} (RHSM) repository.
+
+Contact Red Hat customer support or Red Hat sales for purchasing or attaching an {AnsibleInsideNameShort} subscription.
+
+After a valid {AnsibleInsideNameShort} subscription has been attached to your organization within Red Hat Subscription Manager, you can enable the required repository as follows:
+
+* RHEL 8
+
+[source,bash]
+----
+sudo subscription-manager repos --enable=ansible-inside-1.2-for-rhel-8-x86_64-rpms
+----
+
+* RHEL 9
+
+[source,bash]
+----
+sudo subscription-manager repos --enable=ansible-inside-1.2-for-rhel-9-x86_64-rpms
+----
+
+After the repository is enabled, you can proceed with installing the Ansible components.
