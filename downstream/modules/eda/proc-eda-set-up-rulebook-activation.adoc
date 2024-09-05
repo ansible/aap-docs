@@ -37,19 +37,20 @@ Every time an activation is started, the system tries to pull the most recent ve
 ====
 Restart policy:: This is the policy that determines how an activation should restart after the container process running the source plugin ends.
 *** Policies:
-... Always: This restarts the rulebook activation immediately, regardless of whether it ends successfully or not, and occurs no more than 5 times.
-... Never: This never restarts a rulebook activation when the container process ends.
-... On failure: This restarts the rulebook activation after 60 seconds by default, only when the container process fails, and occurs no more than 5 times.
+... *Always*: This restarts the rulebook activation immediately, regardless of whether it ends successfully or not, and occurs no more than 5 times.
+... *Never*: This never restarts a rulebook activation when the container process ends.
+... *On failure*: This restarts the rulebook activation after 60 seconds by default, only when the container process fails, and occurs no more than 5 times.
 Log level:: This field defines the severity and type of content in your logged events. 
 *** Levels:
-... Error: Logs that contain error messages that are displayed in the *History* tab of an activation. 
-... Info: Logs that contain useful information about rulebook activations, such as a success or failure, triggered action names and their related action events, and errors.
-... Debug: Logs that contain information that is only useful during the debug phase and might be of little value during production. 
+... *Error*: Logs that contain error messages that are displayed in the *History* tab of an activation. 
+... *Info*: Logs that contain useful information about rulebook activations, such as a success or failure, triggered action names and their related action events, and errors.
+... *Debug*: Logs that contain information that is only useful during the debug phase and might be of little value during production. 
 This log level includes both error and log level data. 
-Service Name:: This defines a service name for Kubernetes to configure inbound connections if the activation exposes a port. This field is optional.
+Service name:: This defines a service name for Kubernetes to configure inbound connections if the activation exposes a port. This field is optional.
 Rulebook activation enabled?:: This automatically enables the rulebook activation to run.
 Variables:: The variables for the rulebook are in a JSON or YAML format.
 The content would be equivalent to the file passed through the `--vars` flag of ansible-rulebook command.
+Options:: Check the *Skip audit events* option if you do not want to see your events in the Rule Audit.
 
 . Click btn:[Create rulebook activation].
 
