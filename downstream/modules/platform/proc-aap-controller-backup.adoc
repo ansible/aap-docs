@@ -8,13 +8,13 @@ Use this procedure to back up a deployment of the controller, including jobs, in
 .Prerequisites
 
 * You must be authenticated with an OpenShift cluster.
-* You have installed the {OperatorPlatform} on the cluster.
-* The {ControllerName} is deployed to using the {OperatorPlatform}.
+* You have installed {OperatorPlatform} on the cluster.
+* You have deployed {ControllerName} using the {OperatorPlatform}.
 
 .Procedure
-. Log in to *{OCP}*.
+. Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
-. Select the {OperatorPlatform} installed on your project namespace.
+. Select your {OperatorPlatform} deployment.
 . Select the *Automation Controller Backup* tab.
 . Click btn:[Create AutomationControllerBackup].
 . Enter a *Name* for the backup.
@@ -43,9 +43,9 @@ $ df -h | grep "/var/lib/pgsql/data"
 A backup tarball of the specified deployment is created and available for data recovery or deployment rollback. Future backups are stored in separate tar files on the same pvc.
 
 .Verification
-. Log in to Red Hat *{OCP}*
+. Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
-. Select the {OperatorPlatform} installed on your project namespace.
+. Select your {OperatorPlatform}.
 . Select the *AutomationControllerBackup* tab.
 . Select the backup resource you want to verify.
 . Scroll to *Conditions* and check that the *Successful* status is `True`.
