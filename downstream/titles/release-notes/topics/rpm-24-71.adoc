@@ -1,0 +1,33 @@
+// This is the release notes for 2.4-7.1 RPM release
+
+[id="rpm-24-71"]
+
+= RHSA-2024:4522 - Security Advisory - July 12, 2024
+
+link:https://access.redhat.com/errata/RHSA-2024:4522[RHSA-2024:4522]
+
+== General
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2024-34064[CVE-2024-34064] - Jinja accepts keys containing non-attribute characters.
+** Packages updated: `automation-controller: jinja2`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-28102[CVE-2024-28102] - malicious JWE token can cause denial of service.
+** Packages updated: `automation-controller: jwcrypto`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-35195[CVE-2024-35195] - many requests to the same host ignore cert verification.
+** Packages updated: `automation-controller: requests`.
+
+// Automation controller
+== {ControllerNameStart}
+
+* Fixed a bug where the controller does not respect `DATABASES['OPTIONS']` setting, if specified (AAP-26398).
+
+* Changed all uses of `ImplicitRoleField` to perform an `on_delete=SET_NULL` (AAP-25136).
+
+* Fixed the *HostMetric* automated counter to display the correct values (AAP-25115).
+
+* Added Django logout redirects (AAP-24543).
+
+* Updated the dispatcher to make the database password optional in order to support PostgreSQL authentication methods that do not require them (AAP-22231).
