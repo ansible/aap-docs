@@ -1,0 +1,83 @@
+[id="cont-b-env-a"]
+= Container enterprise topology
+
+The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
+
+== Infrastructure topology
+
+Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPU, 60 GB local disk, and 3000 IOPS. 
+
+.Infrastructure topology
+[options="header"]
+|====
+| VM count | Purpose | Example VM names
+| 2 | Platform gateway with Redis | automationgateway 
+| 2 | {ControllerNameStart} | automationcontroller
+| 2 | {PrivateHubNameStart} with Redis | automationhub
+| 2 | {EDAName} with Redis | automationedacontroller
+| 1 | {AutomationMeshStart} hop node | hop_nodes
+| 2 | {AutomationMeshStart} execution node | execution_nodes
+| 1 | Externally managed database service | external_database
+| 1 | HAProxy load balancer in front of platform gateway (externally managed) | N/A
+|====
+
+== Tested system configurations
+
+Red Hat has tested the following configurations to install and run {PlatformName}:
+
+.Tested system configurations
+[options="header"]
+|====
+| Type | Description 
+| Subscription 
+a| 
+* Valid {PlatformName} subscription
+* Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
+| Operating system | {RHEL} 9.2 or later 64-bit (x86_64)
+| Ansible-core | Ansible-core version 2.15 or later
+| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
+| Database | PostgreSQL version 15
+|====
+
+== Network ports
+
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+
+.Network ports and protocols
+[options="header"]
+|====
+| Port number | Protocol | Service | Source | Destination
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
+| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
+| 443 | TCP | HTTPS | HAProxy load balancer | Platform gateway
+| 443 | TCP | HTTPS | Platform gateway | {ControllerNameStart}
+| 443 | TCP | HTTPS | Platform gateway | {HubNameStart}
+| 443 | TCP | HTTPS | Platform gateway | {EDAName}
+| 5432 | TCP | PostgreSQL | {EDAName} | External database
+| 5432 | TCP | PostgreSQL | Platform gateway | External database 
+| 5432 | TCP | PostgreSQL | {HubNameStart} | External database
+| 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
+| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
+| 27199 | TCP | Receptor | Hop node | Execution node
+| 6379 | TCP | Redis | {EDAName} | Platform gateway
+| 6379 | TCP | Redis | {EDAName} | {HubNameStart}
+| 6379 | TCP | Redis | {EDAName} | {EDAName}
+| 6379 | TCP | Redis | Platform gateway | Platform gateway
+| 6379 | TCP | Redis | Platform gateway | {HubNameStart}
+| 6379 | TCP | Redis | Platform gateway | {EDAName}
+| 16379 | TCP | Redis | Redis | Redis cluster node
+| 8433 | TCP | HTTPS | Platform gateway | Platform gateway
+| 50051 | TCP | gRPC | Platform gateway | Platform gateway
+|====
+
+== Storage requirements
+* Execution environments are pulled into {ControllerName} hybrid nodes and execution nodes that run jobs. The size of these containers influences the storage requirements for `$PATH_WHERE_PODMAN_PUTS_CONTAINER_IMAGES`.
+
+* The primary determining factors for the size of the database and its storage volume, which defaults to `$POSTGRES_DEFAULT_DATA_DIR`, are:
+** The quantity of job events (lines of output from {ControllerName} jobs) 
+** The quantity of days of job data that are retained
+
+* On execution nodes and {ControllerName} control and hybrid nodes, job output is buffered to the disk in `$NAME_OF_RECEPTOR_DIR_VAR`, which defaults to `/tmp`.
+
+* The size and quantity of collections synced to {HubName} influence the storage requirements of `$PATH_WHERE_PULP_STORES_COLLECTIONS`.
