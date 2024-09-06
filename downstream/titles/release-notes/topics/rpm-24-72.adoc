@@ -1,0 +1,67 @@
+// This is the release notes for 2.4-7.1 RPM release
+
+[id="rpm-24-72"]
+
+= RHSA-2024:6428 - security advisory - September 05, 2024
+
+link:https://access.redhat.com/errata/RHSA-2024:6428[RHSA-2024:6428]
+
+== General
+
+* Gunicorn python package will no longer obsolete itself when checking for or applying updates (AAP-28364).
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2024-42005[CVE-2024-42005] - potential SQL injection in `QuerySet.values()` and `values_list()`.
+** Packages updated: `automation-controller: Django`, `python3-django`, and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-41991[CVE-2024-41991] - potential denial of service vulnerability in `django.utils.html.urlize()` and `AdminURLFieldWidget`.
+** Packages updated: `automation-controller: Django`, `python3-django`, and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-41990[CVE-2024-41990] - potential denial of service vulnerability in `django.utils.html.urlize()`.
+** Packages updated: `automation-controller: Django`, `python3-django`, and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-33663[CVE-2024-33663] - algorithm confusion with OpenSSH ECDSA keys and other key formats.
+** Packages updated: `automation-controller: python-jose`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-32879[CVE-2024-32879] - improper handling of case sensitivity in `social-auth-app-django`.
+** Packages updated: `automation-controller: python-social-auth`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-6840[CVE-2024-6840] - gain access to the Kubernetes API server through job execution with container group.
+** Packages updated: `automation-controller`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-41989[CVE-2024-41989] - memory exhaustion in `django.utils.numberformat.floatformat()`.
+** Packages updated: `python3-django` and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-39614[CVE-2024-39614] - Potential denial of service in `django.utils.translation.get_supported_language_variant()`.
+** Packages updated: `python3-django` and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-39330[CVE-2024-39330] - Potential directory-traversal in `django.core.files.storage.Storage.save()`.
+** Packages updated: `python3-django` and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-39329[CVE-2024-39329] - Username enumeration through timing difference for users with unusable passwords.
+** Packages updated: `python3-django` and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-38875[CVE-2024-38875] - Potential denial of service in `django.utils.html.urlize()`.
+** Packages updated: `python3-django` and `python39-django`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-7246[CVE-2024-7246] - Client communicating with a HTTP/2 proxy can poison the HPACK table between the proxy and the backend.
+** Packages updated: `python3-grpcio` and `python39-grpcio`.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-5569[CVE-2024-5569] - denial of service (infinite loop) through crafted .zip file.
+** Packages updated: `python3-zipp` and `python39-zipp`.
+
+
+// Automation controller
+== {ControllerNameStart}
+
+* Updated the receptor to not automatically release the receptor work unit when `RECEPTOR_KEEP_WORK_ON_ERROR` is set to true (AAP-27635).
+
+* Updated the *Help* link in the REST API to point to the latest API reference documentation (AAP-27573).
+
+* Fixed a timeout error in the UI when trying to load the Activity Stream with a large number of activity records (AAP-26772).
+
+// Automation hub
+== {HubNameStart}
+
+* The API browser now correctly escapes JSON values (AAH-3272, AAP-14463).
