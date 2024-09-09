@@ -1,0 +1,61 @@
+[id="cont-a-env-a"]
+= Container growth topology
+
+The growth topology is intended for organizations that do not require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
+
+== Infrastructure topology
+
+Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPU, 60 GB local disk, and 3000 IOPS. Resources, such as storage, can be increased based on the needs of the deployment.
+
+.Infrastructure topology
+[options="header"]
+|====
+| Purpose | Example group names
+| All {PlatformNameShort} components 
+a| 
+* automationgateway 
+* automationcontroller 
+* automationhub 
+* automationedacontroller 
+* database
+|====
+
+== Tested system configurations
+
+Red Hat has tested the following configurations to install and run {PlatformName}:
+
+.Tested system configurations
+[options="header"]
+|====
+| Type | Description 
+| Subscription 
+a| 
+* Valid {PlatformName} subscription
+* Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
+| Operating system | {RHEL} 9.2 or later 64-bit (x86_64)
+| Ansible-core | Ansible-core version 2.15 or later
+| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
+| Database | PostgreSQL version 15
+|====
+
+== Network ports
+
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+
+.Network ports and protocols
+[options="header"]
+|====
+| Port number | Protocol | Service | Source | Destination
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
+| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
+| 443 | TCP | HTTPS | Platform gateway | {ControllerNameStart}
+| 443 | TCP | HTTPS | Platform gateway | {HubNameStart}
+| 443 | TCP | HTTPS | Platform gateway | {EDAName}
+| 5432 | TCP | PostgreSQL | {EDAName} | External database
+| 5432 | TCP | PostgreSQL | Platform gateway | External database 
+| 5432 | TCP | PostgreSQL | {HubNameStart} | External database
+| 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
+| 8433 | TCP | HTTPS | Platform gateway | Platform gateway
+| 50051 | TCP | gRPC | Platform gateway | Platform gateway
+|====
