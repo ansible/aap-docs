@@ -1,0 +1,104 @@
+[id="ocp-a-env-a"]
+= Operator growth topology
+
+The growth topology is intended for organizations that do not require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
+
+== Infrastructure topology
+// The following diagram outlines the infrastructure topology that Red Hat has tested with the respective deployment model that customers may use when self-managing {PlatformNameShort}:
+
+A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPU, 128 GB local disk, and 3000 IOPS.
+
+.Infrastructure topology
+[options="header"]
+|====
+| Count | Component 
+| 1 | Automation controller web Pod
+| 1 | Automation controller task Pod
+| 1 | Automation hub API Pod 
+| 2 | Automation hub content Pod
+| 2 | Automation hub worker Pod
+| 1 | Automation hub redis Pod
+| 1 | Event-Driven Ansible API Pod
+| 1 | Event-Driven Ansible activation worker Pod
+| 1 | Event-Driven Ansible default worker Pod
+| 1 | Event-Driven Ansible event stream Pod
+| 1 | Event-Driven Ansible scheduler Pod
+| 1 | Platform gateway Pod
+| 1 | Database Pod
+| 1 | Redis Pod
+|====
+
+== Tested system configurations
+
+Red Hat has tested the following configurations to install and run {PlatformName}:
+
+.Tested system configurations
+[options="header"]
+|====
+| Type | Description 
+| Subscription 
+a| 
+* Valid {PlatformName} subscription
+* Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
+| Operating system | {RHEL} 9.2 or later 64-bit (x86_64)
+| Red Hat OpenShift  
+a| 
+* Version: 4.14
+* num_of_control_nodes: 1
+* num_of_worker_nodes: 1 
+* VM Configuration:
+** OS: {RHEL} 9.2 or later 64-bit (x86)
+**  CPU: 16 
+**  RAM: 32 GB
+**  Disk: 128 GB
+**  IOPS: 3000/s
+| Ansible-core | Ansible-core version 2.15 or later
+| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
+| Database | PostgreSQL version 15
+|====
+
+== Example custom resource file 
+
+Use the following example custom resource (CR) to add your {PlatformNameShort} instance to your project:
+
+====
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+ name: <aap instance name>
+spec:
+  eda:
+    automation_server_ssl_verify: 'no'
+  hub:
+    storage_type: 's3'
+    object_storage_s3_secret: '<name of the Secret resource holding s3 configuration>'
+----
+====
+
+== Nonfunctional requirements
+
+{PlatformNameShort}’s performance characteristics and capacity are impacted by its resource allocation and configuration. With OpenShift, each {PlatformNameShort} component is deployed as a pod. You can specify resource requests and limits for each pod. 
+
+The {PlatformNameShort} custom resource allows you to configure resource allocation for OpenShift installations. Each configurable item has default settings. These settings are the minimum requirements for an installation, but may not meet your production workload needs. 
+
+By default, each component’s deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU as long as the OpenShift worker node itself is not under node pressure.
+
+In the reference topology provided in this document, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPU, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the automation controller task pods is derived from the underlying OCP node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
+
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a ReadWriteMany type storage, which is not a default storage type in OpenShift.
+
+== Network ports
+
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+
+.Network ports and protocols
+[options="header"]
+|====
+| Port number | Protocol | Service | Source | Destination
+| 27199 | TCP | Receptor | OCP cluster | Execution node
+| 27199 | TCP | Receptor | OCP cluster | Hop node
+| 443 | HTTPS | Receptor | Execution node | OCP ingress
+| 443 | HTTPS | Receptor | Hop node | OCP ingress
+| 443 | HTTPS | Platform | Customer clients | OCP ingress
+|====
