@@ -8,33 +8,39 @@
 
 .Procedure
 
-Containerized {PlatformNameShort} runs the component services as podman based containers on top of a RHEL host. The installer takes care of this once the underlying host has been prepared. Use the following instructions for this.
+Containerized {PlatformNameShort} runs the component services as Podman based containers on top of a RHEL host. The installer takes care of this once the underlying host has been prepared. 
 
-. Log into your RHEL host as your non-root user.
+Use the following instructions to prepare the RHEL host:
 
-. Run *dnf repolist* to validate only the BaseOS and appstream repos are setup and enabled on the host:
+. Log in to the RHEL host as your non-root user.
+
+. Register your RHEL host with `subscription-manager`:
 +
 ----
-$ dnf repolist
+sudo subscription-manager register
+----
++
+
+. Run `sudo dnf repolist` to validate that only the BaseOS and AppStream repositories are setup and enabled on the host:
++
+----
+$ sudo dnf repolist
 Updating Subscription Management repositories.
 repo id                                                    repo name
 rhel-9-for-x86_64-appstream-rpms                           Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
 rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
 ----
 +
-. Ensure that these repos and only these repos are available to the host OS. If you need to know how to do this use this guide:
-link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Chapter 10. Managing custom software repositories Red Hat Enterprise Linux]
+. Ensure that only these repositories are available to the RHEL host. For more information about managing custom repositories, see:
+link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Chapter 10. Managing custom software repositories].
 
-. Ensure that the host has DNS configured and can resolve hostnames and IPs using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
+. Ensure that the host has DNS configured and can resolve host names and IP addresses by using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
 
-.Using unbound DNS
+. Optional: To have the installer automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_operations_guide/assembly-aap-obtain-manifest-files[Chapter 2. Obtaining a manifest file].
 
-To configure unbound DNS refer to link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Chapter 2. Setting up an unbound DNS server Red Hat Enterprise Linux 9].
+[role="_additional-resources"]
+.Additional resources
+* For more information about registering your RHEL system, see link:{BaseURL}/subscription_central/1-latest/html-single/getting_started_with_rhel_system_registration/index[Getting Started with RHEL System Registration].
+* For information about configuring unbound DNS, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Chapter 2. Setting up an unbound DNS server].
+* For information about configuring DNS using BIND, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Chapter 1. Setting up and configuring a BIND DNS server].
 
-.Using BIND DNS
-
-To configure DNS using BIND refer to link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Chapter 1. Setting up and configuring a BIND DNS server Red Hat Enterprise Linux 9].
-
-.Optional
-
-To have the installer automatically pick up and apply your {PlatformNameShort} subscription manifest license, use this guide to generate a manifest file which can be downloaded for the installer: link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_operations_guide/assembly-aap-obtain-manifest-files[Chapter 2. Obtaining a manifest file Red Hat Ansible Automation Platform 2.].
