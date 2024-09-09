@@ -6,29 +6,29 @@
 [role="_abstract"]
 
 
-To uninstall a containerized deployment, execute the *uninstall.yml* playbook.
+To uninstall a containerized deployment, run the `uninstall.yml` playbook:
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall
 ----
 
 This will stop all systemd units and containers and then delete all resources used by the containerized installer such as:
 
-* config and data directories/files
+* config and data directories and files
 * systemd unit files
-* podman containers and images
+* Podman containers and images
 * RPM packages
 
-To keep container images, you can set the *container_keep_images* variable to true.
+To keep container images, you can set the `container_keep_images` variable to `true`.
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall -e container_keep_images=true
 ----
 
-To keep postgresql databases, you can set the *postgresql_keep_databases* variable to true.
+To keep PostgreSQL databases, you can set the `postgresql_keep_databases` variable to `true`.
 ----
-$ ansible-playbook -i </path/to/inventory> ansible.containerized_installer.uninstall -e postgresql_keep_databases=true
+$ ansible-playbook -i inventory ansible.containerized_installer.uninstall -e postgresql_keep_databases=true
 ----
 
 [NOTE] 
 ====
-You will have to use the same django secret key values rather than the auto-generated ones.
+Use the {PlatformNameShort} secret key values rather than the auto-generated ones.
 ====
