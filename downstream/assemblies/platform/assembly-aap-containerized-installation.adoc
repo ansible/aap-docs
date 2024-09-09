@@ -15,7 +15,7 @@ endif::[]
 :context: aap-containerized-installation
 
 [role="_abstract"]
-{PlatformNameShort} is a commercial offering that helps teams manage complex multitiered deployments by adding control, knowledge, and delegation to Ansible-powered environments.
+{PlatformNameShort} is a commercial offering that helps teams manage complex multi-tier deployments by adding control, knowledge, and delegation to Ansible-powered environments.
 
 This guide helps you to understand the installation requirements and processes behind the containerized version of {PlatformNameShort}. 
 
@@ -26,32 +26,39 @@ include::snippets/container-upgrades.adoc[]
 
 .Prerequisites
 
-* A RHEL 9.2 based host. Minimal operating system (OS) base install is recommended.
+* A {RHEL} (RHEL) 9.2 based host. Minimal operating system (OS) base install is recommended.
 * A non-root user for the {RHEL} host, with sudo or other Ansible supported privilege escalation (sudo recommended). This user is responsible for the installation of containerized {PlatformNameShort}.
-* It is recommended that you set up an *SSH public key authentication* for the non-root user. For guidelines on setting up an SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
-* SSH keys are only required when installing on remote hosts. If doing a self contained local VM based installation, you can use *ansible_connection: local*.
-* Internet access from the {RHEL} host if using the default online installation method.
-
-== System Requirements
-Your system must meet the following minimum system requirements to install and run Red Hat Containerized {PlatformNameShort}. 
-
-[cols=2]
-|======================
-| Memory     | 16Gb RAM
-| CPU        | 4 CPU   
-| Disk space | 40Gb  
-| Disk IOPS  | 1500    
-|======================
+* It is recommended that you set up SSH public key authentication for the non-root user. For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
+** SSH keys are only required when installing on remote hosts. If doing a self contained local VM based installation, you can use *ansible_connection: local*.
+* Internet access from the {RHEL} host if you are using the default online installation method.
+* The appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
 
 
+== Supported deployment topologies
 
+Red Hat tests {PlatformNameShort} {PlatformVers} with a defined set of topologies to provide you with opinionated deployment options. The supported topologies include infrastructure topology, tested system configurations, example inventory files, and network ports information.
+
+For more information about the supported topologies for containerized {PlatformNameShort}, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
+
+
+== System requirements
+Each virtual machine (VM) has the following system requirements:
+
+[cols=2,options="header"]
+|====
+| Requirement | Minimum requirement
+| RAM      | 16 GB
+| CPUs         | 4 
+| Local disk  | 60 GB  
+| Disk IOPS   | 3000    
+|====
 
 
 include::platform/proc-preparing-the-rhel-host-for-containerized-installation.adoc[leveloffset=+1]
 include::platform/proc-installing-ansible-core.adoc[leveloffset=+1]
 include::platform/proc-downloading-containerized-aap.adoc[leveloffset=+1]
-include::platform/proc-using-postinstall.adoc[leveloffset=+1]
 include::platform/proc-installing-containerized-aap.adoc[leveloffset=+1]
+include::platform/proc-using-postinstall.adoc[leveloffset=+1]
 include::platform/ref-accessing-control-auto-hub-eda-control.adoc[leveloffset=+1]
 include::platform/ref-using-custom-tls-certificates.adoc[leveloffset=+1]
 include::platform/ref-using-custom-receptor-signing-keys.adoc[leveloffset=+1]

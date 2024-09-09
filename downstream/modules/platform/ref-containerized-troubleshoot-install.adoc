@@ -131,3 +131,21 @@ fatal: [ec2-13-48-25-168.eu-north-1.compute.amazonaws.com]: FAILED! => {"changed
 
 If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. You will need to make more space available. The documentation specifies a minimum of 40GB for a single-node deployment of containerized {PlatformNameShort}.
 
+."Install container tools" task fails due to unavailable packages
+
+This error occurs in the installation application output as:
+
+----
+TASK [ansible.containerized_installer.common : Install container tools] **********************************************************************************************************
+fatal: [192.0.2.1]: FAILED! => {"changed": false, "failures": ["No package crun available.", "No package podman available.", "No package slirp4netns available.", "No package fuse-overlayfs available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
+fatal: [192.0.2.2]: FAILED! => {"changed": false, "failures": ["No package crun available.", "No package podman available.", "No package slirp4netns available.", "No package fuse-overlayfs available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
+fatal: [192.0.2.3]: FAILED! => {"changed": false, "failures": ["No package crun available.", "No package podman available.", "No package slirp4netns available.", "No package fuse-overlayfs available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
+fatal: [192.0.2.4]: FAILED! => {"changed": false, "failures": ["No package crun available.", "No package podman available.", "No package slirp4netns available.", "No package fuse-overlayfs available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
+fatal: [192.0.2.5]: FAILED! => {"changed": false, "failures": ["No package crun available.", "No package podman available.", "No package slirp4netns available.", "No package fuse-overlayfs available."], "msg": "Failed to install some of the specified packages", "rc": 1, "results": []}
+----
+
+To fix this error, run the following command on the target hosts:
+
+----
+sudo subscription-manager register
+----

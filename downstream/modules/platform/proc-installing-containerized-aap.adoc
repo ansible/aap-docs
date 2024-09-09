@@ -7,16 +7,13 @@
 [role="_abstract"]
 
 
-Installation of {PlatformNameShort} is controlled with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
+You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
 
-For convenience an example inventory file is provided, that you can copy and modify to quickly get started.
+You can find example inventory files for containerized {PlatformNameShort} in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
 
-[NOTE]
-====
-There is no default database choice given in the inventory file. You must follow the instructions in the inventory file to make the appropriate choice between an internally provided Postgres, or provide your own externally managed and supported database option.
-====
+Additionally, for convenience, an example `inventory` file is provided that you can copy and change to quickly get started.
 
-Edit the inventory file by replacing the `< >` placeholders with your specific variables, and uncommenting any lines specific to your needs. Refer to the `README.md` file for more information about optional and required variables.
+Edit the `inventory` file by replacing the `< >` placeholders with your specific variables, and uncommenting any lines specific to your needs. Refer to the `README.md` file in the installation directory for more information about optional and required variables.
 
 
 ----
@@ -170,24 +167,7 @@ gateway_pg_password=<set your own>
 #receptor_signing_public_key=<full path to your RSA public key file>
 ----
 
-Use the following command to install containerized {PlatformNameShort}:
-
-----
-ansible-playbook -i inventory ansible.containerized_installer.install
-----
-
-
-[NOTE]
-====
- If your privilege escalation requires a password to be entered, append *-K* to the command line. You will then be prompted for the *BECOME* password. 
-====
-
-You can use increasing verbosity, up to 4 v's (-vvvv) to see the details of the installation process.
-
-[NOTE] 
-====
-This can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
-====
+* There is no default database choice in the example inventory file. Follow the instructions in the inventory file to make the appropriate choice between an internally provided Postgres, or provide your own externally managed and supported database option.
 
 .Configuring a HAProxy load balancer
 
@@ -202,3 +182,16 @@ gateway_main_url=<https://load_balancer_url>
 ====
 HAProxy SSL passthrough mode is not supported with platform gateway.
 ====
+
+.Installing containerized {PlatformNameShort}
+
+Use the following command to install containerized {PlatformNameShort}:
+
+----
+ansible-playbook -i inventory ansible.containerized_installer.install
+----
+
+* If your privilege escalation requires a password to be entered, append `-K` to the command line. You are then prompted for the `BECOME` password. 
+* You can use increasing verbosity, up to 4 v's (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
+
+
