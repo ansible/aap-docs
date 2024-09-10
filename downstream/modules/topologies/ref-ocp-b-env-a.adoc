@@ -1,7 +1,7 @@
 [id="ocp-b-env-a"]
 = Operator enterprise topology
 
-The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
+The enterprise topology is intended for organizations that require {PlatformNameShort} {PlatformVers} to be deployed with redundancy or higher compute for large volumes of automation.
 
 == Infrastructure topology
 
@@ -9,7 +9,7 @@ The enterprise topology is intended for organizations that require {PlatformName
 
 The following infrastructure topology describes an OpenShift Cluster with 3 master nodes and 2 worker nodes.
 
-Each OpenShift Worker node has been tested with the following component requirements: 16 GB RAM, 4 CPU, 128 GB local disk, and 3000 IOPS.  
+Each OpenShift Worker node has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 128 GB local disk, and 3000 IOPS.  
 
 .Infrastructure topology
 [options="header"]
@@ -71,7 +71,7 @@ a|
 * num_node_groups: 2
 * replicas_per_node_group: 1
 * automatic_failover_enabled: true
-| S3 storage | HTTPS only accessible through AWS Role assigned to {HubName} SA at runtime using AWS Pod Identity
+| s3 storage | HTTPS only accessible through AWS Role assigned to {HubName} SA at runtime using AWS Pod Identity
 |====
 
 // == Example custom resource file 
@@ -86,9 +86,9 @@ The {PlatformNameShort} custom resource allows you to configure resource allocat
 
 By default, each component’s deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU as long as the OpenShift worker node itself is not under node pressure.
 
-In the reference topology provided in this document, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPU, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the automation controller task pods is derived from the underlying OCP node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
+In the reference topology provided in this document, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the automation controller task pods is derived from the underlying OCP node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a ReadWriteMany type storage, which is not a default storage type in OpenShift. Externally provided Redis, Posgres, and object storage for automation hub are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services as well as scalable storage.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, Posgres, and object storage for automation hub are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services as well as scalable storage.
 
 
 == Network ports
