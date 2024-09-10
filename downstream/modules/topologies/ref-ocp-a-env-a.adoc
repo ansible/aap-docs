@@ -6,7 +6,7 @@ The growth topology is intended for organizations that do not require {PlatformN
 == Infrastructure topology
 // The following diagram outlines the infrastructure topology that Red Hat has tested with the respective deployment model that customers may use when self-managing {PlatformNameShort}:
 
-A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPU, 128 GB local disk, and 3000 IOPS.
+A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS.
 
 .Infrastructure topology
 [options="header"]
@@ -46,12 +46,6 @@ a|
 * Version: 4.14
 * num_of_control_nodes: 1
 * num_of_worker_nodes: 1 
-* VM Configuration:
-** OS: {RHEL} 9.2 or later 64-bit (x86)
-**  CPU: 16 
-**  RAM: 32 GB
-**  Disk: 128 GB
-**  IOPS: 3000/s
 | Ansible-core | Ansible-core version 2.15 or later
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome.
 | Database | PostgreSQL version 15
@@ -84,9 +78,9 @@ The {PlatformNameShort} custom resource allows you to configure resource allocat
 
 By default, each component’s deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU as long as the OpenShift worker node itself is not under node pressure.
 
-In the reference topology provided in this document, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPU, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the automation controller task pods is derived from the underlying OCP node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
+In the reference topology provided in this document, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the automation controller task pods is derived from the underlying OCP node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a ReadWriteMany type storage, which is not a default storage type in OpenShift.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift.
 
 == Network ports
 
