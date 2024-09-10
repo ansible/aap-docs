@@ -12,8 +12,10 @@ The default link:https://github.com/ansible/event-driven-ansible/tree/main/exten
 [cols="30%,30%",options="header"]
 |====
 | Name | Description
-| json_filter | Include and exclude keys from the event object
+| json_filter | This filter includes and excludes keys from the event object
 | dashes_to_underscores | This filter changes the dashes in all keys in the payload to be underscore
+| ansible.eda.insert_hosts_to_meta | This filter is used to add host information into the event so that ansible-rulebook can locate it and use it
+| ansible.eda.normalize_keys | This filter is used if you want to change non alpha numeric keys to underscore
 |====
 
 You can chain event filters one after the other, and the updated data is sent from one filter to the next.
