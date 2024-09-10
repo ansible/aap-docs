@@ -5,12 +5,12 @@ The enterprise topology is intended for organizations that require {PlatformName
 
 == Infrastructure topology
 
-Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPU, 60 GB local disk, and 3000 IOPS. 
+Each virtual machine (VM) has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
 
 .Infrastructure topology
 [options="header"]
 |====
-| VM count | Purpose | Example VM names
+| VM count | Purpose | Example VM group names
 | 2 | Platform gateway | automationgateway 
 | 2 | {ControllerNameStart} | automationcontroller
 | 2 | {PrivateHubNameStart} | automationhub
@@ -32,7 +32,7 @@ Red Hat has tested the following configurations to install and run {PlatformName
 | Subscription | Valid {PlatformName} subscription
 | Operating system | {RHEL} 9.2 or later 64-bit (x86)
 | Ansible-core | Ansible-core version 2.15 or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
+| Browser | A currently supported version of Mozilla Firefox or Google Chrome
 | Database | PostgreSQL version 15
 |====
 
@@ -59,7 +59,6 @@ Red Hat has tested the following configurations to install and run {PlatformName
 | 27199 | TCP | Receptor | Hop node | Execution node
 | 6379 | TCP | Redis | {EDAName} | Platform gateway
 | 6379 | TCP | Redis | Platform gateway | Platform gateway
-| 16379 | TCP | Redis | Redis | Redis cluster node
 | 8443 | TCP | HTTPS | Platform gateway | Platform gateway
 | 50051 | TCP | gRPC | Platform gateway | Platform gateway
 |====
