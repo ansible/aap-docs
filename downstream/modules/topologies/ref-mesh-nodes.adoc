@@ -1,0 +1,20 @@
+[id="mesh-nodes"]
+= {AutomationMeshStart} nodes
+
+{AutomationMeshStart} is an overlay network intended to ease the distribution of work across a large and dispersed collection of workers. This is done through nodes that establish peer-to-peer connections with each other by using existing networks. 
+
+== Tested system configurations
+Each {AutomationMesh} VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS.
+
+== Network ports
+{AutomationMeshStart} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+
+.Network ports and protocols
+[options="header"]
+|====
+| Port number | Protocol | Service | Source | Destination
+| 27199 | TCP | Receptor | {OCPShort} cluster | Execution node
+| 27199 | TCP | Receptor | {OCPShort} cluster | Hop node
+| 443 | HTTPS | Receptor | Execution node | {OCPShort} mesh ingress
+| 443 | HTTPS | Receptor | Hop node | {OCPShort} mesh ingress
+|====
