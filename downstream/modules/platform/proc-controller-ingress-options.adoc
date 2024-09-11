@@ -24,26 +24,41 @@ You can view the progress by navigating to menu:Workloads[Pods] and locating the
 .Verification
 
 Verify that the following operator pods provided by the {PlatformNameShort} Operator installation from {ControllerName} are running:
-[cols="a,a,a"]
+[cols="a,a,a,a"]
 |===
-| Operator manager controllers | {ControllerName} |{HubName}
+| Operator manager controllers | {ControllerNameStart} |{HubNameStart} |{EDAName} (EDA)
 
-| The operator manager controllers for each of the 3 operators, include the following:
+| The operator manager controllers for each of the three operators, include the following:
 
 * automation-controller-operator-controller-manager
 * automation-hub-operator-controller-manager
 * resource-operator-controller-manager
-| After deploying {ControllerName}, you will see the addition of these pods:
+* aap-gateway-operator-controller-manager 
+* ansible-lightspeed-operator-controller-manager
+* eda-server-operator-controller-manager
+
+| After deploying {ControllerName}, you can see the addition of the following pods:
 
 * controller
 * controller-postgres
-| After deploying {HubName}, you will see the addition of these pods:
+* controller-web
+* controller-task
+
+| After deploying {HubName}, you can see the addition of the following pods:
 
 * hub-api
 * hub-content
 * hub-postgres
 * hub-redis
 * hub-worker
+
+| After deploying EDA, you can see the addition of the following pods:
+
+* eda-activation-worker
+* da-api
+* eda-default-worker
+* eda-event-stream
+* eda-scheduler
 
 |===
 
