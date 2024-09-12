@@ -3,6 +3,7 @@
 = Creating a new application
 
 When integrating an external web application with {ControllerName} the web application might need to create OAuth2 Tokens on behalf of users of the web application.
+
 Creating an application with the Authorization Code grant type is the preferred way to do this for the following reasons:
 
 * External applications can obtain a token for users, using their credentials.
@@ -17,19 +18,26 @@ The *Create Application* page opens.
 //image:apps-create-new.png[Create application]
 
 . Enter the following details:
-
-* *Name* (required): give a name for the application you want to create
-* Optional: *Description*: give a short description for your application
-* *Organization* (required): give an organization with which this application is associated
-* *Authorization grant type* (required): select one of the grant types to use for the user to get tokens for this application.
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index#ref-controller-password-grant-type[Application using password grant type] section of the _{ControllerAG}_.
-* *Client Type* (required): select the level of security of the client device.
-* *Redirect URIS*: give a list of allowed URIs, separated by spaces.
-You need this if you specified the grant type to be *Authorization code*.
-
-. Click btn:[Create application], or click btn:[Cancel] to abandon your changes.
 +
-The client ID displays in a window.
+Name:: (required) Enter a name for the application you want to create
+Description:: (optional) Include a short description for your application
+Organization:: (required) Select an organization with which this application is associated
+Authorization grant type:: (required) Select one of the grant types to use for the user to get tokens for this application.
+For more information, see xref:ref-gw-application-functions[Application functions] for more information about grant types.
+Client Type:: (required) Select the level of security of the client device.
+Redirect URIS:: Provide a list of allowed URIs, separated by spaces.
+You need this if you specified the grant type to be *Authorization code*.
++
+. Click btn:[Create OAuth application], or click btn:[Cancel] to abandon your changes.
++
+The *Client ID* and *Client Secret* display in a window. This will be the only time the client secret will be shown. 
++
+[NOTE] 
+====
+The *Client Secret* is only created when the *Client type* is set to *Confidential*.
+====
++
+. Click the copy icon and save the client ID and client secret to integrate an external application with {PlatformNameShort}. 
 
 //image:apps-client-id-popup.png[Client ID]
 

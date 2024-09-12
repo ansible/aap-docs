@@ -2,49 +2,51 @@
 
 = Adding tokens
 
-You can view a list of users that have tokens to access an application by selecting the *Tokens* tab in the applications *Details* page.
+You can view a list of users that have tokens to access an application by selecting the *Tokens* tab in the *OAuth Applications* details page.
 
-Configure authentication tokens for your users.
-You can select the application to which the token is associated and the level of access that the token has.
+[NOTE]
+====
+You can only create OAuth 2 Tokens for your own user, which means you can only configure or view tokens from your own user profile.
+====
 
-[IMPORTANT]
-====
-You can only create OAuth 2 Tokens for your user through the API or UI, which means you can only access your own user profile to configure or view your tokens.
-====
+When authentication tokens have been configured, you can select the application to which the token is associated and the level of access that the token has.
+
 
 .Procedure
 . From the navigation panel, select {MenuControllerUsers}.
-. Select the user for which you want to configure the OAuth 2 tokens.
-. Select the *Tokens* tab on the user's profile.
+. Select the username for your user profile to configure OAuth 2 tokens.
+. Select the *Tokens* tab.
 +
 When no tokens are present, the *Tokens* screen prompts you to add them.
 . Click btn:[Create token] to open the *Create Token* window.
 . Enter the following details:
-
-* *Application*: enter the name of the application with which you want to associate your token.
-You can also search for it by clicking the image:search.png[Search,15,15] icon.
-This opens a separate window that enables you to choose from the available options.
-Use the Search bar to filter by name if the list is extensive.
-Leave this field blank if you want to create a Personal Access Token (PAT) that is not linked to any application.
-* Optional: *Description*: give a short description for your token.
-* *Scope* (required): specify the level of access you want this token to have.
-
++
+Application:: enter the name of the application with which you want to associate your token. Alternatively, you can search for it by clicking the Browse. This opens a separate window that enables you to choose from the available options. Select Name from the filter list to filter by name if the list is extensive. 
++
+[NOTE]
+====
+To create a Personal Access Token (PAT) that is not linked to any application, leave the Application field blank.
+====
+Description:: (optional) Provide a short description for your token.
+Scope:: (required) Specify the level of access you want this token to have. The scope of an OAuth 2 token can be set as one of the following:
++
+* *Write*: Allows requests sent with this token to add, edit and delete resources in the system.
+* *Read*: Limits actions to read only. Note that the write scope includes read scope.
++
 . Click btn:[Create token], or click btn:[Cancel] to abandon your changes.
 +
-After you save the token, the newly created token for the user is displayed with the token information and when it expires.
+The Token information is displayed with *Token* and *Refresh Token* information, and the expiration date of the token. This will be the only time the token and refresh token will be shown. You can view the token association and token information from the list view. 
 +
-//image:users-token-information-example.png[Token information]
-
-. To view the application to which the token is associated and the token expiration date, go to the token list view.
-+
-//image:users-token-assignment-example.png[Token assignment]
+. Click the copy icon and save the token and refresh token for future use.
 
 .Verification
-To verify that the application now shows the user with the appropriate token, open the *Tokens* tab of the Applications window.
+You can verify that the application now shows the user with the appropriate token using the Tokens tab on the Applications details page.
 
-//image:apps-tokens-list-view-example2.png[image]
+. From the navigation panel, select {MenuAMAdminOauthApps}.
+. Select the application you want to verify from the *Applications* list view.
+. Select the *Tokens* tab.
++
+Your token should be displayed in the list of tokens associated with the application you chose.
 
 .Additional resources
-
-If you are a system administrator and have to create or remove tokens for other users, see the revoke and create commands in the
-link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/assembly-controller-awx-manage-utility#ref-controller-token-session-management[Token and session management] section of the _{ControllerAG}_.
+If you are a system administrator and have to create or remove tokens for other users, see the revoke and create commands in xref:ref-controller-token-session-management[Token and session management].
