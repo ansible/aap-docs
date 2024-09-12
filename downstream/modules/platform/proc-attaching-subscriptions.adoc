@@ -1,13 +1,16 @@
 // emurtoug removed this assembly from the Planning guide to avoid duplication of subscription content added to Access management and authentication
 
-[id="proc-attaching-subscriptions_{context}"]
+[id="proc-attaching-subscriptions"]
 
 = Attaching your {PlatformName} subscription
 
 [role="_abstract"]
 You *must* have valid subscriptions attached on all nodes before installing {PlatformName}. Attaching your {PlatformNameShort} subscription provides access to subscription-only resources necessary to proceed with the installation.
 
-NOTE: Attaching a subscription is unnecessary if you have enabled Simple Content Access Mode on your Red Hat account. Once enabled, you will need to register your systems to either Red Hat Subscription Management (RHSM) or Satellite before installing the {PlatformNameShort}. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
+[NOTE]
+====
+Attaching a subscription is unnecessary if you have enabled Simple Content Access Mode on your Red Hat account. Once enabled, you will need to register your systems to either Red Hat Subscription Management (RHSM) or Satellite before installing the {PlatformNameShort}. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
+====
 
 .Procedure
 
@@ -42,8 +45,14 @@ Subscription Name: Red Hat Ansible Automation, Premium (5000 Managed Nodes)
 -----
 # subscription-manager attach --pool=<pool_id>
 -----
-
++
 You have now attached your {PlatformName} subscriptions to all nodes.
++
+. To remove this subscription, enter the following command:
++
+-----
+# subscription-manager remove --pool=<pool_id>
+-----
 
 .Verification
 
