@@ -57,15 +57,15 @@ For all other nodes:
 *** If you are not adding a hop node, make sure *Peers from Control* is checked.
 *** If you are adding a hop node, make sure *Peers from Control* is not checked.
 *** For execution nodes that communicate with hop nodes, do not check this box.
-** To peer an execution node with a hop node, click the image:search.png[Search,15,15] icon next to the *Peers* field.
+** To peer an execution node with a hop node, select the execution node, then select *Peers* tab.
 +
 The Select Peers window is displayed.
 +
-Peer the execution node to the hop node.
+** Select the execution node to peer to the hop node.
 
-. Click btn:[Save].
-+
-image::instances_create_details.png[Create Instance details]
+** Click btn:[Associate peers].
+//+
+//image::instances_create_details.png[Create Instance details]
 
 ifdef::operator-mesh[]
 . To view a graphical representation of your updated topology, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/assembly-controller-topology-viewer[Topology viewer].
@@ -97,12 +97,6 @@ requirements.yml
 
 . Extract the downloaded `tar.gz` Install Bundle from the location where you downloaded it.
 To ensure that these files are in the correct location on the remote machine, the install bundle includes the `install_receptor.yml` playbook.
-The playbook requires the Receptor collection.
-Run the following command to download the collection:
-+
-----
-ansible-galaxy collection install -r requirements.yml
-----
 
 . Before running the `ansible-playbook` command, edit the following fields in the `inventory.yml` file:
 +
@@ -110,9 +104,9 @@ ansible-galaxy collection install -r requirements.yml
 all:
   hosts:
     remote-execution:
-      ansible_host: 10.0.0.6
-      ansible_user: <username> # user provided
-      ansible_ssh_private_key_file: ~/.ssh/<id_rsa>
+      ansible_host: localhost # change to the mesh node host name
+          ansible_user: <username> # user provided
+          ansible_ssh_private_key_file: ~/.ssh/<id_rsa>
 ----
 
 * Ensure `ansible_host` is set to the IP address or DNS of the node.
@@ -150,7 +144,7 @@ Additionally, it retrieves any other collection dependencies that might be neede
 * Install the receptor collection on all nodes where your playbook will run, otherwise an error occurs.
 
 . If `receptor_listener_port` is defined, the machine also requires an available open port on which to establish inbound TCP connections, for example, 27199.
-Run the following command to open port 27199 for receptor communication:
+Run the following command to open port 27199 for receptor communication (Make sure you have port 27199 open in your firewall):
 +
 ----
 sudo firewall-cmd --permanent --zone=public --add-port=27199/tcp
@@ -161,9 +155,20 @@ sudo firewall-cmd --permanent --zone=public --add-port=27199/tcp
 ----
 ansible-playbook -i inventory.yml install_receptor.yml
 ----
-+
+[Note]
+====
+OpenSSL is required for this playbook you can verify it is installed via: 
+----
+openssl -v 
+----
+If it returns a version OpenSSL is installed otherwise you need to install OpenSSL with
+----
+sudo dnf install -y openssl
+----
+====
+
 After this playbook runs, your automation mesh is configured.
-+
+
 image::instances_list_view2.png[Instances list view]
 
 ifdef::operator-mesh[]
