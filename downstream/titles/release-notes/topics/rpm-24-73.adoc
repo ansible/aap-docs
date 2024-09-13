@@ -1,0 +1,31 @@
+// This is the release notes for 2.4-7.3 RPM release
+
+[id="rpm-24-73"]
+
+= RHSA-2024:6765 - Security Advisory - September 18, 2024
+
+link:https://access.redhat.com/errata/RHSA-2024:6765[RHSA-2024:6765]
+
+== General
+
+With this update, the following CVEs have been addressed:
+
+// (AAP-27943) (AAP-27944)
+* link:https://access.redhat.com/security/cve/CVE-2024-7143[CVE-2024-7143] - RBAC permissions incorrectly assigned in tasks that create objects.
+** Packages updated: `python-pulpcore` and `python39-pulpcore`.
+// (AAP-27465)
+* link:https://access.redhat.com/security/cve/CVE-2024-37891[CVE-2024-37891] - proxy-authorization request header is not stripped during cross-origin redirects.
+** Packages updated: `python-urllib3: urllib3`.
+// (AAP-23879)
+* link:https://access.redhat.com/security/cve/CVE-2024-24788[CVE-2024-24788] - malformed DNS message can cause an infinite loop.
+** Packages updated: `receptor: golang: net`.
+// (AAP-25619)
+* link:https://access.redhat.com/security/cve/CVE-2024-24790[CVE-2024-24790] - unexpected behavior from `Is` methods for IPv4-mapped IPv6 addresses.
+** Packages updated: `receptor: golang: net` and `receptor: golang: netip`.
+
+// Automation controller
+== {ControllerNameStart}
+
+* Updated the shipping analytics data fallback to use the Red Hat Subscription Manager subscription credentials if analytics gathering is enabled (AAP-30228).
+
+* Upgraded the 'channels-redis' library to fix Redis connection leaks (AAP-30124).
