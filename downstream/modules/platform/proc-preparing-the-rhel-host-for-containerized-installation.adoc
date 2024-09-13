@@ -4,13 +4,9 @@
 
 = Preparing the RHEL host for containerized installation
 
-[role="_abstract"]
+Containerized {PlatformNameShort} runs the component services as Podman based containers on top of a RHEL host. The installer takes care of this after the underlying host has been prepared. 
 
 .Procedure
-
-Containerized {PlatformNameShort} runs the component services as Podman based containers on top of a RHEL host. The installer takes care of this once the underlying host has been prepared. 
-
-Use the following instructions to prepare the RHEL host:
 
 . Log in to the RHEL host as your non-root user.
 
@@ -35,6 +31,24 @@ rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Li
 link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Chapter 10. Managing custom software repositories].
 
 . Ensure that the host has DNS configured and can resolve host names and IP addresses by using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
+
+. Install `ansible-core`:
++
+----
+sudo dnf install -y ansible-core
+----
++
+. Optional: You can install additional utilities that can be useful for troubleshooting purposes, for example `wget`, `git`, `rsync`, and `vim`:
++
+----
+sudo dnf install -y wget git rsync vim
+----
++
+. Set a hostname that is a fully qualified domain name (FQDN):
++
+----
+sudo hostnamectl set-hostname <your_hostname>
+----
 
 . Optional: To have the installer automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_operations_guide/assembly-aap-obtain-manifest-files[Chapter 2. Obtaining a manifest file].
 
