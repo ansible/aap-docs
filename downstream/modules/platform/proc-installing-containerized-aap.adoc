@@ -9,165 +9,182 @@
 
 You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
 
-You can find example inventory files for containerized {PlatformNameShort} in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
+== Example inventory files
+Example inventory files are provided in this document that you can copy and change to quickly get started. You can find additional example inventory files in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
 
-Additionally, for convenience, an example `inventory` file is provided that you can copy and change to quickly get started.
+To use the example inventory files, replace the `< >` placeholders with your specific variables, and update the host names. Refer to the `README.md` file in the installation directory for more information about optional and required variables.
 
-Edit the `inventory` file by replacing the `< >` placeholders with your specific variables, and uncommenting any lines specific to your needs. Refer to the `README.md` file in the installation directory for more information about optional and required variables.
+.Inventory file for online installation for containerized growth topology
 
+Use the following example inventory file to perform an online installation for the containerized growth topology:
 
 ----
 # This is the AAP installer inventory file
 # Please consult the docs if you're unsure what to add
 # For all optional variables please consult the included README.md
 
+# This section is for your AAP Gateway host(s)
+# -----------------------------------------------------
+[automationgateway]
+aap.example.org
+
 # This section is for your AAP Controller host(s)
 # -------------------------------------------------
 [automationcontroller]
-fqdn_of_your_rhel_host ansible_connection=local
+aap.example.org
 
 # This section is for your AAP Automation Hub host(s)
 # -----------------------------------------------------
 [automationhub]
-fqdn_of_your_rhel_host ansible_connection=local
+aap.example.org
 
 # This section is for your AAP EDA Controller host(s)
 # -----------------------------------------------------
 [automationeda]
-fqdn_of_your_rhel_host ansible_connection=local
+aap.example.org
+
+# This section is for the AAP database
+# --------------------------------------
+[database]
+aap.example.org
+
+[all:vars]
+
+# Common variables
+# ----------------
+postgresql_admin_username=postgres
+postgresql_admin_password=<set your own>
+
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+
+redis_mode=standalone
+
+# AAP Gateway
+# -----------
+gateway_admin_password=<set your own>
+gateway_pg_host=aap.example.org
+gateway_pg_password=<set your own>
+
+# AAP Controller
+# --------------
+controller_admin_password=<set your own>
+controller_pg_host=aap.example.org
+controller_pg_password=<set your own>
+
+# AAP Automation Hub
+# ------------------
+hub_admin_password=<set your own>
+hub_pg_host=aap.example.org
+hub_pg_password=<set your own>
+
+# AAP EDA Controller
+# ------------------
+eda_admin_password=<set your own>
+eda_pg_host=aap.example.org
+eda_pg_password=<set your own>
+----
+
+.Inventory file for online installation for containerized enterprise topology
+
+Use the following example inventory file to perform an online installation for the containerized enterprise topology:
+
+----
+# This is the AAP installer inventory file
+# Please consult the docs if you're unsure what to add
+# For all optional variables please consult the included README.md
 
 # This section is for your AAP Gateway host(s)
 # -----------------------------------------------------
 [automationgateway]
-fqdn_of_your_rhel_host ansible_connection=local
+gateway1.example.org
+gateway2.example.org
+
+# This section is for your AAP Controller host(s)
+# -------------------------------------------------
+[automationcontroller]
+controller1.example.org
+controller2.example.org
 
 # This section is for your AAP Execution host(s)
 # ------------------------------------------------
-#[execution_nodes]
-#fqdn_of_your_rhel_host
+[execution_nodes]
+hop1.example.org receptor_type='hop'
+exec1.example.org
+exec2.example.org
 
-# This section is for the AAP database(s)
-# -----------------------------------------
-# Uncomment the lines below and amend appropriately if you want AAP to install and manage the postgres databases
-# Leave commented out if you intend to use your own external database and just set appropriate _pg_hosts vars
-# see mandatory sections under each AAP component
-#[database]
-#fqdn_of_your_rhel_host ansible_connection=local
+# This section is for your AAP Automation Hub host(s)
+# -----------------------------------------------------
+[automationhub]
+hub1.example.org
+hub2.example.org
+
+# This section is for your AAP EDA Controller host(s)
+# -----------------------------------------------------
+[automationeda]
+eda1.example.org
+eda2.example.org
+
+[redis]
+gateway1.example.org
+gateway2.example.org
+hub1.example.org
+hub2.example.org
+eda1.example.org
+eda2.example.org
 
 [all:vars]
 
-# Common variables needed for installation
-# ----------------------------------------
-postgresql_admin_username=postgres
-postgresql_admin_password=<set your own>
-# If using the online (non-bundled) installer, you need to set RHN registry credentials
+# Common variables
+# ----------------
 registry_username=<your RHN username>
 registry_password=<your RHN password>
-# If using the bundled installer, you need to alter defaults by using:
-#bundle_install=true
-# The bundle directory must include /bundle in the path
-#bundle_dir=<full path to the bundle directory>
-# To add more decision environment images you need to set the de_extra_images variable
-#de_extra_images=[{'name': 'Custom decision environment', 'image': '<registry>/<namespace>/<image>:<tag>'}]
-# To add more execution environment images you need to set the ee_extra_images variable
-#ee_extra_images=[{'name': 'Custom execution environment', 'image': '<registry>/<namespace>/<image>:<tag>'}]
-# To use custom TLS CA certificate/key you need to set these variables
-#ca_tls_cert=<full path to your TLS CA certificate file>
-#ca_tls_key=<full path to your TLS CA key file>
 
-# AAP Database - optional
-# --------------------------
-# To use custom TLS certificate/key you need to set these variables
-#postgresql_tls_cert=<full path to your TLS certificate file>
-#postgresql_tls_key=<full path to your TLS key file>
-
-# AAP Controller - mandatory
-# --------------------------
-controller_admin_password=<set your own>
-controller_pg_host=fqdn_of_your_rhel_host
-controller_pg_password=<set your own>
-
-# AAP Controller - optional
-# -------------------------
-# To use the postinstall feature you need to set these variables
-#controller_postinstall=true
-#controller_license_file=<full path to your manifest .zip file>
-#controller_postinstall_dir=<full path to your config-as-code directory>
-# When using config-as-code in a git repository
-#controller_postinstall_repo_url=<url to your config-as-code git repository>
-#controller_postinstall_repo_ref=main
-# To use custom TLS certificate/key you need to set these variables
-#controller_tls_cert=<full path to your TLS certificate file>
-#controller_tls_key=<full path to your TLS key file>
-
-# AAP Automation Hub - mandatory
-# ------------------------------
-hub_admin_password=<set your own>
-hub_pg_host=fqdn_of_your_rhel_host
-hub_pg_password=<set your own>
-
-# AAP Automation Hub - optional
-# -----------------------------
-# To use the postinstall feature you need to set these variables
-#hub_postinstall=true
-#hub_postinstall_dir=<full path to your config-as-code directory>
-# When using config-as-code in a git repository
-#hub_postinstall_repo_url=<url to your config-as-code git repository>
-#hub_postinstall_repo_ref=main
-# To customize the number of worker containers
-#hub_workers=2
-# To use the collection signing feature you need to set these variables
-#hub_collection_signing=true
-#hub_collection_signing_key=<full path to your gpg key file>
-# To use the container signing feature you need to set these variables
-#hub_container_signing=true
-#hub_container_signing_key=<full path to your gpg key file>
-# To use custom TLS certificate/key you need to set these variables
-#hub_tls_cert=<full path to your TLS certificate file>
-#hub_tls_key=<full path to your TLS key file>
-
-# AAP EDA Controller - mandatory
-# ------------------------------
-eda_admin_password=<set your own>
-eda_pg_host=fqdn_of_your_rhel_host
-eda_pg_password=<set your own>
-
-# AAP EDA Controller - optional
-# -----------------------------
-# When using an external controller node unmanaged by the installer.
-#controller_main_url=https://fqdn_of_your_rhel_host
-# To customize the number of default/activation worker containers
-#eda_workers=2
-#eda_activation_workers=2
-# To use custom TLS certificate/key you need to set these variables
-#eda_tls_cert=<full path to your TLS certificate file>
-#eda_tls_key=<full path to your TLS key file>
-
-# AAP Gateway - mandatory
-# ------------------------------
+# AAP Gateway
+# -----------
 gateway_admin_password=<set your own>
-gateway_pg_host=fqdn_of_your_rhel_host
+gateway_pg_host=externaldb.example.org
+gateway_pg_database=<set your own>
+gateway_pg_username=<set your own>
 gateway_pg_password=<set your own>
 
-# AAP Gateway - optional
-# -----------------------------
-# To use custom TLS certificate/key you need to set these variables
-#gateway_tls_cert=<full path to your TLS certificate file>
-#gateway_tls_key=<full path to your TLS key file>
+# AAP Controller
+# --------------
+controller_admin_password=<set your own>
+controller_pg_host=externaldb.example.org
+controller_pg_database=<set your own>
+controller_pg_username=<set your own>
+controller_pg_password=<set your own>
 
-# AAP Execution Nodes - optional
-# -----------------------------
-#receptor_port=27199
-#receptor_protocol=tcp
-# To use custom TLS certificate/key you need to set these variables
-#receptor_tls_cert=<full path to your TLS certificate file>
-#receptor_tls_key=<full path to your TLS key file>
-# To use custom RSA key pair you need to set these variables
-#receptor_signing_private_key=<full path to your RSA private key file>
-#receptor_signing_public_key=<full path to your RSA public key file>
+# AAP Automation Hub
+# ------------------
+hub_admin_password=<set your own>
+hub_pg_host=externaldb.example.org
+hub_pg_database=<set your own>
+hub_pg_username=<set your own>
+hub_pg_password=<set your own>
+
+# AAP EDA Controller
+# ------------------
+eda_admin_password=<set your own>
+eda_pg_host=externaldb.example.org
+eda_pg_database=<set your own>
+eda_pg_username=<set your own>
+eda_pg_password=<set your own>
 ----
 
-* There is no default database choice in the example inventory file. Follow the instructions in the inventory file to make the appropriate choice between an internally provided Postgres, or provide your own externally managed and supported database option.
+== Additional information for configuring your inventory file
+
+.Offline or bundled installation
+
+* To perform an offline installation, add the following under the `[all:vars]` group:
+
+----
+bundle_install=true
+# The bundle directory must include /bundle in the path
+bundle_dir=<full path to the bundle directory>
+----
+
 
 .Configuring a HAProxy load balancer
 
@@ -183,7 +200,7 @@ gateway_main_url=<https://load_balancer_url>
 HAProxy SSL passthrough mode is not supported with platform gateway.
 ====
 
-.Installing containerized {PlatformNameShort}
+== Running the installation command
 
 Use the following command to install containerized {PlatformNameShort}:
 
