@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-configure-devspaces_{context}"]
+= Configuring OpenShift Dev Spaces
+
+When OpenShift Dev Spaces is configured for the Ansible plug-ins, users can click a link from the catalog item view in {RHDH} and edit their provisioned Ansible Git projects using Dev Spaces. 
+
+[NOTE]
+====
+OpenShift Dev Spaces is a separate product and it is optional.
+The plug-ins will function without it.
+
+It is a separate Red Hat product and is not included in the {PlatformNameShort} or {RHDH} subscription.
+====
+
+If the OpenShift Dev Spaces link is not configured in the Ansible plug-ins, the *Go to OpenShift Dev Spaces dashboard* link in the *4.DEVELOP* section of the Ansible plug-ins landing page redirects users to the
+link:https://www.redhat.com/en/technologies/management/ansible/development-tools[Ansible development tools home page].
+
+.Prerequisites
+
+* A Dev Spaces installation.
+Refer to the
+link:{BaseURL}/red_hat_openshift_dev_spaces/3.14/html-single/administration_guide/installing-devspaces[Installing Dev Spaces]
+section of the _Red Hat OpenShift Dev Spaces Administration guide_.
+
+.Procedure
+
+. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+. Add the following code to your {RHDH} `app-config-rhdh.yaml` file. 
++
+----
+data:
+  app-config-rhdh.yaml: |-
+    ansible:
+      devSpaces:
+        baseUrl: >-
+          https://<Your OpenShift Dev Spaces URL>
+----
+. Replace `<Your OpenShft Dev Spaces URL>`  with your OpenShift Dev Spaces URL.
+. In the OpenShift Developer UI, select the `Red Hat Developer Hub` pod.
+. Open *Actions*.
+. Click *Restart rollout*.
+

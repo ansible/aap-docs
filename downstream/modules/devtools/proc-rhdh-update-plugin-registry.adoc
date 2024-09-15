@@ -1,0 +1,38 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-update-plugin-registry_{context}"]
+= Updating the plug-in registry
+
+Rebuild your plug-in registry application in your OpenShift cluster with the latest Ansible plug-ins files.
+
+.Procedure
+
+. Log in to your {OCPShort} instance with credentials to create a new application.
+. Open your {RHDH} OpenShift project.
++
+----
+$ oc project <YOUR_DEVELOPER_HUB_PROJECT>
+----
+. Run the following commands to update your plug-in registry build in the OpenShift cluster.
++
+----
+$ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+----
+. When the registry has started, the output displays the following message:
++
+----
+Uploading directory "/path/to/dynamic_plugin_root" as binary input for the build …
+Uploading finished
+build.build.openshift.io/plugin-registry-1 started
+----
+
+.Verification
+
+Verify that the plugin-registry has been updated.
+
+. In the OpenShift UI, click *Topology*.
+. Click the *redhat-developer-hub* icon to view the pods for the plug-in registry.
+. Click *View logs* for the plug-in registry pod.
+. Open the *Terminal* tab and run `ls` to view the `.tar` files in the plug-in registry.
+. Verify that the new `.tar` file has been uploaded.
+
