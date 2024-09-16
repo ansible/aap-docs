@@ -8,7 +8,8 @@ Red{nbsp}Hat does not support the use of external (customer supported) databases
 The following guidance on initial configuration, from a product installation perspective only, is provided to avoid related support requests.
 ====  
 
-Use the following procedure to configure an external PostgreSQL compliant database for use with an {PlatformNameShort} component, for example {ControllerName}, {EDAName}, {HubName}, and platform gateway.
+To create a database, user and password on an external PostgreSQL compliant database for use with {ControllerName}, use the following procedure.
+
 
 .Procedure
 . Install and then connect to a PostgreSQL compliant database server with superuser privileges.
@@ -17,14 +18,14 @@ Use the following procedure to configure an external PostgreSQL compliant databa
 # psql -h <hostname> -U superuser -p 5432 -d postgres <password_for_user_superuser>
 ----
 +
-Where:
+. Where the default value for <hostname> is *hostrname*:
 +
 ----
 -h hostname
 --host=hostname
 ----
 +
-Specifies the hostname of the machine on which the server is running. 
+. Specify the hostname of the machine on which the server is running. 
 If the value begins with a slash, it is used as the directory for the UNIX-domain socket.
 +
 ----
@@ -32,7 +33,7 @@ If the value begins with a slash, it is used as the directory for the UNIX-domai
 --dbname=dbname 
 ----
 +
-Specifies the name of the database to connect to. 
+. Specify the name of the database to connect to. 
 This is equal to specifying `dbname` as the first non-option argument on the command line. 
 The `dbname` can be a connection string. 
 If so, connection string parameters override any conflicting command line options.
@@ -42,118 +43,28 @@ If so, connection string parameters override any conflicting command line option
 --username=username 
 ----
 +
-Connect to the database as the user `username` instead of the default (you must have permission to do so).
+. Connect to the database as the user `username` instead of the default (you must have permission to do so).
 
 . Create the user, database, and password with the `createDB` or administrator role assigned to the user. 
 For further information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
-. Add the database credentials and host details to the installer inventory file under the `[all:vars]` group. 
-
+. Add the database credentials and host details to the automation controller inventory file as an external database.
+The default values are used in the following example:
 +
-*Without mutual TLS (mTLS) authentication to the database*
+[database]
+pg_host='db.example.com'
 +
-Use the following inventory file to configure each component's database ({ControllerName}, {EDAName}, {HubName}, and platform gateway) without mTLS authentication. Uncomment the configuration you need.
+pg_port=5432
 +
-[literal, subs="+attributes"]
-----
-[all:vars]
-# {ControllerNameStart} database variables
-
-# awx_install_pg_host='data.example.com' 
-# awx_install_pg_port='<port_number>' 
-# awx_install_pg_database='<database_name>' 
-# awx_install_pg_username='<username>'
-# awx_install_pg_password='<password>' # This is not required if you enable mTLS authentication to the database
-# pg_sslmode='prefer' # Set to verify-ca or verify-full to enable mTLS authentication to the database
-
-
-# {EDAName} database variables
-
-# automationedacontroller_install_pg_host='data.example.com' 
-# automationedacontroller_install_pg_port='<port_number>' 
-# automationedacontroller_install_pg_database='<database_name>' 
-# automationedacontroller_install_pg_username='<username>'
-# automationedacontroller_install_pg_password='<password>' # This is not required if you enable mTLS authentication to the database
-# automationedacontroller_pg_sslmode='prefer' # Set to verify-full to enable mTLS authentication to the database
-
-
-# {HubNameStart} database variables
-
-# automationhub_pg_host='data.example.com' 
-# automationhub_pg_port='<port_number>' 
-# automationhub_pg_database='<database_name>' 
-# automationhub_pg_username='<username>'
-# automationhub_pg_password='<password>' # This is not required if you enable mTLS authentication to the database
-# automationhub_pg_sslmode='prefer' # Set to verify-ca or verify-full to enable mTLS authentication to the database
-
-
-# Platform gateway database variables
-
-# automationgateway_install_pg_host='data.example.com' 
-# automationgateway_install_pg_port='<port_number>' 
-# automationgateway_install_pg_database='<database_name>' 
-# automationgateway_install_pg_username='<username>'
-# automationgateway_install_pg_password='<password>' # This is not required if you enable mTLS authentication to the database
-# automationgateway_pg_sslmode='prefer' # Set to verify-ca or verify-full to enable mTLS authentication to the database
-
-----
+pg_database='awx'
 +
-*With mutual TLS (mTLS) authentication to the database*
+pg_username='awx'
 +
-Use the following inventory file to configure each component's database ({ControllerName}, {EDAName}, {HubName}, and platform gateway) with mTLS authentication. Uncomment the configuration you need.
+pg_password='redhat'
 +
-[literal, subs="+attributes"]
-----
-[all:vars]
-# {ControllerNameStart} database variables
-
-# awx_install_pg_host='data.example.com' 
-# awx_install_pg_port='<port_number>' 
-# awx_install_pg_database='<database_name>' 
-# awx_install_pg_username='<username>'
-# pg_sslmode='verify-full' # This can be either verify-ca or verify-full
-# pgclient_sslcert='/path/to/cert' # Path to the certificate file 
-# pgclient_sslkey='/path/to/key' # Path to the key file
-
-
-# {EDAName} database variables
-
-# automationedacontroller_install_pg_host='data.example.com' 
-# automationedacontroller_install_pg_port='<port_number>' 
-# automationedacontroller_install_pg_database='<database_name>' 
-# automationedacontroller_install_pg_username='<username>'
-# automationedacontroller_pg_sslmode='verify-full' # EDA does not support verify-ca
-# automationedacontroller_pgclient_sslcert='/path/to/cert' # Path to the certificate file 
-# automationedacontroller_pgclient_sslkey='/path/to/key' # Path to the key file
-
-
-# {HubNameStart} database variables
-
-# automationhub_pg_host='data.example.com' 
-# automationhub_pg_port='<port_number>' 
-# automationhub_pg_database='<database_name>' 
-# automationhub_pg_username='<username>'
-# automationhub_pg_sslmode='verify-full' # This can be either verify-ca or verify-full
-# automationhub_pgclient_sslcert='/path/to/cert' # Path to the certificate file 
-# automationhub_pgclient_sslkey='/path/to/key' # Path to the key file
-
-
-# Platform gateway database variables
-
-# automationgateway_install_pg_host='data.example.com' 
-# automationgateway_install_pg_port='<port_number>' 
-# automationgateway_install_pg_database='<database_name>' 
-# automationgateway_install_pg_username='<username>'
-# automationgateway_pg_sslmode='verify-full' # This can be either verify-ca or verify-full
-# automationgateway_pgclient_sslcert='/path/to/cert' # Path to the certificate file 
-# automationgateway_pgclient_sslkey='/path/to/key' # Path to the key file
-
-----
-
 . Run the installer.
-+
-If you are using a PostgreSQL database, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
-. Check that you can connect to the created database with the credentials provided in the inventory file.
-. Verify the user has the `createDB` or administrator role assigned.
+If you are using a PostgreSQL database with automation controller, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
+. Check that you are able to connect to the created database with the user, password and database name.
+. Check the permission of the user, the user should have the `createDB` or administrator role.
 
 [NOTE]
 ====
