@@ -10,7 +10,7 @@
 You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
 
 == Example inventory files
-Example inventory files are provided in this document that you can copy and change to quickly get started. You can find additional example inventory files in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models_for_ansible_automation_platform[Container supported topologies] in _{TitleTopologies}_.
+Example inventory files are provided in this document that you can copy and change to quickly get started. You can find additional example inventory files in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/supported_deployment_models/index#container-topologies[Container supported topologies] in _{TitleTopologies}_.
 
 To use the example inventory files, replace the `< >` placeholders with your specific variables, and update the host names. Refer to the `README.md` file in the installation directory for more information about optional and required variables.
 
@@ -20,9 +20,11 @@ Use the following example inventory file to perform an online installation for t
 
 [subs="+attributes"]
 ----
-# This is the {PlatformNameShort} installer inventory file
+# This is the {PlatformNameShort} growth installer inventory file
 # Please consult the documentation if you are unsure what to add
 # For all optional variables please consult the included README.md
+# or the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
 
 # This section is for your platform gateway hosts
 # -----------------------------------------------------
@@ -62,24 +64,28 @@ registry_password=<your RHN password>
 redis_mode=standalone
 
 # Platform gateway
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
 # -----------
 gateway_admin_password=<set your own>
 gateway_pg_host=aap.example.org
 gateway_pg_password=<set your own>
 
 # {ControllerNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables
 # --------------
 controller_admin_password=<set your own>
 controller_pg_host=aap.example.org
 controller_pg_password=<set your own>
 
 # {HubNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables
 # ------------------
 hub_admin_password=<set your own>
 hub_pg_host=aap.example.org
 hub_pg_password=<set your own>
 
 # {EDAcontroller}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller
 # ------------------
 eda_admin_password=<set your own>
 eda_pg_host=aap.example.org
@@ -95,6 +101,8 @@ Use the following example inventory file to perform an online installation for t
 # This is the {PlatformNameShort} installer inventory file
 # Please consult the documentation if you are unsure what to add
 # For all optional variables please consult the included README.md
+# or the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
 
 # This section is for your platform gateway hosts
 # -----------------------------------------------------
@@ -138,11 +146,13 @@ eda2.example.org
 [all:vars]
 
 # Common variables
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-general-inventory-variables
 # ----------------
 registry_username=<your RHN username>
 registry_password=<your RHN password>
 
 # Platform gateway
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
 # -----------
 gateway_admin_password=<set your own>
 gateway_pg_host=externaldb.example.org
@@ -151,6 +161,7 @@ gateway_pg_username=<set your own>
 gateway_pg_password=<set your own>
 
 # {ControllerNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables
 # --------------
 controller_admin_password=<set your own>
 controller_pg_host=externaldb.example.org
@@ -159,6 +170,7 @@ controller_pg_username=<set your own>
 controller_pg_password=<set your own>
 
 # {HubNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables
 # ------------------
 hub_admin_password=<set your own>
 hub_pg_host=externaldb.example.org
@@ -167,6 +179,7 @@ hub_pg_username=<set your own>
 hub_pg_password=<set your own>
 
 # {EDAcontroller}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller
 # ------------------
 eda_admin_password=<set your own>
 eda_pg_host=externaldb.example.org
