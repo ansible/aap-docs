@@ -17,9 +17,11 @@ The following table shows possible locations:
 [cols="30%,70%",options="header"]
 |====
 | Installer | Location
-| *Bundle tar* | `/ansible-automation-platform-setup-bundle-<latest-version>`
-| *Non-bundle tar* | `/ansible-automation-platform-setup-<latest-version>`
 | *RPM* | `/opt/ansible-automation-platform/installer`
+| *RPM bundle tar* | `/ansible-automation-platform-setup-bundle-<latest-version>`
+| *RPM non-bundle tar* | `/ansible-automation-platform-setup-<latest-version>`
+| *Container bundle tar* | `/ansible-automation-platform-containerized-setup-bundle-<latest-version>`
+| *Container non-bundle tar* | `/ansible-automation-platform-containerized-setup-<latest-version>`
 |====
 
 You can verify the hosts in your inventory using the command:
@@ -34,15 +36,20 @@ ansible all -i <path-to-inventory-file. --list-hosts
 [options="nowrap" subs="+quotes,attributes"]
 ----
 [automationcontroller]
-host1.example.com
-host2.example.com
-Host4.example.com
+controller.example.com
+
 
 [automationhub]
-host3.example.com
+automationhub.example.com
+
+[automationedacontroller]
+automationedacontroller.example.com
+
+[automationgateway]
+gateway.example.com
 
 [database]
-Host5.example.com
+data.example.com
 
 [all:vars]
 admin_password='<password>'
