@@ -2,7 +2,7 @@
 
 = Revoke an access token
 
-You can revoke an access token by using the `/api/o/revoke-token/` endpoint.
+You can revoke an access token by deleting the token in the platform UI, or by using the `/api/o/revoke-token/` endpoint.
 
 Revoking an access token by this method is the same as deleting the token resource object, but it enables you to delete a token by providing its token value, and the associated `client_id` (and `client_secret` if the application is `confidential`). For example:
 
@@ -21,13 +21,10 @@ http://<controller>/api/o/revoke_token/ -i
 External users refer to users authenticated externally with a service such as LDAP, or any of the other SSO services. 
 This setting ensures external users cannot create their own tokens. 
 If you enable then disable it, any tokens created by external users in the meantime will still exist, and are not automatically revoked.
+This setting can be configured from the {MenuSetGateway} menu.
 ====
 
 Alternatively, to revoke OAuth2 tokens, you can use the `manage` utility, see xref:ref-controller-revoke-oauth2-token[Revoke oauth2 tokens].
-
-This setting can be configured at the system-level in the UI:
-
-image:configure-controller-system-oauth2-tokens-toggle.png[image]
 
 On success, a response of `200 OK` is displayed. 
 Verify the deletion by checking whether the token is present in the `/api/v2/tokens/` endpoint.

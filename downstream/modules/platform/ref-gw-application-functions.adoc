@@ -1,0 +1,17 @@
+[id="ref-gw-application-functions"]
+
+= Application functions
+
+Several OAuth 2 utilities are available for authorization, token refresh, and revoke. 
+You can specify the following grant types when creating an application:
+
+Password:: This grant type is ideal for users who have native access to the web application and must be used when the client is the resource owner. 
+Authorization code:: This grant type should be used when access tokens must be issued directly to an external application or service.
+
+[NOTE]
+====
+You can only use the authorization code type to acquire an access token when using an application. When integrating an external web application with {PlatformNameShort}, that web application might need to create OAuth2 Tokens on behalf of users in that other web application. Creating an application in the platform with the authorization code grant type is the preferred way to do this because:
+
+* This allows an external application to obtain a token from {PlatformNameShort} for a user, using their credentials.
+* Compartmentalized tokens issued for a particular application enables those tokens to be easily managed. For example, revoking all tokens associated with that application without having to revoke all tokens in the system.
+====
