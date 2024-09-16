@@ -4,6 +4,10 @@
 The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
 
 == Infrastructure topology
+The following diagram outlines the infrastructure topology that Red Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+
+.Infrastructure topology diagram
+image::cont-b-env-a.png[Container enterprise topology diagram]
 
 Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
 
@@ -14,10 +18,10 @@ Each VM has been tested with the following component requirements: 16 GB RAM, 4 
 | 2 | Platform gateway with Redis | automationgateway 
 | 2 | {ControllerNameStart} | automationcontroller
 | 2 | {PrivateHubNameStart} with Redis | automationhub
-| 2 | {EDAName} with Redis | automationedacontroller
-| 1 | {AutomationMeshStart} hop node | hop_nodes
+| 2 | {EDAName} with Redis | automationeda
+| 1 | {AutomationMeshStart} hop node | execution_nodes
 | 2 | {AutomationMeshStart} execution node | execution_nodes
-| 1 | Externally managed database service | external_database
+| 1 | Externally managed database service | N/A
 | 1 | HAProxy load balancer in front of platform gateway (externally managed) | N/A
 |====
 
@@ -70,6 +74,102 @@ a|
 | 8433 | TCP | HTTPS | Platform gateway | Platform gateway
 | 50051 | TCP | gRPC | Platform gateway | Platform gateway
 |====
+
+== Example enterprise inventory file
+Use the following example inventory file to perform an installation for this topology: 
+
+[subs="+attributes"]
+----
+# This is the enterprise installer inventory file
+# Please consult the docs if you are unsure what to add
+# For all optional variables please consult the included README.md
+# or the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
+
+# This section is for your platform gateway hosts
+# -----------------------------------------------------
+[automationgateway]
+gateway1.example.org
+gateway2.example.org
+
+# This section is for your {ControllerName} hosts
+# -----------------------------------------------------
+[automationcontroller]
+controller1.example.org
+controller2.example.org
+
+# This section is for your {PlatformNameShort} execution hosts
+# -----------------------------------------------------
+[execution_nodes]
+hop1.example.org receptor_type='hop'
+exec1.example.org
+exec2.example.org
+
+# This section is for your {HubName} hosts
+# -----------------------------------------------------
+[automationhub]
+hub1.example.org
+hub2.example.org
+
+# This section is for your {EDAcontroller} hosts
+# -----------------------------------------------------
+[automationeda]
+eda1.example.org
+eda2.example.org
+
+[redis]
+gateway1.example.org
+gateway2.example.org
+hub1.example.org
+hub2.example.org
+eda1.example.org
+eda2.example.org
+
+[all:vars]
+
+# Common variables
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-general-inventory-variables
+# -----------------------------------------------------
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+
+# Platform gateway
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
+# -----------------------------------------------------
+gateway_admin_password=<set your own>
+gateway_pg_host=externaldb.example.org
+gateway_pg_database=<set your own>
+gateway_pg_username=<set your own>
+gateway_pg_password=<set your own>
+
+# {ControllerNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables
+# -----------------------------------------------------
+controller_admin_password=<set your own>
+controller_pg_host=externaldb.example.org
+controller_pg_database=<set your own>
+controller_pg_username=<set your own>
+controller_pg_password=<set your own>
+
+# {HubNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables
+# -----------------------------------------------------
+hub_admin_password=<set your own>
+hub_pg_host=externaldb.example.org
+hub_pg_database=<set your own>
+hub_pg_username=<set your own>
+hub_pg_password=<set your own>
+
+# {EDAcontroller}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller
+# -----------------------------------------------------
+eda_admin_password=<set your own>
+eda_pg_host=externaldb.example.org
+eda_pg_database=<set your own>
+eda_pg_username=<set your own>
+eda_pg_password=<set your own>
+----
+
 
 == Storage requirements
 * Execution environments are pulled into {ControllerName} hybrid nodes and execution nodes that run jobs. The size of these containers influences the storage requirements for `$PATH_WHERE_PODMAN_PUTS_CONTAINER_IMAGES`.

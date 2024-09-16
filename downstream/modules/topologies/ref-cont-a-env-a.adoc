@@ -4,6 +4,10 @@
 The growth topology is intended for organizations that do not require {PlatformNameShort} {PlatformVers} to be deployed with redundancy or higher compute for large volumes of automation.
 
 == Infrastructure topology
+The following diagram outlines the infrastructure topology that Red Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+
+.Infrastructure topology diagram
+image::cont-a-env-a.png[Container growth topology diagram]
 
 A single VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. Resources, such as storage, can be increased based on the needs of the deployment.
 
@@ -16,7 +20,7 @@ a|
 * automationgateway 
 * automationcontroller 
 * automationhub 
-* automationedacontroller 
+* automationeda
 * database
 |====
 
@@ -59,3 +63,82 @@ a|
 | 8433 | TCP | HTTPS | Platform gateway | Platform gateway
 | 50051 | TCP | gRPC | Platform gateway | Platform gateway
 |====
+
+== Example growth inventory file
+Use the following example inventory file to perform an installation for this topology: 
+
+[subs="+attributes"]
+----
+# This is the growth installer inventory file
+# Please consult the docs if you are unsure what to add
+# For all optional variables please consult the included README.md
+# or the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
+
+# This section is for your platform gateway hosts
+# -----------------------------------------------------
+[automationgateway]
+aap.example.org
+
+# This section is for your {ControllerName} hosts
+# -------------------------------------------------
+[automationcontroller]
+aap.example.org
+
+# This section is for your {HubName} hosts
+# -----------------------------------------------------
+[automationhub]
+aap.example.org
+
+# This section is for your {EDAcontroller} hosts
+# -----------------------------------------------------
+[automationeda]
+aap.example.org
+
+# This section is for the database
+# --------------------------------------
+[database]
+aap.example.org
+
+[all:vars]
+
+# Common variables
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-general-inventory-variables
+# -----------------------------------------------------
+postgresql_admin_username=postgres
+postgresql_admin_password=<set your own>
+
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+
+redis_mode=standalone
+
+# Platform gateway
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
+# -----------------------------------------------------
+gateway_admin_password=<set your own>
+gateway_pg_host=aap.example.org
+gateway_pg_password=<set your own>
+
+# {ControllerNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables
+# -----------------------------------------------------
+controller_admin_password=<set your own>
+controller_pg_host=aap.example.org
+controller_pg_password=<set your own>
+
+# {HubNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables
+# -----------------------------------------------------
+hub_admin_password=<set your own>
+hub_pg_host=aap.example.org
+hub_pg_password=<set your own>
+
+# {EDAcontroller}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller
+# -----------------------------------------------------
+eda_admin_password=<set your own>
+eda_pg_host=aap.example.org
+eda_pg_password=<set your own>
+----
+
