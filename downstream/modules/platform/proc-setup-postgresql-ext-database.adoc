@@ -18,7 +18,7 @@ To create a database, user and password on an external PostgreSQL compliant data
 # psql -h <hostname> -U superuser -p 5432 -d postgres <password_for_user_superuser>
 ----
 +
-. Where the default value for <hostname> is *hostrname*:
+. Where the default value for <hostname> is *hostname*:
 +
 ----
 -h hostname
@@ -50,21 +50,21 @@ For further information, see link:https://www.postgresql.org/docs/13/user-manag.
 . Add the database credentials and host details to the automation controller inventory file as an external database.
 The default values are used in the following example:
 +
+
+----
 [database]
-pg_host='db.example.com'
+  pg_host='db.example.com'
+  pg_port=5432
+  pg_database='awx'
+  pg_username='awx'
+  pg_password='redhat'
+----
 +
-pg_port=5432
-+
-pg_database='awx'
-+
-pg_username='awx'
-+
-pg_password='redhat'
-+
+
 . Run the installer.
 If you are using a PostgreSQL database with automation controller, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
 . Check that you are able to connect to the created database with the user, password and database name.
-. Check the permission of the user, the user should have the `createDB` or administrator role.
+. Check the permission of the user. The user should have the `createDB` or administrator role.
 
 [NOTE]
 ====
