@@ -5,7 +5,7 @@
 
 
 [role="_abstract"]
-Use this example to populate the inventory file to deploy single instances of platform gateway and {ControllerName} with an external (installer managed) database.
+Use this example to see what is minimally needed within the inventory file to deploy single instances of platform gateway and {ControllerName} with an external (installer managed) database.
 
 -----
 [automationcontroller]
@@ -24,7 +24,7 @@ pg_port=5432
 pg_database='awx'
 pg_username='awx'
 pg_password='<password>'
-pg_sslmode='prefer'  # set to 'verify-full' for client-side enforced SSL
+pg_sslmode='prefer' # set to 'verify-full' for client-side enforced SSL
 
 registry_url='registry.redhat.io'
 registry_username='<registry username>'
@@ -33,7 +33,7 @@ registry_password='<registry password>'
 # Automation Gateway configuration
 automationgateway_admin_password=''
 
-automationgateway_pg_host=''
+automationgateway_pg_host='data.example.com'
 automationgateway_pg_port=5432
 
 automationgateway_pg_database='automationgateway'
