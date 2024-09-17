@@ -35,3 +35,52 @@ You can perform an inventory update while a related job is running.
 == Supported File Syntax
 
 {ControllerNameStart} uses the `ansible-inventory` module from Ansible to process inventory files, and supports all valid inventory syntax that {ControllerName} requires.
+
+The following is an example of a working example of JSON output that {ControllerName} can read in:
+
+----
+{
+    "_meta": {
+        "hostvars": {
+            "host1": {
+                "fly_rod": true
+            }
+        }
+    },
+    "all": {
+        "children": [
+            "groupA",
+            "ungrouped"
+        ]
+    },
+    "groupA": {
+        "hosts": [
+            "host1",
+            "host10",
+            "host11",
+            "host12",
+            "host13",
+            "host14",
+            "host15",
+            "host16",
+            "host17",
+            "host18",
+            "host19",
+            "host2",
+            "host20",
+            "host21",
+            "host22",
+            "host23",
+            "host24",
+            "host25",
+            "host3",
+            "host4",
+            "host5",
+            "host6",
+            "host7",
+            "host8",
+            "host9"
+        ]
+    }
+} 
+----
