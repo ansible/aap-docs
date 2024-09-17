@@ -1,0 +1,34 @@
+[id="devtools-setup-registry-redhat-io_{context}"]
+
+= Authenticating with the Red Hat container registry
+
+[role="_abstract"]
+All container images available through the Red Hat container catalog are hosted on an image registry,
+`registry.redhat.io`.
+The registry requires authentication for access to images.
+
+To authenticate with the registry, you must have a Red Hat account. This is the same account that you use to log into the Red Hat Customer Portal (access.redhat.com) and manage your Red Hat subscriptions.
+
+You can use the `podman login` or `docker login` commands with your credentials to access content on the registry.
+
+Docker::
++
+----
+$ podman login registry.redhat.io
+Username: my__redhat_username
+Password: ***********
+----
+Podman::
++
+----
+$ docker login registry.redhat.io
+Username: my__redhat_username
+Password: ***********
+----
+
+For more information about Red Hat container registry authentication, see
+link:https://access.redhat.com/RegistryAuthentication[Red Hat Container Registry Authentication]
+on the Red Hat customer portal.
+
+//Troubleshooting link:https://access.redhat.com/articles/3560571[Troubleshooting Authentication Issues with `registry.redhat.io`]
+
