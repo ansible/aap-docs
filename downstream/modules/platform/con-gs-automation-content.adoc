@@ -3,52 +3,55 @@
 = Automation content
 
 {HubNameStart} is the central location for your {PlatformNameShort} content. 
-In {HubName} you can also find content collections that you can download and integrate into your automation environment. 
+In {HubName} you can also find content collections that you can download and integrate into your automation environment. You can also create and upload your own content to distribute to your users.
 
-An Ansible Content Collection is a ready-to-use toolkit for automation and can include multiple types of content, including playbooks, roles, modules, and plugins all in one place.  
+An Ansible Content Collection is a ready-to-use toolkit for automation and can include multiple types of content, including roles, modules, playbooks, and plugins all in one place.  
 
 You can access {HubName} in one of two ways: 
 
 * On the Red Hat-hosted link:https://console.redhat.com/[Hybrid Cloud Console], where you can find Red Hat validated or certified content that you can sync to your platform environment. 
-* On a self-hosted, on-premise private {HubName}, where you can curate content for your automation users and manage access to collections. 
+* On a self-hosted, on-premise {PrivateHubName}, where you can curate content for your automation users and manage access to collections and {ExecEnvShort}s. 
 
-Depending on the way you access {HubName}, you might have access to different types of content collections.
+Depending on the way you access {HubName}, you may have access to different types of content collections.
 
 There are two types of Red Hat Ansible content:
 
-* Ansible Certified Content Collections, which Red Hat builds, supports, and maintains. 
-Certified collections are included in your subscription to {PlatformName} and you can find in {HubName}.
-* Ansible validated content collections, which are customizable and therefore do not have a support guarantee, but have been tested in the Ansible Automation Platform environment. 
-Ansible validated collections are available in your {PrivateHubName} through the Platform Installer. 
-When you download Red Hat Ansible Automation Platform with the bundled installer, validated content is pre-populated into the {PrivateHubName} by default, but only if you enable {PrivateHubName} as part of the inventory.
+* {CertifiedName}, which Red Hat builds, supports, and maintains. 
+Certified collections are included in your subscription to {PlatformName} and can be found in {HubName}.
+* {Valid} collections, which are customizable and therefore do not have a support guarantee, but have been tested in the {PlatformNameShort} environment. 
 
-== Ansible playbooks
-
-Ansible Content Collections often include playbooks. 
-Playbooks are YAML files that contain specific sets of human-readable instructions, or “plays”, that you send to run on a single target or groups of targets.  
-Ansible playbooks are repeatable, reusable, configuration management tools designed to deploy complex applications. 
-
-You can use playbooks to manage configurations of and deployments to remote machines and sequence multitiered rollouts involving rolling updates. 
-Use playbooks to delegate actions to other hosts, interacting with monitoring servers and load balancers along the way.
-
-Once written, you can use and re-use playbooks for automation across your enterprise. 
-For example, if you need to run a task more than once, write a playbook and put it under source control. 
-Then you can use the playbook to push out new configuration or confirm the configuration of remote systems. 
-
-Ansible playbooks can declare configurations, orchestrate steps of any manually ordered process on many machines in a defined order, or start tasks synchronously or asynchronously. 
-
-.Additional resources
-
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/getting_started_with_playbooks/index[Getting started with Ansible Playbooks]. 
+For more information about Ansible content, see xref:platform/con-gs-create-automation-content.adoc[Create automation content] in xref:assembly-gs-auto-dev[Getting started as an automation developer].
 
 == Ansible roles
 
-Similar to a playbook, use Ansible roles to create reusable automation content that helps teams to work more efficiently and avoid duplicate efforts. 
-With roles, you can group together a broader range of existing automation content. 
-This includes playbooks, configuration files, templates, tasks, and handlers to create customized automation content that can be reused and shared with others. 
+Ansible roles allow you to create reusable automation content that helps teams to work more efficiently and avoid duplicating efforts. 
+With roles, you can group together a broader range of existing automation content, like playbooks, configuration files, templates, tasks, and handlers to create customized automation content that can be reused and shared with others. 
 
 You can also make roles configurable by exposing variables that users can set when calling the role, allowing them to configure their system according to their organization's requirements.
+
+Roles are generally included in Ansible content collections.
 
 .Additional resources
 
 For more information, see xref:con-gs-ansible-roles_assembly-gs-auto-dev[Bundle content with Ansible roles].
+
+== Ansible playbooks
+
+Playbooks are YAML files that contain specific sets of human-readable instructions, or “plays,” that you send to run on a single target or groups of targets.  
+Ansible playbooks are repeatable and reusable configuration management tools designed to deploy complex applications. 
+
+You can use playbooks to manage configurations of and deployments to remote machines to sequence multitiered rollouts involving rolling updates. Use playbooks to delegate actions to other hosts, interacting with monitoring servers and load balancers along the way.
+
+Once written, you can use and re-use playbooks for automation across your enterprise. 
+For example, if you need to run a task more than once, write a playbook and put it under source control. 
+Then, you can use the playbook to push out new configuration or confirm the configuration of remote systems. 
+
+Ansible playbooks can declare configurations, orchestrate steps of any manually ordered process on many machines in a defined order, or start tasks synchronously or asynchronously. 
+
+You can also use {LightspeedShortName}, Ansible's generative AI service, to create and develop playbooks to fit your needs. See the link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/index[Ansible Lightspeed documentation] for more information.
+
+.Additional resources
+
+* {LinkPlaybooksGettingStarted}
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/index[{LightspeedFullName} user guide]
+
