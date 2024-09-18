@@ -7,18 +7,18 @@ To filter only certain hosts with a particular status, specify one of the follow
 
 ok:: Indicates that a task completed successfully but no change was executed on the host.
 changed:: The playbook task executed. 
-Since Ansible tasks should be written to be idempotent, tasks may exit successfully without executing anything on the host. 
+Since Ansible tasks should be written to be idempotent, tasks might exit successfully without executing anything on the host. 
 In these cases, the task returns *ok*, but not *changed*.
 failed:: The task failed. 
 Further playbook execution stopped for this host.
-unreachable:: The host is unreachable from the network or has another fatal error associated with it.
+unreachable:: The host is unreachable from the network or has another unrecoverable error associated with it.
 skipped:: The playbook task skipped because no change was necessary for the host to reach the target state.
 rescued:: This shows the tasks that failed and then executes a rescue section.
 ignored:: This shows the tasks that failed and have `ignore_errors: yes configured`.
 
-These statuses also display in each *Stdout* pane, in a group of "stats" called the host summary fields:
+//These statuses also display in each *Stdout* pane, in a group of "stats" called the host summary fields:
 
-image::ug-job-std-out-host-summary-status.png[Host summary status]
+//image::ug-job-std-out-host-summary-status.png[Host summary status]
 
 The following example shows a search with only unreachable hosts:
 
