@@ -44,8 +44,6 @@ You must use different settings depending on whether you are using Podman or Doc
     "apparmor=unconfined",
     "--userns=host",
     "--hostname=ansible-dev-container",
-    "--volume",
-    "ansible-dev-tools-container-storage:/var/lib/containers"
   ],
   "customizations": {
     "vscode": {
@@ -60,7 +58,7 @@ You must use different settings depending on whether you are using Podman or Doc
 {
   "name": "ansible-dev-container-docker",
   "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
-  "containerUser": "podman",
+  "containerUser": "root",
   "runArgs": [
     "--security-opt",
     "seccomp=unconfined",
