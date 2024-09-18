@@ -1,21 +1,13 @@
-:_mod-docs-content-type: PROCEDURE
+:_mod-docs-content-type: REFERENCE
 
-[id="rhdh-add-plugin-config_{context}"]
-= Adding the Ansible plug-ins configuration
+[id="rhdh-full-helm-chart-ansible-plugins_{context}"]
+= Full Helm chart config example for Ansible plug-ins
 
-. In the OpenShift Developer UI, navigate to menu:Helm[developer-hub > Actions > Upgrade > Yaml view].
-. Update the Helm chart configuration to add the dynamic plug-ins in the {RHDH} instance.
-Under the `plugins` section in the YAML file, add the dynamic plug-ins that you want to enable.
-+
 ----
 global:
-  auth:
-    backend:
-      enabled: true
-  clusterRouterBase: <your-developer-hub-base-url>
+  ...
   dynamic:
-    includes:
-      - dynamic-plugins.default.yaml
+    ...
     plugins:
       - disabled: false
         integrity: <SHA512 Integrity key for ansible-plugin-backstage-rhaap plugin>
@@ -49,19 +41,25 @@ global:
           dynamicPlugins:
             backend:
               ansible.plugin-backstage-rhaap-backend: null
+...
+upstream:
+  backstage:
+    ...
+    extraAppConfig:
+      - configMapRef: app-config-rhdh
+        filename: app-config-rhdh.yaml
+    extraContainers:
+      - command:
+          - adt
+          - server
+        image: >-
+          registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+        imagePullPolicy: IfNotPresent
+        name: ansible-devtools-server
+        ports:
+          - containerPort: 8000
+...
+
+
 ----
-. In the `package` sections, replace `x.y.z`  in the plug-in filenames with the correct version numbers for the Ansible plug-ins.
-. For each Ansible plug-in, update the integrity values using the corresponding `.integrity` file content.
-. Click btn:[Upgrade].
-+
-The developer hub pods restart and the plug-ins are installed.
-
-.Verification
-
-Verify that the plug-ins have been installed:
-
-. Open the Developer perspective for the {RHDH} application in the OpenShift Web console.
-. Check the `install-dynamic-plugin` container logs: the Ansible plug-ins are visible in {RHDH}.
-+
-image::rhdh-check-plugin-config.png[container logs for install-dynamic-plugin]
 
