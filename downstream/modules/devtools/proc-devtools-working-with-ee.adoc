@@ -9,17 +9,28 @@ link:https://catalog.redhat.com/search?searchType=containers&build_categories_li
 
 Click on an execution environment for information on how to download it.
 
+. Log in to `registry.redhat.io` if you have not already done so.
++
+[NOTE]
+====
+If you are running {ToolsName} on a container inside {VSCode} and you want to pull execution environments
+or the `devcontainer` to use as an execution environment,
+you must log in to `registry.redhat.io` from a terminal prompt within the `devcontainer` inside {VSCode}.
+====
+. Using the information in the 
+link:https://catalog.redhat.com/search?searchType=containers&build_categories_list=Automation%20execution%20environment&p=1[Red Hat Ecosystem Catalog], download the execution environment you need.
++
 For example, to download the minimal RHEL 8 base image, run the following command:
++
 ----
 $ podman pull registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel9
 ----
 
 You can build and create custom execution environments with `ansible-builder`.
 For more information about working with execution environments locally, see
-link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/creating_and_consuming_execution_environments/index[_Creating and consuming execution environments_].
+link:{LinkBuilder}.
 
 After customizing your execution environment, you can push your new image to the container registry in automation hub. See
-link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/creating_and_consuming_execution_environments/index#assembly-publishing-exec-env[Publishing an automation execution environment]
-in the _Creating and consuming execution environments_ documentation.
-link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/creating_and_consuming_execution_environments/index[Creating and consuming execution environments].
+link:{URLBuilder}/index#assembly-publishing-exec-env[Publishing an automation execution environment]
+in the _{TitleBuilder}_ documentation.
 
