@@ -7,16 +7,23 @@ The `creatorService` URL is required for the Ansible plug-ins to provision new p
 
 .Procedure
 
-. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+. Edit your custom {RHDH} config map, `app-config-rhdh`, that you created in
+xref:rhdh-add-custom-configmap_rhdh-ocp-required-installation[Adding a custom ConfigMap].
 . Add the following code to your {RHDH} `app-config-rhdh.yaml` file.
 +
 ----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-rhdh
+...
 data:
   app-config-rhdh.yaml: |-
-ansible:
- creatorService:
-   baseUrl: 127.0.0.1
-   port: '8000'
+    ansible:
+      creatorService:
+        baseUrl: 127.0.0.1
+        port: '8000'
+...
 
 ----
 
