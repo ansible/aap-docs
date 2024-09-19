@@ -11,6 +11,8 @@
 
 Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
 
+Use of special characters for `automationgateway_admin_password` is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+
 | *`automationgateway_admin_email`* | The email address used for the admin user for platform gateway.
 
 | *`automationgateway_pg_host`* | The hostname of the Postgres database used by platform gateway, which can be an externally managed database.
@@ -41,13 +43,13 @@ Default = `prefer`.
 
 If not specified, the first node in the `[automationgateway]` group will be used when needed.
 
-| *`automationgateway_ssl_cert`* | Optional
+| *`automationgateway_ssl_cert`* | _Optional_
 
 `/path/to/automationgateway.cert`
 
 Same as `automationhub_ssl_cert` but for platform gateway UI and API.
 
-| *`automationgateway_ssl_key`* | Optional
+| *`automationgateway_ssl_key`* | _Optional_
 
 `/path/to/automationgateway.key`
 
