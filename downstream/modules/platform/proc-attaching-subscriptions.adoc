@@ -7,17 +7,24 @@
 [role="_abstract"]
 You *must* have valid subscriptions attached on all nodes before installing {PlatformName}. Attaching your {PlatformNameShort} subscription provides access to subscription-only resources necessary to proceed with the installation.
 
-[NOTE]
-====
-Attaching a subscription is unnecessary if you have enabled Simple Content Access Mode on your Red Hat account. Once enabled, you will need to register your systems to either Red Hat Subscription Management (RHSM) or Satellite before installing the {PlatformNameShort}. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
-====
+//[ddacosta] Removing this note until it can be verified that SCA is available with AAP
+// [NOTE]
+// ====
+// Attaching a subscription is unnecessary if you have enabled Simple Content Access Mode on your Red Hat account. Once enabled, you will need to register your systems to either Red Hat Subscription Management (RHSM) or Satellite before installing the {PlatformNameShort}. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
+// ====
 
 .Procedure
 
+. Make sure your system is registered:
++
+-----
+$ sudo subscription-manager register --username <$INSERT_USERNAME_HERE> --password <$INSERT_PASSWORD_HERE>
+-----
++
 . Obtain the `pool_id` for your {PlatformName} subscription:
 +
 -----
-# subscription-manager list --available --all | grep "Ansible Automation Platform" -B 3 -A 6
+$ sudo subscription-manager list --available --all | grep "Ansible Automation Platform" -B 3 -A 6
 -----
 +
 [NOTE]
@@ -43,7 +50,7 @@ Subscription Name: Red Hat Ansible Automation, Premium (5000 Managed Nodes)
 . Attach the subscription:
 +
 -----
-# subscription-manager attach --pool=<pool_id>
+$ sudo subscription-manager attach --pool=<pool_id>
 -----
 +
 You have now attached your {PlatformName} subscriptions to all nodes.
@@ -51,7 +58,7 @@ You have now attached your {PlatformName} subscriptions to all nodes.
 . To remove this subscription, enter the following command:
 +
 -----
-# subscription-manager remove --pool=<pool_id>
+$ sudo subscription-manager remove --pool=<pool_id>
 -----
 
 .Verification
@@ -59,7 +66,7 @@ You have now attached your {PlatformName} subscriptions to all nodes.
 * Verify the subscription was successfully attached:
 
 -----
-# subscription-manager list --consumed
+$ sudo subscription-manager list --consumed
 -----
 
 .Troubleshooting
@@ -69,11 +76,11 @@ You have now attached your {PlatformName} subscriptions to all nodes.
 {PlatformName} {PlatformVers} for RHEL 8
 +
 ----
-subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
+$ sudo subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
 ----
 +
 {PlatformName} {PlatformVers} for RHEL 9
 +
 ----
-subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms
+$ sudo subscription-manager repos --enable ansible-automation-platform-2.4-for-rhel-9-x86_64-rpms
 ----
