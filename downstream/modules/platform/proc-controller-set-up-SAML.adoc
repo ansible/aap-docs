@@ -284,6 +284,24 @@ Once the user authenticates, {ControllerName} creates organization and team alia
 For more information, see xref:ref-controller-organization-mapping[Organization mapping] and xref:ref-controller-team-mapping[Team Mapping].
 . Optional: Provide security settings in the *SAML Security Config* field.
 This field is the equivalent to the `SOCIAL_AUTH_SAML_SECURITY_CONFIG` field in the API.
++
+[literal, options="nowrap" subs="+attributes"]
+----
+// Indicates whether the <samlp:AuthnRequest> messages sent by this SP 
+// will be signed. [Metadata of the SP will offer this info]
+
+"authnRequestsSigned": false,
+
+// Indicates a requirement for the <samlp:Response>, <samlp:LogoutRequest> 
+// and <samlp:LogoutResponse> elements received by this SP to be signed.
+
+"wantMessagesSigned": false,
+
+// Indicates a requirement for the <saml:Assertion> elements received by 
+// this SP to be signed. [Metadata of the SP will offer this info]
+
+"wantAssertionsSigned": false,
+----
 For more information, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin's SAML Python Toolkit].
 +
 {ControllerNameStart} uses the `python-social-auth` library when users log in through SAML.
