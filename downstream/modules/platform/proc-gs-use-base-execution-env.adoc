@@ -2,11 +2,28 @@
 
 = Using the base automation {ExecEnvShort}
 
-Your subscription with Ansible Automation Platform gives you access to some base automation execution environments. You can use a base automation execution environment as a starting point for creating a customized automation execution environment. 
+Your subscription with Ansible Automation Platform gives you access to some base {ExecEnvName}. You can use a base {ExecEnvName} as a starting point for creating a customized {ExecEnvShort}. 
 
-(ADD CONTENT)
+Base images included with {PlatformNameShort} are hosted on the Red Hat Ecosystem Catalog (registry.redhat.io).
 
+.Prerequisites 
 
+* You have a valid {PlatformName} subscription. 
+
+.Procedure 
+
+. Log in to registry.redhat.io.
++
+[source,bash]
+----
+$ podman login registry.redhat.io
+----
++
+. Pull the base images from the registry: 
+[source,bash]
+----
+$podman pull registry.redhat.io/aap/<image name>
+----
 
 == Customize the base execution environment image
 
@@ -15,19 +32,19 @@ Your subscription with Ansible Automation Platform gives you access to some base
 * `Minimal` - Includes the latest Ansible-core 2.15 release along with Ansible Runner, but does not include collections or other content
 * `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
 
-While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. For more information about customizing your execution environment, see Customizing an existing automation {ExecEnvShort} image in the Creating and consuming execution environments guide. 
+While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. For more information about customizing your execution environment, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/creating_and_consuming_execution_environments/assembly-publishing-exec-env#proc-customize-ee-image[Customizing an existing automation {ExecEnvShort} image] in the Creating and consuming execution environments guide. 
 
-== About Ansible Builder
+== About {Builder}
 
-You also have the option of creating an entirely new {ExecEnvShort} with Ansible Builder. 
-Ansible Builder is a command line tool you can use to create an e{ExecEnvShort} for Ansible. 
-You must create {ExecEnvShort} with Ansible Builder. 
+You also have the option of creating an entirely new {ExecEnvShort} with {Builder}, also referred to as {ExecEnvShort} builder. 
+{Builder} is a command line tool you can use to create an e{ExecEnvShort} for Ansible. 
+You can only create {ExecEnvShort}s with {Builder}. 
 
-To build your own execution environment, you must: 
+To build your own {ExecEnvShort}, you must: 
 
-* Download Ansible Builder
+* Download {Builder}
 * Create a definition file that defines your {ExecEnvShort}	
-* Create an execution environment image based on the definition file
+* Create an {ExecEnvShort} image based on the definition file
 
-For more information about building an {ExecEnvShort}, see [ADD 2.5 LINK]: Creating and consuming execution environments.
+For more information about building an {ExecEnvShort}, see link:{LinkBuilder}.
  
