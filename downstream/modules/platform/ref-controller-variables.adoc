@@ -2,40 +2,61 @@
 
 = {ControllerNameStart} variables
 
-[cols="50%,50%",options="header"]
+[cols="50%,50%,50%",options="header"]
 |====
-| *Variable* | *Description*
-| *`admin_password`* | The password for an administration user to access the UI when the installation is complet
+| *RPM variable name* | *Container variable name* | *Description*
+| `admin_email` | | The email address used for the admin user for {ControllerName}.
+
+| `admin_password` | `controller_admin_password`| The password for an administration user to access the UI when the installation is complete.
 
 Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
 
-Use of special characters for `admin_password` is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
 
-|*`admin_email`* | The email address used for the admin user for automation controller.
+| `admin_username` | `controller_admin_user` | {ControllerNameStart} admin user
 
-| *`automation_controller_main_url`* | 
+Default = `admin`
 
-| *`nginx_http_port`* | The nginx HTTP server listens for inbound connections.
+| `automation_controller_main_url` | |  {ControllerNameStart} main URL.
 
-Default = 80
-| *`nginx_https_port`* | The nginx HTTPS server listens for secure connections.
+| `controller_tls_files_remote` | `controller_tls_remote` | {ControllerNameStart} TLS remote files.
 
-Default = 443
-| *`nginx_hsts_max_age`* | This variable specifies how long, in seconds, the system must be considered as an _HTTP Strict Transport Security_ (HSTS) host. That is, how long HTTPS is used exclusively for communication.
+Default = `false`
 
-Default = 63072000 seconds, or two years.
-| *`nginx_user_headers`* | List of nginx headers for the {ControllerName} web server.
+| `nginx_disable_hsts` | `controller_nginx_disable_hsts` | Disable NGINX HTTP Strict Transport Security (HSTS).
 
-Each element in the list is provided to the web server's nginx configuration as a separate line. 
+Default = `false`
+
+| `nginx_disable_https` | `controller_nginx_disable_https` | Disable NGINX HTTPS.
+
+Default = `false`
+
+| `nginx_hsts_max_age` | `controller_nginx_hsts_max_age` | This variable specifies how long, in seconds, the system must be considered as an _HTTP Strict Transport Security_ (HSTS) host. That is, how long HTTPS is used only for communication.
+
+Default = `63072000` seconds, or two years.
+
+| `nginx_http_port` | `controller_nginx_http_port` | The NGINX HTTP server listens for inbound connections.
+
+RPM default = `80`, Container default = `8080`
+
+| `nginx_https_port` | `controller_nginx_https_port` | The NGINX HTTPS server listens for secure connections.
+
+RPM Default = `443`, Container default = `8443`
+
+| `nginx_user_headers` | `controller_nginx_user_headers` | List of NGINX headers for the {ControllerName} web server.
+
+Each element in the list is provided to the web server's NGINX configuration as a separate line. 
 
 Default = empty list
-| *`node_state`* | _Optional_
+
+| `node_state` | | _Optional_
 
 The status of a node or group of nodes.
 Valid options are `active`, `deprovision` to remove a node from a cluster, or `iso_migrate` to migrate a legacy isolated node to an execution node.
 
-Default = `active`.
-| *`node_type`* | For `[automationcontroller]` group.
+Default = `active`
+
+| `node_type` | | For `[automationcontroller]` group.
 
 Two valid `node_types` can be assigned for this group.
 
@@ -54,7 +75,7 @@ A `node_type=hop` implies that the node forwards jobs to an execution node.
 A `node_type=execution` implies that the node can run jobs.
 
 Default for this group = `execution`.
-| *`peers`* | _Optional_
+| `peers` | | _Optional_
 
 The `peers` variable is used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established.
 
@@ -63,13 +84,14 @@ This variable is used to add `tcp-peer` entries in the `receptor.conf` file used
 The peers variable can be a comma-separated list of hosts and groups from the inventory.
 This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
 
-| *`pg_database`* | The name of the postgreSQL database.
+| `pg_database` | `controller_pg_database` | The name of the PostgreSQL database.
 
-Default = `awx`.
-| *`pg_host`* | The postgreSQL host, which can be an externally managed database.
-| *`pg_password`* | The password for the postgreSQL database.
+Default = `awx`
 
-Use of special characters for `pg_password` is limited.
+| `pg_host` | `controller_pg_host` | The PostgreSQL host, which can be an externally managed database.
+| `pg_password` | `controller_pg_password` | The password for the PostgreSQL database.
+
+Use of special characters for this variable is limited.
 The `!`, `#`, `0` and `@` characters are supported. 
 Use of other special characters can cause the setup to fail.
 
@@ -78,53 +100,71 @@ NOTE
 You no longer have to provide a `pg_hashed_password` in your inventory file at the time of installation, because PostgreSQL 13 can now store user passwords more securely.
 
 When you supply `pg_password` in the inventory file for the installer, PostgreSQL uses the SCRAM-SHA-256 hash to secure that password as part of the installation process.
-| *`pg_port`* | The postgreSQL port to use.
+| `pg_port` | `controller_pg_port` | The PostgreSQL port to use.
 
-Default = 5432
-| *`pg_ssl_mode`* | Choose one of the two available modes: `prefer` and `verify-full`.
+Default = `5432`
 
-Set to `verify-full` for client-side enforced SSL.
-
-Default = `prefer`.
-| *`pg_username`* | Your postgreSQL database username.
+| `pg_username` | `controller_pg_username` | Your PostgreSQL database username.
 
 Default = `awx`.
-| *`postgres_ssl_cert`* | Location of the postgreSQL SSL certificate.
 
-`/path/to/pgsql_ssl.cert`
-| *`postgres_ssl_key`* | Location of the postgreSQL SSL key.
-
-`/path/to/pgsql_ssl.key`
-| *`postgres_use_cert`* | Location of the postgreSQL user certificate.
-
-`/path/to/pgsql.crt`
-| *`postgres_use_key`* | Location of the postgreSQL user key.
-
-`/path/to/pgsql.key`
-| *`postgres_use_ssl`* | Determines if the connection between {{PlatformNameShort}} and the PostgreSQL database should use SSL. The default for this variable is false which means SSL is not used for PostgreSQL connections. When set to true, the platform connects to PostgreSQL using SSL.
-| *`postgres_max_connections`* | Maximum database connections setting to apply if you are using installer-managed postgreSQL.
-
-See link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index#ref-controller-database-settings[PostgreSQL database configuration] in the {ControllerName} administration guide for help selecting a value.
-
-Default for VM-based installations = 200 for a single node 
-and 1024 for a cluster.
-| *`receptor_listener_port`* | Port to use for receptor connection.
-
-Default = 27199
-| *`supervisor_start_retry_count`* | When specified, it adds `startretries = <value specified>` to the supervisor config file (/`etc/supervisord.d/tower.ini`).
+| `supervisor_start_retry_count` | | When specified, it adds `startretries = <value specified>` to the supervisor config file (/`etc/supervisord.d/tower.ini`).
 
 See link:http://supervisord.org/configuration.html#program-x-section-values[program:x Section Values] for more information about `startretries`.
 
 No default value exists.
 
-| *`web_server_ssl_cert`* | _Optional_
+| `web_server_ssl_cert` | `controller_tls_cert` | _Optional_
 
 `/path/to/webserver.cert`
 
 Same as `automationhub_ssl_cert` but for web server UI and API.
-| *`web_server_ssl_key`* | _Optional_
+
+| `web_server_ssl_key` | `controller_tls_key` | _Optional_
 
 `/path/to/webserver.key`
 
 Same as `automationhub_server_ssl_key` but for web server UI and API.
+
+| | `controller_event_workers` | {ControllerNameStart} event workers.
+
+Default = `4`
+
+| | `controller_license_file` | {ControllerNameStart} license file.  
+| | `controller_nginx_client_max_body_size` | NGINX maximum body size.
+
+Default = `5m`
+
+| | `controller_nginx_https_protocols` | NGINX HTTPS protocols.
+
+Default = `[TLSv1.2, TLSv1.3]`
+
+| | `controller_pg_socket` | PostgreSQL Controller UNIX socket.
+| | `controller_secret_key` | {ControllerNameStart} secret key.
+
+
+| | `controller_uwsgi_listen_queue_size` | {ControllerNameStart} uWSGI listen queue size.
+
+Default = `2048`
+
+| | `controller_postinstall` | Enable {ControllerName} postinstall.
+
+Default = `false`
+
+| | `controller_postinstall_dir` | Postinstall directory. 
+| | `controller_postinstall_async_delay` | Postinstall delay between retries. 
+
+Default = `1`
+
+| | `controller_postinstall_async_retries` | Postinstall number of tries to attempt. 
+
+Default = `30`
+
+| | `controller_postinstall_ignore_files` | {ControllerNameStart} ignore files. 
+| | `controller_postinstall_repo_ref` | {ControllerNameStart} repository branch or tag. 
+
+Default = `main`
+
+| | `controller_postinstall_repo_url` | {ControllerNameStart} repository URL. 
+
 |====
