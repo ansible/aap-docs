@@ -32,6 +32,8 @@ You must use different settings depending on whether you are using Podman or Doc
   "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
   "containerUser": "root",
   "runArgs": [
+    "--cap-add=CAP_MKNOD",
+    "--cap-add=NET_ADMIN",
     "--cap-add=SYS_ADMIN",
     "--cap-add=SYS_RESOURCE",
     "--device",
@@ -42,8 +44,10 @@ You must use different settings depending on whether you are using Podman or Doc
     "label=disable",
     "--security-opt",
     "apparmor=unconfined",
+    "--security-opt",
+    "unmask=/sys/fs/cgroup",
     "--userns=host",
-    "--hostname=ansible-dev-container",
+    "--hostname=ansible-dev-container"
   ],
   "customizations": {
     "vscode": {
@@ -60,16 +64,9 @@ You must use different settings depending on whether you are using Podman or Doc
   "image": "registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest",
   "containerUser": "root",
   "runArgs": [
-    "--security-opt",
-    "seccomp=unconfined",
-    "--security-opt",
-    "label=disable",
-    "--cap-add=SYS_ADMIN",
-    "--cap-add=SYS_RESOURCE",
+    "--privileged",
     "--device",
     "/dev/fuse",
-    "--security-opt",
-    "apparmor=unconfined",
     "--hostname=ansible-dev-container"
   ],
   "updateRemoteUserUID": true,
