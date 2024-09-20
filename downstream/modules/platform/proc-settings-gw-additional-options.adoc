@@ -12,7 +12,7 @@ From the *Platform gateway settings* page, you can configure additional platform
 . Click btn:[Edit platform gateway settings].
 . You can configure the following *Other settings*:
 +
-* *JWT expiration buffer in seconds*: The number of seconds before a JWT token's expiration to revoke from the cache.
+* *Jwt expiration buffer in seconds*: The number of seconds before a JWT token's expiration to revoke from the cache.
 +
 When authentication happens a JWT token is created for the user and that token is cached. 
 When subsequent calls happen to services such as {ControllerName} or {EDAName}, the token is taken from the cache and sent to the service. 
@@ -24,7 +24,9 @@ As a result, expired tokens from the cache are never used.
 This setting defaults to 2 seconds. 
 If you have a large latency between platform gateway and your services and observe 401 responses you must increase this setting to lower the number of 401 responses.
 * *Status endpoint backend timeout seconds*: Timeout (in seconds) for the status endpoint to wait when trying to connect to a backend.
-* *Allow auth2 for external users*: For security reasons, users from external authentication providers, such as LDAP, SAML, SSO, Radius, and others, are not allowed to create OAuth2 tokens. 
+* *Status endpoint backend verify*: Specifies whether SSL certificates of the services are verified when calling individual nodes for statuses.
+* *Request timeout*: Specifies, in seconds, the length of time before the proxy will report a timeout and generate a 504.
+* *Allow external users to create OAuth2 tokens *: For security reasons, users from external authentication providers, such as LDAP, SAML, SSO, Radius, and others, are not allowed to create OAuth2 tokens. 
 To change this behavior, enable this setting. 
 Existing tokens are not deleted when this setting is turned off.
 +
