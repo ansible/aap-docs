@@ -2,31 +2,30 @@
 
 = Configuring GitHub authentication
 
-You can connect GitHub identities to {PlatformNameShort} using OAuth. 
-To set up GitHub authentication, you need to obtain an OAuth2 key and secret by registering your organization-owned application from GitHub using the link:https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app[Installing your own GitHub App].
+You can connect GitHub identities to {PlatformNameShort} using OAuth. To set up GitHub authentication, you need to obtain an OAuth2 key and secret by registering your organization-owned application from GitHub using the link:https://docs.github.com/en/apps/using-github-apps/installing-your-own-github-app[registering the new application with GitHub].
 
-The OAuth2 key (Client ID) and secret (Client Secret) are used to supply the required fields in the UI. 
-To register the application, you must supply it with your webpage URL, which is the Callback URL shown in the Authenticator details for your authenticator configuration. 
-For more information about accessing this, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/access_management_and_authentication/proc-gw-display-auth-details[Displaying authenticator details]. 
+The OAuth2 key (Client ID) and secret (Client Secret) are used to supply the required fields in the UI. To register the application, you must supply it with your webpage URL, which is the Callback URL shown in the Authenticator details for your authenticator configuration. 
+//See xref:gw-display-auth-details[Displaying authenticator details] for instructions on accessing this information. 
 
 .Procedure
 
 . From the navigation panel, select {MenuAMAuthentication}.
 . Click btn:[Create authentication].
-. Select *GitHub* from the *Authentication type* list.
-. Enter a *Name* for this authentication setting.
+. Select *GitHub* from the *Authentication type* list and click btn:[Next].
+. Enter a *Name* for this authentication configuration.
 . When the application is registered, GitHub displays the *Client ID* and *Client Secret*:
-** Copy and paste the *GitHub Client ID* into the *GitHub OAuth2 Key* field. 
-** Copy and paste the *GitHub Client Secret* into the *GitHub OAuth2 Secret* field. 
-. Optional: Enter any *Additional Authenticator Fields* that this authenticator can take. 
-These fields are not validated and are passed directly back to the authenticator.
-+ 
-[NOTE] 
-====
-Values defined in this field override the dedicated fields provided in the UI. 
-====
 +
-. To automatically create organizations, users and teams upon successful login, select *Create objects*. 
-. To enable this authentication method upon creation, select *Enabled*.
-. To remove a user for any groups they were previously added to when they authenticate from this source, select *Remove users*.
+.. Copy and paste the GitHub Client ID into the GitHub OAuth2 Key field. 
+.. Copy and paste the GitHub Client Secret into the GitHub OAuth2 Secret field. 
++
+include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
++
+include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
++
 . Click btn:[Next].
+
+[role="_additional-resources"]
+.Next steps
+include::snippets/snip-gw-authentication-next-steps.adoc[]
+
+include::snippets/snip-gw-authentication-verification.adoc[]
