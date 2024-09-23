@@ -1,0 +1,27 @@
+// This is the release notes for 2.4-7.4 RPM release
+
+[id="rpm-24-74"]
+
+= RHSA-2024:7312 - Security Advisory - September 27, 2024
+
+link:https://access.redhat.com/errata/RHSA-2024:7312[RHSA-2024:7312]
+
+== General
+
+With this update, the following CVEs have been addressed:
+// (AAP-26186)
+* link:https://access.redhat.com/security/cve/CVE-2024-21520[CVE-2024-21520] - Cross-site Scripting (XSS) through `break_long_headers`.
+** Packages updated: `automation-controller: djangorestframework`.
+// (AAP-27468) 
+* link:https://access.redhat.com/security/cve/CVE-2024-37891[CVE-2024-37891] - `proxy-authorization` request header is not stripped during cross-origin redirects.
+** Packages updated: `automation-controller: urllib3`.
+// (AAP-28121)
+* link:https://access.redhat.com/security/cve/CVE-2024-41810[CVE-2024-41810] - Reflected XSS by HTML injection in redirect response.
+** Packages updated: `automation-controller`.
+
+// Automation controller
+== {ControllerNameStart}
+
+* Fixed Galaxy credentials to be correctly ordered when assigning them by using 'ansible.controller.organization' (AAP-31398).
+
+* Fixed gather analytics failure caused by missing '_unpartitioned_main_jobevent' table (AAP-31053).
