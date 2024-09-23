@@ -2,4 +2,33 @@
 
 = Uploading a collection to {HubName}
 
-If you want to share a collection that you have created with the rest of the Ansible community, you can upload it to {HubName}. 
+If you want to share a collection that you have created with the rest of the Ansible community, you can upload it to {HubName}.
+
+[NOTE]
+
+====
+Sharing a collection with the Ansible community requires getting the collection certified or validated by our Partner Engineering team. This action is available only to partner clients. For more about becoming a partner, see our link:https://connect.redhat.com/en/partner-resources/software-certification-documentation[documentation on software certification]. 
+====
+
+You can upload your collection by using either the {HubName} user interface or the `ansible-galaxy` client.
+
+.Prerequisites
+
+* You have configured the `ansible-galaxy` client for {HubName}.
+* You have at least one namespace.
+* You have run all content through `ansible-test sanity`
+
+.Procedure
+
+. From the navigation panel, select {MenuACNamespaces}.
+. Within the My namespaces tab, locate and click into the namespace to which you want to upload a collection.
+. Select the *Collections* tab, and then click btn:[Upload collection].
+. In the New collection modal, click *Select file*. Locate the file on your system.
+. Click btn:[Upload].
+
+Using the `ansible-galaxy` client, enter the following command:
+
+[source,bash]
+----
+$ ansible-galaxy collection publish path/to/my_namespace-my_collection-1.0.0.tar.gz --api-key=SECRET
+----

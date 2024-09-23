@@ -7,4 +7,37 @@ You can use a playbook to define the automation tasks that you want the platform
 
 == Create a playbook
 
-A playbook contains one or more plays. 
+A playbook contains one or more plays. A basic play contains the following parameters:
+
+* *Name*: a brief description of the overall function of the playbook, which assists in keeping it readable and organized for all users. 
+* *Hosts*: identifies the target or targets for Ansible to run against.
+* *Become statements*: this optional statement can be set to `true` or `yes` to enable privilege escalation using a become plugin (such as `sudo`, `su`, `pfexec`, `doas`, `pbrun`, `dzdo`, `ksu`).
+* *Tasks*: this is the list of actions that get executed against each host in the play. 
+
+Here is an example of a play in a playbook. You can see the name of the play, the host, and the list of tasks included in the play. 
+
+[source,bash]
+----
+- name: Set Up a Project and Job Template
+  hosts: host.name.ip
+  become: true
+
+  tasks:
+    - name: Create a Project
+      ansible.controller.project:
+        name: Job Template Test Project
+        state: present
+        scm_type: git
+        scm_url: https://github.com/ansible/ansible-tower-samples.git
+
+    - name: Create a Job Template
+      ansible.controller.job_template:
+        name: my-job-1
+        project: Job Template Test Project
+        inventory: Demo Inventory
+        playbook: hello_world.yml
+        job_type: run
+        state: present
+----
+
+For more detailed instructions on authoring playbooks, see link:{LinkDevelopAutomationContent}, or consult our documentation on link:{LinkLightspeedUserGuide} to learn how to generate a playbook with AI assistance.
