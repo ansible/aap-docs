@@ -2,7 +2,7 @@
 
 = Bundle content with Ansible roles
 
-A role is like a customized piece of automation content that bundles together relevant bits from automation playbooks to fit your system's specific needs. Roles are self-contained and portable, and can include groupings of tasks, variables, configuration templates, handlers, and other supporting files to orchestrate complicated automation flows. 
+A role is like a customized piece of automation content that bundles together relevant bits from playbooks to fit your system's specific needs. Roles are self-contained and portable, and can include groupings of tasks, variables, configuration templates, handlers, and other supporting files to orchestrate complicated automation flows. 
 
 Instead of creating huge playbooks with hundreds of tasks, you can use roles to break the tasks apart into smaller, more discrete units of work. 
 
@@ -10,6 +10,11 @@ To learn more about roles, see link:https://www.redhat.com/en/topics/automation/
 
 == Creating a role
 
-You can create roles using the Ansible Galaxy CLI tool, which is included with your Ansible Automation Platform bundle. Access role-specific commands from the roles subcommand:
+You can create roles using the Ansible Galaxy CLI tool, which is included with your {PlatformNameShort} bundle. Access role-specific commands from the roles subcommand:
 
-//ADD CONTENT
+[source,bash]
+----
+ansible-galaxy role init <role_name>
+----
+
+Standalone roles outside of collections are still supported, but we recommend that you create new roles inside of a collection to take advantage of all the features {PlatformNameShort} has to offer.
