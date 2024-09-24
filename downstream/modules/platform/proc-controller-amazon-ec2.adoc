@@ -10,18 +10,19 @@ Use the following procedure to configure an AWS EC2-sourced inventory.
 . Select the inventory name you want a source to and click the *Sources* tab.
 . Click btn:[Create source].
 . In the *Create source* page, select *Amazon EC2* from the *Source* list.
-. The *Add new source* window expands with additional fields.
+. The *Create source* window expands with additional fields.
 Enter the following details:
 
-* Optional: *Credential*: Choose from an existing AWS credential (for more information, see[Credentials]).
+* Optional: *Credential*: Choose from an existing AWS credential.
+For more information, see xref:controller-credentials[Managing user credentials].
 +
 If {ControllerName} is running on an EC2 instance with an assigned IAM Role, the credential can be omitted, and the security credentials from
 the instance metadata are used instead.
-For more information about using IAM Roles, see link:http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-%20roles-for-amazon-ec2.html[IAM_Roles_for_Amazon_EC2_documentation_at_Amazon].
+For more information about using IAM Roles, see link:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html[IAM roles for Amazon EC2_documentation_at_Amazon] documentation at Amazon.
 
 . Optional: You can specify the verbosity, host filter, enabled variables or values, and update options as described in
 xref:proc-controller-add-source[Adding a source].
-. Use the *Source Variables* field to override variables used by the `aws_ec2` inventory plugin.
+. Use the *Source variables* field to override variables used by the `aws_ec2` inventory plugin.
 Enter variables by using either JSON or YAML syntax.
 Use the radio button to toggle between the two.
 For more information about these variables, see the
