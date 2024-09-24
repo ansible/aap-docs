@@ -1,62 +1,63 @@
-
 [id="event-driven-ansible-controller"]
 = {EDAcontroller} variables
 
-[cols="50%,50%",options="header"]
+[cols="50%,50%,50%",options="header"]
 |====
-| *Variable* | *Description*
+| *RPM variable name* | *Container variable name* | *Description*
 
-| *`automationedacontroller_activation_works`* | _Optional_
+| `automationedacontroller_activation_workers` | `eda_activation_workers` | _Optional_
 
-Number of workers for ansible-rulebook activation pods in EDA.
-
-Default = `(# of cores or threads) * 2 + 1`
-
-| *`automationedacontroller_admin_password`* | _Required_
-
-The admin password used by the {EdaController} instance.
-
-Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
-
-Use of special characters for `automationedacontroller_admin_password` is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
-| *`automationedacontroller_admin_username`* | Username used by django to identify and create the admin superuser in {EDAcontroller}.
-
-Default = `admin`
-| *`automationedacontroller_admin_email`* | _Optional_
-
-Email address used by django for the admin user for {EDAcontroller}.
-
-Default = `admin@example.com`
-| *`automationedacontroller_allowed_hostnames`* | List of additional addresses to enable for user access to {EDAcontroller}.
-
-Default = empty list
-| *`automationedacontroller_controller_verify_ssl`* | Boolean flag used to verify automation controller's web certificates when making calls from {EDAcontroller}. Verified is `true`; not verified is `false`.
-
-Default = `false`
-| *`automationedacontroller_disable_https`* | _Optional_
-
-Boolean flag to disable HTTPS {EDAcontroller}. 
-
-Default = `false`
-| *`automationedacontroller_disable_hsts`* | _Optional_
-
-Boolean flag to disable HSTS {EDAcontroller}. 
-
-Default = `false`
-
-| *`automation_event_stream_path`* | _Optional_
-
-API prefix path used {EDAName} debug 
-
-Default = false
-
-| *`automationedacontroller_gunicorn_workers`* | Number of workers for the API served through gunicorn.
+Number of workers for ansible-rulebook activation pods in {EDAName}.
 
 Default = (# of cores or threads) * 2 + 1
-| *`automationedacontroller_nginx_tls_files_remote`* | Boolean flag to specify whether cert sources are on the remote host (true) or local (false). 
+
+| `automationedacontroller_admin_email` | `eda_admin_email` | _Optional_
+
+Email address used by Django for the admin user for {EDAcontroller}.
+
+Default = `admin@example.com`
+
+| `automationedacontroller_admin_password` | `eda_admin_password` | _Required_
+
+The admin password used by the {EDAcontroller} instance.
+
+Passwords must be enclosed in quotes when they are provided in plain text in the `inventory` file.
+
+Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+
+| `automationedacontroller_admin_username` | `eda_admin_user` | Username used by Django to identify and create the admin superuser in {EDAcontroller}.
+
+Default = `admin`
+
+| `automationedacontroller_allowed_hostnames` | | List of additional addresses to enable for user access to {EDAcontroller}.
+
+Default = empty list
+
+| `automationedacontroller_controller_verify_ssl` | | Boolean flag used to verify automation controller's web certificates when making calls from {EDAcontroller}. Verified is `true` and not verified is `false`.
 
 Default = `false`
-| *`automationedacontroller_max_running_activations`* | _Optional_
+
+| `automationedacontroller_disable_hsts` | `eda_nginx_disable_hsts` | _Optional_
+
+Boolean flag to disable HSTS for {EDAcontroller}. 
+
+Default = `false`
+
+| `automationedacontroller_disable_https` | `eda_nginx_disable_https` | _Optional_
+
+Boolean flag to disable HTTPS for {EDAcontroller}. 
+
+Default = `false`
+
+| `automationedacontroller_event_stream_path` | `eda_event_stream_prefix_path` | API prefix path used for {EDAName} event-stream through platform gateway. 
+
+Default = `/eda-event-streams`
+
+| `automationedacontroller_gunicorn_workers` | `eda_gunicorn_workers` | Number of workers for the API served through Gunicorn.
+
+Default = (# of cores or threads) * 2 + 1
+
+| `automationedacontroller_max_running_activations` | `eda_max_running_activations` | _Optional_
 
 The number of maximum activations running concurrently per node.
 
@@ -64,61 +65,118 @@ This is an integer that must be greater than 0.
 
 Default = `12`
 
-| *`automation_redis_host`* | _Optional_
+| `automationedacontroller_nginx_tls_files_remote` | `eda_tls_remote` | Boolean flag to specify whether cert sources are on the remote host (true) or local (false). 
 
-The Redis hostname used by {EDAcontroller}.
+Default = `false`
 
-| *`automationeda_redis_port`* | _Optional_
+| `automationedacontroller_pg_database` | `eda_pg_database` | _Optional_
 
-The port used for the redis host defined by automationeda_redis_host for {EDAcontroller}.
-
-Default =`6379`
-
-| *`automationedacontroller_gunicorn_workers`* | Number of workers for the API served through gunicorn.
-
-Default = (# of cores or threads) * 2 + 1
-| *`automationedacontroller_pg_database`* | _Optional_
-
-The Postgres database used by {EDAcontroller}.
+The PostgreSQL database used by {EDAcontroller}.
 
 RPM default = `automationedacontroller`
 
 Container default = `eda`
-| *`automationnedacontroller_pg_host`* | The hostname of the Postgres database used by {EDAcontroller}, which can be an externally managed database.
-| *`automationedacontroller_pg_password`* | _Required_
 
-The password for the Postgres database used by {EDAcontroller}.
+| `automationedacontroller_pg_password` | `eda_pg_password` | _Required_
 
-Use of special characters for `automationedacontroller_pg_password` is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
-| *`automationedacontroller_pg_port`* | _Optional_
+The password for the PostgreSQL database used by {EDAcontroller}.
 
-The port number of the Postgres database used by {EDAcontroller}.
+Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
 
-Default = `5432`.
-| *`automationedacontroller_pg_username`* | _Optional_
+| `automationedacontroller_pg_port` | `eda_pg_port` | _Optional_
 
-The username for your {EDAcontroller} Postgres database.
+The port number of the PostgreSQL database used by {EDAcontroller}.
 
-Default = `automationedacontroller`.
-| *`automationedacontroller_rq_workers`* | Number of Redis Queue (RQ) workers used by {EDAcontroller}. RQ workers are Python processes that run in the background.
+Default = `5432`
+
+| `automationedacontroller_pg_username` | `eda_pg_username` | _Optional_
+
+The username for your {EDAcontroller} PostgreSQL database.
+
+RPM default = `automationedacontroller`
+
+Container default = `eda`
+
+| `automationedacontroller_redis_host` | `eda_redis_host` | The Redis hostname used by {EDAcontroller}.
+
+| `automationedacontroller_redis_port` | `eda_redis_port` | The port used for the Redis host defined by `automationedacontroller_redis_host` for {EDAcontroller}. 
+
+| `automationedacontroller_rq_workers` | |  Number of Redis Queue (RQ) workers used by {EDAcontroller}. RQ workers are Python processes that run in the background.
 
 Default = (# of cores or threads) * 2 + 1
-| *`automationedacontroller_ssl_cert`* | _Optional_
+
+| `automationedacontroller_ssl_cert` | `eda_tls_cert` | _Optional_
 
 `/root/ssl_certs/eda.<example>.com.crt`
 
 Same as `automationhub_ssl_cert` but for {EDAcontroller} UI and API.
-| *`automationedacontroller_ssl_key`* | _Optional_
+
+| `automationedacontroller_ssl_key` | `eda_tls_key` | _Optional_
 
 `/root/ssl_certs/eda.<example>.com.key`
 
 Same as `automationhub_server_ssl_key` but for {EDAcontroller} UI and API.
-| *`automationedacontroller_user_headers`* | List of additional nginx headers to add to {EDAcontroller}'s nginx configuration. 
+
+| `automationedacontroller_user_headers` | `eda_nginx_user_headers` | List of additional NGINX headers to add to {EDAcontroller}'s NGINX configuration. 
 
 Default = empty list
-| *`eda_node_type`* _Optional_
 
-The username used to identify and create the admin superuser in platform gateway.
+| `automationnedacontroller_pg_host` | `eda_pg_host` | The hostname of the PostgreSQL database used by {EDAcontroller}, which can be an externally managed database.
 
-Default = `admin`
+| `eda_node_type` | `eda_type` | _Optional_
+
+{EDAcontroller} node type.
+
+Default = `hybrid`
+
+| | `eda_debug` | {EDAcontroller} debug.
+
+Default = `false`
+
+| | `eda_event_stream_url` | {EDAcontroller} event stream URL.
+
+| | `eda_main_url` | {EDAcontroller} main URL.
+
+| | `eda_nginx_client_max_body_size` | NGINX maximum body size.
+
+Default = `1m`
+
+| | `eda_nginx_hsts_max_age` | NGINX HSTS maximum age.
+
+Default = `63072000`
+
+| | `eda_nginx_http_port` | NGINX HTTP port.
+
+Default = `8082`
+
+| | `eda_nginx_https_port` | NGINX HTTPS port.
+
+Default = `8445`
+
+| | `eda_nginx_https_protocols` | NGINX HTTPS protocols.
+
+Default = `[TLSv1.2, TLSv1.3]`
+
+| | `eda_pg_socket` | PostgreSQL {EDAName} UNIX socket.
+
+| | `eda_redis_disable_tls` | Disable TLS Redis (for many nodes).
+
+Default = `false`
+
+| | `eda_redis_password` | Redis {EDAcontroller} password (for many nodes).
+
+| | `eda_redis_tls_cert` | {EDAcontroller} Redis TLS certificate.
+
+| | `eda_redis_tls_key` | {EDAcontroller} Redis TLS key.
+
+| | `eda_redis_username` | Redis {EDAcontroller} username (for many nodes).
+
+| | `eda_safe_plugins` | {EDAcontroller} safe plugins.
+
+| | `eda_secret_key` | {EDAcontroller} secret key.
+
+| | `eda_workers` | {EDAcontroller} workers count.
+
+Default = `2`
+
 |====
