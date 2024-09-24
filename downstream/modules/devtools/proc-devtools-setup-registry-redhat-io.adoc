@@ -7,18 +7,29 @@ All container images available through the Red Hat container catalog are hosted 
 `registry.redhat.io`.
 The registry requires authentication for access to images.
 
-To authenticate with the registry, you must have a Red Hat account. This is the same account that you use to log into the Red Hat Customer Portal (access.redhat.com) and manage your Red Hat subscriptions.
+To use the `registry.redhat.io` registry, you must have a Red Hat login.
+This is the same account that you use to log in to the Red Hat Customer Portal (access.redhat.com) and manage your Red Hat subscriptions.
+
+[NOTE]
+====
+If you are planning to install the {ToolsName} on a container inside {VSCode},
+you must log in to `registry.redhat.io` before launching {VSCode} so vscode can pull the `devtools` container from `registry.redhat.io`.
+
+If you are running {ToolsName} on a container inside {VSCode} and you want to pull execution environments
+or the `devcontainer` to use as an execution environment,
+you must log in from a terminal prompt within the `devcontainer` from a terminal inside {VSCode}.
+====
 
 You can use the `podman login` or `docker login` commands with your credentials to access content on the registry.
 
-Docker::
+Podman::
 +
 ----
 $ podman login registry.redhat.io
 Username: my__redhat_username
 Password: ***********
 ----
-Podman::
+Docker::
 +
 ----
 $ docker login registry.redhat.io
@@ -26,9 +37,14 @@ Username: my__redhat_username
 Password: ***********
 ----
 
+
 For more information about Red Hat container registry authentication, see
 link:https://access.redhat.com/RegistryAuthentication[Red Hat Container Registry Authentication]
 on the Red Hat customer portal.
+
+// * If you are an organization administrator, you can create profiles for users in your organization and configure Red Hat customer portal access permissions for them.
+// Refer to link:https://access.redhat.com/start/learn:get-set-red-hat/resource/resources:create-and-manage-other-users[Create and manage other users] on the Red Hat customer portal for information.
+// * If you are a member of an organization, ask your administrator to create a Red Hat customer portal account for you.
 
 //Troubleshooting link:https://access.redhat.com/articles/3560571[Troubleshooting Authentication Issues with `registry.redhat.io`]
 
