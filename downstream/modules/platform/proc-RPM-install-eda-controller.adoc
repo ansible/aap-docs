@@ -10,7 +10,7 @@ Perform a new {PlatformNameShort} 2.5 RPM-based installation of {EDAcontroller} 
 
 .Procedure
 
-. Follow the steps provided in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/installing_on_virtual_machines/index[Installing on virtual machines] until the section link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/installing_on_virtual_machines/assembly-platform-install-scenario[Installing Red Hat Ansible Automation Platform] and ensure you download the {PlatformNameShort} 2.5 version of the RPM-based installer.
+. Follow the steps provided in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/rpm_installation/index[Installing on virtual machines] until the section link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/rpm_installation/assembly-platform-install-scenario#assembly-platform-install-scenario[Installing Red Hat Ansible Automation Platform] and ensure you download the {PlatformNameShort} 2.5 version of the RPM-based installer.
 . Use the following example to populate the inventory file to deploy a new single instance of {EDAcontroller} 1.1:
 +
 ----
@@ -53,13 +53,14 @@ automationgateway_pg_sslmode='prefer'
 ----
 +
 This variable sets whether or not TLS is verified. 
-It is set to true by default, but if not needed can be set to false. 
+It is set to `true` by default, but if it is not needed can be set to `false`. 
 +
 [NOTE]
 ====
 Keep controller out of the inventory file. 
 Ensure that `[automationcontroller]` is an empty group. 								
-Only add an Event-Driven Ansible 2.5 server. Do not add an Event-Driven Ansible 2.4 server since there is no upgrade option available
+Only add an {EDAName} 2.5 server. 
+Do not add an {EDAName} 2.4 server since there is no upgrade option available
 ====
 +
-. Continue with the steps in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/installing_on_virtual_machines/assembly-platform-install-scenario[Installing Red Hat Ansible Automation Platform].
+. Continue with the steps in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/rpm_installation/assembly-platform-install-scenario#assembly-platform-install-scenario[Installing Red Hat Ansible Automation Platform].
