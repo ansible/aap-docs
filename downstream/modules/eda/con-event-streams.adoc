@@ -13,17 +13,27 @@ Event streams can send events from remote systems to {EDAcontroller}. In a typic
 |===
 | Type | Description | Vendors
 
-h| id | Unique id of the field; must be a string type and stores the variable name | Yes
+h| HMAC | Hashed Message Authentication Code (HMAC). Uses a shared secret between {EDAcontroller} and the vendors webhook server. This guarantees message integrity. | Github
 
-h| type | Can be string or boolean type | No, default is string
+h| Basic Authentication | Uses HTTP basic authentication. | Datadog, Dynatrace
 
-h| label | Used by the UI when rendering the UI element | Yes
+h| Token Authentication | Uses Token Authentication. Usually the HTTP Header is *Authorization* but some vendors like Gitlab use *X-Gitlab-Token*. | Gitlab, ServiceNow
 
-h| secret | Will be encrypted | No, default false
+h| OAuth2 | Uses Machine-to-Machine (M2M) mode with a grant type called *client credentials*. The token is opaque. | Dynatrace
 
-h| multiline | If the field contains data from a file the multiline can be set to True | No, default false
+h| OAuth2 with JWT | Uses M2M mode with a grant type called *client credentials*. The token is JSON Web Token (JWT). | Datadog
 
-h| help_text | The help text associated with this field | No
+h| ECDSA | Elliptic Curve Digital Signature Algorithm | SendGrid, Twilio
 
+h| Mutual TLS | Needs the vendor's CA certificate to be present in our servers at startup. This supports non-repudiation. 
+| PagerDuty
 |===
 
+{EDAcontroller} also supports 4 other specialized event streams that are based on the 7 basic event stream types: 
+
+* GitLab Event Stream
+* GitHub Event Stream
+* ServiceNow Event Stream
+* Dynatrace Event Stream
+
+These specialized types limit the parameters you use by adding default values. For example, the GitHub Event Stream is a specialization of the HMAC Event Stream with many of the fields already populated. After the GitHub Event Stream credential has been saved, the recommended defaults for the GitHub Event Stream are displayed.
