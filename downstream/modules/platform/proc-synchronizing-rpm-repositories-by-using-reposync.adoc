@@ -7,14 +7,16 @@
 
 To perform a reposync you need a RHEL host that has access to the internet. After the repositories are synced, you can move the repositories to the disconnected network hosted from a web server.
 
+When downloading RPM, ensure you use the applicable distro.
+
 .Procedure
 
 . Attach the BaseOS and AppStream required repositories:
 +
 ----
 # subscription-manager repos \
-    --enable rhel-8-for-x86_64-baseos-rpms \
-    --enable rhel-8-for-x86_64-appstream-rpms
+    --enable rhel-9-for-x86_64-baseos-rpms \
+    --enable rhel-9-for-x86_64-appstream-rpms
 ----
 
 . Perform the reposync:
@@ -27,9 +29,9 @@ To perform a reposync you need a RHEL host that has access to the internet. Afte
 
 ... Use reposync with `--download-metadata` and without `--newest-only`. See link://https://access.redhat.com/solutions/5186621[RHEL 8] Reposync.
 
-* If you are not using `--newest-only,` the repos downloaded will be ~90GB.
+* If you are not using `--newest-only,` the repos downloaded may take an extended amount of time to sync due to the large number of GB.
 
-* If you are using `--newest-only,` the repos downloaded will be ~14GB.
+* If you are using `--newest-only,` the repos downloaded may take an extended amount of time to sync due to the large number of GB.
 
 +
 After the reposync is completed, your repositories are ready to use with a web server.
