@@ -6,7 +6,24 @@
 [role="_abstract"]
 Event streams can send events from remote systems to {EDAcontroller}. In a typical set-up, a server sends data to an event stream over the internet to an {EDAName} event stream receiver. When the data comes over the internet, the request must be authenticated. Depending on the webhook vendor or remote system, the authentication method could differ.
 
-Event-Driven controller supports 7 different event stream types.
+{EDAcontroller} supports 7 different event stream types.
  
+.Event Stream Types
+[cols="a,a,a"]
+|===
+| Type | Description | Vendors
 
+h| id | Unique id of the field; must be a string type and stores the variable name | Yes
+
+h| type | Can be string or boolean type | No, default is string
+
+h| label | Used by the UI when rendering the UI element | Yes
+
+h| secret | Will be encrypted | No, default false
+
+h| multiline | If the field contains data from a file the multiline can be set to True | No, default false
+
+h| help_text | The help text associated with this field | No
+
+|===
 
