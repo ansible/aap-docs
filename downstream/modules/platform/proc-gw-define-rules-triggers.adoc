@@ -4,68 +4,30 @@
 
 = Defining authentication mapping rules and triggers
 
-{PlatformNameShort} supports the following rule types:
-
-Allow:: Determine if the user is allowed to log into the system
-Organization:: Determine if a user should be put into an organization
-Team:: Determine if the user should be a member of a team
-Role:: Determine if the user is a member of a role (e.g., "System Auditor")
-Is Superuser:: Determine if the user is a superuser in the system 
-
-These authentication map types can be used with any type of authenticator. Each map has a trigger that defines when the map should be evaluated as true. Trigger types include:
-
-Always:: The trigger should always be fired.
-Never:: The trigger should never be fired.
-Group:: The trigger should fire based on a user having, not having or having multiple groups in the source system.
-Attribute:: The trigger should fire based on a user having some combination of attributes from the source system whose value might match, contain, end with, etc. some value.
-+
-* *Operation:* This field includes conditional settings that trigger the handling of the rule based on the specified *Groups* criteria. The choices include *and* and *or*. For example, if you select and the user logging in must be a member of all of the groups specified in the *Groups* field for this trigger to be true. Alternatively, if you select *or* the user logging in must be a member of any of the specified *Groups* in order for the trigger to fire. 
-+
-[NOTE]
-====
-If you are only keying off one group it doesn’t matter if you select *"and"* or *"or"*.
-====
-+
-* *Groups:* This is a list of one or more groups coming from the authentication system that the user must be a member of. See the Operation field to determine the behavior of the trigger if more than one group is specified in the trigger.
-* *Attribute:* The map is true or false based on a users attributes coming from the source system.When defining an attribute trigger, the authentication mapping expands to include the following selections:
-* *Operation:* This field includes conditional settings that trigger the handling of the rule based on the specified *Attribute* criteria. In version 2.5.0 this field needs to be set but is ignored. In the future, attribute based maps will allow for the processing of multiple attributes. 
-+
-[NOTE]
-====
-If you would like to experiment with multiple attribute maps you can do that through the API but the UI form will remove multi-attribute maps if the authenticator is saved through the UI.
-====
-+
-* *Attribute:* The name of the attribute coming from the source system this trigger will be evaluated against. For example, if you wanted the trigger to fire based on the user's last name and the last name field in the source system was called users_last_name you would enter the value ‘users_last_name’ in this field.
-* *Comparison:* Tells the trigger how to evaluate the value of the users. *Attribute* in the source system compared to the *Value* specified on the trigger. Available options are: *contains*, *matches*, *ends with*, *in*, or *equals*. Below is a breakdown of each comparison type:
-+
-** *contains*: The specified character sequence in *Value* is contained within the attributes value returned from the source. For example, given an attribute value of ‘John’ from the source the contains *Comparison* would set the trigger to *True* if the trigger *Value* was set to ‘Jo’ and False if the trigger *Value* was ‘Joy’.
-** *matches*: The *Value* on the trigger is treated as a python regular expression and does an link:https://docs.python.org/3/library/re.html#re.match[Regular expression match (re.match)] (with case ignore on) between the specified *Value* and the value returned from the source system. For example, if the trigger's *Value* was ‘Jo’ the trigger would return *True* if the value from the source was John or Joanne or any other value which matched the regular expression ‘Jo’. The trigger would return False if the sources value for the attribute was ‘Dan’ because ‘Dan’ does not match the regular expression ‘Jo’. 
-** *ends with*: The trigger will see if the value provided by the source ends with the specified *Value* of the trigger. For example, if the source provided a value of ‘John’ the trigger would be True if its *Value* was set to ‘n’ or ‘on’. The trigger would be False if its *Value* was set to ‘z’ because the value ‘John’ coming from the source does not end with the value ’z’ specified by the trigger.
-** *equal*: The trigger will see if the value provided by the source is equal to (in its entirety) the specified *Value* of the trigger. For example, if the source returned the value ‘John’, the trigger would be True if its Value was set to ‘John’. Any value other than ‘John’ returned from the source would set this trigger to False.
-** *in*: The *in* condition will see if the value matches one of several values. When in is specified as the *Comparison* the *Value* field can be a comma separated list. For example, if a trigger had a *Value* of ‘John,Donna’ the trigger would be True if the attribute coming from the source had either the value ‘John’ or ‘Donna’ and False otherwise.
-** The value that a users attribute will be matched against based on the *Comparison* field. See examples in the *Comparison* section above for examples. 
-+
-[NOTE]
-====
-If the *Comparison* type is in, this field can be a comma separated list (without spaces).
-====
+Authentication map types can be used with any type of authenticator. Each map has a trigger that defines when the map should be evaluated as true. 
 
 .Procedure
 
-. Click btn:[Add authentication mapping]: to see the list of available map types and select the map type you want to create. Options include:
+. Click btn:[Add authentication mapping] to see the list of available map types and select the map type you want to create. See xref:gw-authenticator-map-types[Authenticator map types] for detailed descriptions of the different map types. Choices include:
 +
-* Allow
-* Organization
-* Team
-* Role
-* Superuser
+* xref:gw-allow-mapping[Allow]
+* xref:ref-controller-organization-mapping[Organization]
+* xref:ref-controller-team-mapping[Team]
+* xref:gw-role-mapping[Role]
+* xref:gw-superuser-mapping[Is Superuser]
 +
 . Enter a unique rule *Name* to identify the rule.
-. Select a *Trigger* from the list. See Triggers for more details.
+. Select a *Trigger* from the list. See xref:gw-authenticator-map-triggers[Authenticator map triggers] for more details. Choices include:
++
+* *Always*
+* *Never*
+* *Group*
+* *Attribute*
++
 . Repeat steps 1-3 to add additional triggers to the authenticator.
 . Click btn:[Next] to optionally xref:gw-adjust-mapping-order[Adjust the Mapping order].
 +
 [NOTE]
 ====
-The mapping order setting is only available if there are one or more authenticator maps defined.
+The mapping order setting is only available if there is more than one authenticator map defined.
 ====
