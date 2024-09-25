@@ -1,0 +1,42 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2024-09-18
+:_mod-docs-content-type: PROCEDURE
+
+[id="create-requirements-file_{context}"]
+= Creating a requirements file
+
+We recommend using a requirements file to add collections to your {HubName}. Requirements files are in YAML format and list the collections that you want to install in your {HubName}. After you create your requirements.yml file listing the collections you want to install, you will then run the install command to add the collections to your hub instance. 
+
+A standard `requirements.yml` file contains the following parameters:
+
+* `name`: the name of the collection formatted as `<namespace>.<collection_name>`
+* `version`: the collection version number
+
+.Procedure
+
+. Create your requirements file.
++
+In YAML format, collection information in your requirements file should look like this:
++
+[source,bash]
+----
+collections:
+ name: namespace.collection_name
+ version: 1.0.0
+----
++
+. After you have created your requirements file listing information for each collection that you want to install, navigate to the directory where the file is located and run the following command:
+
+[source,bash]
+----
+$ ansible-galaxy collection install -r requirements.yml
+----
+
+== Installing an individual collection from the command line
+
+To install an individual collection to your {HubName}, run the following command: 
+
+[source,bash]
+----
+$ ansible-galaxy collection install namespace.collection_name
+----
