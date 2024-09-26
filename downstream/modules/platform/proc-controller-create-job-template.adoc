@@ -22,7 +22,7 @@ Exceptions are noted in the following table.
 | *Field* | *Options* | *Prompt on Launch*
 | Name | Enter a name for the job.| N/A
 | Description| Enter an arbitrary description as appropriate (optional). | N/A
-| Job Type a| Choose a job type:
+| Job type a| Choose a job type:
 
 - Run: Start the playbook when launched, running Ansible tasks on the selected hosts.
 
@@ -101,7 +101,7 @@ Verbose logging includes the output of all commands.
 Debug logging is exceedingly verbose and includes information about SSH operations that can be useful in certain support instances.
 
 Verbosity `5` causes {ControllerName} to block heavily when jobs are running, which could delay reporting that the job has finished (even though it has) and can cause the browser tab to lock up.| Yes
-| Job Slicing | Specify the number of slices you want this job template to run.
+| Job slicing | Specify the number of slices you want this job template to run.
 Each slice runs the same tasks against a part of the inventory.
 For more information about job slices, see xref:controller-job-slicing[Job Slicing]. | Yes
 | Timeout a| This enables you to specify the length of time (in seconds) that the job can run before it is canceled. Consider the following for setting the timeout value:
@@ -110,8 +110,8 @@ For more information about job slices, see xref:controller-job-slicing[Job Slici
 - A negative timeout (<0) on a job template is a true "no timeout" on the job.
 - A timeout of 0 on a job template defaults the job to the global timeout (which is no timeout by default).
 - A positive timeout sets the timeout for that job template. | Yes
-| Show Changes | Enables you to see the changes made by Ansible tasks. | Yes
-| Instance Groups | Choose link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/controller-instance-and-container-groups[Instance and Container Groups] to associate with this job template.
+| Show changes | Enables you to see the changes made by Ansible tasks. | Yes
+| Instance groups | Choose xref:controller-instance-and-container-groups[Instance and Container Groups] to associate with this job template.
 If the list is extensive, use the image:examine.png[examine,15,15] icon to narrow the options.
 Job template instance groups contribute to the job scheduling criteria, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/controller-instance-and-container-groups#controller-job-runtime-behavior[Job Runtime Behavior] and link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/controller-instance-and-container-groups#controller-control-job-run[Control where a job runs] for rules.
 A System Administrator must grant you or your team permissions to be able to use an instance group in a job template.
@@ -122,13 +122,13 @@ If selected, you are providing the jobs preferred instance groups in order of pr
 - If you prompt for an instance group, what you enter replaces the normal instance group hierarchy and overrides all of the organizations' and inventories' instance groups.
 
 - The Instance Groups prompt shows up as its own step in a later prompt window.
-| Job Tags | Type and select the *Create* menu to specify which parts of the playbook should be executed.
+| Job tags | Type and select the *Create* menu to specify which parts of the playbook should be executed.
 For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
-| Skip Tags | Type and select the *Create* menu to specify certain tasks or parts of the playbook to skip.
+| Skip tags | Type and select the *Create* menu to specify certain tasks or parts of the playbook to skip.
 For more information and examples see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_tags.html[Tags] in the Ansible documentation. | Yes
-| Extra Variables a| - Pass extra command line variables to the playbook.
+| Extra variables a| - Pass extra command line variables to the playbook.
 This is the "-e" or "-extra-vars" command line parameter for ansible-playbook that is documented in the Ansible documentation at link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-at-runtime[Defining variables at runtime].
-- Provide key or value pairs by using either YAML or JSON.
+- Give key or value pairs by using either YAML or JSON.
 These variables have a maximum value of precedence and overrides other variables specified elsewhere.
 The following is an example value:
 `git_branch: production
@@ -156,12 +156,12 @@ You must configure this in the settings on the webhook service in order for {Con
 +
 Before you can select it, the credential must exist.
 +
-See xref:ref-controller-credential-types[Credential Types] to create one.
+See xref:ref-controller-credential-types[Credential types] to create one.
 ** For additional information about setting up webhooks, see xref:controller-work-with-webhooks[Working with Webhooks].
 * *Concurrent jobs*: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see xref:controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
 * *Enable fact storage*: If checked, {ControllerName} stores gathered facts for all hosts in an inventory related to the job running.
 * *Prevent instance group fallback*: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job.
-If clear, all available instances in the execution pool are used based on the hierarchy described in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index[Control where a job runs].
+If clear, all available instances in the execution pool are used based on the hierarchy described in xref:controller-control-job-run[Control where a job runs].
 . Click btn:[Create job template], when you have completed configuring the details of the job template.
 
 Creating the template does not exit the job template page but advances to the Job Template *Details* tab.

@@ -12,7 +12,7 @@ Adding a source to an inventory only applies to standard inventories.
 . From the navigation panel, select {MenuInfrastructureInventories}.
 . Select the inventory name you want to add a source to.
 . In the Inventory *Details* page, select the *Sources* tab.
-. Click btn:[Add source]. This opens the *Add new source* window.
+. Click btn:[Create source]. 
 +
 //image:inventories-create-source.png[Inventories create source]
 
@@ -27,10 +27,10 @@ For more information about sources, and supplying the appropriate information, s
 . When the information for your chosen xref:ref-controller-inventory-sources[Inventory sources] is complete, you can optionally specify other common parameters, such as verbosity, host filters, and variables.
 
 . Use the *Verbosity* menu to select the level of output on any inventory source's update jobs.
-. Use the *Host Filter* field to specify only matching host names to be imported into {ControllerName}.
-. In the *Enabled Variable* field, specify that {ControllerName} retrieves the enabled state from the dictionary of host variables.
+. Use the *Host filter* field to specify only matching host names to be imported into {ControllerName}.
+. In the *Enabled variable* field, specify that {ControllerName} retrieves the enabled state from the dictionary of host variables.
 You can specify the enabled variable by using dot notation as 'foo.bar', in which case the lookup searches nested dictionaries, equivalent to: `from_dict.get('foo', {}).get('bar', default)`.
-. If you specified a dictionary of host variables in the *Enabled Variable* field, you can provide a value to enable on import.
+. If you specified a dictionary of host variables in the *Enabled variable* field, you can give a value to enable on import.
 For example, for `enabled_var='status.power_state'` and `'enabled_value='powered_on'` in the following host variables, the host is marked `enabled`:
 +
 [literal, options="nowrap" subs="+attributes"]
@@ -56,23 +56,23 @@ the {ControllerName} inventory.
 Hosts and groups that were not managed by the inventory source are promoted to the next manually created group, or, if there is no manually created group to promote them into, they are left in the "all" default group for the inventory.
 +
 When not checked, local child hosts and groups not found on the external source remain untouched by the inventory update process.
-* *Overwrite Variables*: If checked, all variables for child groups and hosts are removed and replaced by those found on the external source.
+* *Overwrite variables*: If checked, all variables for child groups and hosts are removed and replaced by those found on the external source.
 +
 When not checked, a merge is performed, combining local variables with those found on the external source.
-* *Update on Launch*: Each time a job runs using this inventory, refresh the inventory from the selected source before executing job tasks.
+* *Update on launch*: Each time a job runs using this inventory, refresh the inventory from the selected source before executing job tasks.
 +
 To avoid job overflows if jobs are spawned faster than the inventory can synchronize, selecting this enables you to configure a *Cache Timeout* to previous cache inventory synchronizations for a certain number of seconds.
 +
-The *Update on Launch* setting refers to a dependency system for projects and inventory, and does not specifically exclude two jobs from running at the same time.
+The *Update on launch* setting refers to a dependency system for projects and inventory, and does not specifically exclude two jobs from running at the same time.
 +
 If a cache timeout is specified, then the dependencies for the second job are created, and it uses the project and inventory update that the first job spawned.
 +
 Both jobs then wait for that project or inventory update to finish before proceeding.
 If they are different job templates, they can then both start and run at the same time, if the system has the capacity to do so.
-If you intend to use {ControllerName}'s provisioning callback feature with a dynamic inventory source, *Update on Launch* must be set for the inventory
+If you intend to use {ControllerName}'s provisioning callback feature with a dynamic inventory source, *Update on launch* must be set for the inventory
 group.
 +
-If you synchronize an inventory source that uses a project that has *Update On Launch* set, then the project might automatically update (according to
+If you synchronize an inventory source that uses a project that has *Update On launch* set, then the project might automatically update (according to
 cache timeout rules) before the inventory update starts.
 +
 You can create a job template that uses an inventory that sources from the same project that the template uses.
