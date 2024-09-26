@@ -13,47 +13,51 @@ Perform a new {PlatformNameShort} 2.5 RPM-based installation of {EDAcontroller} 
 . Follow the steps provided in link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/rpm_installation/index[Installing on virtual machines] until the section link:{BaseURL}/red_hat_ansible_automation_platform/2.5/html-single/rpm_installation/assembly-platform-install-scenario#assembly-platform-install-scenario[Installing Red Hat Ansible Automation Platform] and ensure you download the {PlatformNameShort} 2.5 version of the RPM-based installer.
 . Use the following example to populate the inventory file to deploy a new single instance of {EDAcontroller} 1.1:
 +
+[subs="+attributes"]
 ----
-[automationedacontroller]
-eda.example.org
+# This is the enterprise installer inventory file
+# Please consult the docs if you are unsure what to add
+# For all optional variables please consult the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation
 
+# This section is for your platform gateway hosts
+# -----------------------------------------------------
 [automationgateway]
-gateway.example.org
+gateway1.example.org
+gateway2.example.org
 
-[database]
-data.example.com
+# This section is for your {EDAcontroller} hosts
+# -----------------------------------------------------
+[automationedacontroller]
+eda1.example.org
+eda2.example.org
 
 [all:vars]
+# Common variables
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-general-inventory-variables
+# -----------------------------------------------------
+registry_username=<your RHN username>
+registry_password=<your RHN password>
 
-automationedacontroller_admin_password='<admin_password>'
+# Platform gateway
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-gateway-variables
+# -----------------------------------------------------
+automationgateway_admin_password=<set your own>
+automationgateway_pg_host=<set your own>
+automationgateway_pg_database=<set your own>
+automationgateway_pg_username=<set your own>
+automationgateway_pg_password=<set your own>
 
-automationedacontroller_pg_host='data.example.com'
-automationedacontroller_pg_port=5432
-automationedacontroller_pg_database='automationedacontroller'
-automationedacontroller_pg_username='automationedacontroller'
-automationedacontroller_pg_password='<password>'
-automationedacontroller_pg_sslmode='prefer'
-
-automation_controller_main_url='automationcontroller.example.org '
-#automationedacontroller_controller_verify_ssl=true 1
-
-registry_url='registry.redhat.io'
-registry_username='<username>'
-registry_password='<password>'
-
-automationgateway_admin_password='<admin_password>'
-
-automationgateway_pg_host='data.example.com'
-automationgateway_pg_port=5432
-
-automationgateway_pg_database='automationgateway'
-automationgateway_pg_username='automationgateway'
-automationgateway_pg_password='<password>'
-automationgateway_pg_sslmode='prefer'
+# {EDAcontroller}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-controller
+# -----------------------------------------------------
+automationedacontroller_admin_password=<set your own>
+automationedacontroller_pg_host=<set your own>
+automationedacontroller_pg_database=<set your own>
+automationedacontroller_pg_username=<set your own>
+automationedacontroller_pg_password=<set your own>
 ----
-+
-This variable sets whether or not TLS is verified. 
-It is set to `true` by default, but if it is not needed can be set to `false`. 
+
 +
 [NOTE]
 ====
