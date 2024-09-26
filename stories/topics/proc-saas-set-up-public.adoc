@@ -1,13 +1,23 @@
 [id="proc-saas-set-up-public"]
 
-= Subscribing to {SaaSonAWS} from the AWS Marketplace
+= Subscribing and provisioning {SaaSonAWS} from the AWS Marketplace
 
-As an AWS customer you can search for and subscribe to {SaaSonAWS} from the AWS Marketplace. 
+To set up {SaaSonAWS} you must link your {AWS} (AWS) and Red{nbsp}Hat accounts through the AWS marketplace.
+When you link your accounts you can provision and configure your cluster through the Red{nbsp}Hat Hybrid Cloud Console.  
+
+.Prerequisites
+* An AWS Account
 
 .Procedure
 . Log in to your AWS account.
 . Navigate to the AWS Marketplace.
 . Go to the *Discover products* page.
++
+[NOTE]
+====
+If you have already accepted your offer you can find it in the *Manage subscriptions* page.
+====
++
 . In the search bar, search for "{SaaSonAWS}." 
 ** Depending on your region select one of the following: 
 *** For EMEA, select *Red{nbsp}Hat Limited*.
@@ -18,16 +28,30 @@ As an AWS customer you can search for and subscribe to {SaaSonAWS} from the AWS 
 . Select the contract options.
 . Optional: Add a purchase order number.
 . Click btn:[Create contract].
-. Click btn:[Click here to set up your account]. This redirects you to {RHSSO} where you need to:
+. Click btn:[Click here to set up your account]. This redirects you to {RHSSO} where you must:
 .. Create or sign into your Red{nbsp}Hat account.
 .. Link your AWS account to the Red{nbsp}Hat account.
 . This then redirects you to the *Provision environment* page on the Red{nbsp}Hat Hybrid Cloud Console. Here you can start configuring your environment. 
-. Enter your AWS account ID.
+. Enter your AWS account ID and click btn:[Verify].
 +
 This account ID must be the account ID that purchased the offer from the AWS marketplace. 
-The system will not recognize associated or nested accounts.
-. Once your AWS ID is validated click btn:[Next].
+The system does not recognize associated or nested accounts.
+. After your AWS ID is validated click btn:[Next].
 . Select your desired region.
 . Click btn:[Provision].
 
-This redirects you to the *Instances* page which displays all the details of the instance you created. From here you can confirm if your instance is *Assigned* or still in a *Pending* state.
+This redirects you to the *Environment details* page of the *Instances* tab which displays all the details of the instance you created.
+From here you can view whether your instance is *Ready* or still in a *Provision in progress* state.
+
+Provisioning your environment can take up to two hours.
+When your environment is ready a confirmation email is sent to the email address linked to your account. 
+
+[IMPORTANT]
+====
+Update your password as soon as possible.
+Your confirmation email includes a link that shows your admin password.
+Use this password to log-in and change your password.
+This link can only be accessed once, so ensure you are ready before clicking it. 
+
+If you did not receive the email or the initial admin password has expired, you must to submit a link:https://access.redhat.com/support[support ticket] and the Red{nbsp}Hat team will assist you with next steps.
+====

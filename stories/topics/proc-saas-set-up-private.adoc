@@ -1,8 +1,11 @@
 [id="proc-saas-set-up-private"]
 
-= Subscribing to a {SaaSonAWS} private offer
+= Subscribing and provisioning a {SaaSonAWS} private offer
 A private offer has pricing and licensing terms specifically offered to your account.
 The offer has a set expiration date, if you do not accept the private offer by the expiration date, you are either automatically moved to the product's public offer or no longer subscribed to the product.
+
+.Prerequisites
+* An AWS Account
 
 .Procedure
 . A Red{nbsp}Hat seller issues you a purchase order and provides it to you by email.
@@ -11,19 +14,39 @@ The offer has a set expiration date, if you do not accept the private offer by t
 . Log in to your AWS account.
 . Navigate to the AWS Marketplace.
 . Go to the *Private Offers* page. 
++
+[NOTE]
+====
+If you have already accepted your offer you can find it in the *Manage subscriptions* page.
+====
++
 . CLick the URL under the *Offer ID* column. This redirects you to the *Offer Selection* page. 
 . Click btn:[Create contract].
-. Click btn:[Click Set up your account]. This redirects you to {RHSSO} where you need to:
+. Click btn:[Click Set up your account]. This redirects you to {RHSSO} where you must:
 .. Create or sign into your Red{nbsp}Hat account.
 .. Connect your AWS account to the Red{nbsp}Hat account.
-... If this is your first time connecting your accounts you will need to accept the terms and conditions and click btn:[Connect accounts].
+... If this is your first time connecting your accounts you must accept the terms and conditions and click btn:[Connect accounts].
 . This then redirects you to the *Provision environment* page on the Red{nbsp}Hat Hybrid Cloud Console. Here you can start configuring your environment. 
-. Enter your AWS account ID.
+. Enter your AWS account ID and click btn:[Verify].
 +
-This account ID must be the account ID that purchased the offer from the AWS marketplace. The system will not recognize associated or nested accounts.
-. Once your AWS ID is validated click btn:[Next].
+This account ID must be the account ID that purchased the offer from the AWS marketplace. The system does not recognize associated or nested accounts.
+. After your AWS ID is validated click btn:[Next].
 . Select your desired region and click btn:[Next].
 . Click btn:[Provision].
 
-This redirects you to the *Instances* page which displays all the details of the instance you created. From here you can confirm if your instance is *Assigned* or still in a *Pending* state.
+This redirects you to the *Environment details* page of the *Instances* tab which displays all the details of the instance you created.
+From here you can view whether your instance is *Ready* or still in a *Provision in progress* state.
+
+Provisioning your environment can take up to two hours.
+When your environment is ready a confirmation email is sent to the email address linked to your account. 
+
+[IMPORTANT]
+====
+Update your password as soon as possible.
+Your confirmation email includes a link that shows your admin password.
+Use this password to log-in and change your password.
+This link can only be accessed once, so ensure you are ready before clicking it.  
+
+If you did not receive the email or the initial admin password has expired, you must to submit a link:https://access.redhat.com/support[support ticket] and the Red{nbsp}Hat team will assist you with next steps.
+====
  
