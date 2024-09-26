@@ -1,47 +1,85 @@
 [id="eda-replace-sources-with-event-streams"] 
 
-= Replacing sources with event streams in rulebook activations
+= Replacing sources and attaching event streams to activations
 
-You can create event streams that will be attached to a rulebook activation. 
+YWhen you create rulebook activations, you can use event streams to swap out source mappings in rulebook activations and simplify routing from external sources to {EDAcontroller}. 
 
-.Prerequisites
+There are several key points to keep in mind regarding source mapping:
 
-* If you will be attaching your event stream to a rulebook activation, ensure that your activation has a decision environment and project already set up.
-* If you plan to connect to {ControllerName} to run your rulebook activation, ensure that you have created a Red Hat Ansible Automation Platform credential type in addition to the decision environment and project. For more information, see xref:eda-set-up-rhaap-credential[Setting up a {PlatformName} credential].
+. An event stream can only be used once in a rulebook source swap. If you have multiple sources in the rulebook, you can only replace each source once.
+. The source mapping happens only in the current rulebook activation. You must repeat this process for any other activations using the same rulebook.
+. The source mapping is valid only if the rulebook doesn't get modified. If the rulebook gets modified during the source mapping process, the source mapping would fail and it would  have to be repeated.
+. If the rulebook is modified after the source mapping has been created and a *Restart* happens, the rulebook activation will fail.
+
+//.Prerequisites
+
+//* Just in case I need prereqs
 
 .Procedure
 
 . Log in to {PlatformNameShort}.
-. From the navigation panel, select {MenuADEventStreams}.
-. Click btn:[Create event stream].
+. From the navigation panel, select {MenuADRulebookActivations}.
+. Click btn:[Create rulebook activation].
 . Insert the following:
 +
 Name:: Insert the name.
-Organization:: Click the list to select an organization or select *Default*.
-Event stream type:: Select the event stream type you prefer.
+Description:: This field is optional.
+Organization:: Enter your organization name or select Default from the list.
+Project:: Projects are a logical collection of rulebooks. This field is optional.
 +
 [NOTE]
 ====
-This list displays at least 10 default event stream types that can be used to authenticate the connection coming from your remote server.
+It is recommended that you select a project to refine your list of rulebooks. 
 ====
-Headers:: Enter HTTP header keys, separated by commas, that you want to include in the event payload. To include all headers, leave the field empty.
 
-Forward events to rulebook activation:: Use this option to enable or disable the capability of forwarding events to rulebook activations.
+Rulebook:: Rulebooks are shown according to the project selected. Select a rulebook.
 +
 [NOTE]
 ====
-The event stream's event forwarding can be disabled for testing purposes while diagnosing connections and evaluating the incoming data. Disabling the *Forward events to rulebook activation* option allows you to test the event stream connection with the remote system, analyze the header and payload, and if necessary, diagnose credential issues. This ensures that events will not be forwarded to rulebook activations causing rules and conditions to be triggered inadvertently while you are in test mode. Some enterprises might have policies to change secrets and passwords at regular cadence. You can enable/disable this option anytime after the event stream is created.
+After you have selected a rulebook, the Event streams field is enabled. You can click the gear icon to display the Event streams mapping form.  If you do not select a rulebook or you have not created any event  If you do not select a rulebook or you have not created any event. 
 ====
 
-. Click btn:[Create event stream].
-
-After creating tyour event stream, the following outputs occur:
-
-* The Details page is displayed. From there or the Event Streams list view, you can edit or delete it. Also, the Event Streams page shows all of the event streams you have created and the following columns for each event: *Events received*, *Last event received*, and *Event stream type*. As the first two columns receive external data through the event stream, they will continuously update to let you know they are receiving events from remote systems.
-* If you disabled the event stream, the Details page is displayed with a warning message, *This event stream is disabled*. 
-* Your new event stream generates a URL that is necessary when you configure the webhook on the remote system that sends events.
-
+Event streams:: All the event streams available and set up to forward events to rulebook actiavtions are displayed. If you have not created any event streams, this field remains disabled.
++
+Click the gear icon to display the Event streams mapping UI. 
++
+image:eda-event-streams-mapping-UI.png[Event streams mapping UI]
++
+Complete the following fields:
++
+Rulebook source::: A rulebook can contain multiple sources across multiple rulesets. You can map the same rulebook in multiple activations to multiple event streams. While managing event streams, unnamed sources are assigned temporary names (__SOURCE {n}) for identification purposes.
++
+Select __SOURCE_1 from the list.
+//+
+//image:
++
+Event stream::: Select your event stream name from the list.
++
+Click btn:[Save].
++
+Event streams can replace matching sources in a rulebook, and are server-side webhooks that enable you to connect various event sources to your rulebook activations. Source types that can be replaced with the event stream's source of type ansible.eda.pg_listener include ansible.eda.webhook and other compatible webhook source plugins. Replacing selected sources affects this activation only, and modifies the rulebook's source type, source name, and arguments. Filters, rules, conditions, and actions are all unaffected.
++
+You can select which source you want to replace with a single event stream. If there are multiple sources in your rulebook, you can choose to replace each one of them with event streams, but you are not required to replace each one. The following image displays which sources can be replaced.
++
+image:eda-event-streams-swapping-sources.png[Event streams replacement sources]
++
+The items in pink demonstrate the sources that can be replaced: source type, source name, and arguments. The remaining items (filters, rules, and actions) are not replaced. 
++
+Credential:: Select 0 or more credentials for this rulebook activation. This field is optional.
++
 [NOTE]
 ====
-After an event stream is created, the associated credential cannot be deleted until the event stream it is attached to is deleted.
+The credentials that display in this field are customized based on your rulebook activation and only include the following redential types: Vault, Red Hat Ansible Automation Platform, or any custom credential types that you have created. For more information on credentials, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/using_automation_decisions/index#eda-credentials[Credentials].
 ====
++
+Decision environment:: A decision environment is a container image used to run Ansible rulebooks.
++
+[NOTE]
+====
+In Event-Driven Ansible controller, you cannot customize the pull policy of the decision environment. By default, it follows the behavior of the always policy. Every time an activation is started, the system tries to pull the most recent version of the image.
+====
+. Click btn:[Create rulebook activation].
++
+After you create your rulebook activation, the Details page is displayed. 
++
+You can navigate to the Event streams page to confirm your events have been received.  
