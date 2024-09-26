@@ -8,20 +8,17 @@ By default, your {PrivateHubName} `rh-certified` repository includes the URL for
 
 To use only those collections specified by your organization, a {PrivateHubName} administrator can upload manually-created requirements files from the `rh-certified` remote.
 
-For more information about using requirements files, see link:https://docs.ansible.com/ansible/latest/collections_guide/collections_installing.html#install-multiple-collections-with-a-requirements-file[Install multiple collections with a requirements file] in the _Using Ansible collections_ guide.
-
 If you have collections `A`, `B`, and `C` in your requirements file, and a new collection `X` is added to {Console} that you want to use, you must add `X` to your requirements file for {PrivateHubName} to synchronize it.
-
 
 .Prerequisites
 
 * You have valid *Modify Ansible repo content* permissions.
-For more information on permissions, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/getting_started_with_automation_hub/assembly-user-access[Configuring user access for your {PrivateHubName}].
+For more information on permissions, see link:{LinkCentralAuth}.
 * You have retrieved the Sync URL and API Token from the {HubName} hosted service on {Console}.
-* You have configured access to port 443. This is required for synchronizing certified collections. For more information, see the {HubName} table in the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_planning_guide/ref-network-ports-protocols_planning[Network ports and protocols] chapter of the {PlatformName} Planning Guide.
+* You have configured access to port 443. This is required for synchronizing certified collections. For more information, see the {HubName} table in the link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] chapter of {TitlePlanningGuide}.
 
 .Procedure
-//[ddacosta] For 2.5 this will be Log in to Ansible Automation Platform and select Automation Content. Automation hub opens in a new tab. From the navigation ...
+
 . Log in to your {PlatformNameShort}.
 . From the navigation panel, select {MenuACAdminRemotes}.
 . In the *rh-certified* remote repository, click btn:[Edit remote].
@@ -31,9 +28,13 @@ For more information on permissions, see link:{BaseURL}/red_hat_ansible_automati
 +
 You can now synchronize collections between your organization synclist on {Console} and your {PrivateHubName}.
 +
-. From the navigation panel, select {MenuACAdminRepositories}. Next to *rh-certified* click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync*.
+. From the navigation panel, select {MenuACAdminRepositories}. Next to *rh-certified* click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync repository*.
+. On the modal that appears, you can toggle the following options:
+* *Mirror*: Select if you want your repository content to mirror the remote repository's content.
+* *Optimize*: Select if you want to sync only when no changes are reported by the remote server.
+. Click btn:[Sync] to complete the sync.
 
 .Verification
-The *Sync status* notification updates to notify you that the Red Hat Certified Content Collections synchronization is complete.
+The *Sync status* column updates to notify you whether the Red Hat Certified Content Collections synchronization is successful.
 
-* Select *Red Hat Certified* from the collections content drop-down list to confirm that your collections content has synchronized successfully.
+* Navigate to {MenuACCollections} to confirm that your collections content has synchronized successfully.
