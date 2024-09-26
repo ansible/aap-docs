@@ -1,18 +1,24 @@
 [id="eda-build-a-custom-decision-environment"]
 
-= Building a custom decision environment for {EDAName} within {PlatformNameShort}
+= Building a custom decision environment for {EDAName}
 
-Use the following instructions if you need a custom decision environment to provide a custom maintained or third-party event source plugin that is not available in the default decision environment.
+Decision Environments are {ExecEnvShort}s tailored towards running Ansible Rulebooks.
+
+Similar to {ExecEnvShort}s that run Ansible rulebooks for {ControllerName}, decision environments are designed to run rulebooks for {EDAcontroller}.
+
+You can create a custom decision environment for {EDAName} that provides a custom maintained or third-party event source plugin that is not available in the default decision environment.
 
 .Prerequisites
 
-* {PlatformNameShort} > = 2.4
+* {PlatformNameShort} > = 2.5
 * {EDAName}
 * {Builder} > = 3.0
 
 .Procedure
 
-* Add the `de-supported` decision environment. This image is built from a base image provided by Red Hat called `de-minimal`.
+* Add the `de-supported` decision environment. 
+This image is built from a base image provided by Red Hat called `de-minimal` at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-24/de-supported-rhel9/6449642e3993031ccdf4cf19[Ansible Automation Platform supported decision environment].
+
 +
 [NOTE]
 ====
