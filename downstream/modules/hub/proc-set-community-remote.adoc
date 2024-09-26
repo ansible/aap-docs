@@ -9,7 +9,7 @@ By default, your {PrivateHubName} community repository directs to `galaxy.ansibl
 .Prerequisites
 
 * You have *Modify Ansible repo content* permissions.
-For more information on permissions, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/getting_started_with_automation_hub/assembly-user-access[Configuring user access for your {PrivateHubName}].
+For more information on permissions, see link:{LinkCentralAuth}.
 * You have a `requirements.yml` file that identifies those collections to synchronize from {Galaxy} as in the following example:
 +
 .Requirements.yml example
@@ -22,18 +22,24 @@ collections:
 -----
 
 .Procedure
-//[ddacosta] For 2.5 this will be Log in to Ansible Automation Platform and select Automation Content. Automation hub opens in a new tab. From the navigation ...
+
 . Log in to {PlatformNameShort}.
 . From the navigation panel, select {MenuACAdminRemotes}.
-. In the *Details* tab in the *Community* remote, click btn:[Edit].
-. In the *YAML requirements* field, click btn:[Browse] and locate the `requirements.yml` file on your local machine.
-. Click btn:[Save].
+. In the *Details* tab in the *Community* remote, click btn:[Edit remote].
+. In the *YAML requirements* field, paste the contents of your `requirements.yml` file.
+. Click btn:[Save remote].
 +
 You can now synchronize collections identified in your `requirements.yml` file from {Galaxy} to your {PrivateHubName}.
 
-. From the navigation panel, select {MenuACAdminRepositories}. Next to the *community* repository, click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync* to sync collections from {Galaxy} and {HubNameMain}.
+. From the navigation panel, select {MenuACAdminRepositories}. Next to the *community* repository, click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync repository* to sync collections between {Galaxy} and {HubNameMain}.
+. On the modal that appears, you can toggle the following options:
+* *Mirror*: Select if you want your repository content to mirror the remote repository's content.
+* *Optimize*: Select if you want to sync only when no changes are reported by the remote server.
+. Click btn:[Sync] to complete the sync.
 
 .Verification
-The *Sync status* notification updates to notify you of completion or failure of {Galaxy} collections synchronization to your {HubNameMain}.
+The *Sync status* column updates to notify you whether the {Galaxy} collections synchronization to your {HubNameMain} is successful.
 
-* Select *Community* from the collections content drop-down list to confirm successful synchronization.
+* Navigate to {MenuACCollections} and select *Community* to confirm successful synchronization.
+
+
