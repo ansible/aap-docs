@@ -40,7 +40,7 @@ Inventory prompts show up as its own step in a later prompt window.
 Specify the overriding branch to use in your job run.
 If left blank, the specified SCM branch (or commit hash or tag) from the project is used.
 
-For more information, see [ADD 2.5 LINK][Job branch overriding]. | Yes
+For more information, see link:{URLControllerUserGuide}/controller-jobs#controller-job-branch-overriding[Job branch overriding]. | Yes
 | Execution Environment | Select the container image to be used to run this job.
 You must select a project before you can select an {ExecEnvShort}. | Yes.
 
@@ -103,7 +103,7 @@ Debug logging is exceedingly verbose and includes information about SSH operatio
 Verbosity `5` causes {ControllerName} to block heavily when jobs are running, which could delay reporting that the job has finished (even though it has) and can cause the browser tab to lock up.| Yes
 | Job Slicing | Specify the number of slices you want this job template to run.
 Each slice runs the same tasks against a part of the inventory.
-For more information about job slices, see [ADD 2.5 LINK][Job Slicing]. | Yes
+For more information about job slices, see link:{URLControllerUserGuide}/controller-job-slicing[Job Slicing]. | Yes
 | Timeout a| This enables you to specify the length of time (in seconds) that the job can run before it is canceled. Consider the following for setting the timeout value:
 
 - There is a global timeout defined in the settings which defaults to 0, indicating no timeout.
@@ -141,7 +141,7 @@ If you want to be able to specify `extra_vars` on a schedule, you must select *P
 * *Privilege escalation*: If checked, you enable this playbook to run as an administrator.
 This is the equal of passing the `--become` option to the `ansible-playbook` command.
 * *Provisioning callback*: If checked, you enable a host to call back to {ControllerName} through the REST API and start a job from this job template.
-For more information, see [ADD 2.5 LINK][Provisioning Callbacks].
+For more information, see link:https://docs.ansible.com/automation-controller/latest/html/userguide/job_templates.html#ug-provisioning-callbacks[Provisioning Callbacks].
 * *Enable webhook*: If checked, you turn on the ability to interface with a predefined SCM system web service that is used to launch a job template.
 GitHub and GitLab are the supported SCM systems.
 ** If you enable webhooks, other fields display, prompting for additional information:
@@ -156,9 +156,9 @@ You must configure this in the settings on the webhook service in order for {Con
 +
 Before you can select it, the credential must exist.
 +
-See [ADD 2.5 LINK][Credential Types] to create one.
-** For additional information about setting up webhooks, see [ADD 2.5 LINK][Working with Webhooks].
-* *Concurrent jobs*: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see [ADD 2.5 LINK][{ControllerNameStart} capacity determination and job impact].
+See link:{URLControllerUserGuide}/controller-credentials#ref-controller-credential-types[Credential Types] to create one.
+** For additional information about setting up webhooks, see link:{URLControllerUserGuide}/controller-work-with-webhooks[Working with Webhooks].
+* *Concurrent jobs*: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see link:{URLControllerUserGuide}/controller-jobs#controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
 * *Enable fact storage*: If checked, {ControllerName} stores gathered facts for all hosts in an inventory related to the job running.
 * *Prevent instance group fallback*: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job.
 If clear, all available instances in the execution pool are used based on the hierarchy described in link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_administration_guide/index[Control where a job runs].
