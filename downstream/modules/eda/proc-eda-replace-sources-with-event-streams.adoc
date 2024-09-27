@@ -2,7 +2,7 @@
 
 = Replacing sources and attaching event streams to activations
 
-YWhen you create rulebook activations, you can use event streams to swap out source mappings in rulebook activations and simplify routing from external sources to {EDAcontroller}. 
+When you create rulebook activations, you can use event streams to swap out source mappings in rulebook activations and simplify routing from external sources to {EDAcontroller}. 
 
 There are several key points to keep in mind regarding source mapping:
 
@@ -11,9 +11,6 @@ There are several key points to keep in mind regarding source mapping:
 . The source mapping is valid only if the rulebook doesn't get modified. If the rulebook gets modified during the source mapping process, the source mapping would fail and it would  have to be repeated.
 . If the rulebook is modified after the source mapping has been created and a *Restart* happens, the rulebook activation will fail.
 
-//.Prerequisites
-
-//* Just in case I need prereqs
 
 .Procedure
 
@@ -29,29 +26,27 @@ Project:: Projects are a logical collection of rulebooks. This field is optional
 +
 [NOTE]
 ====
-It is recommended that you select a project to refine your list of rulebooks. 
+Although this field is optional, selecting a project helps refine your list of rulebooks choices. 
 ====
 
 Rulebook:: Rulebooks are shown according to the project selected. Select a rulebook.
 +
 [NOTE]
 ====
-After you have selected a rulebook, the Event streams field is enabled. You can click the gear icon to display the Event streams mapping form.  If you do not select a rulebook or you have not created any event  If you do not select a rulebook or you have not created any event. 
+After you have selected a rulebook, the Event streams field is enabled. You can click the gear icon to display the Event streams mapping form.   
 ====
 
 Event streams:: All the event streams available and set up to forward events to rulebook actiavtions are displayed. If you have not created any event streams, this field remains disabled.
 +
 Click the gear icon to display the Event streams mapping UI. 
 +
-image:eda-event-streams-mapping-UI.png[Event streams mapping UI]
+image:eda-latest-event-streams-mapping.png[Event streams mapping UI]
 +
 Complete the following fields:
 +
 Rulebook source::: A rulebook can contain multiple sources across multiple rulesets. You can map the same rulebook in multiple activations to multiple event streams. While managing event streams, unnamed sources are assigned temporary names (__SOURCE {n}) for identification purposes.
 +
 Select __SOURCE_1 from the list.
-//+
-//image:
 +
 Event stream::: Select your event stream name from the list.
 +
@@ -69,14 +64,14 @@ Credential:: Select 0 or more credentials for this rulebook activation. This fie
 +
 [NOTE]
 ====
-The credentials that display in this field are customized based on your rulebook activation and only include the following redential types: Vault, Red Hat Ansible Automation Platform, or any custom credential types that you have created. For more information on credentials, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/using_automation_decisions/index#eda-credentials[Credentials].
+The credentials that display in this field are customized based on your rulebook activation and only include the following credential types: Vault, {PlatformName}, or any custom credential types that you have created. For more information on credentials, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/using_automation_decisions/index#eda-credentials[Credentials].
 ====
 +
 Decision environment:: A decision environment is a container image used to run Ansible rulebooks.
 +
 [NOTE]
 ====
-In Event-Driven Ansible controller, you cannot customize the pull policy of the decision environment. By default, it follows the behavior of the always policy. Every time an activation is started, the system tries to pull the most recent version of the image.
+In {EDAcontroller}, you cannot customize the pull policy of the decision environment. By default, it follows the behavior of the always policy. Every time an activation is started, the system tries to pull the most recent version of the image.
 ====
 . Click btn:[Create rulebook activation].
 +
