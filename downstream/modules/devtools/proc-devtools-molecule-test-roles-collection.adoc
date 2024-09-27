@@ -1,0 +1,41 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="devtools-molecule-test-roles-collection_{context}"]
+= Using Molecule to test your roles
+
+It is useful to run your automation content in a test environment before using it to automate production infrastructure.
+Testing ensures the automation works as designed.
+
+Molecule is a complete testing framework designed to help you automate the testing of Ansible roles in different environments,
+ensuring that the roles behave as expected across various platforms and configurations.
+
+A Molecule scenario is a set of configurations and tests for roles within a collection.
+You can have as many scenarios as you like and Molecule will run one after the other.
+
+* `molecule.yml` is the central configuration entry point for Molecule per scenario.
+With this file, you can configure each tool that Molecule will employ when testing your role.
+* `create.yml` is a playbook file used for creating the instances and storing data in `instance-config`.
+* `converge.yml` is the playbook file that contains the call for your role.
+Molecule will invoke this playbook with `ansible-playbook` and run it against an instance created by the driver.
+* `destroy.yml` contains the Ansible code for destroying the instances and removing them from `instance-config`.
+
+. Navigate to the `extensions/` directory in your collection and initialize a new default molecule scenario:
++
+----
+molecule init scenario <name>
+
+---
+- name: Include a role from a collection
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Testing role
+      ansible.builtin.include_role:
+        name: foo.bar.my_role
+        tasks_from: main.yml
+
+----
+
+// https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-1/
+// https://www.ansible.com/blog/developing-and-testing-ansible-roles-with-molecule-and-podman-part-2/
+

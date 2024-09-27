@@ -1,0 +1,50 @@
+ifdef::context[:parent-context-of-devtools-create-roles-collection: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+
+ifndef::context[]
+[id="devtools-create-roles-collection"]
+endif::[]
+ifdef::context[]
+[id="devtools-create-roles-collection_{context}"]
+endif::[]
+
+= Creating a collection for distributing roles
+
+:context: devtools-create-roles-collection
+
+An Ansible role is a self-contained unit of Ansible automation content that groups related
+tasks and associated variables, files, handlers, and other assets in a defined directory structure. 
+
+You can run Ansible roles in one or more plays, and reuse them across playbooks.
+Invoking roles instead of tasks simplifies playbooks.
+You can migrate existing standalone roles into collections,
+and push them to private automation hub to share them with other users in your organization.
+Distributing roles in this way is a typical way to use collections.
+
+With Ansible collections, you can store and distribute multiple roles in a single unit of reusable automation.
+Inside a collection, you can share custom plug-ins across all roles in the collection instead of duplicating them in each role.
+
+You must move roles into collections if you want to use them in {PlatformNameShort}.
+
+You can add existing standalone roles to a collection, or add new roles to it.
+Push the collection to source control and configure credentials for the repository in {PlatformNameShort}. 
+
+include::devtools/con-devtools-plan-roles-collection.adoc[leveloffset=+1]
+include::devtools/con-devtools-roles-collection-prerequisites.adoc[leveloffset=+1]
+
+include::devtools/proc-devtools-scaffold-roles-collection.adoc[leveloffset=+1]
+
+include::devtools/proc-devtools-migrate-existing-roles-collection.adoc[leveloffset=+1]
+include::devtools/proc-devtools-create-new-role-in-collection.adoc[leveloffset=+1]
+include::devtools/proc-devtools-docs-roles-collection.adoc[leveloffset=+1]
+
+// include::devtools/proc-devtools-run-roles-collection.adoc[leveloffset=+1]
+// include::devtools/proc-devtools-molecule-test-roles-collection.adoc[leveloffset=+1]
+
+include::devtools/proc-devtools-publish-roles-collection-pah.adoc[leveloffset=+1]
+include::devtools/proc-devtools-use-roles-collections-aap.adoc[leveloffset=+2]
+
+ifdef::parent-context-of-devtools-create-roles-collection[:context: {parent-context-of-devtools-create-roles-collection}]
+ifndef::parent-context-of-devtools-create-roles-collection[:!context:]
+
