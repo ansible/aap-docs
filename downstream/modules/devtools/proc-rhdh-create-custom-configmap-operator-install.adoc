@@ -1,0 +1,72 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-create-custom-configmap-operator-install_{context}"]
+= Creating a custom ConfigMap
+
+Create a ConfigMap, for instance `rhdh-custom-config`, for your project.
+For more details about creating a custom ConfigMap, see the
+link:{BaseURL}/red_hat_developer_hub/{RHDHVers}/html-single/administration_guide_for_red_hat_developer_hub/index#proc-add-custom-app-config-file-ocp-operator_admin-rhdh[Adding a custom application configuration file to OpenShift Container Platform using the Operator]
+in the _Administration guide for Red Hat Developer Hub_.
+
+Populate the ConfigMap with YAML from the backup that you made of the {RHDHShort} Operator ConfigMap.
+// This enables the dynamic plug-ins specific to the backstage showcase.
+
+.Prerequisites
+
+* You have saved a backup copy of the Configmap for the {RHDHShort} Operator.
+
+.Procedure
+
+. In the OpenShift web console, navigate to the project you created.
+. Click *ConfigMaps* in the navigation pane.
+. Click *Create ConfigMap*.
+. Replace the default YAML code in the new ConfigMap with the following code:
++
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-custom-config
+data:
+  deployment.yaml: |-  # Replace with RHDH Operator ConfigMap deployment.yaml block
+
+----
+. Copy the `deployment.yaml:` section from your local copy of the RHDH Operator ConfigMap.
+. Paste the `deployment.yaml:` section into the `rhdh-custom-config` ConfigMap, replacing the `deployment.yaml:` line.
+. Add a sidecar container (`ansible-devtools-server`)  to the list of containers under `resources` in the `deployment.spec.template.spec.[containers]` block of the ConfigMap:
++
+----
+   spec:
+     replicas: 1
+     selector:
+       matchLabels:
+         rhdh.redhat.com/app:  
+     template:
+       metadata:
+         labels:
+           rhdh.redhat.com/app:  
+       spec:\
+           ...
+           containers:
+           - name: backstage-backend
+		...
+           - resources: {}  # Add sidecar container for Ansible plug-ins
+             terminationMessagePath: /dev/termination-log
+             name: ansible-devtools-server
+             command:
+               - adt
+               - server
+             ports:
+               - containerPort: 8000
+                 protocol: TCP
+             imagePullPolicy: IfNotPresent
+             terminationMessagePolicy: File
+             image: 'ghcr.io/ansible/community-ansible-dev-tools:latest'
+
+----
+. Click btn:[Create] to create the ConfigMap.
+
+.Verification
+
+To view your new ConfigMap, click *ConfigMaps* in the navigation pane.
+
