@@ -1,0 +1,22 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="devtools-use-roles-collections-aap_{context}"]
+= Using your collection in projects in {PlatformName}
+
+To use your collection in {ControllerName}, you must add your collection to an
+{ExecEnvShort} and push it to {PrivateHubName}.  
+
+The following procedure describes the workflow to add a collection to an {ExecEnvShort}.
+Refer to
+link:{URLBuilder}/assembly-publishing-exec-env#proc-customize-ee-image[Customizing an existing automation executions environment image]
+in the _{TitleBuilder}_ guide for the commands to execute these steps.
+
+. You can pull an {ExecEnvShort} base image from {HubName},
+or you can add your collection to your own custom {ExecEnvShort}.
+. Add the collections that you want to include in the {ExecEnvShort}.
+. Build the new {ExecEnvShort}.
+. Verify that the collections are in the {ExecEnvShort}.
+. Tag the image and push it to {PrivateHubName}.
+. Pull your new image into your {ControllerName} instance.
+. The playbooks that use the roles in your collection must use the fully qualified domain name (FQDN) for the roles.
+
