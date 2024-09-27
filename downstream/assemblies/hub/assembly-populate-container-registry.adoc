@@ -10,27 +10,27 @@ ifdef::context[:parent-context: {context}]
 
 
 [role="_abstract"]
-By default, {PrivateHubName} does not include container images.
-To populate your container registry, you must push a container image to it.
+By default, {PrivateHubName} does not include {ExecEnvShort}s.
+To populate your container registry, you must push a {ExecEnvShort} to it.
 
-You must follow a specific workflow to populate your {PrivateHubName} container registry:
+You must follow a specific workflow to populate your {PrivateHubName} remote registry:
 
-* Pull images from the Red Hat Ecosystem Catalog (registry.redhat.io)
+* Pull {ExecEnvShort}s from the Red Hat Ecosystem Catalog (registry.redhat.io)
 * Tag them
-* Push them to your {PrivateHubName} container registry
+* Push them to your {PrivateHubName} remote registry
 
 [IMPORTANT]
 ====
 Image manifests and filesystem blobs were both originally served directly from `registry.redhat.io` and `registry.access.redhat.com`.
 As of 1 May 2023, filesystem blobs are served from `quay.io` instead.
 
-* Ensure that the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_planning_guide/ref-network-ports-protocols_planning[Network ports and protocols] listed in _Table 6.4. Execution Environments (EE)_ are available to avoid problems pulling container images.
+* Ensure that the link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] listed in _Table 5.4. Execution Environments (EE)_ are available to avoid problems pulling container images.
 
 Make this change to any firewall configuration that specifically enables outbound connections to `registry.redhat.io` or `registry.access.redhat.com`.
 
 Use the hostnames instead of IP addresses when configuring firewall rules.
 
-After making this change you can continue to pull images from `registry.redhat.io` and `registry.access.redhat.com`. You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
+After making this change you can continue to pull {ExecEnvShort}s from `registry.redhat.io` and `registry.access.redhat.com`. You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
 
 However, manifests, sometimes called “subscription allocations”, on the web-based Red Hat Subscription Management are no longer supported as of early 2024 with one exception: If a system is part of a closed network or “air gapped” system that does not receive its updates from Red Hat’s servers directly, manifests are supported until the release of Red Hat Satellite 6.16. Keep up to date with link:access.redhat.com/articles/1365633[Red Hat Satellite Release Dates] for the announcement for Red Hat Satellite 6.16's release date announcement.
 ====
