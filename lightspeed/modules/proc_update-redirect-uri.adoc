@@ -21,9 +21,9 @@ When Ansible users log in or log out of Ansible Lightspeed service, the {Platfor
 .. Select the Lightspeed Oauth application that you created.
 .. In the *Redirect URIs* field of the Oauth application, enter the URL in the following format:
 +
-`https://<lightspeed_route>/complete/aap/`
+`\https://<lightspeed_route>/complete/aap/`
 +
-An example of the URL is `https://lightspeed-on-prem-web-service.com/complete/aap/`.
+An example of the URL is `\https://lightspeed-on-prem-web-service.com/complete/aap/`.
 +
 [IMPORTANT]
 ====
@@ -35,8 +35,11 @@ The Redirect URL must include the following information:
 ====
 .. Click *Save*. 
 
-. Update the *logout* redirect URI:
-.. Log in to the cluster on which the {PlatformName} instance is running. 
+. Update the *logout* redirect URI based on your setup:
++
+*Procedure when both the {LightspeedShortName} instance and automation controller are installed using {PlatformNameShort} operator*:
+
+.. Log in to the cluster on which the {PlatformNameShort} instance is running. 
 .. Identify the *AutomationController* custom resource.
 .. Select *[YAML view]*. 
 .. Add the following entry to the YAML file:
@@ -57,7 +60,7 @@ Ensure the following while specifying the `value:` parameter:
 
 * Specify the hostname without the network protocol, such as `https://`.
 +
-For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`, and not `https://my-aiconnect-instance.somewhere.com`.
+For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`, and not `\https://my-aiconnect-instance.somewhere.com`.
 
 * Use the single and double quotes exactly as specified in the codeblock.
 +
@@ -68,7 +71,26 @@ If you change the single quotes to double quotes and vice versa, you will encoun
 If you are running multiple instances of {LightspeedShortName} application with a single {PlatformName} deployment, add a comma (,) and then add the other hostname values. For example, you can add multiple hostnames, such as `"'my-lightspeed-instance1.somewhere.com','my-lightspeed-instance2.somewhere.com'"`
 ====
 
-. Apply the revised YAML. This task restarts the automation controller pods.
+.. Apply the revised YAML. This task restarts the automation controller pods.
+
++
+*Procedure when the {PlatformNameShort} operator is run on a virtual machine*:
+.. Log in to the virtual machine with the {PlatformNameShort} controller.
+.. In the */etc/tower/conf.d/custom.py* file, add the following parameter: +
+`LOGOUT_ALLOWED_HOSTS = "<lightspeed_route-HostName>"`
++
+[IMPORTANT]
+====
+* If the */etc/tower/conf.d/custom.py* file does not exist, create it.
+
+* Specify the hostname without the network protocol, such as `https://`.
++
+For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`, and not `https://my-aiconnect-instance.somewhere.com`.
+
+* Use the single and double quotes in pairs; do not mix single quotes with double quotes.
+====
+.. Restart the automation controller by executing the following command: +
+`$ automation-controller-service restart`
 
 [role="_additional-resources"]
 .Additional resources
