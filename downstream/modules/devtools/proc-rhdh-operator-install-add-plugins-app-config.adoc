@@ -1,16 +1,16 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="rhdh-operator-install-add-plugins-app-config_{context}"]
-= Adding the {AAPRHDHShort} configuration to rhdh-app-config 
+= Adding the {AAPRHDHShort} configuration to app-config-rhdh 
 
-Add the Ansible plugin-specific configuration to the `rhdh-app-config` ConfigMap,
+Add the Ansible plugin-specific configuration to the `app-config-rhdh` ConfigMap,
 and add a route for the templates for the automation content scaffolder plugin.
 
 
 .Procedure
 
 . In the OpenShift web console, select *ConfigMaps*.
-. Select the `rhdh-app-config` ConfigMap.
+. Select the `app-config-rhdh` ConfigMap.
 . Select the *YAML* tab to edit the ConfigMap.
 . In the `data.app-config-custom.yaml.catalog` block, add a `locations:` block for the GitHub repository for the templates that are used to scaffold collections and playbooks. The `locations:` block must have the same indentation as the `rules:` block that precedes it.
 +
@@ -43,7 +43,7 @@ After you have added both blocks, the ConfigFile resembles the following:
 kind: ConfigMap
 apiVersion: v1
 metadata:
- name: rhdh-app-config
+ name: app-config-rhdh
 data:
  app-config-custom.yaml: |
    app:

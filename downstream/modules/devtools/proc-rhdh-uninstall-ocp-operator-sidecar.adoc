@@ -1,0 +1,22 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator-sidecar_{context}"]
+= Removing the Sidecar container from the {RHDHShort} Custom Resource ConfigMap
+
+// Remove sidecar from rhdh-custom-config
+
+// Do this if you need config apart from the Sidecar container to your `rhdh-custom-config` Custom Resource ConfigMap.
+
+If you added extra configuration to the ConfigMap where you added the sidecar container (`rhdh-custom-config` in our example), then you cannot remove the reference to the ConfigMap from the {RHDHShort} Custom Resource.
+
+Instead, you must remove only the YAML code relating to the sidecar from the ConfigMap.
+
+----
+Add YAML code
+
+----
+
+//created a custom resource ConfigMap
+//as described in the xref:rhdh-create-operator-custom-configmap-operator-install_rhdh-install-ocp-operator[Creating a custom Operator ConfigMap]
+//and you added only the {ToolsName} sidecar container to it, then you can remove the reference to the ConfigMap from the {RHDHShort} Custom Resource. 
+
