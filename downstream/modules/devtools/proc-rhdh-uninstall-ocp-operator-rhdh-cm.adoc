@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator-rhdh-cm_{context}"]
+= Removing {PlatformNameShort} and Dev Spaces from the custom {RHDH} ConfigMap
+
+.Procedure
+
+. Open the custom {RHDH} ConfigMap where you added configuration for the templates and for connecting to {PlatformNameShort} and Dev Spaces.
+In this example, the {RHDH} ConfigMap name is `app-config-rhdh`.
++
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: rhdh-app-config
+data:
+ app-config-custom.yaml: |
+   ...
+   catalog:
+     ...
+     locations: # Remove the YAML entry below the 'locations' YAML key 
+       - type: url 
+         target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+         rules:
+           - allow: [Template]
+     ...
+   # Remove the entire 'ansible' YAML key and all sub-entries
+   ansible:
+     devSpaces:
+       baseUrl: '<https://YOUR_DEV_SPACES_URL>'
+     creatorService:
+       baseUrl: '127.0.0.1'
+       port: '8000'
+     rhaap:
+       baseUrl: '<https://YOUR_AAP_URL>'
+       token: <REDACTED>
+       checkSSL: false
+
+----
+. Remove the `url` in the `locations:` block to delete the templates from the {RHDHShort} instance.
+. Remove the `ansible:` block to delete the Ansible-specific configuration.
+. Click btn:[Save].
+

@@ -1,0 +1,45 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator-plugins-cm_{context}"]
+= Removing the {AAPRHDHShort} from the ConfigMap
+
+// (this section covers uninstalling plugins only, not unloading or updating the sidecar container)
+// To uninstall the dynamic plugins, you must update the `rhaap-dynamic-plugins-config` ConfigMap 
+
+.Procedure
+
+. Open the custom ConfigMap where you referenced the {AAPRHDHShort}.
+For this example, the ConfigMap name is `rhaap-dynamic-plugins-config`.
+. Locate the dynamic plug-ins in the `plugins:` block.
++
+** To disable the plug-ins, update the `disabled` attribute to `true` for the three plug-ins.
+** To delete the plug-ins, delete the lines that reference the plug-ins from the `plugins:` block:
++
+----
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: rhaap-dynamic-plugins-config
+data:
+ dynamic-plugins.yaml: |
+   ...
+   plugins: # Remove the Ansible plug-ins entries below the ‘plugins’ YAML key
+     - disabled: false
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
+       integrity: <SHA512 value>
+	 ...
+     - disabled: false
+       package: >-
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+       integrity: <SHA512 value>
+       ...
+     - disabled: false
+       package: >-
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+       integrity: <SHA512 value>
+	 ...
+
+----
+. Click btn:[Save].
+
