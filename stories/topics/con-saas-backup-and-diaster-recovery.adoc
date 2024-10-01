@@ -9,14 +9,31 @@ Red{nbsp}Hat maintains daily database and file system snapshots in a separate re
 | File System | Daily              | 7 days
 |===
 
-This recovery data is used in the event that it becomes unlikely that an AWS regional outage is recoverable within a reasonable period. 
-In the event of such a circumstance, the following process may be followed to recover an {PlatformNameShort} deployment in a different AWS region:
 
-* *Add Steps*
+This recovery data is used if an AWS regional outage cannot be resolved in a reasonable time.
+
+Customer data is replicated to a predefined secondary region based on the deployment region. The currently paired regions are:
+
+[cols="2*", options="header"]
+|===
+| Primary Region          | Business Continuity Region
+
+| us-east-1               | us-west-2
+| us-east-2               | us-west-2
+| us-west-2               | us-east-1
+| eu-central-1            | eu-central-2
+| eu-west-1               | eu-north-1
+|===
+
+To recover an {PlatformNameShort} deployment in a different AWS region, a customer must submit a request specifying their preferred deployment region from the available options.
+Red{nbsp}Hat valuates the request and begins building an instance in that region.
+Data from the previous instance is recovered from the customer’s business continuity region.
+The customer is responsible for any necessary post-deployment network configuration to integrate the new instance into their environment.
+
 
 [NOTE]
 ====
 Backup data is not directly accessible to customers. 
-The data is only used in the event of an infrastructure failure and is not used in the event of customer configuration error. 
-Red{nbsp} encourages you to use configuration-as-code practices when deploying {PlatformNameShort} in order to have a customer-hosted backup of your configuration.
+The data is only used in the event of infrastructure failure, not customer configuration errors. 
+Red{nbsp} encourages using configuration-as-code practices to maintain a customer-hosted backup of your configuration.
 ====
