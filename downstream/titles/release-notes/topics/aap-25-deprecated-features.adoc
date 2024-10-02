@@ -65,7 +65,7 @@ Import the helpers from the source definition.
 
 API endpoints that will be removed in a future release either because their functionality is being removed or superseded with other capabilities. For example, with the platform moving to a centralized authentication system in the platform gateway, the existing authorization APIs in the {ControllerName} and {HubName} are being deprecated for future releases as all authentication operations should occur in the platform gateway.
 
-[cols="25%,25%,50%"]
+[cols="20%,40%,40%"]
 |===
 | Component | Endpoint | Capability
 
@@ -92,5 +92,46 @@ API endpoints that will be removed in a future release either because their func
 |{ControllerNameStart}
 |`*/api/v2/users*`
 |Moving to the platform gateway.
+
+|{ControllerNameStart}
+|`*/api/v2/roles*`
+|Controller-specific role definitions are moving to `*/api/controller/v2/role_definitions*`.
+
+|{ControllerNameStart}
+a|
+The following roles lists:
+
+* `*/api/v2/teams/{id}/roles/*`
+* `*/api/v2/users/{id}/roles/*`
+|Controller-specific resource permissions are moving to `*/api/controller/v2/role_user_assignments*` and `*/api/controller/v2/role_team_assignments*`.
+
+|{ControllerNameStart}
+a|
+The following object roles lists:
+
+* `*/api/v2/credentials/{id}/object_roles/*`
+* `*/api/v2/instance_groups/{id}/object_roles/*`
+* `*/api/v2/inventories/{id}/object_roles/*`
+* `*/api/v2/job_templates/{id}/object_roles/*`
+* `*/api/v2/organizations/{id}/object_roles/*`
+* `*/api/v2/projects/{id}/object_roles/*`
+* `*/api/v2/teams/{id}/object_roles/*`
+* `*/api/v2/workflow_job_templates/{id}/object_roles/*`
+|Controller-specific resource permissions are moving to `*/api/controller/v2/role_user_assignments*` and `*/api/controller/v2/role_team_assignments*`.
+
+|{ControllerNameStart}
+a|
+The following resource access lists:
+
+* `*/api/v2/credentials/{id}/access_list/*`
+* `*/api/v2/instance_groups/{id}/access_list/*`
+* `*/api/v2/inventories/{id}/access_list/*`
+* `*/api/v2/job_templates/{id}/access_list/*`
+* `*/api/v2/organizations/{id}/access_list/*`
+* `*/api/v2/projects/{id}/access_list/*`
+* `*/api/v2/teams/{id}/access_list/*`
+* `*/api/v2/users/{id}/access_list/*`
+* `*/api/v2/workflow_job_templates/{id}/access_list/*`
+|No replacements yet.
 
 |===
