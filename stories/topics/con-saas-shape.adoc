@@ -2,21 +2,16 @@
 
 = Shape
 
-Your execution plane varies in size and shape based on the type of automation that is run and the locations that the mesh connects to. 
-Use the following to help guide your automation mesh implementation model:
+Your execution plane's size and shape depend on the type of automation and the locations connected to the mesh. Use the following guidelines for your automation mesh implementation:
 
 * {PlatformNameShort} minimum requirements:
-** Hop Nodes: Hop nodes are only required when not using mesh ingress. 
-Hop nodes typically require minimum resources. 
-The shape of a hop node depends on the number of execution nodes connected to it. 
-Typically a virtual machine (VM) with 2 vCPUs and 2 GB RAM can route traffic for 2-4 execution nodes.   
+** Hop Nodes: Required only when not using mesh ingress. They typically require minimal resources. The shape of a hop node depends on the number of connected execution nodes. A virtual machine (VM) with 2 vCPUs and 2 GB RAM can route traffic for 2-4 execution nodes. 
 ** For help with configuring your automation mesh see
 link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/red_hat_ansible_automation_platform_automation_mesh_for_operator-based_installations/index[Red Hat Ansible Automation Platform Automation Mesh for operator-based installations].
-* If you have automation in fewer locations (such as geographies or other clouds) must create a mesh with fewer VMs that can be scaled vertically. 
-Most clouds and hypervisors enable the ability to change shapes with minimal downtime.
-* If you require CPU or RAM intensive automation, you need larger machine shapes.
-* If you have automation that spans multiple locations (such as geographies or other clouds), create a mesh with nodes that enable connectivity to those locations.
-* You can consider the use of different CPU architectures, like ARM, and reserved instances to reduce the cost of the execution plane.
-* If you want to configure redundancy in the automation mesh, you can configure at least two mesh nodes of the same shape in the same region, but in different availability zones, with each machine connected to both mesh ingress hop nodes.
+* For automation in fewer locations (such as specific geographies or clouds), create a mesh with fewer VMs that can be scaled vertically. Most clouds and hypervisors allow shape changes with minimal downtime.
+* For CPU or RAM-intensive automation, use larger machine shapes.
+* For automation spanning multiple locations, create a mesh with nodes that connect to those locations.
+* Consider using different CPU architectures, like ARM, and reserved instances to reduce execution plane costs.
+* To configure redundancy in the automation mesh, set up at least two mesh nodes of the same shape in different availability zones within the same region, connecting each machine to both mesh ingress hop nodes.
 * Use OpenShift if auto-scaling the execution plane is necessary.
 
