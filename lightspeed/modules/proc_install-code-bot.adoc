@@ -20,15 +20,34 @@ A message is displayed that specifies the following permissions are granted auto
 * Read and write access to code and pull requests
 . When prompted, log in to your {RHSSO} account as an organization administrator. 
 . Log in to the {AnsibleCodeBot} dashboard:
-.. On the *Authorize Ansible code bot* page, verify your account and repository permissions. 
+.. On the *Authorize {AnsibleCodeBot}* page, verify your account and repository permissions. 
 .. Click *Authorize Ansible*. 
 +
-From the *Authorize Ansible code bot* page, the following actions occur:
+From the *Authorize {AnsibleCodeBot}* page, the following actions occur:
 +
 * {AnsibleCodeBot} verifies that you are a part of an organization that has an active subscription to {PlatformName}. 
 * GitHub requests read permissions to access the repositories associated with your account.
 
-On successful authorization, you are logged in to {AnsibleCodeBot} dashboard that displays all your repositories that have the {AnsibleCodeBot} installed along with their scan status. If you did not set up a scan schedule earlier, the dashboard displays the repositories without any associated scan history. You can scan your Git repository by starting a manual scan, or configure a schedule to scan your repository at regular intervals. You can also add a repository for scanning or remove an existing repository from being scanned. For more information, see xref:manage-repo-scans_using-code-bot-for-suggestions[Managing repository scans]. 
+On successful authorization, you are logged in to {AnsibleCodeBot} dashboard. The dashboard displays all your repositories that have the {AnsibleCodeBot} installed along with their scan status. 
+
+== Post-installation tasks
+
+After the {AnsibleCodeBot} is installed, it automatically scans the selected repositories that are in Jinja format. Once the scanning is complete, the code bot generates an initial PR for each repository; the initial PR also contains the scan schedule configured to run weekly.
+
+.Procedure
+
+. Review the initial PR for the suggested changes, and merge the PR.
++
+After you merge the initial PR, the configured scan schedule is triggered, and the subsequent repository scans are performed weekly.
++
+NOTE: If you do not merge the initial PR, the weekly scan schedule is not triggered and the {AnsibleCodeBot} dashboard displays the repositories without any associated scan history.
++
+The following illustration is an example of an initial PR being created:
++
+image::code-bot-initial-pr.png[{AnsibleCodeBot} settings]
+
+. Optional: If required, you can xref:manually-scan-repo_using-code-bot-for-suggestions[manually scan your repositories] or xref:configure-repo-scan_using-code-bot-for-suggestions[change the scan schedule to a daily or monthly cadence]. 
+. Modify scanned repositories by xref:add-remove-repo-from-scans_using-code-bot-for-suggestions[adding repositories or removing existing repositories from being scanned].
 
 [role="_additional-resources"]
 .Additional resources
