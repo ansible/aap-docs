@@ -1,0 +1,81 @@
+[id="proc-update-aap-container"]
+
+= Container-based {PlatformNameShort}
+
+== Updating container-based {PlatformNameShort}
+
+Perform a patch update for a container-based installation of Ansible Automation Platform.
+
+.Prerequisites
+
+* Reviewed the release notes for the associated patch release.
+
+* Created a backup of your {PlatformNameShort} deployment. For more information, see Backing up container-based <<Backing up controller-based {PlatformNameShort}>>.
+
+.Procedure
+
+. Download the latest version of the containerized installer from the link:access.redhat.com/downloads/content/480/ver=2.4/rhel---9/2.4/x86_64/product-software[{PlatformNameShort}] download page.
+
+. . For online installations *{PlatformNameShort} 2.5 Containerized Setup*
+
+. . For offline or bundled installations: *{PlatformNameShort} 2.5 Containerized Setup Bundle*
+
+. Copy the installer `.tar` file onto your {RHEL} host.
+
+. Decide where you want the installer to reside on the filesystem. Installation related files will be created under this location and require at least 10 GB for the initial installation.
+
+. Unpack the installer `.tar` file into your installation directory, and go to the unpacked directory.
+
+. . To unpack the online installer:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ tar xfvz ansible-automation-platform-containerized-setup-<version>.tar.gz
+----
++
+. . To unpack the offline or bundled installer:
++ 
+----
+$ tar xfvz ansible-automation-platform-containerized-setup-bundle-<version>-<arch name>.tar.gz
+----
+
+. Edit the `inventory` file so that it matches your desired configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can modify the parameters to match any changes to your environment.
+
+. Run the `install` command:
++
+----
+$ ansible-playbook -i inventory ansible.containerized_installer.install
+----
++
+* If your privilege escalation requires a password to be entered, append -K to the command. You will then be prompted for the BECOME password.
++
+* If your privilege escalation requires a password to be entered, append `-K` to the command. You will then be prompted for the `BECOME password.
++
+* You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
+
+The installation will begin.
+
+== Backing up container-based {PlatformNameShort}
+
+Perform a back up of your container-based {PlatformNameShort} installer.
+
+. Procedure
+
+. . Go to the Ansible Automation Platform installation directory on your RHEL host.
+
+. . Run the `backup.yml` playbook:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ ansible-playbook -i inventory ansible.containerized_installer.backup
+----
+
+This will backup the important data deployed by the containerized installer such as:
+
+* PostgreSQL databases
+
+* Configuration files
+
+* Data files
+
+By default, the backup directory is set to ~/backups but this can be changed by using the backup_dir variable in your `inventory` file.
