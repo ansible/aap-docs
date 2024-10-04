@@ -1,15 +1,15 @@
 
 [id="ref-gateway-variables"]
-= Platform gateway variables
+= {GatewayStart} variables
 
 [cols="50%,50%,50%",options="header"]
 |====
 | *RPM variable name* | *Container variable name* | *Description*
-| `automationgateway_admin_email` | `gateway_admin_email` | The email address used for the admin user for platform gateway.
+| `automationgateway_admin_email` | `gateway_admin_email` | The email address used for the admin user for {Gateway}.
 
 | `automationgateway_admin_password` | `gateway_admin_password` | _Required_
 
-The admin password used to connect to the platform gateway instance.
+The admin password used to connect to the {Gateway} instance.
 
 Passwords must be enclosed in quotes when they are provided in plain text in the `inventory` file.
 
@@ -17,7 +17,7 @@ Use of special characters for this variable is limited. The password can include
 
 | `automationgateway_admin_username` | `gateway_admin_user` | _Optional_
 
-The username used to identify and create the admin superuser in platform gateway.
+The username used to identify and create the admin superuser in {Gateway}.
 
 Default = `admin`
 
@@ -33,27 +33,27 @@ Disable NGINX HTTPS.
 
 Default = `false`
 
-| `automationgateway_grpc_auth_service_timeout` | `gateway_grpc_auth_service_timeout` | Platform gateway auth server timeout.
+| `automationgateway_grpc_auth_service_timeout` | `gateway_grpc_auth_service_timeout` | {GatewayStart} auth server timeout.
 
 Default = `30s`
 
-| `automationgateway_grpc_server_max_threads_per_process` | `gateway_grpc_server_max_threads_per_process` | Platform gateway auth server threads per process.
+| `automationgateway_grpc_server_max_threads_per_process` | `gateway_grpc_server_max_threads_per_process` | {GatewayStart} auth server threads per process.
 
 Default = `10`
 
-| `automationgateway_grpc_server_processes` | `gateway_grpc_server_processes` | Platform gateway auth server processes
+| `automationgateway_grpc_server_processes` | `gateway_grpc_server_processes` | {GatewayStart} auth server processes
 
 Default = `5`
 
 | `automationgateway_main_url` | `gateway_main_url` | _Optional_
 
-The main platform gateway URL that clients will connect to (e.g. `\https://<gateway_node>`).
+The main {Gateway} URL that clients will connect to (e.g. `\https://<gateway_node>`).
 
 If not specified, the first the first node in the `[automationgateway]` group will be used when needed.
 
 | `automationgateway_pg_database` | `gateway_pg_database` | _Optional_
 
-The PostgreSQL database used by platform gateway.
+The PostgreSQL database used by {Gateway}.
 
 RPM default = `automationgateway`
 
@@ -61,11 +61,11 @@ Container default = `gateway`
 
 | `automationgateway_pg_host` | `gateway_pg_host` | _Required_
 
-The hostname of the PostgreSQL database used by platform gateway, which can be an externally managed database.
+The hostname of the PostgreSQL database used by {Gateway}, which can be an externally managed database.
 
 | `automationgateway_pg_password` | `gateway_pg_password` | _Required_
 
-The password for the PostgreSQL database used by platform gateway.
+The password for the PostgreSQL database used by {Gateway}.
 
 Use of special characters for `automationgateway_pg_password` is limited. The `!`, `#`, `0` and `@` characters are supported. 
 
@@ -73,7 +73,7 @@ Use of other special characters can cause the setup to fail.
 
 | `automationgateway_pg_port` | `gateway_pg_port` | _Optional_
 
-The port number of the PostgreSQL database used by platform gateway.
+The port number of the PostgreSQL database used by {Gateway}.
 
 Default = `5432`
 
@@ -85,15 +85,15 @@ Default = `prefer`
 
 | `automationgateway_pg_username` | `gateway_pg_username` | _Optional_
 
-The username for your platform gateway PostgreSQL database.
+The username for your {Gateway} PostgreSQL database.
 
 RPM default = `automationgateway`
 
 Container default = `gateway`
 
-| `automationgateway_redis_host` | `gateway_redis_host` | The Redis hostname used by platform gateway.
+| `automationgateway_redis_host` | `gateway_redis_host` | The Redis hostname used by {Gateway}.
 
-| `automationgateway_redis_port` | `gateway_redis_port` | The Redis platform gateway port.
+| `automationgateway_redis_port` | `gateway_redis_port` | The Redis {Gateway} port.
 
 Default = `6379`
 
@@ -101,13 +101,13 @@ Default = `6379`
 
 `/path/to/automationgateway.cert`
 
-Same as `automationhub_ssl_cert` but for platform gateway UI and API.
+Same as `automationhub_ssl_cert` but for {Gateway} UI and API.
 
 | `automationgateway_ssl_key` | `gateway_tls_key` | _Optional_
 
 `/path/to/automationgateway.key`
 
-Same as `automationhub_server_ssl_key` but for platform gateway UI and API.
+Same as `automationhub_server_ssl_key` but for {Gateway} UI and API.
 
 | | `gateway_nginx_client_max_body_size` | NGINX maximum body size.
 
@@ -131,23 +131,23 @@ Default = `[TLSv1.2, TLSv1.3]`
 
 Default = `false`
 
-| | `gateway_redis_password` | Redis platform gateway password.
+| | `gateway_redis_password` | Redis {Gateway} password.
 
-| | `gateway_redis_tls_cert` | Platform gateway Redis TLS certificate.
+| | `gateway_redis_tls_cert` | {GatewayStart} Redis TLS certificate.
 
-| | `gateway_redis_tls_key` | Platform gateway Redis TLS key.
+| | `gateway_redis_tls_key` | {GatewayStart} Redis TLS key.
 
-| | `gateway_redis_username` | Redis platform gateway username.
+| | `gateway_redis_username` | Redis {Gateway} username.
 
 Default = `gateway`
 
-| | `gateway_secret_key` | Platform gateway secret key.
+| | `gateway_secret_key` | {GatewayStart} secret key.
 
-| | `gateway_tls_remote` | Platform gateway TLS remote files.
+| | `gateway_tls_remote` | {GatewayStart} TLS remote files.
 
 Default = `false`
 
-| | `gateway_uwsgi_listen_queue_size` | Platform gateway uWSGI listen queue size.
+| | `gateway_uwsgi_listen_queue_size` | {GatewayStart} uWSGI listen queue size.
 
 Default = `4096`
 
