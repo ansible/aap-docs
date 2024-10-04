@@ -5,7 +5,9 @@
 [cols="50%,50%,50%",options="header"]
 |====
 | *RPM variable name* | *Container variable name* | *Description*
-| `automationhub_admin_password` | `hub_admin_password` | Required passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
+| `automationhub_admin_password` | `hub_admin_password` | _Required_ 
+
+Required passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
 
 Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
 
@@ -107,9 +109,7 @@ Examples are `ansible-doc`, `ansible-lint`, and `flake8`.
 
 This parameter enables you to drive this configuration.
 
-| `automationhub_pg_database` | `hub_pg_database` | _Required_
-
-The PostgreSQL database name.
+| `automationhub_pg_database` | `hub_pg_database` | The PostgreSQL database name.
 
 RPM default = `automationhub`
 
@@ -121,7 +121,9 @@ The hostname of the remote PostgreSQL database used by {HubName}.
 
 Default = `127.0.0.1`
 
-| `automationhub_pg_password` | `hub_pg_password` | The password for the {HubName} PostgreSQL database.
+| `automationhub_pg_password` | `hub_pg_password` | Required if not using an internal database.
+
+The password for the {HubName} PostgreSQL database.
 
 Use of special characters for this variable is limited.
 The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
@@ -134,9 +136,7 @@ Default = `5432`
 
 Default = `prefer`
 
-| `automationhub_pg_username` | `hub_pg_username` | _Required_
-
-The username for your {HubName} PostgreSQL database
+| `automationhub_pg_username` | `hub_pg_username` | The username for your {HubName} PostgreSQL database
 
 RPM default = `automationhub`
 
