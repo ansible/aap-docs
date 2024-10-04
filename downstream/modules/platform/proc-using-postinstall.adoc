@@ -6,7 +6,6 @@
 
 [role="_abstract"]
 
-
 You can use the optional postinstall feature of containerized {PlatformNameShort} to define and load the configuration during the initial installation. This uses a configuration-as-code approach, where you simply define your configuration to be loaded as YAML files. 
 
 .Prerequisites
@@ -29,7 +28,7 @@ controller_postinstall_dir=<full_path_to_your_config-as-code_directory>
 controller_postinstall_repo_ref=main
 ----
 +
-. The `controller_postinstall_repo_url` variable can define the postinstall repository URL which must include authentication information.
+. The `controller_postinstall_repo_url` variable defines the postinstall repository URL which must include authentication information.
 
 +
 ----
@@ -44,7 +43,7 @@ git@<host>:<repo>.git (public or private repository with SSH authentication)
 When using SSH based authentication, the installer does not configure anything for you, so you must configure everything on the installer node.
 ====
 
-Definition files that are used by Ansible Builder to create automation execution environment images use the link:https://console.redhat.com/ansible/automation-hub/namespaces/infra/[infra certified collections]. The link:https://console.redhat.com/ansible/automation-hub/repo/validated/infra/controller_configuration/[controller_configuration] collection is preinstalled as part of the installation and uses the installation controller credentials you supply in the inventory file for access into the {PlatformNameShort} controller. You simply need to give the YAML configuration files. 
+Definition files that are used by {Builder} to create {ExecEnvNameSing} images use the link:https://console.redhat.com/ansible/automation-hub/namespaces/infra/[infra certified collections]. The link:https://console.redhat.com/ansible/automation-hub/repo/validated/infra/controller_configuration/[controller_configuration] collection is preinstalled as part of the installation and uses the installation controller credentials you supply in the inventory file for access into the {PlatformNameShort} controller. You need to give the YAML configuration files. 
 
 You can set up {PlatformNameShort} configuration attributes such as credentials, LDAP settings, users and teams, organizations, projects, inventories and hosts, job and workflow templates.
 
