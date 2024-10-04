@@ -2,15 +2,30 @@
 
 = Upgrading the {OperatorPlatform}
 
-
 [role=_abstract]
 
-To upgrade to the latest version of {OperatorPlatform} on {OCPShort}, do the following:
+To upgrade to the latest version of {OperatorPlatform} on {OCPShort}, you can do the following:
+
+.Prerequisites 
+
+* Read the link:{URLReleaseNotes}[{TitleReleaseNotes}] for 2.5 
+// Need to track down KCS article
+//* [Optional] All of your AAP services (controller, hub, EDA) need to be deployed to the same, single namespace before upgrading to 2.5 (only for existing deployments). See KCS article to migrate from one namespace to another
+* Review the link:{URLOperatorBackup}[{TitleOperatorBackup}] guide and backup your services:
+** AutomationControllerBackup
+** AutomationHubBackup
+** EDABackup 
 
 .Prodedure
 . Log in to {OCPShort}.
 . Navigate to menu:Operators[Installed Operators].
+. Select the {OperatorPlatform} installed on your project namespace.
 . Select the *Subscriptions* tab.
-. Under *Upgrade status*, click btn:[Upgrade Available].
+. Change the channel from stable-2.4 to stable-2.5. An InstallPlan is created for the user.
 . Click btn:[Preview InstallPlan].
 . Click btn:[Approve].
+. Create a Custom Resource (CR) using the {PlatformNameShort} UI.
+The {ControllerName} and {HubName} UIs remain until all SSO configuration is supported in the platform gateway UI.
+
+For more information on configuring your updated {OperatorPlatform}, see xref:configure-aap-operator_{context}[Configuring the Red{nbsp}Hat {OperatorPlatform} on {OCP}].
+

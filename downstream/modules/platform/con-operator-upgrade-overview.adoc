@@ -1,0 +1,18 @@
+[id="operator-upgrade-overview"]
+
+= Overview
+You can use this document for help with upgrading {PlatformNameShort} 2.4 to 2.5 on {OCP}.
+This document applies to upgrades of {PlatformNameShort} 2.5 to later versions of 2.5.
+
+The {OperatorPlatform} manages deployments, upgrades, backups, and restores of {ControllerName} and {HubName}.
+It also handles deployments of AnsibleJob and JobTemplate resources from the {PlatformNameShort} Resource Operator.
+
+Each operator version has default {ControllerName} and {HubName} versions. When the operator is upgraded, it also upgrades the {ControllerName} and {HubName} deployments it manages, unless overridden in the spec as explained below.
+
+OpenShift deployments of {PlatformNameShort} use the built-in Operator Lifecycle Management (OLM) functionality.
+For more information, see link:https://docs.openshift.com/container-platform/4.16/operators/understanding/olm/olm-understanding-olm.html[Operator Lifecycle Manager concepts and resources].
+OpenShift does this by using Subscription, CSV, InstallPlan, and OperatorGroup objects.
+Most users will not have to interact directly with these resources. They are created when the {OperatorPlatform} is installed from *OperatorHub* and managed through the *Subscriptions* tab in the OpenShift console UI.
+For more information, refer to link:https://docs.openshift.com/container-platform/4.16/web_console/web-console.html[Accessing the web console].
+
+image:Subscription_tab.png[Subscription tab]
