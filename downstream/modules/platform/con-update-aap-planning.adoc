@@ -1,0 +1,47 @@
+[id="con-update-aap-planning"]
+
+== Update planning
+
+Before you begin the update process, review the following considerations to plan and prepare your {PlatformNameShort} deployment:
+
+* Even if you have a valid license from a previous version, you must provide your credentials or a subscription manifest upon upgrading to the latest version of {PlatformNameShort}. For more information, see link:docs.redhat.com/en/documentation/{PlatformName}/2.5/html/access_management_and_authentication/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching your {PlatformName} subscription].
+
+* Clustered upgrades require special attention to instance and instance groups before upgrading. Ensure you capture your inventory or instance group details before upgrading. For more information, see link:docs.redhat.com/en/documentation/{PlatformName}/2.5/html-single/configuring_automation_execution/index#controller-clustering[Clustering].
+
+* If you are currently running {EDAcontroller}, it is recommended that you disable all rulebook activations before upgrading to ensure that only new activations run after the upgrade process has completed. This prevents possibilities of orphaned containers running activations from the previous version. For more information, see link:docs.redhat.com/en/documentation/{PlatformName}/2.5/html-single/using_automation_decisions/index#eda-enable-rulebook-activations[Enabling and disabling rulebook activations].
+
+== Backing up RPM-based Ansible Automation Platform
+
+Back up an existing {PlatformNameShort} instance by running the `setup.sh` script with the `backup_dir` flag, which saves the content and configuration of your current environment:
+
+. Go to your Ansible Automation Platform installation directory.
+
+. Run the setup.sh script following the example below:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+$ ./setup.sh -e ‘backup_dir=/ansible/mybackup’ -e ‘use_compression=True’ @credentials.yml -b
++
+* `backup_dir` specifies a directory to save your backup to.
++
+* `@credentials.yml` passes the password variables and their values that are encrypted by `ansible-vault`.
+
+With a successful backup, a backup file is created at `/ansible/mybackup/<platform_installation_directory_name>.tar.gz`.
+
+*Additional resources*
+
+* For more information about backup and restore, see [Backup and restore] in link:docs.redhat.com/en/documentation/{PlatformNameShort}/2.5/html-single/configuring_automation_execution/index#controller-backup-and-restore_Configuring automation execution_.
+
+== Running the {RHEL} installer setup script
+
+You can run the setup script once you have finished updating the `inventory` file.
+
+.Procedure
+. Run the `setup.sh` script:
+[literal, options="nowrap" subs="+attributes"]
++
+----
+$ ./setup.sh
+----
+
+The installation will begin.
