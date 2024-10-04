@@ -7,7 +7,9 @@
 | *RPM variable name* | *Container variable name* | *Description*
 | *`admin_email`* | | The email address used for the admin user for {ControllerName}.
 
-| *`admin_password`* | `controller_admin_password`| {ControllerNameStart} admin password.
+| *`admin_password`* | `controller_admin_password`| _Required_
+
+{ControllerNameStart} admin password.
 
 Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
 
@@ -92,8 +94,13 @@ This is resolved into a set of hosts that is used to construct the `receptor.con
 
 Default = `awx`
 
-| *`pg_host`* | `controller_pg_host` | The PostgreSQL host, which can be an externally managed database.
-| *`pg_password`* | `controller_pg_password` | The password for the PostgreSQL database.
+| *`pg_host`* | `controller_pg_host` | _Required_
+
+The PostgreSQL host, which can be an externally managed database.
+
+| *`pg_password`* | `controller_pg_password` | _Required_
+
+The password for the PostgreSQL database.
 
 Use of special characters for this variable is limited.
 The `!`, `#`, `0` and `@` characters are supported. 
@@ -134,7 +141,14 @@ Same as `automationhub_server_ssl_key` but for web server UI and API.
 
 Default = `4`
 
-| | `controller_license_file` | {ControllerNameStart} license file.  
+| | `controller_license_file` | The location of your automation controller license file.
+
+For example:
+
+`controller_license_file=/path/to/license.zip`
+
+If you are defining this variable as part of the postinstall process (`controller_postinstall = true`), then you need to also set the `controller_postinstall_dir` variable.
+
 | | `controller_nginx_client_max_body_size` | NGINX maximum body size.
 
 Default = `5m`
@@ -151,11 +165,13 @@ Default = `[TLSv1.2, TLSv1.3]`
 
 Default = `2048`
 
-| | `controller_postinstall` | Enable {ControllerName} postinstall.
+| | `controller_postinstall` | Enable or disable the postinstall feature of the containerized installer.
+
+If set to `true`, then you also need to set `controller_license_file` and `controller_postinstall_dir`.
 
 Default = `false`
 
-| | `controller_postinstall_dir` | Postinstall directory. 
+| | `controller_postinstall_dir` | The location of your {ControllerName} postinstall directory.
 | | `controller_postinstall_async_delay` | Postinstall delay between retries. 
 
 Default = `1`
