@@ -1,0 +1,59 @@
+//This is the working version of the patch release notes document.
+
+[[aap-25-2-patch-release-7-oct-2024]]
+
+
+= {PlatformNameShort} 2.5-2 - October 7, 2024
+
+This release includes a few enhancements and fixes that have been implemented in the Red Hat {PlatformNameShort} 2.5-2.
+
+== Enhancements
+
+* Event-Driven Ansible workers and scheduler add timeout and retry resilience when communicating with a Redis cluster. (AAP-32139) 
+* Removed the *MTLS* credential type that was incorrectly added. (AAP-31848)
+
+== Fixed issues
+
+== {PlatformNameShort}
+
+* Fixed conditional that was skipping necessary tasks in the restore role, which was causing restores to not finish reconciling. (AAP-30437)
+
+* Systemd services in the containerized installer are now set with restart policy set to *always* by default. (AAP-31824)
+
+* *FLUSHDB* is now modified to account for shared usage of a Redis database. It now respects access limitations by removing only those keys that the client has permissions to. (AAP-32138)
+
+* Added a fix to ensure default *extra_vars* values are rendered in the *Prompt on launch* wizard. (AAP-30585)
+
+* Filtered out the unused *ANSIBLE_BASE_* settings from the environment variable in job execution. (AAP-32208)
+
+
+== {EDAName}
+
+* Configured the setting *EVENT_STREAM_MTLS_BASE_URL* to the correct default to ensure MTLS is disallowed in the RPM installer. (AAP-32027)
+
+* Configured the setting *EVENT_STREAM_MTLS_BASE_URL* to the correct default to ensure MTLS is disallowed in the containerized installer. (AAP-31851)
+
+* Fixed a bug where the Event-Driven Ansible workers and scheduler are unable to reconnect to the Redis cluster if a primary Redis node enters a *failed* state and a new primary node is promoted. See the KCS article link:https://access.redhat.com/articles/7088545[Redis failover causes Event-Driven Ansible activation failures] that include the steps that were necessary before this bug was fixed. (AAP-30722)
+
+== Advisories
+This section lists the various errata advisories contained in this release.
+
+.Errata advisories
+//cols="a,a" formats the columns as AsciiDoc allowing for AsciiDoc syntax
+[cols="2a,3a", options="header"]
+|===
+| Patch release version | Errata advisory 
+
+| Ansible Automation Platform 2.5-2 - October 7, 2024
+
+|
+link:https://errata.engineering.redhat.com/advisory/139519[RHBA-2024:139519-03 RPM]
+
+link:https://errata.engineering.redhat.com/advisory/139531[RHBA-2024:139531-04 Container (namespace-scoped)]
+
+link:https://errata.engineering.redhat.com/advisory/139532[RHBA-2024:139532-04 Container (cluster-scoped)]
+
+link:https://errata.engineering.redhat.com/advisory/xxxx[RHBA-2024:139623-01 Bundle Installer (VM and Containerized)]
+
+|===
+
