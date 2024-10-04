@@ -9,7 +9,13 @@ Containerized {PlatformNameShort} runs the component services as Podman based co
 .Procedure
 
 . Log in to the RHEL host as your non-root user.
-
++
+. Set a hostname that is a fully qualified domain name (FQDN):
++
+----
+sudo hostnamectl set-hostname <your_hostname>
+----
++
 . Register your RHEL host with `subscription-manager`:
 +
 ----
@@ -28,7 +34,7 @@ rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Li
 ----
 +
 . Ensure that only these repositories are available to the RHEL host. For more information about managing custom repositories, see:
-link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Chapter 10. Managing custom software repositories].
+link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Managing custom software repositories].
 
 . Ensure that the host has DNS configured and can resolve host names and IP addresses by using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
 
@@ -43,18 +49,12 @@ sudo dnf install -y ansible-core
 ----
 sudo dnf install -y wget git-core rsync vim
 ----
-+
-. Set a hostname that is a fully qualified domain name (FQDN):
-+
-----
-sudo hostnamectl set-hostname <your_hostname>
-----
 
-. Optional: To have the installer automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link: {URLCentralAuth}/assembly-gateway-licensing#assembly-aap-obtain-manifest-files[Obtaining a manifest file].
+. Optional: To have the installer automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link:{URLCentralAuth}/assembly-gateway-licensing#assembly-aap-obtain-manifest-files[Obtaining a manifest file].
 
 [role="_additional-resources"]
 .Additional resources
 * For more information about registering your RHEL system, see link:{BaseURL}/subscription_central/1-latest/html-single/getting_started_with_rhel_system_registration/index[Getting Started with RHEL System Registration].
-* For information about configuring unbound DNS, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Chapter 2. Setting up an unbound DNS server].
-* For information about configuring DNS using BIND, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Chapter 1. Setting up and configuring a BIND DNS server].
+* For information about configuring unbound DNS, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Setting up an unbound DNS server].
+* For information about configuring DNS using BIND, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Setting up and configuring a BIND DNS server].
 
