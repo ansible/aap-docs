@@ -1,0 +1,28 @@
+[id="inventory-file-setup-rpm"]
+
+= Setting up the inventory file
+
+Before upgrading your {PlatformName} installation, edit the `inventory file so that it matches your desired configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can modify the parameters to match any changes to your environment.
+
+.Procedure
+
+. Navigate to the installation program directory.
++
+*Bundled installer*
++
+----
+$ cd ansible-automation-platform-setup-bundle-<version_number>-<arch_version>
+----
++
+*Online installer*
++
+----
+$ cd ansible-automation-platform-setup-<version_number>
+----
++
+. Update the `inventory` file to match your desired configuration. You can use the same inventory file from an existing {PlatformNameShort} installation if there are no changes to the environment.
+
+[NOTE]
+====
+Provide a reachable IP address or fully qualified domain name (FQDN) for all hosts to ensure that users can synchronize and install content from {HubNameMain} from a different node. Do not use localhost. If localhost is used, the upgrade will be stopped as part of preflight checks.
+====
