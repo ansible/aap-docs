@@ -1,0 +1,80 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator_{context}"]
+= Uninstalling an Operator installation
+
+To delete the dynamic plug-ins from your installation, you must edit the ConfigMaps
+that reference Ansible.
+
+The deployment auto reloads when the ConfigMaps are updated.
+You do not need to reload the deployment manually .
+
+.Procedure
+
+. Open the custom ConfigMap where you referenced the dynamic plug-ins, `rhaap-dynamic-plugins-config`.
+.. Locate the dynamic plug-ins in the `plugins:` block.
++
+*** To disable the dynamic plug-ins, update the `disabled` attribute to `true` for the three dynamic plug-ins.
+*** To delete the dynamic plug-ins, delete the lines that reference the dynamic plug-ins from the `plugins:` block:
++
+----
+     - disabled: false
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
+       integrity: <SHA512 value>
+	 ...
+     - disabled: false
+       package: >-
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+       integrity: <SHA512 value>
+       ...
+     - disabled: false
+       package: >-
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+       integrity: <SHA512 value>
+----
+.. Click btn:[Save].
+. To completely remove all the Ansible plugins remove the entire list entries that contain
++
+----
+http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz
+http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+----
+. Open the custom {RHDH}ConfigMap, `app-config-rhdh`.
+.. Remove the `locations:` block to delete the templates from the {RHDHShort} instance.
+.. Remove the `ansible:` block to delete the Ansible-specific configuration.
++
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: rhdh-app-config
+data:
+ app-config-custom.yaml: |
+   app:
+     baseUrl: https://<RHDH_ROUTE>
+   backend:
+     baseUrl: https://<RHDH_ROUTE>
+     cors:
+       origin: https://<RHDH_ROUTE>
+   catalog:
+     rules:
+       - allow: [Component, System, Group, Resource, Location, Template, API, User]
+     locations: 
+       - type: url 
+         target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+         rules:
+           - allow: [Template]
+   ansible:
+     devSpaces:
+       baseUrl: 'https://devspaces.apps.ansible-rhdh-dev.testing.ansible.com/'
+     creatorService:
+       baseUrl: '127.0.0.1'
+       port: '8000'
+     rhaap:
+       baseUrl: 'https://controller.acme.demoredhat.com'
+       token: ...<REDACTED>
+       checkSSL: false
+----
+. Click btn:[Save].
+

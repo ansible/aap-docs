@@ -16,6 +16,7 @@ The following procedures describe how to install {AAPRHDHShort} in {RHDH} instan
 // . Add your custom ConfigMap to your Helm chart.
 // . Edit your custom ConfigMap and Helm chart according to the required and optional configuration procedures.
 
+include::devtools/con-rhdh-install-ocp-prereqs.adoc[leveloffset=+1]
 include::devtools/con-rhdh-recommended-preconfig.adoc[leveloffset=+1]
 
 // Create custom ConfigMap
@@ -30,14 +31,20 @@ include::devtools/proc-rhdh-create-plugin-registry.adoc[leveloffset=+1]
 
 // Install the dynamic plug-ins
 include::devtools/proc-rhdh-install-dynamic-plugins-operator.adoc[leveloffset=+1]
-//Add dynamic plug-ins to rhaap-dynamic-plugins-config
-include::devtools/proc-rhdh-operator-install-add-plugins-app-config.adoc[leveloffset=+1]
+//
+// Add dynamic plug-ins to rhaap-dynamic-plugins-config
+// Replace the following to reuse Helm config:
+// include::devtools/proc-rhdh-operator-install-add-plugins-app-config.adoc[leveloffset=+1]
 
-// Required config
-//
-// Optional config 
-//
+include::devtools/proc-rhdh-add-custom-configmap.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-devtools-server.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-aap-details.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-add-plugin-software-templates.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-rbac.adoc[leveloffset=+1]
+include::assembly-rhdh-ocp-configure-optional.adoc[leveloffset=+1]
+
 // Full example configuration
+include::devtools/ref-rhdh-full-aap-configmap-example.adoc[leveloffset=+1]
 //
 
 ifdef::parent-context-of-rhdh-install-ocp-operator[:context: {parent-context-of-rhdh-install-ocp-operator}]

@@ -3,7 +3,13 @@
 [id="rhdh-install-dynamic-plugins-operator_{context}"]
 = Installing the dynamic plug-ins
 
-To install the dynamic plugins, add them to the `rhaap-dynamic-plugins-config` ConfigMap.
+To install the dynamic plugins, add them to your ConfigMap for your {RHDHShort} plugin settings (for example, `rhaap-dynamic-plugins-config`).
+
+If you have not already created a ConfigMap file for your {RHDHShort} plugin settings,
+create one by following the procedure in
+link:{BaseURL}/red_hat_developer_hub/{RHDHVers}/html/administration_guide_for_red_hat_developer_hub/assembly-add-custom-app-file-openshift_admin-rhdh[Adding a custom application configuration file to Red Hat OpenShift Container Platform] section of the _Administration guide for Red Hat Developer Hub_.
+
+The example ConfigMap used in the following procedure is called `rhaap-dynamic-plugins-config`.
 
 .Procedure
 
@@ -24,8 +30,8 @@ data:
    ...
    plugins:
      - disabled: false
-       package: 'http://registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
-       integrity: sha512-<REDACTED>== # Use hash in ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            frontend:
@@ -41,16 +47,16 @@ data:
                    path: /ansible
      - disabled: false
        package: >-
-         http://registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
-       integrity: sha512-E<REDACTED>w== # Use hash in ansible-plugin-backstage-rhaap-backend-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-backend-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            backend:
              ansible.plugin-backstage-rhaap-backend: null
      - disabled: false
        package: >-
-         http://registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
-       integrity: sha512-<REDACTED>Q== # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            backend:
