@@ -5,7 +5,7 @@ The enterprise topology is intended for organizations that require {PlatformName
 
 == Infrastructure topology
 
-The following diagram outlines the infrastructure topology that Red Hat has tested with the respective deployment model that customers may use when self-managing {PlatformNameShort}:
+The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
 .Infrastructure topology diagram
 image::ocp-b-env-a.png[Operator enterprise topology diagram]
@@ -18,27 +18,27 @@ Each OpenShift Worker node has been tested with the following component requirem
 [options="header"]
 |====
 | Count | Component 
-| 1 | Automation controller web Pod
-| 1 | Automation controller task Pod
-| 1 | Automation hub API Pod 
-| 2 | Automation hub content Pod
-| 2 | Automation hub worker Pod
-| 1 | Automation hub redis Pod
-| 1 | Event-Driven Ansible API Pod
-| 2 | Event-Driven Ansible activation worker Pod
-| 2 | Event-Driven Ansible default worker Pod
-| 2 | Event-Driven Ansible event stream Pod
-| 1 | Event-Driven Ansible scheduler Pod
-| 1 | Platform gateway Pod
-| 2 | Mesh Ingress Pod
+| 1 | {ControllerNameStart} web pod
+| 1 | {ControllerNameStart} task pod
+| 1 | {HubNameStart} API pod 
+| 2 | {HubNameStart} content pod
+| 2 | {HubNameStart} worker pod
+| 1 | {HubNameStart} Redis pod
+| 1 | {EDAName} API pod
+| 2 | {EDAName} activation worker pod
+| 2 | {EDAName} default worker pod
+| 2 | {EDAName} event stream pod
+| 1 | {EDAName} scheduler pod
+| 1 | {GatewayStart} pod
+| 2 | Mesh ingress pod
 | N/A | Externally managed database service
-| N/A | Externally managed redis
+| N/A | Externally managed Redis
 | N/A | Externally managed object storage service (for {HubName})
 |====
 
 == Tested system configurations
 
-Red Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
 
 .Tested system configurations
 [options="header"]
@@ -48,33 +48,33 @@ Red Hat has tested the following configurations to install and run {PlatformName
 | Red Hat OpenShift  
 a| 
 * Red Hat OpenShift on AWS Hosted Control Planes 4.15.16
-** 2 worker nodes in different AZs at t3.xlarge
+** 2 worker nodes in different availability zones (AZs) at t3.xlarge
 | Ansible-core | Ansible-core version {CoreInstVers} or later
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome.
 | AWS RDS PostgreSQL service 
 a|
-* engine: “postgres” 
-* engine_version: “15”
-* parameter_group_name: “default.postgres15”
+* engine: "postgres" 
+* engine_version: 15"
+* parameter_group_name: "default.postgres15"
 * allocated_storage: 20
 * max_allocated_storage: 1000
-* storage_type: “gp2”
+* storage_type: "gp2"
 * storage_encrypted: true
-* instance_class: “db.t4g.small”
+* instance_class: "db.t4g.small"
 * multi_az: true
 * backup_retention_period: 5
 | AWS Memcached Service
 a|
-* engine: “redis”
-* engine_version: “6.2”
-* auto_minor_version_upgrade: “false”
-* node_type: “cache.t3.micro”
-* parameter_group_name: “default.redis6.x.cluster.on”
-* transit_encryption_enabled: “true”
+* engine: "redis"
+* engine_version: "6.2"
+* auto_minor_version_upgrade: "false"
+* node_type: "cache.t3.micro"
+* parameter_group_name: "default.redis6.x.cluster.on"
+* transit_encryption_enabled: "true"
 * num_node_groups: 2
 * replicas_per_node_group: 1
 * automatic_failover_enabled: true
-| s3 storage | HTTPS only accessible through AWS Role assigned to {HubName} SA at runtime using AWS Pod Identity
+| s3 storage | HTTPS only accessible through AWS Role assigned to {HubName} SA at runtime by using AWS Pod Identity
 |====
 
 // == Example custom resource file 
@@ -83,30 +83,30 @@ a|
 
 == Nonfunctional requirements
 
-{PlatformNameShort}’s performance characteristics and capacity are impacted by its resource allocation and configuration. With OpenShift, each {PlatformNameShort} component is deployed as a pod. You can specify resource requests and limits for each pod. 
+{PlatformNameShort}'s performance characteristics and capacity are impacted by its resource allocation and configuration. With OpenShift, each {PlatformNameShort} component is deployed as a pod. You can specify resource requests and limits for each pod. 
 
-The {PlatformNameShort} custom resource allows you to configure resource allocation for OpenShift installations. Each configurable item has default settings. These settings are the exact configuration used within the context of this reference deployment architecture and presumes that the environment is being deployed and managed by an Enterprise IT organization for production purposes.
+Use the {PlatformNameShort} custom resource to configure resource allocation for OpenShift installations. Each configurable item has default settings. These settings are the exact configuration used within the context of this reference deployment architecture and presumes that the environment is being deployed and managed by an Enterprise IT organization for production purposes.
 
-By default, each component’s deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU as long as the OpenShift worker node itself is not under node pressure.
+By default, each component's deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU provided that the OpenShift worker node itself is not under node pressure.
 
-In the reference topology provided in this document, {PlatformNameShort} is deployed on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster with 2 t3.xlarge worker nodes spread across 2 AZs within a single AWS Region. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the ROSA HCP cluster. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying HCP worker node that runs the pod. It does not have access to the cpu/memory resources of the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run.
+In the Operator enterprise topology, {PlatformNameShort} is deployed on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster with 2 t3.xlarge worker nodes spread across 2 AZs within a single AWS Region. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the ROSA HCP cluster. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying HCP worker node that runs the pod. It does not have access to the CPU or memory resources of the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run.
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the reference topology provided in this document, we use s3 storage because  {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, Posgres, and object storage for automation hub are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services as well as scalable storage.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator enterprise topology, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, PostgreSQL, and object storage for {HubName} are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services and scalable storage.
 
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
 
 .Network ports and protocols
 [options="header"]
 |====
 | Port number | Protocol | Service | Source | Destination
-| 5432 | TCP | PostgreSQL | OCP cluster | External database service
-| 6379 | TCP | Redis | OCP cluster | External redis service
-| 443 | HTTPS | Object storage | OCP cluster | External object storage service
-| 27199 | TCP | Receptor | OCP cluster | Execution node
-| 27199 | TCP | Receptor | OCP cluster | Hop node
-| 443 | HTTPS | Receptor | Execution node | OCP ingress
-| 443 | HTTPS | Receptor | Hop node | OCP ingress
+| 5432 | TCP | PostgreSQL | {OCPShort} cluster | External database service
+| 6379 | TCP | Redis | {OCPShort} cluster | External Redis service
+| 443 | HTTPS | Object storage | {OCPShort} cluster | External object storage service
+| 27199 | TCP | Receptor | {OCPShort} cluster | Execution node
+| 27199 | TCP | Receptor | {OCPShort} cluster | Hop node
+| 443 | HTTPS | Receptor | Execution node | {OCPShort} ingress
+| 443 | HTTPS | Receptor | Hop node | {OCPShort} ingress
 |====
