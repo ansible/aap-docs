@@ -1,0 +1,35 @@
+[id="proc-operator-mesh-upgrading-receptors"]
+
+= Upgrading receptors
+
+To update your receptor to the latest version follow these steps:
+
+.Procedure
+
+. Check the current receptor version:
++
+----
+receptor --version
+----
++
+. Update the receptor:
++
+----
+sudo dnf update ansible-runner receptor -y
+----
++
+. Verify the installation. After the update is complete, check the receptor version again to verify the update:
++
+----
+receptor --version
+----
++
+. Restart the receptor service:
++
+----
+sudo systemctl restart receptor
+----
++
+. Ensure the receptor is working correctly and is properly connected to the controller or other nodes in the system.
+
+
