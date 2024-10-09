@@ -1,0 +1,44 @@
+[id="con-operator-ansible-verbosity_{context}"]
+
+= Ansible verbosity 
+
+Setting the verbosity of the `ansible-runner` command, controls the output detail of `ansible-playbook`. The verbosity ranges from 0 (minimal output) to 7 (maximum debugging).
+
+{OperatorPlatform} users and admins can set the Ansible verbosity by setting the "ansible.sdk.operatorframework.io/verbosity" annotation on the Custom Resource.
+
+.Example
+For a database operator with `MongoDB` and `PostgreSQL` in the `db.example.com` Group, you can configure the `MongoDB` verbosity higher to debug. The operator container’s spec in the `config/manager/manager.yaml` would look like this:
+
+----
+name: manager
+  image: "quay.io/example/database-operator:v1.0.0"
+  imagePullPolicy: "Always"
+  args:
+    # This value applies to all GVKs specified in watches.yaml
+    # that are not overridden by environment variables.
+    - "--ansible-verbosity"
+    - "1"
+  env:
+    # Override the verbosity for the MongoDB kind
+    - name: ANSIBLE_VERBOSITY_MONGODB_DB_EXAMPLE_COM
+      value: "4"
+----
+
+After the {OperatorPlatform} is deployed, the only way to change the verbosity is through the "ansible.sdk.operatorframework.io/verbosity" annotation. Continuing with the above example, the Custom Resource may look like:
+
+----
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  annotations:
+    "ansible.sdk.operatorframework.io/verbosity": "5"
+  creationTimestamp: '2024-10-02T12:24:35Z'
+  generation: 3
+  labels:
+	app.kubernetes.io/component: automationcontroller
+	app.kubernetes.io/managed-by: automationcontroller-operator
+	app.kubernetes.io/operator-version: '2.5'
+<ommited>
+spec:
+<omited>
+----
