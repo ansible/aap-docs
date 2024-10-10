@@ -5,19 +5,43 @@
 [id="account-linking_{context}"]
 = Linking your account
 
- [TEXT]
+{PlatformNameShort} 2.5 provides a centralized location for users, teams and organizations to access the platform's services and features. When you upgrade from a previous version of {PlatformNameShort}, your existing account is automatically migrated to a single platform account. However, if you have multiple component accounts, your accounts must be linked to use the centralized features of the platform.
+
+The first time you log in to {PlatformNameShort} 2.5, the platform searches through the existing services to locate a user account with the credentials you entered. When there is a match to an existing account, that account is registered and becomes centrally managed by the platform. Any subsequent component accounts in the system are orphaned. This can cause problems accessing the services in {PlatformNameShort}. 
+
+To address this problem, use the account linking procedure to authenticate from any of your existing component accounts and still be recognized by the platform. Linking accounts associates existing component accounts with the same user profile. 
+
+[IMPORTANT]
+====
+{ControllerNameStart} OAuth applications on the platform UI are not supported for 2.4 to 2.5 migration.
+====
 
 .Prerequisites
 
 * You have completed the upgrade process and have a legacy {PlatformNameShort} account and credentials.
 
 .Procedure
+If you have completed the upgrade process and have a legacy {PlatformNameShort} subscription, follow the account linking procedure below to migrate your account to {PlatformNameShort} 2.5.
 
+. Navigate to the login page for {PlatformNameShort}. 
+. In the login modal, select either *I have an {ControllerName} account* or *I have an {HubName} account* based on the credentials you have. 
+. On the next screen, enter the legacy credentials for the component account you selected and click btn:[Log in].
+. If you have successfully linked your account, the next screen shows your username with a green checkmark beside it. If you have other legacy accounts that you want to link, enter those account credentials and click btn:[Link] to link them to your centralized {Gateway} account.
+. Click btn:[Submit] to complete linking your legacy accounts. 
+. After your accounts are linked, depending on your authentication method, you might be prompted to create a new username and password. These credentials will replace your legacy credentials for each component account. 
 
-.Verification
+You can also link your legacy account manually by taking the following steps:
 
+. Select your user icon at the top right of your screen, and select *User details*. 
+. Select the btn:[More Actions] icon *{MoreActionsIcon}* > *Link user accounts*. 
+. Enter the credentials for the account that you want to link. 
 
-[role="_additional-resources"]
-.Additional resources
+If you encounter an error message telling your that your account could not be authenticated, contact your platform administrator. 
 
+[NOTE]
+====
+If you log into {PlatformNameShort} for the first time and are prompted to change your username, this is an indication that another user has already logged into {PlatformNameShort} with the same username. To proceed with account migration, follow the prompts to change your username. {PlatformNameShort} uses your password to authenticate which account or accounts belong to you. If you have multiple accounts, you will be prompted to merge them before the migration begins.
+====
 
+.A diagram of the account linking flow
+image:account-linking-flow.png[Account linking flow]
