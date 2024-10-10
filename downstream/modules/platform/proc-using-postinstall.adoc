@@ -13,11 +13,17 @@ You can use the optional postinstall feature of containerized {PlatformNameShort
 
 
 .Procedure
-. The postinstall feature is disabled by default. To use the postinstaller, add the following variables in your inventory file:
+. The postinstall feature is disabled by default. To enable the postinstall feature, add the following variables in your inventory file:
 +
 ----
 controller_postinstall=true
+----
++
+. To load your {ControllerName} license as part of the postinstall process, set the following variables in your inventory file:
++
+----
 controller_license_file=<full_path_to_your_manifest_zip_file>
+controller_postinstall_dir=<full_path_to_your_postinstall_directory>
 ----
 +
 . You can pull your configuration-as-code from a Git based repository. To do this, set the following variables to dictate where you pull the content from and where to store it for upload to the {PlatformNameShort} controller:
