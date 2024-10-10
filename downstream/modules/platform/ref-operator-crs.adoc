@@ -3,6 +3,8 @@
 = Custom resources
 
 == aap-all-defaults.yml
+
+[subs="+attributes"]
 ----
 apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatform
@@ -37,9 +39,588 @@ spec:
   #   disabled: true
 
 # End state:
-# * Controller deployed and named: myaap-controller
-# * EDA deployed and named: myaap-eda
-# * Hub deployed and named: myaap-hub
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-existing-controller-only.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    name: existing-controller
+
+  eda:
+    disabled: true
+
+  hub:
+    disabled: true
+    ## uncomment if using file storage for Content pod
+    # storage_type: file
+    # file_storage_storage_class: nfs-local-rwx
+    # file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+
+# End state:
+# * {ControllerNameStart}: existing-controller registered with {PlatformNameShort} UI
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-existing-hub-and-controller.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    name: existing-controller
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    name: existing-hub
+    disabled: false
+
+# End state:
+# * {ControllerNameStart}: existing-controller registered with {PlatformNameShort} UI
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart}: existing-hub registered with {PlatformNameShort} UI
+----
+
+== aap-existing-hub-controller-eda.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    name: existing-controller # <-- this is the name of the existing AutomationController CR
+    disabled: false
+
+  eda:
+    name: existing-eda
+    disabled: false
+
+  hub:
+    name: existing-hub
+    disabled: false
+
+# End state:
+# * Controller: existing-controller registered with {PlatformNameShort} UI
+# * * {EDAName}: existing-eda registered with {PlatformNameShort} UI
+# * * {HubNameStart}: existing-hub registered with {PlatformNameShort} UI
+#
+# Note: The {ControllerName}, {EDAName}, and {HubName} names must match the names of the existing.
+# {ControllerNameStart}, {EDAName}, and {HubName} CRs in the same namespace as the {PlatformNameShort} CR. If the names do not match, the {PlatformNameShort} CR will not be able to register the existing {ControllerName}, {EDAName}, and {HubName} with the {PlatformNameShort} UI,and will instead deploy new {ControllerName}, {EDAName}, and {HubName} instances.
+----
+
+== aap-existing-hub-controller-eda.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    name: existing-controller # <-- this is the name of the existing AutomationController CR
+    disabled: false
+
+  eda:
+    name: existing-eda
+    disabled: false
+
+  hub:
+    name: existing-hub
+    disabled: false
+
+# End state:
+# * {ControllerNameStart}: existing-controller registered with {PlatformNameShort} UI
+# * * {EDAName}: existing-eda registered with {PlatformNameShort} UI
+# * * {HubNameStart}: existing-hub registered with {PlatformNameShort} UI
+#
+# Note: The {ControllerName}, {EDAName}, and {HubName} names must match the names of the existing.
+# {ControllerNameStart}, {EDAName}, and {HubName} CRs in the same namespace as the {PlatformNameShort} CR. If the names do not match, the {PlatformNameShort} CR will not be able to register the existing {ControllerName}, {EDAName}, and {HubName} with the {PlatformNameShort} UI,and will instead deploy new {ControllerName}, {EDAName}, and {HubName} instances.
+----
+
+== aap-fresh-controller-eda.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    disabled: true
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+  lightspeed:
+    disabled: false
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} disabled
+# * {LightspeedShortName} disabled
+----
+
+== aap-fresh-external-db.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    disabled: false
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-fresh-install-local-management.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  # Platform
+  ## uncomment to test bundle certs
+  # bundle_cacert_secret: gateway-custom-certs
+
+  # Components
+  controller:
+    disabled: false
+    extra_settings:
+      - setting: ALLOW_LOCAL_RESOURCE_MANAGEMENT
+        value: 'True'
+
+  eda:
+    disabled: false
+
+    extra_settings:
+      - setting: EDA_ALLOW_LOCAL_RESOURCE_MANAGEMENT
+        value: '@bool True'
+
+  hub:
+    disabled: false
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+
+    pulp_settings:
+      ALLOW_LOCAL_RESOURCE_MANAGEMENT: True
+
+      # cache_enabled: false
+      # redirect_to_object_storage: "False"
+      # analytics: false
+      # galaxy_collection_signing_service: ""
+      # galaxy_container_signing_service: ""
+      # token_auth_disabled: 'False'
+      # token_signature_algorithm: 'ES256'
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+    # Development purposes only
+    no_log: false
+
+  # lightspeed:
+  #   disabled: true
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-fresh-install-with-settings.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+  image_pull_policy: Always
+
+  # Platform
+  ## uncomment to test bundle certs
+  # bundle_cacert_secret: gateway-custom-certs
+
+  # Components
+  controller:
+    disabled: false
+    image_pull_policy: Always
+
+    extra_settings:
+      - setting: MAX_PAGE_SIZE
+        value: '501'
+
+  eda:
+    disabled: false
+    image_pull_policy: Always
+
+    extra_settings:
+      - setting: EDA_MAX_PAGE_SIZE
+        value: '501'
+
+  hub:
+    disabled: false
+    image_pull_policy: Always
+
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: rook-cephfs
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+    pulp_settings:
+      MAX_PAGE_SIZE: 501
+      cache_enabled: false
+
+  # lightspeed:
+  #   disabled: true
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
 ----
 
 == aap-fresh-install.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  # Redis Mode
+  # redis_mode: cluster
+
+  # Platform
+  ## uncomment to test bundle certs
+  # bundle_cacert_secret: gateway-custom-certs
+  # extra_settings:
+  #   - setting: MAX_PAGE_SIZE
+  #     value: '501'
+
+  # Components
+  controller:
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    disabled: false
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+  # lightspeed:
+  #   disabled: true
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-fresh-only-controller.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: false
+
+  eda:
+    disabled: true
+
+  hub:
+    disabled: true
+    ## uncomment if using file storage for Content pod
+    # storage_type: file
+    # file_storage_storage_class: nfs-local-rwx
+    # file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+
+# End state:
+# * {ControllerNameStart}: existing-controller registered with {PlatformNameShort} UI
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+----
+
+== aap-fresh-only-hub.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: true
+
+  eda:
+    disabled: true
+
+  hub:
+    disabled: false
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+    # # AaaS Hub Settings
+    # pulp_settings:
+    #   cache_enabled: false
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+  lightspeed:
+    disabled: false
+
+# End state:
+# * {ControllerNameStart} disabled
+# * * {EDAName} disabled
+# * * {HubNameStart} deployed and named: myaap-hub
+# * {LightspeedShortName} disabled
+----
+
+== aap-lightspeed-enabled.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    disabled: false
+    ## uncomment if using file storage for Content pod
+    storage_type: file
+    file_storage_storage_class: nfs-local-rwx
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
+  lightspeed:
+    disabled: false
+
+# End state:
+# * {ControllerNameStart} deployed and named: myaap-controller
+# * * {EDAName} deployed and named: myaap-eda
+# * * {HubNameStart} deployed and named: myaap-hub
+# * {LightspeedShortName} deployed and named: myaap-lightspeed
+----
+
+== gateway-only.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    disabled: true
+
+  eda:
+    disabled: true
+
+  hub:
+    disabled: true
+
+  lightspeed:
+    disabled: true
+
+# End state:
+# * {GatewayStart} deployed and named: myaap-gateway
+#   * UI is reachable at: https://myaap-gateway-gateway.apps.ocp4.example.com
+# * {ControllerNameStart} is not deployed
+# * * {EDAName} is not deployed
+# * * {HubNameStart} is not deployed
+# * {LightspeedShortName} is not deployed
+----
+
