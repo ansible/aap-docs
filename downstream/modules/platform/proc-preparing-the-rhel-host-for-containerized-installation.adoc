@@ -2,13 +2,13 @@
 
 [id="preparing-the-rhel-host-for-containerized-installation_{context}"]
 
-= Preparing the RHEL host for containerized installation
+= Preparing the {RHEL} host for containerized installation
 
-Containerized {PlatformNameShort} runs the component services as Podman based containers on top of a RHEL host. The installer takes care of this after the underlying host has been prepared. 
+Containerized {PlatformNameShort} runs the component services as Podman based containers on top of a {RHEL} host. Prepare the {RHEL} host to ensure a successful installation. 
 
 .Procedure
 
-. Log in to the RHEL host as your non-root user.
+. Log in to the {RHEL} host as your non-root user.
 +
 . Set a hostname that is a fully qualified domain name (FQDN):
 +
@@ -16,7 +16,7 @@ Containerized {PlatformNameShort} runs the component services as Podman based co
 sudo hostnamectl set-hostname <your_hostname>
 ----
 +
-. Register your RHEL host with `subscription-manager`:
+. Register your {RHEL} host with `subscription-manager`:
 +
 ----
 sudo subscription-manager register
@@ -33,7 +33,7 @@ rhel-9-for-x86_64-appstream-rpms                           Red Hat Enterprise Li
 rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
 ----
 +
-. Ensure that only these repositories are available to the RHEL host. For more information about managing custom repositories, see:
+. Ensure that only these repositories are available to the {RHEL} host. For more information about managing custom repositories, see:
 link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Managing custom software repositories].
 
 . Ensure that the host has DNS configured and can resolve host names and IP addresses by using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
