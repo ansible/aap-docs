@@ -3,23 +3,22 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="configuring-the-metrics-utility_{context}"]
-= configuring-the-metrics-utility
+= Configuring metrics-utility
 
 
 == On RHEL 
 
-=== Prerequisites:
+.Prerequisites:
 
-* An active Ansible Automation Platform subscription
-
-
-Metrics-utility is included with Ansible Automation Platform, so no separate installation is needed. The following commands gather the relevant data and generate a CCSP report containing your usage metrics. You can configure these commands as cronjobs to ensure they run at the beginning of every month. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more on configuring using the cron syntax. 
+* An active {PlatformNameShort} subscription
 
 
+Metrics-utility is included with {PlatformNameShort}, so no separate installation is needed. The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. You can configure these commands as cronjobs to ensure they run at the beginning of every month. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more on configuring using the cron syntax. 
 
-=== *Procedure:*
 
-. In the cron file, set the following variables to ensure metrics-utility gathers the relevant data. To open the cron file for editing, run: 
+.Procedure
+
+. In the cron file, set the following variables to ensure `metrics-utility` gathers the relevant data. To open the cron file for editing, run: 
 +
 [source, ]
 ----
@@ -50,14 +49,14 @@ export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
 export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
 ----
 +
-. Add the following parameter to gather and store the data in the provided SHIP_PATH directory in the ./report_data subdirectory: 
+. Add the following parameter to gather and store the data in the provided SHIP_PATH directory in the `./report_data` subdirectory: 
 +
 [source, ]
 ----
 metrics-utility gather_automation_controller_billing_data --ship --until=10m
 ----
 +
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want metrics-utility to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the gather command is configured to run every hour at 00 minutes. The build_report command is configured to run every second day of each month at 4:00 am. 
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 am. 
 +
 [source, ]
 ----
@@ -104,23 +103,23 @@ metrics-utility build_report
 +
 The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 2.
 
-== On Openshift Container Platform from the AAP operator
+== On {OCPShort} from the {PlatformNameShort} operator
 
-Metrics-utility is included in the Openshift Container Platform image beginning with version 4.12. If your system does not have metrics-utility installed, update your OpenShift image to the latest version. 
+Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
 
-Follow the steps below to configure the run schedule for metrics-utility on Openshift Container Platform using the AAP operator.
+Follow the steps below to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
 
 .Prerequisites:
 * A running OpenShift cluster
-* An operator-based installation of Ansible Automation Platform on OpenShift. 
+* An operator-based installation of {PlatformNameShort} on {OCPShort}. 
 
-NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on Openshift Container Platform.
+NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on {OCPShort}.
 
 === Create a ConfigMap in the Openshift UI YAML view
 
 . From the navigation panel on the left side, select *ConfigMaps*, and then click the *Create ConfigMap* button.
 . On the next screen, select the *YAML view* tab.
-. In the YAML field, enter the following parameters with the appropriate variables set: 
+. In the `YAML` field, enter the following parameters with the appropriate variables set: 
 +
 [source, ]
 ----
@@ -143,20 +142,20 @@ data:
   METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER: "PROCUREMENT LEADER"
 ----
 +
-. Click the *Create* button.
+. Click btn:[Create].
 . To verify that the ConfigMap was created and the metric utility is installed, select *ConfigMap* from the navigation panel and look for your ConfigMap in the list.
 
 
-=== Deploy automation controller
+=== Deploy {ControllerName}
 
-Deploy automation controller and specify variables for how often the metric collection utility gathers usage information and generates a report. 
+Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report. 
 
 . From the navigation panel, select *Installed Operators*.
-. Click on Ansible Automation Platform
-. In the Operator details, select the *Automaton Controller* tab.
-. Click the button labeled *Create AutomationController*.
-. Select the *YAML view* option. The YAML now shows the default parameters for automation controller. 
-The relevant parameters for metrics-utility are the following: 
+. Select {PlatformNameShort}.
+. In the Operator details, select the *{ControllerName}* tab.
+. Click btn:[Create {ControllerName}]*.
+. Select the *YAML view* option. The `YAML` now shows the default parameters for {ControllerName}. 
+The relevant parameters for `metrics-utility` are the following: 
 +
 ----
 [cols="50%,50%",options="header"]
@@ -168,32 +167,7 @@ The relevant parameters for metrics-utility are the following:
 |====
 ----
 +
-. Find the `metrics_utility_enabled` parameter and change the variable to true.
+. Find the `metrics_utility_enabled` parameter and change the variable to `true`.
 . Find the `metrics_utility_cronjob_gather_schedule` parameter and enter a variable for how often the utility should gather usage information (for example, @hourly or @daily). 
 . Find the `metrics_utility_cronjob_report_schedule` parameter and enter a variable for how often the utility generates a report (for example, @daily or @monthly).
-. Click the *Create* button.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-== NewDoc
-
-[role="_additional-resources"]
-.Additional resources
-
-* This section is optional.
-* Provide a bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* Use an unnumbered bullet (*) if the list includes only one step.
-
+. Click btn:[Create].
