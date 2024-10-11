@@ -18,7 +18,7 @@ Metrics-utility is included with {PlatformNameShort}, so no separate installatio
 
 .Procedure
 
-. In the cron file, set the following variables to ensure metrics-utility gathers the relevant data. To open the cron file for editing, run: 
+. In the cron file, set the following variables to ensure `metrics-utility` gathers the relevant data. To open the cron file for editing, run: 
 +
 [source, ]
 ----
@@ -56,7 +56,7 @@ export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
 metrics-utility gather_automation_controller_billing_data --ship --until=10m
 ----
 +
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want metrics-utility to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 am. 
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 am. 
 +
 [source, ]
 ----
@@ -105,9 +105,9 @@ The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and wil
 
 == On {OCPShort} from the {PlatformNameShort} operator
 
-Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have metrics-utility installed, update your OpenShift image to the latest version. 
+Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
 
-Follow the steps below to configure the run schedule for metrics-utility on {OCPShort} using the {PlatformNameShort} operator.
+Follow the steps below to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
 
 .Prerequisites:
 * A running OpenShift cluster
@@ -148,14 +148,14 @@ data:
 
 === Deploy {ControllerName}
 
-Deploy {ControllerName} and specify variables for how often metrics-utility gathers usage information and generates a report. 
+Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report. 
 
 . From the navigation panel, select *Installed Operators*.
 . Select {PlatformNameShort}.
 . In the Operator details, select the *{ControllerName}* tab.
 . Click btn:[Create {ControllerName}]*.
 . Select the *YAML view* option. The `YAML` now shows the default parameters for {ControllerName}. 
-The relevant parameters for metrics-utility are the following: 
+The relevant parameters for `metrics-utility` are the following: 
 +
 ----
 [cols="50%,50%",options="header"]
