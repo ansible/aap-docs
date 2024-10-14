@@ -2,7 +2,10 @@
 
 = Upgrading receptors
 
-To update your receptor to the latest version follow these steps:
+A software update addresses any issues or bugs to provide a better experience of working with the technology. Anyone with administrative rights can update the receptor on an execution node. 
+
+Red{nbsp}Hat recommends performing updates to the receptor after any {PlatformNameShort} control plane updates. This ensures you are using the latest version. Best practice is to perform regular updates outside of any updates to the control plane.
+
 
 .Procedure
 
@@ -17,6 +20,11 @@ receptor --version
 ----
 sudo dnf update ansible-runner receptor -y
 ----
++
+[NOTE]
+====
+To upgrade all packages (not just the receptor), use `dnf update`, then reboot with `reboot`.
+====
 +
 . Verify the installation. After the update is complete, check the receptor version again to verify the update:
 +
