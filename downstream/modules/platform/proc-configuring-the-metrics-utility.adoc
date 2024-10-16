@@ -1,0 +1,170 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2024-07-15
+:_mod-docs-content-type: PROCEDURE
+
+[id="configuring-the-metrics-utility"]
+= Configuring metrics-utility
+
+Metrics-utility is included with {PlatformNameShort}, so no separate installation is needed. The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. You can configure these commands as cronjobs to ensure they run at the beginning of every month. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more on configuring using the cron syntax. 
+
+== On RHEL 
+
+.Prerequisites:
+
+* An active {PlatformNameShort} subscription
+
+.Procedure
+
+. In the cron file, set the following variables to ensure `metrics-utility` gathers the relevant data. To open the cron file for editing, run: 
++
+[source, ]
+----
+crontab -e
+----
++
+. Specify the following variables to indicate where the report will be deposited in your file system:
++
+[source, ]
+----
+export METRICS_UTILITY_SHIP_TARGET=directory
+export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
+----
++
+. Set these variables to generate a report: 
++
+[source, ]
+----
+export METRICS_UTILITY_REPORT_TYPE=CCSP
+export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
+export METRICS_UTILITY_REPORT_SKU=MCT3752MO
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+export METRICS_UTILITY_REPORT_H1_HEADING="CCSP Reporting <Company>: ANSIBLE Consumption"
+export METRICS_UTILITY_REPORT_COMPANY_NAME="Company Name"
+export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
+export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
+----
++
+. Add the following parameter to gather and store the data in the provided SHIP_PATH directory in the `./report_data` subdirectory: 
++
+[source, ]
+----
+metrics-utility gather_automation_controller_billing_data --ship --until=10m
+----
++
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 am. 
++
+[source, ]
+----
+0 */1 * * * metrics-utility gather_automation_controller_billing_data --ship --until=10m
+0 4 2 * *  metrics-utili
+ty build_report
+----
++
+. Save and close the file.
+. To verify that your changes are saved, run:
++
+[source, ]
+----
+crontab -l
+----
++
+. You can also check the logs to ensure that data is being collected. Run: 
++
+[source, ]
+----
+cat /var/log/cron 
+----
++
+The following is an example of the output. Note that time and date may vary depending on how your configure the run schedule:
++
+[source, ]
+----
+May  8 09:45:03 ip-10-0-6-23 CROND[51623]: (root) CMDOUT (No billing data for month: 2024-04)
+May  8 09:45:03 ip-10-0-6-23 CROND[51623]: (root) CMDEND (metrics-utility build_report)
+May  8 09:45:19 ip-10-0-6-23 crontab[51619]: (root) END EDIT (root)
+May  8 09:45:34 ip-10-0-6-23 crontab[51659]: (root) BEGIN EDIT (root)
+May  8 09:46:01 ip-10-0-6-23 CROND[51688]: (root) CMD (metrics-utility gather_automation_controller_billing_data --ship --until=10m)
+May  8 09:46:03 ip-10-0-6-23 CROND[51669]: (root) CMDOUT (/tmp/9e3f86ee-c92e-4b05-8217-72c496e6ffd9-2024-05-08-093402+0000-2024-05-08-093602+0000-0.tar.gz)
+May  8 09:46:03 ip-10-0-6-23 CROND[51669]: (root) CMDEND (metrics-utility gather_automation_controller_billing_data --ship --until=10m)
+May  8 09:46:26 ip-10-0-6-23 crontab[51659]: (root) END EDIT (root)
+----
++
+. Run the following command to build a report for the previous month:
++
+[source, ]
+----
+metrics-utility build_report
+----
++
+The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 2.
+
+== On {OCPShort} from the {PlatformNameShort} operator
+
+Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
+
+Follow the steps below to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
+
+.Prerequisites:
+* A running OpenShift cluster
+* An operator-based installation of {PlatformNameShort} on {OCPShort}. 
+
+NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on {OCPShort}.
+
+=== Create a ConfigMap in the Openshift UI YAML view
+
+. From the navigation panel on the left side, select *ConfigMaps*, and then click the *Create ConfigMap* button.
+. On the next screen, select the *YAML view* tab.
+. In the `YAML` field, enter the following parameters with the appropriate variables set: 
++
+[source, ]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: automationcontroller-metrics-utility-configmap
+data:
+  METRICS_UTILITY_SHIP_TARGET: directory
+  METRICS_UTILITY_SHIP_PATH: /metrics-utility
+  METRICS_UTILITY_REPORT_TYPE: CCSP
+  METRICS_UTILITY_PRICE_PER_NODE: '11' # in USD
+  METRICS_UTILITY_REPORT_SKU: MCT3752MO
+  METRICS_UTILITY_REPORT_SKU_DESCRIPTION: "EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+  METRICS_UTILITY_REPORT_H1_HEADING: "CCSP Reporting <Company>: ANSIBLE Consumption"
+  METRICS_UTILITY_REPORT_COMPANY_NAME: "Company Name"
+  METRICS_UTILITY_REPORT_EMAIL: "email@email.com"
+  METRICS_UTILITY_REPORT_RHN_LOGIN: "test_login"
+  METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER: "BUSINESS LEADER"
+  METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER: "PROCUREMENT LEADER"
+----
++
+. Click btn:[Create].
+. To verify that the ConfigMap was created and the metric utility is installed, select *ConfigMap* from the navigation panel and look for your ConfigMap in the list.
+
+
+=== Deploy {ControllerName}
+
+Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report. 
+
+. From the navigation panel, select *Installed Operators*.
+. Select {PlatformNameShort}.
+. In the Operator details, select the *{ControllerName}* tab.
+. Click btn:[Create {ControllerName}]*.
+. Select the *YAML view* option. The `YAML` now shows the default parameters for {ControllerName}. 
+The relevant parameters for `metrics-utility` are the following: 
++
+----
+[cols="50%,50%",options="header"]
+|====
+| *Parameter* | *Variable*
+| *`metrics_utility_enabled`* | True.
+| *`metrics_utility_cronjob_gather_schedule`* | @hourly or @daily.
+| *`metrics_utility_cronjob_report_schedule`* | @daily or @monthly.
+|====
+----
++
+. Find the `metrics_utility_enabled` parameter and change the variable to `true`.
+. Find the `metrics_utility_cronjob_gather_schedule` parameter and enter a variable for how often the utility should gather usage information (for example, @hourly or @daily). 
+. Find the `metrics_utility_cronjob_report_schedule` parameter and enter a variable for how often the utility generates a report (for example, @daily or @monthly).
+. Click btn:[Create].
