@@ -1,0 +1,43 @@
+
+ifdef::context[:parent-context-of-metrics-utility: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+
+[id="metrics-utility"]
+
+:context: metrics-utility
+
+= Subscription consumption
+
+The {PlatformNameShort} metrics utility tool (`metrics-utility`) is a command-line utility that is installed on a system containing an instance of {ControllerName}. 
+
+When installed and configured, `metrics-utility` gathers billing-related metrics from your system and creates a consumption-based billing report. Metrics-utility is especially suited for users who have multiple managed hosts and want to use consumption-based billing. Once a report is generated, it is deposited in a target location that you specify in the configuration file. 
+
+Metrics-utility collects two types of data from your system: configuration data and reporting data. 
+
+The configuration data includes the following information:
+
+* Version information for {ControllerName} and for the operating system 
+* Subscription information
+* The base URL
+
+The reporting data includes the following information:
+
+* Job name and ID
+* Host name
+* Inventory name 
+* Organization name 
+* Project name 
+* Success or failure information
+* Report date and time
+
+To ensure that `metrics-utility` continues to work as configured, clear your report directories of outdated reports regularly. 
+
+
+include::platform/proc-configuring-the-metrics-utility.adoc[leveloffset=+1]
+include::platform/ref-fetching-a-monthly-report.adoc[leveloffset=+1]
+include::platform/proc-modifying-the-run-schedule.adoc[leveloffset=+1]
+
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
