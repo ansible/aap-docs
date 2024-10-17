@@ -14,6 +14,11 @@ Before you begin the upgrade process, review the following considerations to pla
 2.4 to 2.5 upgrades now include link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[Platform gateway]. Ensure you review the 2.5 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
 ====
 +
+[IMPORTANT]
+====
+When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
+====
++
 * Ensure you have a valid subscription from a previous version. You must provide your credentials or a link:https://access.redhat.com/articles/5807761[subscriptions manifest] upon upgrading to the latest version of {PlatformNameShort}.
 * Clustered upgrades require special attention to instance and instance groups before upgrading. Ensure you capture your inventory or instance group details before upgrading.
 * Upgrades of {EDAName} version 2.4 to 2.5 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible.
