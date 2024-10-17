@@ -34,11 +34,11 @@ callbacks_enabled = ansible.posix.profile_tasks
 This error is due to `manifest.zip` license files that are larger than the `nginx_client_max_body_size` setting. If this error occurs, you will need to change the installation inventory file to include the following variables:
 
 ----
-nginx_disable_hsts: false
-nginx_http_port: 8081
-nginx_https_port: 8444
-nginx_client_max_body_size: 20m
-nginx_user_headers: []
+nginx_disable_hsts=false
+nginx_http_port=8081
+nginx_https_port=8444
+nginx_client_max_body_size=20m
+nginx_user_headers=[]
 ----
 
 The current default setting of `20m` should be enough to avoid this issue.
