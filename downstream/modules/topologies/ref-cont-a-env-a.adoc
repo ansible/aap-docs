@@ -1,10 +1,10 @@
 [id="cont-a-env-a"]
 = Container growth topology
 
-The growth topology is intended for organizations that do not require {PlatformNameShort} {PlatformVers} to be deployed with redundancy or higher compute for large volumes of automation.
+The growth topology is intended for organizations that are getting started with {PlatformNameShort} and do not require redundancy or higher compute for large volumes of automation. This topology allows for smaller footprint deployments.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
 .Infrastructure topology diagram
 image::cont-a-env-a.png[Container growth topology diagram]
@@ -17,16 +17,16 @@ A single VM has been tested with the following component requirements: 16 GB RAM
 | Purpose | Example group names
 | All {PlatformNameShort} components 
 a| 
-* automationgateway 
-* automationcontroller 
-* automationhub 
-* automationeda
-* database
+* `automationgateway` 
+* `automationcontroller` 
+* `automationhub` 
+* `automationeda`
+* `database`
 |====
 
 == Tested system configurations
 
-Red Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
 
 .Tested system configurations
 [options="header"]
@@ -36,7 +36,7 @@ Red Hat has tested the following configurations to install and run {PlatformName
 a| 
 * Valid {PlatformName} subscription
 * Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
-| Operating system | {RHEL} 9.2 or later x86_64
+| Operating system | {RHEL} 9.2 or later x86_64 and AArch64
 | Ansible-core | Ansible-core version {CoreInstVers} or later
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome
 | Database | {PostgresVers}
@@ -44,7 +44,7 @@ a|
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
 
 .Network ports and protocols
 [options="header"]
@@ -53,19 +53,21 @@ a|
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
-| 443 | TCP | HTTPS | Platform gateway | {ControllerNameStart}
-| 443 | TCP | HTTPS | Platform gateway | {HubNameStart}
-| 443 | TCP | HTTPS | Platform gateway | {EDAName}
+| 443 | TCP | HTTPS | {GatewayStart} | {ControllerNameStart}
+| 443 | TCP | HTTPS | {GatewayStart} | {HubNameStart}
+| 443 | TCP | HTTPS | {GatewayStart} | {EDAName}
 | 5432 | TCP | PostgreSQL | {EDAName} | External database
-| 5432 | TCP | PostgreSQL | Platform gateway | External database 
+| 5432 | TCP | PostgreSQL | {GatewayStart} | External database 
 | 5432 | TCP | PostgreSQL | {HubNameStart} | External database
 | 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
-| 8433 | TCP | HTTPS | Platform gateway | Platform gateway
-| 50051 | TCP | gRPC | Platform gateway | Platform gateway
+| 6379 | TCP | Redis | {EDAName} | Redis node
+| 6379 | TCP | Redis | {GatewayStart} | Redis node
+| 8433 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
+| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
 == Example growth inventory file
-Use the following example inventory file to perform an installation for this topology: 
+Use the example inventory file to perform an installation for this topology: 
 
 [source,yaml,subs="+attributes"]
 ----
@@ -75,7 +77,7 @@ Use the following example inventory file to perform an installation for this top
 # or the Red Hat documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
 
-# This section is for your platform gateway hosts
+# This section is for your {Gateway} hosts
 # -----------------------------------------------------
 [automationgateway]
 aap.example.org
@@ -113,7 +115,7 @@ registry_password=<your RHN password>
 
 redis_mode=standalone
 
-# Platform gateway
+# {GatewayStart}
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
 # -----------------------------------------------------
 gateway_admin_password=<set your own>
