@@ -4,7 +4,7 @@
 The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
 .Infrastructure topology diagram
 image::rpm-b-env-a.png[RPM enterprise topology diagram]
@@ -15,20 +15,25 @@ Each virtual machine (VM) has been tested with the following component requireme
 [options="header"]
 |====
 | VM count | Purpose | Example VM group names
-| 2 | Platform gateway | automationgateway 
-| 2 | {ControllerNameStart} | automationcontroller
-| 2 | {PrivateHubNameStart} | automationhub
-| 2 | {EDAName} | automationedacontroller
-| 1 | {AutomationMeshStart} hop node | execution_nodes
-| 2 | {AutomationMeshStart} execution node | execution_nodes
-| 1 | Redis | N/A
+| 2 | {GatewayStart} | `automationgateway` 
+| 2 | {ControllerNameStart} | `automationcontroller`
+| 2 | {PrivateHubNameStart} | `automationhub`
+| 2 | {EDAName} | `automationedacontroller`
+| 1 | {AutomationMeshStart} hop node | `execution_nodes`
+| 2 | {AutomationMeshStart} execution node | `execution_nodes`
+| 6 | Redis | `redis`
 | 1 | Externally managed database service | N/A
-| 1 | HAProxy load balancer in front of platform gateway (externally managed) | N/A
+| 1 | HAProxy load balancer in front of {Gateway} (externally managed) | N/A
 |====
+
+[NOTE]
+====
+6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM.
+====
 
 == Tested system configurations
 
-Red Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
 
 .Tested system configurations
 [options="header"]
@@ -43,7 +48,7 @@ Red Hat has tested the following configurations to install and run {PlatformName
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server in order for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
 
 .Network ports and protocols
 [options="header"]
@@ -52,24 +57,25 @@ Red Hat has tested the following configurations to install and run {PlatformName
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
-| 443 | TCP | HTTPS | HAProxy load balancer | Platform gateway
-| 443 | TCP | HTTPS | Platform gateway | {ControllerNameStart}
-| 443 | TCP | HTTPS | Platform gateway | {HubNameStart}
-| 443 | TCP | HTTPS | Platform gateway | {EDAName}
+| 443 | TCP | HTTPS | HAProxy load balancer | {GatewayStart}
+| 443 | TCP | HTTPS | {GatewayStart} | {ControllerNameStart}
+| 443 | TCP | HTTPS | {GatewayStart} | {HubNameStart}
+| 443 | TCP | HTTPS | {GatewayStart} | {EDAName}
 | 5432 | TCP | PostgreSQL | {EDAName} | External database
-| 5432 | TCP | PostgreSQL | Platform gateway | External database
+| 5432 | TCP | PostgreSQL | {GatewayStart} | External database
 | 5432 | TCP | PostgreSQL | {HubNameStart} | External database
 | 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
 | 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
 | 27199 | TCP | Receptor | Hop node | Execution node
 | 6379 | TCP | Redis | {EDAName} | Redis node
-| 6379 | TCP | Redis | Platform gateway | Redis node
-| 8443 | TCP | HTTPS | Platform gateway | Platform gateway
-| 50051 | TCP | gRPC | Platform gateway | Platform gateway
+| 6379 | TCP | Redis | {GatewayStart} | Redis node
+| 16379 | TCP | Redis | Redis node | Redis node
+| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
+| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
 == Example enterprise inventory file
-Use the following example inventory file to perform an installation for this topology: 
+Use the example inventory file to perform an installation for this topology: 
 
 [source,yaml,subs="+attributes"]
 ----
@@ -78,7 +84,7 @@ Use the following example inventory file to perform an installation for this top
 # For all optional variables please consult the Red Hat documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation
 
-# This section is for your platform gateway hosts
+# This section is for your {Gateway} hosts
 # -----------------------------------------------------
 [automationgateway]
 gateway1.example.org
@@ -112,15 +118,22 @@ hub2.example.org
 eda1.example.org
 eda2.example.org
 
-[all:vars]
+[redis]
+gateway1.example.org
+gateway2.example.org
+hub1.example.org
+hub2.example.org
+eda1.example.org
+eda2.example.org
 
+[all:vars]
 # Common variables
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-general-inventory-variables
 # -----------------------------------------------------
 registry_username=<your RHN username>
 registry_password=<your RHN password>
 
-# Platform gateway
+# {GatewayStart}
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-gateway-variables
 # -----------------------------------------------------
 automationgateway_admin_password=<set your own>

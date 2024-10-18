@@ -1,35 +1,29 @@
-[id="rpm-b-env-b"]
-= RPM mixed enterprise topology
+[id="rpm-a-env-a"]
+= RPM growth topology
 
-The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation. The mixed topology has different versions of {PlatformNameShort} intended for configuring a new installation of {EDAcontroller} 1.1 with {ControllerName} 4.4 or 4.5.
+The growth topology is intended for organizations that are getting started with {PlatformNameShort} and do not require redundancy or higher compute for large volumes of automation. This topology allows for smaller footprint deployments.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
-.Infrastructure topology diagram
-image::rpm-b-env-b.png[RPM mixed enterprise topology diagram]
+// Commenting this out for now as we don't yet have the diagram
+// The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
-Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
+// .Infrastructure topology diagram
+// image::<image-name.png>[RPM growth topology diagram]
+
+Each virtual machine (VM) has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
 
 .Infrastructure topology
 [options="header"]
 |====
-| VM count | Purpose | {PlatformNameShort} version | Example VM group names
-| 2 | {GatewayStart} | 2.5 | `automationgateway` 
-| 2 | {ControllerNameStart} | 2.4 | `automationcontroller`
-| 2 | {PrivateHubNameStart} | 2.4 | `automationhub`
-| 2 | {EDAName} | 2.5 | `automationedacontroller`
-| 1 | {AutomationMeshStart} hop node | 2.4 | `execution_nodes`
-| 2 | {AutomationMeshStart} execution node | 2.4 | `execution_nodes`
-| 6 | Redis | N/A | `redis`
-| 1 | Externally managed database service | N/A | N/A
-| 1 | HAProxy load balancer in front of {Gateway} (externally managed) | N/A | N/A
+| VM count | Purpose | Example VM group names
+| 1 | {GatewayStart} with colocated Redis | `automationgateway` 
+| 1 | {ControllerNameStart} | `automationcontroller`
+| 1 | {PrivateHubNameStart} | `automationhub`
+| 1 | {EDAName} | `automationedacontroller`
+| 1 | {AutomationMeshStart} execution node | `execution_nodes`
+| 1 | Database | `database`
 |====
-
-[NOTE]
-====
-6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM.
-====
 
 == Tested system configurations
 
@@ -57,29 +51,26 @@ Red{nbsp}Hat has tested the following configurations to install and run {Platfor
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
-| 443 | TCP | HTTPS | HAProxy load balancer | {GatewayStart}
 | 443 | TCP | HTTPS | {GatewayStart} | {ControllerNameStart}
 | 443 | TCP | HTTPS | {GatewayStart} | {HubNameStart}
 | 443 | TCP | HTTPS | {GatewayStart} | {EDAName}
-| 5432 | TCP | PostgreSQL | {EDAName} | External database
-| 5432 | TCP | PostgreSQL | {GatewayStart} | External database
-| 5432 | TCP | PostgreSQL | {HubNameStart} | External database
-| 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
-| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
-| 27199 | TCP | Receptor | Hop node | Execution node
+| 5432 | TCP | PostgreSQL | {EDAName} | Database
+| 5432 | TCP | PostgreSQL | {GatewayStart} | Database
+| 5432 | TCP | PostgreSQL | {HubNameStart} | Database
+| 5432 | TCP | PostgreSQL | {ControllerNameStart} | Database
+| 27199 | TCP | Receptor | {ControllerNameStart} | Execution node
 | 6379 | TCP | Redis | {EDAName} | Redis node
 | 6379 | TCP | Redis | {GatewayStart} | Redis node
-| 16379 | TCP | Redis | Redis node | Redis node
 | 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
 | 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
-== Example mixed enterprise inventory file
+== Example growth inventory file
 Use the example inventory file to perform an installation for this topology: 
 
 [source,yaml,subs="+attributes"]
 ----
-# This is the mixed enterprise installer inventory file
+# This is the growth installer inventory file
 # Please consult the docs if you are unsure what to add
 # For all optional variables please consult the Red Hat documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation
@@ -87,45 +78,74 @@ Use the example inventory file to perform an installation for this topology:
 # This section is for your {Gateway} hosts
 # -----------------------------------------------------
 [automationgateway]
-gateway1.example.org
-gateway2.example.org
+gateway.example.org
+
+# This section is for your {ControllerName} hosts
+# -----------------------------------------------------
+[automationcontroller]
+controller.example.org
+
+[automationcontroller:vars]
+peers=execution_nodes
+
+# This section is for your {PlatformNameShort} execution hosts
+# -----------------------------------------------------
+[execution_nodes]
+exec.example.org
+
+# This section is for your {HubName} hosts
+# -----------------------------------------------------
+[automationhub]
+hub.example.org
 
 # This section is for your {EDAcontroller} hosts
 # -----------------------------------------------------
 [automationedacontroller]
-eda1.example.org
-eda2.example.org
+eda.example.org
 
-[redis]
-gateway1.example.org
-gateway2.example.org
-hub1.example.org
-hub2.example.org
-eda1.example.org
-eda2.example.org
+# This section is for the {PlatformNameShort} database
+# -----------------------------------------------------
+[database]
+db.example.org
 
 [all:vars]
+
 # Common variables
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-general-inventory-variables
 # -----------------------------------------------------
 registry_username=<your RHN username>
 registry_password=<your RHN password>
 
+redis_mode=standalone
+
 # {GatewayStart}
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-gateway-variables
 # -----------------------------------------------------
 automationgateway_admin_password=<set your own>
-automationgateway_pg_host=<set your own>
-automationgateway_pg_database=<set your own>
-automationgateway_pg_username=<set your own>
+automationgateway_pg_host=db.example.org
 automationgateway_pg_password=<set your own>
+
+# {ControllerNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-controller-variables
+# -----------------------------------------------------
+admin_password=<set your own>
+pg_host=db.example.org
+pg_password=<set your own>
+
+# {HubNameStart}
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#ref-hub-variables
+# -----------------------------------------------------
+automationhub_admin_password=<set your own>
+automationhub_pg_host=db.example.org
+automationhub_pg_password=<set your own>
 
 # {EDAcontroller}
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-controller
 # -----------------------------------------------------
 automationedacontroller_admin_password=<set your own>
-automationedacontroller_pg_host=<set your own>
-automationedacontroller_pg_database=<set your own>
-automationedacontroller_pg_username=<set your own>
+automationedacontroller_pg_host=db.example.org
 automationedacontroller_pg_password=<set your own>
 ----
+
+
+
