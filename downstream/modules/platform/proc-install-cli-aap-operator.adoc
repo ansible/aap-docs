@@ -55,40 +55,63 @@ spec:
   source: redhat-operators
   sourceNamespace: openshift-marketplace
 ---
-apiVersion: automationcontroller.ansible.com/v1beta1
-kind: AutomationController
-metadata:
-  name: example
-  namespace: ansible-automation-platform
-spec:
-  replicas: 1
-
 -----
 +
 This file creates a `Subscription` object called `_ansible-automation-platform_` that subscribes the `ansible-automation-platform` namespace to the `ansible-automation-platform-operator` operator.
 +
-It then creates an `AutomationController` object called `_example_` in the `ansible-automation-platform` namespace.
-+
-To change the {ControllerName} name from `_example_`, edit the _name_ field in the `kind: AutomationController` section of [filename]`sub.yaml` and replace `_<automation_controller_name>_` with the name you want to use:
-+
-[subs="+quotes"]
------
-apiVersion: automationcontroller.ansible.com/v1beta1
-kind: AutomationController
-metadata:
-  name: __<automation_controller_name>__
-  namespace: ansible-automation-platform
------
 . Run the [command]`*oc apply*` command to create the objects specified in the [filename]`sub.yaml` file:
 +
 -----
 oc apply -f sub.yaml
 -----
-
-To verify that the namespace has been successfully subscribed to the `ansible-automation-platform-operator` operator, run the [command]`*oc get subs*` command:
-
++
+. Verify the CSV PHASE reports Succeeded before proceeding using the [command]`oc get csv -n ansible-automation-platform` command:
++
 -----
-$ oc get subs -n ansible-automation-platform
+oc get csv -n ansible-automation-platform
+
+NAME                               DISPLAY                       VERSION              REPLACES                           PHASE
+aap-operator.v2.5.0-0.1728520175   Ansible Automation Platform   2.5.0+0.1728520175   aap-operator.v2.5.0-0.1727875185   Succeeded
+-----
++
+. Create an `AnsibleAutomationPlatform` object called `_example_` in the `ansible-automation-platform` namespace.
++
+To change the {PlatformNameShort} and its components from  from `_example_`, edit the _name_ field in the `metadata:` section and replace example with the name you want to use:
+
++
+[subs="+quotes"]
+-----
+oc apply -f - <<EOF
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: example
+  namespace: ansible-automation-platform
+spec:
+  # Platform
+  image_pull_policy: IfNotPresent
+  # Components
+  controller:
+    disabled: false
+  eda:
+    disabled: false
+  hub:
+    disabled: false
+    ## Modify to contain your RWM storage class name
+    storage_type: file
+    file_storage_storage_class: <your-read-write-many-storage-class>
+    file_storage_size: 10Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+  lightspeed:
+    disabled: true
+EOF
 -----
 
 For further information about subscribing namespaces to operators, see link:{BaseURL}/openshift_container_platform/{OCPLatest}/html/operators/user-tasks#olm-installing-operator-from-operatorhub-using-cli_olm-installing-operators-in-namespace[Installing from OperatorHub using the CLI] in the {OCP} _Operators_ guide.
