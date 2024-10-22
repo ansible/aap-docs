@@ -30,7 +30,7 @@ The following default destination ports and installer inventory listed are confi
 | 22 | TCP | SSH | Installer node | PostgreSQL database| Remote access during installation (temporary) | `pg_port`
 | 80/443 | TCP | HTTP/HTTPS | Installer node | {HubNameStart} | Allows installer node to push the execution environment image to {HubName} when using the bundle installer. | Fixed value
 | 80/443 | TCP | HTTP/HTTPS | Execution node | {HubNameStart} | Allows execution nodes to pull the execution environment image from {HubName}. | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} |  | Fixed value
+| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | For pulling collections and/or container images {ExecEnvShort}s. | Fixed value
 | 443 | TCP | HTTPS | Controller node | Client | Web UI/API | `nginx_https_port`
 | 443 | TCP | HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
 | 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
