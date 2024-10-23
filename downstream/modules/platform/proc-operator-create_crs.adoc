@@ -1,0 +1,21 @@
+[id="operator-create-crs_{context}"]
+
+= Creating {PlatformNameShort} custom resources
+
+Create an {PlatformNameShort} custom resource (CR) that specifies the names of your existing deployments, in the same namespace.
+
+.Procedure
+
+You can find examples for {PlatformNameShort} CR for various deployment scenarios in the xref:appendix-operator-crs_performance-considerations[Appendix]. 
+
+. For example, use the fresh install {PlatformNameShort} CR (aap-fresh-install.yml).
+. Wait for the {PlatformNameShort} CR to show the *Successful* status.
+. Navigate to the Route URL listed in the status (or the *Routes* page) to access the new CR.
+
+[NOTE]
+====
+You can override the operator’s default image for {ControllerName}, {HubName}, or platform-resource app images by specifying the preferred image on the YAML spec.
+This enables upgrading a specific deployment, like a controller, without updating the operator.
+
+The recommended approach however, is to upgrade the operator and use the default image values. 
+====

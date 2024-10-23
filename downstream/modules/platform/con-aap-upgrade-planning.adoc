@@ -7,34 +7,29 @@
 [role="_abstract"]
 Before you begin the upgrade process, review the following considerations to plan and prepare your {PlatformNameShort} deployment:
 
-[discrete]
-== {ControllerNameStart}
-
-* Even if you have a valid license from a previous version, you must provide your credentials or a subscriptions manifest upon upgrading to the latest version of {ControllerName}.
-* If you need to upgrade {RHEL} and {ControllerName}, you must first backup and restore your {ControllerName} data.
-* Clustered upgrades require special attention to instance and instance groups before upgrading.
-
-[role="_additional-resources"]
-.Additional resources
-* link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_user_guide/controller-managing-subscriptions#controller-importing-subscriptions[Importing a subscription]
-* link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/controller-backup-and-restore[Backup and restore]
-* link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_controller_administration_guide/controller-clustering[Clustering]
-
-[discrete]
-== {HubNameStart}
-
-* When upgrading to {PlatformNameShort} {PlatformVers}, you can either add an existing {HubName} API token or generate a new one and invalidate any existing tokens.
-* Existing container images are removed when upgrading {PlatformNameShort}. 
-This is because, when upgrading {PlatformNameShort} with `setup.sh` script, podman `system reset -f` is executed. 
-This removes all container images on your {PlatformNameShort} nodes then pushes the new {ExecEnvShort} image that is bundled with installer.
-See xref:proc-running-setup-script-for-updates[Running the {PlatformName} installer setup script].
+* See link:{URLPlanningGuide}/platform-system-requirements[System requirements] in the {TitlePlanningGuide} guide to ensure you have the topologies that fit your use case. 
++
+[NOTE]
+====
+2.4 to 2.5 upgrades now include link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[Platform gateway]. Ensure you review the 2.5 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
+====
++
+[IMPORTANT]
+====
+When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
+====
++
+* Ensure you have a valid subscription from a previous version. You must provide your credentials or a link:https://access.redhat.com/articles/5807761[subscriptions manifest] upon upgrading to the latest version of {PlatformNameShort}.
+* Ensure you have a backup of an {PlatformNameShort} 2.4 environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and link:{LinkOperatorBackup} for the specific topology of the environment.
+* Clustered upgrades require special attention to instance and instance groups before upgrading. Ensure you capture your inventory or instance group details before upgrading.
+* Upgrades of {EDAName} version 2.4 to 2.5 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible.
++
+If you are currently running {EDAcontroller} 2.5, it is recommended that you disable all {EDAName} activations before upgrading to ensure that only new activations run after the upgrade process is complete. 
 
 [role="_additional-resources"]
 .Additional resources
-* <<editing-inventory-file-for-updates_{context}, Setting up the inventory file >>
+* link:{URLCentralAuth}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching a subscription]
+* xref:platform/con-backup-aap.adoc[Backup and restore]
+* link:{URLControllerAdminGuide}/controller-clustering[Clustering]
+* link:{LinkPlanningGuide}
 
-[discrete]
-== {EDAcontroller}
-//ATTENTION: Remove this section for EDA 1.0.4; customers will no longer need to perform deactivation because services will be automatically restored after upgrade and migration. 
-
-* If you are currently running {EDAcontroller} and plan to deploy it when you upgrade to {PlatformNameShort} {PlatformVers}, it is recommended that you disable all {EDAName} activations before upgrading to ensure that only new activations run after the upgrade process has completed. This prevents possibilities of orphaned containers running activations from the previous version.
