@@ -15,20 +15,19 @@ Each VM has been tested with the following component requirements: 16 GB RAM, 4 
 [options="header"]
 |====
 | VM count | Purpose | {PlatformNameShort} version | Example VM group names
-| 2 | {GatewayStart} | 2.5 | `automationgateway` 
+| 2 | {GatewayStart} with colocated Redis | 2.5 | `automationgateway` 
 | 2 | {ControllerNameStart} | 2.4 | `automationcontroller`
-| 2 | {PrivateHubNameStart} | 2.4 | `automationhub`
-| 2 | {EDAName} | 2.5 | `automationedacontroller`
+| 2 | {PrivateHubNameStart} with colocated Redis | 2.4 | `automationhub`
+| 2 | {EDAName} with colocated Redis | 2.5 | `automationedacontroller`
 | 1 | {AutomationMeshStart} hop node | 2.4 | `execution_nodes`
 | 2 | {AutomationMeshStart} execution node | 2.4 | `execution_nodes`
-| 6 | Redis | N/A | `redis`
 | 1 | Externally managed database service | N/A | N/A
 | 1 | HAProxy load balancer in front of {Gateway} (externally managed) | N/A | N/A
 |====
 
 [NOTE]
 ====
-6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM.
+6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database.
 ====
 
 == Tested system configurations
