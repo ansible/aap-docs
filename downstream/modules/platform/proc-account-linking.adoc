@@ -7,14 +7,9 @@
 
 {PlatformNameShort} 2.5 provides a centralized location for users, teams and organizations to access the platform's services and features. When you upgrade from a previous version of {PlatformNameShort}, your existing account is automatically migrated to a single platform account. However, if you have multiple component accounts, your accounts must be linked to use the centralized features of the platform.
 
-The first time you log in to {PlatformNameShort} 2.5, the platform searches through the existing services to locate a user account with the credentials you entered. When there is a match to an existing account, that account is registered and becomes centrally managed by the platform. Any subsequent component accounts in the system are orphaned. This can cause problems accessing the services in {PlatformNameShort}. 
+The first time you log in to {PlatformNameShort} 2.5, the platform searches through the existing services to locate a user account with the credentials you entered. When there is a match to an existing account, that account is registered and becomes centrally managed by the platform. Any subsequent component accounts in the system are orphaned and cannot be used to log into the platform.
 
 To address this problem, use the account linking procedure to authenticate from any of your existing component accounts and still be recognized by the platform. Linking accounts associates existing component accounts with the same user profile. 
-
-[IMPORTANT]
-====
-{ControllerNameStart} OAuth applications on the platform UI are not supported for 2.4 to 2.5 migration. See this link:https://access.redhat.com/solutions/7091987[Knowledgebase article] for more information. To learn how to recreate your OAuth applications, see link:{URLCentralAuth}/gw-token-based-authentication#assembly-controller-applications[Applications] in the {TitleCentralAuth} guide.
-====
 
 .Prerequisites
 
@@ -26,6 +21,12 @@ If you have completed the upgrade process and have a legacy {PlatformNameShort} 
 . Navigate to the login page for {PlatformNameShort}. 
 . In the login modal, select either *I have an {ControllerName} account* or *I have an {HubName} account* based on the credentials you have. 
 . On the next screen, enter the legacy credentials for the component account you selected and click btn:[Log in].
++
+[NOTE]
+====
+If you are logging in using OIDC credentials, see link:LINK TBD
+====
++
 . If you have successfully linked your account, the next screen shows your username with a green checkmark beside it. If you have other legacy accounts that you want to link, enter those account credentials and click btn:[Link] to link them to your centralized {Gateway} account.
 . Click btn:[Submit] to complete linking your legacy accounts. 
 . After your accounts are linked, depending on your authentication method, you might be prompted to create a new username and password. These credentials will replace your legacy credentials for each component account. 
@@ -40,7 +41,7 @@ If you encounter an error message telling your that your account could not be au
 
 [NOTE]
 ====
-If you log into {PlatformNameShort} for the first time and are prompted to change your username, this is an indication that another user has already logged into {PlatformNameShort} with the same username. To proceed with account migration, follow the prompts to change your username. {PlatformNameShort} uses your password to authenticate which account or accounts belong to you. If you have multiple accounts, you will be prompted to merge them before the migration begins.
+If you log into {PlatformNameShort} for the first time and are prompted to change your username, this is an indication that another user has already logged into {PlatformNameShort} with the same username. To proceed with account migration, follow the prompts to change your username. {PlatformNameShort} uses your password to authenticate which account or accounts belong to you.
 ====
 
 .A diagram of the account linking flow
