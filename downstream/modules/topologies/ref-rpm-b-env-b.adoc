@@ -15,10 +15,10 @@ Each VM has been tested with the following component requirements: 16 GB RAM, 4 
 [options="header"]
 |====
 | VM count | Purpose | {PlatformNameShort} version | Example VM group names
-| 2 | {GatewayStart} with colocated Redis | 2.5 | `automationgateway` 
+| 3 | {GatewayStart} with colocated Redis | 2.5 | `automationgateway` 
 | 2 | {ControllerNameStart} | 2.4 | `automationcontroller`
-| 2 | {PrivateHubNameStart} with colocated Redis | 2.4 | `automationhub`
-| 2 | {EDAName} with colocated Redis | 2.5 | `automationedacontroller`
+| 2 | {PrivateHubNameStart} | 2.4 | `automationhub`
+| 3 | {EDAName} with colocated Redis | 2.5 | `automationedacontroller`
 | 1 | {AutomationMeshStart} hop node | 2.4 | `execution_nodes`
 | 2 | {AutomationMeshStart} execution node | 2.4 | `execution_nodes`
 | 1 | Externally managed database service | N/A | N/A
@@ -88,20 +88,22 @@ Use the example inventory file to perform an installation for this topology:
 [automationgateway]
 gateway1.example.org
 gateway2.example.org
+gateway3.example.org
 
 # This section is for your {EDAcontroller} hosts
 # -----------------------------------------------------
 [automationedacontroller]
 eda1.example.org
 eda2.example.org
+eda3.example.org
 
 [redis]
 gateway1.example.org
 gateway2.example.org
-hub1.example.org
-hub2.example.org
+gateway3.example.org
 eda1.example.org
 eda2.example.org
+eda3.example.org
 
 [all:vars]
 # Common variables
