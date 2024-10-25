@@ -4,12 +4,44 @@
 
 = {PlatformNameShort} upgrades
 
-Upgrading {PlatformNameShort} {PlatformVers}  involves downloading the installation package and then performing the following steps:
+Currently, it is possible to perform {PlatformNameShort} upgrades using one of the following supported upgrade paths. 
 
-* Set up your inventory to match your installation environment. See link:{LinkTopologies} for a list of example inventory files. 
-* Run the {PlatformVers} installation program over your current {PlatformNameShort} installation.
+[IMPORTANT]
+====
+Upgrading from {EDAName} 2.4 is not supported. If you’re using {EDAName} 2.4 in production, contact Red Hat before you upgrade.
+====
+
+Before beginning your upgrade be sure to review the prerequisites and upgrade planning sections of this guide.
+
+[cols="a,a"]
+|===
+h|Supported upgrade path h| Steps to upgrade
+|{PlatformNameShort} 2.4 to 2.5 | xref:proc-choosing-obtaining-installer_aap-upgrading-platform[Download the installation package].
+
+xref:editing-inventory-file-for-updates_aap-upgrading-platform[Set up your inventory file] to match your installation environment. See link:{LinkTopologies} for a list of example inventory files.
+
+xref:con-backup-aap_aap-upgrading-platform[Back up your {PlatformNameShort} instance].
+
+xref:proc-running-setup-script-for-updates[Run the 2.5 installation program] over your current {PlatformNameShort} instance.
+
+xref:account-linking_aap-upgrading-platform[Link your existing service level accounts] to a single unified platform account. 
+
+|{PlatformNameShort} 2.5 to 2.5.x | xref:proc-choosing-obtaining-installer_aap-upgrading-platform[Download the installation package].
+
+xref:editing-inventory-file-for-updates_aap-upgrading-platform[Set up your inventory file] to match your installation environment. See link:{LinkTopologies} for a list of example inventory files.
+
+xref:con-backup-aap_aap-upgrading-platform[Back up your {PlatformNameShort} instance].
+
+xref:proc-running-setup-script-for-updates[Run the 2.5 installation program] over your current {PlatformNameShort} instance.
+
+|xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerNameStart} and {HubName} 2.4 and {EDAName} 2.5 with unified UI upgrades] | Upgrade the 2.4 services (using inventory file to only specify {ControllerName} and {HubName} VMs) to get them to the initial version of AAP 2.5.
+
+After all the services are at the same version, run a 2.5 upgrade on all the services
+|===
+ 
 
 // [hherbly]: not sure we need the addt'l resources block? the xref goes to the next section of the document.
-[role="_additional-resources"]
-.Additional resources
-* xref:aap-upgrading-platform[Upgrading to {PlatformName} {PlatformVers}] 
+// [ddacosta]: agree, it's not needed.
+//[role="_additional-resources"]
+//.Additional resources
+//* xref:aap-upgrading-platform[Upgrading to {PlatformName} {PlatformVers}] 
