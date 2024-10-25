@@ -16,7 +16,7 @@ The following enhancements and bug fixes have been implemented in this release o
 
 * An informative redirect page is now shown when you go to the {HubName} URL root. (AAP-30915)
 
-=== Containerized installer
+=== Container-based {PlatformNameShort}
 
 * The TLS Certificate Authority private key can now use a passphrase. (AAP-33594)
 
@@ -24,15 +24,19 @@ The following enhancements and bug fixes have been implemented in this release o
 
 * The {ControllerName}, {EDAName}, and {HubName} legacy UIs now display a redirect page to the Platform UI rather than a blank page. (AAP-33794)
 
-=== RPM installer
+=== RPM-based {PlatformNameShort}
 
 * Added platform Redis to RPM-based {PlatformNameShort}. This allows a 6 node cluster for a Redis high availability (HA) deployment. Removed the variable `aap_caching_mtls` and replaced it with `redis_disable_tls` and `redis_disable_mtls` which are boolean flags that disable Redis server TLS and Redis client certificate authentication. (AAP-33773)
+
+* An informative redirect page is now shown when going to {ControllerName}, {EDAName}, or {HubName} URL. (AAP-33827)
 
 == Bug fixes
 
 === {PlatformNameShort}
 
 * Removed the *Legacy external password* option from the *Authentication Type* list. (AAP-31506)
+
+* {Galaxy}'s `sessionauth` class is now always the first in the list of authentication classes so that the platform UI can successfully authenticate. (AAP-32146)
 
 * link:https://access.redhat.com/security/cve/CVE-2024-10033[CVE-2024-10033] - `automation-gateway`: Fixed a Cross-site Scripting (XSS) vulnerability on the `automation-gateway` component that allowed a malicious user to perform actions that impact users.
 
@@ -44,13 +48,19 @@ The following enhancements and bug fixes have been implemented in this release o
 
 * link:https://access.redhat.com/security/cve/CVE-2024-45230[CVE-2024-45230] - `automation-controller`: Resolved an issue in Python's Django `urlize()` and `urlizetrunc()` functions where excessive input with a specific sequence of characters would lead to denial of service.
 
+=== {HubNameStart}
+
+* Refactored the `dynaconf` hooks to preserve the necessary authentication classes for {PlatformNameShort} {PlatformVers} deployments. (AAP-31680)
+
+* During role migrations, model permissions are now re-added to roles to preserve ownership. (AAP-31417)
+
 === {OperatorPlatformNameShort}
 
 * The port is now correctly set when configuring the {Gateway} cache `redis_host` setting when using an external Redis cache. (AAP-33279)
 
 * Added checksums to the {HubName} deployments so that pods are cycled to pick up changes to the PostgreSQL configuration and galaxy server settings Kubernetes secrets. (AAP-33518)
 
-=== Containerized installer
+=== Container-based {PlatformNameShort}
 
 * Fixed the uninstall playbook execution when the environment was already uninstalled. (AAP-32981)
 
