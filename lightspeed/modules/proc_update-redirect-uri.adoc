@@ -73,8 +73,8 @@ If you are running multiple instances of {LightspeedShortName} application with 
 
 .. Apply the revised YAML. This task restarts the automation controller pods.
 
-+
 *Procedure when the {PlatformNameShort} operator is run on a virtual machine*:
+
 .. Log in to the virtual machine with the {PlatformNameShort} controller.
 .. In the */etc/tower/conf.d/custom.py* file, add the following parameter: +
 `LOGOUT_ALLOWED_HOSTS = "<lightspeed_route-HostName>"`
@@ -91,6 +91,21 @@ For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`
 ====
 .. Restart the automation controller by executing the following command: +
 `$ automation-controller-service restart`
+
+*Procedure when the platform gateway is run on a virtual machine*:
+
+.. Log in to the virtual machine with the platform gateway.
+.. Add the following parameter in either the *gateway/settings.py* file or in the *ansible-automation-platform/gateway/settings.py* file: +
+`LOGOUT_ALLOWED_HOSTS = "<lightspeed_route-HostName>"`
++
+[IMPORTANT]
+====
+* Specify the hostname without the network protocol, such as `https://`.
++
+For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`, and not `https://my-aiconnect-instance.somewhere.com`.
+
+* Use double quotes exactly as specified in the codeblock.
+====
 
 [role="_additional-resources"]
 .Additional resources
