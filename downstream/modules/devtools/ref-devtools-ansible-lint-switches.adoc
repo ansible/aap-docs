@@ -1,0 +1,150 @@
+[id="devtools-ansible-lint-switches_{context}"]
+
+= Command-line switches for ansible-lint
+
+Run the following command to display {LintCmd} commands and switches:
+
+-----
+$ ansible-lint --help
+-----
+
+The following table lists the options:
+
+[options="header"]
+|===
+|Options |Description
+|`-h`
+
+`--help`
+|Show this help message and exit.
+//
+|`-P`
+
+`--list-profiles`
+|List all profiles.
+No formatting options available.
+//
+|`-L`
+
+`--list-rules`
+|List all the rules.
+
+For listing rules, only the following formats for the `-f` argument are supported: `{brief, full, md}` with `brief` as default.
+//
+|`-T`
+
+`--list-tags`
+|List all the tags and the rules they cover.
+
+Increase the verbosity level with `-v` to include 'opt-in' tag and its rules.
+//
+|`-f {brief,full,md,json,codeclimate,quiet,pep8,sarif}`
+
+`--format {brief,full,md,json,codeclimate,quiet,pep8,sarif}`
+
+|stdout formatting, `json` being an alias for codeclimate. (default: `None`)
+//
+|`--sarif-file SARIF_FILE`
+
+|SARIF output file
+//
+|`-q`
+|quieter, reduce verbosity, can be specified twice.
+//
+|`--profile {min,basic,moderate,safety,shared,production}`
+
+|Specify which rules profile to be used.
+//
+|`-p`
+
+`--parseable`
+|parseable output, same as `-f pep8`
+//
+|`--project-dir PROJECT_DIR`
+
+|Location of project/repository, autodetected based on location of configuration file.
+//
+|`-r RULESDIR`
+
+`--rules-dir RULESDIR`
+
+|Specify custom rule directories. Add `-R` to keep using embedded rules from `/home/docs/checkouts/readthedocs.org/user_builds/ansible-lint/checkouts/latest/src/ansiblelint/rules`
+//
+|`-R`
+|Keep default rules when using -r
+//
+|`-s`
+
+`--strict`
+|Return non-zero exit code on warnings as well as errors
+//
+|`--fix [WRITE_LIST]`
+|Allow ansible-lint to perform auto-fixes, including YAML reformatting. You can limit the effective rule transforms (the `write_list`) by passing a keywords `all` or `none` or a comma separated list of rule IDs or rule tags.
+
+YAML reformatting happens whenever `--fix` or `--fix=` is used. `--fix` and `--fix=all` are equivalent: they allow all transforms to run.
+
+Using `--fix` in the command overrides the config file value.
+//
+|`--show-relpath`
+|Display path relative to CWD
+//
+|`-t TAGS`
+
+`--tags TAGS`
+|only check rules whose id/tags match these values
+//
+|`-v`
+|Increase verbosity level (-vv for more)
+//
+|`-x SKIP_LIST`
+
+`--skip-list SKIP_LIST`
+
+|Only check rules whose id/tags do not match these values.
+
+Example: `--skip-list=name,run-once`
+//
+|`--generate-ignore`
+|Generate a text file `.ansible-lint-ignore` that ignores all found violations. Each line contains a filename and rule ID separated by a space.
+//
+|`-w WARN_LIST`
+
+`--warn-list WARN_LIST
+
+|only warn about these rules, unless overridden in the config file. 
+
+Default: `experimental`, `jinja[spacing]`, `fqcn[deep]`
+//
+|`--enable-list ENABLE_LIST`
+
+|activate optional rules by their tag name
+//
+|`--nocolor`
+|disable colored output, same as NO_COLOR=1
+//
+|`--force-color`
+|Force colored output, same as FORCE_COLOR=1
+//
+|`--exclude EXCLUDE_PATHS [EXCLUDE_PATHS ...]`
+
+|path to directories or files to skip. This option is repeatable.
+//
+|`-c CONFIG_FILE`
+
+`--config-file CONFIG_FILE`
+
+|Specify configuration file to use. By default it looks for `.ansible-lint`, `.config/ansible-lint.yml`, or `.config/ansible-lint.yaml`
+//
+|`-i IGNORE_FILE`
+
+`--ignore-file IGNORE_FILE`
+
+|Specify ignore file to use. By default it looks for `.ansible-lint-ignore` or `.config/ansible-lint-ignore.txt`
+//
+|`--offline`
+|Disable installation of requirements.yml and schema refreshing
+//
+|`--version`
+|
+|===
+

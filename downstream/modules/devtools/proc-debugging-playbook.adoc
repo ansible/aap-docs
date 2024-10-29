@@ -1,12 +1,20 @@
 [id="debugging-playbook_{context}"]
 :_mod-docs-content-type: PROCEDURE
 
-= Debugging your playbook
+= Debugging with ansible-lint in {VSCode}
 
-Learn how to use {VSCode} to identify and understand error messages in playbooks.
+When the Ansible extension is running in {VSCode}, ansible-lint runs in the background.
+Diagnostics information for files whose language is identified as Ansible is displayed inline on the YAML lines.
+Further information about linting rule violations is displayed in the *Problems* tab of the terminal.
 
-. The following playbook contains multiple errors. Copy and paste it into a new file in {VSCode}.
-+
+{LintName} loads configuration from the `.ansible-lint.yml` configuration file in the `.config` directory of your project workspace.
+For example, you can specify strict linting rules for production, or less strict rules in the development phase.
+
+For information about customizing the configuration file, see xref:devtools-ansible-lint-customize_devtools-ansible-lint[Customizing {LintName}].
+// == Error messages
+
+The following playbook violates Ansible linting rules:
+
 ----
 - name:
   hosts: localhost 

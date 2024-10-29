@@ -1,0 +1,14 @@
+[id="devtools-ansible-lint-exclude-rules_{context}"]
+
+
+= Excluding ansible-lint rules
+
+To exclude specific rules from being applied when linting a playbook, use the `-x` flag.
+This is useful if you want to temporarily disable certain rules without modifying your configuration file.
+
+The following example lints a file but skips the checks for YAML formatting rules and tabs:
+
+----
+ansible-lint -x no-tabs -x yaml <filename.yml>
+----
+
