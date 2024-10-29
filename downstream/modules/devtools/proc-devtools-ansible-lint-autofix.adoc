@@ -1,0 +1,58 @@
+[id="devtools-ansible-lint-autofix_{context}"]
+
+= Autofix
+
+Ansible-lint provides an autofix feature that allows auto-fixing of some rule violations in Ansible files.
+
+To reformat YAML files and run transform for the given rules, run the following command:
+
+----
+ansible-lint --fix [<write_list>]
+----
+
+Use the `write-list` to limit the rules that you want to auto-fix
+by passing a keywords `all` or `none` or a comma separated list of rule ids or rule tags.
+
+* `ansible-lint --fix ["all"]` (default) runs all transforms.
+* `ansible-lint --fix ["none"]` disables all auto-fixes.
+* `ansible-lint --fix ["csv-list-of-rules"]` enables a subset of rule transforms by listing rules/tags here.
+
+The following rules allow autofix functionality.
+
+[options="header" cols="30,70"]
+|===
+|Options |Description
+|`command-instead-of-shell`
+|Use shell only when shell functionality is required.
+
+|`deprecated-local-action`
+|Do not use `local_action`, use `delegate_to: localhost`.
+
+|`fqcn`
+|Use FQCN for builtin actions.
+
+|`jinja`
+|Rule that looks inside jinja2 templates.
+
+|`key-order`
+|Ensure specific order of keys in mappings.
+
+|`name`
+|Rule for checking task and play names.
+
+|`no-free-form`
+|Rule for detecting discouraged free-form syntax for action modules.
+                             
+|`no-jinja-when`
+|No Jinja2 in when.
+
+|`no-log-password`
+|Password should not be logged.
+
+|`partial-become`
+|`become_user` should have a corresponding `become` at the play or task level.
+
+|`yaml`
+|Violations reported by yamllint.
+|===
+

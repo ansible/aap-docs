@@ -1,0 +1,48 @@
+[id="devtools-ansible-lint-muting-warning_{context}"]
+
+= Muting warnings to avoid false positives
+
+Not all linting rules are precise. Some are general rules.
+Advanced `git`, `yum` or `apt` usage, for example, can incorrectly
+trigger {LintName} rule violations.
+
+To disable rule violations for specific tasks in a playbook, and mute false positives,
+add `# noqa: [rule_id]` to the end of the line.
+Add a comment that explains why the rules are disabled.
+
+You can add the `# noqa: [rule_id]` comment to the end of any line in
+a task. You can also skip multiple rules with a space-separated list.
+
+----
+- name: This task would typically fire git-latest and partial-become rules
+  become_user: alice # noqa: git-latest partial-become
+  ansible.builtin.git: src=/path/to/git/repo dest=checkout
+----
+
+If the rule is line-based, `# noqa: [rule_id]` must be at the end of
+the line.
+
+----
+- name: This would typically fire jinja[spacing]
+  get_url:
+    url: http://example.com/file.conf
+    dest: "{{dest_proj_path}}/foo.conf" # noqa: jinja[spacing]
+----
+
+If you want Ansible-lint to skip a rule entirely, use the `-x` command
+line argument or add it to `skip_list` in your configuration.
+
+The least preferred method of skipping rules is to skip all task-based
+rules for a task, which does not skip line-based rules. You can use the
+`skip_ansible_lint` tag with all tasks, for example:
+
+----
+- name: This would typically fire no-free-form
+  command: warn=no chmod 644 X
+
+- name: This would typically fire git-latest
+  git: src=/path/to/git/repo dest=checkout
+  tags:
+    - skip_ansible_lint
+----
+

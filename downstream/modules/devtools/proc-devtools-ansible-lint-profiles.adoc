@@ -1,0 +1,65 @@
+[id="devtools-ansible-lint-profiles_{context}"]
+
+= Applying profiles
+
+A profile specifies a predefined collection of rules to be applied when running `{LintCmd}`.
+Profiles allow you to group related rules together and switch between different sets of checks easily,
+so that you can enforce different levels of strictness when linting.
+
+This is useful when you need to apply different linting standards for different contexts,
+for example development and production environments,
+so that you can progressively improve the quality of Ansible files.
+
+The following command displays the available profiles:
+
+----
+ansible-lint --list-profiles
+----
+
+The predefined profiles below are listed from least strict to most strict. 
+
+`min`:: Ensures that Ansible can load content. Rules in this profile are mandatory because they prevent fatal errors.
+`basic`:: Prevents common coding issues and enforces standard styles and formatting.
+`moderate`:: Ensures that content adheres to best practices for making content easier to read and maintain.
+`safety`:: Avoids module calls that can have non-determinant outcomes or security concerns.
+`shared`:: Ensures that content follows best practices for packaging and publishing. This profile is intended for content creators who want to make Ansible playbooks, roles, or collections available from `galaxy.ansible.com`.
+`production`:: Ensures that content meets requirements for inclusion in {PlatformNameShort} as validated or certified content.
+
+The profiles are incremental: the stricter profiles include the rules from the less strict profiles. 
+For example, the `moderate` profile includes the rules from the `basic` and `min` profiles.
+
+To specify a profile for linting your content, use the `--profile` parameter:
+
+----
+ansible-lint --profile=<profile_name>
+----
+
+During early development cycles, user the less strict {LintName} profiles.
+Starting with the `min` profile ensures that Ansible can load
+your content:
+
+----
+ansible-lint --profile=min
+----
+
+As you move to the next stage of developing content, you
+can gradually apply profiles to avoid common pitfalls and brittle
+complexity. 
+
+When you are ready to publish or share your content,
+you can use the `shared` and `production` profiles with much
+stricter rules.
+These profiles harden security, guarantee reliability,
+and ensure your Ansible content is easy for others to contribute to and
+use.
+
+----
+ansible-lint --profile=production
+----
+
+[NOTE]
+====
+Tags such as `opt-in` and `experimental` do not take effect for rules that are included in profiles, directly or indirectly.
+If a rule is in a profile, {LintName} applies that rule to the content.
+====
+
