@@ -2,15 +2,44 @@
 
 = Creating {PlatformNameShort} custom resources
 
-Create an {PlatformNameShort} custom resource (CR) that specifies the names of your existing deployments, in the same namespace.
+After upgrading to the latest version of {OperatorPlatformNameShort} on {OCPShort}, you can create an {PlatformNameShort} custom resource (CR) that specifies the names of your existing deployments, in the same namespace.
 
 .Procedure
+This example outlines the steps to deploy a new {EDAName} setup after upgrading to the latest version, with existing {ControllerName} and {HubName} deployments already in place.
 
-You can find examples for {PlatformNameShort} CR for various deployment scenarios in the xref:appendix-operator-crs_performance-considerations[Appendix]. 
 
-. For example, use the fresh install {PlatformNameShort} CR (aap-fresh-install.yml).
-. Wait for the {PlatformNameShort} CR to show the *Successful* status.
-. Navigate to the Route URL listed in the status (or the *Routes* page) to access the new CR.
+The xref:appendix-operator-crs_performance-considerations[Appendix] contains more examples of {PlatformNameShort} CRs for different deployments.
+
+. Log in to {OCP}.
+. Navigate to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Select the *Details* tab. 
+. On the *{PlatformNameShort}* tile click btn:[Create instance].
+. From the *Create {PlatformNameShort}* page enter a name for your instance in the *Name* field.
+. Click btn:[YAML view] and paste the following YAML (xref:appendix-operator-crs_performance-considerations[aap-existing-controller-and-hub-new-eda.yml]):
++
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+
+  controller:
+    name: existing-controller
+    disabled: false
+
+  eda:
+    disabled: false
+
+  hub:
+    name: existing-hub
+    disabled: false
+----
+. Click btn:[Create].
 
 [NOTE]
 ====
@@ -19,3 +48,9 @@ This enables upgrading a specific deployment, like a controller, without updatin
 
 The recommended approach however, is to upgrade the operator and use the default image values. 
 ====
+
+.Verification
+Navigate to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify whether all instances have deployed correctly.
+You should see the *{PlatformNameShort}* instance and the deployed *AutomationController*, *EDA*, and *AutomationHub* instances here.
+
+Alternatively, you can verify whether all instances deployed correctly by running `oc get route` in the command line.
