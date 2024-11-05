@@ -17,12 +17,12 @@ You can create a custom decision environment for {EDAName} that provides a custo
 .Procedure
 
 * Add the `de-supported` decision environment. 
-This image is built from a base image provided by Red Hat called `de-minimal` at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-24/de-supported-rhel9/6449642e3993031ccdf4cf19[Ansible Automation Platform supported decision environment].
+This image is built from a base image provided by Red Hat called `de-minimal` at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-24/de-supported-rhel9/6449642e3993031ccdf4cf19[{PlatformNameShort} supported decision environment].
 
 +
 [NOTE]
 ====
-Red Hat recommends using `de-minimal` as the base image with {Builder} to build your custom decision environments.
+Use `de-minimal` as the base image with {Builder} to build your custom decision environments.
 ====
 
 [IMPORTANT]
@@ -30,8 +30,8 @@ Red Hat recommends using `de-minimal` as the base image with {Builder} to build 
 ====
 * Use the correct {EDAcontroller} decision environment in {PlatformNameShort} {PlatformVers} to prevent rulebook activation failure.
 
-** If you want to connect Event-Driven Ansible controller to Ansible Automation Platform 2.4, you must use `registry.redhat.io/ansible-automation-platform-24/de-supported-rhel8:latest`.
-** If you want to connect Event-Driven Ansible controller to AAP 2.5, you must use `registry.redhat.io/ansible-automation-platform-25/de-supported-rhel8:latest`.
+** If you want to connect {EDAcontroller} to {PlatformNameShort} 2.4, you must use link:http://registry.redhat.io/ansible-automation-platform-24/de-supported-rhel8:latest[http://registry.redhat.io/ansible-automation-platform-24/de-supported-rhel8:latest]
+** If you want to connect {EDAcontroller} to {PlatformNameShort} {PlatformVers}, you must use link:http://registry.redhat.io/ansible-automation-platform-25/de-supported-rhel8:latest[http://registry.redhat.io/ansible-automation-platform-25/de-supported-rhel8:latest]
 ====
 
 The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the ansible.eda collection:
