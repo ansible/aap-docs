@@ -2,14 +2,15 @@
 
 = Containerized {PlatformNameShort} reference
 
-.Can you provide details of the architecture for the {PlatformNameShort} containerized design?
+.Can you give details of the architecture for the {PlatformNameShort} containerized design?
 
-We use as much of the underlying native RHEL technology as possible. For the container runtime and management of services we use Podman. Many Podman services and commands are used to show and investigate the solution.
+We use as much of the underlying native RHEL technology as possible. Podman is used for the container runtime and management of services. 
 
-For instance, use `podman ps`, and `podman images` to see some of the foundational and running pieces:
+Use `podman ps` to list the running containers on the system:
 
 ----
-[aap@daap1 aap]$ podman ps
+$ podman ps
+
 CONTAINER ID  IMAGE                                                                        COMMAND               CREATED         STATUS         PORTS       NAMES
 88ed40495117  registry.redhat.io/rhel8/postgresql-13:latest                                run-postgresql        48 minutes ago  Up 47 minutes              postgresql
 8f55ba612f04  registry.redhat.io/rhel8/redis-6:latest                                      run-redis             47 minutes ago  Up 47 minutes              redis
@@ -17,14 +18,18 @@ CONTAINER ID  IMAGE                                                             
 f346f05d56ee  registry.redhat.io/ansible-automation-platform-24/controller-rhel8:latest    /usr/bin/launch_a...  47 minutes ago  Up 45 minutes              automation-controller-rsyslog
 26e3221963e3  registry.redhat.io/ansible-automation-platform-24/controller-rhel8:latest    /usr/bin/launch_a...  46 minutes ago  Up 45 minutes              automation-controller-task
 c7ac92a1e8a1  registry.redhat.io/ansible-automation-platform-24/controller-rhel8:latest    /usr/bin/launch_a...  46 minutes ago  Up 28 minutes              automation-controller-web
+----
 
-[aap@daap1 aap]$ podman images
+Use `podman images` to display information about locally stored images:
+
+----
+$ podman images
+
 REPOSITORY                                                            TAG         IMAGE ID      CREATED      SIZE
 registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8  latest      b497bdbee59e  10 days ago  3.16 GB
 registry.redhat.io/ansible-automation-platform-24/controller-rhel8    latest      ed8ebb1c1baa  10 days ago  1.48 GB
 registry.redhat.io/rhel8/redis-6                                      latest      78905519bb05  2 weeks ago  357 MB
 registry.redhat.io/rhel8/postgresql-13                                latest      9b65bc3d0413  2 weeks ago  765 MB
-[aap@daap1 aap]$
 ----
 
 //Describe AAP Controller containers:
@@ -33,12 +38,12 @@ registry.redhat.io/rhel8/postgresql-13                                latest    
 
 //Describe EDA Controller containers:
 
-Containerized {PlatformNameShort} runs as rootless containers for maximum out-of-the-box security. This means you can install containerized {PlatformNameShort} by using any local unprivileged user account. Privilege escalation is only needed for certain root level tasks, and by default is not needed to use root directly.
+Containerized {PlatformNameShort} runs as rootless containers for enhanced security by default. This means you can install containerized {PlatformNameShort} by using any local unprivileged user account. Privilege escalation is only needed for certain root level tasks, and by default is not needed to use root directly.
 
-Once installed, you will notice certain items have populate on the filesystem where the installation program is run (the underlying RHEL host).
+The installation program adds the following files to the filesystem where you run the installation program on the underlying {RHEL} host:
 
 ----
-[aap@daap1 aap]$ tree -L 1
+$ tree -L 1
 .
 ├── aap_install.log
 ├── ansible.cfg
@@ -54,9 +59,11 @@ Once installed, you will notice certain items have populate on the filesystem wh
 ├── roles
 ----
 
-Other containerized services that make use of things such as Podman volumes, reside under the installation root directory used. Here are some examples for further reference:
+The installation root directory includes other containerized services that make use of Podman volumes for example. 
 
-The containers directory contains some of the Podman specifics used and installed for the execution plane:
+Here are some examples for further reference:
+
+The `containers` directory includes some of the Podman specifics used and installed for the execution plane:
 
 ----
 containers/
@@ -74,7 +81,7 @@ containers/
 └── storage.conf
 ----
 
-The controller directory has some of the installed configuration and runtime data points:
+The `controller` directory has some of the installed configuration and runtime data points:
 
 ----
 controller/
@@ -96,7 +103,7 @@ controller/
     └── run
 ----
 
-The receptor directory has the {AutomationMesh} configuration:
+The `receptor` directory has the {AutomationMesh} configuration:
 
 ----
 receptor/
@@ -117,7 +124,7 @@ After installation, you will also find other pieces in the local users home dire
     └── rhsm.log
 ----
 
-As we run by default in the most secure manner, such as rootless Podman, we can also use other services such as running `systemd` as non-privileged users. Under `systemd` you can see some of the component service controls available:
+As services are run using rootless Podman by default, you can use other services such as running `systemd` as non-privileged users. Under `systemd` you can see some of the component service controls available:
 
 The `.config` directory:
 
@@ -142,8 +149,7 @@ The `.config` directory:
         └── sockets.target.wants
 ----
 
-
-This is specific to Podman and conforms to the Open Container Initiative (OCI) specifications. Whereas Podman run as the root user would use `/var/lib/containers` by default, for standard users the hierarchy under `$HOME/.local` is used.
+This is specific to Podman and conforms to the Open Container Initiative (OCI) specifications. When you run Podman as the root user `/var/lib/containers` is used by default, for standard users the hierarchy under `$HOME/.local` is used.
 
 The `.local` directory:
 
@@ -154,10 +160,13 @@ The `.local` directory:
         ├── cache
         ├── podman
         └── storage
+----
 
 As an example `.local/storage/volumes` contains what the output from `podman volume ls` provides:
 
-[aap@daap1 containers]$ podman volume ls
+----
+$ podman volume ls
+
 DRIVER      VOLUME NAME
 local       d73d3fe63a957bee04b4853fd38c39bf37c321d14fdab9ee3c9df03645135788
 local       postgresql
@@ -166,11 +175,25 @@ local       redis_etc
 local       redis_run
 ----
 
-We isolate the execution plane from the control plane main services (PostgreSQL, Redis, {ControllerName}, receptor, {HubName} and {EDAName}).
+The execution plane is isolated from the control plane main services to ensure it does not affect the main services.
 
-Control plane services run with the standard Podman configuration (`~/.local/share/containers/storage`).
+*Control plane services*
 
-Execution plane services use a dedicated configuration or storage (`~/aap/containers/storage`) to avoid execution plane containers to be able to interact with the control plane.
+Control plane services run with the standard Podman configuration and can be found in: `~/.local/share/containers/storage`.
+
+*Execution plane services*
+
+Execution plane services ({ControllerName}, {EDAName} and execution nodes) use a dedicated configuration found in `~/aap/containers/storage.conf`. This separation prevents execution plane containers from affecting the control plane services.
+
+You can view the execution plane configuration with one of the following commands:
+
+----
+CONTAINERS_STORAGE_CONF=~/aap/containers/storage.conf podman <subcommand>
+----
+
+----
+CONTAINER_HOST=unix://run/user/<user uid>/podman/podman.sock podman <subcommand>
+----
 
 
 .How can I see host resource utilization statistics?
@@ -182,7 +205,6 @@ $ podman container stats -a
 ----
 
 ----
-podman container stats -a
 ID            NAME                           CPU %       MEM USAGE / LIMIT  MEM %       NET IO      BLOCK IO    PIDS        CPU TIME    AVG CPU %
 0d5d8eb93c18  automation-controller-web      0.23%       959.1MB / 3.761GB  25.50%      0B / 0B     0B / 0B     16          20.885142s  1.19%
 3429d559836d  automation-controller-rsyslog  0.07%       144.5MB / 3.761GB  3.84%       0B / 0B     0B / 0B     6           4.099565s   0.23%
@@ -197,7 +219,7 @@ The previous is an example of a Dell sold and offered containerized {PlatformNam
 
 .How much storage is used and where?
 
-As we run rootless Podman the container volume storage is under the local user at `$HOME/.local/share/containers/storage/volumes`.
+The container volume storage is under the local user at `$HOME/.local/share/containers/storage/volumes`.
 
 . To view the details of each volume run:
 +
@@ -241,8 +263,6 @@ $ podman ps --format "{{.ID}}\t{{.Command}}\t{{.Names}}"
 ----
 +
 ----
-Example:
-$ podman ps --format "{{.ID}}\t{{.Command}}\t{{.Names}}"
 89e779b81b83	run-postgresql	postgresql
 4c33cc77ef7d	run-redis	redis
 3d8a028d892d	/usr/bin/receptor...	receptor
@@ -272,7 +292,6 @@ $ podman inspect <container_name> | jq -r .[].Mounts[].Source
 ----
 +
 ----
-Example:
 /home/aap/.local/share/containers/storage/volumes/receptor_run/_data
 /home/aap/.local/share/containers/storage/volumes/redis_run/_data
 /home/aap/aap/controller/data/rsyslog
