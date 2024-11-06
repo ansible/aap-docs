@@ -2,18 +2,4 @@
 
 = Regions and availability zones
 
-The following regions are currently supported. Each supported region has a designated AWS region where backup data is stored for restoration in case of a primary region failure. The following table maps each primary region with a backup region for this purpose.
-
-[cols="2*", options="header"]
-|===
-| Primary region   | Backup region
-
-| us-east-1        | us-west-2
-| us-east-2        | us-west-2
-| us-west-2        | us-east-1
-| eu-west-2        | eu-central-2
-| eu-central-1     | eu-north-1
-|===
-
-
-//{SaaSonAWSShort} regional support will be rolled out to new regions over time with the objective of having regional parity with ROSA HCP multi-region support.For more information on ROSA see the link:https://docs.openshift.com/rosa/rosa_architecture/rosa_policy_service_definition/rosa-service-definition.html#rosa-sdpolicy-account-management_rosa-service-definition[ROSA service definition] documentation.
+Each supported region is paired with a companion AWS region where backup data is stored in the event of a primary region catastrophe that requires restoration in another AWS region. Refer to xref:con-saas-backup-and-diaster-recovery[Backup and diaster recovery] for the list of supported and back up regions.
