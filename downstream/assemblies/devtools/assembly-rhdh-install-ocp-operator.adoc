@@ -1,0 +1,52 @@
+ifdef::context[:parent-context-of-rhdh-install-ocp-operator: {context}]
+[id="rhdh-install-ocp-operator_{context}"]
+
+= Installing the {AAPRHDHShort} with the Operator on {OCPShort}
+
+:context: rhdh-install-ocp-operator
+[role="_abstract"]
+The following procedures describe how to install {AAPRHDHShort} in {RHDH} instances on {OCP} using the Operator.
+
+// The workflow is as follows:
+// 
+// . Download the Ansible plug-ins files.
+// . Create a plug-in registry in your OpenShift cluster to host the Ansible plug-ins.
+// . Create a local backup copy of the ConfigMap for the {RHDHShort} Operator.
+// . Create a custom ConfigMap.
+// . Add your custom ConfigMap to your Helm chart.
+// . Edit your custom ConfigMap and Helm chart according to the required and optional configuration procedures.
+
+include::devtools/con-rhdh-install-ocp-prereqs.adoc[leveloffset=+1]
+include::devtools/con-rhdh-recommended-preconfig.adoc[leveloffset=+1]
+
+// Create custom ConfigMap
+include::devtools/proc-rhdh-backup-operator-configmap.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-create-custom-configmap-operator-install.adoc[leveloffset=+1]
+// Add sidecar container to custom ConfigMap
+include::devtools/proc-rhdh-operator-add-custom-configmap-cr.adoc[leveloffset=+1]
+
+// Plug-in registry
+include::devtools/proc-rhdh-download-plugins.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-create-plugin-registry.adoc[leveloffset=+1]
+
+// Install the dynamic plug-ins
+include::devtools/proc-rhdh-install-dynamic-plugins-operator.adoc[leveloffset=+1]
+//
+// Add dynamic plug-ins to rhaap-dynamic-plugins-config
+// Replace the following to reuse Helm config:
+// include::devtools/proc-rhdh-operator-install-add-plugins-app-config.adoc[leveloffset=+1]
+
+include::devtools/proc-rhdh-add-custom-configmap.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-devtools-server.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-aap-details.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-add-plugin-software-templates.adoc[leveloffset=+1]
+include::devtools/proc-rhdh-configure-rbac.adoc[leveloffset=+1]
+include::assembly-rhdh-ocp-configure-optional.adoc[leveloffset=+1]
+
+// Full example configuration
+include::devtools/ref-rhdh-full-aap-configmap-example.adoc[leveloffset=+1]
+//
+
+ifdef::parent-context-of-rhdh-install-ocp-operator[:context: {parent-context-of-rhdh-install-ocp-operator}]
+ifndef::parent-context-of-rhdh-install-ocp-operator[:!context:]
+

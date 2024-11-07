@@ -1,0 +1,38 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator-remove-sidecar-cr_{context}"]
+= Removing the custom resource ConfigMap from the {RHDHShort} Operator Custom Resource 
+
+// If a custom resource is created to load the sidecar container,
+//we need to be specific about what we remove while we are willing to remove just the sidecar container,
+// because the customResouce acts as the source of truth for the entire RHDH deployment then. 
+// 
+If you created a custom resource ConfigMap
+as described in the xref:rhdh-create-operator-custom-configmap-operator-install_rhdh-install-ocp-operator[Creating a custom Operator ConfigMap]
+and you added only the {ToolsName} sidecar container to it, then you can remove the reference to the ConfigMap from the {RHDHShort} Custom Resource. 
+
+[NOTE]
+====
+Ensure that you do not have any additional need for the custom ConfigMap before you remove it from the Custom Resource.
+====
+
+.Procedure
+
+. In the OpenShift console, select the Topology view.
+. Click *More actions {MoreActionsIcon}* on the RHDH Operator Custom Resource and select *Edit backstage* to edit the Custom Resource.
+. Remove the ConfigMap reference from the {RHDHShort} Operator Custom Resource.
+For this example, the ConfigMap name is `rhdh-custom-config`.
++
+----
+...
+spec:
+ application:
+	...
+ database:
+  	...
+ rawRuntimeConfig: # Remove the backstageConfig’ YAML key below 
+   backstageConfig: rhdh-custom-config
+
+----
+. Click btn:[Save].
+
