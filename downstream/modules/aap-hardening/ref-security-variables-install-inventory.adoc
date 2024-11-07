@@ -36,5 +36,7 @@ In scenarios such as the reference architecture where a load balancer is used wi
 
 [NOTE]
 ====
-This guide recommends using an external database in production environments, but for development and testing scenarios the database could be co-located on the {ControllerName}. Due to current PostgreSQL 15 limitations, setting `pg_sslmode = verify-full` when the database is co-located on the {ControllerName} results in an error validating the host name during TLS negotiation. Until this issue is resolved, an external database must be used to ensure mutual TLS authentication between the {ControllerName} and the database.
+This guide recommends using an external database in production environments, but for development and testing scenarios the database could be co-located on {ControllerName}. 
+Due to current PostgreSQL 15 limitations, setting `pg_sslmode = verify-full` when the database is co-located on  {ControllerName} results in an error validating the host name during TLS negotiation. 
+Until this issue is resolved, an external database must be used to ensure mutual TLS authentication between {ControllerName} and the database.
 ====
