@@ -1,0 +1,109 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-operator-install-add-plugins-app-config_{context}"]
+= Adding the {AAPRHDHShort} configuration to app-config-rhdh 
+
+Add the Ansible plugin-specific configuration to the `app-config-rhdh` ConfigMap,
+and add a route for the templates for the automation content scaffolder plugin.
+
+
+.Procedure
+
+. In the OpenShift web console, select *ConfigMaps*.
+. Select the `app-config-rhdh` ConfigMap.
+. Select the *YAML* tab to edit the ConfigMap.
+. In the `data.app-config-custom.yaml.catalog` block, add a `locations:` block for the GitHub repository for the templates that are used to scaffold collections and playbooks. The `locations:` block must have the same indentation as the `rules:` block that precedes it.
++
+----
+     locations:
+       - type: url 
+         target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+         rules:
+           - allow: [Template]
+----
+. In the `data.app-config-custom.yaml` block, add an `ansible: block with the same indentation as `catalog`, to point to your Dev Spaces instance and your {PlatformNameShort} instance.
+Replace `baseUrl` with the URLs for your own instances.
++
+----
+   ansible: 
+     devSpaces:
+       baseUrl: 'https://devspaces.apps.example-cluster.com/'
+     creatorService:
+       baseUrl: '127.0.0.1'
+       port: '8000'
+     rhaap:
+       baseUrl: 'https://controller.acme.demoredhat.com'
+       token: ...<REDACTED>
+       checkSSL: false
+----
++
+After you have added both blocks, the ConfigFile resembles the following:
++
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+ name: app-config-rhdh
+data:
+ app-config-custom.yaml: |
+   app:
+     baseUrl: https://<RHDH_ROUTE>
+   backend:
+     baseUrl: https://<RHDH_ROUTE>
+     cors:
+       origin: https://<RHDH_ROUTE>
+   catalog:
+     rules:
+       - allow: [Component, System, Group, Resource, Location, Template, API, User]
+     locations: 
+       - type: url         # Add RHDH templates URL
+         target: https://github.com/ansible/ansible-rhdh-templates/blob/main/all.yaml
+         rules:
+           - allow: [Template]
+   ansible:               # Add Dev Spaces and AAP URLs
+     devSpaces:
+       baseUrl: 'https://devspaces.apps.example-cluster.com/'
+     creatorService:
+       baseUrl: '127.0.0.1'
+       port: '8000'
+     rhaap:
+       baseUrl: 'https://controller.acme.demoredhat.com'
+       token: ...<REDACTED>
+       checkSSL: false
+   auth:
+     environment: development
+     providers:
+       guest:
+         dangerouslyAllowOutsideDevelopment: true
+       github:
+         development:
+           clientId: '...<REDACTED>'
+           clientSecret: '...<REDACTED>'
+   integrations:
+     github:
+       - host: github.com
+         token: ...<REDACTED>
+   enabled:
+     github: true
+   signInPage: github
+   permission:
+     enabled: true
+     rbac:
+       admin:
+         users:
+           - name: ...<REDACTED>
+         superUsers:
+           - name: ...<REDACTED>
+----
+. Click btn:[Save].
++
+Your {RHDHShort} instance reloads.
+
+.Verification
+
+. Select the *Topology* in the OpenShift web console to monitor the rolling update.
+. When the update is complete, click the *Open URL* icon on the deployment pod to open your {RHDH} instance in a browser window.
+. Select *Create* in the navigation pane.
+The *Create Ansible Collection Project* and *Create Ansible Playbook Project* are displayed.
+//When you perform a rolling update in OpenShift, the new pods are baked with the updated image or configuration before being deployed. 
+
