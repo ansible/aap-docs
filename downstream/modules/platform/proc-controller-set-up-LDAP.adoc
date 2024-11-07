@@ -24,7 +24,7 @@ CN=josie,CN=users,DC=website,DC=com
 ----
 +
 . In the *LDAP Bind Password* text field, enter the password to use for the binding user.
-. Select a group type from the *LDAP Group Type* list. *LDAP Group Types* include:
+. Select a group type from the *LDAP Group Type* list. The *LDAP Group Type* list includes the following groups:
 +
 * `PosixGroupType`
 * `GroupOfNamesType`
@@ -42,7 +42,7 @@ CN=josie,CN=users,DC=website,DC=com
 +
 [NOTE]
 ====
-The *LDAP group types* that are supported by the {PlatformNameShort} use the underlying link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django-auth-ldap library]. To specify the parameters for the selected group type, see Step 13 of this procedure.
+The group types that are supported by {PlatformNameShort} use the underlying link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django-auth-ldap library]. To specify the parameters for the selected group type, see Step 13 of this procedure.
 ====
 . To use *LDAP User DN Template* as an alternative to user search, enter the name of the template. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. If this setting has a value it will be used instead of the *LDAP User Search* setting.
 . *LDAP Start TLS* is disabled by default. To enable TLS when the LDAP connection is not using SSL, set the switch to *On*.
@@ -50,7 +50,7 @@ The *LDAP group types* that are supported by the {PlatformNameShort} use the und
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
 . Enter any *LDAP Connection Options* to set for the LDAP connection. 
-. Depending on the selected *LDAP Group Type*, different parameters are available in the *LDAP Group Type Parameters* field to account for this. LDAP_GROUP_TYPE_PARAMS is a dictionary, which is converted to kwargs and passed to the *LDAP Group Type* class selected. There are two common parameters used by the LDAP group types; `name_attr` and `member_attr`. Where `name_attr` defaults to `cn` and `member_attr` defaults to `member`: 
+. Depending on the selected *LDAP Group Type*, different parameters are available in the *LDAP Group Type Parameters* field to account for this. `LDAP_GROUP_TYPE_PARAMS` is a dictionary, which is converted to `kwargs` and passed to the *LDAP Group Type* class selected. There are two common parameters used by group types: `name_attr` and `member_attr`. Where `name_attr` defaults to `cn` and `member_attr` defaults to `member`: 
 +
 ----
 {"name_attr": "cn", "member_attr": "member"}
@@ -59,7 +59,7 @@ include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 To determine the parameters that a specific *LDAP Group Type* requires, refer to the link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django_auth_ldap documentation] on the classes `init` parameters.
 +
 . In the *LDAP Group Search* field, specify which groups should be searched and how to search them. 
-. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users for example, email or first_name. 
+. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name`. 
 . In the *LDAP User Search* field, enter where to search for users during authentication. 
 +
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
