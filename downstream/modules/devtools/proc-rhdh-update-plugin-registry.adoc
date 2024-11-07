@@ -5,6 +5,12 @@
 
 Rebuild your plug-in registry application in your OpenShift cluster with the latest Ansible plug-ins files.
 
+.Prerequisites
+
+* You have downloaded the Ansible plug-ins files.
+* You have set an environment variable, for example (`$DYNAMIC_PLUGIN_ROOT_DIR`),
+to represent the path to the local directory where you have stored the `.tar` files.
+
 .Procedure
 
 . Log in to your {OCPShort} instance with credentials to create a new application.
@@ -14,6 +20,12 @@ Rebuild your plug-in registry application in your OpenShift cluster with the lat
 $ oc project <YOUR_DEVELOPER_HUB_PROJECT>
 ----
 . Run the following commands to update your plug-in registry build in the OpenShift cluster.
+The commands assume that `$DYNAMIC_PLUGIN_ROOT_DIR` represents the directory for your `.tar` files.
+Replace this in the command if you have chosen a different environment variable name.
++
+----
+$ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+----
 +
 ----
 $ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
@@ -28,11 +40,11 @@ build.build.openshift.io/plugin-registry-1 started
 
 .Verification
 
-Verify that the plugin-registry has been updated.
+Verify that the `plugin-registry` has been updated.
 
 . In the OpenShift UI, click *Topology*.
 . Click the *redhat-developer-hub* icon to view the pods for the plug-in registry.
 . Click *View logs* for the plug-in registry pod.
-. Open the *Terminal* tab and run `ls` to view the `.tar` files in the plug-in registry.
+. Open the *Terminal* tab and run `ls` to view the `.tar` files in the `plug-in registry`.
 . Verify that the new `.tar` file has been uploaded.
 
