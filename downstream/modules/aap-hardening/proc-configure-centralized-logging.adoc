@@ -59,32 +59,32 @@ For each {ControllerName} host, from the navigation panel, select {MenuSetSystem
 
 To set up logging to any of the aggregator types, read the documentation on link:https://docs.ansible.com/automation-controller/latest/html/administration/logging.html#logging-aggregator-services[supported log aggregators] and configure your log aggregator using the following steps:
 
-include:platform/platform/
+include::platform/proc-controller-set-up-logging.adoc[leveloffset=+2]
 
-. Navigate to {PlatformNameShort}.
-. Click btn:[Settings].
-. Under the list of System options, select Logging settings.
-. At the bottom of the Logging settings screen, click btn:[Edit].
-. Set the configurable options from the fields provided:
-* Enable External Logging: Click the toggle button to btn:[ON] if you want to send logs to an external log aggregator. The UI requires the Logging Aggregator and Logging Aggregator Port fields to be filled in before this can be done.
-* Logging Aggregator: Enter the hostname or IP address you want to send logs.
-* Logging Aggregator Port: Specify the port for the aggregator if it requires one.
-* Logging Aggregator Type: Select the aggregator service from the drop-down menu:
-** Splunk
-** Loggly
-** Sumologic
-** Elastic stack (formerly ELK stack)
-* Logging Aggregator Username: Enter the username of the logging aggregator if required.
-* Logging Aggregator Password/Token: Enter the password of the logging aggregator if required.
-* Log System Tracking Facts Individually: Click the tooltip icon for additional information, whether or not you want to turn it on, or leave it off by default.
-* Logging Aggregator Protocol: Select a connection type (protocol) to communicate with the log aggregator. Subsequent options vary depending on the selected protocol.
-* Logging Aggregator Level Threshold: Select the level of severity you want the log handler to report.
-* TCP Connection Timeout: Specify the connection timeout in seconds. This option is only applicable to HTTPS and TCP log aggregator protocols.
-* Enable/disable HTTPS certificate verification: Certificate verification is enabled by default for HTTPS log protocol. Click the toggle button to btn:[OFF] if you do not want the log handler to verify the HTTPS certificate sent by the external log aggregator before establishing a connection.
-* Loggers to Send Data to the Log Aggregator Form: All four types of data are pre-populated by default. Click the tooltip icon next to the field for additional information on each data type. Delete the data types you do not want.
-* Log Format For API 4XX Errors: Configure a specific error message.
-. Click btn:[Save] to apply the settings or btn:[Cancel] to abandon the changes.
-. To verify if your configuration is set up correctly, btn:[Save] first then click btn:[Test]. This sends a test log message to the log aggregator using the current logging configuration in the {ControllerName}. You should check to make sure this test message was received by your external log aggregator.
+//. Navigate to {PlatformNameShort}.
+//. Click btn:[Settings].
+//. Under the list of System options, select Logging settings.
+//. At the bottom of the Logging settings screen, click btn:[Edit].
+//. Set the configurable options from the fields provided:
+//* Enable External Logging: Click the toggle button to btn:[ON] if you want to send logs to an external log aggregator. The UI requires the Logging Aggregator and Logging Aggregator Port fields to be filled in before this can be done.
+//* Logging Aggregator: Enter the hostname or IP address you want to send logs.
+//* Logging Aggregator Port: Specify the port for the aggregator if it requires one.
+//* Logging Aggregator Type: Select the aggregator service from the drop-down menu:
+//** Splunk
+//** Loggly
+//** Sumologic
+//** Elastic stack (formerly ELK stack)
+//* Logging Aggregator Username: Enter the username of the logging aggregator if required.
+//* Logging Aggregator Password/Token: Enter the password of the logging aggregator if required.
+//* Log System Tracking Facts Individually: Click the tooltip icon for additional information, whether or not you want to turn it on, or leave it off by default.
+//* Logging Aggregator Protocol: Select a connection type (protocol) to communicate with the log aggregator. Subsequent options vary depending on the selected protocol.
+//* Logging Aggregator Level Threshold: Select the level of severity you want the log handler to report.
+//* TCP Connection Timeout: Specify the connection timeout in seconds. This option is only applicable to HTTPS and TCP log aggregator protocols.
+//* Enable/disable HTTPS certificate verification: Certificate verification is enabled by default for HTTPS log protocol. Click the toggle button to btn:[OFF] if you do not want the log handler to verify the HTTPS certificate sent by the external log aggregator before establishing a connection.
+//* Loggers to Send Data to the Log Aggregator Form: All four types of data are pre-populated by default. Click the tooltip icon next to the field for additional information on each data type. Delete the data types you do not want.
+//* Log Format For API 4XX Errors: Configure a specific error message.
+//. Click btn:[Save] to apply the settings or btn:[Cancel] to abandon the changes.
+//. To verify if your configuration is set up correctly, btn:[Save] first then click btn:[Test]. This sends a test log message to the log aggregator using the current logging configuration in the {ControllerName}. You should check to make sure this test message was received by your external log aggregator.
 
 A {ControllerName} account is automatically created for any user who logs in with an LDAP username and password. These users can automatically be placed into organizations as regular users or organization administrators. This means that logging should be turned on when LDAP integration is in use. You can enable logging messages for the SAML adapter the same way you can enable logging for LDAP.
 
