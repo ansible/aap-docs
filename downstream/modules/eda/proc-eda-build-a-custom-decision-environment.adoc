@@ -4,7 +4,7 @@
 
 Decision Environments are {ExecEnvShort}s tailored towards running Ansible Rulebooks.
 
-Similar to {ExecEnvShort}s that run Ansible rulebooks for {ControllerName}, decision environments are designed to run rulebooks for {EDAcontroller}.
+Similar to {ExecEnvShort}s that run Ansible playbooks for {ControllerName}, decision environments are designed to run rulebooks for {EDAcontroller}.
 
 You can create a custom decision environment for {EDAName} that provides a custom maintained or third-party event source plugin that is not available in the default decision environment.
 
@@ -16,15 +16,10 @@ You can create a custom decision environment for {EDAName} that provides a custo
 
 .Procedure
 
-* Add the `de-supported` decision environment to your installed `ansible-builder` package. 
-This image is built from a base image provided by Red Hat called `de-minimal` at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-25/de-supported-rhel9/650a5674ad524b664b693729[{PlatformNameShort} supported decision environment].
+* Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
+This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-25/de-supported-rhel9/650a5674ad524b664b693729[{PlatformNameShort} supported decision environment].
 
 +
-[NOTE]
-====
-Use `de-minimal` as the base image with {Builder} to build your custom decision environments.
-====
-
 [IMPORTANT]
 ====
 * Use the correct {EDAcontroller} decision environment in {PlatformNameShort} to prevent rulebook activation failure.
