@@ -52,10 +52,25 @@ The developer hub pods restart and the plug-ins are installed.
 
 .Verification
 
-Verify that the plug-ins have been installed:
+To verify that the plug-ins have been installed, open the `install-dynamic-plugin` container logs and check that the Ansible plug-ins are visible in {RHDH}:
 
 . Open the Developer perspective for the {RHDH} application in the OpenShift Web console.
-. Check the `install-dynamic-plugin` container logs: the Ansible plug-ins are visible in {RHDH}.
+. Select the *Topology* view.
+. Select the {RHDH} deployment pod to open an information pane.
+. Select the *Resources* tab of the information pane.
+. In the *Pods* section, click *View logs* to open the *Pod details* page.
+. In the *Pod details* page, select the *Logs* tab.
+. Select `install-dynamic-plugins` from the drop-down list of containers to view the container log.
+. In the `install-dynamic-plugin` container logs, search for the Ansible plug-ins.
++
+The following example from the log indicates a successful installation for one of the plug-ins:
++
+-----
+=> Successfully installed dynamic plugin http://plugin-registry-1:8080/ansible-plugin-backstage-rhaap-1.1.0.tgz
+-----
++
+The following image shows the container log in the *Pod details* page.
+The version numbers and file names can differ.
 +
 image::rhdh-check-plugin-config.png[container logs for install-dynamic-plugin]
 
