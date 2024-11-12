@@ -5,28 +5,28 @@
 [cols="50%,50%,50%",options="header"]
 |====
 | *RPM variable name* | *Container variable name* | *Description*
-| *`pg_ssl_mode`* | | Choose one of the two available modes: `prefer` and `verify-full`. 
+| `pg_ssl_mode` | | Choose one of the two available modes: `prefer` and `verify-full`. 
 
-Set to `verify-full` for client-side enforced SSL. 
+Set to `verify-full` for client-side enforced SSL/TLS. 
 
 Default = `prefer`
-| *`postgres_ssl_cert`* | `postgresql_tls_cert` | Location of the PostgreSQL SSL/TLS certificate.
+| `postgres_ssl_cert` | `postgresql_tls_cert` | Location of the PostgreSQL SSL/TLS certificate.
 
 `/path/to/pgsql_ssl.cert`
 
-| *`postgres_ssl_key`* | `postgresql_tls_key` | Location of the PostgreSQL SSL/TLS key.
+| `postgres_ssl_key` | `postgresql_tls_key` | Location of the PostgreSQL SSL/TLS key.
 
 `/path/to/pgsql_ssl.key`
 
-| *`postgres_use_cert`* | | Location of the PostgreSQL user certificate.
+| `postgres_use_cert` | | Location of the PostgreSQL user certificate.
 
 `/path/to/pgsql.crt`
 
-| *`postgres_use_ssl`* | `postgresql_disable_tls` | Determines if the connection between {PlatformNameShort} and the PostgreSQL database should use SSL/TLS. The default for this variable is `false` which means SSL/TLS is not used for PostgreSQL connections. When set to `true`, the platform connects to PostgreSQL by using SSL/TLS.
+| `postgres_use_ssl` | `postgresql_disable_tls` | Determines if the connection between {PlatformNameShort} and the PostgreSQL database should use SSL/TLS. The default for this variable is `false` which means SSL/TLS is not used for PostgreSQL connections. When set to `true`, the platform connects to PostgreSQL by using SSL/TLS.
 
-| *`postgres_max_connections`* | `postgresql_max_connections` | Maximum database connections setting to apply if you are using installer-managed PostgreSQL.
+| `postgres_max_connections` | `postgresql_max_connections` | Maximum database connections setting to apply if you are using installer-managed PostgreSQL.
 
-See link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-database-settings[PostgreSQL database configuration and maintenance for automation controller] for help selecting a value.
+See link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for help selecting a value.
 
 Default = `1024`
 
