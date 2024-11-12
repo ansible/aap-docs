@@ -5,9 +5,9 @@
 [cols="50%,50%,50%",options="header"]
 |====
 | *RPM variable name* | *Container variable name* | *Description*
-| *`admin_email`* | | The email address used for the admin user for {ControllerName}.
+| `admin_email` | | The email address used for the admin user for {ControllerName}.
 
-| *`admin_password`* | `controller_admin_password`| _Required_
+| `admin_password` | `controller_admin_password`| _Required_
 
 {ControllerNameStart} admin password.
 
@@ -15,54 +15,54 @@ Passwords must be enclosed in quotes when they are provided in plain text in the
 
 Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
 
-| *`admin_username`* | `controller_admin_user` | {ControllerNameStart} admin user.
+| `admin_username` | `controller_admin_user` | {ControllerNameStart} admin user.
 
 Default = `admin`
 
-| *`automation_controller_main_url`* | |  {ControllerNameStart} main URL.
+| `automation_controller_main_url` | |  {ControllerNameStart} main URL.
 
-| *`controller_tls_files_remote`* | `controller_tls_remote` | {ControllerNameStart} TLS remote files.
-
-Default = `false`
-
-| *`nginx_disable_hsts`* | `controller_nginx_disable_hsts` | Disable NGINX HTTP Strict Transport Security (HSTS).
+| `controller_tls_files_remote` | `controller_tls_remote` | {ControllerNameStart} TLS remote files.
 
 Default = `false`
 
-| *`nginx_disable_https`* | `controller_nginx_disable_https` | Disable NGINX HTTPS.
+| `nginx_disable_hsts` | `controller_nginx_disable_hsts` | Disable NGINX HTTP Strict Transport Security (HSTS).
 
 Default = `false`
 
-| *`nginx_hsts_max_age`* | `controller_nginx_hsts_max_age` | This variable specifies how long, in seconds, the system must be considered as an _HTTP Strict Transport Security_ (HSTS) host. That is, how long HTTPS is used only for communication.
+| `nginx_disable_https` | `controller_nginx_disable_https` | Disable NGINX HTTPS.
+
+Default = `false`
+
+| `nginx_hsts_max_age` | `controller_nginx_hsts_max_age` | This variable specifies how long, in seconds, the system must be considered as an _HTTP Strict Transport Security_ (HSTS) host. That is, how long HTTPS is used only for communication.
 
 Default = `63072000` seconds, or two years.
 
-| *`nginx_http_port`* | `controller_nginx_http_port` | The NGINX HTTP server listens for inbound connections.
+| `nginx_http_port` | `controller_nginx_http_port` | The NGINX HTTP server listens for inbound connections.
 
 RPM default = `80`
 
 Container default = `8080`
 
-| *`nginx_https_port`* | `controller_nginx_https_port` | The NGINX HTTPS server listens for secure connections.
+| `nginx_https_port` | `controller_nginx_https_port` | The NGINX HTTPS server listens for secure connections.
 
 RPM Default = `443`
 
 Container default = `8443`
 
-| *`nginx_user_headers`* | `controller_nginx_user_headers` | List of NGINX headers for the {ControllerName} web server.
+| `nginx_user_headers` | `controller_nginx_user_headers` | List of NGINX headers for the {ControllerName} web server.
 
 Each element in the list is provided to the web server's NGINX configuration as a separate line. 
 
 Default = empty list
 
-| *`node_state`* | | _Optional_
+| `node_state` | | _Optional_
 
 The status of a node or group of nodes.
 Valid options are `active`, `deprovision` to remove a node from a cluster, or `iso_migrate` to migrate a legacy isolated node to an execution node.
 
 Default = `active`
 
-| *`node_type`* | | For `[automationcontroller]` group.
+| `node_type` | | For `[automationcontroller]` group.
 
 Two valid `node_types` can be assigned for this group.
 
@@ -81,7 +81,7 @@ A `node_type=hop` implies that the node forwards jobs to an execution node.
 A `node_type=execution` implies that the node can run jobs.
 
 Default for this group = `execution`.
-| *`peers`* | | _Optional_
+| `peers` | | _Optional_
 
 The `peers` variable is used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established.
 
@@ -90,15 +90,15 @@ This variable is used to add `tcp-peer` entries in the `receptor.conf` file used
 The peers variable can be a comma-separated list of hosts and groups from the inventory.
 This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
 
-| *`pg_database`* | `controller_pg_database` | The name of the PostgreSQL database.
+| `pg_database` | `controller_pg_database` | The name of the PostgreSQL database.
 
 Default = `awx`
 
-| *`pg_host`* | `controller_pg_host` | _Required_
+| `pg_host` | `controller_pg_host` | _Required_
 
 The PostgreSQL host, which can be an externally managed database.
 
-| *`pg_password`* | `controller_pg_password` | _Required_
+| `pg_password` | `controller_pg_password` | _Required_
 
 The password for the PostgreSQL database.
 
@@ -111,27 +111,27 @@ NOTE
 You no longer have to provide a `pg_hashed_password` in your inventory file at the time of installation, because PostgreSQL 13 can now store user passwords more securely.
 
 When you supply `pg_password` in the inventory file for the installer, PostgreSQL uses the SCRAM-SHA-256 hash to secure that password as part of the installation process.
-| *`pg_port`* | `controller_pg_port` | The PostgreSQL port to use.
+| `pg_port` | `controller_pg_port` | The PostgreSQL port to use.
 
 Default = `5432`
 
-| *`pg_username`* | `controller_pg_username` | Your PostgreSQL database username.
+| `pg_username` | `controller_pg_username` | Your PostgreSQL database username.
 
 Default = `awx`.
 
-| *`supervisor_start_retry_count`* | | When specified, it adds `startretries = <value specified>` to the supervisor config file (/`etc/supervisord.d/tower.ini`).
+| `supervisor_start_retry_count` | | When specified, it adds `startretries = <value specified>` to the supervisor config file (/`etc/supervisord.d/tower.ini`).
 
 See link:http://supervisord.org/configuration.html#program-x-section-values[program:x Section Values] for more information about `startretries`.
 
 No default value exists.
 
-| *`web_server_ssl_cert`* | `controller_tls_cert` | _Optional_
+| `web_server_ssl_cert` | `controller_tls_cert` | _Optional_
 
 `/path/to/webserver.cert`
 
 Same as `automationhub_ssl_cert` but for web server UI and API.
 
-| *`web_server_ssl_key`* | `controller_tls_key` | _Optional_
+| `web_server_ssl_key` | `controller_tls_key` | _Optional_
 
 `/path/to/webserver.key`
 
@@ -141,7 +141,7 @@ Same as `automationhub_server_ssl_key` but for web server UI and API.
 
 Default = `4`
 
-| | `controller_license_file` | The location of your automation controller license file.
+| | `controller_license_file` | The location of your {ControllerName} license file.
 
 For example:
 
