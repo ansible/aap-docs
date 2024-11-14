@@ -7,31 +7,6 @@
 
 [role="_abstract"]
 
-When using a load balancer with {PlatformNameShort} as described in the reference architecture, an additional FQDN is needed for each load-balanced component ({ControllerName} and {PrivateHubName}).
+When using a load balancer with {PlatformNameShort} as described in the deployment topology, an additional FQDN is needed for the load-balancer.
+For example, an FQDN such as `aap.example.com` might be used for the load balancer which in turn directs traffic to each of the {GatewayStart} components defined in the installation inventory.
 
-For example, if the following hosts are defined in the {PlatformNameShort} installer inventory file:
-
------
-[automationgateway]
-gateway0.example.com
-gateway1.example.com
-
-[automationcontroller]
-controller0.example.com
-controller1.example.com
-controller2.example.com
-
-[automationhub]
-hub0.example.com
-hub1.example.com
-hub2.example.com
-
-[automationedacontroller]
-edacontroller0.example.com
-edacontroller1.example.com
-edacontroller2.example.com
------
-
-Then the load balancer can use the FQDNs `controller.example.com` and `hub.example.com` for the user-facing name of these {PlatformNameShort} services.
-
-When a load balancer is used in front of the {PrivateHubName}, the installer must be aware of the load balancer FQDN. Before installing {PlatformNameShort}, in the installation inventory file set the `automationhub_main_url` variable to the FQDN of the load balancer. For example, to match the previous example, you would set the variable to `automationhub_main_url = hub.example.com`.
