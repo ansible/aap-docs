@@ -8,14 +8,14 @@ Customers may implement Azure infrastructure changes or policies that negatively
 In such scenarios, the deployment can transition into a limited support status.
 A deployment may move to a limited support status for many reasons, including the following scenarios:
 
-Inactive Ansible subscription(s)::
-Red Hat issues subscription entitlements through the application deployment process.  The entitlement expires one year after it is issued.  Customers are emailed prior to expiration to renew the entitlement.  This process will issue a new entitlement for the next year and can be imported into {PlatformNameShort}.
+Inactive Ansible subscriptions::
+Red Hat issues subscription entitlements through the application deployment process.  The entitlement expires one year after it is issued.  Customers are emailed prior to expiration to renew the entitlement.  This process issues a new entitlement for the next year and can be imported into {PlatformNameShort}.
 Failure to renew:::
-When an entitlement expires, customers can continue to use {AAPonAzureNameShort}. However, Red Hat support will require a valid entitlement before assisting with support issues.
+When an entitlement expires, customers can continue to use {AAPonAzureNameShort}. However, Red Hat support requires a valid entitlement before assisting with support issues.
 Changes to customized policies::
 {AAPonAzureNameShort} runs on infrastructure within a customer’s Azure tenant.  This means that customer Azure policies can affect the deployment and function of the platform.  Given the flexibility of Azure policy definitions, it is impossible to list all policies that can cause infrastructure or operational issues with the platform.  When those events happen, the Red Hat SRE team can help identify the policy causing the issue, and suggested remediation.  That remediation may require customer policy changes in order for the managed application to function correctly.
 Failure to remediate:::
-When a policy conflict arises, the Red Hat team will attempt to reach out to the customer to remediate. Some of these changes are time sensitive and can impact the platform’s operational function. Red Hat SRE team maintenance and upgrades tasks will be on hold until the customer resolves the policy issues.
+When a policy conflict arises, the Red Hat team reaches out to the customer to remediate. Some of these changes are time sensitive and can impact the platform’s operational function. The Red Hat Site Reliability Engineering (SRE) team will pause maintenance and upgrades until the customer resolves the policy issues.
 Changes to firewall and network configurations::
 When configuring egress routes from {AAPonAzureNameShort}, customers are required to route traffic to a set of domains on the public internet used for the deployment, monitoring and maintenance of the platform.
 Failure to set up:::
@@ -25,6 +25,6 @@ A prerequisite for {AAPonAzureNameShort} requires adequate capacity to deploy th
 Failure to remediate:::
 As the Red Hat SRE team perform regular maintenance and improvements, the quota limitations in the region could prevent them to manage the deployment consistently and can eventually result in an inability to manage the offering.
 Incorrect CIDR ranges::
-During initial deployment, customers can configure networking address range (CIDR block) for the VNet the {PlatformNameShort} uses. Once configured, Azure does not allow CIDR blocks to be changed once a network is created, and so a change would requires a redeployment of the managed {PlatformNameShort} application with the configurations specified in the documentation.
+During initial deployment, customers can configure networking address range (CIDR block) for the VNet the {PlatformNameShort} uses. After configuration, when you have created the network, you cannot change CIDR blocks. To male a change you must redeploy the managed {PlatformNameShort} application with the configurations specified in the documentation.
 Failure to remediate:::
 While the Azure user experiences allow customers to set CIDR blocks of choice, the use of the smaller CIDR ranges smaller than our guidelines can create the circumstance that your deployment is in limited supported state where the platform is unable to scale for both automation and management workloads.
