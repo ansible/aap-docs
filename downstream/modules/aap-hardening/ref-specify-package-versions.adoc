@@ -1,0 +1,42 @@
+[id="ref-specify-package-versions"]
+
+= Specifying package versions
+
+For production systems, a well-established configuration management practice is to deploy only known, tested combinations of software to ensure that systems are configured correctly and perform as expected. 
+This includes deploying only known versions of operating system software and patches to ensure that system updates do not introduce problems with production applications. 
+
+[NOTE]
+====
+The following example playbook installs a specific version of the `httpd` RPM and its dependencies when the target host uses the RHEL 9 operating system. 
+This playbook does not take action if the specified versions are already in place or if a different version of RHEL is installed.
+====
+----
+- name: Install specific RPM versions
+  hosts: target_hosts
+  gather_facts: true
+  become: true
+
+  vars:
+    httpd_packages_rhel9:
+      - httpd-2.4.53-11.el9_2.5
+      - httpd-core-2.4.53-11.el9_2.5
+      - httpd-filesystem-2.4.53-11.el9_2.5
+      - httpd-tools-2.4.53-11.el9_2.5
+      - mod_http2-1.15.19-4.el9_2.4
+      - mod_lua-2.4.53-11.el9_2.5
+    
+  tasks:
+    - name: Install httpd and dependencies
+      ansible.builtin.dnf:
+        name: '{{ httpd_packages_rhel9 }}'
+        state: present
+        allow_downgrade: true
+    when:
+      - ansible_distribution == "RedHat"
+      - ansible_distribution_major_version == "9"
+----
+
+[NOTE]
+==== 
+By setting `allow_downgrade: true`, if a newer version of any defined package is installed on the system, it is downgraded to the specified version instead.
+====

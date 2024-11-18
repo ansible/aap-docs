@@ -1,0 +1,18 @@
+[id="ref-keep-up-to-date"]
+
+= Keeping everything up to date
+
+For some {RHEL} servers, such as a lab or other non-production systems, you might want to install all available patches on a regular cadence. 
+The following example playbook might be used in a job template that is scheduled to run weekly, and updates the system with all of the latest RPMs.
+
+----
+- name: Install all available RPM updates
+  hosts: target_hosts
+  become: true
+
+  tasks:
+    - name: Install latest RPMs
+      ansible.builtin.dnf:
+        name: '*'
+        state: latest
+----
