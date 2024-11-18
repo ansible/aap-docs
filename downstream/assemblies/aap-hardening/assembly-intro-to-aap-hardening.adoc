@@ -10,15 +10,29 @@ ifdef::context[:parent-context: {context}]
 
 This document provides guidance for improving the security posture (referred to as “hardening” throughout this guide) of your {PlatformName} deployment on {RHEL}.
 
-Other deployment targets, such as OpenShift, are not currently within the scope of this guide. {PlatformNameShort} managed services available through cloud service provider marketplaces are also not within the scope of this guide.
+The following are not currently within the scope of this guide:
 
-This guide takes a practical approach to hardening the {PlatformNameShort} security posture, starting with the planning and architecture phase of deployment and then covering specific guidance for installation, initial configuration, and day two operations. As this guide specifically covers {PlatformNameShort} running on {RHEL}, hardening guidance for {RHEL} will be covered where it affects the automation platform components. Additional considerations with regards to the Defense Information Systems Agency (DISA) Security Technical Implementation Guides (STIGs) are provided for those organizations that integrate the DISA STIG as a part of their overall security strategy.
+* Other deployment targets for {PlatformNameShort}, such as OpenShift.
+* {PlatformNameShort} managed services available through cloud service provider marketplaces.
+//* Additional considerations with regards to the _Defense Information Systems Agency_ (DISA) _Security Technical Implementation Guides_ (STIGs)
 
 [NOTE]
 ====
-These recommendations do not guarantee security or compliance of your deployment of {PlatformNameShort}. You must assess security from the unique requirements of your organization to address specific threats and risks and balance these against implementation factors.
+Hardening and compliance for {PlatformNameShort} 2.4 includes additional considerations with regards to the specific _Defense Security Information Agency_ (DISA) _Security Technical Implementation Guides_ (STIGs) for {ControllerName}, but this guidance does not apply to {PlatformNameShort} {PlatformVers}.
+====
+
+This guide takes a practical approach to hardening the {PlatformNameShort} security posture, starting with the planning and architecture phase of deployment and then covering specific guidance for installation, initial configuration, and day 2 operations. 
+As this guide specifically covers {PlatformNameShort} running on {RHEL}, hardening guidance for {RHEL} will be covered where it affects the automation platform components. 
+Additional considerations with regards to the Defense Information Systems Agency (DISA) Security Technical Implementation Guides (STIGs) for {RHEL} are provided for those organizations that integrate the DISA STIGs as a part of their overall security strategy.
+
+[NOTE]
+====
+These recommendations do not guarantee security or compliance of your deployment of {PlatformNameShort}. 
+You must assess security from the unique requirements of your organization to address specific threats and risks and balance these against implementation factors.
 ====
 
 include::aap-hardening/con-hardening-guide-audience.adoc[leveloffset=+1]
 include::aap-hardening/con-product-overview.adoc[leveloffset=+1]
+
+include::aap-hardening/con-deployment-methods.adoc[leveloffset=+2]
 include::aap-hardening/con-platform-components.adoc[leveloffset=+2]
