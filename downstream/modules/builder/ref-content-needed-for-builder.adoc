@@ -1,0 +1,19 @@
+[id="ref-content-needed-for-builder"]
+
+= Content needed for an execution environment 
+
+Ansible-builder is used to create an {ExecEnvShort}.
+
+An {ExecEnvShort} must contain:
+
+* Ansible
+* Ansible Runner
+* Ansible Collections
+* Python and system dependencies of:
+** modules or plugins in collections
+** content in ansible-base
+**custom user needs
+
+Building a new {ExecEnvShort} involves a definition that specifies which content you want to include in your {ExecEnvShort}, such as collections, Python requirements, and system-level packages. 
+The definition must be a `.yml` file
+The content from the output generated from migrating to {ExecEnvShort}s has some of the required data that can be piped to a file or pasted into this definition file.
