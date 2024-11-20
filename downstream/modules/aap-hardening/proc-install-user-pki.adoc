@@ -12,7 +12,7 @@ By default, {PlatformNameShort} creates self-signed PKI certificates for the inf
 Use the following inventory variables to configure the infrastructure components with the new certificates.
 
 .PKI certificate inventory variables
-|===
+|====
 | *RPM Variable* | *Containerized Variable* | *Details*
 | `custom_ca_cert` | `custom_ca_cert` | The file name of the CA certificate located in the installer directory.
 
@@ -35,12 +35,12 @@ Defines a custom CA certificate here when you have the leaf certificates created
 | `automationedacontroller_ssl_key` | `eda_tls_key` | The file name of the {EDAcontroller} PKI key located in the installer directory.
 | - | `gateway_tls_cert` | The filename of the {Gateway} PKI certificate located in the installer directory.
 | - | `gateway_tls_key` | The file name of the {Gateway} PKI key located in the installer directory.
-|===
+|====
 
 When multiple {Gateway}s are deployed with a load balancer, the `gateway_tls_cert` and `gateway_tls_key` are shared by each {Gateway}. 
-To prevent hostname mismatches, the certificate's Common Name (CN) must match the DNS FQDN used by the load balancer. 
+To prevent hostname mismatches, the certificate's _Common Name_ (CN) must match the DNS FQDN used by the load balancer. 
 //This also applies when deploying multiple {PrivateHubName} and the `automationhub_ssl_cert` and `automationhub_ssl_key` variables. 
-If your organizational policies require unique certificates for each service, each certificate requires a Subject Alt Name (SAN) that matches the DNS FQDN used for the load-balanced service. 
+If your organizational policies require unique certificates for each service, each certificate requires a _Subject Alt Name_ (SAN) that matches the DNS FQDN used for the load-balanced service. 
 To install unique certificates and keys on each {Gateway}, the certificate and key variables in the installation inventory file must be defined as per-host variables instead of in the `[all:vars]` section. 
 For example:
 
