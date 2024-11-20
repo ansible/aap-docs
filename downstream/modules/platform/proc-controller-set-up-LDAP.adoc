@@ -6,6 +6,11 @@
 
 As a platform administrator, you can configure LDAP as the source for account authentication information for {PlatformNameShort} users. 
 
+[NOTE]
+====
+If the LDAP server you want to connect to has a certificate that is self-signed or signed by a corporate internal certificate authority (CA), the CA certificate must be added to the system’s trusted CAs. Otherwise, connection to the LDAP server will result in an error that the certificate issuer is not recognized.
+====
+
 When LDAP is configured, an account is created for any user who logs in with an LDAP username and password and they can be automatically placed into organizations as either regular users or organization administrators. 
 
 Users created through an LDAP login should not change their username, first name, last name, or set a local password for themselves. Any changes made to this information is overwritten the next time the user logs in to the platform. 
