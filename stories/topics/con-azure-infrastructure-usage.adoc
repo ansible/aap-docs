@@ -2,7 +2,7 @@
 
 = {AAPonAzureNameShort} infrastructure usage
 
-When you install {AAPonAzureNameShort}, the following infrastructure is deployed into your {Azure} subscription:
+When you install {AAPonAzureNameShort}, you deploy the following infrastructure into your {Azure} subscription:
 
 Managed identity:: A {Azure} service that enables {PlatformNameShort} components to communicate with other {Azure} services such as database, DNS, storage, and other services.
 Key vault:: A secure key vault used to store secrets that are unique to the {PlatformNameShort} deployment.
@@ -12,15 +12,15 @@ Storage account:: The {Azure} service is used for file and block storage such as
 +
 **Service Shape:**
 +
-* StorageV2 - Standard_LRS if disaster recovery is not enabled
-* StorageV2 - Standard_GRS if disaster recovery is enabled
+* If disaster recovery is not enabled: StorageV2 - Standard_LRS 
+* If disaster recovery is enabled: StorageV2 - Standard_GRS
 Virtual network:: The {Azure} service is used to manage all internal networking and dependent services such as the Azure Application Gateway.
 +
 **Service Shape:** Application Gateway: WAF_v2
 
 Azure Kubernetes service (AKS):: The Kubernetes cluster used to deploy {PlatformNameShort} applications and services.
 +
-**Service Shape for all AAP plan sizes:**
+**Service Shape for all Ansible Automation Platform plan sizes:**
 +
 * Compute nodes: Standard_D4ds_v5 (4 vCPUs x 16 GiB)
 * Autoscaling minimum nodes: 3
@@ -30,7 +30,7 @@ The following table presents the different configuration tiers based on the plan
 +
 [cols="a,a,a,a"]
 |===
-|AAP plan size (minimum node count) | Database shape configuration | Database storage | link:https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#storage[IOPS]
+|Ansible Automation Platform plan size (minimum node count) | Database shape configuration | Database storage | link:https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-compute-storage#storage[IOPS]
 |50 | Standard_D2s_v3 | 512 GB | Provisioned 2,300; up to 3,500
 |400 | Standard_D4s_v3 | 512 GB | Provisioned 2,300; up to 3,500
 |1000 | Standard_D2s_v3 | 512 GB | Provisioned 2,300; up to 3,500
@@ -45,4 +45,4 @@ Microsoft provides a link:https://azure.microsoft.com/en-us/pricing/calculator/[
 Red Hat has configured an example scenario in the pricing calculator: use the link:https://azure.com/e/d12a08795a4942c1801c610810791764[Red Hat Ansible Automation Platform on Azure Infrastructure Estimate] to tune Kubernetes expected auto scaling variables based on your organization’s workloads.
 
 If Red Hat determines that a deployment’s automation might exceed the capabilities of the current tier of the deployment,
-then Red Hat SREs will work with you to upgrade the infrastructure tier based on automation needs.
+then Red Hat site reliability engineers  work with you to upgrade the infrastructure tier based on automation needs.

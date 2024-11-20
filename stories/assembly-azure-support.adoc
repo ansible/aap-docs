@@ -21,7 +21,7 @@ For more information about Azure Virtual Appliance Routing, see the link:https:/
 
 {AAPonAzureNameShort} uses Azure's managed DNS services when deployed.
 
-To use private DNS records that cannot be resolved publicly, you can either use Azure Private DNS zones that are peered to the managed application VNET, or you can make a submit request to Red Hat to submit DNS zones that should be forwarded to a customer-managed private DNS server.
+To use private DNS records that cannot be resolved publicly, you can either use Azure Private DNS zones that are peered to the managed application VNET, or you can make a submit request to Red Hat to submit DNS zones that must be forwarded to a customer-managed private DNS server.
 
 A limitation of Private DNS zones is that only one instance of a given zone may be linked to a Virtual Network.
 Attempting to link zones that match the names of Private DNS zones in the managed resource group causes conflicts.
@@ -32,7 +32,7 @@ You can then unlink Private DNS zones in the managed resource group from the Vir
 
 Failure to properly maintain the records in the Private DNS zone can prevent the managed application from operating.
 
-The AKS Private DNS zone cannot be customer managed and still allow Red Hat to update or upgrade the managed AKS that is a part of this offering.
+The Azure Kubernetes Service (AKS) Private DNS zone cannot be customer managed and still allow Red Hat to update or upgrade the managed AKS that is a part of this offering.
 To allow Red Hat to upgrade the customer AKS to the latest version during the maintenance windows, do not unlink the `<GUID>.privatelink.<region>.azmk8s.io` Private DNS zone.
 For more information on this limitation, see link:https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/create-upgrade-delete/createorupdatevirtualnetworklinkfailed-error["CreateOrUpdateVirtualNetworkLinkFailed" error when updating or upgrading an AKS cluster] in the Microsoft Azure documentation.
 
