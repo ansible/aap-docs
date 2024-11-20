@@ -1,10 +1,10 @@
 [id="controller-set-up-azure"]
 
-= Configuring {Azure} active directory authentication
+= Configuring {MSEntraID} authentication
 
-To set up enterprise authentication for {Azure} Active Directory (AD), you need to obtain an OAuth2 key and secret by registering your organization-owned application from Azure using the link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[Quickstart: Register an application with the Microsoft identity platform]. 
+To set up enterprise authentication for {MSEntraID}, formerly known as {Azure} Active Directory (AD), you need to obtain an OAuth2 key and secret by registering your organization-owned application from Azure using the link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[Quickstart: Register an application with the Microsoft identity platform]. 
 
-Each key and secret must belong to a unique application and cannot be shared or reused between different authentication backends. To register the application, you must supply it with your webpage URL, which is the Callback URL shown in the Authenticator details for your authenticator configuration. See dxref:gw-display-auth-details[Displaying authenticator details] for instructions on accessing this information.  
+Each key and secret must belong to a unique application and cannot be shared or reused between different authentication backends. To register the application, you must supply it with your webpage URL, which is the Callback URL shown in the Authenticator details for your authenticator configuration. See xref:gw-display-auth-details[Displaying authenticator details] for instructions on accessing this information.  
 
 .Procedure
 
@@ -12,17 +12,17 @@ Each key and secret must belong to a unique application and cannot be shared or 
 . Click btn:[Create authentication].
 . Select *Azuread* from the *Authentication type* list and click btn:[Next].
 . Enter a *Name* for this authentication configuration.
-. Click btn:[Edit], copy and paste Microsoft’s *Application (Client) ID* to the *OIDC Key* field.
+. Click btn:[Edit], copy and paste Microsoft's *Application (Client) ID* to the *OIDC Key* field.
 + 
 Following instructions for link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[registering your application with the Microsoft identity platform], supply the key (shown at one time only) to the client for authentication. 
 +
-. Copy and paste the secret key created for your Microsoft Azure AD application to the OIDC Secret field.
+. Copy and paste the secret key created for your {MSEntraID}/{Azure} AD application to the *OIDC Secret* field.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 +
-Click btn:[Next].
+. Click btn:[Next].
 
 include::snippets/snip-gw-authentication-verification.adoc[]
 
@@ -32,4 +32,4 @@ include::snippets/snip-gw-authentication-next-steps.adoc[]
 
 [role="_additional-resources"]
 .Additional resources
-For application registering basics in {Azure} AD, see the link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?] overview.
+For application registering basics in {MSEntraID}/{Azure} AD, see the link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?] overview.
