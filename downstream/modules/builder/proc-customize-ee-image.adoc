@@ -2,15 +2,16 @@
 
 = Customizing an existing {ExecEnvName} image
 
-Ansible Controller includes the following default execution environments:
+{ControllerNameStart} includes the following default execution environments:
 
-* `Minimal` - Includes the latest Ansible-core 2.15 release along with {Runner}, but does not include collections or other content
+* `Minimal` - Includes the latest Ansible-core {CoreInstVersion} release along with {Runner}, but does not include collections or other content
 * `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
 
-While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. The following procedure adds the `kubernetes.core` collection to the `ee-minimal` default image:
+While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. 
+The following procedure adds the `kubernetes.core` collection to the `ee-minimal` default image:
 
 .Procedure
-. Log in to `registry.redhat.io` via Podman:
+. Log in to `registry.redhat.io` through Podman:
 +
 ----
 $ podman login -u="[username]" -p="[token/hash]" registry.redhat.io
@@ -30,8 +31,10 @@ collections:
   - kubernetes.core
 ----
 ====
-.. For more information about definition files and their content, see the <<assembly-definition-file-breakdown,definition file breakdown section>>.
-. In the {ExecEnvShort} definition file, specify the original `ee-minimal` container's URL and tag in the `EE_BASE_IMAGE` field. In doing so, your final `execution-environment.yml` file will look like the following:
++
+For more information about definition files and their content, see the <<assembly-definition-file-breakdown,definition file breakdown section>>.
+. In the {ExecEnvShort} definition file, specify the original `ee-minimal` container's URL and tag in the `EE_BASE_IMAGE` field. 
+In doing so, your final `execution-environment.yml` file appears similar to the following:
 +
 .A customized `execution-environment.yml` file
 [example]
@@ -91,7 +94,8 @@ $ podman tag [username]/new-ee [automation-hub-IP-address]/[username]/new-ee
 +
 [NOTE]
 =====
-You must have `admin` or appropriate container repository permissions for {HubName} to push a container. For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/managing_automation_content/index#managing-containers-hub[Manage containers in private automation hub].
+You must have `admin` or appropriate container repository permissions for {HubName} to push a container. 
+For more information, see link:{URLHubManagingContent}/managing-containers-hub[Manage containers in private automation hub].
 =====
 +
 -----
