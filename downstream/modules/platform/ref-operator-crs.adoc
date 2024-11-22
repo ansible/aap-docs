@@ -649,3 +649,19 @@ spec:
 # * {LightspeedShortName} is not deployed
 ----
 
+== EDA_MAX_RUNNING_ACTIVATIONS
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  eda:
+    extra_settings:
+      - setting: EDA_MAX_RUNNING_ACTIVATIONS
+        value: "15" # Setting this value to "-1" means there will be no limit
+
+----
