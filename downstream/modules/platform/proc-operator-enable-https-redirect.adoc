@@ -1,0 +1,33 @@
+[id="proc-operator-enable-https-redirect"]
+
+= Enabling HTTPS redirect for single sign-on (SSO) for {Gateway} on {OCPShort}
+
+HTTPS redirect for SAML, allows you to log in once and access all of the {Gateway} without needing to reauthenticate.
+
+.Prerequisites 
+
+* You have successfully configured SAML in the gateway from the {OperatorPlatformNameShort}. Refer to link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/access_management_and_authentication/index#controller-set-up-SAML[Configuring SAML authentication] for help with this.
+
+.Procedure
+
+. Log in to {OCP}.
+. Go to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Select *All Instances* and go to your *AnsibleAutomationPlatform* instance.
+. Click the  {MoreActionsIcon} icon and then select btn:[Edit AnsibleAutomationPlatform].
+. In the *YAML view* paste the following YAML code under the `spec:` section:
+----
+spec:
+  extra_settings:
+    - setting: REDIRECT_IS_HTTPS
+      value: '"True"'
+
+----
+. Click btn:[Save].
+
+.Verification
+
+After you have added the `REDIRECT_IS_HTTPS` setting, wait for the pod to redeploy automatically. You can verify this setting makes it into the pod by running:
+----
+oc exec -it <gateway-pod-name> -- grep REDIRECT /etc/ansible-automation-platform/gateway/settings.py
+----
