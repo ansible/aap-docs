@@ -31,46 +31,46 @@ By default, {PlatformNameShort} {HubName} and {ControllerName} are installed usi
 
 To ensure that automation controller downloads the execution environment from automation hub, you must import the hub’s Certificate Authority (CA) certificate as a trusted certificate on the controller. You can do this in one of two ways, depending on whether SSH is available as root user between {ControllerName} and {PrivateHubName}. 
 
-=== Using secure copy (SCP) as a root user
+//=== Using secure copy (SCP) as a root user
 
-If SSH is available as the root user between the controller and {PrivateHubName}, use SCP to copy the root certificate on the {PrivateHubName} to the controller.
+//If SSH is available as the root user between the controller and {PrivateHubName}, use SCP to copy the root certificate on the {PrivateHubName} to the controller.
 
 
-.Procedure
-
- . Run `update-ca-trust` on the controller to update the CA trust store:
-
-----
-$ sudo -i
-# scp <hub_fqdn>:/etc/pulp/certs/root.crt
-/etc/pki/ca-trust/source/anchors/automationhub-root.crt
-# update-ca-trust
-----
-
-=== Copying and pasting as a non root user
-
-If SSH is unavailable as root between the {PrivateHubName} and the controller, copy the contents of the file __/etc/pulp/certs/root.crt__ on the {PrivateHubName} and paste it into a new file on the controller called __/etc/pki/ca-trust/source/anchors/automationhub-root.crt__. 
-
-.Procedure
-
-. Run `update-ca-trust` to update the CA trust store with the new certificate. On the {PrivateHubName}, run:
-
-----
-$ sudo -i
-# cat /etc/pulp/certs/root.crt
-(copy the contents of the file, including the lines with 'BEGIN CERTIFICATE' and
-'END CERTIFICATE')
-----
-
-. On the {ControllerName}:
-
-----
-$ sudo -i
-# vi /etc/pki/ca-trust/source/anchors/automationhub-root.crt
-(paste the contents of the root.crt file from the private automation hub into the new file and write to disk)
-# update-ca-trust
-----
-
+//.Procedure
+//
+// . Run `update-ca-trust` on the controller to update the CA trust store:
+//
+//----
+//$ sudo -i
+//# scp <hub_fqdn>:/etc/pulp/certs/root.crt
+// /etc/pki/ca-trust/source/anchors/automationhub-root.crt
+//# update-ca-trust
+//----
+//
+//=== Copying and pasting as a non root user
+//
+//If SSH is unavailable as root between the {PrivateHubName} and the controller, copy the contents of the file __/etc/pulp/certs/root.crt__ on the {PrivateHubName} and paste it into a new file on the controller called __/etc/pki/ca-trust/source/anchors/automationhub-root.crt__. 
+//
+//.Procedure
+//
+//. Run `update-ca-trust` to update the CA trust store with the new certificate. On the {PrivateHubName}, run:
+//
+//----
+//$ sudo -i
+//# cat /etc/pulp/certs/root.crt
+//(copy the contents of the file, including the lines with 'BEGIN CERTIFICATE' and
+//'END CERTIFICATE')
+//----
+//
+//. On the {ControllerName}:
+//
+//----
+//$ sudo -i
+//# vi /etc/pki/ca-trust/source/anchors/automationhub-root.crt
+//(paste the contents of the root.crt file from the private automation hub into the new file and write to disk)
+//# update-ca-trust
+//----
+//
 
 .Additional Resources
 
