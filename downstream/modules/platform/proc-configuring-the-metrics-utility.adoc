@@ -5,16 +5,16 @@
 [id="configuring-the-metrics-utility"]
 = Configuring metrics-utility
 
-
-== On RHEL 
+== On {RHEL} 
 
 .Prerequisites:
 
 * An active {PlatformNameShort} subscription
 
-
-Metrics-utility is included with {PlatformNameShort}, so no separate installation is needed. The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. You can configure these commands as cronjobs to ensure they run at the beginning of every month. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more on configuring using the cron syntax. 
-
+Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
+The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
+You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
+See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
 
 .Procedure
 
@@ -25,7 +25,7 @@ Metrics-utility is included with {PlatformNameShort}, so no separate installatio
 crontab -e
 ----
 +
-. Specify the following variables to indicate where the report will be deposited in your file system:
+. Specify the following variables to indicate where the report is deposited in your file system:
 +
 [source, ]
 ----
@@ -56,17 +56,16 @@ export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
 metrics-utility gather_automation_controller_billing_data --ship --until=10m
 ----
 +
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the example below, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 am. 
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 AM. 
 +
 [source, ]
 ----
 0 */1 * * * metrics-utility gather_automation_controller_billing_data --ship --until=10m
-0 4 2 * *  metrics-utili
-ty build_report
+0 4 2 * *  metrics-utility build_report
 ----
 +
 . Save and close the file.
-. To verify that your changes are saved, run:
+. To verify that you saved your changes, run:
 +
 [source, ]
 ----
@@ -80,7 +79,7 @@ crontab -l
 cat /var/log/cron 
 ----
 +
-The following is an example of the output. Note that time and date may vary depending on how your configure the run schedule:
+The following is an example of the output. Note that time and date might vary depending on how your configure the run schedule:
 +
 [source, ]
 ----
@@ -115,7 +114,7 @@ Follow the steps below to configure the run schedule for `metrics-utility` on {O
 
 NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on {OCPShort}.
 
-=== Create a ConfigMap in the Openshift UI YAML view
+=== Create a ConfigMap in the OpenShift UI YAML view
 
 . From the navigation panel on the left side, select *ConfigMaps*, and then click the *Create ConfigMap* button.
 . On the next screen, select the *YAML view* tab.
