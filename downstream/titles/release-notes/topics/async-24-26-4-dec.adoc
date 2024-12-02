@@ -1,0 +1,82 @@
+[id="async-24-6-4-dec"]
+
+= {PlatformNameShort} patch release December 4, 2024
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== Enhancements
+
+=== {PlatformNameShort}
+
+* {LightspeedShortName} has been updated to 2.4.241127.
+
+=== {OperatorPlatformNameShort}
+
+* With this update you can set PostgreSQL SSL/TLS mode to `verify-full` or `verify-ca` with the proper `sslrootcert` configuration in the {HubName} Operator.
+
+=== {ControllerNameStart}
+
+* With this update, support was added for receiving webhooks from Bitbucket Data Center. Additionally, support was added for posting build statuses back.
+
+=== RPM-based {PlatformNameShort}
+
+* The 2.4-8 installer can restore a backup created with 2.4-8 or later, but cannot restore backups created with 2.4-1 to 2.4-7. The 2.4-7 installer can restore backups created with 2.4-1 to 2.4-7. Ensure that you make a backup before and after the upgrade to 2.4-8 or later.
+
+* With this update, installer tasks that include CA or key information are obfuscated. 
+
+== Bug fixes
+
+=== General
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2024-9902[CVE-2024-9902] `ansible-core`: Ansible-core user can read or write unauthorized content.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-8775[CVE-2024-8775] `ansible-core`: Exposure of sensitive information in Ansible vault files due to improper logging.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-45801[CVE-2024-45801] `automation-controller`: XSS vulnerability via prototype pollution.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-45296[CVE-2024-45296] `automation-controller`: Backtracking regular expressions causes ReDoS.
+
+* link:https://access.redhat.com/security/cve/CVE-2024-52304[CVE-2024-52304] `automation-controller`: `aiohttp` vulnerable to request smuggling due to wrong parsing of chunk extensions.
+
+=== {PlatformNameShort}
+
+* The *Notification List* no longer errors when notifications have a missing or null organization field.
+
+=== {OperatorPlatformNameShort}
+
+* Fixed a parsing issue with the `node_selector` parameter so it is now correctly evaluated as a dictionary. 
+
+* The `/var/log/tower` directory is now pre-created by mounting an `emptyDir` so the directory exists and web logging does not throw a permission error. 
+
+=== {ControllerNameStart}
+
+* Fixed job schedules running at the wrong time when the `rrule` interval was set to `HOURLY` or `MINUTELY`.
+
+* Fixed an issue where sensitive data was displayed in the job output. 
+
+* With this update, you can now save a constructed inventory when verbosity is greater than 2.
+
+* Fixed an issue where unrelated jobs could be marked as a dependency of other jobs. 
+
+* Fixed an issue where Thycotic secret server credentials form fields were mis-matched.
+
+=== Execution environments
+
+* `ansible.utils` collection has been updated to 5.1.2.
+
+=== Receptor
+
+* Fixed an issue that caused a receptor runtime panic error. 
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where the `metrics-utility` command failed to run after updating {ControllerName}. 
+
+* Fixed an issue where the dispatcher service went into `FATAL` status and failed to process new jobs after a database outage.
+
+* With this update, the receptor data directory can now be configured using the `receptor_datadir` variable. 
+
+* Fixed an issue that caused wrong IDs for RBAC in the database following a backup restore.
+
