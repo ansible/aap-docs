@@ -1,0 +1,116 @@
+[[aap-25-5-4-dec]]
+
+= {PlatformNameShort} patch release December 4, 2024
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== Enhancements
+
+=== {PlatformNameShort}
+
+* {LightspeedShortName} has been updated to 2.5.241127.
+
+* `redhat.insights` Ansible collection has been updated to 1.3.0. 
+
+* `ansible.eda` collection has been updated to 2.2.0 in {ExecEnvShort} and decision environment images. 
+
+=== {OperatorPlatformNameShort}
+
+* With this update, you can set PostgreSQL SSL/TLS mode to `verify-full` or `verify-ca` with the proper `sslrootcert` configuration in the {HubName} Operator.
+
+=== Container-based {PlatformNameShort}
+
+* With this update, `ID` and `Image` fields from a container image are used instead of `Digest` and `ImageDigest` to trigger a container update. 
+
+* With this update, you can now update the registry URL value in {EDAName} credentials. 
+
+* With this update, the `kernel.keys.maxkeys` and `kernel.keys.maxbytes` settings are increased on systems with large memory configuration. 
+
+* Added `ansible_connection=local` to the `inventory-growth file` and clarified its usage. 
+
+=== Documentation updates
+
+* With this update, the Container growth topology and Container enterprise topology have been updated to include s390x (IBM Z) architecture test support. 
+
+=== RPM-based {PlatformNameShort}
+
+* With this update, you can now update the registry URL value in {EDAName} credentials.
+
+== Bug fixes
+
+=== General
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2024-52304[CVE-2024-52304] `automation-controller`: `aiohttp` vulnerable to request smuggling due to wrong parsing of chunk extensions.
+
+=== {OperatorPlatformNameShort}
+
+* With this update, missing {OperatorPlatformNameShort} custom resource definitions (CRDs) are added to the `aap-must-gather` container image.
+
+* Disabled {Gateway} authentication in the proxy configuration to prevent HTTP 502 errors when the control plane is down.
+
+* The Red Hat favicon is now correctly displayed on {ControllerName} and {EDAName} API tabs. 
+
+* With this update, the {ControllerName} admin password is now reused during upgrade from {PlatformNameShort} 2.4 to 2.5. 
+
+* Fixed undefined variable (`_controller_enabled`) when reconciling an `AnsibleAutomationPlatformRestore`. Fixed {HubName} Operator `pg_restore` error on restores due to a wrong database secret being set. 
+
+=== {ControllerNameStart}
+
+* Updated the minor version of uWSGI to obtain updated log verbiage.
+
+* Fixed job schedules running at the wrong time when the `rrule` interval was set to `HOURLY` or `MINUTELY`.
+
+* Fixed an issue where sensitive data was displayed in the job output. 
+
+* Fixed an issue where unrelated jobs could be marked as a dependency of other jobs. 
+
+* Included pod anti-affinity configuration on default container group pod specification to optimally spread workload. 
+
+=== Container-based {PlatformNameShort}
+
+* With this update, you cannot change the `postgresql_admin_username` value when using a managed database node.
+
+* Added update support for PCP monitoring role. 
+
+* Disabled {Gateway} authentication in the proxy configuration to prevent HTTP 502 errors when the control plane is down. 
+
+* With this update, you can use dedicated nodes for the Redis group. 
+
+* Fixed an issue where disabling TLS on {Gateway} would cause installation to fail. 
+
+* Fixed an issue where disabling TLS on {Gateway} proxy would cause installation to fail. 
+
+* Fixed an issue where {Gateway} uninstall would leave container systemd unit files on disk.
+
+* Fixed an issue where the {HubName} container signing service creation failed when `hub_collection_signing=false` but `hub_container_signing=true`. 
+
+* Fixed an issue with the `HOME` environment variable for receptor containers which would cause a “Permission denied” error on the containerized execution node. 
+
+* Fixed an issue where not setting up the GPG agent socket properly when many hub nodes are configured, resulted in not creating a GPG socket file in `/var/tmp/pulp`.
+
+* With this update, you can now change the {Gateway} port value after the initial deployment.
+
+=== Receptor
+
+* Fixed an issue that caused a Receptor runtime panic error. 
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where the `metrics-utility` command failed to run after updating {ControllerName}. 
+
+* Fixed the owner and group permissions on the `/etc/tower/uwsgi.ini` file. 
+
+* Fixed an issue where not having `eda_node_type` defined in the inventory file would result in backup failure. 
+
+* Fixed an issue where not having `routable_hostname` defined in the inventory file would result in a restore failure.
+
+* With this update, the `inventory-growth` file is now included in the RPM installer.
+
+* Fixed an issue where the dispatcher service went into `FATAL` status and failed to process new jobs after a database outage of a few minutes. 
+
+* Disabled {Gateway} authentication in the proxy configuration to allow access to the UI when the control plane is down. 
+
+* With this update, the Receptor data directory can now be configured using the `receptor_datadir` variable. 
+
