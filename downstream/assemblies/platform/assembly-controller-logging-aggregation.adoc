@@ -33,9 +33,10 @@ This can have an impact on memory use.
 When the queue reaches 75% of this number, the queue starts writing to disk (`queue.highWatermark` in `rsyslog`). 
 When it reaches 90%, `NOTICE`, `INFO`, and `DEBUG` messages start to be discarded (`queue.discardMark` with 'queue.discardSeverity=5`).
 +
-Equivalent to the `rsyslogd queue.maxDiskSpace` setting on the action.
+Equivalent to the `rsyslogd queue.size` setting on the action.
 
 It stores files in the directory specified by `LOG_AGGREGATOR_MAX_DISK_USAGE_PATH`.
+
 * `LOG_AGGREGATOR_MAX_DISK_USAGE_PATH`: Specifies the location to store logs that should be retried after an outage of the external log aggregator (defaults to `/var/lib/awx`). 
 Equivalent to the `rsyslogd queue.spoolDirectory` setting.
 
