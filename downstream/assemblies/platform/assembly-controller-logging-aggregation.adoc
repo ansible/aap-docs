@@ -20,12 +20,20 @@ If you already use `rsyslog` for logging system logs on the {ControllerName} ins
 
 Use the `/api/v2/settings/logging/` endpoint to configure how the {ControllerName} `rsyslog` process handles messages that have not yet been sent in the event that your external logger goes offline:
 
-* `LOG_AGGREGATOR_ACTION_QUEUE_SIZE`: Defines how large the rsyslog action queue can grow in number of messages stored. 
+* `LOG_AGGREGATOR_ACTION_MAX_DISK_USAGE_GB`: Maximum disk persistence for rsyslogd action queuing in GB.
++
+Specifies the amount of data to store (in gigabytes) during an outage of the external log aggregator (defaults to 1). 
++
+Equivalent to the `rsyslogd queue.maxDiskSpace` setting.
+
+* `LOG_AGGREGATOR_ACTION_QUEUE_SIZE`: Maximum number of messages that can be stored in the log action queue.
++
+Defines how large the rsyslog action queue can grow in number of messages stored. 
 This can have an impact on memory use. 
 When the queue reaches 75% of this number, the queue starts writing to disk (`queue.highWatermark` in `rsyslog`). 
 When it reaches 90%, `NOTICE`, `INFO`, and `DEBUG` messages start to be discarded (`queue.discardMark` with 'queue.discardSeverity=5`).
-
-Equivalent to the `rsyslogd queue.maxdiskspace` setting on the action.
++
+Equivalent to the `rsyslogd queue.maxDiskSpace` setting on the action.
 
 It stores files in the directory specified by `LOG_AGGREGATOR_MAX_DISK_USAGE_PATH`.
 * `LOG_AGGREGATOR_MAX_DISK_USAGE_PATH`: Specifies the location to store logs that should be retried after an outage of the external log aggregator (defaults to `/var/lib/awx`). 
