@@ -128,6 +128,18 @@ and 1024 for a cluster.
 
 Default = 27199
 
+| *`receptor_listener_protocol`* | Protocol to connect to a receptor.
+
+Default = tcp
+
+| *`receptor_datadir`* | This variable configures the receptor data directory. By default, it is set to `/tmp/receptor`. To change the default location, run the installation script with `"-e receptor_datadir="` and specify the target directory that you want. 
+
+*NOTES*
+
+* The target directory must be accessible to *awx* users. 
+
+* If the target directory is a temporary file system *tmpfs*, ensure it is remounted correctly after a reboot. Failure to do so results in the receptor no longer having a working directory.
+
 | *`web_server_ssl_cert`* | _Optional_
 
 `/path/to/webserver.cert`
