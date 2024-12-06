@@ -152,15 +152,11 @@ If you want to disable the content approval flow, set the variable to `false`.
 
 Default = `true`
 
-| `automationhub_seed_collections` |  | A Boolean that defines whether or not pre-loading is enabled.
+| `automationhub_seed_collections` | `hub_seed_collections` | A Boolean that defines whether or not pre-loading of collections is enabled. When you run the bundle installer, validated content is uploaded to the `validated` repository, and certified content is uploaded to the `rh-certified` repository. By default, certified content and validated content are both uploaded.
 
-When you run the bundle installer, validated content is uploaded to the `validated` repository, and certified content is uploaded to the `rh-certified` repository.
+If you do not want to install content, set this variable to `false` to disable the seeding.
 
-By default, both certified and validated content are uploaded.
-
-If you do not want to install content, set `automationhub_seed_collections` to `false` to disable the seeding.
-
-If you only want one type of content, set `automationhub_seed_collections` to `true` and `automationhub_collection_seed_repository` to the type of content you do want to include.
+For the RPM-based installer, if you only want one type of content, set this variable to `true` and set the `automationhub_collection_seed_repository` variable to the type of content you want to include.
 
 Default = `true`
 
