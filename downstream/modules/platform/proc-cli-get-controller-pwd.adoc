@@ -8,7 +8,7 @@
 
 To login to the {Gateway}, you need the web address and the password.
 
-== Fetching the {Gateway}y web address
+== Fetching the {Gateway} web address
 
 A {OCP} route exposes a service at a host name, so that external clients can reach it by name.
 When you created the {Gateway} instance, a route was created for it.
@@ -37,21 +37,21 @@ The address for the {Gateway} instance is `example-ansible-automation-platform.a
 The YAML block for the {Gateway} instance in the `AnsibleAutomationPlatform` object assigns values to the _name_ and _admin_user_ keys.
 
 . Use these values in the following command to fetch the password for the {Gateway} instance.
-
++
 -----
 oc get secret/<your instance name>-<admin_user>-password -o yaml
 -----
-
++
 . The default value for _admin_user_ is `_admin_`. Modify the command if you changed the admin username in the `AnsibleAutomationPlatform` object.
-
++
 The following example retrieves the password for a {Gateway} object called `_example_`: 
-
++
 -----
 oc get secret/example-admin-password -o yaml
 -----
-
++
 The base64 encoded password for the {Gateway} instance is listed in the `metadata` field in the output:
-
++
 -----
 $ oc get secret/example-admin-password -o yaml
 
@@ -72,7 +72,7 @@ metadata:
 
 == Decoding the {Gateway} password
 
-After you have found your gateway password, you will need to decode it from base64. 
+After you have found your gateway password, you must decode it from base64. 
 
 * Run the following command to decode your password from base64:
 +
