@@ -4,15 +4,15 @@
 
 [id="proc-cli-get-controller-pwd{context}"]
 
-= Fetching platform gateway login details from the {OCPShort} CLI
+= Fetching {Gateway} login details from the {OCPShort} CLI
 
-To login to the platform gateway, you need the web address and the password.
+To login to the {Gateway}, you need the web address and the password.
 
-== Fetching the platform gateway web address
+== Fetching the {Gateway} web address
 
 A {OCP} route exposes a service at a host name, so that external clients can reach it by name.
-When you created the platform gateway instance, a route was created for it.
-The route inherits the name that you assigned to the platform gateway object in the YAML file.
+When you created the {Gateway} instance, a route was created for it.
+The route inherits the name that you assigned to the {Gateway} object in the YAML file.
 
 Use the following command to fetch the routes:
 
@@ -21,7 +21,7 @@ Use the following command to fetch the routes:
 oc get routes -n __<platform_namespace>__
 -----
 
-In the following example, the `_example_` platform gateway is running in the `_ansible-automation-platform_` namespace.
+In the following example, the `_example_` {Gateway} is running in the `_ansible-automation-platform_` namespace.
 
 -----
 $ oc get routes -n ansible-automation-platform
@@ -30,27 +30,28 @@ NAME      HOST/PORT                                              PATH   SERVICES
 example   example-ansible-automation-platform.apps-crc.testing          example-service   http   edge/Redirect   None
 -----
 
-The address for the platform gateway instance is `example-ansible-automation-platform.apps-crc.testing`.
+The address for the {Gateway} instance is `example-ansible-automation-platform.apps-crc.testing`.
 
-== Fetching the platform gateway password
+== Fetching the {Gateway} password
 
-The YAML block for the platform gateway instance in the `AnsibleAutomationPlatform` object assigns values to the _name_ and _admin_user_ keys.
-Use these values in the following command to fetch the password for the platform gateway instance.
+The YAML block for the {Gateway} instance in the `AnsibleAutomationPlatform` object assigns values to the _name_ and _admin_user_ keys.
 
+. Use these values in the following command to fetch the password for the {Gateway} instance.
++
 -----
 oc get secret/<your instance name>-<admin_user>-password -o yaml
 -----
-
-The default value for _admin_user_ is `_admin_`. Modify the command if you changed the admin username in the `AnsibleAutomationPlatform` object.
-
-The following example retrieves the password for a platform gateway object called `_example_`: 
-
++
+. The default value for _admin_user_ is `_admin_`. Modify the command if you changed the admin username in the `AnsibleAutomationPlatform` object.
++
+The following example retrieves the password for a {Gateway} object called `_example_`: 
++
 -----
 oc get secret/example-admin-password -o yaml
 -----
-
-The base64 encoded password for the platform gateway instance is listed in the `metadata` field in the output:
-
++
+The base64 encoded password for the {Gateway} instance is listed in the `metadata` field in the output:
++
 -----
 $ oc get secret/example-admin-password -o yaml
 
@@ -67,4 +68,15 @@ metadata:
   name: example-admin-password
   namespace: ansible-automation-platform
 
------
+----- 
+
+== Decoding the {Gateway} password
+
+After you have found your gateway password, you must decode it from base64. 
+
+* Run the following command to decode your password from base64:
++
+----
+oc get secret/example-admin-password -o jsonpath={.data.password} | base64 --decode
+----
++
