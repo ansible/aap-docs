@@ -1,0 +1,13 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="reinstalling-containerized-aap_{context}"]
+= Reinstalling containerized {PlatformNameShort}
+
+[role="_abstract"]
+
+To reinstall a containerized deployment after uninstalling and preserving the database, run the `install.yml` playbook and include the existing secret key value:
+----
+$ ansible-playbook -i inventory ansible.containerized_installer.install -e controller_secret_key=<secret_key_value>
+----
+
+For more information about the `*_secret_key` variables, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables].
