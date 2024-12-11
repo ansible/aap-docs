@@ -73,11 +73,15 @@ Use the example inventory file to perform an installation for this topology:
 
 [source,yaml,subs="+attributes"]
 ----
-# This is the growth installer inventory file
-# Please consult the docs if you are unsure what to add
-# For all optional variables please consult the included README.md
-# or the Red Hat documentation:
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation
+# This is the {PlatformNameShort} installer inventory file intended for the container growth deployment topology.
+# This inventory file expects to be run from the host where {PlatformNameShort} will be installed.
+# Consult the {PlatformNameShort} product documentation about this topology's tested hardware configuration.
+# {URLTopologies}/container-topologies
+#
+# Consult the docs if you are unsure what to add
+# For all optional variables consult the included README.md
+# or the {PlatformNameShort} documentation:
+# {URLContainerizedInstall}
 
 # This section is for your {Gateway} hosts
 # -----------------------------------------------------
@@ -109,7 +113,7 @@ aap.example.org
 ansible_connection=local
 
 # Common variables
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-general-inventory-variables
+# {URLContainerizedInstall}/appendix-inventory-files-vars#ref-general-inventory-variables
 # -----------------------------------------------------
 postgresql_admin_username=postgres
 postgresql_admin_password=<set your own>
@@ -120,28 +124,28 @@ registry_password=<your RHN password>
 redis_mode=standalone
 
 # {GatewayStart}
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-gateway-variables
+# {URLContainerizedInstall}/appendix-inventory-files-vars#ref-gateway-variables
 # -----------------------------------------------------
 gateway_admin_password=<set your own>
 gateway_pg_host=aap.example.org
 gateway_pg_password=<set your own>
 
 # {ControllerNameStart}
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-controller-variables
+# {URLContainerizedInstall}/appendix-inventory-files-vars#ref-controller-variables
 # -----------------------------------------------------
 controller_admin_password=<set your own>
 controller_pg_host=aap.example.org
 controller_pg_password=<set your own>
 
 # {HubNameStart}
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#ref-hub-variables
+# {URLContainerizedInstall}/appendix-inventory-files-vars#ref-hub-variables
 # -----------------------------------------------------
 hub_admin_password=<set your own>
 hub_pg_host=aap.example.org
 hub_pg_password=<set your own>
 
 # {EDAcontroller}
-# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/containerized_installation/appendix-inventory-files-vars#event-driven-ansible-controller
+# {URLContainerizedInstall}/appendix-inventory-files-vars#event-driven-ansible-controller
 # -----------------------------------------------------
 eda_admin_password=<set your own>
 eda_pg_host=aap.example.org
