@@ -2,13 +2,39 @@
 
 [id="ansible-content-parser_{context}"]
 
-= Creating a training data set by using the {AnsibleContentParser}
+= Configuring custom models
+
+:context: configuring-custom-models
 
 [role="_abstract"]
 
+As an organization administrator, you can create and use fine-tuned, custom models that are trained on your organization's existing Ansible content. With this capability, you can tune the models to your organization's automation patterns and improve the code recommendation experience.
+
+After you create a custom model, you can specify one of the following access types:
+
+* Enable access for all users in your organization
++
+You can configure the custom model as the default model for your organization. All users in your organization can use the custom model.
+
+* Enable access for select Ansible users in your organization
++
+Using the *model-override* setting in the Ansible VS Code extension, select Ansible users can tune their Ansible Lightspeed service to use a custom model instead of the default model. 
+
+== Process for configuring custom models
+
+To configure a custom model, perform the following tasks: 
+
+. xref:ansible-content-parser_configuring-custom-models[Create a training data set by using the {AnsibleContentParser}]
+
+. xref:create-deploy-custom-model-ibm_configuring-custom-models[Create and deploy a custom model by using {ibmwatsonxcodeassistant}]
+
+. xref:configure-custom-models-lightspeed_configuring-custom-models[Configure {LightspeedshortName} to use the custom model]
+
+== Creating a training data set by using the {AnsibleContentParser}
+
 Use the {AnsibleContentParser}, a command-line interface (CLI) tool, to scan your existing Ansible files and generate a custom model training data set. The training data set includes a list of Ansible files and their paths relative to the project root. You can then upload this data set to {ibmwatsonxcodeassistant}, and use it to create a custom model that is trained on your organization's existing Ansible content. 
 
-== Methods of creating training data sets
+=== Methods of creating training data sets
 You can generate a training data set by using one of the following methods:  
 
 * *With ansible-lint preprocessing* 
