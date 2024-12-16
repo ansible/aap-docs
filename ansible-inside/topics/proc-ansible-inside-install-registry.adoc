@@ -2,19 +2,21 @@
 
 = Download from the Red Hat Registry
 
-Ansible Execution Environments are used in {AnsibleInsideNameShort} as either a baseline to execute your Ansible automation with, or can be used with Ansible Builder to provide extended automation compatibility to suit your needs.
+{ExecEnvNameStart} are used in {AnsibleInsideNameShort} as either a baseline to execute your Ansible automation with,
+or can be used with {Builder} to provide extended automation compatibility to suit your needs.
 
-The Red Hat supported execution environments available are:
+The Red Hat supported {ExecEnvShort}s available are:
 
-compatibility execution environment (ansible-automation-platform-24/ee-29-rhel8)::
-ee-29 contains ansible 2.9, for compatibility with playbooks and content written for previous versions of Ansible Automation Platform.
+compatibility execution environment (`ansible-automation-platform-24/ee-29-rhel8`)::
+`ee-29` contains ansible 2.9, for compatibility with playbooks and content written for previous versions of {PlatformName}.
 
-minimal execution environment (ansible-automation-platform-24/ee-minimal-rhel8)::
-ee-minimal is an automation execution environment for Red Hat Ansible Automation Platform. ee-minimal contains ansible-core 2.15.
+minimal execution environment `ansible-automation-platform-24/ee-minimal-rhel8`)::
+`ee-minimal` is an automation execution environment for Red Hat Ansible Automation Platform.
+`ee-minimal` contains ansible-core 2.15.
 
-supported execution environment (ansible-automation-platform-24/ee-supported-rhel8)::
-ee-supported is an automation execution environment for use with Red Hat Ansible Automation Platform.
-ee-supported contains ansible-core 2.15 and automation content collections supported by Red Hat.
+supported execution environment (`ansible-automation-platform-24/ee-supported-rhel8`)::
+`ee-supported` is an automation execution environment for use with {PlatformName}.
+`ee-supported` contains ansible-core 2.15 and automation content collections supported by Red Hat.
 
 .Example of pull for an image
 
@@ -23,12 +25,12 @@ The following example uses Podman pull.
 
 [source,bash]
 ----
-podman login registry.redhat.io
+$ podman login registry.redhat.io
 Username: {REGISTRY-SERVICE-ACCOUNT-USERNAME}
 Password: {REGISTRY-SERVICE-ACCOUNT-PASSWORD}
 Login Succeeded!
 
-podman pull registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8:2.16.9-2
+$ podman pull registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8:2.16.9-2
 ----
 
 Refer to catalog.redhat.com for other installation methods available.
