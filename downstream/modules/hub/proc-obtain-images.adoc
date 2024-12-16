@@ -8,25 +8,11 @@
 [role="_abstract"]
 Before you can push container images to your {PrivateHubName}, you must first pull them from an existing registry and tag them for use. The following example details how to pull an image from the Red Hat Ecosystem Catalog (registry.redhat.io).
 
-[IMPORTANT]
-====
-As of early 2024, Red Hat no longer supports manifests or manifest lists on the Red Hat Subscription Management web platform, which has also been used interchangeably with “subscription allocations.” Red Hat also no longer supports most manifest functionality in Red Hat Satellite with one exception:
-* Red Hat Satellite users in closed network or “air gapped” networks that do not receive their updates directly from Red Hat servers can currently still use `access.redhat.com` until the release of Red Hat Satellite 6.16.
-
-New Red Hat accounts automatically use Simple Content Access for their subscription tooling. New Red Hat accounts and existing Satellite customers who can connect to Red Hat’s servers can find their manifests at `console.redhat.com`.
-====
-
 .Prerequisites
 
 * You have permissions to pull images from registry.redhat.io.
 
-* A Red Hat account with Simple Content Access enabled.
-
 .Procedure
-
-. If you need to access your manifest for your container images log in to link:console.redhat.com/subscriptions/manifests[Red Hat Console].
-
-. Click the three-dot menu for the manifest you need for your container images, and click btn:[Export manifest].
 
 . Log in to Podman by using your registry.redhat.io credentials:
 +
@@ -59,5 +45,3 @@ $ podman images
 .Additional resources
 
 * See link:redhat-connect.gitbook.io/catalog-help/[Red Hat Ecosystem Catalog Help] for information on registering and getting images.
-
-* See link:{BaseURL}/subscription_central/1-latest/html/creating_and_managing_manifests_for_a_connected_satellite_server/index[Creating and managing manifests for a connected Satellite Server] to learn more about the changes coming to Red Hat subscription tooling
