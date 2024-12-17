@@ -1,0 +1,32 @@
+[id="async-24-12-18-dec"]
+
+= {PlatformNameShort} patch release December 18, 2024
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== Enhancements
+
+=== General
+* `aap-metrics-utility` has been updated to 0.4.1.(AAP-36394)
+
+* The `ansible.controller` collection has been updated to 4.5.15.(AAP-37293)
+
+
+== Bug fixes
+
+=== General
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2024-53908[CVE-2024-53908] `ansible-lightspeed-container`: Potential SQL injection in `HasKey(lhs, rhs)` on Oracle.(AAP-36767)
+
+* link:https://access.redhat.com/security/cve/cve-2024-53907[CVE-2024-53907] `ansible-lightspeed-container`: Potential denial-of-service in `django.utils.html.strip_tags()`.(AAP-37275)
+
+
+=== {ControllerNameStart}
+
+* Fixed an issue where a scheduled job with count set to non-zero value would run unexpectedly.(AAP-37292)
+
+* Fixed an issue where when launching the job template, the named URL returned a *404* error code.(AAP-37024)
+
+* Fixed an issue where temporary receptor files were not being cleaned up on nodes.(AAP-36903)
