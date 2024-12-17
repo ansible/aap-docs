@@ -69,6 +69,16 @@ For more information and additional options, see link:https://github.com/SAML-To
 +
 . Optional: In the *SAML IDP to extra_data attribute mapping* field, enter values to map  IDP attributes to extra_data attributes. For more information, see link:https://python-social-auth.readthedocs.io/en/latest/backends/saml.html#advanced-settings[advanced SAML settings].
 +
+[NOTE]
+====
+Any parameters other than the defaults (User Last Name, User First Name, User Email, etc.) must include attributes for mapping in the *SAML IDP to extra_data attribute mapping* field. This ensures all non-default attributes are properly interpreted by Ansible Automation Platform. For example, 
+-----
+- Department
+- UserType
+- Organization
+-----
+====
++
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 +
 . Click btn:[Next].
