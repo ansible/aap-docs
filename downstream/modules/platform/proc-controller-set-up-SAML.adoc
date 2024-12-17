@@ -71,11 +71,17 @@ For more information and additional options, see link:https://github.com/SAML-To
 +
 [NOTE]
 ====
-Any parameters other than the defaults (User Last Name, User First Name, User Email, etc.) must include attributes for mapping in the *SAML IDP to extra_data attribute mapping* field. This ensures all non-default attributes are properly interpreted by Ansible Automation Platform. For example, 
+By default only the attributes in the SAML assertion identified in the fields: *User Email*, *Username*, *User Last Name*, *User First Name*, and *User Permanent ID* are available for {PlatformNameShort} authenticator maps.
+
+If you would like to make other attributes from the SAML assertion available for {PlatformNameShort} authenticator maps, you must include them in the *SAML IDP to extra_data attribute mapping* field. For example:
 -----
 - Department
 - UserType
 - Organization
+-----
+Alternatively, if you want all attributes returned by the SAML Assertion to be avialable for {PlatformNameShort} authenticator maps you can add the following setting to *Additional Authenticator Fields*:
+-----
+GET_ALL_EXTRA_DATA: true
 -----
 ====
 +
