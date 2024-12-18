@@ -10,7 +10,7 @@ You can control the installation of {PlatformNameShort} with inventory files. In
 
 Example inventory files are provided in this document that you can copy and change to quickly get started. 
 
-Inventory files for the growth and enterprise topology are also found in the downloaded installer package:
+Inventory files for the growth and enterprise topologies are also found in the downloaded installer package:
 
 * The default one named `inventory` is for the enterprise topology pattern. 
 
@@ -266,9 +266,14 @@ controller_license_file=<full_path_to_your_manifest_zip_file>
 Use the following command to install containerized {PlatformNameShort}:
 
 ----
+ansible-playbook -i <inventory_file_name> ansible.containerized_installer.install
+----
+
+For example:
+----
 ansible-playbook -i inventory ansible.containerized_installer.install
 ----
 
-* If your privilege escalation requires you to enter a password, append `-K` to the command line. You are then prompted for the `BECOME` password. 
-* You can use increasing verbosity, up to 4 v's (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
+* If your privilege escalation requires you to enter a password, append `-K` to the command. You are then prompted for the `BECOME` password. 
+* You can use increasing verbosity, up to 4 v's (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red{nbsp}Hat support.
 
