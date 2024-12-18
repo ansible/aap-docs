@@ -10,7 +10,7 @@ You have done the following:
 
 * Reviewed the release notes for the associated patch release. For more information, see the link:{URLReleaseNotes}[{PlatformNameShort} {TitleReleaseNotes}].
 
-* Created a backup of your {PlatformNameShort} deployment. For more information, see xref:proc-backup-aap-container[Backing up controller-based {PlatformNameShort}].
+* Created a backup of your {PlatformNameShort} deployment. For more information, see xref:proc-backup-aap-container[Backing up container-based {PlatformNameShort}].
 
 .Procedure
 
@@ -38,7 +38,7 @@ $ tar xfvz ansible-automation-platform-containerized-setup-<version>.tar.gz
 $ tar xfvz ansible-automation-platform-containerized-setup-bundle-<version>-<arch name>.tar.gz
 ----
 +
-. Edit the `inventory` file so that it matches your required configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can change the parameters to match any modifications to your environment.
+. Edit the `inventory` file to match your required configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can change the parameters to match any modifications to your environment.
 
 . Run the `install` command:
 +
@@ -49,4 +49,4 @@ $ ansible-playbook -i inventory ansible.containerized_installer.install
 * If your privilege escalation requires a password to be entered, append `-K` to the command. You will then be prompted for the `BECOME` password.
 * You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
 
-The installation will begin.
+The update begins.
