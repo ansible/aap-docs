@@ -26,7 +26,7 @@ To register the {ControllerName} instance in Azure, you must supply the _{MSEntr
 . In a web browser, open the {ControllerName} console.
 . Click *Settings* in the menu to open the main settings page.
 . Click *{MSEntraID} settings* in the *Authentication* category to open the *Details* page.
-. Copy the value for _{MSEntraID} OAuth2 Callback URL_. You will need this value when you register your deployed application in {MSEntraID}.
+. Copy the value for _{MSEntraID} OAuth2 Callback URL_. You need this value when you register your deployed application in {MSEntraID}.
 
 .Creating a registered application in {MSEntraID}
 
@@ -56,7 +56,7 @@ You need this value for the _{MSEntraID}OAuth2 Key_ in the {PlatformNameShort} s
 +
 It is not possible to automatically renew a certificate or identify when it is about to expire.
 +
-It is useful to include the date in the description, for example: _AAP Client Secret <Today's Date in YYYY-MM-DD format>_.
+It is useful to include the date in the description, for example: _Ansible Automation Platform Client Secret <Today's Date in YYYY-MM-DD format>_.
 . Provide an expiration date for the new secret.
 +
 The maximum lifetime for the certificate is 2 years. Unless you have specific security needs that prevent the creation of a long term certificate, select an expiration date of *24 months*.
@@ -75,7 +75,60 @@ Add the key _(Application (client) ID)_ and value (_Value_) of the secret that y
   . In *{MSEntraID} OAuth2 Secret*, paste the secret _Value_.
 . Click *Save*.
 
-.Adding Azure Credentials to Automation controller
+.Creating a service principal for automating Azure resources
+
+[role="_abstract"]
+To enable the {PlatformNameShort} application to access and manage Azure resources, you must provide authorization credentials after deployment.
+The Microsoft Azure collection supports service principal authentication.
+
+To create a service principal, you must have administrator privileges with tenancy-wide permissions on your Azure tenant.
+Your {AAPonAzureNameShort} deployment provisions in the same Subscription ID as the service principal created in this step.
+
+. Navigate to the Azure portal
+. Click the link:https://docs.microsoft.com/en-us/azure/cloud-shell/overview[Cloud Shell] icon to open a bash Cloud Shell in your browser.
+. Set the Azure CLI to use the subscription that you intend to use for automating Azure services. Run the following command from the shell:
++
+-----
+az account set --subscription <your_subscription_id>
+-----
+. Run the following command using the Azure CLI to create a privileged service principal in {MSEntraID}:
++
+-----
+az ad sp create-for-rbac --name ansible --role Contributor
+-----
++
+The output displays the _appID_ and _tenant_ keys for the service principal:
++
+-----
+{
+  "appId": "xxxxxxx-xxx-xxxx",
+  "displayName": "ansible",
+  "name": "xxxxxxx-xxx-xxxx",
+  "password": "xxxxxxx-xxx-xxxx",
+  "tenant": "xxxxxxx-xxx-xxxx"
+}
+-----
+. Store the service principal details securely, as they are displayed only when you create the secret. You need them when you deploy {ControllerName}.
+See link:{LinkControllerAdminGuide} for help with deploying your {ControllerName}.
+
+
+.Maintaining your service principals
+
+Service principal credentials have a limited lifetime that is set in your {MSEntraID} configuration.
+Track the lifespan of the service principal if you intend to automate against Azure for an extended period of time.
+You can create a new one when needed.
+
+To view records of updated or deleted service principles, run the following Azure CLI command:
+
+-----
+az ad sp list -o table | grep ansible
+-----
+
+This command does not display the secrets for your service principals. Delete the service principal and create a new one if the secret is lost.
+
+When you create a new service principal to replace an expired or deleted one, you must update the credential that uses the service principal that you are replacing. If the credential is not updated, automations that use that credential will fail.
+
+.Adding Azure Credentials to {ControllerName}
 
 . Open the {ControllerName} in a web browser.
 . Under *Resources*, click *Credentials*.
