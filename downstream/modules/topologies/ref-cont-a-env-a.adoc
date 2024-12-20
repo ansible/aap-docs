@@ -143,6 +143,7 @@ controller_pg_password=<set your own>
 hub_admin_password=<set your own>
 hub_pg_host=aap.example.org
 hub_pg_password=<set your own>
+hub_seed_collections=false
 
 # {EDAcontroller}
 # {URLContainerizedInstall}/appendix-inventory-files-vars#event-driven-ansible-controller
@@ -152,7 +153,9 @@ eda_pg_host=aap.example.org
 eda_pg_password=<set your own>
 ----
 
-[NOTE]
+[WARNING]
 ====
+include::snippets/known-issue-container-content-syncing.adoc[]
+====
+
 SSH keys are only required when installing on remote hosts. If doing a self contained local VM based installation, you can use `ansible_connection=local`.
-====
