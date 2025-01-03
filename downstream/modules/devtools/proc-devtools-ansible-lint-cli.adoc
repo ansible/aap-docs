@@ -1,0 +1,42 @@
+[id="devtools-ansible-lint-cli_{context}"]
+
+= Running ansible-lint from the command line
+
+Run `ansible-lint --help` to display available commands and their options.
+
+Ansible-lint recommends following the
+https://docs.ansible.com/ansible-core/devel/dev_guide/developing_collections_structure.html#collection-structure[collection
+structure layout] whether you plan to build a collection or not.
+
+Following that layout assures the best integration with all ecosystem
+tools because it helps those tools better distinguish between random
+YAML files and files managed by Ansible. When you call `ansible-lint`
+without arguments, it uses internal heuristics to determine file types.
+
+Pass the *roles* and *playbooks* that you want to lint as arguments to
+the `ansible-lint` command. For example, to lint
+`examples/playbooks/play.yml` and `examples/roles/bobbins`, use the
+following command:
+
+----
+$ ansible-lint examples/playbooks/play.yml examples/roles/bobbins
+----
+
+// == Running example playbooks
+// 
+// Ansible-lint includes an `ansible-lint/examples` folder that contains
+// example playbooks with different rule violations and undesirable
+// characteristics. You can run `ansible-lint` on the example playbooks
+// to observe Ansible-lint in action, as follows:
+// 
+// ----
+// $ ansible-lint --offline -p examples/playbooks/example.yml
+// ----
+
+Ansible-lint also handles playbooks that include other playbooks, tasks,
+handlers, or roles.
+// 
+// ----
+// $ ansible-lint --offline -q -p examples/playbooks/include.yml
+// ----
+
