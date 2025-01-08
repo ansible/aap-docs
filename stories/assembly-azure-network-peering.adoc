@@ -5,15 +5,20 @@ ifdef::context[:parent-context: {context}]
 
 :context: azure-install
 
-You deploy {AAPonAzureNameShort} into an independent managed resource group with its own Azure virtual network (VNet).
+Deploying {AAPonAzureNameShort} creates an independent managed resource group with its own Azure virtual network (VNet).
+By default, the platform can only send requests to external networks through the public internet.
 
-Initially when you deploy, {AAPonAzureNameShort}’s VNet you can only send requests to external networks through the public internet.
 
-To enable {AAPonAzureNameShort} to access resources in an internet-gapped deployment, over private networks, configure Azure network peering between your private virtual networks and {AAPonAzureName}’s managed application VNet.
+To enable access to resources in private, internet-gapped deployments, you can configure Azure network peering between your private VNets and the managed application VNet of {PlatformNameShort}.
 
-You can configure your Azure VNets for private communication between multiple Azure VNets and private transit routing between Azure VNets and external VPN routed networks. These VPN networks can be on-premises or on other clouds.
+Azure network peering allows:
 
-No two Azure networking configurations are the same. To enable user access to {AAPonAzureNameShort}, work with your Azure administrators to connect your deployment to your VNets and external VPN routed networks.
+* Private communication between multiple Azure VNets.
+* Private transit routing between Azure VNets and external VPN-routed networks, which can include on-premises systems or other cloud environments.
+
+Each Azure networking configuration is unique.
+To enable user access to {PlatformNameShort}, collaborate with your Azure administrators to establish connections between the platform's deployment, your VNets, and external VPN-routed networks.
+
 
 [NOTE]
 ====

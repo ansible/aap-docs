@@ -8,44 +8,25 @@ Complete the form to provision {PlatformNameShort} infrastructure and resources 
 
 .Procedure
 
-. In a web browser, navigate to *Managed Applications* in the Azure console.
-. Select the instance of {AAPonAzureName} that you deployed.
+. In a web browser, navigate to the *Managed Applications* section in the Azure console.
+. Select the instance of {AAPonAzureNameShort} that you deployed.
 . Select *Parameters and Outputs* in the *Settings* section in the left navigation menu.
-**  The *Parameters and Outputs* page contains a link to the {PlatformNameShort} Landing page. The {PlatformNameShort} Landing page is available after deployment completes.
-From the {PlatformNameShort} Landing page, you can access your {ControllerName} and {HubName} instance and view announcements and notifications.
-You do not have to login to view the {PlatformNameShort} Landing page.
-** The *Parameters and Outputs* page also displays direct links to the {ControllerName} and {HubName}.
-. Save the URL links for the {PlatformNameShort} Landing page, {ControllerName}, and {HubName}.
-The names for the links are _automationControllerUrl_, _automationHubUrl_, and _landingPageUrl_.
-. Open the {PlatformNameShort} Landing page.
-
-
-== {PlatformNameShort} Landing page
-
-The {PlatformNameShort} Landing page is a convenient page for deployments of {AAPonAzureNameShort}.
-You can open the following views from the navigation pane:
-
-Overview:: Links to {ControllerName}, {HubName}, and {AutomationAnalytics}.
+* If this is your first time accessing your {PlatformNameShort} through the Azure portal you must select and copy the deploymentEngineUrl under the *output* section to continue setting up your deployment.
 +
-image::azure-aap-landing-page-overview.png[{PlatformNameShort} Landing page overview]
-Announcements:: You can view notifications about your subscription and global notifications about maintenance, upgrades, and resource downtime, for both public and private deployments of {AAPonAzureNameShort}.
+====
+NOTE: After you set up your instance through the deploymentEngineUrl, it is removed from the outputs section because it is no longer needed. Trying to reuse the URL results in a 404 Not Found error.
+====
 +
-To view announcements, click the image:bell.png[Bell,15,15] bell icon.
-Automation Controller:: Displays links to the {ControllerName} documentation.
-+ 
-To open the {ControllerName} from this view, click **Launch Automation Controller**.
-Automation Hub:: Displays links to the {HubName} documentation. 
-+
-To open the {HubName} from this view, click **Launch Automation Hub**.
-Automation Analytics:: Links to {AutomationAnalytics} documentation
-Documentation:: Links to {AAPonAzureName} documentation.
+* If you have already set up your {PlatformNameShort} deployment you can go directly to it by copying the platformUrl output. 
+. Paste the selected URL into your browser search bar and hit enter. This brings you to your {PlatformNameShort} deployment.
+. The first time you login to {PlatformNameShort} with the URL, you must configure the subscription. For help see the _Logging in for the first time_ section of the link:{URLGettingStarted}[{TitleGettingStarted}] guide.
 
 
-== Logging in to {ControllerName}
+====
+NOTE: When upgrading your {AAPonAzureNameShort} version from 2.4 to 2.5, your previous {ControllerName} and {HubName} URLs continue to display under the outputs section.
+Selecting these URLs redirects you to the {PlatformNameShort}. 
 
-* In a browser, navigate to the {ControllerName} URL, and then log in using the following credentials:
-  * *Username*: `admin`
-  * *Password*: Use the _Administrator password_ you provided when you deployed the {PlatformNameShort} application.
+These redirects will eventually be deprecated, Red{nbsp}Hat recommend using the {PlatformNameShort} URL to access the platform. 
+====
 
-The first time you login to {AAPonAzureNameShort}, you must configure a subscription and agree to the terms and conditions.
 
