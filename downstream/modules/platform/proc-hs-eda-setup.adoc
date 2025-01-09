@@ -6,9 +6,11 @@
 
 To scale up (add more nodes) or scale down (remove nodes), you must update the content of the inventory to add or remove nodes and rerun the installer.
 
+
+// Procedure for RPM installer
+ifdef::aap-install[]
 .Procedure
 . Update the inventory to add two more worker nodes:
-
 +
 -----
 [automationedacontroller]
@@ -22,5 +24,28 @@ To scale up (add more nodes) or scale down (remove nodes), you must update the c
 
 3.88.116.114 routable_hostname=automationedacontroller-api.example.com eda_node_type=worker
 -----
-
++
 . Re-run the installer.
+endif::aap-install[]
+
+
+// Procedure for Containerized installer
+ifdef::container-install[]
+.Procedure
+. Update the inventory to add two more worker nodes:
++
+-----
+[automationeda]
+
+3.88.116.111 routable_hostname=automationeda-api.example.com eda_type=api
+
+3.88.116.112 routable_hostname=automationeda-api.example.com eda_type=worker
+
+# two more worker nodes
+3.88.116.113 routable_hostname=automationeda-api.example.com eda_type=worker
+
+3.88.116.114 routable_hostname=automationeda-api.example.com eda_type=worker
+-----
++
+. Re-run the installer.
+endif::container-install[]  
