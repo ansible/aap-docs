@@ -68,48 +68,5 @@ Red{nbsp}Hat has tested the following configurations to install and run {Platfor
 
 Use the example inventory file to perform an installation for this topology: 
 
-[source,yaml,subs="+attributes"]
-----
-# This is the {PlatformNameShort} installer inventory file intended for the mixed RPM growth deployment topology.
-# Consult the {PlatformNameShort} product documentation about this topology's tested hardware configuration.
-# {URLTopologies}/rpm-topologies
-#
-# Consult the docs if you are unsure what to add
-# For all optional variables consult the Red Hat documentation:
-# {URLInstallationGuide}
-
-# This section is for your {Gateway} hosts
-# -----------------------------------------------------
-[automationgateway]
-gateway.example.org
-
-# This section is for your {EDAcontroller} hosts
-# -----------------------------------------------------
-[automationedacontroller]
-eda.example.org
-
-[all:vars]
-
-# Common variables
-# {URLInstallationGuide}/appendix-inventory-files-vars#ref-general-inventory-variables
-# -----------------------------------------------------
-registry_username=<your RHN username>
-registry_password=<your RHN password>
-
-redis_mode=standalone
-
-# {GatewayStart}
-# {URLInstallationGuide}/appendix-inventory-files-vars#ref-gateway-variables
-# -----------------------------------------------------
-automationgateway_admin_password=<set your own>
-automationgateway_pg_host=db.example.org
-automationgateway_pg_password=<set your own>
-
-# {EDAcontroller}
-# {URLInstallationGuide}/appendix-inventory-files-vars#event-driven-ansible-controller
-# -----------------------------------------------------
-automationedacontroller_admin_password=<set your own>
-automationedacontroller_pg_host=db.example.org
-automationedacontroller_pg_password=<set your own>
-----
+include::snippets/inventory-rpm-a-env-b.adoc[]
 
