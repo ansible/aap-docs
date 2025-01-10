@@ -3,13 +3,15 @@
 
 = Adding a safe plugin variable to {EDAcontroller}
 
-When using redhat.insights_eda or similar plugins to run rulebook activations in {EDAcontroller}, you must add a safe plugin variable to a directory in {PlatformNameShort}. This ensures connection between {EDAcontroller} and the source plugin, and displays port mappings correctly. 
+When using `redhat.insights_eda` or similar plugins to run rulebook activations in {EDAcontroller}, you must add a safe plugin variable to a directory in {PlatformNameShort}. This ensures connection between {EDAcontroller} and the source plugin, and displays port mappings correctly. 
 
+// Procedure for RPM installer
+ifdef::aap-install[]
 .Procedure
 
 . Create a directory for the safe plugin variable: `mkdir -p ./group_vars/automationedacontroller`
 . Create a file within that directory for your new setting (for example, `touch ./group_vars/automationedacontroller/custom.yml`)
-. Add the variable `automationedacontroller_additional_settings` to extend the default `settings.yaml` template for {EDAcontroller} and add the *SAFE_PLUGINS* field with a list of plugins to enable. For example: 
+. Add the variable `automationedacontroller_additional_settings` to extend the default `settings.yaml` template for {EDAcontroller} and add the `SAFE_PLUGINS` field with a list of plugins to enable. For example: 
 +
 ----
 automationedacontroller_additional_settings:
@@ -20,6 +22,25 @@ automationedacontroller_additional_settings:
 +
 [NOTE]
 ====
-You can also extend the `automationedacontroller_additional_settings` variable beyond SAFE_PLUGINS in the Django configuration file, /etc/ansible-automation-platform/eda/settings.yaml 
+You can also extend the `automationedacontroller_additional_settings` variable beyond `SAFE_PLUGINS` in the Django configuration file `/etc/ansible-automation-platform/eda/settings.yaml`. 
 ====
+endif::aap-install[]
 
+
+// Procedure for Containerized installer
+ifdef::container-install[]
+.Procedure
+
+. Create a directory for the safe plugin variable: 
++
+----
+mkdir -p ./group_vars/automationeda
+----
++
+. Create a file within that directory for your new setting (for example, `touch ./group_vars/automationeda/custom.yml`)
+. Add the variable `eda_safe_plugins` with a list of plugins to enable. For example: 
++
+----
+eda_safe_plugins: ['ansible.eda.webhook', 'ansible.eda.alertmanager']
+----
+endif::container-install[]
