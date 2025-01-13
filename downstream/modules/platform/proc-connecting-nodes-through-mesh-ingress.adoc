@@ -24,36 +24,28 @@ Use the following procedure to set up mesh nodes.
 Your file should resemble the following:
 +
 ----
-apiVersion:
+apiVersion: automationcontroller.ansible.com/v1alpha1
 kind: AutomationControllerMeshIngress
 metadata:
     name:
     namespace:
 spec:
-    deployment_name: 
+    deployment_name: aap-controller
 ----
 +
 Where:
 
 * *apiVersion*: defines the versioned schema of this representation of an object. 
 Servers should convert recognized schemas to the latest internal value, and might reject unrecognized values.
-+
-Set the value to `automationcontroller.ansible.com/v1alpha1`.
+This value is static.
 * *kind*: Is the type of node to create. 
 +
 Set the value to `AutomationControllerMeshIngress`. 
 `AutomationControllerMeshIngress` controls the deployment and configuration of mesh ingress on {ControllerName}.
-* *name*: is the name of the mesh ingress node. You must choose this name TBD
+* *name*: enter a name for the mesh ingress node.
 * *namespace*: is which Kubernetes namespace to deploy the mesh ingress into and is determined by the operator. TBD
 This must be in the same namespace as the {ControllerName} that the mesh is connected to.
 * *deployment_name*: Use the `deployment_name' `aap-controller`.
-Using the following command to determine the `deployment_name`
-+
-----
-oc get automation_controllers
-----
-+
-always supplies `aap-controller`.
 
 . Apply this YAML file using:
 +
