@@ -37,7 +37,10 @@ Where:
 
 * *apiVersion*: defines the versioned schema of this representation of an object. 
 Servers should convert recognized schemas to the latest internal value, and might reject unrecognized values.
++
+Set the value to `automationcontroller.ansible.com/v1alpha1`.
 * *kind*: Is the type of node to create. 
++
 Set the value to `AutomationControllerMeshIngress`. 
 `AutomationControllerMeshIngress` controls the deployment and configuration of mesh ingress on {ControllerName}.
 * *name*: is the name of the mesh ingress node. You must choose this name TBD
@@ -72,4 +75,11 @@ options:
     Enable instance: checked
     Managed by Policy: as needed
     Peers from control nodes: unchecked (this one is important)
+====
+. Associate this new instance with the hop node you created using the procedure in this paragraph
+. Download the tarball.
++
+[NOTE]
+====
+Association with the hop node must be done before creating the tarball.
 ====
