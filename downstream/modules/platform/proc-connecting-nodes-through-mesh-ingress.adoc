@@ -19,53 +19,36 @@ Use the following procedure to set up mesh nodes.
 
 .Procedure
 
-. Create a YAML file to  set up the mesh ingress node.
+. Create a YAML file (in this case named `oc_meshingress.yml`) to  set up the mesh ingress node.
 +
-The file resembles the following:
+Your file should resemble the following:
 +
 ----
-apiVersion:
+apiVersion: automationcontroller.ansible.com/v1alpha1
 kind: AutomationControllerMeshIngress
 metadata:
     name:
     namespace:
 spec:
-    deployment name: 
+    deployment_name: aap-controller
 ----
 +
 Where:
 
 * *apiVersion*: defines the versioned schema of this representation of an object. 
 Servers should convert recognized schemas to the latest internal value, and might reject unrecognized values.
+This value is static.
 * *kind*: Is the type of node to create. 
-Set the value to `AutomationControllerMeshIngress`. 
++
+Use the value `AutomationControllerMeshIngress`. 
++
 `AutomationControllerMeshIngress` controls the deployment and configuration of mesh ingress on {ControllerName}.
-* *name*: is the name of the mesh ingress node.
-* *namespace*: is which Kubernetes namespace to deploy the mesh ingress into.
-This must be in the same namespace as the {ControllerName} that the mesh is connected to
-* *deployment_name*: You can find the deployment name by using:
+* *name*: enter a name for the mesh ingress node.
+* *namespace*: enter a name for the Kubernetes namespace to deploy the mesh ingress into.
 +
-----
-oc get ansible-automation-platform.
-----
-+
-//Additionally you can use:
-+
-//* *external_hostname*: an optional field used for specifying the external hostname defined in an user managed ingress.
-//* *external_ipaddress*: an optional field used for specifying the external IP address defined in an user managed ingress
-//* *ingress_type*: Ingress type for ingress managed by the operator.
-//Where options are:  
-//** none (default) 
-//** Ingress
-//** IngressRouteTCP
-//** Route (default when deployed on OpenShift)
-//* *ingress_api_version*: the API Version for ingress managed by the operator. 
-//This parameter is ignored when `ingress_type=Route`.
-//* *ingress_annotations*: annotation on the ingress managed by the operator
-//* *ingress_class_name*: the name of ingress class to use instead of the cluster default. 
-//This parameter is ignored when `ingress_type=Route`.
-//* *ingress_controller*: special configuration for specific Ingress Controllers. 
-//This parameter is ignored when `ingress_type=Route`.
+This must be in the same namespace as the {ControllerName} that the mesh is connected to.
+* *deployment_name*: is the {ControllerName} instance that this mesh ingress is attached to.
+Provide the name of your {ControllerName} instance.
 
 . Apply this YAML file using:
 +
@@ -73,8 +56,26 @@ oc get ansible-automation-platform.
 oc apply -f oc_meshingress.yml
 ----
 +
-This runs the playbook associated with `AutomationControllerMeshIngress`, and creates the hop node called `<name>`.
+Run this playbook to creates the `AutomationControllerMeshIngress` resource. 
+The operator creates a hop node in {ControllerName} with the `name` you supplied.
 
 . When the MeshIngress instance has been created, it appears in the Instances page.
++
+[IMPORTANT]
+====
+Any instance that is to function as a remote execution node in "pull" mode need to be created after this procedure and must be configured as follows:
 
-
+instance type: Execution
+listener port: keep empty
+options:
+    Enable instance: checked
+    Managed by Policy: as needed
+    Peers from control nodes: unchecked (this one is important)
+====
+. Associate this new instance with the hop node you created using the procedure in this paragraph
+. Download the tarball.
++
+[NOTE]
+====
+Association with the hop node must be done before creating the tarball.
+====
