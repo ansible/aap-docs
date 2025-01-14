@@ -1,0 +1,18 @@
+[id="devtools-ansible-lint-cacle_{context}"]
+
+= Caching
+
+For optimal performance, Ansible-lint creates caches with installed or
+mocked roles, collections, and modules in the `{project_dir}/.cache`
+folder. The location of `{project_dir}` is passed with a command line
+argument, determined by the location of the configuration file, git
+project top-level directory, or user home directory.
+
+To perform faster re-runs, Ansible-lint does not automatically clean the
+cache. If required you can do this manually by simply deleting the
+`.cache` folder. Ansible-lint creates a new cache on the next
+invocation.
+
+Add the `.cache` folder to the `.gitignore` file in your
+git repositories.
+

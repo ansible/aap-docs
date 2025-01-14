@@ -1,0 +1,28 @@
+[id="devtools-ansible-lint-vaults_{context}"]
+= Vaults
+
+{LintName} executes Ansible, therefore it needs access to encrypted secrets.
+If you do not give access to them or you are concerned about security implications,
+you must refactor your code to allow it to be linted without access to real secrets:
+
+* Configure dummy fallback values that are used during linting, so
+Ansible will not complain about undefined variables.
+* Exclude the problematic files from the linting process.
+
+----
+# Example of avoiding an undefined variable error
+foo: "{{ undefined_variable_name | default('dummy') }}"
+----
+
+A well-written playbook or role must allow Ansible’s syntax check to pass,
+even if you do not have access to the vault.
+
+Internally {LintCmd} runs `ansible-playbook --syntax-check` on each playbook and also on roles.
+As Ansible does not support running syntax-check directly on roles,
+{LintName} creates temporary playbooks that only include each role from your project.
+You can use `defaults/` to change the code for the role so that it does not cause syntax
+errors when called without any variables or arguments.
+See
+link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#understanding-variable-precedence[Understanding variable precedence]
+for further information.
+
