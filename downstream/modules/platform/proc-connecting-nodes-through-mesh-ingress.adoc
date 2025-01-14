@@ -47,7 +47,8 @@ Use the value `AutomationControllerMeshIngress`.
 * *namespace*: enter a name for the Kubernetes namespace to deploy the mesh ingress into.
 +
 This must be in the same namespace as the {ControllerName} that the mesh is connected to.
-* *deployment_name*: is the {controllerName} instance that this mesh ingress would be attached to, for example `aap_contoller`.
+* *deployment_name*: is the {ControllerName} instance that this mesh ingress is attached to.
+Provide the name of your {ControllerName} instance.
 
 . Apply this YAML file using:
 +
@@ -55,7 +56,8 @@ This must be in the same namespace as the {ControllerName} that the mesh is conn
 oc apply -f oc_meshingress.yml
 ----
 +
-This runs the playbook associated with `AutomationControllerMeshIngress`, and creates the hop node with the `name` you supplied.
+Run this playbook to creates the `AutomationControllerMeshIngress` resource. 
+The operator creates a hop node in {ControllerName} with the `name` you supplied.
 
 . When the MeshIngress instance has been created, it appears in the Instances page.
 +
