@@ -2,8 +2,9 @@
 
 = Configuring SAML authentication
 
-SAML allows the exchange of authentication and authorization data between an Identity Provider (IdP) and a Service Provider (SP). {PlatformNameShort} is a SAML SP that can be configured to talk with one or more SAML IdPs in order to authenticate users. Based on groups and attributes optionally provided by the IdP users can be placed into teams and organizations in {PlatformNameShort} based on authenticator maps tied to this authenticator.
-
+SAML allows the exchange of authentication and authorization data between an Identity Provider (IdP) and a Service Provider (SP). 
+{PlatformNameShort} is a SAML SP that you can configure to talk with one or more SAML IdPs to authenticate users. 
+Based on groups and attributes optionally provided by the IdP, users can be placed into teams and organizations in {PlatformNameShort} based on authenticator maps tied to this authenticator.
 
 .Procedure
 
@@ -34,7 +35,7 @@ include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 }
 ----
 +
-. In the *SAML Service Provider Technical Contact* field, provide the name and email address of the technical contact for your service provider. 
+. In the *SAML Service Provider Technical Contact* field, give the name and email address of the technical contact for your service provider. 
 +
 ----
 {
@@ -43,7 +44,7 @@ include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 }
 ----
 +
-. In the *SAML Service Provider Support Contact* field, provide the name and email address of the support contact for your service provider. 
+. In the *SAML Service Provider Support Contact* field, give the name and email address of the support contact for your service provider. 
 +
 ----	
 {
@@ -65,21 +66,21 @@ include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 // Indicates a requirement for the <saml:Assertion> elements received by // this SP to be signed. [Metadata of the SP will offer this info] 
 "wantAssertionsSigned": false,
 ----
-For more information and additional options, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin’s SAML Python Toolkit].
+For more information and additional options, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin's SAML Python Toolkit].
 +
 . Optional: In the *SAML IDP to extra_data attribute mapping* field, enter values to map  IDP attributes to extra_data attributes. For more information, see link:https://python-social-auth.readthedocs.io/en/latest/backends/saml.html#advanced-settings[advanced SAML settings].
 +
 [NOTE]
 ====
-By default only the attributes in the SAML assertion identified in the fields: *User Email*, *Username*, *User Last Name*, *User First Name*, and *User Permanent ID* are available for {PlatformNameShort} authenticator maps.
+By default only the attributes in the SAML Assertion identified in the fields: *User Email*, *Username*, *User Last Name*, *User First Name*, and *User Permanent ID* are available for {PlatformNameShort} authenticator maps.
 
-If you would like to make other attributes from the SAML assertion available for {PlatformNameShort} authenticator maps, you must include them in the *SAML IDP to extra_data attribute mapping* field. For example:
+If you want to make other attributes from the SAML Assertion available for {PlatformNameShort} authenticator maps, you must include them in the *SAML IDP to extra_data attribute mapping* field. For example:
 -----
 - Department
 - UserType
 - Organization
 -----
-Alternatively, if you want all attributes returned by the SAML Assertion to be avialable for {PlatformNameShort} authenticator maps you can add the following setting to *Additional Authenticator Fields*:
+Alternatively, if you want all attributes returned by the SAML Assertion to be available for {PlatformNameShort} authenticator maps you can add the following setting to *Additional Authenticator Fields*:
 -----
 GET_ALL_EXTRA_DATA: true
 -----
