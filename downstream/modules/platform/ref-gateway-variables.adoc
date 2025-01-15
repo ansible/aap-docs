@@ -51,9 +51,11 @@ The main {Gateway} URL that clients will connect to (e.g. `\https://<gateway_nod
 
 If not specified, the first the first node in the `[automationgateway]` group will be used when needed.
 
-| `automationgateway_pg_database` | `gateway_pg_database` | _Optional_
+| `automationgateway_pg_cert_auth` | `gateway_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
 
-The PostgreSQL database used by {Gateway}.
+Default = `false`
+
+| `automationgateway_pg_database` | `gateway_pg_database` | The name of the PostgreSQL database used by {Gateway}.
 
 RPM default = `automationgateway`
 
@@ -61,31 +63,37 @@ Container default = `gateway`
 
 | `automationgateway_pg_host` | `gateway_pg_host` | _Required_
 
-The hostname of the PostgreSQL database used by {Gateway}, which can be an externally managed database.
+The hostname of the PostgreSQL database used by {Gateway}.
 
-| `automationgateway_pg_password` | `gateway_pg_password` | _Required_
+Default = `127.0.0.1`
 
-The password for the PostgreSQL database used by {Gateway}.
+| `automationgateway_pg_password` | `gateway_pg_password` | Required if not using client certificate authentication.
 
-Use of special characters for `automationgateway_pg_password` is limited. The `!`, `#`, `0` and `@` characters are supported. 
+The password for the {Gateway} PostgreSQL database.
 
-Use of other special characters can cause the setup to fail.
+Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
 
-| `automationgateway_pg_port` | `gateway_pg_port` | _Optional_
+| `automationgateway_pg_port` | `gateway_pg_port` | Required if not using an internal database.
 
 The port number of the PostgreSQL database used by {Gateway}.
 
 Default = `5432`
 
-| `automationgateway_pg_sslmode` | `gateway_pg_sslmode` | Choose one of the two available modes: `prefer` and `verify-full`.
+| `automationgateway_pg_sslmode` | `gateway_pg_sslmode` | Determines the level of encryption and authentication for client server connections.
 
-Set to `verify-full` for client-side enforced SSL.
+Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
 
 Default = `prefer`
 
-| `automationgateway_pg_username` | `gateway_pg_username` | _Optional_
+| `automationgateway_pgclient_sslcert` | `gateway_pg_tls_cert` | Required if using client certificate authentication.
 
-The username for your {Gateway} PostgreSQL database.
+The path to the PostgreSQL SSL/TLS certificate file for {Gateway}.
+
+| `automationgateway_pgclient_sslkey` | `gateway_pg_tls_key` | Required if using client certificate authentication.
+
+The path to the PostgreSQL SSL/TLS key file for {Gateway}.
+
+| `automationgateway_pg_username` | `gateway_pg_username` | The username for the {Gateway} PostgreSQL database.
 
 RPM default = `automationgateway`
 
