@@ -51,6 +51,19 @@ Default = `TLSv1.2`
 Each element in the list is provided into `http nginx config` as a separate line. 
 
 Default = empty list
+
+| `redis_cluster_ip` | `redis_cluster_ip` | The IPv4 address used by the Redis cluster to identify each host in the cluster.
+
+Redis clusters cannot use hostnames or IPv6 addresses. When defining hosts in the `[redis]` group, use this variable to identify the IPv4 address if the default is not what you want. 
+
+| `redis_mode` | `redis_mode` | The Redis mode to use for your {PlatformNameShort} installation.
+
+Possible values are: `standalone` and `cluster`.
+
+For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[Caching and queueing system] in _{TitlePlanningGuide}_.
+
+Default = `cluster`
+
 | |`registry_auth` |Use registry authentication.
 
 Default = `true`
@@ -61,13 +74,7 @@ Default = `ansible-automation-platform-25`
 | |`registry_ns_rhel` |RHEL registry namespace.
 
 Default = `rhel8`
-| `redis_mode` | `redis_mode` | The Redis mode to use for your {PlatformNameShort} installation.
 
-Possible values are: `standalone` and `cluster`.
-
-For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[Caching and queueing system] in _{TitlePlanningGuide}_.
-
-Default = `cluster`
 | `registry_password` |`registry_password` | This variable is only required if a non-bundle installer is used.
 
 Password credential for access to `registry_url`.
