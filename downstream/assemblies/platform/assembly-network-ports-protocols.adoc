@@ -42,19 +42,19 @@ The following default destination ports and installer inventory listed are confi
 
 This exposes the mesh ingress receptor entry point for inbound connections.| `nginx_https_port`
 | 443 | TCP | HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
-| 443 | TCP | HTTPS | HA Proxy load balancer | Platform gateway |  This is the ingress above the gateway that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of Ansible Automation Platform.
-| 443 | TCP | HTTPS | Platform gateway | {ControllerNameStart} |  | 
-| 443 | TCP | HTTPS | Platform gateway | {HubNameStart} |  | 
-| 443 | TCP | HTTPS | Platform gateway | {EDAName} |  | 
+| 443 | TCP | HTTPS | HA Proxy load balancer | {GatewayStart} |  This is the ingress above the gateway that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of {PlatformNameShort}.
+| 443 | TCP | HTTPS | {GatewayStart} | {ControllerNameStart} |  | 
+| 443 | TCP | HTTPS | {GatewayStart} | {HubNameStart} |  | 
+| 443 | TCP | HTTPS | {GatewayStart} | {EDAName} |  | 
 | 443 | HTTPS | Receptor | Execution node | OCP Mesh ingress |  | 
 | 443 | HTTPS | Receptor | Hop node | OCP Mesh ingress |  | 
 | 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
 | 5432 | TCP | PostgreSQL | {EDAName} node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationedacontroller_pg_port`
 | 5432 | TCP | PostgreSQL | {HubNameStart} | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationhub_pg_port`
-| 5432 | TCP | PostgreSQL | Platform gateway | External database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationgateway_pg_port`
+| 5432 | TCP | PostgreSQL | {GatewayStart} | External database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationgateway_pg_port`
 | 6379 | TCP | PostgreSQL | {EDAName} | Redis node |  | 
-| 6379 | TCP | PostgreSQL | Platform gateway | Redis node |  | 
-| 8443 | TCP | HTTPS | Platform gateway | Platform gateway | nginx | 
+| 6379 | TCP | PostgreSQL | {GatewayStart} | Redis node |  | 
+| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart} | nginx | 
 | 16379 | TCP | Redis | Redis nodes | Redis nodes | Redis cluster bus port for a resilient Redis configuration | 
 | 27199 | TCP | Receptor | Controller node | Execution node | Configurable
 
@@ -95,7 +95,7 @@ ALLOW connection from controller(s) to Receptor port |
 
 `peers`
 | 27199 | TCP | Receptor | OCP cluster | Execution node |  | 
-| 50051 | TCP | GRPC | Platform gateway | Platform gateway |  | 
+| 50051 | TCP | GRPC | {GatewayStart} | {GatewayStart} |  | 
 |===
 
 [NOTE]
