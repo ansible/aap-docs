@@ -6,14 +6,14 @@
 
 In {PlatformNameShort} {PlatformVers}, link:https://redis.io/[Redis (REmote DIctionary Server)] is used as the caching and queueing system. Redis is an open source, in-memory, NoSQL key/value store that is used primarily as an application cache, quick-response database and lightweight message broker.  
 
-Centralized Redis is provided for the platform gateway and {EDAName} and shared between those components. {ControllerNameStart} and {HubName} have their own instances of Redis. 
+Centralized Redis is provided for the {Gateway} and {EDAName} and shared between those components. {ControllerNameStart} and {HubName} have their own instances of Redis. 
 
 This cache and queue system stores data in memory, rather than on a disk or solid-state drive (SSD), which helps deliver speed, reliability, and performance. In {PlatformNameShort}, the system caches the following types of data for the various services in {PlatformNameShort}:
 
 .Data types cached by Centralized Redis
 [options="header"]
 |====
-| {ControllerNameStart} | {EDAName} server | {HubNameStart} | Platform gateway 
+| {ControllerNameStart} | {EDAName} server | {HubNameStart} | {GatewayStart} 
 | N/A {ControllerName} does not use shared Redis in {PlatformNameShort} {PlatformVers} | Event queues | N/A {HubName} does not use shared Redis in {PlatformNameShort} {PlatformVers} | Settings, Session Information, JSON Web Tokens
 |====
 
@@ -21,7 +21,7 @@ This data can contain sensitive Personal Identifiable Information (PII). Your da
 
 [NOTE]
 ====
-The data in Redis from both the platform gateway and {EDAName} are partitioned; therefore, neither service can access the other’s data.
+The data in Redis from both the {Gateway} and {EDAName} are partitioned; therefore, neither service can access the other’s data.
 ====
 
 include::platform/con-gw-centralized-redis.adoc[leveloffset=+1]
