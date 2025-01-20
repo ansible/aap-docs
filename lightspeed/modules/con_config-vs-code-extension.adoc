@@ -1,0 +1,20 @@
+:_content-type: CONCEPT
+
+[id="configure-vs-code-extension_{context}"]
+
+= Installing and configuring the Ansible VS Code extension
+
+:context: con-configure-vs-code-extension
+
+{LightspeedFullName} is integrated with the Ansible Visual Studio (VS) Code extension in VS Code. The Ansible VS Code extension, with {LightspeedShortName} features enabled, automatically collects recommendations, usage telemetry, and Ansible YAML file state through automated events. 
+
+To access {LightspeedShortName}, all Ansible users must install and configure the Ansible VS Code extension in their VS Code. The Ansible VS Code extension uses the Ansible-specific IBM watsonx Granite model configured in the {LightspeedShortName} administrator portal as the default mode for all users in your organization. 
+
+You can also use a custom, fine-tuned model if your organization administrator has created a custom model and has shared the model ID with you separately. Use the *model-override* setting in the Ansible VS Code extension to override the default model, and use the custom model instead. Using a custom model enables you to improve the code recommendation experience and tune the model to your organizational automation patterns. For example, if you are using {LightspeedShortName} both as an organization administrator and a user, you can test the custom model for select Ansible users before making it available for all users in your organization. For more information, see xref:configuring-custom-models_set-up-lightspeed[Configuring custom models]. 
+
+== Connectivity requirements
+To generate code recommendations, the Ansible Lightspeed service in Visual Studio (VS) Code editor requires access to the following outbound domain:
+
+* https://c.ai.ansible.redhat.com
+
+The outbound connections are encrypted on TCP protocol port 443.

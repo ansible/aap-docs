@@ -1,0 +1,50 @@
+// This assembly contains nested assemblies.
+// Store the value of context as grandparent-context because
+// the nested assemblies will change the value of parent-context.
+ifdef::context[:grandparent-context: {context}]
+//
+ifdef::context[:parent-context: {context}]
+
+:_content-type: ASSEMBLY
+
+[id="developing-ansible-content_{context}"]
+
+= Developing Ansible content
+
+:context: developing-ansible-content
+
+[role="_abstract"]
+
+As an automation developer, you can use {LightspeedShortName} to implement your organization’s automation strategy. {LightspeedShortName} can help you create and use custom automation content. This chapter provides information about how to get set up as an automation developer on {LightspeedShortName}, with details on how to:
+
+* Access the Ansible Lightspeed portal as an automation developer
+* Install and configure the {AnsibleVSCode}
+* Create task recommendations
+* Create playbooks and view playbook explanations
+* Create roles (TBD)
+* Provide feedback on the Ansible Lightspeed service
+
+include::modules/con_log-into-portal-auto-dev.adoc[leveloffset=+1]
+include::modules/proc_log-into-portal-auto-dev.adoc[leveloffset=+2]
+include::modules/con_config-vs-code-extension.adoc[leveloffset=+1]
+include::modules/proc_install-vscode-extension.adoc[leveloffset=+2]
+include::modules/proc_configure-vscode-extension.adoc[leveloffset=+2]
+include::modules/proc_login-vscode-extension.adoc[leveloffset=+2]
+include::modules/proc_log-out-of-portal.adoc[leveloffset=+2]
+include::modules/con_task-recommendations.adoc[leveloffset=+1]
+include::modules/proc_single-task-recs.adoc[leveloffset=+2]
+include::modules/proc_multi-task-recs.adoc[leveloffset=+2]
+include::modules/proc_view-training-matches.adoc[leveloffset=+2]
+include::modules/con_playbook-generation.adoc[leveloffset=+1]
+include::modules/proc_generate-playbook.adoc[leveloffset=+2]
+include::modules/proc_view-playbook-explanation.adoc[leveloffset=+2]
+include::modules/proc_provide-feedback.adoc[leveloffset=+1]
+
+// The nested assemblies use this current assembly as their parent,
+// so the value of parent-context was changed.
+// Reset the value of parent-context to the parent of this assembly, ie grandparent-context.
+ifdef::grandparent-context[:parent-context: {grandparent-context}]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
+

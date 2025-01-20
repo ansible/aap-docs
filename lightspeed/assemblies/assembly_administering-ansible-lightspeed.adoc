@@ -1,0 +1,50 @@
+// This assembly contains nested assemblies.
+// Store the value of context as grandparent-context because
+// the nested assemblies will change the value of parent-context.
+ifdef::context[:grandparent-context: {context}]
+//
+ifdef::context[:parent-context: {context}]
+
+:_content-type: ASSEMBLY
+
+[id="administering-ansible-lightspeed_{context}"]
+
+= Administering the Ansible Lightspeed Service
+
+:context: administering-ansible-lightspeed
+
+[role="_abstract"]
+
+As a platform administrator, Ansible Automation Platform can help you enable your users and teams to develop and run automation.
+
+This guide walks you through the basic steps to get set up as an administrator for Ansible Automation Platform, including configuring and maintaining the platform for users.
+
+As an organization administrator, you can use {LightspeedShortName} to manage the Ansible Lightspeed service, so that your users and teams can create and use custom automation content. This chapter provides information about how to get set up as an organization administrator on {LightspeedShortName}, with details on how to:
+
+* Access the Ansible Lightspeed portal as an organization administrator
+* View and manage the Admin dashboard telemetry data
+* Configure custom models
+
+include::modules/proc_log-in-administrator-portal.adoc[leveloffset=+1]
+include::modules/proc_log-out-of-portal.adoc[leveloffset=+2]
+include::modules/con_view-manage-admin-dashboard-telemetry.adoc[leveloffset=+1]
+include::modules/proc_view-admin-dashboard.adoc[leveloffset=+2]
+include::modules/proc_disable-admin-dashboard-telemetry.adoc[leveloffset=+2]
+include::modules/con_ansible-content-parser.adoc[leveloffset=+1]
+include::modules/proc_install-content-parser.adoc[leveloffset=+2]
+include::modules/proc_generate-training-data-set.adoc[leveloffset=+2]
+include::modules/proc_view-content-parser-output.adoc[leveloffset=+2]
+include::modules/proc_resolve-ansible-lint-rule-violations.adoc[leveloffset=+2]
+include::modules/proc_merge-multiple-jsonl-files.adoc[leveloffset=+2]
+include::modules/proc_create-deploy-custom-model-ibm.adoc[leveloffset=+2]
+include::modules/proc_configure-custom-models-lightspeed.adoc[leveloffset=+2]
+
+
+// The nested assemblies use this current assembly as their parent,
+// so the value of parent-context was changed.
+// Reset the value of parent-context to the parent of this assembly, ie grandparent-context.
+ifdef::grandparent-context[:parent-context: {grandparent-context}]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
+
