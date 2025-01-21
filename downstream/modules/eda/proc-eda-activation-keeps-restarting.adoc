@@ -1,0 +1,20 @@
+[id="eda-activation-keeps-restarting"]
+
+= Activation keeps restarting
+
+Perform the following steps if your rulebook activation keeps restarting.
+
+.Procedure
+. Log in to the {PlatformNameShort}.
+. From the navigation panel, select {MenuADRulebookActivations}.
+. From the *Rulebook Activations* page, select the activation in your list that keeps restarting. The Details page is displayed.
+. Click the *History* tab for more information and select the rulebook activation that keeps restarting. The Details tab is displayed with the output information contained there.
+. Check the *Restart policy* field for your activation. There are three selections available: *On failure* (restarts a rulebook activation when the container process fails), *Always* (always restarts regardless of success or failure, with no more than 5 restarts), or *Never* (never restarts when the container process ends).
+.. Confirm that your rulebook activation Restart policy is set to *On failure*. This is an indication that an issue is causing it to fail.
+.. To possibly diagnose the problem, check the YAML code and the instance logs of the rulebook activation for errors.
+.. If you cannot find a solution with the restart policy values, proceed to the next steps related to the *Log level*.
+. Check your log level for your activation.
+.. If your default log level is *Error*, go back to the *Rulebook Activation* page and recreate your activation following procedures in link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-rulebook-activations#eda-set-up-rulebook-activation[Setting up rulebook a activation].
+.. Change the *Log level* to *Debug*.
+.. Run the activation again and navigate to the *History* tab from the activation details page.
+.. On the *History* page, click one of your recent activations that you recently ran and view the *Output*.

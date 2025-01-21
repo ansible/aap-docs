@@ -1,0 +1,25 @@
+[id="eda-activation-stuck-pending"]
+
+= Activation stuck in Pending state
+
+Perform the following steps if your rulebook activation is stuck in *Pending* state.
+
+.Procedure
+
+. Confirm whether there are other running activations and if you have reached the limits (for example, memory or CPU limits).
+.. If there are other activations running, terminate one or more activations, if possible.
+.. If not, check that the default worker, Redis, and activation worker are all running. If all systems are working as expected, check your eda-server internal logs in the worker, scheduler, API, and nginx containers and services to see if the problem can be determined.
+
+[NOTE]
+====
+These logs reveal the source of the issue, such as an exception thrown by the code, a runtime error with network issues, or an error with the rulebook code. If your internal logs do not provide information that leads to resolution, report the issue to Red Hat support.
+====
+
+.. If you need to make adjustments, see the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-performance-tuning#modifying-simultaneous-activations[Modifying the number of simultaneous rulebook activations]
+
+[NOTE]
+====
+To adjust the maximum number of simultaneous activations for {OperatorPlatformNameShort} on OCP deployments, see link:{URLOperatorInstallation}/operator-install-planning#modifying_the_number_of_simultaneous_rulebook_activations_during_or_after_event_driven_ansible_controller_installation[Modifying the number of simultaneous rulebook activations during or after {EDAcontroller} installation] in link:{LinkOperatorInstallation}.
+====
+. 
+
