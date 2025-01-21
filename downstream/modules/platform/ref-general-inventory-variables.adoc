@@ -75,29 +75,40 @@ Default = `ansible-automation-platform-25`
 
 Default = `rhel8`
 
-| `registry_password` |`registry_password` | This variable is only required if a non-bundle installer is used.
+| `registry_password` |`registry_password` | Required if performing an online non-bundled installation.
 
-Password credential for access to `registry_url`.
+The password credential for access to the registry source defined in `registry_url`.
 
-Enter your Red Hat Registry Service Account credentials in `registry_username` and `registry_password` to link to the Red Hat container registry.
-
-When `registry_url` is `registry.redhat.io`, username and password are required if not using a bundle installer.
-
+// This content is used in RPM installation
+ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
-| |`registry_tls_verify` |Verify registry TLS.
+endif::aap-install[] 
+// This content is used in Containerized installation
+ifdef::container-install[]
+For more information, see link:{URLContainerizedInstall}/assembly-aap-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+endif::container-install[]
+
+| `registry_verify_ssl` |`registry_tls_verify` |Verify registry TLS.
 
 Default = `true`
 
-| `registry_url` |`registry_url` | URL for the registry source. 
+| `registry_url` | `registry_url` | URL for the registry source. 
 
 Default = `registry.redhat.io`
-| `registry_username` |`registry_username` | This variable is only required if a non-bundle installer is used.
 
-User credential for access to `registry_url`.
+| `registry_username` |`registry_username` | Required if performing an online non-bundled installation.
 
-Enter your Red Hat Registry Service Account credentials in `registry_username` and `registry_password` to link to the Red Hat container registry.
+The username credential for access to the registry source defined in `registry_url`.
 
+// This content is used in RPM installation
+ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
+endif::aap-install[] 
+// This content is used in Containerized installation
+ifdef::container-install[]
+For more information, see link:{URLContainerizedInstall}/assembly-aap-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+endif::container-install[]
+
 | `routable_hostname` |`routable_hostname` | This variable is used if the machine running the installer can only route to the target host through a specific URL. For example, if you use short names in your inventory, but the node running the installer can only resolve that host by using a FQDN.
 
 If `routable_hostname` is not set, it should default to `ansible_host`. If you do not set `ansible_host`, `inventory_hostname` is used as a last resort.
