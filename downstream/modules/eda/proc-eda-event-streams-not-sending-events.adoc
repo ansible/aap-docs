@@ -2,16 +2,16 @@
 
 = Event streams not sending events to activation
 
-If you are using event streams to send events to your rulebook activations, occasionally those events might not be successfully routed to your rulebook activation. Try the following options to resolve this.
+If you are using event streams to send events to your rulebook activations, occasionally those events might not be successfully routed to your rulebook activation. 
 
 .Procedure
-. Try the following options to resolve this.
+* Try the following options to resolve this.
 .. Ensure that each of your event streams in {EDAcontroller} is _not_ in *Test* mode . This means activations would not receive the events.
 .. Verify that the origin service is sending the request properly.
-.. Check that the network connection up to our {Gateway} instance is stable. If you have set up event streams, this is the entry of the event stream request from the sender.
+.. Check that the network connection to your {Gateway} instance is stable. If you have set up event streams, this is the entry of the event stream request from the sender.
 .. Verify that the proxy in the {Gateway} is running.
 .. Confirm that the event stream worker is up and running, and able to process the request.
-.. Verify that your credential is correctly setup in the event stream.
+.. Verify that your credential is correctly set up in the event stream.
 .. Confirm that the request complies with the authentication mechanism determined by the set credential (for example, basic must contain a header with the credentials or HMAC must contain the signature of the content in a header, and similar).
 +
 [NOTE]
