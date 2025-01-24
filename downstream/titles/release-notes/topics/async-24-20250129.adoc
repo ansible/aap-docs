@@ -1,0 +1,55 @@
+[id="async-24-20250129"]
+
+= {PlatformNameShort} patch release January 29, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== Enhancements
+
+=== General
+* The `ansible.controller` collection has been updated to 4.5.17.(AAP-39099)
+
+
+
+== Bug fixes
+
+=== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2024-56326[CVE-2024-56326] `python3x-jinja2`: Jinja has a sandbox breakout through indirect reference to format method.(AAP-38851)
+
+* link:https://access.redhat.com/security/cve/cve-2024-11407[CVE-2024-11407] `ansible-lightspeed-container`: Denial-of-Service through data corruption in `gRPC-C++`.(AAP-38785)
+
+* link:https://access.redhat.com/security/cve/CVE-2024-56374[CVE-2024-56374] `ansible-lightspeed-container`: Potential denial-of-service vulnerability in IPv6 validation.(AAP-38784)
+
+* link:https://access.redhat.com/security/cve/cve-2024-56201[CVE-2024-56201] `python3x-jinja2`: Jinja has a sandbox breakout through malicious filenames.(AAP-38332)
+
+* link:https://access.redhat.com/security/cve/cve-2024-56201[CVE-2024-56201] `python3x-jinja2`: Jinja has a sandbox breakout through malicious filenames.(AAP-38328)
+
+* link;https://access.redhat.com/security/cve/cve-2024-56201[CVE-2024-56201] `ansible-lightspeed-container`: Jinja has a sandbox breakout through malicious filenames.(AAP-38078)
+
+* link:https://access.redhat.com/security/cve/cve-2024-56326[CVE-2024-56326] `ansible-lightspeed-container`: Jinja has a sandbox breakout through indirect reference to format method.(AAP-38055)
+
+* link:https://access.redhat.com/security/cve/cve-2024-52304[CVE-2024-52304] `ansible-lightspeed-container`: `aiohttp` vulnerable to request smuggling due to incorrect parsing of chunk extensions.(AAP-37995)
+
+* link:https://access.redhat.com/security/cve/cve-2024-53908[CVE-2024-53908] `automation-controller`: Potential SQL injection in HasKey(lhs, rhs) on Oracle.(AAP-36768)
+
+* link:https://access.redhat.com/security/cve/cve-2024-56201[CVE-2024-56201] `automation-controller`: Jinja has a sandbox breakout through malicious filenames.(AAP-38080)
+
+
+=== {ControllerNameStart}
+
+* Fixed an issue where the traceback from `host_metric_summary_monthly` task caused a type comparison error.(AAP-37486)
+
+* Fixed an issue where the order of source inventories was not respected by the collection `ansible.controller`.(AAP-38511)
+
+=== RPM-based {PlatfromNameShort}
+
+* Fixed an issue where setting the `+*pg_host=+` without any other context would result in an empty *HOST* section of `settings.py` in controller.(AAP-38030)
+
+* Fixed an issue where {HubNameStart} backup would fail when `automationhub_pg_port="`.(AAP-18484)
+
+* Fixed an issue where providing the database installation a custom port would break the installation of *postgres*.(AAP-31260)
+
+* Fixed an issue where `setup.sh -p <path_to_log_dir>` did not work if the directory specified by the `-p` parameter was not writable. The setup script now warns if the provided log path does not have write permission.(AAP-18204)
