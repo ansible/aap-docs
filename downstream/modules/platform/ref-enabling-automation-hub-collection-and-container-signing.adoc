@@ -4,21 +4,144 @@
 :_mod-docs-content-type: REFERENCE
 
 [id="enabling-automation-hub-collection-and-container-signing_{context}"]
-= Enabling {HubNameStart} collection and container signing
+= Enabling automation content collection and container signing
 
-[role="_abstract"]
-With {HubName} you can sign Ansible collections and container images. This feature is not enabled by default, and you must provide the GPG key.
+Automation content signing is disabled by default. To enable it, the following installation variables are required in the inventory file:
 
 ----
+#Collection signing
 hub_collection_signing=true
-hub_collection_signing_key=<full_path_to_collections_gpg_key>
+hub_collection_signing_key=<full_path_to_collection_gpg_key>
+
+#Container signing
 hub_container_signing=true
-hub_container_signing_key=<full_path_to_containers_gpg_key>
+hub_container_signing_key=<full_path_to_container_gpg_key>
 ----
 
-When the GPG key is protected by a passphrase, you must provide the passphrase.
+The following variables are required if the keys are protected by a passphrase:
 
 ----
-hub_collection_signing_pass=<collections_gpg_key_passphrase>
-hub_container_signing_pass=<containers_gpg_key_passphrase>
+#Collection signing
+hub_collection_signing_pass=<gpg_key_passphrase>
+
+#Container signing
+hub_container_signing_pass=<gpg_key_passphrase>
+----
+
+The `hub_collection_signing_key` and `hub_container_signing_key` variables require the set up of keys before running an installation. 
+
+Automation content signing currently only supports GnuPG (GPG) based signature keys. For more information about GPG, see the link:https://www.gnupg.org/documentation/manpage.html[GnuPG man page].
+
+[NOTE]
+====
+The algorithm and cipher used is the responsibility of the customer.
+====
+
+.Procedure
+
+. On a RHEL9 server run the following command to create a new key pair for collection signing:
++
+----
+gpg --gen-key
+----
++
+. Enter your information for "Real name" and "Email address":
++
+Example output:
++
+----
+gpg --gen-key
+gpg (GnuPG) 2.3.3; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Note: Use "gpg --full-generate-key" for a full featured key generation dialog.
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Joe Bloggs
+Email address: jbloggs@example.com
+You selected this USER-ID:
+    "Joe Bloggs <jbloggs@example.com>"
+
+Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
+----
++
+If this fails, your environment does not have the necessary prerequisite packages installed for GPG. Install the necessary packages to proceed.  
++
+. A dialog box will appear and ask you for a passphrase. This is optional but recommended.
+. The keys are then generated, and produce output similar to the following:
++
+----
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 022E4FBFB650F1C4 marked as ultimately trusted
+gpg: revocation certificate stored as '/home/aapuser/.gnupg/openpgp-revocs.d/F001B037976969DD3E17A829022E4FBFB650F1C4.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2024-10-25 [SC] [expires: 2026-10-25]
+      F001B037976969DD3E17A829022E4FBFB650F1C4
+uid                      Joe Bloggs <jbloggs@example.com>
+sub   rsa3072 2024-10-25 [E] [expires: 2026-10-25]
+----
++
+Note the expiry date that you can set based on company standards and needs.
++
+. You can view all of your GPG keys by running the following command:
++
+----
+gpg --list-secret-keys --keyid-format=long
+----
++
+. To export the public key run the following command:
++
+----
+gpg --export -a --output collection-signing-key.pub <email_address_used_to_generate_key>
+----
++
+. To export the private key run the following command:
++
+----
+gpg -a --export-secret-keys <email_address_used_to_generate_key> > collection-signing-key.priv
+----
++
+. If a passphrase is detected, you will be prompted to enter the passphrase.
+. To view the private key file contents, run the following command:
++
+----
+cat collection-signing-key.priv
+----
++
+Example output:
++
+----
+-----BEGIN PGP PRIVATE KEY BLOCK-----
+
+lQWFBGcbN14BDADTg5BsZGbSGMHypUJMuzmIffzzz4LULrZA8L/I616lzpBHJvEs
+sSN6KuKY1TcIwIDCCa/U5Obm46kurpP2Y+vNA1YSEtMJoSeHeamWMDd99f49ItBp
+
+<snippet>
+
+j920hRy/3wJGRDBMFa4mlQg=
+=uYEF
+-----END PGP PRIVATE KEY BLOCK-----
+----
++
+. Repeat steps 1 to 9 to create a key pair for container signing. 
+. Add the following variables to the inventory file and run the installation to create the signing services:
++
+----
+#Collection signing
+hub_collection_signing=true
+hub_collection_signing_key=/home/aapuser/aap/ansible-automation-platform-containerized-setup-2.5-2/collection-signing-key.priv
+# This variable is required if the key is protected by a passphrase
+hub_collection_signing_pass=<password>
+
+#Container signing
+hub_container_signing=true
+hub_container_signing_key=/home/aapuser/aap/ansible-automation-platform-containerized-setup-2.5-2/container-signing-key.priv
+# This variable is required if the key is protected by a passphrase
+hub_container_signing_pass=<password>
 ----
