@@ -45,27 +45,27 @@ If you do not want to install content, set `automationhub_seed_collections` to `
 
 If you only want one type of content, set `automationhub_seed_collections` to `true` and `automationhub_collection_seed_repository` to the type of content you do want to include.
 
-| `automationhub_collection_signing_service_key` | `hub_collection_signing_key`  | If a collection signing service is enabled, you must provide this variable to ensure that collections can be properly signed.
+| `automationhub_collection_signing_service_key` | `hub_collection_signing_key`  | Required when a collection signing service is enabled to ensure that collections can be properly signed. 
 
-`/absolute/path/to/key/to/sign`
+The path to the collection signing key file.
 
 | `automationhub_collection_signing_service_script` |  | If a collection signing service is enabled, you must provide this variable to ensure that collections can be properly signed.
 
 `/absolute/path/to/script/that/signs`
 
-| `automationhub_container_signing_service_key` | `hub_container_signing_key`  | If a container signing service is enabled, you must provide this variable to ensure that containers can be properly signed.
+| `automationhub_container_signing_service_key` | `hub_container_signing_key`  | Required when a container signing service is enabled to ensure that containers can be properly signed.
 
-`/absolute/path/to/key/to/sign`
+The path to the container signing key file.
 
 | `automationhub_container_signing_service_script` |  | If a container signing service is enabled, you must provide this variable to ensure that containers can be properly signed.
 
 `/absolute/path/to/script/that/signs`
 
-| `automationhub_create_default_collection_signing_service` | `hub_collection_signing_service` | Set this variable to `true` to create a collection signing service.
+| `automationhub_create_default_collection_signing_service` | `hub_collection_signing` | Set this variable to `true` to enable a collection signing service.
 
 Default = `false`
 
-| `automationhub_create_default_container_signing_service` | `hub_container_signing_service` | Set this variable to `true` to create a container signing service.
+| `automationhub_create_default_container_signing_service` | `hub_container_signing` | Set this variable to `true` to enable a container signing service.
 
 Default = `false`
 
@@ -247,17 +247,14 @@ Default = `[TLSv1.2, TLSv1.3]`
 
 |  | `hub_workers` | {HubNameStart} workers count. 
 
-|  | `hub_collection_signing` | Enable {HubNameStart} collection signing.
 
-Default = `false`
+|  | `hub_container_signing_pass` | Required when the container signing service is protected by a passphrase. 
 
-|  | `hub_container_signing` | Enable {HubNameStart} container signing.
+The password for the automation content container signing service.
 
-Default = `false`
+|  | `hub_collection_signing_pass` | Required when the collection signing service is protected by a passphrase.
 
-|  | `hub_container_signing_pass` | {HubNameStart} container signing passphrase.
-
-|  | `hub_collection_signing_pass` | {HubNameStart} collection signing passphrase. 
+The password for the automation content collection signing service.
 
 |  | `hub_postinstall` | Enable {HubNameStart} postinstall. 
 
