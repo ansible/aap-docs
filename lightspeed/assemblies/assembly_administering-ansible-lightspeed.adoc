@@ -1,8 +1,3 @@
-// This assembly contains nested assemblies.
-// Store the value of context as grandparent-context because
-// the nested assemblies will change the value of parent-context.
-ifdef::context[:grandparent-context: {context}]
-//
 ifdef::context[:parent-context: {context}]
 
 :_content-type: ASSEMBLY
@@ -39,12 +34,6 @@ include::modules/proc_resolve-ansible-lint-rule-violations.adoc[leveloffset=+3]
 include::modules/proc_merge-multiple-jsonl-files.adoc[leveloffset=+3]
 include::modules/proc_create-deploy-custom-model-ibm.adoc[leveloffset=+2]
 include::modules/proc_configure-custom-models-lightspeed.adoc[leveloffset=+2]
-
-
-// The nested assemblies use this current assembly as their parent,
-// so the value of parent-context was changed.
-// Reset the value of parent-context to the parent of this assembly, ie grandparent-context.
-ifdef::grandparent-context[:parent-context: {grandparent-context}]
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]
