@@ -12,11 +12,25 @@ Choose the {PlatformName} installer if your {RHEL} environment is connected to t
 
 . Navigate to the link:{PlatformDownloadUrl}[{PlatformName} download] page.
 . Click btn:[Download Now] for the *Ansible Automation Platform <latest-version> Setup*.
-. Extract the files:
-+
+. Transfer the file to the target server using `scp` or `curl`:
+.. Using `scp`: 
+... Run the following command, replacing `private_key.pem`, `user`, and `server_ip` with your appropriate values:
 -----
-$ tar xvzf ansible-automation-platform-setup-<latest-version>.tar.gz
+$ scp -i private_key.pem aap-bundled-installer.tar.gz user@server_ip: 
 -----
+.. Using `curl`: 
+... If the setup file URL is available, you can download it directly to the target server using `curl`. Replace `<download_url>` with the file URL:
+-----
+$ curl -0 <download_url>
+-----
+
+[NOTE]
+====
+If the file needs to be extracted after downloading, run the following command:
+-----
+$ tar xvzf aap-bundled-installer.tar.gz
+-----
+====
 
 .RPM install
 
