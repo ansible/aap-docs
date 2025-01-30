@@ -11,6 +11,8 @@ image::cont-a-env-a.png[Container growth topology diagram]
 
 A single VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. Resources, such as storage, can be increased based on the needs of the deployment.
 
+If performing a bundled installation with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+
 .Infrastructure topology
 [options="header"]
 |====
@@ -72,10 +74,5 @@ a|
 Use the example inventory file to perform an installation for this topology: 
 
 include::snippets/inventory-cont-a-env-a.adoc[]
-
-[WARNING]
-====
-include::snippets/known-issue-container-content-syncing.adoc[]
-====
 
 SSH keys are only required when installing on remote hosts. If doing a self contained local VM based installation, you can use `ansible_connection=local`.
