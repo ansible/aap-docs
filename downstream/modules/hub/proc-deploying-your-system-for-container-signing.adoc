@@ -3,28 +3,8 @@
 
 = Deploying your system for container signing
 
-{HubNameStart} implements image signing to offer better security for the {ExecEnvShort} container images.
 
-.Prerequisites 
-* You have already link:{URLHubManagingContent}/managing-containers-hub#populate-container-registry[created and synced a container registry] in the Remote Registry section of {PlatformNameShort}.
-
-.Procedure
-
-. Log in to {PlatformNameShort} and, from the navigation panel, select {MenuACAdminSignatureKeys}. If you followed the steps in [NEW CONTENT FROM CONTAINERIZED INSTALL GUIDE] during setup, you should see a key labeled `container-default`.
-. From the navigation panel, select {MenuACExecEnvironments}.
-. Click btn:[Create execution environment] and enter the relevant information in the fields that appear. 
-.. The *Name* field displays the name of the {ExecEnvName} on your local registry. 
-.. The *Upstream name* field is the name of the image on the remote server. For example, if the upstream name is set to "alpine" and the *Name* field is "local/alpine," the alpine image is downloaded from the remote and renamed "local/alpine."
-.. Set a list of tags to include or exclude. Note that syncing an {ExecEnvNameSing} with a large number of tags is time consuming and uses a lot of disk space.
-. Click btn:[Create execution environment]. You should see your new {ExecEnvNameSing} in the list that appears.
-. Sync and sign your new {ExecEnvNameSing}.
-.. Click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync execution environment*.
-.. Click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sign execution environment*. 
-. Click on your new {ExecEnvNameSing}. On the Details page, find the *Signed* label to determine that your {ExecEnvNameSing} has been signed.  
-
-
-////
-To deploy your system so that it is ready for container signing, create a signing script.
+To deploy your system so that it is ready for container signing, first ensure that you have link:{URLContainerizedInstall}/aap-containerized-installation#enabling-automation-hub-collection-and-container-signing_aap-containerized-installation [enabled automation content collection and container signing]. Then you can create a signing script, or xref:proc-adding-containers-remotely-to-the-automation-hub.adoc[add and sign containers remotely].
 
 [NOTE]
 ====
@@ -86,4 +66,3 @@ automationhub_container_signing_service_script = /absolute/path/to/script/that/s
 ====
 The `container-default` service is created by the {PlatformNameShort} installer.
 ====
-////
