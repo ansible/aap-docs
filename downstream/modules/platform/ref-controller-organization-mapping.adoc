@@ -53,3 +53,44 @@ SOCIAL_AUTH_GITHUB_ORG_ORGANIZATION_MAP = {}
 SOCIAL_AUTH_GITHUB_TEAM_ORGANIZATION_MAP = {}
 SOCIAL_AUTH_SAML_ORGANIZATION_MAP = {}
 ----
+
+.remove_auditors
+
+Before {PlatformNameShort} {PlatformVers}, *System Auditor* rights were revoked when logging in using Single Sign-On (SSO).
+The user system auditor role was reset at login for SAML users when added in the {PlatformNameShort} user interface.
+
+In {PlatformNameShort} {PlatformVers}, you can set a new special user flag to not remove system auditors when logging in, if you added the role in the user interface.
+
+To enable this functionality:
+
+. From the navigation panel, select {MenuAEAdminSettings}.
+. Select *SAML settings* from the list of *Authentication* options.
+. Click btn:[Edit] and update the SAML Organization Attribute Mapping to `{"remove_auditors": false}`.
+
+.Example
+
+[literal, options="nowrap" subs="+attributes"]
+
+----
+{ "remove": true, "remove_admins": false, 
+"remove_auditors": false, "saml_admin_attr": 
+"admin-of", "saml_attr": "organizations" }
+----
+
+.Verification
+
+. Enable debugging in {ControllerName}.
+.. From the navigation panel, select {MenuAEAdminSettings}.
+.. Select *Logging settings* from the list of *System* options.
+.. Click btn:[Edit] and select *Debug* in the *Logging Aggregator Level Threshold* drop-down menu.
+. Use SSO to log in to an account with *System Auditor* privileges.
+. Verify the results in `/var/log/tower/tower.log` or if you are running {PlatformNameShort} on {OCPShort}, review the web pod logs and look for the following which would occur a system auditor logs in, whose role was removed upon login:
+
+[literal, options="nowrap" subs="+attributes"]
+
+----
+2025-01-17 14:19:36,624 DEBUG 
+[7d3cf3b24d4e4d0e9edd5e2606d6ceba] awx.sso.common 
+SAML adapter removing user auditor1 permission of 
+auditor_role from organization Default
+----
