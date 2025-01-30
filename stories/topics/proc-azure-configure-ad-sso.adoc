@@ -3,30 +3,9 @@
 = {MSEntraID} SSO configuration
 
 [role="_abstract"]
-Follow the procedures below to configure single sign-on (SSO) with {MSEntraID} (formerly known as Azure Active Directory). If your organization does not use {MSEntraID} for application authorization, you can create users in the user management system in {PlatformNameShort}.
 
-.Configuring the base URL for the {PlatformNameShort} deployment
+For help with setting up and configuring your enterprise authentication, see the _Chapter 3. Configuring Microsoft Entra ID authentication_ section of the link:{URLCentralAuth}[{TitleCentralAuth}] guide. 
 
-. In a browser, navigate to the Automation controller URL and log in using the following credentials:
-  * Username: `admin`
-  * Password: Use the _Administrator password_ you provided when you deployed the {PlatformNameShort} application.
-. In the Automation controller console, click *Settings* in the menu options.
-. Click *Miscellaneous System settings* under the *System* settings.
-. Click *Edit*. Enter the Automation controller URL in the Base URl of the service field.
-. Click *Save*.
-
-.Configuring authentication for {PlatformNameShort}
-
-To set up enterprise authentication for {MSEntraID}, you must obtain an OAuth2 key and secret by registering your {PlatformNameShort} deployment in Azure.
-
-To register the {ControllerName} instance in Azure, you must supply the _{MSEntraID} OAuth2 Callback URL_ from the {ControllerName} settings.
-
-.Fetching the {MSEntraID} OAuth2 Callback URL
-
-. In a web browser, open the {ControllerName} console.
-. Click *Settings* in the menu to open the main settings page.
-. Click *{MSEntraID} settings* in the *Authentication* category to open the *Details* page.
-. Copy the value for _{MSEntraID} OAuth2 Callback URL_. You need this value when you register your deployed application in {MSEntraID}.
 
 .Creating a registered application in {MSEntraID}
 
@@ -40,14 +19,14 @@ To register the {ControllerName} instance in Azure, you must supply the _{MSEntr
   * In the *Name* field, enter the same name that you used for the deployed application.
   * Select the default value for *Supported account types*.
   * Select *Web* for *Redirect URI (optional)*.
-  * In the *Redirect URI (optional)* field, enter the _{MSEntraID} OAuth2 Callback URL_ value that you fetched from {ControllerName}.
+  * In the *Redirect URI (optional)* field, enter the _{MSEntraID} OAuth2 Callback URL_ value that you fetched from {PlatformNameShort}.
 . Click *Register* to create the registration.
 
-When registration is complete, the registration page for the Automation Controller application is displayed.
+When registration is complete, the registration page for the {PlatformNameShort} application is displayed.
 
 .Generating secrets for communication
 
-. In the *Automation controller application registration page* on Azure, copy and save the value of _Application (client) ID_.
+. In the *{PlatformNameShort} application registration page* on Azure, copy and save the value of _Application (client) ID_.
 +
 You need this value for the _{MSEntraID}OAuth2 Key_ in the {PlatformNameShort} settings.
 . Under *Manage*, click *Certificates & secrets*.
@@ -61,19 +40,6 @@ It is useful to include the date in the description, for example: _Ansible Autom
 +
 The maximum lifetime for the certificate is 2 years. Unless you have specific security needs that prevent the creation of a long term certificate, select an expiration date of *24 months*.
 . Save the secret _Value_ to a location on your local machine. After you navigate away from this page the secret value is no longer retrievable.
-
-.Adding secrets to {PlatformNameShort} settings
-
-[role="_abstract"]
-Add the key _(Application (client) ID)_ and value (_Value_) of the secret that you generated in Azure to your {PlatformNameShort} instance.
-
-. Open the {ControllerName} console in a web browser.
-. Click menu:Settings[{MSEntraID} settings].
-. Click *Edit*.
-. Enter the information for the secret that you generated in {MSEntraID}:
-  . In *{MSEntraID} OAuth2 Key*, paste the _Application (client) ID_.
-  . In *{MSEntraID} OAuth2 Secret*, paste the secret _Value_.
-. Click *Save*.
 
 .Creating a service principal for automating Azure resources
 
@@ -108,8 +74,7 @@ The output displays the _appID_ and _tenant_ keys for the service principal:
   "tenant": "xxxxxxx-xxx-xxxx"
 }
 -----
-. Store the service principal details securely, as they are displayed only when you create the secret. You need them when you deploy {ControllerName}.
-See link:{LinkControllerAdminGuide} for help with deploying your {ControllerName}.
+. Store the service principal details securely, as they are displayed only when you create the secret.
 
 
 .Maintaining your service principals
@@ -127,18 +92,4 @@ az ad sp list -o table | grep ansible
 This command does not display the secrets for your service principals. Delete the service principal and create a new one if the secret is lost.
 
 When you create a new service principal to replace an expired or deleted one, you must update the credential that uses the service principal that you are replacing. If the credential is not updated, automations that use that credential will fail.
-
-.Adding Azure Credentials to {ControllerName}
-
-. Open the {ControllerName} in a web browser.
-. Under *Resources*, click *Credentials*.
-. Click *Add* to open the *Create New Credentials* page.
-. Enter a name for the new credential and select *Azure Resource Manager* for the credential type.
-. Use the Service Principal details to fill out the values of the form:
-  * *Name*: Choose a descriptive name for the credential, for example _*Azure Infrastructure*_.
-  * *Subscription ID*: Enter the subscription ID where your resources created in Azure are associated. This is unique to your tenant. Your organization may have multiple subscription IDs; consult your Azure administrator regarding the subscription ID that you must use.
-  * *Client ID*: Enter the appId value from the Service Principal creation.
-  * *Client Secret*: Enter the password from the Service Principal creation.
-  * *Tenant ID*: Enter the tenant from the Service Principal creation.
-. Click *Save* to save the credential.
 
