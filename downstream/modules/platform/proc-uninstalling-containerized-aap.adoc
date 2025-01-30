@@ -7,7 +7,7 @@
 
 When performing a reinstall following an uninstall that preserves the databases, you must use the previously generated {PlatformNameShort} secret key values to access the preserved databases.
 
-Before running the uninstall, collect the existing secret keys by running the following command:
+Before performing an uninstall, collect the existing secret keys by running the following command:
 ----
 $ podman secret inspect --showsecret <secret_key_variable> | jq -r .[].SecretData
 ----
@@ -18,7 +18,7 @@ $ podman secret inspect --showsecret controller_secret_key | jq -r .[].SecretDat
 
 For more information about the `*_secret_key` variables, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables].
 
-To uninstall a containerized deployment, run the `uninstall` playbook command:
+To uninstall a containerized deployment, run the `uninstall` playbook:
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall
 ----
