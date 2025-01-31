@@ -65,12 +65,12 @@ To enable this functionality:
 
 . From the navigation panel, select {MenuAEAdminSettings}.
 . Select *SAML settings* from the list of *Authentication* options.
-. Click btn:[Edit] and update the SAML Organization Attribute Mapping to `{"remove_auditors": false}`.
-
+. Click btn:[Edit] and update the *SAML Organization Attribute Mapping* to `{"remove_auditors": false}`.
++
 .Example
-
++
 [literal, options="nowrap" subs="+attributes"]
-
++
 ----
 { "remove": true, "remove_admins": false, 
 "remove_auditors": false, "saml_admin_attr": 
@@ -80,14 +80,15 @@ To enable this functionality:
 .Verification
 
 . Enable debugging in {ControllerName}.
-.. From the navigation panel, select {MenuAEAdminSettings}.
-.. Select *Logging settings* from the list of *System* options.
-.. Click btn:[Edit] and select *Debug* in the *Logging Aggregator Level Threshold* drop-down menu.
+** From the navigation panel, select {MenuAEAdminSettings}.
+** Select *Logging settings* from the list of *System* options.
+** Click btn:[Edit] and select *Debug* in the *Logging Aggregator Level Threshold* drop-down menu.
 . Use SSO to log in to an account with *System Auditor* privileges.
-. Verify the results in `/var/log/tower/tower.log` or if you are running {PlatformNameShort} on {OCPShort}, review the web pod logs and look for the following which would occur a system auditor logs in, whose role was removed upon login:
-
+. Verify the results in `/var/log/tower/tower.log`. 
+Or if you are running {PlatformNameShort} on {OCPShort}, review the web pod logs and look for the following, which occurs when a system auditor logs in, whose role was removed when logging in:
++
 [literal, options="nowrap" subs="+attributes"]
-
++
 ----
 2025-01-17 14:19:36,624 DEBUG 
 [7d3cf3b24d4e4d0e9edd5e2606d6ceba] awx.sso.common 
