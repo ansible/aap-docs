@@ -29,7 +29,9 @@ Used to indicate which nodes a specific host connects to. Wherever this variable
 
 The `peers` variable can be a comma-separated list of hosts only and not groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
 
-Default = an empty list
+For example usage, see link:{URLContainerizedInstall}/aap-containerized-installation#adding-execution-nodes_aap-containerized-installation[Adding execution nodes].
+
+Default = []
 
 | `receptor_datadir` | | This variable configures the receptor data directory. By default, it is set to `/tmp/receptor`. To change the default location, run the installation script with `"-e receptor_datadir="` and specify the target directory that you want. 
 
@@ -63,16 +65,16 @@ Default = `false`
 
 For the `[automationcontroller]` group the two options are:
 
-* `node_type=control` - The node only runs project and inventory updates, but not regular jobs.
+* `receptor_type=control` - The node only runs project and inventory updates, but not regular jobs.
 
-* `node_type=hybrid` - The node runs everything.
+* `receptor_type=hybrid` - The node runs everything.
 
 Default for this group = `hybrid`.
 
 For the `[execution_nodes]` group the two options are:
 
-* `node_type=hop` - The node forwards jobs to an execution node.
-* `node_type=execution` - The node can run jobs.
+* `receptor_type=hop` - The node forwards jobs to an execution node.
+* `receptor_type=execution` - The node can run jobs.
 
 Default for this group = `execution`
 |====
