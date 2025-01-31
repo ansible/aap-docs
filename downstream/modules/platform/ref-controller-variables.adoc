@@ -62,33 +62,28 @@ Valid options are `active`, `deprovision` to remove a node from a cluster, or `i
 
 Default = `active`
 
-| `node_type` | | For `[automationcontroller]` group.
+| `node_type` | See `receptor_type` for the container equivalent variable. a| 
 
-Two valid `node_types` can be assigned for this group.
+For the `[automationcontroller]` group the two options are:
 
-A `node_type=control` means that the node only runs project and inventory updates, but not regular jobs.
+* `node_type=control` - The node only runs project and inventory updates, but not regular jobs.
 
-A `node_type=hybrid` can run everything.
+* `node_type=hybrid` - The node runs everything.
 
 Default for this group = `hybrid`.
 
-For `[execution_nodes]` group:
+For the `[execution_nodes]` group the two options are:
 
-Two valid `node_types` can be assigned for this group.
+* `node_type=hop` - The node forwards jobs to an execution node.
+* `node_type=execution` - The node can run jobs.
 
-A `node_type=hop` implies that the node forwards jobs to an execution node.
+Default for this group = `execution`
 
-A `node_type=execution` implies that the node can run jobs.
+| `peers` | See `receptor_peers` for the container equivalent variable. | 
 
-Default for this group = `execution`.
-| `peers` | | _Optional_
+Used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established.
 
-The `peers` variable is used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established.
-
-This variable is used to add `tcp-peer` entries in the `receptor.conf` file used for establishing network connections with other nodes.
-
-The peers variable can be a comma-separated list of hosts and groups from the inventory.
-This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
+The `peers` variable can be a comma-separated list of hosts and groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
 
 | `awx_pg_cert_auth` | `controller_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
 
