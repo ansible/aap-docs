@@ -8,33 +8,33 @@ The following enhancements and bug fixes have been implemented in this release o
 
 === {PlatformNameShort}
 
-* {LightspeedShortName} has been updated to 2.5.241127.
+* {LightspeedShortName} has been updated to 2.5.241127.(AAP-35307)
 
-* `redhat.insights` Ansible collection has been updated to 1.3.0. 
+* `redhat.insights` Ansible collection has been updated to 1.3.0.(AAP-35161)
 
-* `ansible.eda` collection has been updated to 2.2.0 in {ExecEnvShort} and decision environment images. 
+* `ansible.eda` collection has been updated to 2.2.0 in {ExecEnvShort} and decision environment images.(AAP-3398)
 
 === {OperatorPlatformNameShort}
 
-* With this update, you can set PostgreSQL SSL/TLS mode to `verify-full` or `verify-ca` with the proper `sslrootcert` configuration in the {HubName} Operator.
+* With this update, you can set PostgreSQL SSL/TLS mode to `verify-full` or `verify-ca` with the proper `sslrootcert` configuration in the {HubName} Operator.(AAP-35368)
 
 === Container-based {PlatformNameShort}
 
-* With this update, `ID` and `Image` fields from a container image are used instead of `Digest` and `ImageDigest` to trigger a container update. 
+* With this update, `ID` and `Image` fields from a container image are used instead of `Digest` and `ImageDigest` to trigger a container update.(AAP-36575)
 
-* With this update, you can now update the registry URL value in {EDAName} credentials. 
+* With this update, you can now update the registry URL value in {EDAName} credentials.(AAP-35085)
 
-* With this update, the `kernel.keys.maxkeys` and `kernel.keys.maxbytes` settings are increased on systems with large memory configuration. 
+* With this update, the `kernel.keys.maxkeys` and `kernel.keys.maxbytes` settings are increased on systems with large memory configuration.(AAP-34019)
 
-* Added `ansible_connection=local` to the `inventory-growth file` and clarified its usage. 
+* Added `ansible_connection=local` to the `inventory-growth file` and clarified its usage. (AAP-34016)
 
 === Documentation updates
 
-* With this update, the Container growth topology and Container enterprise topology have been updated to include s390x (IBM Z) architecture test support. 
+* With this update, the Container growth topology and Container enterprise topology have been updated to include s390x (IBM Z) architecture test support. (AAP-35969)
 
 === RPM-based {PlatformNameShort}
 
-* With this update, you can now update the registry URL value in {EDAName} credentials.
+* With this update, you can now update the registry URL value in {EDAName} credentials.(AAP-35162)
 
 == Bug fixes
 
@@ -46,31 +46,31 @@ With this update, the following CVEs have been addressed:
 
 === {OperatorPlatformNameShort}
 
-* With this update, missing {OperatorPlatformNameShort} custom resource definitions (CRDs) are added to the `aap-must-gather` container image.
+* With this update, missing {OperatorPlatformNameShort} custom resource definitions (CRDs) are added to the `aap-must-gather` container image. (AAP-35226)
 
-* Disabled {Gateway} authentication in the proxy configuration to prevent HTTP 502 errors when the control plane is down.
+* Disabled {Gateway} authentication in the proxy configuration to prevent HTTP 502 errors when the control plane is down.(AAP-36527)
 
-* The Red Hat favicon is now correctly displayed on {ControllerName} and {EDAName} API tabs. 
+* The Red Hat favicon is now correctly displayed on {ControllerName} and {EDAName} API tabs.(AAP-30810)
 
-* With this update, the {ControllerName} admin password is now reused during upgrade from {PlatformNameShort} 2.4 to 2.5. 
+* With this update, the {ControllerName} admin password is now reused during upgrade from {PlatformNameShort} 2.4 to 2.5.(AAP-35159)
 
-* Fixed undefined variable (`_controller_enabled`) when reconciling an `AnsibleAutomationPlatformRestore`. Fixed {HubName} Operator `pg_restore` error on restores due to a wrong database secret being set. 
+* Fixed undefined variable (`_controller_enabled`) when reconciling an `AnsibleAutomationPlatformRestore`. Fixed {HubName} Operator `pg_restore` error on restores due to a wrong database secret being set.(AAP-35815)
 
 === {ControllerNameStart}
 
-* Updated the minor version of uWSGI to obtain updated log verbiage.
+* Updated the minor version of uWSGI to obtain updated log verbiage.(AAP-33169)
 
-* Fixed job schedules running at the wrong time when the `rrule` interval was set to `HOURLY` or `MINUTELY`.
+* Fixed job schedules running at the wrong time when the `rrule` interval was set to `HOURLY` or `MINUTELY`.(AAP-36572)
 
-* Fixed an issue where sensitive data was displayed in the job output. 
+* Fixed an issue where sensitive data was displayed in the job output.(AAP-35584)
 
-* Fixed an issue where unrelated jobs could be marked as a dependency of other jobs. 
+* Fixed an issue where unrelated jobs could be marked as a dependency of other jobs.(AAP-35309)
 
-* Included pod anti-affinity configuration on default container group pod specification to optimally spread workload. 
+* Included pod anti-affinity configuration on default container group pod specification to optimally spread workload.(AAP-35055)
 
 === Container-based {PlatformNameShort}
 
-* With this update, you cannot change the `postgresql_admin_username` value when using a managed database node.
+* With this update, you cannot change the `postgresql_admin_username` value when using a managed database node. (AAP-36577)
 
 * Added update support for PCP monitoring role. 
 
