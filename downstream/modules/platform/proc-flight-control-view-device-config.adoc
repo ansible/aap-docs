@@ -1,0 +1,17 @@
+[id="proc-flight-control-view-device-config"]
+
+= Viewing a device's effective target configuration
+
+The device manifest returned by the `flightctl get device` command still only has references to external configuration and secret objects.
+Only when the device agent queries the service, the service replaces the references with the actual configuration and secret data. 
+While this better protects potentially sensitive data, it also makes troubleshooting faulty configurations hard. 
+This is why a user can be authorized to query the effective configuration as rendered by the service to the agent.
+
+.Procedure
+
+* To query the effective configuration, use the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+flightctl get device/${device_name} --rendered | jq
+----
