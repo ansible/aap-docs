@@ -12,14 +12,14 @@ See the following procedure for how to back up a deployment of the {ControllerNa
 
 .Procedure
 
-. Create a file named "backup-awx.yml" with the following contents:
+. Create a file named "backup-automation-controller.yml" with the following contents:
 +
 ----
 ---
 apiVersion: automationcontroller.ansible.com/v1beta1
-kind: AWXBackup
+kind: AutomationControllerBackup
 metadata:
-  name: awxbackup-2024-07-15
+  name: AutomationControllerBackup-2024-07-15
   namespace: my-namespace
 spec:
   deployment_name: controller
@@ -34,4 +34,4 @@ The namespace above is the one containing the {ControllerName} deployment you in
 
 . Use the `oc apply` command to create the backup object in your cluster:
 
-`$ oc apply -f backup-awx.yml`
+`$ oc apply -f backup-automation-controller.yml`
