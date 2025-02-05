@@ -218,7 +218,23 @@ Default = `63072000` seconds, or two years.
 | `pulp_db_fields_key` |  | Relative or absolute path to the Fernet symmetric encryption key that you want to import.
 The path is on the Ansible management node. It is used to encrypt certain fields in the database, such as credentials.
 If not specified, a new key will be generated.
+| | `hub_azure_account_key` | Required when using an Azure blob storage backend.
 
+The Azure blob storage account key.
+
+| | `hub_azure_account_name` | Required when using an Azure blob storage backend.
+
+The account name associated with the Azure blob storage.
+
+| | `hub_azure_container` | The name of the Azure blob storage container.
+
+Default = `pulp`
+
+| | `hub_azure_extra_settings` | Used to define extra parameters for the Azure blob storage backend.
+
+For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/azure.html#settings[django-storages documentation - Azure Storage].
+
+Default = `{}`
 |  | `hub_tls_remote` | {HubNameStart} TLS remote files. 
 
 Default = `false`
@@ -243,7 +259,11 @@ Default = `[TLSv1.2, TLSv1.3]`
 
 |  | `hub_secret_key` | The secret key value used by {HubName} to sign and encrypt data, ensuring secure communication and data integrity between services. 
 
-|  | `hub_storage_backend` | {HubNameStart} storage backend. 
+|  | `hub_storage_backend` | {HubNameStart} storage backend type. 
+
+Possible values include: `azure`, `file`, `s3`.
+
+Default = `file`
 
 |  | `hub_workers` | {HubNameStart} workers count. 
 
@@ -278,14 +298,30 @@ Default = `30`
 Default = `main`
 
 |  | `hub_postinstall_repo_url` | {HubNameStart} repository URL.
-| | `hub_shared_data_path` | Required when installing more than one instance of {HubName} with a file storage backend. When installing a single instance of {HubName}, it is optional.
+| | `hub_shared_data_path` | Required when installing more than one instance of {HubName} with a `file` storage backend. When installing a single instance of {HubName}, it is optional.
 
-Path to a Network File System (NFS) share with read, write, and execute (RWX) access.
+Path to the Network File System (NFS) share with read, write, and execute (RWX) access.
 
-| | `hub_shared_data_mount_opts` | _Optional_
-
-Mount options for NFS share.
+| | `hub_shared_data_mount_opts` | Mount options for the Network File System (NFS) share.
 
 Default = `rw,sync,hard`
+
+| | `hub_s3_access_key` | Required when using an AWS S3 storage backend. 
+
+The AWS S3 access key. 
+
+| | `hub_s3_secret_key` | Required when using an AWS S3 storage backend.
+
+The AWS S3 secret key. 
+
+| | `hub_s3_bucket_name` | The name of the AWS S3 storage bucket.
+
+Default = `pulp`
+
+| | `hub_s3_extra_settings` | Used to define extra parameters for the AWS S3 storage backend.
+
+For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings[django-storages documentation - Amazon S3].
+
+Default = `{}`
 
 |====
