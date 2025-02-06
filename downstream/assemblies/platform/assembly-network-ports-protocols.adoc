@@ -18,7 +18,7 @@ Hop nodes use minimal CPU and memory, so vertically scaling hop nodes does not i
 
 [NOTE]
 ====
-Direct connections shown in the diagram between the Client and {HubName},{EDAName}, and {ControllerName} only apply to systems upgraded from {PlatformName} 2.4 to {PlatformName} {PlatformVers} to provide backward compatibility.
+Direct connections shown in the diagram between the Client and {HubName}, {EDAName}, and {ControllerName} only apply to systems upgraded from {PlatformName} 2.4 to {PlatformName} {PlatformVers} to provide backward compatibility.
 The connection does not exist for {PlatformName} {PlatformVers}.
 ====
 
@@ -51,17 +51,19 @@ If you choose to configure them to suit your environment, you might experience a
 | 80/443 | TCP | HTTP/HTTPS | Execution node | {HubNameStart} | Allows execution nodes to pull the execution environment image from {HubName}. | Fixed value
 | 80/443 | TCP | HTTP/HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
 | 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {GatewayStart} |  This is the ingress above the gateway that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of {PlatformNameShort}.
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | | 
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | | 
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | | 
-| 80/443 | TCP | HTTP/HTTPS | Receptor | Execution node | OCP Mesh ingress |
-| 80/443 | TCP | HTTP/HTTPS | Receptor | Hop node | OCP Mesh ingress | 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {ControllerNameStart} | Proxy request| `automationgateway_main_url` 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {HubNameStart} | Proxy request | `automationgatweway_main_url` 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node |  {EDAName} | Proxy request| `automationgateway_main_url` 
-| 443 | TCP | HTTPS | Remote execution node (Client) | Controller node | Web UI/API
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | Link between gateway and {PlatformNameShort} components | 
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | Link between gateway and {PlatformNameShort} components | 
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | Link between gateway and {PlatformNameShort} components | 
+//Lines removed after consulting with Shane MacDonald for AAP-37353
+//| 80/443 | TCP | HTTP/HTTPS | Receptor | Execution node | OCP Mesh ingress |
+//| 80/443 | TCP | HTTP/HTTPS | Receptor | Hop node | OCP Mesh ingress | 
+| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {ControllerNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
+| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {HubNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgatweway_main_url` 
+| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node |  {EDAName} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
+| 443 | TCP | HTTPS | Remote execution node (Client) | Controller node | Web UI/API 
 // Line removed after consulting with Shane MacDonald for AAP-37353
-//This exposes the mesh ingress receptor entry point for inbound connections.| `nginx_https_port`
+//This exposes the mesh ingress receptor entry point for inbound connections.
+| `nginx_https_port`
 | 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
 | 5432 | TCP | PostgreSQL | {EDAName} node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationedacontroller_pg_port`
 | 5432 | TCP | PostgreSQL | {HubNameStart} | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationhub_pg_port`
