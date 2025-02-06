@@ -54,14 +54,14 @@ If you choose to configure them to suit your environment, you might experience a
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | Link between gateway and {PlatformNameShort} components | 
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | Link between gateway and {PlatformNameShort} components | 
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | Link between gateway and {PlatformNameShort} components | 
-//Lines removed after consulting with Shane MacDonald for AAP-37353
+//Lines removed after consulting with Shane McDonald for AAP-37353
 //| 80/443 | TCP | HTTP/HTTPS | Receptor | Execution node | OCP Mesh ingress |
 //| 80/443 | TCP | HTTP/HTTPS | Receptor | Hop node | OCP Mesh ingress | 
 | 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {ControllerNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
 | 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {HubNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgatweway_main_url` 
 | 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node |  {EDAName} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
 | 443 | TCP | HTTPS | Remote execution node (Client) | Controller node | Web UI/API 
-// Line removed after consulting with Shane MacDonald for AAP-37353
+// Line removed after consulting with Shane McDonald for AAP-37353
 //This exposes the mesh ingress receptor entry point for inbound connections.
 | `nginx_https_port`
 | 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
