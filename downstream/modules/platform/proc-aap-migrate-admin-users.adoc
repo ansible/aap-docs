@@ -1,0 +1,42 @@
+
+
+[id="aap-migrate-admin-users_{context}"]
+
+= Migrating admin users
+ 
+[role="_abstract"]
+Upgrades from {PlatformNameShort} 2.4 to 2.5 allows for the migration of administrators for each component with their existing component-level admin privileges maintained. However, escalation of privileges to platform gateway administrator is not automatic during the upgrade process. This is intentional to ensure a secure privilege escalation process, which can be customized based on the needs of the organization.
+
+.Prerequisites
+
+* Review current admin roles for the individual services in your current deployment.
+* Confirm the users who will require platform gateway admin rights post-upgrade.
+
+
+== Important notes
+
+*Component-level admin privileges are retained:* Administrators for {ControllerName} and {HubName} will retain their existing admin privileges for those respective services post-upgrade. For example, an admin of {ControllerName} will continue to have full administration privileges for {ControllerName} resources. 
+
+[NOTE]
+====
+Users previously designated as {ControllerName} or {HubName} administrators are labeled as *Normal* in the *User type* column of the Users list view. This is a mischaracterization. 
+====
+
+You can verify that these users have, in fact, retained their service level administrator privileges, by editing the account:
+
+.Procedure
+
+. From the navigation panel of the platform gateway, select Access Management → Users.
+. Select the check box for the user that you want to modify.
+. Click the Pencil icon and select Edit user.
+. The Edit user page is displayed where you can see the service level administrator privileges assigned by the User type checkboxes. 
+
+[NOTE]
+====
+Only a platform administrator can escalate your privileges.
+====
+
+*Escalation to gateway platform admin must be manually configured post-upgrade:* During the upgrade process, admin privileges for individual services are not automatically translated to platform administrator privileges. Escalation to platform gateway admin must be granted by the platform administrator after upgrade and migration. Each service admin retains the original scope of their access until the access is changed. 
+
+As a platform administrator, you can escalate a user's privileges by selecting the *{PlatformNameShort} Administrator* checkbox.
+
