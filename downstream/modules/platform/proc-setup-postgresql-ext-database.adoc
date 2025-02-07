@@ -9,10 +9,6 @@ When using an external database with {PlatformNameShort}, you must create and ma
 
 Use the following procedure to configure an external PostgreSQL compliant database for use with an {PlatformNameShort} component, for example {ControllerName}, {EDAName}, {HubName}, and {Gateway}.
 
-
-//Procedure for RPM installation
-ifdef::aap-install[]
-
 .Procedure
 . Connect to a PostgreSQL compliant database server with superuser privileges.
 +
@@ -149,7 +145,7 @@ Use the following inventory file snippet to configure each component's database 
 # automationgateway_pgclient_sslkey=/path/to/key # Path to the key file
 ----
 +
-. Run the installer. If you are using a PostgreSQL database, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
+. Run the installation program. If you are using a PostgreSQL database, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
 . Check that you can connect to the created database with the credentials provided in the inventory file.
 . Check the permission of the user. The user should have the `createDB` or administrator role.
 
@@ -157,68 +153,3 @@ Use the following inventory file snippet to configure each component's database 
 ====
 During this procedure, you must check the External Database coverage. For further information, see https://access.redhat.com/articles/4010491
 ====
-
-endif::aap-install[]  
-//End of procedure for RPM installation
-
-
-
-//Procedure for Containerized installation
-ifdef::container-install[]
-
-.Procedure
-. Connect to a PostgreSQL compliant database server with a user that has superuser privileges.
-+
-----
-# psql -h <hostname> -U <username> -p <port_number> -d <database_name>
-----
-+
-For example:
-+
-----
-# psql -h db.example.com -U superuser -p 5432 -d postgres
-----
-+
-. Create the user, database, and password with the `createDB` or `administrator` role assigned to the user. 
-For further information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
-. Add the database credentials and host details to the installation program's inventory file under the `[all:vars]` group.
-. Optional: mutual TLS (mTLS) authentication is disabled by default. To configure each component’s database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
-+
-[source,yaml,subs="+attributes"]
-----
-# {GatewayStart}
-gateway_pg_cert_auth=true
-gateway_pg_tls_cert=/path/to/gateway.cert
-gateway_pg_tls_key=/path/to/gateway.key
-gateway_pg_sslmode=verify-full
-
-# {ControllerNameStart}
-controller_pg_cert_auth=true
-controller_pg_tls_cert=/path/to/awx.cert
-controller_pg_tls_key=/path/to/awx.key
-controller_pg_sslmode=verify-full
-
-# {HubNameStart}
-hub_pg_cert_auth=true
-hub_pg_tls_cert=/path/to/pulp.cert
-hub_pg_tls_key=/path/to/pulp.key
-hub_pg_sslmode=verify-full
-
-# {EDAcontroller}
-eda_pg_cert_auth=true
-eda_pg_tls_cert=/path/to/eda.cert
-eda_pg_tls_key=/path/to/eda.key
-eda_pg_sslmode=verify-full
-----
-+
-. Run the installer. If you are using a PostgreSQL database, the database is owned by the connecting user and must have a `createDB` or `administrator` role assigned to it.
-. Check that you can connect to the created database with the credentials provided in the inventory file.
-. Check the permission of the user. The user should have the `createDB` or `administrator` role.
-
-[NOTE]
-====
-During this procedure, you must check the External Database coverage. For further information, see https://access.redhat.com/articles/4010491
-====
-
-endif::container-install[]
-//End of procedure for Containerized installation

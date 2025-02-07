@@ -21,6 +21,10 @@ Default = `admin`
 
 | `automation_controller_main_url` | |  {ControllerNameStart} main URL.
 
+| `awx_pg_cert_auth` | `controller_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
+
+Default = `false`
+
 | `controller_tls_files_remote` | `controller_tls_remote` | {ControllerNameStart} TLS remote files.
 
 Default = `false`
@@ -85,9 +89,6 @@ Used to indicate which nodes a specific host or group connects to. Wherever this
 
 The `peers` variable can be a comma-separated list of hosts and groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
 
-| `awx_pg_cert_auth` | `controller_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
-
-Default = `false`
 
 | `pg_database` | `controller_pg_database` | The name of the PostgreSQL database used by {ControllerName}.
 
@@ -117,6 +118,10 @@ Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, 
 
 Default = `prefer`
 
+| `pg_username` | `controller_pg_username` | The username for the {ControllerName} PostgreSQL database.
+
+Default = `awx`
+
 | `pgclient_sslcert` | `controller_pg_tls_cert` | Required if using client certificate authentication.
 
 The path to the PostgreSQL SSL/TLS certificate file for {ControllerName}.
@@ -124,10 +129,6 @@ The path to the PostgreSQL SSL/TLS certificate file for {ControllerName}.
 | `pgclient_sslkey` | `controller_pg_tls_key` | Required if using client certificate authentication.
 
 The path to the PostgreSQL SSL/TLS key file for {ControllerName}.
-
-| `pg_username` | `controller_pg_username` | The username for the {ControllerName} PostgreSQL database.
-
-Default = `awx`
 
 | `web_server_ssl_cert` | `controller_tls_cert` | _Optional_
 
