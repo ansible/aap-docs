@@ -1,0 +1,130 @@
+[id="proc-setup-postgresql-ext-database-containerized"]
+
+= Setting up an external (customer supported) database
+
+[IMPORTANT]
+====
+* When using an external database with {PlatformNameShort}, you must create and maintain that database. Ensure that you clear your external database when uninstalling {PlatformNameShort}.
+
+* During configuration of an external database, you must check the external database coverage. For more information, see link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage].
+====  
+
+There are two possible scenarios for setting up an external database:
+
+. An external database with PostgreSQL admin credentials
+. An external database without PostgreSQL admin credentials
+
+== Setting up an external database with PostgreSQL admin credentials
+
+If you have PostgreSQL admin credentials, you can supply them in the inventory file and the installation program will create the PostgreSQL users and databases for each component for you. The PostgreSQL admin account must have `SUPERUSER` privileges. 
+
+To configure the PostgreSQL admin credentials, add the following variables to the inventory file under the `[all:vars]` group:
+
+----
+postgresql_admin_username=<set your own>
+postgresql_admin_password=<set your own>
+----
+
+== Setting up an external database without PostgreSQL admin credentials
+
+If you do not have PostgreSQL admin credentials, then PostgreSQL users and databases need to be created for each component ({Gateway}, {ControllerName}, {HubName}, and {EDAName}) before running the installation program.
+
+.Procedure
+
+. Connect to a PostgreSQL compliant database server with a user that has `SUPERUSER` privileges.
++
+----
+# psql -h <hostname> -U <username> -p <port_number> 
+----
++
+For example:
++
+----
+# psql -h db.example.com -U superuser -p 5432
+----
++
+. Create the user with a password and ensure the `CREATEDB` role is assigned to the user. For more information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
++
+----
+CREATE USER <username> WITH PASSWORD <password> CREATEDB;
+----
++
+For example:
++
+----
+CREATE USER hub_user WITH PASSWORD <password> CREATEDB;
+----
++
+. Create the database and add the user you created as the owner.
++
+----
+CREATE DATABASE <database_name> OWNER <username>;
+----
++
+For example:
++
+----
+CREATE DATABASE hub_database OWNER hub_user;
+----
++
+. Once you have created the PostgreSQL users and databases for each component, you can supply them in the inventory file under the `[all:vars]` group. 
++
+[source,yaml,subs="+attributes"]
+----
+# {GatewayStart}
+gateway_pg_host=aap.example.org
+gateway_pg_database=<set your own>
+gateway_pg_username=<set your own>
+gateway_pg_password=<set your own>
+
+# {ControllerNameStart}
+controller_pg_host=aap.example.org
+controller_pg_database=<set your own>
+controller_pg_username=<set your own>
+controller_pg_password=<set your own>
+
+# {HubNameStart}
+hub_pg_host=aap.example.org
+hub_pg_database=<set your own>
+hub_pg_username=<set your own>
+hub_pg_password=<set your own>
+
+# {EDAName}
+eda_pg_host=aap.example.org
+eda_pg_database=<set your own>
+eda_pg_username=<set your own>
+eda_pg_password=<set your own>
+----
+
+== Optional: enabling mutual TLS (mTLS) authentication
+
+mTLS authentication is disabled by default. To configure each component's database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
+
+[source,yaml,subs="+attributes"]
+----
+# {GatewayStart}
+gateway_pg_cert_auth=true
+gateway_pg_tls_cert=/path/to/gateway.cert
+gateway_pg_tls_key=/path/to/gateway.key
+gateway_pg_sslmode=verify-full
+
+# {ControllerNameStart}
+controller_pg_cert_auth=true
+controller_pg_tls_cert=/path/to/awx.cert
+controller_pg_tls_key=/path/to/awx.key
+controller_pg_sslmode=verify-full
+
+# {HubNameStart}
+hub_pg_cert_auth=true
+hub_pg_tls_cert=/path/to/pulp.cert
+hub_pg_tls_key=/path/to/pulp.key
+hub_pg_sslmode=verify-full
+
+# {EDAName}
+eda_pg_cert_auth=true
+eda_pg_tls_cert=/path/to/eda.cert
+eda_pg_tls_key=/path/to/eda.key
+eda_pg_sslmode=verify-full
+----
+
+

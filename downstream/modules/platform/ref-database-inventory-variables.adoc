@@ -10,53 +10,74 @@
 Set to `verify-full` for client-side enforced SSL/TLS. 
 
 Default = `prefer`
-| `postgres_ssl_cert` | `postgresql_tls_cert` | Location of the PostgreSQL SSL/TLS certificate.
 
-`/path/to/pgsql_ssl.cert`
-
-| `postgres_ssl_key` | `postgresql_tls_key` | Location of the PostgreSQL SSL/TLS key.
-
-`/path/to/pgsql_ssl.key`
-
-| `postgres_use_cert` | | Location of the PostgreSQL user certificate.
-
-`/path/to/pgsql.crt`
-
-| `postgres_use_ssl` | `postgresql_disable_tls` | Determines if the connection between {PlatformNameShort} and the PostgreSQL database should use SSL/TLS. The default for this variable is `false` which means SSL/TLS is not used for PostgreSQL connections. When set to `true`, the platform connects to PostgreSQL by using SSL/TLS.
-
-| `postgres_max_connections` | `postgresql_max_connections` | Maximum database connections setting to apply if you are using installer-managed PostgreSQL.
+| `postgres_max_connections` | `postgresql_max_connections` | Maximum database connections setting to apply if you are using an installer-managed database.
 
 See link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for help selecting a value.
 
 Default = `1024`
 
-| | `postgresql_admin_database` | PostgreSQL admin database.
+| `postgres_ssl_cert` | `postgresql_tls_cert` | Location of the PostgreSQL SSL/TLS certificate file.
+
+`/path/to/pgsql_ssl.cert`
+
+| `postgres_ssl_key` | `postgresql_tls_key` | Location of the PostgreSQL SSL/TLS key file.
+
+`/path/to/pgsql_ssl.key`
+
+| `postgres_use_cert` | | Location of the PostgreSQL user certificate file.
+
+`/path/to/pgsql.crt`
+
+| `postgres_use_ssl` | `postgresql_disable_tls` | Determines if the connection between {PlatformNameShort} and the PostgreSQL database should use SSL/TLS. 
+
+The default for this variable is `false` which means SSL/TLS is not used for PostgreSQL connections.
+
+When set to `true`, the platform connects to PostgreSQL by using SSL/TLS.
+
+| | `postgresql_admin_username` | The username for the PostgreSQL admin user.
+
+When used, the installation program creates each component's database and credentials.
+
+The PostgreSQL admin user must have `SUPERUSER` privileges.
 
 Default = `postgres`
 
-| | `postgresql_admin_username` | PostgreSQL admin user.
+| | `postgresql_admin_password` | Required when using `postgresql_admin_username`.
+
+The password for the PostgreSQL admin user.
+
+When used, the installation program creates each component's database and credentials.
+
+The PostgreSQL admin user must have `SUPERUSER` privileges.
+
+| | `postgresql_admin_database` | The name of the PostgreSQL admin database.
 
 Default = `postgres`
 
-| | `postgresql_admin_password` | _Required_
+| | `postgresql_effective_cache_size` | This defines the total memory available for caching data.
 
-PostgreSQL admin password.
+The format should be <int>MB.
 
-| | `postgresql_effective_cache_size` | PostgreSQL effective cache size.
+| | `postgresql_keep_databases` | Determines whether or not to keep databases during uninstall.
 
-| | `postgresql_keep_databases` | Keep databases during uninstall. This variable applies to databases managed by the installation program only, and not for external customer-created databases.
+When set to `true` databases will be kept during uninstall. 
+
+This variable applies to databases managed by the installation program only, and not external customer-created databases.
 
 Default = `false`
 
-| | `postgresql_log_destination` | PostgreSQL log file location.
+| | `postgresql_log_destination` | The location of the PostgreSQL log file.
 
 Default = `/dev/stderr`
 
-| | `postgresql_password_encryption` | PostgreSQL password encryption.
+| | `postgresql_password_encryption` | The type of PostgreSQL password encryption to use.
 
 Default = `scram-sha-256`
 
-| | `postgresql_shared_buffers` | PostgreSQL shared buffers.
+| | `postgresql_shared_buffers` | The amount of memory allocated for caching data within the database.
+
+The format should be <int>MB.
 
 | | `postgresql_tls_remote` | PostgreSQL TLS remote files.
 
