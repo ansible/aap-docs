@@ -25,7 +25,7 @@ RPM Default = `/var/lib/ansible-automation-platform-bundle`
 
 | `custom_ca_cert` | `custom_ca_cert` | The path to the custom CA certificate file.
 
-If set, this will install a custom CA certificate to the system trust store.
+If set, this installs a custom CA certificate to the system truststore.
 
 | `enable_insights_collection` | | The default install registers the node to the {InsightsName} for the {PlatformName} Service if the node is registered with Subscription Manager. 
 
@@ -105,9 +105,10 @@ This variable is used as a host variable for particular hosts and not under the 
 
 For further information, see link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#assigning-a-variable-to-one-machine-host-variables[Assigning a variable to one machine: host variables].
 
-| | `registry_ns_aap` | {PlatformNameShort} registry namespace.
+|| `backup_dir` | The location of the backup directory on the Ansible host. Used when performing backup and restore.
 
-Default = `ansible-automation-platform-25`
+Default = `~/backups`
+
 
 | | `container_compress` | Container compression software.
 
@@ -124,6 +125,10 @@ Default = `true`
 | | `registry_auth` | Use registry authentication.
 
 Default = `true`
+
+| | `registry_ns_aap` | {PlatformNameShort} registry namespace.
+
+Default = `ansible-automation-platform-25`
 
 | | `registry_ns_rhel` | RHEL registry namespace.
 
