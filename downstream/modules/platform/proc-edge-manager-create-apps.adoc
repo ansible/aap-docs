@@ -1,0 +1,22 @@
+[id="edge-manager-create-apps"]
+
+= Creating applications
+
+You can create an OCI registry application package with the following steps.
+
+.Procedure
+
+. Define the application's functionality with the link:https://github.com/compose-spec/compose-spec/blob/main/spec.md[Compose specification].
+. Embed the compose file in a scratch container.
+. Add the `appType=compose` label, then build and push the container to your OCI registry.
+. Reference the image in `spec.applications[]`.
++
+[source,yaml]
+----
+FROM scratch
+
+COPY podman-compose.yaml /podman-compose.yaml
+
+# required
+LABEL appType="compose"
+----

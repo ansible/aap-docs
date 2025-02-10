@@ -1,0 +1,104 @@
+[id="edge-manager-device-lifecycle"]
+
+= Use device lifecycle hooks
+
+You can use device lifecycle hooks to make the agent run user-defined commands at specific points in the device's lifecycle. 
+For example, you can add a shell script to your operating system images that backs up your application data.
+You can then specify that this script is to run and complete successfully before the agent can start updating the system.
+
+The following device lifecycle hooks are supported:
+
+[width="100%",cols="56%,44%",options="header",]
+|===
+|Lifecycle Hook |Description
+|`beforeUpdating` |This hook is called after the agent completed preparing for the update and before actually making changes to the system. 
+If an action in this hook returns with failure, the agent cancels the update.
+
+|`afterUpdating` |This hook is called after the agent has written the update to disk. 
+If an action in this hook returns with failure,the agent cancels and rolls back the update.
+
+|`beforeRebooting` |This hook is called before the system reboots. The agent blocks the reboot until running the action has completed or timed out. 
+If any action in this hook returns with failure, the agent cancels and rolls back the update.
+
+|`afterRebooting` |This hook is called when the agent first starts after a reboot. 
+If any action in this hook returns with failure, the agent reports this but continues starting up.
+|===
+
+For a state diagram defining when each device lifecycle hook is called by the agent, see the ADD LINK[Device API statuses] section.
+
+You can define device lifecycle hooks by adding rule files to one of two locations in the device's filesystem, where `${lifecyclehook}` is the all-lower-case name of the hook you want to define:
+
+* Rules in the `/usr/lib/flightctl/hooks.d/${lifecyclehook}/` drop-in directory are read-only.
+Therefore, you must add them to the operating system image during ADD LINK[image building].
+* Rules in the `/etc/flightctl/hooks.d/${lifecyclehook}/` drop-in directory are read-writable. 
+You can update them at runtime by using the methods described in ADD LINK[Managing OS Configuration].
+
+If rules are defined in both locations they are merged, whereby files under `/etc` take precedence over files of the same name under `/usr`. 
+If many rule files are added to a hook's directory, they are processed in lexical order of their file names.
+
+A rule file is written in YAML format and has a list of one or more actions. 
+An action can be to run an external command ("run action").
+When you specify many actions for a hook, these actions are performed in sequence, finishing one action before starting the next. 
+If an action returns with failure, later actions are not executed.
+
+A run action takes the following parameters:
+
+[width="100%",cols="45%,55%",options="header",]
+|===
+|Parameter |Description
+|Run |The absolute path to the command to run, followed by any flags or arguments. Example: `/usr/bin/nmcli connection reload`. Note that the command is not executed in a shell, so you cannot use shell variables like `$PATH` or `$HOME` or chain commands (`\|` or `;`). However, it is possible to start a shell yourself if necessary by specifying the shell as command to run. Example: `/usr/bin/bash -c 'echo $SHELL $HOME $USER'`
+
+|EnvVars |(Optional) A list of key/value-pairs to set as environment variables for the command.
+
+|WorkDir |(Optional) The directory the command is run from.
+
+|Timeout |(Optional) The maximum duration allowed for the action to complete. Specify the duration as a single positive integer followed by a time unit. 
+Supported time units are `s` for seconds, `m` for minutes, and `h` for hours.
+
+|If |(Optional) A list of conditions that must be true for the action to be run. 
+If not provided, actions run unconditionally.
+|===
+
+By default, actions are performed every time the hook is triggered.
+However, for the `afterUpdating` hook you can use the `If` parameter to add conditions that must be true for an action to be performed, otherwise the action is skipped.
+
+In particular, to only run an action if a given file or directory has changed during the update, you can define a "path condition" that takes the following parameters:
+
+[width="100%",cols="45%,55%",options="header",]
+|===
+|Parameter |Description
+|Path |An absolute path to a file or directory that must have changed during the update as condition for the action to be performed. Paths must be specified using forward slashes (`/`) and if the path is to a directory it must end with a forward slash `/`. 
+If you specify a path to a file, the file must have changed to satisfy the condition. 
+If you specify a path to a directory, a file in that directory or any of its subdirectories must have changed to satisfy the condition.
+
+|On |A list of file operations (`created`, `updated`, `removed`) to further limit the kind of changes to the specified path as condition for the action to be performed.
+|===
+
+If you have specified a "path condition" for an action in the `afterUpdating` hook, you have the following variables that you can include in arguments to your command and are replaced with the absolute paths to the changed files:
+
+[width="100%",cols="43%,57%",options="header",]
+|===
+|Variable |Description
+|`{{ Path }}` |The absolute path to the file or directory specified in the path condition.
+
+|`{{ Files }}` |A space-separated list of absolute paths of the files that were changed (created, updated, or removed) during the update and are covered by the path condition.
+
+|`{{ CreatedFiles }}` |A space-separated list of absolute paths of the files that were changed (created, updated, or removed) during the update and are covered by the path condition.
+
+|`{{ UpdatedFiles }}` |A space-separated list of absolute paths of the files that were updated during the update and are covered by the path condition.
+
+|`{{ RemovedFiles }}` |A space-separated list of absolute paths of the files that were removed during the update and are covered by the path condition.
+|===
+
+The {RedHatEdge} includes a built-in set of rules defined in `/usr/lib/flightctl/hooks.d/afterupdating/00-default.yaml`:
+
+[width="100%",cols="50%,28%,22%",options="header",]
+|===
+|If you change the following files |then the agent runs |Description
+|`/etc/systemd/system/` |`systemctl daemon-reload` |Changes to systemd units are activated by signaling the systemd daemon to reload the systemd manager configuration. 
+This reruns all generators, reloads all unit files, and re-creates the entire dependency tree.
+
+|`/etc/NetworkManager/system-connections/` |`nmcli conn reload` |Changes to Network Manager system connections are activated by signaling Network Manager to reload all connections.
+
+|`/etc/firewalld/` |`firewall-cmd --reload` |Changes to firewalld's permanent configuration are activated by signaling firewalld to reload firewall rules as new runtime configuration.
+|===
