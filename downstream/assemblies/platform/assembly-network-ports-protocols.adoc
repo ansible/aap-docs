@@ -25,7 +25,7 @@ The connection does not exist for {PlatformName} {PlatformVers}.
 The following table indicates the destination port and the direction of network traffic:
 
 .{PlatformNameShort} Network ports and protocols 
-image::aap-network-ports-protocols.png[Interaction of Ansible Automation Platform components on the network with information about the ports and protocols that are used.]
+image::aap-network-ports-protocols.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
 
 [NOTE]
 ====
@@ -50,7 +50,7 @@ If you choose to configure them to suit your environment, you might experience a
 | 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | Pull collections | Fixed value
 | 80/443 | TCP | HTTP/HTTPS | Execution node | {HubNameStart} | Allows execution nodes to pull the execution environment image from {HubName}. | Fixed value
 | 80/443 | TCP | HTTP/HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {GatewayStart} |  This is the ingress above the gateway that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of {PlatformNameShort}.
+| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {GatewayStart} |  This is the ingress above the {Gateway} that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of {PlatformNameShort}.
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | Link between gateway and {PlatformNameShort} components | 
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | Link between gateway and {PlatformNameShort} components | 
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | Link between gateway and {PlatformNameShort} components | 
