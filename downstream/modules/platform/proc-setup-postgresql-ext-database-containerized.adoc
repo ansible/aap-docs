@@ -96,6 +96,8 @@ eda_pg_username=<set your own>
 eda_pg_password=<set your own>
 ----
 
+include::proc-enable-hstore-extension.adoc[leveloffset=+1]
+
 == Optional: enabling mutual TLS (mTLS) authentication
 
 mTLS authentication is disabled by default. To configure each component's database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
@@ -126,5 +128,3 @@ eda_pg_tls_cert=/path/to/eda.cert
 eda_pg_tls_key=/path/to/eda.key
 eda_pg_sslmode=verify-full
 ----
-
-
