@@ -167,16 +167,25 @@ This means that nothing connects to Controller A as Controller A is creating the
 
 [IMPORTANT]
 ====
-Image manifests and filesystem blobs are served directly from `registry.redhat.io`.
-However, from 1 May 2023, filesystem blobs are served from `quay.io` instead.
-To avoid problems pulling container images, you must enable outbound connections to the listed `quay.io` hostnames.
+As of *April 1st, 2025*, `quay.io` is adding 3 additional endpoints. As a result, customers must adjust allow/block lists within their firewall systems lists to include the following endpoints:
+. `cdn04.quay.io`
+. `cdn05.quay.io`
+. `cdn06.quay.io`
 
-This change should be made to any firewall configuration that specifically enables outbound connections to `registry.redhat.io`.
+To avoid problems pulling container images, customers must allow outbound TCP connections (ports 80 and 443) to these hostnames:
+. `cdn.quay.io`
+. `cdn01.quay.io`
+. `cdn02.quay.io`
+. `cdn03.quay.io`
+. `cdn04.quay.io`
+. `cdn05.quay.io`
+. `cdn06.quay.io`
+
+This change should be made to any firewall configuration that specifically enables outbound connections to `registry.redhat.io` or `registry.access.redhat.com`.
 
 Use the hostnames instead of IP addresses when configuring firewall rules.
 
-After making this change, you can continue to pull images from `registry.redhat.io`.
-You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
+After making this change, you can continue to pull images from `registry.redhat.io` or `registry.access.redhat.com`. You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
 
-For more information, see link:https://access.redhat.com/articles/6999582[Firewall changes for container image pulls].
+For more information, see link:https://access.redhat.com/articles/7084334[Firewall changes for container image pulls 2024/2025].
 ====
