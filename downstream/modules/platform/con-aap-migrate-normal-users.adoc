@@ -5,13 +5,18 @@
 = Migrating normal users
  
 [role="_abstract"]
-When you upgrade from Ansible Automation Platform 2.4 to 2.5, your existing user account is automatically migrated to a single platform account. However, if you have multiple component accounts, your accounts must be linked to use the centralized features of the platform.
+When you upgrade from {PlatformNameShort} 2.4 to 2.5, your existing user account is automatically migrated to a single platform account. However, if you have multiple component accounts, your accounts must be linked to use the centralized features of the platform.
 
-== Important notes
+== Key considerations
 
 *Previous service accounts are prefixed:* Users with accounts on multiple services in 2.4 are migrated as individual users in 2.5 and prefixed to identify the service from which they were migrated. For example, {HubName} accounts are prefixed as `hub_<username>`. {ControllerNameStart} user names do not include a prefix. 
 
 *{ControllerNameStart} user accounts take precedence:* When an individual user had accounts on multiple services in 2.4, priority is given to their {ControllerName} account during migration, so those are not renamed. 
 
-*Component level roles are retained until user migration is complete:* When users log in using an existing service account and do not perform the account linking process, only the roles for that specific service account are available. The migration process is completed once the user performs the account linking process. At that time, all roles for all services are migrated into the new platform gateway user account. 
+*Component level roles are retained until user migration is complete:* When users log in using an existing service account and do not perform the account linking process, only the roles for that specific service account are available. The migration process is completed once the user performs the account linking process. At that time, all roles for all services are migrated into the new {Gateway} user account. 
 
+[role="_additional-resources"]
+
+== Additional resources
+
+* See link:{URLCentralAuth}/gw-managing-access#proc-controller-creating-a-user[Creating a user] for more information on user types.

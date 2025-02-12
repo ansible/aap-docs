@@ -2,26 +2,28 @@
 
 [id="proc-migrate-SAML-users_{context}"]
 
-= Migrating SAML users
+= Migrating Single Sign-On (SSO) users
  
 [role="_abstract"]
 
-When upgrading from {PlatformNameShort} 2.4 to 2.5, you can migrate your SAML users to ensure authentication remains seamless and secure after the upgrade. Follow the steps in this procedure to ensure a smooth SAML user migration. 
+When upgrading from {PlatformNameShort} 2.4 to 2.5, you must migrate your Single Sign-On (SSO) user accounts if you want to continue using SSO capabilities after the upgrade. Follow the steps in this procedure to ensure a smooth SSO user migration. 
 
-== Important notes
+== Key considerations
 
-*SAML migration is not currently supported in the UI:* While migration of SAML accounts is supported in 2.5, the configuration must be done through the API `/api/gateway/v1/authenticators/`.
+*SSO migration is not currently supported in the UI:* While migration of SSO accounts is supported in 2.5, the configuration must be done through the API `/api/gateway/v1/authenticators/`.
 
-*Migration of SAML must happen before users log in and start account linking:* You must enable the Auto migrate users setting after configuring SAML in 2.5 and before any users log in.
+*Migration of SSO must happen before users log in and start account linking:* You must enable the Auto migrate users setting after configuring SSO in 2.5 and before any users log in.
 
 .Prerequisistes
 
-You have configured a SAML authentication method in the platform gateway following the steps in link:{URLCentralAuth}/gw-configure-authentication#controller-set-up-SAML[Configuring SAML authentication]. This will be the configuration that you will migrate your previous SAML users to. 
+You have configured a SSO authentication method in the {Gateway} following the steps in link:{URLCentralAuth}/gw-configure-authentication#gw-config-authentication-type[Configuring an authentication type]. This will be the configuration that you will migrate your previous SSO users to. 
 
-. Log in to the platform gateway API.
-. Go to `/api/gateway/v1/authenticators/`, locate the legacy SAML authenticator and click the link. 
+.Procedure
+
+. Log in to the {Gateway} API.
+. Go to `/api/gateway/v1/authenticators/`, locate the legacy authenticator and click the link. 
 . This opens the HTML form for that authenticator. 
-. Select the new platform gateway SAML authenticator from the *Auto migrate users to* list. 
+. Select the new {Gateway} authenticator from the *Auto migrate users to* list. 
 . Click btn:[PUT]. 
 
-Once you set up the auto migrate functionality, you should be able to login with SAML in the platform gateway and it will automatically link any matching accounts from the legacy SAML authenticator.
+Once you set up the auto migrate functionality, you should be able to login with SSO in the {Gateway} and it will automatically link any matching accounts from the legacy SSO authenticator.
