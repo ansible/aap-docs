@@ -7,16 +7,17 @@
 
 [role="_abstract"]
 
-By default, {PlatformNameShort} creates self-signed PKI certificates for the infrastructure components of the platform. Where an existing PKI infrastructure is available, certificates must be generated for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the postgres database server. Copy the certificate files and their relevant key files to the installer directory, along with the CA certificate used to verify the certificates.
+By default, {PlatformNameShort} creates self-signed _Public Key Infrastructure_ (PKI) certificates for the infrastructure components of the platform. Where an existing PKI infrastructure is available, certificates must be generated for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the postgres database server. 
+Copy the certificate files and their relevant key files to the installer directory, along with the CA certificate used to verify the certificates.
 
 Use the following inventory variables to configure the infrastructure components with the new certificates.
 
 .PKI certificate inventory variables
 |====
 | *RPM Variable* | *Containerized Variable* | *Details*
-| `custom_ca_cert` | `custom_ca_cert` | The file name of the CA certificate located in the installer directory.
+| `custom_ca_cert` | `custom_ca_cert` | The path to the custom CA certificate file.
 
-Defines a custom CA certificate here when you have the leaf certificates created for each product and need the certificate trust to be established.
+If set, this will install a custom CA certificate to the system trust store.
 
 | `web_server_ssl_cert` | `controller_tls_cert` | The file name of the {ControllerName} PKI certificate located in the installer directory.
 
@@ -37,7 +38,7 @@ Defines a custom CA certificate here when you have the leaf certificates created
 | - | `gateway_tls_key` | The file name of the {Gateway} PKI key located in the installer directory.
 |====
 
-When multiple {Gateway}s are deployed with a load balancer, the `gateway_tls_cert` and `gateway_tls_key` are shared by each {Gateway}. 
+When multiple {Gateway}s are deployed with a load balancer, `gateway_tls_cert` and `gateway_tls_key` are shared by each {Gateway}. 
 To prevent hostname mismatches, the certificate's _Common Name_ (CN) must match the DNS FQDN used by the load balancer. 
 //This also applies when deploying multiple {PrivateHubName} and the `automationhub_ssl_cert` and `automationhub_ssl_key` variables. 
 If your organizational policies require unique certificates for each service, each certificate requires a _Subject Alt Name_ (SAN) that matches the DNS FQDN used for the load-balanced service. 
