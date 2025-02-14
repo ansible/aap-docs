@@ -7,13 +7,14 @@
 
 [role="_abstract"]
 
-The {RHEL} 8 STIG requires that a number of file systems are mounted with the `noexec` option to prevent execution of binaries located in these file systems. The {PlatformNameShort} installer runs a preflight check that will fail if any of the following file systems are mounted with the `noexec` option:
+A compliance profile might require that certain file systems are mounted with the `noexec` option to prevent execution of binaries located in these file systems. The {PlatformNameShort} RPM-based installer runs a preflight check that fails if any of the following file systems are mounted with the `noexec` option:
 
 * `/tmp`
 * `/var`
 * `/var/tmp`
 
-To install {PlatformNameShort}, you must re-mount these file systems with the `noexec` option removed. Once installation is complete, proceed with the following steps:
+To install {PlatformNameShort}, you must re-mount these file systems with the `noexec` option removed. 
+When installation is complete, proceed with the following steps:
 
 . Reapply the `noexec` option to the `/tmp` and `/var/tmp` file systems.
 . Change the {ControllerName} job execution path from `/tmp` to an alternate directory that does not have the `noexec` option enabled.

@@ -7,14 +7,16 @@
 
 [role="_abstract"]
 
-The {RHEL} 8 STIG requires the fapolicyd daemon to be running. However, {PlatformNameShort} is not currently supported when fapolicyd enforcing policy, as this causes failures during the installation and operation of {PlatformNameShort}. Because of this, the installer runs a pre-flight check that will halt installation if it discovers that fapolicyd is enforcing policy. This guide recommends setting fapolicyd to permissive mode on the {ControllerName} using the following steps:
+A cxompliance policy might requires the fapolicyd daemon to be running. However, {PlatformNameShort} is not currently supported when fapolicyd enforcing policy, as this causes failures during both installation and operation of {PlatformNameShort}. Because of this, the installer runs a pre-flight check that halts installation if it discovers that fapolicyd is enforcing policy. 
+This guide recommends setting fapolicyd to permissive mode on {PlatformNameShort} using the following steps:
 
 . Edit the file `/etc/fapolicyd/fapolicyd.conf` and set "permissive = 1".
-. Restart the service with the command `sudo systemctl restart fapolicyd.service`.
+. Restart the service with the command 
 
-In environments where STIG controls are routinely audited, discuss waiving the fapolicy-related STIG controls with your security auditor.
+`sudo systemctl restart fapolicyd.service`.
+
 
 [NOTE]
 ====
-If the {RHEL} 8 STIG is also applied to the installation host, the default fapolicyd configuration causes the {PlatformNameShort} installer to fail. In this case, the recommendation is to set fapolicyd to permissive mode on the installation host.
+If this security control is also applied to the installation host, the default fapolicyd configuration causes the {PlatformNameShort} installer to fail. In this case, the recommendation is to set fapolicyd to permissive mode on the installation host.
 ====
