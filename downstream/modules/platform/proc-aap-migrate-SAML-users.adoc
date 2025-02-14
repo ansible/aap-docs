@@ -10,13 +10,21 @@ When upgrading from {PlatformNameShort} 2.4 to 2.5, you must migrate your Single
 
 == Key considerations
 
-*SSO migration is not currently supported in the UI:* While migration of SSO accounts is supported in 2.5, the configuration must be done through the API `/api/gateway/v1/authenticators/`.
+*SSO configurations are not migrated automatically during upgrade to 2.5:* SSO configurations must be manually migrated over to {PlatformNameShort} 2.5 after a successful upgrade. 
 
-*Migration of SSO must happen before users log in and start account linking:* You must enable the Auto migrate users setting after configuring SSO in 2.5 and before any users log in.
+
+*SSO migration is not currently supported in the UI:* While migration of SSO accounts is supported in 2.5,  the configuration is not supported through the platform UI and must be done through the API `/api/gateway/v1/authenticators/`.
+
+*Migration of SSO must happen before users log in and start account linking:* You must enable the *Auto migrate users* to setting _after_ configuring SSO in 2.5 and _before_ any users log in.
 
 .Prerequisistes
 
 You have configured a SSO authentication method in the {Gateway} following the steps in link:{URLCentralAuth}/gw-configure-authentication#gw-config-authentication-type[Configuring an authentication type]. This will be the configuration that you will migrate your previous SSO users to. 
+
+[NOTE]
+====
+{PlatformNameShort} 2.4 SSO configurations are renamed during the upgrade process and are displayed in the *Authentication Methods* list view prefixed to indicate that it is a legacy configuration, for example,  `legacy_sso-saml-<entity id>`. The *Authentication type* is also listed as *legacy sso*. These configurations can not be modified.
+====
 
 .Procedure
 
