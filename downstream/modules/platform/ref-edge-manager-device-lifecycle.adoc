@@ -46,14 +46,20 @@ A run action takes the following parameters:
 [width="100%",cols="45%,55%",options="header",]
 |===
 |Parameter |Description
-|Run |The absolute path to the command to run, followed by any flags or arguments. Example: `/usr/bin/nmcli connection reload`. Note that the command is not executed in a shell, so you cannot use shell variables like `$PATH` or `$HOME` or chain commands (`\|` or `;`). However, it is possible to start a shell yourself if necessary by specifying the shell as command to run. Example: `/usr/bin/bash -c 'echo $SHELL $HOME $USER'`
+|Run |The absolute path to the command to run, followed by any flags or arguments. 
+
+Example: `/usr/bin/nmcli connection reload`. 
+
+Note that the command is not executed in a shell, so you cannot use shell variables like `$PATH` or `$HOME` or chain commands (`\|` or `;`). However, it is possible to start a shell yourself if necessary by specifying the shell as command to run. 
+
+Example: `/usr/bin/bash -c 'echo $SHELL $HOME $USER'`
 
 |EnvVars |(Optional) A list of key/value-pairs to set as environment variables for the command.
 
 |WorkDir |(Optional) The directory the command is run from.
 
 |Timeout |(Optional) The maximum duration allowed for the action to complete. Specify the duration as a single positive integer followed by a time unit. 
-Supported time units are `s` for seconds, `m` for minutes, and `h` for hours.
+The following time units are supported: `s` for seconds, `m` for minutes, and `h` for hours.
 
 |If |(Optional) A list of conditions that must be true for the action to be run. 
 If not provided, actions run unconditionally.
@@ -67,7 +73,8 @@ In particular, to only run an action if a given file or directory has changed du
 [width="100%",cols="45%,55%",options="header",]
 |===
 |Parameter |Description
-|Path |An absolute path to a file or directory that must have changed during the update as condition for the action to be performed. Paths must be specified using forward slashes (`/`) and if the path is to a directory it must end with a forward slash `/`. 
+|Path |An absolute path to a file or directory that must have changed during the update as condition for the action to be performed. Specify paths by using forward slashes (`/`) and if the path is to a directory it must end with a forward slash `/`. 
+
 If you specify a path to a file, the file must have changed to satisfy the condition. 
 If you specify a path to a directory, a file in that directory or any of its subdirectories must have changed to satisfy the condition.
 
@@ -90,7 +97,7 @@ If you have specified a "path condition" for an action in the `afterUpdating` ho
 |`{{ RemovedFiles }}` |A space-separated list of absolute paths of the files that were removed during the update and are covered by the path condition.
 |===
 
-The {RedHatEdge} includes a built-in set of rules defined in `/usr/lib/flightctl/hooks.d/afterupdating/00-default.yaml`:
+The {RedHatEdge} agent includes a built-in set of rules defined in `/usr/lib/flightctl/hooks.d/afterupdating/00-default.yaml`:
 
 [width="100%",cols="50%,28%,22%",options="header",]
 |===
