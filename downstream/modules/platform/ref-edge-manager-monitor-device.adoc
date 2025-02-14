@@ -1,0 +1,47 @@
+[id="manager-monitor-device"]
+
+= Monitor device resources
+
+You can set up monitors for device resources and define alerts when the use of these resources crosses a defined threshold. 
+When the agent alerts the {RedHatEdge} service, the service sets the device status to "degraded" or "error" (depending on the severity level).
+This might suspend the rollout of updates and alarm the user as a result.
+
+[NOTE]
+====
+This is not meant to replace an observability solution. 
+If your use case requires streaming logs and metrics from devices into an observability stack and the device's network bandwidth allows this, see ADD LINK[Adding Device Observability] for more information.
+====
+
+Resource monitors take the following parameters:
+
+[width="100%",cols="45%,55%",options="header",]
+|===
+|Parameter |Description
+|MonitorType |The resource to monitor. 
+Currently supported resources are "CPU", "Memory", and "Disk". 
+
+|SamplingInterval |The interval in which the monitor samples use, specified as positive integer followed by a time unit ("s" for seconds, "m" for minutes, "h" for hours).
+
+|AlertRules |A list of alert rules.
+
+|Path |(Disk monitor only) The absolute path to the directory to monitor. 
+Utilization reflects the filesystem containing the path, similar to df, even if it’s not a mount point.
+|===
+
+Alert rules take the following parameters:
+
+[width="100%",cols="45%,55%",options="header",]
+|===
+|Parameter |Description
+|Severity |The alert rule's severity level out of "Info", "Warning", or "Critical". 
+Only one alert rule is allowed per severity level and monitor.
+
+|Duration |The duration that resource use is measured and averaged over when sampling, specified as positive integer followed by a time unit ("s" for seconds, "m" for minutes, "h" for hours). 
+It must be smaller than the sampling interval.
+
+|Percentage |The use threshold that triggers the alert, as percentage value (range 0 to 100 without the "%" sign).
+
+|Description |A human-readable description of the alert. 
+This is useful for adding details about the alert that might help with debugging. 
+//By default it populates the alert as : load is above >% for more than.
+|===

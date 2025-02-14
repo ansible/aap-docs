@@ -1,0 +1,76 @@
+[id="edge-manager-manage-apps-cli"]
+
+= Managing applications on the CLI
+
+Managing applications through the Command Line Interface (CLI) allows for efficient and streamlined control.
+
+.Procedure
+
+* To deploy an application package from an OCI registry, specify it in the device's `spec.applications[]` as follows:
++
+[source,yaml]
+----
+apiVersion: v1alpha1
+kind: Device
+metadata:
+  name: some_device_name
+spec:
+[...]
+  applications:
+  - name: wordpress
+    image: quay.io/flightctl-demos/wordpress-app:latest
+    envVars:
+      WORDPRESS_DB_HOST: "mysql"
+      WORDPRESS_DB_USER: "user"
+      WORDPRESS_DB_PASSWORD: "password"
+[...]
+----
+
+* To deploy an unpackaged application from a Git repository, specify it in the device's `spec.applications[]` as follows:
++
+[source,yaml]
+----
+apiVersion: v1alpha1
+kind: Device
+metadata:
+  name: some_device_name
+spec:
+[...]
+  applications:
+  - name: wordpress
+    git:
+      url: https://github.com/flightctl/flightctl-demos.git
+      revision: v1.0
+      path: /wordpress
+    envVars:
+      WORDPRESS_DB_HOST: "mysql"
+      WORDPRESS_DB_USER: "user"
+      WORDPRESS_DB_PASSWORD: "password"
+[...]
+----
+
+* To deploy an unpackaged application inline with the device specification, specify it in the device's `spec.applications[]` as follows:
++
+[source,yaml]
+----
+apiVersion: v1alpha1
+kind: Device
+metadata:
+  name: some_device_name
+spec:
+[...]
+  applications:
+  - name: wordpress
+    inline:
+      podman-compose.yaml: |
+        version: “3.7"
+        services:
+          wordpress:
+            image: “wordpress:latest”
+        [...]
+    envVars:
+      WORDPRESS_DB_HOST: "mysql"
+      WORDPRESS_DB_USER: "user"
+      WORDPRESS_DB_PASSWORD: "password"
+[...]
+----
