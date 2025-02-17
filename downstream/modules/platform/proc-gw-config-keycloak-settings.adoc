@@ -6,6 +6,11 @@
 
 You can configure {PlatformNameShort} to integrate Keycloak to manage user authentication.
 
+[NOTE]
+====
+When using this authenticator some specific setup in your Keycloak instance is required. Refer to the link:https://python-social-auth.readthedocs.io/en/latest/backends/keycloak.html[Python Keycloak reference] for more details.
+====
+
 .Procedure
 
 . From the navigation panel, select {MenuAMAuthentication}.
@@ -27,3 +32,11 @@ include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 [role="_additional-resources"]
 .Next steps
 include::snippets/snip-gw-authentication-next-steps.adoc[]
+
+.Troubleshooting
+If you receive an `jwt.exceptions.InvalidAudienceError: Audience doesn't match` error, you must re-enable the audience by doing the following:
+
+. From the navigation for your Keycloak configuration, select menu:Client scopes[_YOUR-CLIENT-ID-dedicated_ > Add mapper > Audience].
+. Pick a name for the mapper.
+. Select the *Client ID* corresponding to your client in `Included Client Audience`. 
+
