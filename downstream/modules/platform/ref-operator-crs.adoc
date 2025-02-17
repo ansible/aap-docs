@@ -290,6 +290,78 @@ spec:
 # * * {HubNameStart} deployed and named: myaap-hub
 ----
 
+== aap-configuring-external-db-all-default-components.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  database:
+     database_secret: external-postgres-configuration-gateway
+  controller:
+     postgres_configuration_secret: external-postgres-configuration-controller
+  hub:
+     postgres_configuration_secret: external-postgres-configuration-hub
+  eda:
+     database:
+       database_secret: external-postgres-configuration-eda
+----
+
+== aap-configuring-existing-external-db-all-default-components.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  database:
+     database_secret: external-postgres-configuration-gateway
+----
+
+[NOTE]
+====
+The system uses the external database for {Gateway}, and {ControllerName}, {HubName}, and {EDAName} continues to use the existing databases that were used in 2.4.
+====
+
+== aap-configuring-external-db-with-lightspeed-enabled.yml
+
+[subs="+attributes"]
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  database:
+     database_secret: external-postgres-configuration-gateway
+  controller:
+     postgres_configuration_secret: external-postgres-configuration-controller
+  hub:
+     postgres_configuration_secret: external-postgres-configuration-hub
+  eda:
+     database:
+       database_secret: external-postgres-configuration-eda
+  lightspeed:
+    disabled: false
+    database:
+      database_secret: <secret-name>-postgres-configuration
+    auth_config_secret_name: 'auth-configuration-secret'
+    model_config_secret_name: 'model-configuration-secret'
+----
+
+[Note]
+====
+You can follow the link:{BaseURL}/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/index[Red Hat Ansible Lightspeed with IBM watsonx Code Assistant User Guide] for help with creating the model and auth secrets.
+====
+
 == aap-fresh-install-local-management.yml
 
 [subs="+attributes"]
@@ -646,7 +718,7 @@ spec:
 # * {LightspeedShortName} is not deployed
 ----
 
-== EDA_MAX_RUNNING_ACTIVATIONS
+== eda-max-running-activations.yml
 
 [subs="+attributes"]
 ----
