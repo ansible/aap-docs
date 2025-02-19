@@ -1,0 +1,41 @@
+[id="edge-manager-update-os-cli"]
+
+= Updating the operating system on the CLI
+
+Update a device using the CLI.
+
+Complete the following steps:
+
+.Procedure
+
+. Get the current resource manifest of the device by running the following command:
+
++
+[source,terminal]
+----
+flightctl get device/<device_name> -o yaml > my_device.yaml
+----
+
+. Edit the `Device` resource to specify the new operating system name and version target.
+
++
+[source,yaml]
+----
+apiVersion: flightctl.io/v1alpha1
+kind: Device
+metadata:
+  name: some_device_name
+spec:
+[...]
+  os:
+    image: quay.io/flightctl/rhel:9.5
+[...]
+----
+
+. Apply the updated `Device` resource by running the following command:
+
++
+[source,terminal]
+----
+flightctl apply -f some_device_name.yaml
+----
