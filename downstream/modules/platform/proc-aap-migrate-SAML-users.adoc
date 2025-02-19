@@ -10,8 +10,7 @@ When upgrading from {PlatformNameShort} 2.4 to 2.5, you must migrate your Single
 
 == Key considerations
 
-*SSO configurations are not migrated automatically during upgrade to 2.5:* SSO configurations must be manually migrated over to {PlatformNameShort} 2.5 after a successful upgrade. 
-
+*SSO configurations are not migrated automatically during upgrade to 2.5:* While the legacy authentication settings are carried over during the upgrade process and allow seamless initial access to the platform after upgrade, SSO configurations must be manually migrated over to a new {PlatformNameShort} 2.5 authentication configuration. The legacy configuration acts as a reference to preserve existing authentication capabilities and facilitate the migration process. The legacy authentication configuration should not be modified directly or used after migration is complete.
 
 *SSO migration is not currently supported in the UI:* While migration of SSO accounts is supported in 2.5,  the configuration is not supported through the platform UI and must be done through the API `/api/gateway/v1/authenticators/`.
 
@@ -35,3 +34,8 @@ You have configured a SSO authentication method in the {Gateway} following the s
 . Click btn:[PUT]. 
 
 Once you set up the auto migrate functionality, you should be able to login with SSO in the {Gateway} and it will automatically link any matching accounts from the legacy SSO authenticator.
+
+[role="_additional-resources"]
+.Additional resources
+
+Refer to link:https://interact.redhat.com/share/baxthgXBQZ3kSRKPLn5L[{PlatformNameShort} 2.4 to 2.5. Linking accounts post upgrade, and Setting up SAML authentication] for a demonstration of the post upgrade steps.
