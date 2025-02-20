@@ -1,0 +1,20 @@
+[id="edge-manager-k8s-rbac-auth"]
+
+= Kubernetes role-based access authorization
+
+To set up link:https://kubernetes.io/docs/reference/access-authn-authz/rbac/[Kubernetes RBAC authorization] you must use either *Role* and *RoleBinding* or *ClusterRole* and *ClusterRoleBinding*.
+
+[NOTE]
+====
+* Use *Role*/*RoleBinding* for namespace based authorization.
+* Use *ClusterRole*/*ClusterRoleBinding* for cluster wide authorization (all namespaces in a cluster).
+====
+
+Use API objects *_Role_* or *_ClusterRole_* to define the allowed API resources and verbs for a particular role.
+
+API objects *_RoleBinding_* or *_ClusterRoleBinding_* give association between subjects (example users) to a specific role.
+
+.Additional resources
+
+For the API endpoints, see link:https://github.com/flightctl/flightctl/blob/main/docs/user/auth-resources.md[Authentication resources]. 
+Use the resources and verbs in the document for creating the API objects *_Role_* or *_ClusterRole_*.
