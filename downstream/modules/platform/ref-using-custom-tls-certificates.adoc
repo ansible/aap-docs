@@ -8,47 +8,58 @@
 
 [role="_abstract"]
 
-By default, the installation program generates TLS certificates and keys for all services that are signed by a custom Certificate Authority (CA). You can provide a custom TLS certificate and key for each service. If that certificate is signed by a custom CA, you must provide the CA TLS certificate and key.
+By default, the installation program generates self-signed TLS certificates and keys for all {PlatformNameShort} services.
 
-* Certificate Authority
-----
-ca_tls_cert=/full/path/to/tls/certificate
-ca_tls_key=/full/path/to/tls/key
-----
+If you want to replace these with your own custom certificate and key, then set the following inventory file variables:
 
-* {GatewayStart}
 ----
-gateway_tls_cert=/full/path/to/tls/certificate
-gateway_tls_key=/full/path/to/tls/key
+ca_tls_cert=<path_to_ca_tls_certificate>
+ca_tls_key=<path_to_ca_tls_key>
 ----
 
-* {ControllerNameStart}
+If you want to use your own TLS certificates and keys for each service (for example {ControllerName}, {HubName}, {EDAName}), then set the following inventory file variables:
+
+[source,yaml,subs="+attributes"]
 ----
-controller_tls_cert=/full/path/to/tls/certificate
-controller_tls_key=/full/path/to/tls/key
+# {GatewayStart}
+gateway_tls_cert=<path_to_tls_certificate>
+gateway_tls_key=<path_to_tls_key>
+gateway_pg_tls_cert=<path_to_tls_certificate>
+gateway_pg_tls_key=<path_to_tls_key>
+gateway_redis_tls_cert=<path_to_tls_certificate>
+gateway_redis_tls_key=<path_to_tls_key>
+
+# {ControllerNameStart}
+controller_tls_cert=<path_to_tls_certificate>
+controller_tls_key=<path_to_tls_key>
+controller_pg_tls_cert=<path_to_tls_certificate>
+controller_pg_tls_key=<path_to_tls_key>
+
+# {HubNameStart}
+hub_tls_cert=<path_to_tls_certificate>
+hub_tls_key=<path_to_tls_key>
+hub_pg_tls_cert=<path_to_tls_certificate>
+hub_pg_tls_key=<path_to_tls_key>
+
+# {EDAName}
+eda_tls_cert=<path_to_tls_certificate>
+eda_tls_key=<path_to_tls_key>
+eda_pg_tls_cert=<path_to_tls_certificate>
+eda_pg_tls_key=<path_to_tls_key>
+eda_redis_tls_cert=<path_to_tls_certificate>
+eda_redis_tls_key=<path_to_tls_key>
+
+# PostgreSQL
+postgresql_tls_cert=<path_to_tls_certificate>
+postgresql_tls_key=<path_to_tls_key>
+
+# Receptor
+receptor_tls_cert=<path_to_tls_certificate>
+receptor_tls_key=<path_to_tls_key>
 ----
 
-* {HubNameStart}
-----
-hub_tls_cert=/full/path/to/tls/certificate
-hub_tls_key=/full/path/to/tls/key
-----
+If any of your certificates are signed by a custom Certificate Authority (CA), then you must specify the Certificate Authority's certificate by using the `custom_ca_cert` inventory file variable:
 
-* {EDAName}
 ----
-eda_tls_cert=/full/path/to/tls/certificate
-eda_tls_key=/full/path/to/tls/key
+custom_ca_cert=<path_to_custom_ca_certificate>
 ----
-
-* PostgreSQL
-----
-postgresql_tls_cert=/full/path/to/tls/certificate
-postgresql_tls_key=/full/path/to/tls/key
-----
-
-* Receptor
-----
-receptor_tls_cert=/full/path/to/tls/certificate
-receptor_tls_key=/full/path/to/tls/key
-----
-
