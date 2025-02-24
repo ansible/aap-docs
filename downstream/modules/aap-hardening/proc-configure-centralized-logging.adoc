@@ -32,102 +32,127 @@ include::platform/proc-controller-set-up-logging.adoc[leveloffset=+3]
 
 The following steps enable the LDAP logging:
 
-To enable logging for LDAP, the log level must be set to DEBUG.
+To enable logging for LDAP, use the following procedure.
 
 .Procedure
 
-. From the navigation panel, select {MenuSetLogging}.
-. On the *Logging settings* page, click btn:[Edit].
-. Set the *Logging Aggregator Level Threshold* field to DEBUG.
-. Click btn:[Save] to save your changes.
+. Edit the gateway settings file:
+.. On {PlatformNameShort}{PlatformVers} Containerized, the file is `~/aap/gateway/etc/settings.py` (as the user running the {Gateway} container).
+.. On {PlatformNameShort}{PlatformVers} RPM-based, the file is `/etc/ansible-automation-platform/gateway/settings.py`.
++
+----
+ (...)
+  CACHES['fallback']['LOCATION'] = '/var/cache/ansible-automation-platform/gateway'
+
+  LOGGING['loggers']['aap']['level'] = 'INFO'
+  LOGGING['loggers']['ansible_base']['level'] = 'INFO'
+  LOGGING['loggers']['django_auth_ldap']['level'] = 'DEBUG'      ######      add this line
+
+  (...)
+----
+
+. Restart the {Gateway} service or container:
+
+.. On {PlatformNameShort}{PlatformVers} Containerized, restart the {Gateway} service so that it restarts the {Gateway} container:
++
+[NOTE]
+====
+Ensure that you run `systemctl with the `--user`` flag as follows:
++
+`$ systemctl --user restart automation-gateway`
+====
+
+.. On {PlatformNameShort}{PlatformVers} RPM-based, use the `automation-gateway-service` command:
++
+`# automation-gateway-service restart`
 
 Some of the following examples of meeting compliance requirements come from the US DoD _Security Technical Implementation Guide_, but go back to integrity and security best practices. 
 
-. {ControllerNameStart} must use external log providers that can collect user activity logs in independent, protected repositories to prevent modification or repudiation. 
+{ControllerNameStart} must use external log providers that can collect user activity logs in independent, protected repositories to prevent modification or repudiation. 
 {ControllerNameStart} must be configured to use external logging to compile log records from multiple components within the server. 
 The events occurring must be time-correlated in order to conduct accurate forensic analysis. 
 In addition, the correlation must meet certain tolerance criteria. 
-+
+
 The following steps implement the security control:
-+
+
 .Procedure
-.. Log in to {ControllerName} as an administrator.
-.. From the navigation panel, select {MenuSetLogging}.
-.. On the *Logging settings* page, click btn:[Edit].
-.. Set the following fields:
+. Log in to {ControllerName} as an administrator.
+. From the navigation panel, select {MenuSetLogging}.
+. On the *Logging settings* page, click btn:[Edit].
+. Set the following fields:
 
-** Set *Logging Aggregator* to `Not configured`. This is the default.
-** Set *Enable External Logging* to `On`.
-** Set *Logging Aggregator Level Threshold* to DEBUG.
-** Set *TCP Connection Timeout* to 5 (the default) or to the organizational timeout.
-** Set *Enable/disable HTTPS certificate verification* to `On`.
-.. Click btn:[Save].
+* Set *Logging Aggregator* to `Not configured`. This is the default.
+* Set *Enable External Logging* to `On`.
+* Set *Logging Aggregator Level Threshold* to DEBUG.
+* Set *TCP Connection Timeout* to 5 (the default) or to the organizational timeout.
+* Set *Enable/disable HTTPS certificate verification* to `On`.
+. Click btn:[Save].
 
-. {ControllerNameStart} must allocate log record storage capacity and shut down by default upon log failure (unless availability is an overriding concern). 
+{ControllerNameStart} must allocate log record storage capacity and shut down by default upon log failure (unless availability is an overriding concern). 
 It is critical that when a system is at risk of failing to process logs, it detects and takes action to mitigate the failure. 
 Log processing failures include software/hardware errors, failures in the log capturing mechanisms, and log storage capacity being reached or exceeded. 
 During a failure, the application server must be configured to shut down unless the application server is part of a high availability system. 
 When availability is an overriding concern, other approved actions in response to a log failure are as follows: 
 
-.. If the failure was caused by the lack of log record storage capacity, the application must continue generating log records if possible (automatically restarting the log service if necessary), overwriting the oldest log records in a first-in-first-out manner. 
-.. If log records are sent to a centralized collection server and communication with this server is lost or the server fails, the application must queue log records locally until communication is restored or until the log records are retrieved manually. 
+. If the failure was caused by the lack of log record storage capacity, the application must continue generating log records if possible (automatically restarting the log service if necessary), overwriting the oldest log records in a first-in-first-out manner. 
+. If log records are sent to a centralized collection server and communication with this server is lost or the server fails, the application must queue log records locally until communication is restored or until the log records are retrieved manually. 
 Upon restoration of the connection to the centralized collection server, action must be taken to synchronize the local log data with the collection server. 
 +
 The following steps implment the security control:
 
-.. Open a web browser and navigate to: https:///api/v2/settings/logging/ 
-If the *Log In* button is displayed, click it, enter an {ControllerName} administrator's credentials, and continue.
+.. Open a web browser and navigate to: https://<your controller fqdn.com>/api/v2/settings/logging/ 
+Ensure that you are authenticated as an {ControllerName} administrator.
 .. In the *Content* section, modify the following values:
 
 ** `LOG_AGGREGATOR_ACTION_MAX_DISK_USAGE_GB` = organization-defined requirement for log buffering.
 ** `LOG_AGGREGATOR_MAX_DISK_USAGE_PATH` = `/var/lib/awx``
 ..Click btn:[PUT].
 
-. {ControllerNameStart} must generate the appropriate log records. 
+{ControllerNameStart} must generate the appropriate log records. 
 {ControllerNameStarts}'s web server must log all details related to user sessions in support of troubleshooting, debugging, and forensic analysis. 
 Without a data logging feature, the organization loses an important auditing and analysis tool for event investigations.
-+
-To implement the security control. As a System Administrator, for each {ControllerName} host:
-+
+
+To implement the security control as a System Administrator, for each {ControllerName} host:
+
 .Procedure
-.. From the navigation panel, select {MenuSetSystem}. The System Settings page is displayed.
-.. Click btn:[Edit].
-.. Set the following:
+. From the navigation panel, select {MenuSetSystem}. The System Settings page is displayed.
+. Click btn:[Edit].
+. Set the following:
 
-** *Enable Activity Stream* = On
-** *Enable Activity Stream for Inventory Sync* = On
-** *Organization Admins Can Manage Users and Teams* = On
-** *All Users Visible to Organization Admins* = On
-.. Click btn:[Save].
+* *Enable Activity Stream* = On
+* *Enable Activity Stream for Inventory Sync* = On
+* *Organization Admins Can Manage Users and Teams* = On
+* *All Users Visible to Organization Admins* = On
+. Click btn:[Save].
 
-. {ControllerNameStart}'s log files must be accessible by explicitly defined privilege. 
+{ControllerNameStart}'s log files must be accessible by explicitly defined privilege. 
 A failure of the confidentiality of {ControllerName} log files would enable an attacker to identify key information about the system that they might not otherwise be able to obtain that would enable them to enumerate more information to enable escalation or lateral movement. 
-+
+
 To implement the security control.
-+
+
 .Procedure
-.. As a system administrator for each {ControllerName} host, set the permissions and owner of the {ControllerName} NGINX log directory:
+. As a system administrator for each {ControllerName} host, set the permissions and owner of the {ControllerName} NGINX log directory:
 
-** `chmod 770 /var/log/nginx
-** `chown nginx:root /var/log/nginx`
+* `chmod 770 /var/log/nginx
+* `chown nginx:root /var/log/nginx`
 
-.. Set the permissions and owner of the {ControllerName} log directory:
+. Set the permissions and owner of the {ControllerName} log directory:
 
-** `chmod 770 /var/log/tower`
-** `chown awx:awx /var/log/tower`
+* `chmod 770 /var/log/tower`
+* `chown awx:awx /var/log/tower`
 
-.. Set the permissions and owner of the {controllerName} supervisor log directory:
+. Set the permissions and owner of the {controllerName} supervisor log directory:
 
-** `chmod 770 /var/log/supervisor/`
-** `chown root:root /var/log/supervisor/`
+* `chmod 770 /var/log/supervisor/`
+* `chown root:root /var/log/supervisor/`
 
-. {ControllerNameStart} must be configured to fail over to another system in the event of log subsystem failure.
+{ControllerNameStart} must be configured to fail over to another system in the event of log subsystem failure.
 {ControllerNameStart} hosts must be capable of failing over to another {ControllerName} host which can handle application and logging functions upon detection of an application log processing failure. 
 This enables continual operation of the application and logging functions while minimizing the loss of operation for the users and loss of log data. 
-+
+
 To implement the security control.
-+
-.. If {ControllerName} is not in an HA configuration, the administrator must reinstall {ControllerName}.
+
+* If {ControllerName} is not in an HA configuration, the administrator must reinstall {ControllerName}.
 
 
 
