@@ -1,0 +1,105 @@
+[[aap-25-20250225]]
+
+= {PlatformNameShort} patch release February 25, 2025
+
+This release includes the following components and versions:
+
+[cols="1a,3a", options="header"]
+|===
+| Release Date | Component versions
+
+| February 25, 2025  | 
+* {ControllerNameStart} 4.6.8
+* {HubNameStart} 4.10.1
+* {EDAName} 1.1.4
+* Container-based installer {PlatformNameShort} (bundle) 2.5-10.1
+* Container-based installer {PlatformNameShort} (online) 2.5-10
+* Receptor 1.5.1
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-8.2
+* RPM-based installer {PlatformNameShort} (online) 2.5-8
+
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: `aap-operator.v2.5.0-0.1740093573`
+
+* Cluster-scoped Bundle: `aap-operator.v2.5.0-0.1740094176`
+
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+== Enhancements
+
+=== {GatewayStart}
+
+* Previously `gateway_proxy_url` was used for the proxy health check, but is no longer used in favor of the `ENVOY_HOSTNAME` setting.(AAP-39907)
+
+
+=== {EDAName}
+
+* In the credential type schema the format field can be set to binary_base64 to specify a file should be loaded as a binary file.(AAP-36581)
+
+** Sample Credential Type Schema
+** Inputs Configuration
+** fields:
+*** id: keytab
+*** type: string
+*** label: Kerberos Keytab file
+*** format: binary_base64
+secret: true
+*** help_text: Please select a Kerberos Keytab file
+*** multiline: true
+
+
+== Bug fixes
+
+=== {PlatformNameShort}
+
+* Fixed an issue where the subscription entitlement expiration notification was visible, even when the subscription was active.(AAP-39982)
+
+* Fixed an issue where upon UI reload/refresh, logs of a running job before the refresh would not appear until new logs were generated from the playbook.(AAP-38924)
+
+* Fixed an issue when the customer was unable to scale down replicas to put Ansible Automation Platform into idle mode.(AAP-39492)
+
+* After launching the *Workflow Job Template*, the launched job for a job template node in the workflow should contain the `job_tags` and `skip_tags` that were specified in the *launch prompt* step.(AAP-40395)
+
+* Fixed an issue where the user was not able to create a members role in {PlatformNameShort} 2.5.(AAP-37626)
+
+* Fixed an issue where a custom image showed Base64 encoded data.(AAP-26984)
+
+* Fixed an issue where a custom logo showed Base64 encoded data.(AAP-26909)
+
+* Fixed an issue that restricted users from executing jobs for which they had the correct permissions.(AAP-40398)
+
+* Fixed an issue where the workflow job template node extra vars were not saved.(AAP-40396)
+
+* Fixed an issue where the Creating and using execution environments guide had the incorrect ansible-core version.(AAP-40390)
+
+* Fixed an issue where you were not able to create a members role in {PlatformNameShort} 2.5.(AAP-40698)
+
+* Fixed an issue where the initial login to any of the services from {Gateway} could result in the user being given access to the wrong account.(AAP-40617)
+
+* Fixed an issue where the service owned resources were not kept in sync with the {Gateway} allowing for duplicate name values on user login.(AAP-40616)
+
+* Fixed an issue where users, organizations, and teams, became permanently out of sync if any user, organization, or team, was deleted from the {Gateway}.(AAP-40615)
+
+* Fixed an issue where {HubName} would fail to run the sync task if any users were deleted from the system.(AAP-40613)
+
+
+=== {GatewayStart}
+
+* Fixed an issue where ping and status checks with resolvable, but nonresponding, URLs could cause all {Gateway} `uwsgi` workers to hang until all were exhausted. The new settings are `PING_PAGE_CHECK_TIMEOUT` and `PING_PAGE_CHECK_IGNORE_CERT`.(AAP-39907)
+
+
+=== {EDAName}
+
+* Fixed an issue where credentials could be copied in AAP but could not be copied in {EDAName}.(AAP-35875)
+
+
+=== Known Issues
+
+* In the {Gateway}, the tooltip for *Projects -> Create Project - Project Base Path* is undefined.(AAP-27631)
+
+* Deploying the {Gateway} on FIPS enabled RHEL 9 is currently not supported.(AAP-39146)
