@@ -2,28 +2,41 @@
 
 = Authorizing with Kubernetes
 
-{RedHatEdge} Kubernetes authorization uses a role-based access control (RBAC) to control authorization for {RedHatEdge} API endpoints. 
-You need to change some `helm` configuration values.
-For more information, see the *global.auth* section in https://github.com/flightctl/flightctl/blob/main/deploy/helm/flightctl/values.yaml[values.yaml].
+// Needs intro text
 
 .Procedure
 
-Set the following variables:
+. Set the following variables in the `values.yaml` file:
 
-* Set *global.auth.type* to *k8s*.
-* Optionally set *global.auth.caCert*,
-*global.auth.insecureSkipTlsVerify*.
-
-When you set these variables, the Kubernetes cluster on which {RedHatEdge} is deployed, is used as auth authority.
-
-If you want to use a different cluster as auth authority, set the following variables also:
-
-* Set *global.auth.k8s.apiUrl* to API URL of the external Kubernetes cluster.
-* Set *global.auth.k8s.externalApiToken* to a token which has permission to CREATE `authentication.k8s.io/tokenreview` resource in the external Kubernetes cluster.
-
-If the Kubernetes cluster is an OpenShift cluster, you can also set
-*global.auth.k8s.externalOpenShiftApiUrl* which enables interactive login for the CLI (`flightctl login <fctl_url> --web`).
-
+[source,yaml]
+----
+global:
+  target: "standalone" <1>
+  baseDomain: ""
+  baseDomainTls:
+    cert: ""
+    key: ""
+  storageClassName: ""
+  imagePullSecretName: ""
+  apiUrl: "" <2>
+  auth:
+    type: "k8s" <3>
+    caCert: "" <4>
+    insecureSkipTlsVerify: false <4>
+    k8s:
+      apiUrl: https://kubernetes.default.svc <5>
+      externalOpenShiftApiUrl: "" <6>
+      externalApiToken: "" <7>
+      rbacNs: ""
+    [...]
+----
+<1> You can set the `global.target` field to `standalone` or `acm`. If the field is set to `acm`, the Kubernetes authorization values are automatically calculated.
+<2> Optional. If deploying on RHACM, set the `global.apiUrl` to enable interactive login for the CLI.
+<3> Set the `global.auth.type` field to `k8s`.
+<4> Optional. Set the `global.auth.caCert` and `global.auth.insecureSkipTlsVerify` fields.
+<5> Optional. If you want to use a different cluster as `auth` authority, set the `global.auth.k8s.apiUrl` field to the API URL of the external Kubernetes cluster.
+<6> Optional. If the external Kubernetes cluster is an OpenShift cluster, set the `global.auth.k8s.externalOpenShiftApiUrl` field to enable interactive login for the CLI.
+<7> Optional. If you want to use a different cluster as `auth` authority, set the `global.auth.k8s.externalApiToken` field to a token which has permission to create the `authentication.k8s.io/tokenreview` resource in the external Kubernetes cluster.
 
 // Not relevant for AAP:
 // If deploying on ACM (by global.target: acm), the k8s auth values are automatically calculated.
