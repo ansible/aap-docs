@@ -7,8 +7,9 @@
 
 [role="_abstract"]
 
-By default, {PlatformNameShort} creates self-signed _Public Key Infrastructure_ (PKI) certificates for the infrastructure components of the platform. Where an existing PKI infrastructure is available, certificates must be generated for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the postgres database server. 
-Copy the certificate files and their relevant key files to the installer directory, along with the CA certificate used to verify the certificates.
+By default, {PlatformNameShort} creates self-signed _Public Key Infrastructure_ (PKI) certificates for the infrastructure components of the platform. 
+Where an existing PKI infrastructure is available, certificates must be generated for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the postgres database server. 
+Copy the certificate files and their relevant key files to the installation program directory, along with the CA certificate used to verify the certificates.
 
 Use the following inventory variables to configure the infrastructure components with the new certificates.
 
@@ -17,25 +18,25 @@ Use the following inventory variables to configure the infrastructure components
 | *RPM Variable* | *Containerized Variable* | *Details*
 | `custom_ca_cert` | `custom_ca_cert` | The path to the custom CA certificate file.
 
-If set, this will install a custom CA certificate to the system trust store.
+If set, this will install a custom CA certificate to the system truststore.
 
 | `web_server_ssl_cert` | `controller_tls_cert` | The file name of the {ControllerName} PKI certificate located in the installer directory.
 
-| `web_server_ssl_key` | `controller_tls_key` | The file name of the {ControllerName} PKI key located in the installer directory.
+| `web_server_ssl_key` | `controller_tls_key` | The file name of the {ControllerName} PKI key located in the installation prograam directory.
 
-| `automationhub_ssl_cert` | `hub_tls_cert` | The file name of the {PrivateHubName} PKI certificate located in the installer directory.
+| `automationhub_ssl_cert` | `hub_tls_cert` | The file name of the {PrivateHubName} PKI certificate located in the installation program directory.
 
-| `automationhub_ssl_key` | `hub_tls_key` | The file name of the {PrivateHubName} PKI key located in the installer directory.
+| `automationhub_ssl_key` | `hub_tls_key` | The file name of the {PrivateHubName} PKI key located in the installation program directory.
 
-| `postgres_ssl_cert` | `postgresql_tls_cert` | The file name of the database server PKI certificate located in the installer directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
+| `postgres_ssl_cert` | `postgresql_tls_cert` | The file name of the database server PKI certificate located in the installation program directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
 
-| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installer directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
+| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installation program directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
 
-| `automationedacontroller_ssl_cert` | `eda_tls_cert` | The file name of the {EDAcontroller} PKI certificate located in the installer directory.
+| `automationedacontroller_ssl_cert` | `eda_tls_cert` | The file name of the {EDAcontroller} PKI certificate located in the installation program directory.
 
-| `automationedacontroller_ssl_key` | `eda_tls_key` | The file name of the {EDAcontroller} PKI key located in the installer directory.
-| - | `gateway_tls_cert` | The filename of the {Gateway} PKI certificate located in the installer directory.
-| - | `gateway_tls_key` | The file name of the {Gateway} PKI key located in the installer directory.
+| `automationedacontroller_ssl_key` | `eda_tls_key` | The file name of the {EDAcontroller} PKI key located in the installation program directory.
+| - | `gateway_tls_cert` | The filename of the {Gateway} PKI certificate located in the installation program directory.
+| - | `gateway_tls_key` | The file name of the {Gateway} PKI key located in the installation program directory.
 |====
 
 When multiple {Gateway}s are deployed with a load balancer, `gateway_tls_cert` and `gateway_tls_key` are shared by each {Gateway}. 

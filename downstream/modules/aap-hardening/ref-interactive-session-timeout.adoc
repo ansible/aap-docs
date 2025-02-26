@@ -4,7 +4,7 @@
 
 A compliance profile might require that an interactive session timeout be enforced. 
 For example, the DISA STIG requires that all users be automatically logged out after 15 minutes of inactivity. 
-The installation process often requires an hour or more to complete, and this control can kill the installation process and log out the user before installation is complete. 
+The installation process often requires an hour or more to complete, and this control can stop the installation process and log out the user before installation is complete. 
 The same also applies to day two operations such as backup and restore, which in production environments often take longer than the recommended interactive session timeout. 
 During these operations, the interactive session timeout should be increased to ensure the operation is successful.
 
@@ -13,7 +13,7 @@ The one that most often interrupts the installation and day two operations is th
 
 * Edit the file `/etc/systemd/logind.conf`.
 * If the `StopIdleSessionSec` setting is set to zero, no change is needed.
-* If the `StopIdleSessionSec`` setting is non-zero this indicates that the session will be terminated after that number of seconds. 
+* If the `StopIdleSessionSec` setting is non-zero this indicates that the session will be terminated after that number of seconds. 
 +
 Change `StopIdleSessionSec=7200` to increase the timeout, then run `systemctl restart systemd.logind` to apply the change.
 * Log out of the interactive session entirely and log back in to ensure the new setting applies to the current login session.
