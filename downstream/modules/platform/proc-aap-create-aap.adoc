@@ -1,0 +1,46 @@
+[id="aap-create-aap"]
+
+= Creating an AnsibleAutomationPlatform object
+
+[role=_abstract]
+
+Use the following steps to create an *AnsibleAutomationPlatform* custom resource object.
+
+.Procedure
+. Log in to *{OCP}*.
+. Navigate to menu:Operators[Installed Operators].
+. Select the {OperatorPlatformNameShort} installed on your project namespace.
+. Select the *{PlatformNameShort}* tab.
+. Click btn:[Create AnsibleAutomationPlatform]. 
+. Select *YAML view* and paste in the following modified accordingly:
++
+----
+# Migrating from 2.4 (containerized or rpm installer) to Openshift
+# Note that in 2.4 controller, hub, and eda were deployed as separate CRs to 2.5 where they are deployed as nested CRs under the AAP CR.
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+spec:
+  # Development purposes only
+  no_log: false
+  postgres_configuration_secret: external-postgres-configuration
+
+  controller:
+    disabled: false
+    postgres_configuration_secret: external-controller-postgres-configuration
+    secret_key_secret: controller-secret-key
+
+  eda:
+    disabled: false
+    postgres_configuration_secret: external-eda-postgres-configuration
+    db_fields_encryption_secret: eda-db-fields-encryption-secret
+
+  hub:
+    disabled: false
+    postgres_configuration_secret: external-hub-postgres-configuration
+    db_fields_encryption_secret: hub-db-fields-encryption-secret
+----
++
+. Click btn:[Create].
