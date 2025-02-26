@@ -1,0 +1,26 @@
+[id="edge-manager-update-os"]
+
+= Update the operating system
+
+You can update the operating system of a device by updating the target operating system image name or version in the device specification.
+When the agent communicates with the server, the agent detects the requested update.
+Then, the agent automatically starts downloading and verifying the new operating system version in the background.
+The {RedHatEdge} agent schedules the actual system update that is performed according to the update policy.
+At the scheduled update time, the agent installs the new version without disrupting the currently running operating system.
+Finally, the device reboots into the new version.
+
+The {RedHatEdge} currently supports the following image type and image reference format:
+
+[width="100%",cols="40%,60%",options="header",]
+|===
+|Image Type |Image Reference
+|bootc|An OCI image reference to a container registry. Example: `quay.io/flightctl-example/rhel:9.5`
+|===
+
+During the process, the agent sends status updates to the service.
+You can check the update process by viewing the device status.
+
+For more information, see:
+
+* <<update-os-cli,Updating the operating system on the CLI>>
+* <<manage-os-config,Managing the operating system configuration>>
