@@ -54,18 +54,16 @@ fatal: [daap1.lan]: FAILED! => {"changed": false, "connection": "close", "conten
 
 * Check if you have an `automation-controller-web` container running and a systemd service.
 
-
 [NOTE]
 ====
-This is used at the regular unprivileged user not system wide level. If you have used `su` to switch to the user running the containers, you must set your `XDG_RUNTIME_DIR` environment variable to the correct value to be able to interact with the user `systemctl` units.
+This is used at the regular unprivileged user not system wide level. If you have used `su` to switch to the user running the containers, you must set your `XDG_RUNTIME_DIR` environment variable to the correct value to be able to interact with the user `systemctl` units. Run the command `export XDG_RUNTIME_DIR="/run/user/$UID"`.
 ====
-
-----
-export XDG_RUNTIME_DIR="/run/user/$UID"
-----
 
 ----
 podman ps | grep web
+----
+
+----
 systemctl --user | grep web
 ----
 
@@ -76,7 +74,13 @@ No output indicates a problem.
 +
 ----
 systemctl start automation-controller-web.service --user
+----
++
+----
 systemctl --user | grep web
+----
++
+----
 systemctl status automation-controller-web.service --user
 ----
 +
