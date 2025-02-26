@@ -16,17 +16,17 @@ The following table lists a number of security-relevant variables and their reco
 |===
 | *RPM deployment variable* | *Recommended Value* | *Details*
 
-| `postgres_use_ssl` | true | The installer configures the installer-managed Postgres database to accept SSL-based connections when this variable is set.
+| `postgres_use_ssl` | true | The installation program configures the installer-managed Postgres database to accept SSL-based connections when this variable is set.
 
 The default for this variable is false which means SSL/TLS is not used for PostgreSQL connections. 
 
 When set to true, the platform connects to PostgreSQL by using SSL/TLS.
 
-| `pg_sslmode` `automation_gateway_pg_sslmode`` `automationhub_pg_sslmode` `automationcontroller_pg_sslmode`  |verify-full | These variables control mutual TLS (mTLS) authentication to the database. 
+| `pg_sslmode` `automation_gateway_pg_sslmode` `automationhub_pg_sslmode` `automationcontroller_pg_sslmode`  |verify-full | These variables control mutual TLS (mTLS) authentication to the database. 
 By default, when each service connects to the database, it tries an encrypted connection, but it is not enforced. 
 
 Setting this variable to `verify-full` enforces an mTLS negotiation between the service and the database. 
-The postgres_use_ssl variable must also be set to "true" for this pg_sslmode to be effective.
+The `postgres_use_ssl` variable must also be set to `true` for this pg_sslmode to be effective.
 
 *NOTE*: If a third-party database is used instead of the installer-managed database, the third-party database must be set up independently to accept mTLS connections.
 
@@ -43,9 +43,9 @@ The following table lists a number of security-relevant variables and their reco
 | *Container deployment variable* | *Recommended Value* | *Details*
 | `postgresql_disable_tls` | false | If set to `true`, this variable disables TLS connections to the installer-managed PostgreSQL database. 
 
-The default is `false`. 
+The default is `false` 
 
-If this variable is absent from the installer inventory, it is effectively the same as explicitly defining the variable asto `false`.
+If this variable is absent from the installer inventory, it is effectively the same as defining the variable as `false`.
 
 | `controller_pg_sslmode` `gateway_pg_sslmode` `hub_pg_sslmode` `eda_pg_sslmode` | verify-full a| These variables control mutual TLS (mTLS) authentication to the database. 
 
