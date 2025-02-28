@@ -6,12 +6,6 @@
 |===
 | RPM variable name | Container variable name | Description | Required or optional | Default
 
-| `automationhub_additional_settings`
-| 
-| A dictionary for defining additional pulp settings.
-| Optional 
-| `{}`
-
 | `automationhub_admin_password` 
 | `hub_admin_password` 
 | {HubNameStart} administrator password. +
@@ -33,6 +27,12 @@ Set this variable to `false` to prevent backup or restore of `/var/lib/pulp`.
 | Optional
 | `true`
 
+| `automationhub_client_max_body_size`
+| `hub_nginx_client_max_body_size` 
+| Maximum allowed size for data sent to {HubName} through NGINX.
+| Optional
+| `20m`
+
 | `automationhub_collection_download_count` 
 | 
 | Denote whether or not the collection download count should be displayed in the UI.
@@ -41,10 +41,16 @@ Set this variable to `false` to prevent backup or restore of `/var/lib/pulp`.
 
 | `automationhub_collection_seed_repository`
 | 
-| Controls the type of content to upload when `hub_seed_collections` is set to true. +
+| Controls the type of content to upload when `hub_seed_collections` is set to `true`. +
 Valid options include: `certified`, `validated`
 | Optional
 | Both certified and validated are enabled by default.
+
+| `automationhub_collection_signing_service_key`
+| `hub_collection_signing_key`  
+| Path to the collection signing key file.
+| Required if a collection signing service is enabled.
+| 
 
 | `automationhub_container_repair_media_type`
 |
@@ -52,6 +58,12 @@ Valid options include: `certified`, `validated`
 Valid options include: `true`, `false`, `auto`
 | Optional
 | `auto`
+
+| `automationhub_container_signing_service_key`
+| `hub_container_signing_key`  
+| Path to the container signing key file.
+| Required if a container signing service is enabled.
+|
 
 | `automationhub_create_default_collection_signing_service` 
 | `hub_collection_signing` 
@@ -243,6 +255,18 @@ If set to `true`, a token is regenerated during installation.
 | Optional
 | `false`
 
+| `nginx_hsts_max_age` 
+| `hub_nginx_hsts_max_age` 
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {HubName}.
+| Optional
+| `63072000`
+
+| `pulp_secret`
+| `hub_secret_key` 
+| Secret key value used by {HubName} to sign and encrypt data.
+| Optional
+| 
+
 | 
 | `hub_azure_account_key` 
 | Azure blob storage account key.
@@ -268,12 +292,6 @@ For more information about the list of parameters, see link:https://django-stora
 | Optional
 | `{}`
 
-| `automationhub_collection_signing_service_key`
-| `hub_collection_signing_key`  
-| Path to the collection signing key file.
-| Required if a collection signing service is enabled.
-| 
-
 |  
 | `hub_collection_signing_pass` 
 | Password for the automation content collection signing service.
@@ -286,12 +304,6 @@ For more information about the list of parameters, see link:https://django-stora
 | Optional
 | `ansible-default`
 
-| `automationhub_container_signing_service_key`
-| `hub_container_signing_key`  
-| Path to the container signing key file.
-| Required if a container signing service is enabled.
-|
-
 |  
 | `hub_container_signing_pass` 
 | Password for the automation content container signing service.
@@ -303,18 +315,6 @@ For more information about the list of parameters, see link:https://django-stora
 | Service for signing containers.
 | Optional
 | `container-default`
-
-|  `automationhub_client_max_body_size`
-| `hub_nginx_client_max_body_size` 
-| Maximum allowed size for data sent to {HubName} through NGINX.
-| Optional
-| `20m`
-
-| `nginx_hsts_max_age` 
-| `hub_nginx_hsts_max_age` 
-| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {HubName}.
-| Optional
-| `63072000`
 
 |  
 | `hub_nginx_http_port` 
@@ -363,12 +363,6 @@ For more information about the list of parameters, see link:https://django-stora
 | `hub_s3_secret_key` 
 | AWS S3 secret key. 
 | Required if using an AWS S3 storage backend.
-| 
-
-| `pulp_secret`
-| `hub_secret_key` 
-| Secret key value used by {HubName} to sign and encrypt data.
-| Optional
 | 
 
 | 
