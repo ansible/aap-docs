@@ -1,0 +1,19 @@
+[id="con-saas-how-private-link-works"]
+
+= How {AWSPrivateLink} works
+
+{AWSPrivateLink} connectivity is supported both into (ingress) and out of (egress) the {PlatformNameShort} control plane.
+For more AWS specific information about how {AWSPrivateLink} works, see the link:https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html[Amazon Virtual Private Cloud] documentation.
+
+== AWS PrivateLink connectivity into the {PlatformNameShort} control plane
+
+For {AWSPrivateLink} connectivity into the control plane, an AWS Endpoint Service has automatically provisioned {AWSPrivateLink} connectivity into the control plane in your AWS environment.
+You must create an AWS Endpoint to connect to this service in your Virtual Private Cloud (VPC), and enable private DNS resolution of the endpoint service hostname.
+With this in place, any traffic originating from your VPC to the control plane API or mesh ingress connects to a private IP address and does not traverse the public internet.
+
+== {AWSPrivateLink} connectivity out of the {PlatformNameShort} control plane
+
+To enable {AWSPrivateLink} connectivity from the control plane to your private resources, create one or more Endpoint Services in your VPC and work with Red{nbsp}Hat to create the consuming Endpoints.
+With this in place, the {PlatformNameShort} control plane can connect privately to your resources such as registries, repositories, and execution nodes.
+
+
