@@ -37,15 +37,15 @@ This setting can also be enabled through the API by specifying `INSIGHTS_TRACKIN
 * `api/v2/settings/all`
 * `api/v2/settings/system`
 
-The {Analytics} generated from this data collection can be found on the link:https://cloud.redhat.com[Red Hat Cloud Services] portal.
+You can fing {Analytics} generated from this data collection on the link:https://cloud.redhat.com[Red Hat Cloud Services] portal.
 
 image:aa-dashboard.png[Analytics dashboard]
 
 *Clusters* data is the default view.
 This graph represents the number of job runs across all {ControllerName} clusters over a period of time.
-The previous example shows a span of a week in a stacked bar-style chart that is organized by the number of jobs that ran successfully (in green) and jobs that failed (in red).
+The earlier example shows a span of a week in a stacked bar-style chart that is organized by the number of jobs that ran successfully (in green) and jobs that failed (in red).
 
-Alternatively, you can select a single cluster to view its job status information.
+You can also select a single cluster to view its job status information.
 
 image:aa-job-run-status-over-time-period.png[Job run status]
 
@@ -58,3 +58,19 @@ On the clouds navigation panel, select menu:Organization Statistics[] to view in
 * xref:ref-controller-use-by-organization[Use by organization]
 * xref:ref-controller-jobs-run-by-organization[Job runs by organization]
 * xref:ref-controller-organization-status[Organization status]
+
+== Creating and configuring {PlatformNameShort} to use a service account for {Analytics}
+
+.Prerequisites
+
+* A service account created with the Analytics Administrator viewer role in console.redhat.com.
+For more information see, link:https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[Creating a service account].
+
+.Procedure
+
+. From the navigation panels, select {MenuAEAdminSettings}.
+. Select *Miscellaneous System settings* from the list of *System* options.
+. Click btn:[Edit].
+. In the field labeled *Red Hat customer username*, enter the client ID you received when you created your service account.
+. In the field labeled *Red Hat customer password*, enter the client secret you received when you created your service account.
+. Click btn:[Save].
