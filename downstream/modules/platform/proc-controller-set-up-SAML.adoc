@@ -4,7 +4,6 @@
 
 SAML allows the exchange of authentication and authorization data between an Identity Provider (IdP) and a Service Provider (SP). 
 {PlatformNameShort} is a SAML SP that you can configure to talk with one or more SAML IdPs to authenticate users. 
-Based on groups and attributes optionally provided by the IdP, users can be placed into teams and organizations in {PlatformNameShort} based on authenticator maps tied to this authenticator.
 
 Based on groups and attributes optionally provided by the SAML IdP, users can be placed into teams and organizations in {PlatformNameShort} based on the authenticator maps tied to this authenticator. This mapping ensures that when a user logs in through SAML, {PlatformNameShort} can correctly identify the user and assign the proper attributes like first name, last name, email, and group membership.
 
@@ -12,7 +11,7 @@ Based on groups and attributes optionally provided by the SAML IdP, users can be
 
 Before you configure SAML authentication in {PlatformNameShort}, be sure you do the following:
 
-* Configure a SAML Identify Provider (IdP).
+* Configure a SAML Identity Provider (IdP).
 * Pre-configure the SAML IdP with the settings required for integration with {PlatformNameShort}. For example, in Microsoft Entra ID you can configure the following:
 ** *Identifier (Entity ID):* This can be any value that you want, but it needs to match the one configured in your {PlatformNameShort}. 
 ** *Reply URL (Assertion Consumer Service (ACS) URL):* This URL is auto generated when the SAML method is configured in {PlatformNameShort}. That value must be copied from {PlatformNameShort} and pasted in your IdP settings.
@@ -32,7 +31,7 @@ $ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days
 . Enter a *Name* for this SAML configuration. 
 . Enter the application-defined unique identifier used as the audience of the SAML service provider configuration in the *SAML Service Provider Entity ID* field. This is usually the base URL of your service provider, but the actual value depends on the Entity ID expected by your IdP.
 . Include the certificate content in the *SAML Service Provider Public Certificate* field. This information is contained in the cert.pem you created as a prerequisite and must include the `—–BEGIN CERTIFICATE—–` and `—–END CERTIFICATE—–`.
-. Include the private key content in the *SAML Service Provider Private Key*. This information is contained in the key.pem you created as a prerequisite and must include the `—–BEGIN PRIVATE KEY—–` and `—–END PRIVATE KEY—–`.
+. Include the private key content in the *SAML Service Provider Private Key* field. This information is contained in the key.pem you created as a prerequisite and must include the `—–BEGIN PRIVATE KEY—–` and `—–END PRIVATE KEY—–`.
 . Enter the URL to redirect the user to for login initiation in the *IdP Login URL* field. This is the login URL from your SAML IdP application.
 . Enter the public cert used for secrets coming from the *IdP in the IdP Public Cert* field. This is the SAML certificate available for download from IdP.
 +
@@ -144,7 +143,7 @@ include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 
 [IMPORTANT]
 ====
-You can configure an HTTPS redirect for SAML in operator-based deployments to simplify log in for your users. For the steps to configure this setting, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#proc-operator-enable-https-redirect[Enabling single sign-on (SSO) for {Gateway} on {OCPShort}].
+You can configure an HTTPS redirect for SAML in operator-based deployments to simplify login for your users. For the steps to configure this setting, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#proc-operator-enable-https-redirect[Enabling single sign-on (SSO) for {Gateway} on {OCPShort}].
 ====
 
 [role="_additional-resources"]
