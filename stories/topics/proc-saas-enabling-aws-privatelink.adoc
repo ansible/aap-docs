@@ -1,0 +1,53 @@
+[id="proc-saas-enabling-aws-privatelink"]
+
+= Enabling {AWSPrivateLink} connectivity
+
+To enable private link connectivity, submit a customer support ticket and the Red{nbsp}Hat team will assist you with next steps. 
+
+[NOTE]
+====
+You must create two support tickets for bi-directional connectivity: one support case for enabling {AWSPrivateLink} connectivity into the control plane and another one for enabling {AWSPrivateLink} connectivity out of the control plane. 
+====
+
+.Procedure 
+
+. Navigate to link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true&product=Red%20Hat%20Ansible%20Automation%20Platform%20On%20Clouds&version=AWS%20-%20Managed%20Service&seSessionId=db3c1163-09b0-4076-b27f-0ce89eb2b9e7[Customer support]. 
+The fields auto-fill, however confirm: 
+.. The *Account* field displays your customer account
+.. The *Owner* field displays your login
+.. The *Product* field displays *{PlatformName} On Clouds*
+.. The *Version* field displays *AWS - Managed Service*
+. Select *Configuration* for the *What can we help you with?* section.
+. Click btn:[Continue].
+. Use the values in the following templates to copy values into the *Title* and *Describe your problem* sections of the support request.
++
+----
+Title:
+Ansible Automation Platform Service on AWS PrivateLink Template
+
+Describe your problem: 
+Enable AWS PrivateLink connectivity from control plane to customer's network
+
+Endpoint Service references are for the Endpoint Service created in the customer's VPC.
+
+Endpoint Service name: <enter here>
+Endpoint Service AWS region: <enter here>
+Endpoint Service ports or port ranges: <enter here>
+----
++
+----
+Title:
+Ansible Automation Platform Service on AWS PrivateLink Template
+
+Describe your problem: 
+Enable AWS PrivateLink connectivity from customer's network to control plane
+
+Customer AWS account ID: <enter here>
+Endpoint AWS region(s): <enter here>
+
+After Red Hat has configured the control plane Endpoint Service allowed principal and supported regions, a response will be added to your support ticket to create your Endpoint and share the Endpoint Service name, which you can find at https://console.redhat.com/ansible/service.
+
+----
++
+. Click btn:[Continue].
+
