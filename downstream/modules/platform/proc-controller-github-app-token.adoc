@@ -11,21 +11,29 @@ For more information, see link:https://docs.github.com/en/apps/creating-github-a
 
 . Create a lookup credential that stores your secrets. 
 For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_execution/controller-credentials#controller-create-credential[Creating new credentials].
+
 . Select *GitHub App Installation Access Token lookup* for *Credential type*, and enter the following attributes to properly configure your lookup:
+
 ** *GitHub App ID*: Enter the app ID used for communicating with your GitHub app.
 ** *GitHub App Installation ID*: Enter the ID of the installation that you want to authenticate as.
 ** *RSA Private Key*: Enter the generated private key from the GitHub organization in your repository. 
 For more information, see link:https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps[Managing private keys for GitHub Apps].
-. Click btn:[Create Credential] to confirm and save the credential.
+
+. Click btn:[Create credential] to confirm and save the credential.
+
 . Create a target credential that looks up the lookup credential. 
 To use your lookup in a private repository, select *Source Control* as your *Credential type*. 
 Enter the following attributes to properly configure your target credential:
+
 ** *Username*: Enter the username `x-access-token`.
 ** *Password*: Click the image:leftkey.png[Link,15,15] icon for managing external credentials in the input field. 
 You are prompted to set the input source to use to retrieve your secret information. 
 This is the lookup credential that you have already created.
+
 . Enter an optional description for the metadata requested and click btn:[Finish].
+
 . Click btn:[Create credential] to confirm and save the credential.
+
 . Verify both your lookup credential and your target credential are now available on the *Credentials* list view.
 To use the target credential in a project, create a project and enter the following information:
 
