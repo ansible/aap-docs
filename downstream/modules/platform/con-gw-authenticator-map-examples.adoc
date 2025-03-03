@@ -4,12 +4,29 @@
 
 = Authenticator map examples
 
-* Make this user a superuser if they have an attribute called `aap_superuser` with a value of _True_.
-* Add this user to a team if they have the group `cn=Administrators,ou=AAP,ou=example,o=com` or `cn=Operators,ou=AAP,ou=example,o=com`. 
-* Never allow access to the system if the user has an attribute called `disabled` with a value of _True_, _Yes_ or _Until Further Notice_.
+Use the examples below to explore the different conditions, like groups and attribute values you can implement to control user access to the platform. 
 
-Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Never allow access to the system if the user has an attribute called disabled with a value of _True_, _Yes_ or _Until Further Notice_.
+.Make this user a superuser if they have an attribute called `aap_superuser` with a value of _true_
+
+//image::am-superuser-map-example.png[Super user mapping example]
+
+
+.Add this user to the `Apple` team if they have either the group `cn=Administrators,ou=AAP,ou=example,o=com` or `cn=Operators,ou=AAP,ou=example,o=com`
+
+//image::am-apple-team-map-example.png[Add user to team mapping example]
+
+.Never allow access to the system if the user has an attribute called `disabled` with a value of _True_, _Yes_ or _Until Further Notice_
+
+//image::am-never-allow-map-example.png[Never allow access mapping example]
+
+.Using mapping order to create exceptions
+
+Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Never allow access to the system if the user has an attribute called disabled with a value of _True_, _Yes_ or _Until Further Notice_".
 
 You can add another rule with a higher order, such as, “Allow access to the system for a `disabled` user if they are in the group `Emergency Contacts`.”
 
-The first rule prevents the disabled user from accessing the system, but the second rule alters that decision to grant access to the system for the disabled user if they are in the `Emergency Contacts` group.
+//image::am-allow-emergency-map-example.png[Allow in emergency mapping example]
+
+The first rule (Never allow) prevents the disabled user from accessing the system, but the second rule (Allow in emergency) alters that decision to grant access to the system for the disabled user if they are in the `Emergency Contacts` group.
+
+//image::am-mapping-order-example.png[Mapping order example]
