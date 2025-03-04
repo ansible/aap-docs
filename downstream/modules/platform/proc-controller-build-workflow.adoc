@@ -9,13 +9,14 @@ You can set up any combination of two or more of the following node types to bui
 * Inventory Sync
 * Approval
 
-Each node is represented by a rectangle while the relationships and their associated edge types are represented by a line (or link) that connects them.
+// Not in 2.5 UI
+//Each node is represented by a rectangle while the relationships and their associated edge types are represented by a line (or link) that connects them.
 
 .Procedure
 
 . To launch the workflow visualizer, use one of these methods:
 ** From the navigation panel, select {MenuAETemplates}. 
-... Select a workflow template and click btn:[View workflow visualizer].
+*** Select a workflow template and click btn:[View workflow visualizer].
 ** From the *Templates* list view, click the image:visualizer.png[Visualizer,15,15] icon next to a workflow job template.
 +
 //image::ug-wf-editor-create.png[Launch visualizer]
@@ -97,6 +98,12 @@ Click btn:[Legend] to display the legend for each run scenario and their job typ
 image::ug-wf-dropdown-list.png[Workflow dropdown list]
 +
 . Hover over a node to edit the node, add step and link, or delete the selected node:
++
+[NOTE]
+====
+If you hover over a step when adding a link and a red border appears, this means that you cannot connect those two steps together.
+This is a preventive measure to prevent a user from creating "circular dependencies", which can result in a workflow that ends up in an infinite loop and never finishes.
+====
 +
 image::ug-wf-add-template.png[Node options]
 +
