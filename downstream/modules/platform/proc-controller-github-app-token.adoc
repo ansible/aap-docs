@@ -1,8 +1,8 @@
 [id="controller-github-app-token"]
 
-= Configuring a GitHub app token lookup
+= Configuring a `GitHub App Installation Access Token Lookup`
 
-With this plugin you can use a GitHub app token as a credential input source to pull secrets from the GitHub app. 
+With this plugin you can use a private GitHub App RSA key as a credential input source to pull access tokens from GitHub App installations.
 {GatewayStart} uses existing GitHub authorization from organizations' GitHub repositories. 
 
 For more information, see link:https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app[Generating an installation access token for a GitHub App].
@@ -12,16 +12,22 @@ For more information, see link:https://docs.github.com/en/apps/creating-github-a
 . Create a lookup credential that stores your secrets. 
 For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_execution/controller-credentials#controller-create-credential[Creating new credentials].
 
-. Select *GitHub App Installation Access Token lookup* for *Credential type*, and enter the following attributes to properly configure your lookup:
+. Select *GitHub App Installation Access Token Lookup* for *Credential type*, and enter the following attributes to properly configure your lookup:
 
-** *GitHub App ID*: Enter the app ID used for communicating with your GitHub app.
-** *GitHub App Installation ID*: Enter the ID of the installation that you want to authenticate as.
-** *RSA Private Key*: Enter the generated private key from the GitHub organization in your repository. 
+** *GitHub App ID*: Enter the App ID provided by your instance of GitHub, this is what is used to authenticate.
+** *GitHub App Installation ID*: Enter the ID of the application into your target organization that the access token is scoped to. 
+You must set it up to have access to your target repository.
+** *RSA Private Key*: Enter the generated private key that your GitHub instance generated. 
+You can get it from the GitHub App maintainer within GitHub. 
 For more information, see link:https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/managing-private-keys-for-github-apps[Managing private keys for GitHub Apps].
 
 . Click btn:[Create credential] to confirm and save the credential.
-
-. Create a target credential that looks up the lookup credential. 
++
+The following is an example of a configured *GitHub App Installation Access Token Lookup* credential:
++
+image:credentials-create-github-app-lookup-credential.png[GitHub App token lookup credential]
++
+. Create a target credential that searches for the lookup credential. 
 To use your lookup in a private repository, select *Source Control* as your *Credential type*. 
 Enter the following attributes to properly configure your target credential:
 
@@ -29,7 +35,9 @@ Enter the following attributes to properly configure your target credential:
 ** *Password*: Click the image:leftkey.png[Link,15,15] icon for managing external credentials in the input field. 
 You are prompted to set the input source to use to retrieve your secret information. 
 This is the lookup credential that you have already created.
-
++
+image:credentials-github-app-target-secret-info.png[Target credential secret info]
++
 . Enter an optional description for the metadata requested and click btn:[Finish].
 
 . Click btn:[Create credential] to confirm and save the credential.
@@ -46,12 +54,18 @@ The *Type Details* view opens for additional input.
 Enter the following information:
 
 ** *Source control URL*: Enter the URL of the private repository you want to access. 
-The other related fields pertaining to *branch/tag/commit* and *refspec* are not pertinent for use with a lookup credential.
+The other related fields pertaining to *branch/tag/commit* and *refspec* are not relevant for use with a lookup credential.
 ** *Source control credential*: Select the target credential that you have already created.
-
++
+The following is an example of a configured target credential in a project:
++
+image:project-create-git-github-app.png[GitHub App project]
++
 . Click btn:[Create project] and the project sync automatically starts. 
-The project *Details* tab displays the progress of the job.
+The project *Details* tab displays the progress of the job:
++
+image:project-sync-github-app.png[Project sync GitHub App]
 
 .Troubleshooting 
 
-If your project sync fails, you might have to manually re-enter `https://api.github.com/` in the *GitHub API endpoint URL* field from Step 2 and re-run your project sync.
+If your project sync fails, you might have to manually re-enter `https://api.github.com` in the *GitHub API endpoint URL* field from Step 2 and re-run your project sync.
