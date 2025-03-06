@@ -3,7 +3,7 @@
 = Installing {ToolsName} on a container inside {VSCode}
 
 The Dev Containers {VSCode} extension requires a `.devcontainer` file to store settings for your dev containers. 
-You must create a config file for your dev container and reopen your directory in a container in {VSCode}.
+You must use the Ansible extension to scaffold a config file for your dev container, and reopen your directory in a container in {VSCode}.
 
 .Prerequisites
 
@@ -20,26 +20,21 @@ xref:devtools-setup-registry-redhat-io_installing-devtools[Authenticating with t
 
 .Procedure
 
-. In {VSCode}, open the directory where you want to store the configuration files for your development container.
-. Create a subdirectory called `.devcontainer`.
-. In the `.devcontainer` directory, create a file called `devcontainer.json`.
+. In {VSCode}, navigate to your project directory.
+. Click the Ansible icon in the {VSCode} activity bar to open the Ansible extension.
+. In the *Ansible Development Tools* section of the Ansible extension, scroll down to the *ADD* option and select *Devcontainer*. 
+. In the *Create a devcontainer* page, select the *Downstream* container image from the *Container image* options.
 +
-You must use different settings depending on whether you are using Podman or Docker.
-
-** If you are using Podman or Podman desktop, add the following text to `devcontainer.json`:
-+
-include::snippets/podman-devcontainer.json[]
-** If you are using Docker or Docker desktop, add the following text to `devcontainer.json`:
-+
-include::snippets/docker-devcontainer.json[]
-. Reopen the directory in a container.
-** If {VSCode} detects that your directory contains the `devcontainer.json` file, the following notification appears:
+This action adds `devcontainer.json` files for both Podman and Docker in a `.devcontainer` directory.
+. Reopen or reload the project directory:
+** If {VSCode} detects that your directory contains a `devcontainer.json` file, the following notification appears:
 +
 image::devtools-reopen-in-container.png[Reopen in container]
 +
 Click *Reopen in Container*.
 ** If the notification does not appear, click the `Remote` (image:vscode-remote-icon.png[Remote,15,15]) icon. In the dropdown menu that appears, select *Reopen in Container*.
-
+. Select the dev container for Podman or Docker according to the containerization platform you are using.
++
 The *Remote ()* status in the {VSCode} Status bar displays `opening Remote` and a notification indicates the progress in opening the container.
 
 .Verification
