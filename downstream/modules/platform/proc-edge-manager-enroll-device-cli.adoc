@@ -2,6 +2,7 @@
 
 = Enrolling devices on the CLI
 
+You must enroll devices into the {RedHatEdge} service before you can manage them.
 Complete the following steps:
 
 .Procedure
@@ -10,14 +11,14 @@ Complete the following steps:
 
 +
 --
-[source,terminal]
+[source,bash]
 ----
 flightctl get enrollmentrequests
 ----
 
 See the following example output:
 
-[source,terminal]
+[source,bash]
 ----
 NAME           APPROVAL  APPROVER  APPROVED LABELS
 <device_name>  Pending   <none>    <none>    
@@ -36,14 +37,14 @@ The agent chooses a base32-encoded hash of its public key as device name.
 
 +
 --
-[source,terminal]
+[source,bash]
 ----
 flightctl approve -l region=eu-west-1 -l site=factory-berlin enrollmentrequest/54shovu028bvj6stkovjcvovjgo0r48618khdd5huhdjfn6raskg
 ----
 
 See the following example output:
 
-[source,terminal]
+[source,bash]
 ----
 NAME           APPROVAL  APPROVER  APPROVED LABELS
 <device_name>  Approved  user      region=eu-west-1,site=factory-berlin
