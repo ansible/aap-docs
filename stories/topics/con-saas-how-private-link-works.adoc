@@ -10,10 +10,12 @@ For more AWS specific information about how {AWSPrivateLink} works, see the link
 For {AWSPrivateLink} connectivity into the control plane, an AWS Endpoint Service has automatically provisioned {AWSPrivateLink} connectivity into the control plane in your AWS environment.
 You must create an AWS Endpoint to connect to this service in your Virtual Private Cloud (VPC), and enable private DNS resolution of the endpoint service hostname.
 With this in place, any traffic originating from your VPC to the control plane API or mesh ingress connects to a private IP address and does not traverse the public internet.
+Traffic is stateful, so there is no need to open a private link in the reverse direction for responses to Transmission Control Protocol (TCP) requests that originate from the customer VPC
 
 == {AWSPrivateLink} connectivity out of the {PlatformNameShort} control plane
 
 To enable {AWSPrivateLink} connectivity from the control plane to your private resources, create one or more Endpoint Services in your VPC and work with Red{nbsp}Hat to create the consuming Endpoints.
 With this in place, the {PlatformNameShort} control plane can connect privately to your resources such as registries, repositories, and execution nodes.
+Traffic is stateful, so there is no need to open a private link in the reverse direction for responses to Transmission Control Protocol (TCP) requests that originate from the control plane VPC.
 
 
