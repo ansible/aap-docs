@@ -1,0 +1,29 @@
+[id="edge-manager-manage-os-config"]
+
+= Operating system configuration
+
+You can include an operating system-level host configuration in the image to give maximum consistency and repeatability.
+To update the configuration, create a new operating system image and update devices with the new image.
+
+However, updating devices with a new image can be impractical in the following cases:
+
+* The configuration is missing in the image.
+* The configuration needs to be specific to a device.
+* The configuration needs to be updateable at runtime without updating the operating system image and rebooting.
+
+For these cases, you can declare a set of configuration files that are present on the file system of the device.
+The {RedHatEdge} agent applies updates to the configuration files while ensuring that either all files are successfully updated in the file system, or rolled back to their pre-update state.
+If the user updates both an operating system and configuration set of a device at the same time, the {RedHatEdge} agent updates the operating system first. 
+It then applies the specified set of configuration files.
+
+You can also specify a list of configurations sets that the {RedHatEdge} agent applies in sequence.
+In case of a conflict, the last applied configuration set is valid.
+
+[IMPORTANT]
+====
+After the {RedHatEdge} agent updates the configuration on the disk, the running applications need to reload the new configuration into memory for the configuration to become effective.
+If the update involves a reboot, `systemd` automatically restarts the applications with the new configuration and in the correct order.
+If the update does not involve a reboot, many application can detect changes to their configuration files and automatically reload the files.
+When an application does not support change detection, you can use device lifecycle hooks to run scripts or commands if certain conditions are met.
+For more information about device lifecycle hooks and the default rules used by the {RedHatEdge} agent, see xref:edge-manager-device-lifecycle[Device lifecycle hooks].
+====
