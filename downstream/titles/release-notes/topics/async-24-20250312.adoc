@@ -1,0 +1,35 @@
+[id="async-24-20250312"]
+
+= {PlatformNameShort} patch release March 12, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== Enhancements
+
+=== General
+
+* The `redhat.insights` collection has been updated to 1.3.0(AAP-40261)
+
+* The `ansible.controller` collection has been updated to 4.5.19(AAP-41401)
+
+== Bug fixes
+
+=== {ControllerNameStart}
+
+* Fixed an issue where the Azure credentials automatically added the `config_cred` value where having both fields for the client caused an error.(AAP-39847)
+
+* Fixed an issue where the job schedules would run at incorrect times when that schedule's start time fell within a Daylight Saving Time period.(AAP-39827)
+
+* Fixed an issue where `awxkit` did not have service account support for Insights credential type. The fields `client_id` and `client_secret` were missing from the `credential_input_fields`.(AAP-39351)
+
+* Fixed an issue where the python script `action_plugins/insights.py` could not handle service account oauth.(AAP-37463)
+
+* Fixed an issue where there was service account support for Insights credential type for {PlatformNameShort} version 2.4.(AAP-37440)
+
+=== Receptor
+
+* Fixed an issue where {MeshReceptor} was creating too many `inotify` processes, and where the user would encounter a *too many open files* error.(AAP-22605)
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where the previously required a {RHEL} minimum versions were not set to 8.8 and 9.2.(AAP-40422)
