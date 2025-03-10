@@ -4,8 +4,19 @@
 
 = Installing containerized {PlatformNameShort}
 
-Use the following command to install containerized {PlatformNameShort}:
+After you prepare the {RHEL} host, download {PlatformNameShort}, and configure the inventory file, run the `install` playbook to install containerized {PlatformNameShort}.
 
+.Prerequisites
+
+You have done the following:
+
+* xref:preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
+* xref:downloading-containerized-aap[Downloaded {PlatformNameShort}]
+* xref:configuring-inventory-file[Configured the inventory file]
+
+.Procedure
+
+* Run the `install` playbook:
 ----
 ansible-playbook -i <inventory_file_name> ansible.containerized_installer.install
 ----
@@ -15,6 +26,24 @@ For example:
 ansible-playbook -i inventory ansible.containerized_installer.install
 ----
 
-* If your privilege escalation requires you to enter a password, append `-K` to the command. You are then prompted for the `BECOME` password. 
-* You can use increasing verbosity, up to 4 v's (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red{nbsp}Hat support.
+You can add additional parameters to the installation command as needed:
+----
+ansible-playbook -i <inventory_file_name> -e @<vault_file_name> --ask-vault-pass -K -v ansible.containerized_installer.install
+----
 
+For example:
+----
+ansible-playbook -i inventory -e @vault.yml --ask-vault-pass -K -v  ansible.containerized_installer.install
+----
+
+* `-i <inventory_file_name>` - The inventory file to use for the installation.
+* `-e @<vault_file_name> --ask-vault-pass` - (Optional) If you are using a vault to store sensitive variables, add this to the installation command.
+* `-K` - (Optional) If your privilege escalation requires you to enter a password, add this to the installation command. You are then prompted for the BECOME password.
+* `-v` - (Optional) You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so use it only as needed or requested by Red Hat support.
+
+Installation of containerized {PlatformNameShort} will begin.
+
+[role="_additional-resources"]
+.Additional resources
+* For more information about privilege escalation, see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html[Understanding privilege escalation: become].
+* For more information about securing sensitive variables, see link:{URLHardening}/hardening-aap#ref-sensitive-variables-install-inventory_hardening-aap[Sensitive variables in the installation inventory] in _{TitleHardening}_.
