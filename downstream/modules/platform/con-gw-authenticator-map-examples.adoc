@@ -4,29 +4,49 @@
 
 = Authenticator map examples
 
-Use the examples below to explore the different conditions, like groups and attribute values you can implement to control user access to the platform. 
+Use the following examples to explore the different conditions, like groups and attribute values you can implement to control user access to the platform. 
 
-.Make this user a superuser if they have an attribute called `aap_superuser` with a value of _true_
+.Add users to an organization based on an attribute
+In this example, you will add a user to the *Networking* organization if they have an `Organization` attribute with the value of `Networking`:
 
-//image::am-superuser-map-example.png[Super user mapping example]
+image::am-org-mapping.png[Add users to an organization mapping example]
 
 
-.Add this user to the `Apple` team if they have either the group `cn=Administrators,ou=AAP,ou=example,o=com` or `cn=Operators,ou=AAP,ou=example,o=com`
+.Add users to a team based on the users group
+In this example, you will add user to the `Apple` team if they have either of the following  groups:
 
-//image::am-apple-team-map-example.png[Add user to team mapping example]
+-----
+cn=Administrators,ou=AAP,ou=example,o=com
+-----
 
-.Never allow access to the system if the user has an attribute called `disabled` with a value of _True_, _Yes_ or _Until Further Notice_
+or
 
-//image::am-never-allow-map-example.png[Never allow access mapping example]
+-----
+cn=Operators,ou=AAP,ou=example,co=com
+-----
+
+image::am-apple-team-map-example.png[Add user to a team mapping example]
+
+.Do not escalate privileges
+
+In this example, you will never escalate users to a superuser. But note, this rule will not revoke a user’s superuser permission because the revoke option is not set. 
+
+image::am-do-not-escalate-privileges.png[Do not escalate privileges mapping example]
+
+.Escalate privileges based on a user having a group
+
+In this example, you will escalate user privileges to superuser if they belong to the following group:
+
+-----
+cn=Administrators,ou=AAP
+-----
+
+image::am-escalate-privileges.png[Escalate privileges mapping example]
 
 .Using mapping order to create exceptions
 
-Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Never allow access to the system if the user has an attribute called disabled with a value of _True_, _Yes_ or _Until Further Notice_".
+Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Do not escalate privileges”, you can add another rule with a higher order, such as, “Escalate privileges”. 
 
-You can add another rule with a higher order, such as, “Allow access to the system for a `disabled` user if they are in the group `Emergency Contacts`.”
+The first rule (Do not escalate privileges) prevents any user from being escalated to a superuser, but the second rule (Escalate privileges) alters that decision to grant superuser privileges to a user if they are in the `Administrators` group.
 
-//image::am-allow-emergency-map-example.png[Allow in emergency mapping example]
-
-The first rule (Never allow) prevents the disabled user from accessing the system, but the second rule (Allow in emergency) alters that decision to grant access to the system for the disabled user if they are in the `Emergency Contacts` group.
-
-//image::am-mapping-order-example.png[Mapping order example]
+image::am-mapping-order.png[Mapping order example]
