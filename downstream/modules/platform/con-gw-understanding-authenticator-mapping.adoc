@@ -1,0 +1,95 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-understanding-authenticator-mapping"]
+
+= Understanding authenticator mapping
+
+Authentication:: validates a user’s identity, typically through a username and password or a trust system.
+
+Authorization:: determines what an authenticated user can do once they are authenticated. 
+
+In {PlatformNameShort}, authenticators manage authentication, validating users and returning details such as their username, first name, email, and group memberships (for example, LDAP groups). Authorization comes from the authenticator’s associated maps.
+
+During the authentication process, once a user has authenticated, the authorization system starts with a default set of permissions in memory. Then sequentially, the authenticator maps are processed and adjust permissions based on their trigger conditions. Once all the authenticator's maps are processed, the in-memory representation of the users permissions are reconciled with the users existing permissions. 
+
+For example, let's simplify the in-memory representation of the default permissions as follows:
+
+-----
+Access allowed = True
+Superuser permission = Undefined
+Admin of teams = None
+-----
+And, let’s say the maps which need to be processed are processed in the following order:
+
+. *Allow* rule set to never
+. *Allow* rule based on group
+. *Superuser* rule based on user attributes
+. *Team* admin rule based on user group
+
+The first *Allow* map, set to never, denies access to the system and the in memory representation would now look like:
+
+[subs=+quotes]
+-----
+Access allowed = *False*
+Superuser permission = Undefined
+Admin of teams = None
+-----
+
+However, if the user matches the second *Allow* map (the group-based allow), the permissions change to the following:
+
+[subs=+quotes]
+-----
+Access allowed = *True*
+Superuser permission = Undefined
+Admin of teams = None
+-----
+
+Where the user is subsequently granted access to Ansible Automation Platform because they have the required groups. 
+
+Next, the *Superuser* map checks user attributes. If no match is found, it does not revoke existing permissions by default. Therefore, the permissions remain the same as the results from our last map:
+
+[subs=+quotes]
+-----
+Access allowed = True
+Superuser permission = *Skipped*
+Admin of teams = None
+-----
+
+To revoke superuser access, you can select the *Revoke* option on the *Superuser* map. That way, when the user does not meet the attribute criteria, the permissions update to False like in the following:
+
+[subs=+quotes]
+-----
+Access allowed = True
+Superuser permission = *False*
+Admin of teams = None
+-----
+
+The final *Team* map checks the user’s groups coming from the authenticator for admin access on the team “My Team”. If the user has the required group, the permissions update to the following:
+
+[subs=+quotes]
+-----
+Access allowed = True
+Superuser permission = False
+Admin of teams = “*My Team*”
+-----
+
+If the user lacks the required group, permissions remain unchanged unless the *Revoke* option has been selected on the map, in which case permissions update to the following:
+
+[subs=+quotes]
+-----
+Access allowed = True
+Superuser permission = False
+Admin of teams = *Revoke admin of “My Team”*
+-----
+After processing all maps in the order defined, the final permissions reconcile, updating the user’s access based on the map rules.
+
+In summary, authenticators authenticate users and delegate system authorization to the authenticator maps defined for the authenticator. Authenticator maps are executed in order creating an in memory representation of the users permissions which get reconciled with the users actual permissions once all maps are executed.
+
+By default, authenticator maps return either *ALLOW* or *SKIPPED*.
+
+ALLOW:: Means that a match is detected and the platform should grant  the user access to  the corresponding role or permission (such as, superuser, or team member).
+
+SKIPPED:: Means that the user did not match the trigger in the map and , the platform skips processing this map and continues to check the remaining maps. This is useful if you want to grant users additional permissions in the system without having to change the authenticator maps.
+
+However, when the *Revoke* option is selected, *SKIPPED* becomes *DENY* and users who do not meet the required trigger criteria are denied access to the corresponding role or permission. This ensures that only users with matching trigger conditions are granted access.
+

@@ -8,7 +8,9 @@ Each map has a trigger that defines when the map should be evaluated as true. Tr
 
 Always:: The trigger should always be fired.
 Never:: The trigger should never be fired.
-Group:: The map is true or false  based on a user having, not having or having multiple groups in the source system. When defining a group trigger, the authentication mapping expands to include the following selections:
+Group:: The map is true or false  based on a user having, not having or having multiple groups in the source system. See link:{URLCentralAuth}/gw-configure-authentication#gw-authenticator-map-examples[Authenticator map examples] for information on using *Group* triggers. 
++
+When defining a group trigger, the authentication mapping expands to include the following selections:
 +
 * *Operation:* This field includes conditional settings that trigger the handling of the rule based on the specified *Groups* criteria. The choices include *and* and *or*. For example, if you select *and* the user logging in must be a member of all of the groups specified in the *Groups* field for this trigger to be true. Alternatively, if you select *or* the user logging in must be a member of any of the specified *Groups* in order for the trigger to fire. 
 +
@@ -17,14 +19,18 @@ Group:: The map is true or false  based on a user having, not having or having m
 If you are only keying off one group it doesn’t matter if you select *"and"* or *"or"*.
 ====
 +
-* *Groups:* This is a list of one or more groups coming from the authentication system that the user must be a member of. See the *Operation* field to determine the behavior of the trigger if more than one group is specified in the trigger.
+* *Groups:* This is a list of one or more groups coming from the authentication system that the user must be a member of. The first time you create a *Groups* entry, you must manually enter the values. Once entered, that selection will be available from the drop-down list. 
++
+See the *Operation* field to determine the behavior of the trigger if more than one group is specified in the trigger.
 +
 [NOTE]
 ====
 Group identifiers are case-sensitive and must match the authenticator backend. For example, `cn=johnsmith,dc=example,dc=com` instead of `CN=johnsmith,DC=example,DC=com`.
 ====
 +
-Attribute:: The map is true or false based on a users attributes coming from the source system. When defining an attribute trigger, the authentication mapping expands to include the following selections:
+Attribute:: The map is true or false based on a users attributes coming from the source system. See link:{URLCentralAuth}/gw-configure-authentication#gw-authenticator-map-examples[Authenticator map examples] for information on using *Attribute* triggers.
++
+When defining an attribute trigger, the authentication mapping expands to include the following selections:
 +
 * *Operation:* This field includes conditional settings that trigger the handling of the rule based on the specified *Attribute* criteria. In version {PlatformVers} this field indicates what will happen if the source system returns a list of  attributes instead of a single value. For example, if the source system returns multiple emails for a user and *Operation* was set to *and*, all of the given emails must match the *Comparison* for the trigger to be _True_. If *Operation* was set to *or*, any of the returned emails will set the trigger to _True_ if they match the *Comparison* in the trigger. 
 +
