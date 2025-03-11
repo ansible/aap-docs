@@ -7,7 +7,7 @@
 | RPM variable name | Container variable name | Description | Required or optional | Default
 
 | `admin_email` 
-| 
+| `controller_admin_email`
 | Email address used by Django for the admin user for {ControllerName}.
 | Optional
 | `admin@example.com`
@@ -37,6 +37,12 @@ Use of special characters for this variable is limited. The password can include
 Set this variable to `true` to enable client certificate authentication.
 | Optional 
 | `false`
+
+| `controller_firewalld_zone`
+| `controller_firewall_zone`
+| The firewall zone where {ControllerName} related firewall rules are applied. This controls which networks can access {ControllerName} based on the zone's trust level.
+| Optional
+| `public`
 
 | `controller_nginx_tls_files_remote`
 |
@@ -70,6 +76,12 @@ Set this variable to `true` to disable HTTPS.
 | Optional
 | `false`
 
+| `nginx_hsts_max_age`
+| `controller_nginx_hsts_max_age` 
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {ControllerName}.
+| Optional
+| `63072000`
+
 | `nginx_http_port` 
 | `controller_nginx_http_port` 
 |  Port number that {ControllerName} listens on for HTTP requests.
@@ -97,7 +109,8 @@ Container = `[TLSv1.2, TLSv1.3]`
 | Optional
 | `[]`
 
-| `node_state` | 
+| `node_state` 
+| 
 | The status of a node or group of nodes. +
 Valid options include `active`, `deprovision` to remove a node from a cluster, or `iso_migrate` to migrate a legacy isolated node to an execution node.
 | Optional
@@ -176,6 +189,12 @@ Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, 
 | Required if using client certificate authentication.
 |
 
+| `uwsgi_listen_queue_size`
+| `controller_uwsgi_listen_queue_size` 
+| Number of requests `uwsgi` will allow in the queue on {ControllerName} until `uwsgi_processes` can serve them.
+| Optional
+| `2048`
+
 | `web_server_ssl_cert` 
 | `controller_tls_cert` 
 | Path to the SSL/TLS certificate file for {ControllerName}.
@@ -201,12 +220,6 @@ Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, 
 | 
 |
 
-| 
-| `controller_nginx_hsts_max_age` 
-| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {ControllerName}.
-| Optional
-| `63072000`
-
 |
 | `controller_percent_memory_capacity`
 | Memory allocation for {ControllerName}.
@@ -224,12 +237,6 @@ Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, 
 | Secret key value used by {ControllerName} to sign and encrypt data.
 | Optional
 |
-
-| 
-| `controller_uwsgi_listen_queue_size` 
-| Number of requests `uwsgi` will allow in the queue on {ControllerName} until `uwsgi_processes` can serve them.
-| Optional
-| `2048`
 
 // Michelle - commenting out postinstall vars.
 // | | `controller_postinstall` | Enable or disable the postinstall feature of the containerized installer. If set to `true`, then you also need to set `controller_license_file` and `controller_postinstall_dir`. Default = `false`
