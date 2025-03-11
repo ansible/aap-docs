@@ -51,9 +51,17 @@ Each element in the list is provided into `http nginx config` as a separate line
 
 Default = {}
 
+| | `pcp_firewall_zone` | The firewall zone where Performance Co-Pilot related firewall rules are applied. This controls which networks can access Performance Co-Pilot based on the zone's trust level. 
+
+Default = `public`
+
 | `redis_cluster_ip` | `redis_cluster_ip` | The IPv4 address used by the Redis cluster to identify each host in the cluster.
 
 Redis clusters cannot use hostnames or IPv6 addresses. When defining hosts in the `[redis]` group, use this variable to identify the IPv4 address if the default is not what you want. 
+
+| `redis_firewalld_zone` | `redis_firewall_zone` | The firewall zone where Redis related firewall rules are applied. This controls which networks can access Redis based on the zone's trust level.
+
+Default = `public`
 
 | `redis_mode` | `redis_mode` | The Redis mode to use for your {PlatformNameShort} installation.
 
