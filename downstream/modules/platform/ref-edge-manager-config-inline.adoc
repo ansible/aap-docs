@@ -1,0 +1,24 @@
+[id="edge-manager-config-inline"]
+
+= Configuration inline in the device specification
+
+You can specify configuration inline in a device specification.
+When you use the inline device specification, the {RedHatEdge} does not need to connect to external systems to fetch the configuration.
+
+The Inline Config Provider takes a list of file specifications, where each file specification takes the following parameters:
+
+|===
+|Parameter|Description
+|`Path`|The absolute path to the file in the file system of the device to write the content to.
+If a file already exists in the specified path, the file is overwritten.
+
+|`Content`|The UTF-8 or base64-encoded content of the file.
+
+|`ContentEncoding`|Defines how the contents are encoded. Must be either `plain` or `base64`. Default value is set to `plain`.
+
+|`Mode`|Optional. The permission mode of the file. You can specify the octal with a leading zero, for example `0644`, or as a decimal without a leading zero, for example `420`. The `setuid`, `setgid`, and `sticky` bits are supported. If not specified, the permission mode for files defaults to `0644`.
+
+|`User`|Optional. The owner of the file. Specified either as a name or numeric ID. Default value is set to `root`.
+
+|`Group`|Optional. The group of the file. Specified either as a name or numeric ID.
+|===
