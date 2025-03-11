@@ -9,7 +9,10 @@ The following diagram outlines the infrastructure topology that Red{nbsp}Hat has
 .Infrastructure topology diagram
 image::cont-b-env-a.png[Container enterprise topology diagram]
 
-Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
+Each VM has been tested with the following component requirements:
+
+.Virtual machine requirements
+include::snippets/cont-tested-vm-config.adoc[]
 
 .Infrastructure topology
 [options="header"]
@@ -35,19 +38,7 @@ include::snippets/redis-colocation-containerized.adoc[]
 Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
 
 .Tested system configurations
-[options="header"]
-|====
-| Type | Description 
-| Subscription 
-a| 
-* Valid {PlatformName} subscription
-* Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
-| Operating system | {RHEL} 9.2 or later
-| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
-| Ansible-core | Ansible-core version {CoreInstVers} or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
-| Database | {PostgresVers}
-|====
+include::snippets/cont-tested-system-config.adoc[]
 
 == Network ports
 

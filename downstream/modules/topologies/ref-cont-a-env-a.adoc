@@ -9,9 +9,17 @@ The following diagram outlines the infrastructure topology that Red{nbsp}Hat has
 .Infrastructure topology diagram
 image::cont-a-env-a.png[Container growth topology diagram]
 
-A single VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. Resources, such as storage, can be increased based on the needs of the deployment.
+A single VM has been tested with the following component requirements: 
 
-If performing a bundled installation with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+.Virtual machine requirements
+include::snippets/cont-tested-vm-config.adoc[]
+
+Resources, such as storage, can be increased based on the needs of the deployment.
+
+[NOTE]
+====
+If performing a bundled installation of the growth topology with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+====
 
 .Infrastructure topology
 [options="header"]
@@ -31,19 +39,8 @@ a|
 Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
 
 .Tested system configurations
-[options="header"]
-|====
-| Type | Description 
-| Subscription 
-a| 
-* Valid {PlatformName} subscription
-* Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
-| Operating system | {RHEL} 9.2 or later
-| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
-| Ansible-core | Ansible-core version {CoreInstVers} or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome
-| Database | {PostgresVers}
-|====
+include::snippets/cont-tested-system-config.adoc[]
+
 
 == Network ports
 
