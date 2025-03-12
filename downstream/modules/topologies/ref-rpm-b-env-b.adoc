@@ -9,6 +9,11 @@ The following diagram outlines the infrastructure topology that Red{nbsp}Hat has
 .Infrastructure topology diagram
 image::rpm-b-env-b.png[RPM mixed enterprise topology diagram]
 
+[NOTE]
+====
+Here, {ControllerName} and {HubName} are at 2.4x while the {EDAName} and {Gateway} components are at {PlatformVers}
+====
+
 Each VM has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
 
 .Infrastructure topology
@@ -68,13 +73,13 @@ a|
 | 5432 | TCP | PostgreSQL | {GatewayStart} | External database
 | 5432 | TCP | PostgreSQL | {HubNameStart} | External database
 | 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
-| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
-| 27199 | TCP | Receptor | Hop node | Execution node
 | 6379 | TCP | Redis | {EDAName} | Redis node
 | 6379 | TCP | Redis | {GatewayStart} | Redis node
-| 16379 | TCP | Redis | Redis node | Redis node
 | 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
-| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
+| 16379 | TCP | Redis | Redis node | Redis node
+| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
+| 27199 | TCP | Receptor | Hop node | Execution node
+//| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
 == Example mixed enterprise inventory file
