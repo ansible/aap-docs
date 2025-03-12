@@ -9,6 +9,11 @@ The following diagram outlines the infrastructure topology that Red{nbsp}Hat has
 .Infrastructure topology diagram
 image::rpm-a-env-b.png[RPM mixed growth topology diagram]
 
+[NOTE]
+====
+Here, {ControllerName} and {HubName} are at 2.4x while the {EDAName} and {Gateway} components are at {PlatformVers}
+====
+
 Each virtual machine (VM) has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 60 GB local disk, and 3000 IOPS. 
 
 .Infrastructure topology
@@ -60,11 +65,11 @@ a|
 | 5432 | TCP | PostgreSQL | {GatewayStart} | Database
 | 5432 | TCP | PostgreSQL | {HubNameStart} | Database
 | 5432 | TCP | PostgreSQL | {ControllerNameStart} | Database
-| 27199 | TCP | Receptor | {ControllerNameStart} | Execution node
 | 6379 | TCP | Redis | {EDAName} | Redis node
 | 6379 | TCP | Redis | {GatewayStart} | Redis node
 | 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
-| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
+| 27199 | TCP | Receptor | {ControllerNameStart} | Execution node
+//| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
 == Example mixed growth inventory file
