@@ -1,0 +1,40 @@
+[id="edge-manager-agent-service"]
+
+= {RedHatEdge} agent and service
+
+// The intro mentions ACM, confirm if different for AAP
+
+The {RedHatEdge} agent is a process running on each managed device that periodically communicates the {RedHatEdge} service on the ACM hub cluster.
+The agent is responsible for the following tasks:
+
+* Enrolling devices into the service
+* Periodically checking with the service for changes in the device specification, such as changes to the operating system, configuration, and applications
+* Applying any updates independently from the service
+* Reporting status of the device and the applications
+
+The {RedHatEdge} service is responsible for the following tasks:
+
+* Authenticating and authorizing users and agents
+* Enrolling devices
+* Managing device inventory
+* Reporting status from individual devices or fleets
+
+The service also communicates with a database that stores the device inventory and the target device configuration.
+When communicating with the service, the agent polls the service for changes in the configuration.
+If the agent detects that the current configuration deviates from the target configuration, the agent attempts to apply the changes to the device.
+
+When the agent receives a new target configuration from the service, the agent does the following tasks:
+
+. To avoid depending on network connectivity during the update, the agent downloads all required resources, such as the operating system image and application container images, over the network to disk.
+. The agent updates the operating system image by delegating to `bootc`.
+. The agent updates configuration files on the file system of the device by overlaying a set of files that the service sends to the device.
+. If necessary, the agent reboots into the new operating system. Otherwise, the agent signals system services and applications to reload the updated configuration.
+. The agent updates applications running on Podman or MicroShift.
+
+If the update fails or the system does not return online after rebooting, the agent automatically rolls back to the earlier operating system image and configuration.
+
+[NOTE]
+====
+You can keep fleet definitions in Git. 
+The {RedHatEdge} periodically syncs with the fleet definitions in the database.
+====
