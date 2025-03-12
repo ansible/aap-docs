@@ -2,193 +2,249 @@
 
 = {ControllerNameStart} variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-| `admin_email` | | The email address used for the admin user for {ControllerName}.
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-| `admin_password` | `controller_admin_password`| _Required_
+| `admin_email` 
+| `controller_admin_email`
+| Email address used by Django for the admin user for {ControllerName}.
+| Optional
+| `admin@example.com`
 
-{ControllerNameStart} admin password.
-
-Passwords must be enclosed in quotes when they are provided in plain text in the inventory file.
-
+| `admin_password` 
+| `controller_admin_password`
+| {ControllerNameStart} administrator password. +
 Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+| Required
+| 
 
-| `admin_username` | `controller_admin_user` | {ControllerNameStart} admin user.
+| `admin_username` 
+| `controller_admin_user` 
+| Username used to identify and create the administrator user in {ControllerName}.
+| Optional
+| `admin`
 
-Default = `admin`
+| `automationcontroller_client_max_body_size`
+| `controller_nginx_client_max_body_size` 
+| Maximum allowed size for data sent to {ControllerName} through NGINX.
+| Optional
+| `5m`
 
-| `automation_controller_main_url` | |  {ControllerNameStart} main URL.
+| `awx_pg_cert_auth` 
+| `controller_pg_cert_auth` 
+| Controls whether client certificate authentication is enabled or disabled on the {ControllerName} PostgreSQL database. +
+Set this variable to `true` to enable client certificate authentication.
+| Optional 
+| `false`
 
-| `awx_pg_cert_auth` | `controller_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
+| `controller_firewalld_zone`
+| `controller_firewall_zone`
+| The firewall zone where {ControllerName} related firewall rules are applied. This controls which networks can access {ControllerName} based on the zone's trust level.
+| Optional
+| `public`
 
-Default = `false`
+| `controller_nginx_tls_files_remote`
+|
+| Denote whether the web certificate sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| The value defined in `controller_tls_files_remote`.
 
-| `controller_firewalld_zone` | `controller_firewall_zone` | The firewall zone where {ControllerName} related firewall rules are applied. This controls which networks can access {ControllerName} based on the zone's trust level.
+| `controller_pgclient_tls_files_remote`
+|
+| Denote whether the PostgreSQL client certificate sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| The value defined in `controller_tls_files_remote`.
 
-Default = `public`
+| `controller_tls_files_remote` 
+| `controller_tls_remote` 
+| Denote whether the {ControllerName} provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional 
+| `false`
 
-| `controller_tls_files_remote` | `controller_tls_remote` | {ControllerNameStart} TLS remote files.
+| `nginx_disable_hsts` 
+| `controller_nginx_disable_hsts` 
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {ControllerName}. +
+Set this variable to `true` to disable HSTS.
+| Optional
+| `false`
 
-Default = `false`
+| `nginx_disable_https` 
+| `controller_nginx_disable_https` 
+| Controls whether HTTPS is enabled or disabled for {ControllerName}. +
+Set this variable to `true` to disable HTTPS.
+| Optional
+| `false`
 
-| `nginx_disable_hsts` | `controller_nginx_disable_hsts` | Disable NGINX HTTP Strict Transport Security (HSTS).
+| `nginx_hsts_max_age`
+| `controller_nginx_hsts_max_age` 
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {ControllerName}.
+| Optional
+| `63072000`
 
-Default = `false`
+| `nginx_http_port` 
+| `controller_nginx_http_port` 
+|  Port number that {ControllerName} listens on for HTTP requests.
+| Optional
+| RPM = `80` +
+Container = `8080`
 
-| `nginx_disable_https` | `controller_nginx_disable_https` | Disable NGINX HTTPS.
+| `nginx_https_port` 
+| `controller_nginx_https_port` 
+| Port number that {ControllerName} listens on for HTTPS requests.
+| Optional
+| RPM = `443` +
+Container = `8443`
 
-Default = `false`
+| `nginx_tls_protocols`
+| `controller_nginx_https_protocols` 
+| Protocols that {ControllerName} supports when handling HTTPS traffic.
+| Optional
+| RPM = `[TLSv1.2]` +
+Container = `[TLSv1.2, TLSv1.3]`
 
-| `nginx_hsts_max_age` | `controller_nginx_hsts_max_age` | This variable specifies how long, in seconds, the system must be considered as an _HTTP Strict Transport Security_ (HSTS) host. That is, how long HTTPS is used only for communication.
+| `nginx_user_headers` 
+| `controller_nginx_user_headers` 
+| List of additional NGINX headers to add to {ControllerName}'s NGINX configuration.
+| Optional
+| `[]`
 
-Default = `63072000` seconds, or two years.
+| `node_state` 
+| 
+| The status of a node or group of nodes. +
+Valid options include `active`, `deprovision` to remove a node from a cluster, or `iso_migrate` to migrate a legacy isolated node to an execution node.
+| Optional
+| `active`
 
-| `nginx_http_port` | `controller_nginx_http_port` | The NGINX HTTP server listens for inbound connections.
-
-RPM default = `80`
-
-Container default = `8080`
-
-| `nginx_https_port` | `controller_nginx_https_port` | The NGINX HTTPS server listens for secure connections.
-
-RPM Default = `443`
-
-Container default = `8443`
-
-| `nginx_user_headers` | `controller_nginx_user_headers` | List of NGINX headers for the {ControllerName} web server.
-
-Each element in the list is provided to the web server's NGINX configuration as a separate line. 
-
-Default = empty list
-
-| `node_state` | | _Optional_
-
-The status of a node or group of nodes.
-Valid options are `active`, `deprovision` to remove a node from a cluster, or `iso_migrate` to migrate a legacy isolated node to an execution node.
-
-Default = `active`
-
-| `node_type` | See `receptor_type` for the container equivalent variable. a| 
+| `node_type` 
+| See `receptor_type` for the container equivalent variable. a| 
 
 For the `[automationcontroller]` group the two options are:
 
 * `node_type=control` - The node only runs project and inventory updates, but not regular jobs.
-
 * `node_type=hybrid` - The node runs everything.
-
-Default for this group = `hybrid`.
 
 For the `[execution_nodes]` group the two options are:
 
 * `node_type=hop` - The node forwards jobs to an execution node.
 * `node_type=execution` - The node can run jobs.
+| Optional
+| For `[automationcontroller]` = `hybrid` +
+For `[execution_nodes]` = `execution`
 
-Default for this group = `execution`
+| `peers` 
+| See `receptor_peers` for the container equivalent variable. 
+| Used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established. +
+This variable can be a comma-separated list of hosts and groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
+| Optional 
+| 
 
-| `peers` | See `receptor_peers` for the container equivalent variable. | 
+| `pg_database` 
+| `controller_pg_database` 
+| Name of the PostgreSQL database used by {ControllerName}.
+| Optional
+| `awx`
 
-Used to indicate which nodes a specific host or group connects to. Wherever this variable is defined, an outbound connection to the specific host or group is established.
+| `pg_host` 
+| `controller_pg_host` 
+| Hostname of the PostgreSQL database used by {ControllerName}.
+| Required
+|
 
-The `peers` variable can be a comma-separated list of hosts and groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
-
-
-| `pg_database` | `controller_pg_database` | The name of the PostgreSQL database used by {ControllerName}.
-
-Default = `awx`
-
-| `pg_host` | `controller_pg_host` | _Required_
-
-The hostname of the PostgreSQL database used by {ControllerName}.
-
-Default = `127.0.0.1`
-
-| `pg_password` | `controller_pg_password` | Required if not using client certificate authentication.
-
-The password for the {ControllerName} PostgreSQL database.
-
+| `pg_password` 
+| `controller_pg_password` 
+| Password for the {ControllerName} PostgreSQL database user. +
 Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| Required if not using client certificate authentication.
+|
 
-| `pg_port` | `controller_pg_port` | Required if not using an internal database.
+| `pg_port` 
+| `controller_pg_port` 
+| Port number for the PostgreSQL database used by {ControllerName}.
+| Optional
+| `5432`
 
-The port number of the PostgreSQL database used by {ControllerName}.
-
-Default = `5432`
-
-| `pg_sslmode` | `controller_pg_sslmode` | Determines the level of encryption and authentication for client server connections.
-
+| `pg_sslmode` 
+| `controller_pg_sslmode` 
+| Controls the SSL/TLS mode to use when {ControllerName} connects to the PostgreSQL database. +
 Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
+| Optional
+| `prefer`
 
-Default = `prefer`
+| `pg_username` 
+| `controller_pg_username` 
+| Username for the {ControllerName} PostgreSQL database user.
+| Optional
+| `awx`
 
-| `pg_username` | `controller_pg_username` | The username for the {ControllerName} PostgreSQL database.
+| `pgclient_sslcert` 
+| `controller_pg_tls_cert` 
+| Path to the PostgreSQL SSL/TLS certificate file for {ControllerName}.
+| Required if using client certificate authentication.
+|
 
-Default = `awx`
+| `pgclient_sslkey` 
+| `controller_pg_tls_key` 
+| Path to the PostgreSQL SSL/TLS key file for {ControllerName}.
+| Required if using client certificate authentication.
+|
 
-| `pgclient_sslcert` | `controller_pg_tls_cert` | Required if using client certificate authentication.
+| `uwsgi_listen_queue_size`
+| `controller_uwsgi_listen_queue_size` 
+| Number of requests `uwsgi` allows in the queue on {ControllerName} until `uwsgi_processes` can serve them.
+| Optional
+| `2048`
 
-Path to the PostgreSQL SSL/TLS certificate file for {ControllerName}.
+| `web_server_ssl_cert` 
+| `controller_tls_cert` 
+| Path to the SSL/TLS certificate file for {ControllerName}.
+| Optional
+|
 
-| `pgclient_sslkey` | `controller_pg_tls_key` | Required if using client certificate authentication.
+| `web_server_ssl_key` 
+| `controller_tls_key` 
+| Path to the SSL/TLS key file for {ControllerName}.
+| Optional
+|
 
-Path to the PostgreSQL SSL/TLS key file for {ControllerName}.
+| 
+| `controller_event_workers` 
+| Number of event workers that handle job-related events inside {ControllerName}.
+| Optional
+| `4`
 
-| `web_server_ssl_cert` | `controller_tls_cert` | _Optional_
+| 
+| `controller_license_file` 
+| Path to the {ControllerName} license file. +
+// If you are defining this variable as part of the postinstall process (`controller_postinstall=true`), then you need to also set `controller_postinstall_dir`."
+| 
+|
 
-Path to the SSL/TLS certificate file for {ControllerName}.
+|
+| `controller_percent_memory_capacity`
+| Memory allocation for {ControllerName}.
+| Optional
+| `1.0` (allocates 100% of the total system memory to {ControllerName})
 
-| `web_server_ssl_key` | `controller_tls_key` | _Optional_
+| 
+| `controller_pg_socket` 
+| UNIX socket used by {ControllerName} to connect to the PostgreSQL database.
+| Optional
+|
 
-Path to the SSL/TLS key file for {ControllerName}.
+| 
+| `controller_secret_key` 
+| Secret key value used by {ControllerName} to sign and encrypt data.
+| Optional
+|
 
-| | `controller_event_workers` | {ControllerNameStart} event workers.
+// Michelle - commenting out postinstall vars.
+// | | `controller_postinstall` | Enable or disable the postinstall feature of the containerized installer. If set to `true`, then you also need to set `controller_license_file` and `controller_postinstall_dir`. Default = `false`
+// | | `controller_postinstall_dir` | The location of your {ControllerName} postinstall directory.
+// | | `controller_postinstall_async_delay` | Postinstall delay between retries. Default = `1`
+// | | `controller_postinstall_async_retries` | Postinstall number of tries to attempt. Default = `30`
+// | | `controller_postinstall_ignore_files` | {ControllerNameStart} ignore files. 
+// | | `controller_postinstall_repo_ref` | {ControllerNameStart} repository branch or tag. Default = `main`
+// | | `controller_postinstall_repo_url` | {ControllerNameStart} repository URL. 
 
-Default = `4`
-
-| | `controller_license_file` | The location of your {ControllerName} license file.
-
-For example:
-
-`controller_license_file=/path/to/license.zip`
-
-If you are defining this variable as part of the postinstall process (`controller_postinstall = true`), then you need to also set the `controller_postinstall_dir` variable.
-
-| | `controller_nginx_client_max_body_size` | NGINX maximum body size.
-
-Default = `5m`
-
-| | `controller_nginx_https_protocols` | NGINX HTTPS protocols.
-
-Default = `[TLSv1.2, TLSv1.3]`
-
-| | `controller_pg_socket` | PostgreSQL Controller UNIX socket.
-| | `controller_secret_key` | The secret key value used by {ControllerName} to sign and encrypt data, ensuring secure communication and data integrity between services.
-
-| | `controller_uwsgi_listen_queue_size` | {ControllerNameStart} uWSGI listen queue size.
-
-Default = `2048`
-
-| | `controller_postinstall` | Enable or disable the postinstall feature of the containerized installer.
-
-If set to `true`, then you also need to set `controller_license_file` and `controller_postinstall_dir`.
-
-Default = `false`
-
-| | `controller_postinstall_dir` | The location of your {ControllerName} postinstall directory.
-| | `controller_postinstall_async_delay` | Postinstall delay between retries. 
-
-Default = `1`
-
-| | `controller_postinstall_async_retries` | Postinstall number of tries to attempt. 
-
-Default = `30`
-
-| | `controller_postinstall_ignore_files` | {ControllerNameStart} ignore files. 
-| | `controller_postinstall_repo_ref` | {ControllerNameStart} repository branch or tag. 
-
-Default = `main`
-
-| | `controller_postinstall_repo_url` | {ControllerNameStart} repository URL. 
-
-|====
+|===
