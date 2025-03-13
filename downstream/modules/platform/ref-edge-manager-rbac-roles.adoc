@@ -1,0 +1,17 @@
+[id="edge-manager-rbac-roles"]
+
+= {RedHatEdge} RBAC roles
+
+The {RedHatEdge} has the following default roles and their permissions:
+
+|====
+|Roles|Permissions |Resources
+|`flightctl-admin` |All |All
+|`flightctl-viewer` | `get`, `list` |`devices`, `fleets`, `resourcesyncs`
+.3+|`flightctl-operator` | `get`, `list`, `create`, `delete`, `update`, `patch`|`devices`, `fleets`, `resourcesyncs`
+|`get` |`devices/console`
+|`get`, `list`|`repositories`, `fleets`, `templateversions`
+.3+|`flightctl-installer` |`get`, `list` |`enrollmentrequests`
+|`post` |`enrollmentrequests/approval`
+|`get`, `list`, `create` | `certificatesigningrequests`
+|====
