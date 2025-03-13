@@ -1,6 +1,6 @@
 :_mod-docs-content-type: PROCEDURE
 
-[id="installing-containerized-aap_{context}"]
+[id="installing-containerized-aap"]
 
 = Installing containerized {PlatformNameShort}
 
@@ -43,7 +43,32 @@ ansible-playbook -i inventory -e @vault.yml --ask-vault-pass -K -v  ansible.cont
 
 The installation of containerized {PlatformNameShort} begins.
 
+.Verification
+
+* After the installation completes, verify that you can access the platform UI which is available by default at the following URL:
+
+----
+https://<gateway_node>:443
+----
+
+Log in as the admin user with the credentials you created for `gateway_admin_username` and `gateway_admin_password`.
+
+The default ports and protocols used for {PlatformNameShort} are 80 (HTTP) and 443 (HTTPS). You can customize the ports with the following variables:
+
+----
+envoy_http_port=80
+envoy_https_port=443
+----
+
+If you want to disable HTTPS, set `envoy_disable_https` to `true`:
+
+----
+envoy_disable_https: true
+----
+
+
 [role="_additional-resources"]
 .Additional resources
 * For more information about privilege escalation, see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html[Understanding privilege escalation: become].
 * For more information about securing sensitive variables, see link:{URLHardening}/hardening-aap#ref-sensitive-variables-install-inventory_hardening-aap[Sensitive variables in the installation inventory] in _{TitleHardening}_.
+* For more information about post installation instructions see link:{LinkGettingStarted}
