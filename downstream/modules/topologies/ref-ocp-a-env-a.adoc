@@ -1,13 +1,13 @@
 [id="ocp-a-env-a"]
-= Operator growth topology
+= Operator {GrowthTopology}
 
-The growth topology is intended for organizations that are getting started with {PlatformNameShort} and do not require redundancy or higher compute for large volumes of automation. This topology allows for smaller footprint deployments.
+include::snippets/growth-topologies.adoc[]
 
 == Infrastructure topology
 The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
 .Infrastructure topology diagram
-image::ocp-a-env-a.png[Operator growth topology diagram]
+image::ocp-a-env-a.png[Operator {GrowthTopology} diagram]
 
 A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS.
 
@@ -85,9 +85,9 @@ Use the {PlatformNameShort} Custom Resource (CR) to configure resource allocatio
 
 By default, each component's deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU provided that the OpenShift worker node itself is not under node pressure.
 
-In the Operator growth topology, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying {OCPShort} node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
+In the Operator {GrowthTopology}, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying {OCPShort} node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator growth topology, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator {GrowthTopology}, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift.
 
 == Network ports
 
