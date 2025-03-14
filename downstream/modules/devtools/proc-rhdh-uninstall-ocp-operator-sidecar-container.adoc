@@ -1,0 +1,37 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-ocp-operator-sidecar-container_{context}"]
+= Uninstalling the sidecar container
+
+To remove the sidecar container for {ToolsName} from the developer-hub pod,
+you must modify the base ConfigMap for the {RHDH} deployment.
+
+.Procedure
+
+. In the OpenShift console, select the *Topology* view.
+. Click *More actions {MoreActionsIcon}* on the developer-hub instance and select *Edit backstage* to edit the base ConfigMap.
+. Select the *YAML* tab.
+. In the editing pane, remove the `containers` block for the sidecar container from the `spec.deployment.patch.spec.template.spec` block:
++
+----
+...
+spec:
+  deployment:
+    patch:
+      spec:
+        template:
+          spec:
+            containers:
+              - command:
+                  - adt
+                  - server
+                image: ghcr.io/ansible/community-ansible-dev-tools:latest
+                imagePullPolicy: always
+                ports:
+                  - containerPort:8000
+                    protocol: TCP
+                terminationMessagePolicy: file
+
+----
+. Click btn:[Save].
+
