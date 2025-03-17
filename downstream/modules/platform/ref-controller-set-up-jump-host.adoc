@@ -35,7 +35,7 @@ Host jumphost.example.com
 [literal, options="nowrap" subs="+attributes"]
 ----
 Host 192.0.* 
-    ProxyCommand ssh -W %h:%p jumphost.example.com
+   ...
 ----
 +
 * The `Host 192.0.*`` line indicates that all hosts in that subnet use the settings defined in that block. 
@@ -45,7 +45,7 @@ Specifically all hosts in that subnet are accessed using the `ProxyCommand` sett
 [literal, options="nowrap" subs="+attributes"]
 ----
 Host * !jumphost.example.com 
-    ProxyCommand ssh -W %h:%p jumphost.example.com
+    ...    
 ----
 
 [discrete]
