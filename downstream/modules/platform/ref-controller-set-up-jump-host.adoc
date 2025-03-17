@@ -1,29 +1,70 @@
 [id="ref-controller-set-up-jump-host"]
 
-= Set up a jump host to use with {ControllerName}
+= Configuring {ControllerName} to use jump hosts connecting to managed nodes
 
 Credentials supplied by {ControllerName} do not flow to the jump host through ProxyCommand. 
 They are only used for the end-node when the tunneled connection is set up.
 
-You can configure a fixed user/keyfile in the AWX user's SSH configuration in the ProxyCommand definition that sets up the connection through the jump host. 
+[discrete]
+== Configure a fixed user/keyfile in your SSH configuration file
 
-For example:
+You can configure a fixed user/keyfile in your SSH configuration file in the ProxyCommand definition that sets up the connection through the jump host. 
+
+.Prerequisites
+* Check whether all jump hosts are reachable from any node that establishes a SSH connection to the managed nodes, such as a Hybrid Controller or an Execution Node.
+
+.Procedure
+. Create a SSH configuration file `/var/lib/awx .ssh/config` on each node with the following details
 
 [literal, options="nowrap" subs="+attributes"]
 ----
-Host tampa
-Hostname 10.100.100.11
-IdentityFile [privatekeyfile]
-
-Host 10.100..
-Proxycommand ssh -W [jumphostuser]@%h:%p tampa
+Host jumphost.example.com
+    Hostname jumphost.example.com
+    User <jumphostuser>
+    Port <jumphostport>
+    IdentityFile ~.ssh/id_rsa
+    StrictHostKeyChecking no
+    ProxyCommand ssh -W %h:%p jumphost.example.com
 ----
+
+* The code specifies the configuration required to connect to the jum host 'jumphost.example.com'
+* {ControllerNameStart} establishes a SSH connection from each node to the managed nodes.
+* Example values `jumphost.example.com`, `jumphostuser`, `jumphostport` and `~/.ssh/id_rsa` must be changed according to your environment
+* Add a Host matching block to the already created SSH configuration file `/var/lib/awx/.ssh/config`` on the node, for example:
++ 
+[literal, options="nowrap" subs="+attributes"]
+----
+Host 192.0.* 
+    ProxyCommand ssh -W %h:%p jumphost.example.com
+----
++
+* The `Host 192.0.*`` line indicates that all hosts in that subnet use the settings defined in that block. 
+Specifically all hosts in that subnet are accessed using the `ProxyCommand` setting and connect through `jumphost.example.com`
+* If `Host *` is used to indicate that all hosts connect through the specified proxy, ensure that `jumphost.example.com` is excluded from that matching, for example:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+Host * !jumphost.example.com 
+    ProxyCommand ssh -W %h:%p jumphost.example.com
+----
+
+[discrete]
+=== Using the {PlatformName} UI
+
+.Procedure
+. On the navigation panel, select {MenuSetJob}
+. Click btn:[Edit] and add `/var/lib/awx .ssh:/home/runner/.ssh:0` to the *Paths to expose isolated jobs* field.
+. Click btn:[Save] to save your changes.
+
+[discrete]
+== Configuring jump hosts using Ansible Inventory variables
 
 You can also add a jump host to your {ControllerName} instance through Inventory variables. 
 
-These variables can be set at either the inventory,
-group, or host level. 
-To add this, navigate to your inventory and in the `variables` field of whichever level you choose, add the following
+These variables can be set at either the inventory, group, or host level. 
+Use this method if you want to control the use of jump hosts inside {ControllerName} using the inventory.
+
+* Navigate to your inventory and in the `variables` field of whichever level you choose, add the following
 variables:
 
 [literal, options="nowrap" subs="+attributes"]
