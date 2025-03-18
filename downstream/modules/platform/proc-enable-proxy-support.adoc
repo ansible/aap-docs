@@ -1,15 +1,16 @@
-
 [id="proc-enable-proxy-support_{context}"]
 
-= Enable proxy support
+= Enabling proxy support through a load balancer
 //FYI - In 2.5 EA, the System menu is specific to controller so do not change to AAP.
-To provide proxy server support, {ControllerName} handles proxied requests (such as ALB, NLB , HAProxy, Squid, Nginx and tinyproxy in front of {ControllerName}) via the *REMOTE_HOST_HEADERS* list variable in the {ControllerName} settings. By default, *REMOTE_HOST_HEADERS* is set to `["REMOTE_ADDR", "REMOTE_HOST"]`.
+A forward proxy deals with client traffic, reggulating and securing it.
+To provide proxy server support, {ControllerName} handles proxied requests (such as ALB, NLB , HAProxy, Squid, Nginx and tinyproxy in front of {ControllerName}) using the *REMOTE_HOST_HEADERS* list variable in the {ControllerName} settings. By default, *REMOTE_HOST_HEADERS* is set to `["REMOTE_ADDR", "REMOTE_HOST"]`.
 
 To enable proxy server support, edit the *REMOTE_HOST_HEADERS* field in the settings page for your {ControllerName}:
 
 .Procedure
 
 . From the navigation panel, select {MenuSetSystem}.
+. Click btn:[Edit]
 . In the *Remote Host Headers* field, enter the following values:
 +
 ----
@@ -19,5 +20,6 @@ To enable proxy server support, edit the *REMOTE_HOST_HEADERS* field in the sett
   "REMOTE_HOST"
 ]
 ----
+. Click btn:[Save] to save  your settings.
 
 {ControllerNameStart} determines the remote host’s IP address by searching through the list of headers in *Remote Host Headers* until the first IP address is located.
