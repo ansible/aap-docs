@@ -1,0 +1,20 @@
+[id="edge-manager-config-http"]
+
+= Configuration from an HTTP server
+
+The {RedHatEdge} can query an HTTP server for configuration.
+The HTTP server can serve static or dynamically generated configuration for a device.
+
+The HTTP Config Provider takes the following parameters:
+
+|===
+|Parameter|Description
+|`Repository`|The name of a `Repository` resource defined in the {RedHatEdge}.
+
+|`Suffix`|The suffix to append to the base URL defined in the `Repository` resource. The suffix can include path and query parameters, for example `/path/to/endpoint?query=param`.
+
+|`FilePath`|The absolute path to the file in the file system of the device to write the response of the HTTP server to.
+|===
+
+The `Repository` resource specifies the HTTP server for the {RedHatEdge} to connect to, and the protocol and access credentials to use.
+You must set up the repository needs once, and then you can use the repository to configure many devices or device fleets.
