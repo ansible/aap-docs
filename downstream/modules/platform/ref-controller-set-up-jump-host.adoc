@@ -14,7 +14,7 @@ You can configure a fixed user/keyfile in your SSH configuration file in the Pro
 * Check whether all jump hosts are reachable from any node that establishes a SSH connection to the managed nodes, such as a Hybrid Controller or an Execution Node.
 
 .Procedure
-. Create a SSH configuration file `/var/lib/awx .ssh/config` on each node with the following details
+. Create an SSH configuration file `/var/lib/awx .ssh/config` on each node with the following details
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -27,8 +27,8 @@ Host jumphost.example.com
     ProxyCommand ssh -W %h:%p jumphost.example.com
 ----
 
-* The code specifies the configuration required to connect to the jum host 'jumphost.example.com'
-* {ControllerNameStart} establishes a SSH connection from each node to the managed nodes.
+* The code specifies the configuration required to connect to the jump host 'jumphost.example.com'
+* {ControllerNameStart} establishes an SSH connection from each node to the managed nodes.
 * Example values `jumphost.example.com`, `jumphostuser`, `jumphostport` and `~/.ssh/id_rsa` must be changed according to your environment
 * Add a Host matching block to the already created SSH configuration file `/var/lib/awx/.ssh/config`` on the node, for example:
 + 
