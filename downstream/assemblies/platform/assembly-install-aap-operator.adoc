@@ -16,6 +16,10 @@ ifdef::context[:parent-context: {context}]
 ** For information about the AWS Elastic Block Store (EBS) or to use the `aws-ebs` storage class, see link:{BaseURL}/openshift_container_platform/4.10/html-single/storage/index#persistent-storage-aws[Persistent storage using AWS Elastic Block Store].
 ** To use multi-attach `ReadWriteMany` access mode for AWS EBS, see link:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html[Attaching a volume to multiple instances with Amazon EBS Multi-Attach].
 
+[IMPORTANT]
+====
+You cannot deploy {PlatformNameShort} in the default namespace on your OpenShift Cluster. The `aap` namespace is recommended. You can use a custom namespace, but it should run only {PlatformNameShort}.
+====
 
 include::platform/proc-install-aap-operator.adoc[leveloffset=+2]
 
