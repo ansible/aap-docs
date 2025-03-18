@@ -1,0 +1,21 @@
+[id="assembly-edge-manager-device-enroll"]
+
+= Device enrollment
+
+You must enroll devices to a {RedHatEdge} service before you can start managing them. 
+The {RedHatEdge} agent that runs on a device handles the device enrollment.
+
+When the agent starts on a device, the agent searches for the configuration in the `/etc/flightctl/config.yaml` file. 
+The file defines the following configurations:
+
+* The enrollment endpoint, which is the {RedHatEdge} service that the agent connects to for enrollment.
+* The enrollment certificate, which is the X.509 client certificate and key that the agent only uses to securely request enrollment from the {RedHatEdge} service.
+* *Optional*: Any additional agent configuration.
+
+The agent starts the enrollment process by searching for the enrollment endpoint, the {RedHatEdge} service, that is defined in the configuration file. 
+After establishing a secure, mTLS-protected network connection with the service, the agent submits an enrollment request to the service.
+
+The request includes a description of hardware and operating system of the device, a X.509 certificate signing request, and the cryptographic identity of the device. The enrollment request must be approved by an authorized user. 
+After the request is approved, the device becomes trusted and managed by the {RedHatEdge} service.
+
+include::platform/con-edge-manager-enroll-meth.adoc[leveloffset=+1]
