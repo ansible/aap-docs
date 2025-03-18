@@ -1,0 +1,25 @@
+[id="edge-manager-config-git-repo"]
+
+= Configuration from a Git repository
+
+You can store device configuration in a Git repository such as GitHub or GitLab.
+You can then add a Git Config Provider so that the {RedHatEdge} synchronizes the configuration from the repository to the file system of the device.
+
+The Git Config Provider takes the following parameters:
+
+|===
+|Parameter|Description
+|`Repository`|The name of a `Repository` resource defined in the {RedHatEdge}.
+
+|`TargetRevision`|The branch, tag, or commit of the repository to checkout.
+
+|`Path`|The absolute path to the directory in the repository from which files and subdirectories are synchronized to the file system of the device.
+The `Path` directory corresponds to the root directory (`/`) on the device, unless you specify the `MountPath` parameter.
+
+|`MountPath`|Optional. The absolute path to the directory in the file system of the device to write the content of the repository to. 
+By default, the value is the file system root (`/`).
+|===
+
+The `Repository` resource defines the Git repository, the protocol, and the access credentials that the {RedHatEdge} must use.
+You only need to set up the repository once.
+After setting up, you can use the repository to configure individual devices or device fleets.

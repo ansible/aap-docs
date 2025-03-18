@@ -1,0 +1,23 @@
+[id="edge-manager-k8s-cluster"]
+
+= Secrets from a Kubernetes cluster
+
+The {RedHatEdge} can query only the Kubernetes cluster that the {RedHatEdge} is running on for a Kubernetes secret.
+You can write the content of that secret to a path on the device file system.
+
+The Kubernetes Secret Provider takes the following parameters:
+
+|===
+|Parameter|Description
+|`Name`|The name of the secret.
+
+|`NameSpace`|The namespace of the secret.
+
+|`MountPath`|The directory in the file system of the device to write the secret contents to.
+|===
+
+[NOTE]
+====
+The {RedHatEdge} needs permission to access secrets in the defined namespace.
+For example, creating a `ClusterRole` and `ClusterRoleBinding` allows the `flightctl-worker` service account to get and list secrets in that namespace.
+====
