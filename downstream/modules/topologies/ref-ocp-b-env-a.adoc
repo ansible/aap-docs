@@ -1,14 +1,14 @@
 [id="ocp-b-env-a"]
-= Operator enterprise topology
+= Operator {EnterpriseTopology}
 
-The enterprise topology is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation.
+include::snippets/enterprise-topologies.adoc[]
 
 == Infrastructure topology
 
 The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
 
 .Infrastructure topology diagram
-image::ocp-b-env-a.png[Operator enterprise topology diagram]
+image::ocp-b-env-a.png[Operator {EnterpriseTopology} diagram]
 
 The following infrastructure topology describes an OpenShift Cluster with 3 primary nodes and 2 worker nodes.
 
@@ -92,9 +92,9 @@ Use the {PlatformNameShort} custom resource to configure resource allocation for
 
 By default, each component's deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU provided that the OpenShift worker node itself is not under node pressure.
 
-In the Operator enterprise topology, {PlatformNameShort} is deployed on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster with 2 t3.xlarge worker nodes spread across 2 AZs within a single AWS Region. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the ROSA HCP cluster. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying HCP worker node that runs the pod. It does not have access to the CPU or memory resources of the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run.
+In the Operator {EnterpriseTopology}, {PlatformNameShort} is deployed on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster with 2 t3.xlarge worker nodes spread across 2 AZs within a single AWS Region. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the ROSA HCP cluster. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying HCP worker node that runs the pod. It does not have access to the CPU or memory resources of the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run.
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator enterprise topology, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, PostgreSQL, and object storage for {HubName} are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services and scalable storage.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator {EnterpriseTopology}, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, PostgreSQL, and object storage for {HubName} are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services and scalable storage.
 
 
 == Network ports
