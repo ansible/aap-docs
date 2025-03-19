@@ -1,0 +1,67 @@
+[id="proc-operator-upgrade-external-db-gateway"]
+
+= Upgrading an external database for {Gateway} on {OperatorPlatformName}
+
+[role="_abstract"]
+
+To upgrade from {PlatformNameShort} 2.4 to 2.5 with an external database, you must scale down your Operator deployment, upgrade your PostgreSQL, then scale your deployment back up. 
+
+.Prerequisites
+
+* A 2.4 {ControllerName} and {HubName} deployment with an external PostgreSQL 13 database
+
+.Procedure
+
+. Scale down your deployments in their respective namespaces using:
++
+`oc scale deployment --replicas=0 -n <component-namespace> <component-deployment>`
++
+.. {ControllerNameStart}:
+... `automation-controller-operator-controller-manager`
+... `<controller-name>-controller-task`
+... `<controller-name>-controller-web`
+.. {HubNameStart}:
+... `automation-hub-operator-controller-manager`
+... `<hub-name>-hub-api`
+... `<hub-name>-hub-content`
+... `<hub-name>-hub-redis`
+... `<hub-name>-hub-worker`
+.. The remaining operators:
+... `ansible-lightspeed-operator-controller-manager`
+... `eda-server-operator-controller-manager`
+... `resource-operator-controller-manager`
+. Upgrade your PostgreSQL 13 to {PostgresVers}.
+. Scale your deployments back up using:
++
+`oc scale deployment --replicas=1 -n <component-namespace> <component-deployment>`
++
+. Log in to {OCP}.
+. Navigate to menu:Operators[Installed Operators].
+. Click the {MoreActionsIcon} icon next to your deployment and then click btn:[Edit Subscription].
+. From the *Details* tab, select btn:[Update Channel].
+. Select *stable-2.5* as the channel and click btn:[Save].
+. Deploy {PlatformNameShort} {PlatformVers} using the following custom resource (CR):
++
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: aap
+spec:
+
+  database:
+    database_secret: postgres-config-gateway
+
+  controller:
+    name: existing-controller
+
+  eda:
+    disabled: true
+
+  hub:
+    name: existing-hub
+----
+
+.Verification 
+
+To verify your upgrade was successful, go to your users, collection, job history or similar and confirm that they are on the new {PlatformVers} instance and in the new {PostgresVers} databases. 
