@@ -1,4 +1,3 @@
-
 [id="proc-configuring-known-proxies_{context}"]
 
 = Configuring known proxies
@@ -10,7 +9,7 @@ To configure a list of known proxies for your {ControllerName}, add the proxy IP
 .Procedure
 //[ddacosta] The Settings > System configurations are for controller only, so don't change ControllerName to PlatformName.
 . From the navigation panel, select {MenuSetSystem}.
-. In the *Proxy IP Allowed List* field, enter IP addresses that are allowed to connect to your {ControllerName}, following the syntax in the example below:
+. In the *Proxy IP Allowed List* field, enter IP addresses that are permitted to connect to your {ControllerName}, using the syntax in the following example:
 +
 .Example *Proxy IP Allowed List* entry
 ----
@@ -22,7 +21,7 @@ To configure a list of known proxies for your {ControllerName}, add the proxy IP
 +
 [IMPORTANT]
 ====
-* *Proxy IP Allowed List* requires proxies in the list are properly sanitizing header input and correctly setting an ``X-Forwarded-For`` value equal to the real source IP of the client. {ControllerNameStart} can rely on the IP addresses and hostnames in *Proxy IP Allowed List* to provide non-spoofed values for `X-Forwarded-For`.`
+* *Proxy IP Allowed List* requires proxies in the list are properly sanitizing header input and correctly setting an `X-Forwarded-For` value equal to the real source IP of the client. {ControllerNameStart} can rely on the IP addresses and hostnames in *Proxy IP Allowed List* to provide non-spoofed values for `X-Forwarded-For`.
 * Do not configure `HTTP_X_FORWARDED_FOR` as an item in *Remote Host Headers* unless *all* of the following conditions are satisfied:
 ** You are using a proxied environment with ssl termination;
 ** The proxy provides sanitization or validation of the `X-Forwarded-For` header to prevent client spoofing;
