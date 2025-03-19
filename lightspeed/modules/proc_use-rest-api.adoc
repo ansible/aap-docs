@@ -1,0 +1,53 @@
+:_content-type: PROCEDURE
+
+[id="use-rest-api_{context}"]
+
+= Using the Ansible Lightspeed REST API 
+
+As the platform administrator, you can configure and use the Ansible Lightspeed REST API to build a custom automation development and tooling workflow outside of VS Code. For information about the Ansible Lightspeed REST API, see link:https://developers.redhat.com/api-catalog/api/ansible-lightspeed[Ansible AI Connect. 1.0.0 (v1)] in the API catalog.
+ 
+[NOTE]
+====
+The Ansible Lightspeed REST API is available for {PlatformNameShort} 2.5 and later. 
+====
+
+.Prerequisite
+
+* Ensure that you are using the {PlatformName} operator patch version 2.5-20250305.9 and {LightspeedShortName} operator version 2.5.250225.
+
+.Procedure
+
+. Select the platform user for whom you want to grant REST API access. 
++
+You can select an existing user or create a platform user in the {PlatformName}. For the procedure, see the link:{URLGettingStarted}/assembly-gs-platform-admin#proc-gs-platform-admin-create-user[Creating a user] section of _{TitleGettingStarted}_.
+
+. Verify that you can log in to the Ansible Lightspeed portal for on-premise deployment (`\https://<lightspeed_route>/`) as the platform user you selected or created, and then log out.
+
+. Create a token for the platform user:
+.. Log in to the Ansible Lightspeed portal for on-premise deployment (`\https://<lightspeed_route>/admin`) as an administrator by using the following credentials:
++
+* Username: *admin*
+* Password: The secret that is named as `<lightspeed-custom-resource-name>-admin-password` in the {OCP} cluster namespace where {LightspeedShortName} is deployed. 
+
+.. On the Django administration window, select *Users* from the Users area. A list of users is displayed.
+.. Verify that the platform user is listed in the *Users* list.
+.. From the Django Oauth toolkit area, select menu:Access tokens[Add].
+.. Provide the following information and click *Save*:
+
+* *User*: Use the magnifying glass icon to search and select the newly-created or existing user for whom you want to grant API access.
+* *Token*: Specify a token for the user. Copy this token for later use.
+* *Id token*: Select the token ID. 
+* *Application*: Select *Ansible Lightspeed for VS Code*. 
+* *Expires*: Select the date and time when you want the token to expire.  
+* *Scope*: Specify the scope as *read write*. 
++
+An access token is created for the user.
+
+.. Log out from the Ansible Lightspeed portal for on-premise deployment.
+
+. Make a direct call to the Ansible Lightspeed REST API by specifying the newly-created token in the authorization header:
++
+----
+curl -H "Authorization: Bearer <token>" 
+https://<lightspeed_route>/api/v1/me/
+----
