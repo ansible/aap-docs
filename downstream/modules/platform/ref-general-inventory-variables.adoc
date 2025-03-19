@@ -142,6 +142,50 @@ Default = `ansible-automation-platform-25`
 
 Default = `rhel8`
 
+| `use_archive_compression` | | Controls at the global level whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
+
+Default = `true`
+
+This functionality can be controlled at the component level using the `<componentName>_use_archive_compression` variable. 
+
+| `<componentName>_use_archive_compression` | a| Enables or disables archive compression on a component level by specifying the component in `<componentName>`.  
+
+For example:
+
+* `automationgateway_use_archive_compression=true`
+
+* `automationcontroller_use_archive_compression=true`
+
+* `automationhub_use_archive_compression=true`
+
+* `automationedacontroller_use_archive_compression=true`
+
+Default = `true`
+
+This functionality can be controlled at the global level using the `use_archive_compression` variable.
+
+| `use_db_compression` | | Controls at the global level whether the database-related backup files will be compressed before being sent to the host to run the backup operation. 
+
+Default = `true`
+
+This functionality can be controlled at the component level using the `<componentName>_use_db_compression` variable. 
+
+| `<componentName>_use_db_compression` | a| Enables or disables archive compression on a database level by specifying the component in `<componentName>`.  
+
+For example:
+
+* `automationgateway_use_db_compression=true`
+
+* `automationcontroller_use_db_compression=true`
+
+* `automationhub_use_db_compression=true`
+
+* `automationedacontroller_use_db_compression=true`
+
+Default = `true`
+
+This functionality can be controlled at the global level using the `use_db_compression` variable.
+
 |====
 
 
