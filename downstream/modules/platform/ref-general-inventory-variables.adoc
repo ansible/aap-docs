@@ -142,11 +142,11 @@ Default = `ansible-automation-platform-25`
 
 Default = `rhel8`
 
-| `use_archive_compression` | | Controls whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation on a global level. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
+| `use_archive_compression` | | Controls at the global level whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
 
 Default = `true`
 
-This functionality can be controlled on a component level using the variable `<componentName>_use_archive_compression`. 
+This functionality can be controlled at the component level using the `<componentName>_use_archive_compression` variable. 
 
 | `<componentName>_use_archive_compression` | a| Enables or disables archive compression on a component level by specifying the component in `<componentName>`.  
 
@@ -162,13 +162,13 @@ For example:
 
 Default = `true`
 
-This functionality can be controlled on a global level using the variable `use_archive_compression`.
+This functionality can be controlled at the global level using the `use_archive_compression` variable.
 
-| `use_db_compression` | | Controls whether the database-related backup files will be compressed before being sent to the host to run the backup operation on a global level. 
+| `use_db_compression` | | Controls at the global level whether the database-related backup files will be compressed before being sent to the host to run the backup operation. 
 
 Default = `true`
 
-This functionality can be controlled on a component level using the variable `<componentName>_use_db_compression`. 
+This functionality can be controlled at the component level using the `<componentName>_use_db_compression` variable. 
 
 | `<componentName>_use_db_compression` | a| Enables or disables archive compression on a database level by specifying the component in `<componentName>`.  
 
@@ -184,7 +184,7 @@ For example:
 
 Default = `true`
 
-This functionality can be controlled on a global level using the variable `use_db_compression`.
+This functionality can be controlled at the global level using the `use_db_compression` variable.
 
 |====
 
