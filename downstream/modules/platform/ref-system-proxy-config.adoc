@@ -1,0 +1,15 @@
+[id="ref-system-proxy-config"]
+
+= System proxy configuration
+The outbound proxy is configured on the system level for all the nodes in the control plane. 
+
+The following environment variables must be set:
+----
+http_proxy=“http://external-proxy_0:3128”
+https_proxy=“http://external-proxy_0:3128”
+no_proxy=“localhost,127.0.0.0/8,10.0.0.0/8”
+----
+You can also add those variables to the `/etc/environment` file to make them permanent. 
+
+The installation program ensures that all external communication during the installation goes through the proxy. 
+For containerized installation, those variables ensure that the podman uses the egress proxy. 
