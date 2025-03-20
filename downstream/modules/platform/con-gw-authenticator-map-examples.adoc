@@ -4,12 +4,58 @@
 
 = Authenticator map examples
 
-* Make this user a superuser if they have an attribute called `aap_superuser` with a value of _True_.
-* Add this user to a team if they have the group `cn=Administrators,ou=AAP,ou=example,o=com` or `cn=Operators,ou=AAP,ou=example,o=com`. 
-* Never allow access to the system if the user has an attribute called `disabled` with a value of _True_, _Yes_ or _Until Further Notice_.
+Use the following examples to explore the different conditions, like groups and attribute values you can implement to control user access to the platform. 
 
-Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for “Never allow access to the system if the user has an attribute called disabled with a value of _True_, _Yes_ or _Until Further Notice_.
+.Add users to an organization based on an attribute
+In this example, you will add a user to the *Networking* organization if they have an `Organization` attribute with the value of `Networking`:
 
-You can add another rule with a higher order, such as, “Allow access to the system for a `disabled` user if they are in the group `Emergency Contacts`.”
+image::am-org-mapping-full-annotation.png[Add users to an organization mapping example fully annotated with callout numbers that correlate with the following list that describes the function of each field]
 
-The first rule prevents the disabled user from accessing the system, but the second rule alters that decision to grant access to the system for the disabled user if they are in the `Emergency Contacts` group.
+. The *Organization* title of the page indicates that you are configuring settings permissions on an organization.
+. `Network Organization` is entered in this field and is the unique, descriptive name for this map configuration.
+. *Attributes* is selected from the *Trigger* list to configure authentication based on an attribute from the source system, which in this example is `Organization`.
+. The operation is defined as `or` meaning that at least one condition must be true for authentication to succeed. 
+. The *Attribute* coming from the source system is Organization.
+. The *Comparison* value is set to `matches` which means that when a user has the attribute *Value* of `Networking`, they are added to the *Networking* organization.
+. The attribute *Value* coming from the source system is `Networking`.
+. The name of the *Organization* to which you are adding members is `Networking`.
+. Users are added to the *Networking* organization with the `Organization Member` role.
+
+.Add users to a team based on the users group
+In this example, you will add user to the `Apple` team if they have either of the following  groups:
+
+-----
+cn=Administrators,ou=AAP,ou=example,o=com
+-----
+
+or
+
+-----
+cn=Operators,ou=AAP,ou=example,co=com
+-----
+
+image::am-apple-team-map-example.png[Add user to a team mapping example]
+
+.Do not escalate privileges
+
+In this example, you never escalate users to a superuser. But note, this rule does not revoke a user’s superuser permission because the revoke option is not set. 
+
+image::am-do-not-escalate-privileges.png[Do not escalate privileges mapping example]
+
+.Escalate privileges based on a user having a group
+
+In this example, you escalate user privileges to superuser if they belong to the following group:
+
+-----
+cn=Administrators,ou=AAP
+-----
+
+image::am-escalate-privileges.png[Escalate privileges mapping example]
+
+.Using mapping order to create exceptions
+
+Since maps are executed in order, it is possible to create exceptions. Expanding on the previous example for __Do not escalate privileges__, you can add another rule with a higher order, such as, __Escalate privileges__. 
+
+The first rule (__Do not escalate privileges__) prevents any user from being escalated to a superuser, but the second rule (__Escalate privileges__) alters that decision to grant superuser privileges to a user if they are in the `Administrators` group.
+
+image::am-mapping-order.png[Mapping order example]
