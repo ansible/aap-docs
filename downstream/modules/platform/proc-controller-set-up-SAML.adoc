@@ -29,6 +29,9 @@ $ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days
 . Click btn:[Create authentication].
 . Select *SAML* from the *Authentication type* list and click btn:[Next].
 . Enter a *Name* for this SAML configuration. 
+
+include::snippets/snip-gw-authentication-auto-migrate.adoc[]
+
 . Enter the application-defined unique identifier used as the audience of the SAML service provider configuration in the *SAML Service Provider Entity ID* field. This is usually the base URL of your service provider, but the actual value depends on the Entity ID expected by your IdP.
 . Include the certificate content in the *SAML Service Provider Public Certificate* field. This information is contained in the cert.pem you created as a prerequisite and must include the `—–BEGIN CERTIFICATE—–` and `—–END CERTIFICATE—–`.
 . Include the private key content in the *SAML Service Provider Private Key* field. This information is contained in the key.pem you created as a prerequisite and must include the `—–BEGIN PRIVATE KEY—–` and `—–END PRIVATE KEY—–`.
