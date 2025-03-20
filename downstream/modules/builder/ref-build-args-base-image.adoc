@@ -1,6 +1,6 @@
 [id="ref-build-args-base-image"]
 
-= Build args and base image
+= Build args
 
 The `build_arg_defaults` section of the definition file is a dictionary whose keys can provide default values for arguments to {Builder}. See the following table for a list of values that can be used in `build_arg_defaults`:
 
@@ -18,4 +18,13 @@ The `build_arg_defaults` section of the definition file is a dictionary whose ke
 
 The values given inside `build_arg_defaults` will be hard-coded into the `Containerfile`, so these values will persist if `podman build` is called manually.
 
+// ariordan TODO
+// You should add a section explaining how this is done for advanced needs, i.e. call ansible-builder create -> customize Containerfile -> call podman build. 
+// I would add a note that it's generally easier (especially in a pipeline context) to first customize the base image into a custom base image using podman, and then call ansible-builder on this custom image.
+
 NOTE: If the same variable is specified in the CLI `--build-arg` flag, the CLI value will take higher precedence.
+
+// ariordan TODO
+// Wouldn't a note that similar files contained in collections will be considered recursively make sense at this stage?
+// It would be interesting to document (I didn't try) what happens if different collections have conflicting dependencies (e.g. in terms of versions) between themselves or with the base dependencies.
+
