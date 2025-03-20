@@ -4,9 +4,8 @@
 
 = Understanding authenticator mapping
 
-Authentication:: validates a user’s identity, typically through a username and password or a trust system.
-
-Authorization:: determines what an authenticated user can do once they are authenticated. 
+Authentication:: Validates a user’s identity, typically through a username and password or a trust system.
+Authorization:: Determines what an authenticated user can do once they are authenticated. 
 
 In {PlatformNameShort}, authenticators manage authentication, validating users and returning details such as their username, first name, email, and group memberships (for example, LDAP groups). Authorization comes from the authenticator’s associated maps.
 
@@ -88,7 +87,6 @@ In summary, authenticators validate users and delegate system authorization to t
 By default, authenticator maps return either *ALLOW* or *SKIPPED*.
 
 ALLOW:: Means that a match is detected and the platform should grant  the user access to  the corresponding role or permission (such as, superuser, or team member).
-
 SKIPPED:: Means that the user did not match the trigger in the map and, the platform skips processing this map and continues to check the remaining maps. This is useful if you want to grant users additional permissions in the system without having to change the authenticator maps.
 
 However, when the *Revoke* option is selected, *SKIPPED* becomes *DENY* and users who do not meet the required trigger criteria are denied access to the corresponding role or permission. This ensures that only users with matching trigger conditions are granted access.
