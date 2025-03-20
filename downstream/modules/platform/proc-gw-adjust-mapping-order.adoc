@@ -10,6 +10,17 @@ For example, if the first authenticator map is of type `is_superuser` and the tr
 
 And, if the second map is of type `is_superuser` and the trigger is based on the user having a specific group, any user logging in would initially be denied the `is_superuser` permission. However, any user with the specified group would subsequently be granted the `is_superuser` permission by the second rule. 
 
+The order of rules is important beyond whether you want to process organizations, teams or roles first. They can also be used to refine access and careful consideration is needed to avoid login issues. 
+
+For example:
+
+* Authenticator map A denies all users access to the system
+* Authenticator map B allows the user `john` access to the system
+
+When the mapping order is set to A, B; the first map denies access for all users, including `john`. The second map subsequently allows `john` access to the system and the result is that `john` is granted access and is able to log in to the platform.
+
+However, when the mapping order is changed to B, A; the first map allows `john` access to the system. The second map subsequently denies all users access to the system (including `john`) and the result is that `john` is denied access and is unable to log in to the platform.
+
 .Procedure
 
 . Adjust the mapping order by dragging and dropping the mappings up or down in the list using the draggable icon.
