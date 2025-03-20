@@ -1,0 +1,33 @@
+[id="edge-manager-device-selection"]
+
+= Device selection into a fleet
+
+By default, devices are not assigned to a fleet.
+Instead, each fleet uses a selector that defines which labels a device must have to be added to the fleet.
+
+To understand how to use labels in a fleet, see the following example.
+
+The following list shows point-of-sales terminal devices and their labels:
+
+|===
+|Device |Labels
+|A |`type: pos-terminal`, `region: east`, `stage: production`
+|B |`type: pos-terminal`, `region: east`, `stage: development`
+|C |`type: pos-terminal`, `region: west`, `stage: production`
+|D |`type: pos-terminal`, `region: west`, `stage: development`
+|===
+
+If all point-of-sale terminals use the same configuration and are managed by the same operations team, you can define a single fleet called `pos-terminals` with the `type=pos-terminal` label selector.
+Then, the fleet contains devices A, B, C, and D.
+
+However, you might want to create separate fleets for the different organizations for development or production.
+You can define a fleet for development with the `type=pos-terminal, stage=development` label selector, which selects devices C and D.
+Then, you can define another fleet for production with the `type=pos-terminal, stage=production` label selector.
+By using the correct label selectors, you can manage both fleets independently.
+
+[IMPORTANT]
+====
+You must define selectors in a way that two fleets do not select the same device.
+For example, if one fleet selects `region=east`, and another fleet selects `stage=production`, both fleets try to select device A.
+If two fleets try to select the same device, the {RedHatEdge} keeps the device in the currently assigned fleet, if any, and sets the `OverlappingSelectors` condition on the affected fleets to `true`.
+====
