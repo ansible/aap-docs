@@ -1,8 +1,8 @@
 [id="proc-controller-github-enterprise-org-settings"]
 
-= GitHub Enterprise Organization settings
+= Configuring GitHub enterprise organization authentication
 
-To set up social authentication for a GitHub Enterprise Organization, you must obtain a GitHub Enterprise Organization URL, an Organization API URL, an Organization OAuth2 key and secret for a web application.
+To set up social authentication for a GitHub enterprise organization, you must obtain a GitHub enterprise organization URL, an Organization API URL, an Organization OAuth2 key and secret for a web application.
 
 To obtain the URLs, refer to the link:https://docs.github.com/en/enterprise-server@3.1/rest/reference/enterprise-admin[GitHub Enterprise administration documentation].
 
@@ -15,6 +15,9 @@ Each key and secret must belong to a unique application and cannot be shared or 
 . Click btn:[Create authentication].
 . Select *GitHub enterprise organization* from the *Authentication type* list and click btn:[Next].
 . Enter a *Name* for this authentication configuration.
+
+include::snippets/snip-gw-authentication-auto-migrate.adoc[]
+
 . When the application is registered, GitHub displays the *Client ID* and *Client Secret*:
 +
 .. Copy and paste the GitHub Client ID into the GitHub OAuth2 Key field. 
@@ -22,7 +25,7 @@ Each key and secret must belong to a unique application and cannot be shared or 
 +
 . In the *Base URL* field, enter the hostname of the GitHub Enterprise instance, for example, `https://github.example.com`.
 . In the *Github OAuth2 Enterprise API URL* field, enter the API URL of the GitHub Enterprise instance, for example, `https://github.example.com/api/v3`.
-. Enter the name of your GitHub Enterprise organization, as used in your organization’s URL, for example, `https://github.com/<yourorg>/` in the *GitHub OAuth2 Enterprise Org Name* field.
+. Enter the name of your GitHub enterprise organization, as used in your organization’s URL, for example, `https://github.com/<yourorg>/` in the *GitHub OAuth2 Enterprise Org Name* field.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
