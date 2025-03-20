@@ -7,23 +7,11 @@ ifdef::context[:parent-context-of-rhdh-install-ocp-operator: {context}]
 [role="_abstract"]
 The following procedures describe how to install {AAPRHDHShort} in {RHDH} instances on {OCP} using the Operator.
 
-// The workflow is as follows:
-// 
-// . Download the Ansible plug-ins files.
-// . Create a plug-in registry in your OpenShift cluster to host the Ansible plug-ins.
-// . Create a local backup copy of the ConfigMap for the {RHDHShort} Operator.
-// . Create a custom ConfigMap.
-// . Add your custom ConfigMap to your Helm chart.
-// . Edit your custom ConfigMap and Helm chart according to the required and optional configuration procedures.
-
 include::devtools/con-rhdh-install-ocp-prereqs.adoc[leveloffset=+1]
 include::devtools/con-rhdh-recommended-preconfig.adoc[leveloffset=+1]
 
-// Create custom ConfigMap
-include::devtools/proc-rhdh-backup-operator-configmap.adoc[leveloffset=+1]
-include::devtools/proc-rhdh-create-custom-configmap-operator-install.adoc[leveloffset=+1]
-// Add sidecar container to custom ConfigMap
-include::devtools/proc-rhdh-operator-add-custom-configmap-cr.adoc[leveloffset=+1]
+// Add sidecar container to the base configmap of for the rhdh deployment
+include::devtools/proc-rhdh-operator-add-sidecar-container.adoc[leveloffset=+1]
 
 // Plug-in registry
 include::devtools/proc-rhdh-download-plugins.adoc[leveloffset=+1]
