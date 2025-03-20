@@ -26,7 +26,8 @@ You can also use the following functions in your placeholders:
 * The `lower` function changes the value to lowercase. For example, the function is `{{ lower .metadata.labels.key }}`.
 * The `replace` function replaces all occurrences of a substring with another string. 
 For example, the function is `{{ replace "old" "new" .metadata.labels.key }}`.
-* The `getOrDefault` function returns a default value if accessing a missing label. For example, he function is `{{ getOrDefault .metadata.labels "key" "default" }}`.
+* The `getOrDefault` function returns a default value if accessing a missing label. 
+For example, the function is `{{ getOrDefault .metadata.labels "key" "default" }}`.
 You can combine the functions in pipelines, for example, a combined function is `{{ getOrDefault .metadata.labels "key" "default" | upper | replace " " "-" }}`.
 
 [NOTE]
