@@ -2,64 +2,93 @@
 
 = Image variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-| | `controller_image` | {ControllerNameStart} image. 
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-Default = `controller-rhel8:latest`
+| 
+| `controller_image` 
+| Container image for {ControllerName}.
+| Optional
+| `controller-rhel8:latest`
 
-| | `de_extra_images` | Decision environment extra images. 
-| | `de_supported_image` | Decision environment supported image. 
+|
+| `de_extra_images` 
+| Additional decision environment container images to pull from the configured container registry during deployment.
+| Optional
+| `[]`
 
-Default = `de-supported-rhel8:latest`
+| 
+| `de_supported_image` 
+| Supported decision environment container image.
+| Optional
+| `de-supported-rhel8:latest`
 
-| | `eda_image` | {EDAName} image. 
+| 
+| `eda_image` 
+| Backend container image for {EDAName}. 
+| Optional
+| `eda-controller-rhel8:latest`
 
-Default = `eda-controller-rhel8:latest`
+| 
+| `eda_web_image` 
+| Front-end container image for {EDAName}.
+| Optional
+| `eda-controller-ui-rhel8:latest`
 
-| | `eda_web_image` | {EDAName} web image. 
+| `extra_images` 
+| `ee_extra_images` 
+| Additional {ExecEnvShort} container images to pull from the configured container registry during deployment.
+| Optional
+| RPM = `ansible-builder-rhel8` +
+Container = `[]`
 
-Default = `eda-controller-ui-rhel8:latest`
-| | `ee_29_enabled` | Enable {ExecEnvShort} 29. 
+| 
+| `ee_minimal_image` 
+| Minimal {ExecEnvShort} container image. 
+| Optional
+| `ee-minimal-rhel8:latest`
 
-Default = `false`
+| 
+| `ee_supported_image` 
+| Supported {ExecEnvShort} container image.
+| Optional
+| `ee-supported-rhel8:latest`
 
-| | `ee_29_image` | Execution environment 29 image. 
+| 
+| `hub_image` 
+| Backend container image for {HubName}.
+| Optional
+| `hub-rhel8:latest`
 
-Default = `ee-29-rhel8:latest`
+|
+| `hub_web_image`
+| Front-end container image for {HubName}.
+| Optional
+| `hub-web-rhel8:latest`
 
-| | `ee_extra_images` | Execution environment extra images. 
-| | `ee_minimal_image` | Execution environment minimal image. 
+|
+| `pcp_image`
+| Container image for Performance Co-Pilot.
+| Optional
+| `pcp:latest`
 
-Default = `ee-minimal-rhel8:latest`
+|
+| `postgresql_image`
+| Container image for PostgreSQL.
+| Optional
+| `postgresql-15:latest`
 
-| | `ee_supported_image` | Execution environment supported image. 
+|
+| `receptor_image`
+| Container image for receptor.
+| Optional
+| `receptor-rhel8:latest`
 
-Default = `ee-supported-rhel8:latest`
+|
+| `redis_image`
+| Container image for Redis.
+| Optional
+| `redis-6:latest`
 
-| | `hub_image` | {HubNameStart} image. 
-
-Default = `hub-rhel8:latest`
-
-| | `hub_web_image` | {HubNameStart} web image. 
-
-Default = `hub-web-rhel8:latest`
-
-| | `postgresql_image` | PostgreSQL image. 
-
-Default = `postgresql-15:latest`
-
-| | `receptor_image` | Receptor image. 
-
-Default = `receptor-rhel8:latest`
-
-| | `redis_image` | Redis image. 
-
-Default = `redis-6:latest`
-
-| | `pcp_image` | Performance Co-Pilot image. 
-
-Default = `rhel8-pcp:latest`
-
-|====
+|===
