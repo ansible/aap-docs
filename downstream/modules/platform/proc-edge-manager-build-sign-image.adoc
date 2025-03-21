@@ -1,0 +1,45 @@
+[id="edge-manager-build-sign-image"]
+
+= Signing and publishing the _bootc_ operating system image by using Sigstore
+
+To sign the `bootc` operating system image by using Sigstore, complete the following steps:
+
+.Procedure
+
+. Generate a Sigstore key pair named `signingkey.pub` and `signingkey.private`:
+
++
+[source,bash]
+----
+skopeo generate-sigstore-key --output-prefix signingkey
+----
+
+. Configure container tools such as Podman and Skopeo to upload Sigstore signatures together with your signed image to your OCI registry:
+
++
+[source,bash]
+----
+sudo tee "/etc/containers/registries.d/${OCI_REGISTRY}.yaml" > /dev/null <<EOF
+docker:
+    ${OCI_REGISTRY}:
+        use-sigstore-attachments: true
+EOF
+----
+
+. Log in to your OCI registry by running the following command:
+
++
+[source,bash]
+----
+sudo podman login ${OCI_REGISTRY}
+----
+
+. Sign and publish the operating system image by running the following command:
+
++
+[source,bash]
+----
+sudo podman push \
+    --sign-by-sigstore-private-key ./signingkey.private \
+    ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
+----

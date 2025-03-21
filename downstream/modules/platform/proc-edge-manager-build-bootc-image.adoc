@@ -1,0 +1,91 @@
+[id="edge-manager-build-bootc-image"]
+
+= Building the operating system image with _bootc_
+
+Build the operating system image with the `bootc` that contains the {RedHatEdge} agent. 
+You can optionally include the following items in your operating system image:
+
+* The agent configuration for early binding
+* Any drivers
+* Host configuration
+* Application workloads that you need
+
+Complete the following steps:
+
+.Procedure
+
+. Create a `Containerfile` file with the following content to build a RHEL 9-based operating system image that includes the {RedHatEdge} agent and configuration:
+//The following containerfile includes RHACM, confirm step for AAP.
++
+[source,bash]
+----
+FROM registry.redhat.io/rhel9/rhel-bootc:<required_os_version> <1>
+RUN subscription-manager repos --enable rhacm-2.13-for-rhel-9-$(uname -m)-rpms && \
+    dnf -y install flightctl-agent && \
+    dnf -y clean all && \
+    systemctl enable flightctl-agent.service && \
+    systemctl mask bootc-fetch-apply-updates.timer <2>
+----
+<1> The base image that is referenced in `FROM` is a bootable container (`bootc`) image that already has a Linux kernel, which allows you to reuse existing standard container build tools and workflows.
+<2> Disables the default automatic updates. The updates are managed by the {RedHatEdge}.
+
++
+[IMPORTANT]
+====
+If your device relies on containers from a private repository, you must place the device pull secret in the `/etc/ostree/auth.json` path. 
+The pull secret must exist on the device before the secret can be consumed.
+====
+
+** *Optional:* To enable `podman-compose` application support, add the following section to the `Containerfile` file:
+
++
+[source,bash]
+----
+RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm && \
+    dnf -y install podman-compose && \
+    dnf -y clean all && \
+    systemctl enable podman.service
+----
+
+** *Optional:* If you created the `config.yaml` for early binding, add the following section to the `Containerfile`:
+
++
+[source,bash]
+----
+ADD config.yaml /etc/flightctl/
+----
+
++
+For more information, see xref:edge-manager-request-cert[Optional: Requesting an enrollment certificate for early binding].
+
+. Define the Open Container Initiative (OCI) registry by running the following command:
+
++
+[source,bash]
+----
+OCI_REGISTRY=registry.redhat.io
+----
+
+. Define the image repository that you have permissions to write to by running the following command:
+
++
+[source,bash]
+----
+OCI_IMAGE_REPO=${OCI_REGISTRY}/<your_org>/<your_image>
+----
+
+. Define the image tag by running the following command:
+
++
+[source,bash]
+----
+OCI_IMAGE_TAG=v1
+----
+
+. Build the operating system image for your target platform:
+
++
+[source,bash]
+----
+sudo podman build -t ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG} .
+----

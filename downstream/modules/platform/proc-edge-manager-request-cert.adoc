@@ -1,0 +1,52 @@
+[id="edge-manager-request-cert"]
+
+= Optional: Requesting an enrollment certificate for early binding
+
+If you want to include an agent configuration in the image, complete the following steps:
+
+.Procedure
+
+. Authenticate with the {RedHatEdge} service by using the `flightctl` CLI by running the following command:
+
++
+[source,bash]
+----
+flightctl login --username=<your_user> --password=<your_password> https://<rhem_api_server_url>
+----
+
++
+[NOTE]
+====
+The CLI uses the certificate authority pool of the host to verify the identity of the {RedHatEdge} service. The verification can lead to a TLS verification error when using self-signed certificates, if you do not add your certificate authority certificate to the pool. You can bypass the server verification by adding the `--insecure-skip-tls-verify` flag to your command.
+====
+
+. Get the enrollment credentials in the format of an agent configuration file by running the following command:
+
++
+[source,bash]
+----
+flightctl certificate request --signer=enrollment --expiration=365d --output=embedded > config.yaml
+----
++
+
+[NOTE]
+====
+* The `--expiration=365d` option specifies that the credentials are valid for a year.
+* The `--output=embedded` option specifies that the output is an agent configuration file with the enrollment credentials embedded.
+====
++
+The returned `config.yaml` contains the URLs of the {RedHatEdge} service, the certificate authority bundle, and the enrollment client certificate and key for the agent.
+See the following example:
+
++
+[source,yaml]
+----
+enrollment-service:
+  authentication:
+    client-certificate-data: LS0tLS1CRUdJTiBD...
+    client-key-data: LS0tLS1CRUdJTiBF...
+  service:
+    certificate-authority-data: LS0tLS1CRUdJTiBD...
+    server: https://agent-api.flightctl.127.0.0.1.nip.io:7443
+  enrollment-ui-endpoint: https://ui.flightctl.127.0.0.1.nip.io:8081
+----
