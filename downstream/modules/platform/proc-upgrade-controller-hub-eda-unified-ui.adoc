@@ -8,7 +8,7 @@
 {PlatformNameShort} 2.5 supports upgrades from {PlatformNameShort} 2.4 environments for all components, with the exception of {EDAName}. You can also configure a mixed environment with {EDAName} from 2.5 connected to a legacy 2.4 cluster. Combining install methods (OCP, RPM, Containerized) within such a topology is not supported by {PlatformNameShort}.
 
 [NOTE]
-If you are running the 2.4 version of {EDAName} in production, before you upgrade, contact Red Hat support or your account represenative for more information on how to move to {PlatformNameShort} 2.5.
+If you are running the 2.4 version of {EDAName} in production, before you upgrade, contact Red Hat support or your account representative for more information on how to move to {PlatformNameShort} 2.5.
 
 Supported topologies described in this document assume that:
 
@@ -19,7 +19,7 @@ Supported topologies described in this document assume that:
 == Upgrade considerations
 
 * You must maintain two separate inventory files: one for the 2.4 services and one for the 2.5 services.
-* You must maintain two separate "installations" wihtin this scenario: one for the 2.4 services and one for the 2.5 services. 
+* You must maintain two separate "installations" within this scenario: one for the 2.4 services and one for the 2.5 services. 
 * You must "upgrade" the two separate "installations" separately.
 * To upgrade to a consistent component version topology, consider the following: 
 ** You must manually combine the inventory file configuration from the 2.4 inventory into the 2.5 inventory and run upgrade on ONLY the 2.5 inventory file. 
@@ -29,12 +29,14 @@ Supported topologies described in this document assume that:
 
 .Prerequisites
 
-* An inventory from 2.4 for {ControllerName} and {HubName} and a 2.5 inventory for unified UI ({Gateway}) and {EDAName}. You must run upgrades on 2.4 services (using the inventory file to specify only {ControllerName} and {HubName} VMs) to get them to the invitial version of {PlatformNameShort} 2.5 first. When all the services are at the same version, run an upgrade (using a complete inventory file) on all the services to go to the latest version of {PlatformNameShort} 2.5.
+* An inventory from 2.4 for {ControllerName} and {HubName} and a 2.5 inventory for unified UI ({Gateway}) and {EDAName}. You must run upgrades on 2.4 services (using the inventory file to specify only {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} 2.5 first. When all the services are at the same version, run an upgrade (using a complete inventory file) on all the services to go to the latest version of {PlatformNameShort} 2.5.
 
 [IMPORTANT]
 ====
 DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of {PlatformNameShort} 2.5 without first upgrading the individual services ({ControllerName} and {HubName}) to the initial version of {PlatformNameShort} 2.5.
 ====
+
+* Ensure you have upgraded to {ControllerName} 2.5 or later before upgrading your {PlatformName}.
 
 .Procedure
 
