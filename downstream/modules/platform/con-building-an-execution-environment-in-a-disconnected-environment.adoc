@@ -5,16 +5,16 @@
 
 = Building an {ExecEnvShort} in a disconnected environment
 
+Creating execution environments for {PlatformNameShort} is a common task which works differently in disconnected environments.
+When building a custom {ExecEnvShort}, the ansible-builder tool defaults to downloading content from the following locations on the internet:
 
-Creating execution environments for {PlatformNameShort} is a common task which works differently in disconnected environments. When building a custom {ExecEnvShort}, the ansible-builder tool defaults to downloading content from the following locations on the internet:
-
-* Red Hat {HubNameStart} ({Console}) or {Galaxy} (galaxy.ansible.com) for any Ansible content collections added to the {ExecEnvShort} image.
+* Red Hat {HubNameStart} (`{Console}`) or {Galaxy} (`galaxy.ansible.com`) for any Ansible content collections added to the {ExecEnvShort} image.
 
 * PyPI (pypi.org) for any python packages required as collection dependencies.
 
 * RPM repositories such as the RHEL or UBI repositories (cdn.redhat.com) for adding or updating RPMs to the {ExecEnvShort} image, if needed. 
 
-* registry.redhat.io for access to the base container images.
+* `registry.redhat.io` for access to the base container images.
 
 Building an {ExecEnvShort} image in a disconnected environment requires mirroring content from these locations.
 For information about importing collections from {Galaxy} or {HubName} into a {PrivateHubName}, see link:{URLHubManagingContent}/managing-collections-hub#proc-import-collection[Importing an automation content collection in {HubName}] .
