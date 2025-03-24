@@ -1,0 +1,33 @@
+[id="edge-manager-build-disk-image"]
+
+= Building the operating system disk image
+
+Build the operating system disk image that contains the file system for your devices. 
+
+Complete the following steps:
+
+.Procedure
+
+. Create a directory called `output` by running the following command:
+
++
+[source,bash]
+----
+mkdir -p output
+----
+
+. Use `bootc-image-builder` to generate an operating system disk image of type `iso` from your operating system image by running the following command:
+
++
+[source,bash]
+----
+sudo podman run --rm -it --privileged --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v "${PWD}/output":/output \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    --type iso \
+    ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
+----
+
+When the `bootc-image-builder` completes, you can find the ISO disk image at the `${PWD}/output/bootiso/install.iso` path.
