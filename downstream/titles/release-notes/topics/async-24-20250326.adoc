@@ -1,0 +1,57 @@
+[id="async-24-20250326"]
+
+= {PlatformNameShort} patch release March 26, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| March 26, 2025  | 
+* {ControllerNameStart} 4.6.20
+* {EDAcontroller} 1.0.7	             
+* {HubNameStart} 4.9.3 
+* {LightspeedShortName} 2.4.250225	 
+* {PlatformNameShort}-collection installer (online): 2.4-10
+* {PlatformNameShort}-collection installer (bundle): 2.4-10
+* Receptor devel v1.5.3
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1742444794
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1742445409
+
+== General
+
+The `ansible.controller` collection has been updated to 4.5.20.(AAP-42241)
+
+== Bug fixes
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-27516[CVE-2025-27516] `ansible-lightspeed-container`: Jinja sandbox breakout through attr filter selecting format method.(AAP-41689)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-27516[CVE-2025-27516] `python3x-jinja2`: Jinja sandbox breakout through attr filter selecting format method.(AAP-42106)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-27516[CVE-2025-27516] `python-jinja2`: Jinja sandbox breakout through attr filter selecting format method.(AAP-42105)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-27516[CVE-2025-27516] `automation-controller`: Jinja sandbox breakout through attr filter selecting format method.(AAP-41691)
+
+=== Ansible Automation Platform Operator
+
+* Fixed an issue where Ansible Automation Platform backups failed when writing YAML to the PVC on Openshift clusters with Openshift Virtualization installed.(AAP-28609)
+
+=== Automation controller
+
+* Fixed an issue where Insights projects were failing on Openshift Container Platform Ansible Automation Platform, due to incorrectly specifying the extra vars path.(AAP-41875)
+
+* Fixed an issue where the system auditor could download the execution node install bundle.(AAP-39799)
+
+* Fixed an issue where the latest committed code was not reflecting on controller nodes.(AAP-39228)
+
+=== Automation hub
+
+* Fixed an issue where the retain_repo_versions was null for the validated repos.(AAP-42004)
