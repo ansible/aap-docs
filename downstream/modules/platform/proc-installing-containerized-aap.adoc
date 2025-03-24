@@ -13,9 +13,11 @@ You have done the following:
 * xref:preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
 * xref:downloading-containerized-aap[Downloaded {PlatformNameShort}]
 * xref:configuring-inventory-file[Configured the inventory file]
+* Logged in to the {RHEL} host as your non-root user
 
 .Procedure
 
+* Go to the installation directory on your {RHEL} host.
 * Run the `install` playbook:
 ----
 ansible-playbook -i <inventory_file_name> ansible.containerized_installer.install
@@ -65,7 +67,6 @@ If you want to disable HTTPS, set `envoy_disable_https` to `true`:
 ----
 envoy_disable_https: true
 ----
-
 
 [role="_additional-resources"]
 .Additional resources
