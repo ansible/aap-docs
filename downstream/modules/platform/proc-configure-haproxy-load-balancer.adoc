@@ -1,0 +1,14 @@
+[id="configuring-haproxy-load-balancer"]
+= Configuring a HAProxy load balancer
+
+To configure a HAProxy load balancer in front of {Gateway} with a custom CA cert, set the following inventory file variables under the `[all:vars]` group:
+
+----
+custom_ca_cert=<path_to_cert_crt>
+gateway_main_url=<https://load_balancer_url>
+----
+
+[NOTE] 
+====
+HAProxy SSL passthrough mode is not supported with {Gateway}.
+====
