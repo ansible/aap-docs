@@ -1,19 +1,20 @@
 [id="configuring-inventory-file"]
 = Configuring the inventory file
 
-You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the hosts and containers used and created, variables for components, and other information needed to customize the installation.
+You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the information needed to customize the installation. For example, host details, certificate details, and various component-specific settings. 
 
-Example inventory files are provided in this document that you can copy and change to quickly get started. 
+Example inventory files are available in this document that you can copy and change to quickly get started.
 
-Inventory files for the {GrowthTopology} and {EnterpriseTopology} are also found in the downloaded installer package:
+Additionally, {GrowthTopology} and {EnterpriseTopology} inventory files are available in the following locations:
 
-* The default one named `inventory` is for the {EnterpriseTopology} pattern. 
+* In the downloaded installation program package:
+** The default inventory file, named `inventory`, is for the {EnterpriseTopology} pattern. 
+** To deploy the {GrowthTopology} (all-in-one) pattern, you need to copy over or use the `inventory-growth` file instead.
+* In link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
 
-* If you want to deploy the {GrowthTopology} or all-in-one pattern you need to copy over or use the `inventory-growth` file instead.
+To use the example inventory files, replace the `< >` placeholders with your specific variables, and update the host names. 
 
-Additionally, you can find example inventory files in link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
-
-To use the example inventory files, replace the `< >` placeholders with your specific variables, and update the host names. Refer to the `README.md` file in the installation directory for more information about optional and required variables.
+Refer to the `README.md` file in the installation directory or link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables] for more information about optional and required variables.
 
 == Inventory file for online installation for containerized {GrowthTopology} (all-in-one)
 
@@ -21,115 +22,28 @@ Use the example inventory file to perform an online installation for the contain
 
 include::snippets/inventory-cont-a-env-a.adoc[]
 
+[role="_additional-resources"]
+.Additional resources
+* For more information about the container {GrowthTopology} (all-in-one), see link:{URLTopologies}/container-topologies#infrastructure_topology_5[Container {GrowthTopology}] in _{TitleTopologies}_.
+
 == Inventory file for online installation for containerized {EnterpriseTopology}
 
 Use the example inventory file to perform an online installation for the containerized {EnterpriseTopology}:
 
 include::snippets/inventory-cont-b-env-a.adoc[]
 
-.Redis configuration for an {EnterpriseTopology}
-include::snippets/redis-colocation-containerized.adoc[]
-* By default the `redis_mode` is set to `cluster`.
-** `redis_mode=cluster`
-
+[role="_additional-resources"]
+.Additional resources
+* For more information about the container {EnterpriseTopology}, see link:{URLTopologies}/container-topologies#infrastructure_topology_6[Container {EnterpriseTopology}] in _{TitleTopologies}_.
 * For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[Caching and queueing system] in _{TitlePlanningGuide}_.
 
-== Additional information for configuring your inventory file
 
-For more information about the variables you can use to configure your inventory file, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables]
+== Performing an offline or bundled installation
 
-.Offline or bundled installation
-
-* To perform an offline installation, add the following under the `[all:vars]` group:
+To perform an offline installation, add the following under the `[all:vars]` group:
 
 ----
 bundle_install=true
 # The bundle directory must include /bundle in the path
-bundle_dir=<full path to the bundle directory>
+bundle_dir=<full_path_to_the_bundle_directory>
 ----
-
-.Configuring a HAProxy load balancer
-
-* To configure a HAProxy load balancer in front of {Gateway} with a custom CA cert, set the following inventory file variables under the `[all:vars]` group:
-
-----
-custom_ca_cert=<path_to_cert_crt>
-gateway_main_url=<https://load_balancer_url>
-----
-
-[NOTE] 
-====
-HAProxy SSL passthrough mode is not supported with {Gateway}.
-====
-
-.Configuring Network File System (NFS) storage for {HubName}
-
-NFS is a type of shared storage that is supported in containerized installations. Shared storage is required when installing more than one instance of {HubName} with a `file` storage backend. When installing a single instance of the {HubName}, shared storage is optional.
-
-* To configure shared storage for {HubName}, set the following variable in the inventory file, ensuring your NFS share has read, write, and execute permissions:
-
-----
-hub_shared_data_path=<path_to_nfs_share>
-----
-
-* To change the mount options for your NFS share, use the `hub_shared_data_mount_opts` variable. This variable is optional and the default value is `rw,sync,hard`.
-
-.Configuring Amazon S3 storage for {HubName}
-
-Amazon S3 storage is a type of object storage that is supported in containerized installations. When using an AWS S3 storage backend, set `hub_storage_backend` to `s3`. The AWS S3 bucket needs to exist before running the installation program.
-
-The variables you can use to configure this storage backend type in your inventory file are:
-
-* `hub_s3_access_key`
-* `hub_s3_secret_key`
-* `hub_s3_bucket_name`
-* `hub_s3_extra_settings`
-
-Extra parameters can be passed through an Ansible `hub_s3_extra_settings` dictionary.
-
-For example, you can set the following parameters:
-
-----
-hub_s3_extra_settings:
-  AWS_S3_MAX_MEMORY_SIZE: 4096
-  AWS_S3_REGION_NAME: eu-central-1
-  AWS_S3_USE_SSL: True
-----
-
-For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings[django-storages documentation - Amazon S3].
-
-.Configuring Azure Blob Storage for {HubName}
-
-Azure Blob storage is a type of object storage that is supported in containerized installations. 
-When using an Azure blob storage backend, set `hub_storage_backend` to `azure`. The Azure container needs to exist before running the installation program.
-
-The variables you can use to configure this storage backend type in your inventory file are:
-
-* `hub_azure_account_key`
-* `hub_azure_account_name`
-* `hub_azure_container`
-* `hub_azure_extra_settings`
-
-Extra parameters can be passed through an Ansible `hub_azure_extra_settings` dictionary.
-
-For example, you can set the following parameters:
-
-----
-hub_azure_extra_settings:
-  AZURE_LOCATION: foo
-  AZURE_SSL: True
-  AZURE_URL_EXPIRATION_SECS: 60
-----
-
-For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/azure.html#settings[django-storages documentation - Azure Storage].
-
-
-.Loading an {ControllerName} license file
-
-* To define the location of your {ControllerName} license file, set the following variable in the inventory file:
-
-----
-controller_license_file=<full_path_to_your_manifest_zip_file>
-----
-
-//* To define the license file as part of the postinstall process instead, see xref:using-postinstall_{context}[Using the postinstall feature of containerized {PlatformNameShort}].

@@ -1,0 +1,31 @@
+[id="cont-aap-system-requirements"]
+
+= System requirements
+Use this information when planning your installation of containerized {PlatformNameShort}.
+
+.Prerequisites
+* A non-root user for the {RHEL} host, with sudo or other Ansible supported privilege escalation (sudo is recommended). This user is responsible for the installation of containerized {PlatformNameShort}.
+* SSH public key authentication for the non-root user (if installing on remote hosts). For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
+** If doing a self contained local VM based installation, you can use `ansible_connection=local`.
+* Internet access from the {RHEL} host if you are using the default online installation method.
+* The appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
+
+== {PlatformNameShort} system requirements
+
+Your system must meet the following minimum system requirements to install and run {PlatformName}. 
+
+.Base system requirements
+include::snippets/cont-tested-system-config.adoc[]
+
+Each virtual machine (VM) has the following system requirements:
+
+.Virtual machine requirements
+include::snippets/cont-tested-vm-config.adoc[]
+
+[NOTE]
+====
+If performing a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+====
+
+== PostgreSQL requirements
+{PlatformNameShort} {PlatformVers} uses {PostgresVers} and requires the external (customer supported) databases to have ICU support.  
