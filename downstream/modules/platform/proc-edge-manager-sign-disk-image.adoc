@@ -1,0 +1,63 @@
+[id="edge-manager-sign-disk-image"]
+
+= Optional: Signing and publishing the operating system disk image to an Open Container Initiative registry
+
+Sign and publish your disk image to your Open Container Initiative (OCI) registry. Optionally, you can compress and publish the disk image as an OCI artifact to the same OCI registry as your `bootc` images, which facilitates a unified hosting and distribution of `bootc` and disk images. To publish your ISO disk image to a repository named after your `bootc` image with `/diskimage-iso` appended, complete the following steps:
+
+.Prerequisites
+
+* You created a private key by using Sigstore. 
+See xref:edge-manager-build-sign-image[Signing and publishing the _bootc_ operating system image by using Sigstore].
+
+Sign and publish your disk image to your OCI registry. 
+Complete the following steps:
+
+.Procedure
+
+. Change the owner of the directory where the ISO disk image is located from `root` to your current user by running the following command:
+
++
+[source,bash]
+----
+sudo chown -R $(whoami):$(whoami) "${PWD}/output"
+----
+
+. Define the `OCI_DISK_IMAGE_REPO` environmental variable to be the same repository as your `bootc` image with `/diskimage-iso` appended by running the following command:
+
++
+[source,bash]
+----
+OCI_DISK_IMAGE_REPO=${OCI_IMAGE_REPO}/diskimage-iso
+----
+
+.. Create a manifest list by running the following command:
+
++
+[source,bash]
+----
+sudo podman manifest create \
+    ${OCI_DISK_IMAGE_REPO}:${OCI_IMAGE_TAG}
+----
+
+.. Add the ISO disk image to the manifest list as an OCI artifact by running the following command:
+
++
+[source,bash]
+----
+sudo podman manifest add \
+    --artifact --artifact-type application/vnd.diskimage.iso \
+    --arch=amd64 --os=linux \
+    ${OCI_DISK_IMAGE_REPO}:${OCI_IMAGE_TAG} \
+    "${PWD}/output/bootiso/install.iso"
+----
+
+.. Sign the manifest list with your private Sigstore key and push the image to the registry by running the following command:
+
++
+[source,bash]
+----
+sudo podman manifest push --all \
+     --sign-by-sigstore-private-key ./signingkey.private \
+    ${OCI_DISK_IMAGE_REPO}:${OCI_IMAGE_TAG} \
+    docker://${OCI_DISK_IMAGE_REPO}:${OCI_IMAGE_TAG}
+----

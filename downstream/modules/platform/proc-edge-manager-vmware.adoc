@@ -1,0 +1,51 @@
+[id="edge-manager-vmware"]
+
+= Image building for VMware vSphere
+
+When building operating system images and disk images for VMware vSphere, you can follow the generic image building process with the following changes:
+
+* Using late binding by injecting the enrollment certificate or the agent configuration through `cloud-init` when provisioning the virtual device.
+* Adding the `open-vm-tools` guest tools to the image.
+* Building a disk image of type `vmdk` instead of `iso`.
+Complete the generic steps with changes to the following steps:
+
+. Build an operating system image based on RHEL 9 that includes the {rhem} agent and VM guest tools but excludes the agent configuration.
+
+. Create a file named `Containerfile` with the following content:
+
++
+[source,bash]
+----
+FROM registry.redhat.io/rhel9/bootc-image-builder:latest
+RUN subscription-manager repos --enable rhacm-2.13-for-rhel-9-$(uname -m)-rpms && \
+    dnf -y install flightctl-agent && \
+    dnf -y clean all && \
+    systemctl enable flightctl-agent.service && \
+RUN dnf -y install cloud-init open-vm-tools && \
+    dnf -y clean all && \
+    ln -s ../cloud-init.target /usr/lib/systemd/system/default.target.wants && \
+    systemctl enable vmtoolsd.service
+----
+
+. Create a directory called `output` by running the following command:
+
++
+[source,bash]
+----
+mkdir -p output
+----
+
+. Generate an operating system disk image of type `vmdk` from your operating system image by running the following command:
++
+[source,bash]
+----
+sudo podman run --rm -it --privileged --pull=newer \
+    --security-opt label=type:unconfined_t \
+    -v "${PWD}/output":/output \
+    -v /var/lib/containers/storage:/var/lib/containers/storage \
+    registry.redhat.io/rhel9/bootc-image-builder:latest \
+    --type vmdk \
+    ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
+----
+
+When `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
