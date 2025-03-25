@@ -1,15 +1,18 @@
 [id="edge-manager-vmware"]
 
-= Image building for VMware vSphere
+= Building images for VMware vSphere
 
 When building operating system images and disk images for VMware vSphere, you can follow the generic image building process with the following changes:
 
 * Using late binding by injecting the enrollment certificate or the agent configuration through `cloud-init` when provisioning the virtual device.
 * Adding the `open-vm-tools` guest tools to the image.
 * Building a disk image of type `vmdk` instead of `iso`.
+
 Complete the generic steps with changes to the following steps:
 
-. Build an operating system image based on RHEL 9 that includes the {rhem} agent and VM guest tools but excludes the agent configuration.
+.Procedure
+
+. Build an operating system image based on RHEL 9 that includes the {RedHatEdge} agent and VM guest tools but excludes the agent configuration.
 
 . Create a file named `Containerfile` with the following content:
 
@@ -48,4 +51,4 @@ sudo podman run --rm -it --privileged --pull=newer \
     ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
 ----
 
-When `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
+When the `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
