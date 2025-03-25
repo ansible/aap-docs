@@ -1,6 +1,6 @@
 [id="edge-manager-virt"]
 
-= Image building for Red Hat OpenShift Virtualization
+= Building images for Red Hat OpenShift Virtualization
 
 When building operating system images and disk images for Red Hat OpenShift Virtualization, you can follow the generic image building process with the following changes:
 
@@ -41,7 +41,7 @@ RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noar
     systemctl enable podman.service
 ----
 
-Build, sign, and publish the `bootc` operating system image by following the generic image building process.
+Build, sign, and publish the `bootc` operating system image by following the generic image building process:
 
 .Procedure
 
@@ -67,7 +67,7 @@ sudo podman run --rm -it --privileged --pull=newer \
     ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
 ----
 
-When `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
+When the `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
 
 Red Hat OpenShift Virtualization can download disk images from an OCI registry but it expects a container disk image instead of an OCI artifact. 
 
