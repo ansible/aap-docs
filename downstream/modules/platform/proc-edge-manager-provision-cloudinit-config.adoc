@@ -1,0 +1,37 @@
+[id="edge-manager-provision-cloudinit-config"]
+
+= Creating the _cloud-init_ configuration
+
+To create the `cloud-init` configuration, complete the following steps:
+
+.Procedure 
+
+. Request a new {RedHatEdge} agent enrollment configuration and store it in a file called `config.yaml` by running the following command:
+
++
+[source,bash]
+----
+flightctl certificate request --signer=enrollment --expiration=365d --output=embedded > config.yaml
+----
+
+. Create a cloud configuration user data file called `cloud-config.yaml` that places the agent configuration in the correct location on the first boot by running the following command:
+
++
+[source,bash]
+----
+cat <<EOF > cloud-config.yaml
+#cloud-config
+write_files:
+- path: /etc/flightctl/config.yaml
+  content: $(cat config.yaml | base64 -w0)
+  encoding: b64
+EOF
+----
+
+. Create a Kubernetes `Secret` that contains the cloud configuration user data file:
+
++
+[source,bash]
+----
+oc create secret generic enrollment-secret --from-file=userdata=cloud-config.yaml
+----

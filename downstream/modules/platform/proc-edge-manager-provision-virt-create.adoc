@@ -1,0 +1,60 @@
+[id="edge-manager-provision-virt-create"]
+
+= Creating the virtual machine
+
+Create a virtual machine that has its primary disk populated from your QCoW2 container disk image and a `cloud-init` configuration drive that is populated from your enrollment secret.
+
+Complete the following steps:
+
+.Procedure 
+
+. Create a file that has the `VirtualMachine` resource manifest by running the following command:
+
++
+[source,bash]
+----
+cat <<EOF > my-bootc-vm.yaml
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: my-bootc-vm
+spec:
+  runStrategy: RerunOnFailure
+  template:
+    spec:
+      domain:
+        cpu:
+          cores: 1
+        memory:
+          guest: 1024M
+        devices:
+          disks:
+            - name: containerdisk
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              disk:
+                bus: virtio
+      volumes:
+        - name: containerdisk
+          containerDisk:
+            image: ${OCI_DISK_IMAGE_REPO}:${OCI_IMAGE_TAG}
+        - name: cloudinitdisk
+          cloudInitConfigDrive:
+            secretRef:
+              name: enrollment-secret
+EOF
+----
+
+. Apply the resource manifest to your cluster by running the following command:
+
++
+[source,bash]
+----
+oc apply -f my-bootc-vm.yaml
+----
+
+.Additional resources
+
+* For more information about how to inject the configuration through the `cloud-init` user data, see the link:https://cloudinit.readthedocs.io/en/latest/[Cloud-init documentation].
+* See xref:edge-manager-virt[Building images for Red Hat OpenShift Virtualization].
