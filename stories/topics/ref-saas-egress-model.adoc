@@ -1,8 +1,10 @@
 [id="ref-saas-egress-model"]
 = PULL connectivity
 
-Remote automation mesh nodes can access {PlatformNameShort} using a 'polling' or 'pull' model, which does not require opening ingress ports in the firewall.
-This model eliminates the need for hop nodes from your demilitarized zone (DMZ) to private networks if private networks have outbound internet connectivity.
+Remote automation mesh nodes can access {PlatformNameShort} using a 'polling' or 'pull' model, which does not require opening ingress ports in your enterprise network.
+The pull model initiates a WebSocket from the remote execution node to the control plane hop node secured with mTLS for authentication and encryption.
+This model eliminates the need to deploy hop nodes into your demilitarized zone (DMZ) to establish connectivity to private networks if private networks have outbound internet connectivity.
+Proxy servers that terminate TLS are not supported and will disrupt automation mesh connectivity.
 
 .Figure 1 Pull model
 image:mesh_egress.png[Pull model] 
