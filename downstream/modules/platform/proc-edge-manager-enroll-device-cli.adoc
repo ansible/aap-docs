@@ -3,7 +3,12 @@
 = Enrolling devices on the CLI
 
 You must enroll devices into the {RedHatEdge} service before you can manage them.
-Complete the following steps:
+
+.Prerequisites
+
+* You must install the {RedHatEdge} CLI. 
+See xref:edge-manager-install-CLI[Installing the Red Hat Edge Manager CLI].
+* You must log in to the {RedHatEdge} service.
 
 .Procedure
 
@@ -13,10 +18,10 @@ Complete the following steps:
 --
 [source,bash]
 ----
-flightctl get enrollmentrequests
+flightctl get enrollmentrequests --field-selector="status.approval.approved != true"
 ----
 
-Example output:
+See the following example:
 
 [source,bash]
 ----
