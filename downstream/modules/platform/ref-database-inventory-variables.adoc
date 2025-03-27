@@ -2,89 +2,104 @@
 
 = Database variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-| `pg_ssl_mode` | | Choose one of the two available modes: `prefer` and `verify-full`. 
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-Set to `verify-full` for client-side enforced SSL/TLS. 
+| ``
+| `postgresql_admin_database`
+| Database name used for connections to the PostgreSQL database server.
+| Optional
+| `postgres`
 
-Default = `prefer`
+| `postgres_firewalld_zone` 
+| `postgresql_firewall_zone` 
+| The firewall zone where PostgreSQL related firewall rules are applied. This controls which networks can access PostgreSQL based on the zone's trust level.
+| Optional
+| RPM = `` +
+Container = `public`
 
-| `postgres_firewalld_zone` | `postgresql_firewall_zone` | The firewall zone where PostgreSQL related firewall rules are applied. This controls which networks can access PostgreSQL based on the zone's trust level. 
-
-Default = `public`
-
-| `postgres_max_connections` | `postgresql_max_connections` | Maximum database connections setting to apply if you are using an installer-managed database.
-
+| `postgres_max_connections` 
+| `postgresql_max_connections` 
+| Maximum number of concurrent connections to the database if you are using an installer-managed database. +
 See link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for help selecting a value.
+| Optional
+| `1024`
 
-Default = `1024`
+| ``
+| `postgresql_admin_password` 
+| Password for the PostgreSQL admin user. +
+When used, the installation program creates each component’s database and credentials.
+| Required if using `postgresql_admin_username`.
+|
 
-| `postgres_ssl_cert` | `postgresql_tls_cert` | Path to the PostgreSQL SSL/TLS certificate file.
+| `postgres_ssl_cert` 
+| `postgresql_tls_cert` 
+| Path to the PostgreSQL SSL/TLS certificate file.
+| Optional
+|
 
-| `postgres_ssl_key` | `postgresql_tls_key` | Path to the PostgreSQL SSL/TLS key file.
+| `postgres_ssl_key` 
+| `postgresql_tls_key` 
+| Path to the PostgreSQL SSL/TLS key file.
+| Optional
+|
 
-| `postgres_use_cert` | | Location of the PostgreSQL user certificate file.
+| `postgres_use_ssl` 
+| `postgresql_disable_tls` 
+| Controls whether SSL/TLS is enabled or disabled for the PostgreSQL database.
+| Optional
+| `false`
 
-`/path/to/pgsql.crt`
+| ``
+| `postgresql_admin_username` 
+|  Username for the PostgreSQL admin user. +
+When used, the installation program creates each component’s database and credentials.
+| Optional
+| `postgres`
 
-| `postgres_use_ssl` | `postgresql_disable_tls` | Determines if the connection between {PlatformNameShort} and the PostgreSQL database should use SSL/TLS. 
+| 
+| `postgresql_effective_cache_size` 
+| Memory allocation available (in MB) for caching data.
+| Optional
+|
 
-The default for this variable is `false` which means SSL/TLS is not used for PostgreSQL connections.
+| 
+| `postgresql_keep_databases` 
+| Controls whether or not to keep databases during uninstall. +
+This variable applies to databases managed by the installation program only, and not external (customer-managed) databases. +
+Set to `true` to keep databases during uninstall.
+| Optional
+| `false`
 
-When set to `true`, the platform connects to PostgreSQL by using SSL/TLS.
+| 
+| `postgresql_log_destination` 
+| Destination for server log output.
+| Optional
+| `/dev/stderr`
 
-| | `postgresql_admin_username` | The username for the PostgreSQL admin user.
+| 
+| `postgresql_password_encryption` 
+| The algorithm for encrypting passwords.
+| Optional
+| `scram-sha-256`
 
-When used, the installation program creates each component's database and credentials.
+| `install_pg_port`
+| `postgresql_port` 
+| Port number for the PostgreSQL database.
+| Optional
+| `5432`
 
-The PostgreSQL admin user must have `SUPERUSER` privileges.
+| 
+| `postgresql_shared_buffers` 
+| Memory allocation (in MB) for shared memory buffers.
+| Optional
+|
 
-Default = `postgres`
+| 
+| `postgresql_tls_remote` 
+| Denote whether the PostgreSQL provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-| | `postgresql_admin_password` | Required when using `postgresql_admin_username`.
-
-The password for the PostgreSQL admin user.
-
-When used, the installation program creates each component's database and credentials.
-
-The PostgreSQL admin user must have `SUPERUSER` privileges.
-
-| | `postgresql_admin_database` | The name of the PostgreSQL admin database.
-
-Default = `postgres`
-
-| | `postgresql_effective_cache_size` | This defines the total memory available for caching data.
-
-The format should be <int>MB.
-
-| | `postgresql_keep_databases` | Determines whether or not to keep databases during uninstall.
-
-When set to `true` databases will be kept during uninstall. 
-
-This variable applies to databases managed by the installation program only, and not external customer-created databases.
-
-Default = `false`
-
-| | `postgresql_log_destination` | The location of the PostgreSQL log file.
-
-Default = `/dev/stderr`
-
-| | `postgresql_password_encryption` | The type of PostgreSQL password encryption to use.
-
-Default = `scram-sha-256`
-
-| | `postgresql_shared_buffers` | The amount of memory allocated for caching data within the database.
-
-The format should be <int>MB.
-
-| | `postgresql_tls_remote` | PostgreSQL TLS remote files.
-
-Default = `false`
-
-| | `postgresql_port` | PostgreSQL port number.
-
-Default = `5432`
-
-|====
+|===
