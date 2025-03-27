@@ -9,34 +9,27 @@ You can configure your LDAP SSL configuration for {ControllerName} through any o
 * The following procedure steps.
 
 .Procedure
-. If you do not have a `ldap_cacert_secret`, you can create one with the following command:
+. Create a secret in your {PlatformNameShort} namespace for the `bundle-ca.crt` file (the filename must be `bundle-ca.crt`):
 +
 ----
-$ oc create secret generic <resourcename>-custom-certs \
-    --from-file=ldap-ca.crt=<PATH/TO/YOUR/CA/PEM/FILE>  \ <1>
+$ oc create secret -n aap-namespace generic bundle-ca-secret --from-file=bundle-ca.crt
 ----
-<1> Modify this to point to where your CA cert is stored.
 +
-This will create a secret that looks like this:
+. Add the `bundle_cacert_secret` to the {PlatformNameShort} customer resource:
 +
 ----
-$ oc get secret/mycerts -o yaml
-apiVersion: v1
-data:
-  ldap-ca.crt: <mysecret> <1>
-kind: Secret
-metadata:
-  name: mycerts
-  namespace: AutomationController
-type: Opaque
+...
+spec:
+  bundle_cacert_secret: bundle-ca-secret
+...
 ----
-<1> {ControllerNameStart} looks for the data field `ldap-ca.crt` in the specified secret when using the `ldap_cacert_secret`.
 +
-. Under *LDAP Certificate Authority Trust Bundle* click the drop-down menu and select your `ldap_cacert_secret`.
-. Under *LDAP Password Secret*, click the drop-down menu and select a secret.
-. Under *EE Images Pull Credentials Secret*, click the drop-down menu and select a secret.
-. Under *Bundle Cacert Secret*, click the drop-down menu and select a secret.
-. Under *Service Type*, click the drop-down menu and select
-* *ClusterIP*
-* *LoadBalancer*
-* *NodePort*
+
+.Verification
+
+You can verify the expected certificate by running:
++
+----
+oc exec -it deployment.apps/aap-gateway - openssl x509 -in /etc/pki/tls/certs/bundle-ca.crt -noout -text
+----
+
