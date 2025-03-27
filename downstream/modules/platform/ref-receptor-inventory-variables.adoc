@@ -3,82 +3,122 @@
 
 = Receptor variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-| | `receptor_disable_signing` | Disable receptor signing. 
+| `receptor_datadir`
+| 
+| The directory where receptor stores its runtime data and local artifacts. +
+The target directory must be accessible to *awx* users. +
+If the target directory is a temporary file system *tmpfs*, ensure it is remounted correctly after a reboot. Failure to do so results in the receptor no longer having a working directory.
+| Optional
+| `/tmp/receptor`
 
-Default = `false`
+| `receptor_listener_port` 
+| `receptor_port` 
+| Port number that receptor listens on for incoming connections from other receptor nodes.
+| Optional
+| `27199`
 
-| | `receptor_disable_tls` | Disable receptor TLS. 
+| `receptor_listener_protocol` 
+| `receptor_protocol` 
+| Protocol that receptor will support when handling traffic.
+| Optional
+| `tcp`
 
-Default = `false`
+| `receptor_log_level`
+| `receptor_log_level` 
+| Controls the verbosity of logging for receptor. +
+Valid options include: `error`, `warning`, `info`, or `debug`.
+| Optional
+| `info`
 
-| | `receptor_firewall_zone` | The firewall zone where receptor related firewall rules are applied. This controls which networks can access receptor based on the zone's trust level.
-
-Default = `public`
-
-| | `receptor_log_level` | Receptor logging level.
-
-Default = `info`
-
-| | `receptor_mintls13` | Receptor TLS 1.3 minimal. 
-
-Default = `false`
-
-| See `peers` for the RPM equivalent variable | `receptor_peers` | 
-
-Used to indicate which nodes a specific host connects to. Wherever this variable is defined, an outbound connection to the specific host is established.
-
-This variable can be a comma-separated list of hosts only and not groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file.
-
-For example usage, see link:{URLContainerizedInstall}/aap-containerized-installation#adding-execution-nodes_aap-containerized-installation[Adding execution nodes].
-
-Default = []
-
-| `receptor_datadir` | | This variable configures the receptor data directory. By default, it is set to `/tmp/receptor`. To change the default location, run the installation script with `"-e receptor_datadir="` and specify the target directory that you want. 
-
-*NOTES*
-
-* The target directory must be accessible to *awx* users. 
-
-* If the target directory is a temporary file system *tmpfs*, ensure it is remounted correctly after a reboot. Failure to do so results in the receptor no longer having a working directory.
-
-| `receptor_listener_port` | `receptor_port` | Receptor port number.
-
-Default = `27199`
-
-| `receptor_listener_protocol` | `receptor_protocol` | Receptor protocol.
-
-Default = `tcp`
-
-| | `receptor_signing_private_key` | Receptor signing private key. 
-| | `receptor_signing_public_key` | Receptor signing public key. 
-| | `receptor_signing_remote` | Receptor signing remote files. 
-
-Default = `false`
-
-| | `receptor_tls_cert` | Path to the SSL/TLS certificate file for receptor. 
-| | `receptor_tls_key` | Path to the SSL/TLS key file for receptor. 
-| | `receptor_tls_remote` | Receptor TLS remote files. 
-
-Default = `false`
-
-| See `node_type` for the RPM equivalent variable. | `receptor_type` a|
-
+| See `node_type` for the RPM equivalent variable. 
+| `receptor_type` 
+a|
 For the `[automationcontroller]` group the two options are:
 
 * `receptor_type=control` - The node only runs project and inventory updates, but not regular jobs.
-
 * `receptor_type=hybrid` - The node runs everything.
-
-Default for this group = `hybrid`.
 
 For the `[execution_nodes]` group the two options are:
 
 * `receptor_type=hop` - The node forwards jobs to an execution node.
 * `receptor_type=execution` - The node can run jobs.
+| Optional
+| For the `[automationcontroller]` group: `hybrid`. +
+For the `[execution_nodes]` group: `execution`.
 
-Default for this group = `execution`
-|====
+| See `peers` for the RPM equivalent variable 
+| `receptor_peers` 
+| Used to indicate which nodes a specific host connects to. Wherever this variable is defined, an outbound connection to the specific host is established. +
+This variable can be a comma-separated list of hosts only and not groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file. +
+For example usage, see link:{URLContainerizedInstall}/aap-containerized-installation#adding-execution-nodes_aap-containerized-installation[Adding execution nodes].
+| Optional
+| `[]`
+
+| 
+| `receptor_disable_signing` 
+| Controls whether signing of communications between receptor nodes is enabled or disabled. +
+Set this variable to `true` to disable communication signing.
+| Optional
+| `false`
+
+| 
+| `receptor_disable_tls` 
+| Controls whether TLS is enabled or disabled for receptor. +
+Set this variable to `true` to disable TLS.
+| Optional
+| `false`
+
+| 
+| `receptor_firewall_zone` 
+| The firewall zone where receptor related firewall rules are applied. This controls which networks can access receptor based on the zone's trust level.
+| Optional
+| `public`
+
+|
+| `receptor_mintls13` 
+| Controls whether or not receptor only accepts connections that use TLS 1.3 or higher. +
+Set to `true` to only accept connections that use TLS 1.3 or higher.
+| Optional
+| `false`
+
+| 
+| `receptor_signing_private_key` 
+| Path to the private key used by receptor to sign communications with other receptor nodes in the network. 
+| Optional
+|
+
+| 
+| `receptor_signing_public_key` 
+| Path to the public key used by receptor to sign communications with other receptor nodes in the network.
+| Optional
+|
+
+| 
+| `receptor_signing_remote` 
+| Denote whether the receptor signing files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| 
+| `receptor_tls_cert` 
+| Path to the TLS certificate file for receptor. 
+| Optional
+|
+
+| 
+| `receptor_tls_key` 
+| Path to the TLS key file for receptor. 
+| Optional
+|
+
+| 
+| `receptor_tls_remote` 
+| Denote whether the receptor provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+|===
