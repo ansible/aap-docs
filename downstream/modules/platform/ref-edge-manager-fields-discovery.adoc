@@ -6,17 +6,20 @@ Some {RedHatEdge} resources might expose additional supported fields.
 You can discover the supported fields by using `flightctl` with the `--field-selector` option. 
 If you try to use an unsupported field, the error message lists the available supported fields.
 
-.Example
+See the following examples:
 
 [source,bash]
 ----
 flightctl get device --field-selector='text'
+----
 
+[source,bash]
+----
 Error: listing devices: 400, message: unknown or unsupported selector: unable to resolve selector name "text". Supported selectors are: [metadata.alias metadata.creationTimestamp metadata.name metadata.nameoralias metadata.owner status.applicationsSummary.status status.lastSeen status.summary.status status.updated.status]
 ----
 
-In this example, the field `text` is not a valid field for filtering.
-The error message provides a list of supported fields that you can use with `--field-selector` for the `device` resource.
+The field `text` is not a valid field for filtering.
+The error message provides a list of supported fields that you can use with `--field-selector` for the `Device` resource.
 
 You can then use one of the supported fields:
 
@@ -25,4 +28,34 @@ You can then use one of the supported fields:
 flightctl get devices --field-selector 'metadata.alias contains cluster'
 ----
 
-In this command, the `metadata.alias` field is checked with the containment operator `contains` to see if it has the value `cluster`.
+The `metadata.alias` field is checked with the containment operator `contains` to see if it has the value `cluster`.
+
+.Examples
+
+.Example 1: Excluding a specific device by name
+
+The following command filters out a specific device by its name:
+
+[source,bash]
+----
+flightctl get devices --field-selector 'metadata.name!=c3tkb18x9fw32fzx5l556n0p0dracwbl4uiojxu19g2'
+----
+
+.Example 2: Filter by owner, labels, and creation timestamp
+
+This command retrieves devices owned by `Fleet/pos-fleet`, located in the `us` region, and created in 2024:
+
+[source,bash]
+----
+flightctl get devices --field-selector 'metadata.owner=Fleet/pos-fleet, metadata.creationTimestamp >= 2024-01-01T00:00:00Z, metadata.creationTimestamp < //2025-01-01T00:00:00Z' -l 'region=us'
+----
+
+.Example 3: Filter by Owner, Labels, and Device Status
+
+This command retrieves devices owned by `Fleet/pos-fleet`, located in the `us` region, and with a `status.updated.status` of either `Unknown`
+or `OutOfDate`:
+
+[source,bash]
+----
+flightctl get devices --field-selector 'metadata.owner=Fleet/pos-fleet, status.updated.status in (Unknown, OutOfDate)' -l 'region=us'
+----
