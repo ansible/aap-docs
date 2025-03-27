@@ -9,7 +9,7 @@ You can configure your LDAP SSL configuration for {ControllerName} through any o
 * The following procedure steps.
 
 .Procedure
-. Create a secret in your {PlatformNameShort} namespace from the `bundle-ca.crt` file (the filename must be `bundle-ca.crt`):
+. Create a secret in your {PlatformNameShort} namespace for the `bundle-ca.crt` file (the filename must be `bundle-ca.crt`):
 +
 ----
 $ oc create secret -n aap-namespace generic bundle-ca-secret --from-file=bundle-ca.crt
@@ -30,6 +30,6 @@ spec:
 You can verify the expected certificate by running:
 +
 ----
-oc exec -it deployment.apps/aap-gateway - openssl x509 -in /etc/pki/tls/certs/ca-bundle.crt -noout -text
+oc exec -it deployment.apps/aap-gateway - openssl x509 -in /etc/pki/tls/certs/bundle-ca.crt -noout -text
 ----
 
