@@ -4,8 +4,10 @@
 
 You can define device lifecycle hooks by adding rule files to one of the following locations in the device file system:
 
-* Rules in the `/usr/lib/flightctl/hooks.d/<lifecycle_hook_name>/` drop-in directory are read-only. To add rules to the `/usr` directory, you must add them to the operating system image during image building.
-* Rules in the `/etc/flightctl/hooks.d/<lifecycle_hook_name>/` drop-in directory are read-writable. You can update the rules at runtime by using several methods. 
+* Rules in the `/usr/lib/flightctl/hooks.d/<lifecycle_hook_name>/` drop-in directory are read-only. 
+To add rules to the `/usr` directory, you must add them to the operating system image during image building.
+* Rules in the `/etc/flightctl/hooks.d/<lifecycle_hook_name>/` drop-in directory are read-writable. 
+You can update the rules at runtime by using several methods. 
 
 When creating and placing the files, you must consider the following practices:
 
@@ -14,7 +16,8 @@ When creating and placing the files, you must consider the following practices:
 * If you add more than one rule files to a lifecycle hook directory, the files are processed in lexical order of the file names.
 * If you define files with identical file names in both locations, the file in the `/etc` folder takes precedence over the file of the same name in the `/usr` folder.
 
-A rule file is written in YAML format and contains a list of one or more actions. An action can be an instruction to run an external command.
+A rule file is written in YAML format and has a list of one or more actions. 
+An action can be an instruction to run an external command.
 
 When you specify many actions for a hook, the actions are performed in sequence, finishing one action before starting the next. 
 
@@ -35,14 +38,18 @@ A `run` action takes the following parameters:
 |`If` | Optional. A list of conditions that must be true for the action to be run. If not provided, actions run unconditionally.
 |===
 
-By default, actions are performed every time the hook is triggered. However, for the `afterUpdating` hook, you can use the `If` parameter to add conditions that must be true for an action to be performed. Otherwise, the action is skipped. 
+By default, actions are performed every time the hook is triggered. 
+However, for the `afterUpdating` hook, you can use the `If` parameter to add conditions that must be true for an action to be performed. 
+Otherwise, the action is skipped. 
 
 For example, to run an action only if a given file or directory changes during the update, you can define a path condition that takes the following parameters:
 
 |===
 |Parameter | Description
 |`Path` | An absolute path to a file or directory that must change during the update as condition for the action to be performed.
-Specify paths by using forward slashes (`/`). If the path is to a directory, it must end with a forward slash (`/`). If you specify a path to a file, the file must have changed to satisfy the condition. If you specify a path to a directory, a file in that directory or any of its subdirectories must have changed to satisfy the condition.
+Specify paths by using forward slashes (`/`). If the path is to a directory, it must end with a forward slash (`/`). 
+If you specify a path to a file, the file must have changed to satisfy the condition. 
+If you specify a path to a directory, a file in that directory or any of its subdirectories must have changed to satisfy the condition.
 |`Op` | A list of file operations, such as `created`, `updated`, and `removed`, to limit the type of changes to the specified path as condition for the action to be performed.
 |===
 
@@ -61,7 +68,8 @@ If you specify a path condition for an action in the `afterUpdating` hook, you h
 |`${ RemovedFiles }` | A space-separated list of absolute paths of the files that were removed during the update and are covered by the path condition.
 |===
 
-The {rhem} agent includes a built-in set of rules defined in `/usr/lib/flightctl/hooks.d/afterupdating/00-default.yaml`. The following commands are executed if certain files are changed:
+The {RedHatEdge} agent includes a built-in set of rules defined in `/usr/lib/flightctl/hooks.d/afterupdating/00-default.yaml`. 
+The following commands are executed if certain files are changed:
 
 |===
 |File | Command | Description
@@ -74,4 +82,4 @@ The {rhem} agent includes a built-in set of rules defined in `/usr/lib/flightctl
 
 .Additional resources
 
-* See link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_networking/index[Configuring and managing networking].
+* For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_networking/index[Configuring and managing networking].
