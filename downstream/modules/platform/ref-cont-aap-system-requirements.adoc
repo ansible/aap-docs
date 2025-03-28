@@ -27,5 +27,16 @@ include::snippets/cont-tested-vm-config.adoc[]
 If performing a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
 ====
 
-== PostgreSQL requirements
-{PlatformNameShort} {PlatformVers} uses {PostgresVers} and requires the external (customer supported) databases to have ICU support.  
+== Database requirements
+
+{PlatformNameShort} {PlatformVers} can work with two varieties of database:
+
+. Database installed with {PlatformNameShort} - This database consists of a PostgreSQL installation done as part of an {PlatformNameShort} installation using PostgreSQL packages provided by Red Hat.
+. Customer provided or configured database - This is an external database that is provided by the customer, whether on bare metal, virtual machine, container, or cloud hosted service.
+
+{PlatformNameShort} {PlatformVers} uses {PostgresVers} and requires the customer provided (external) database to have ICU support.  
+
+[role="_additional-resources"]
+.Additional resources
+* For more information about the scope of coverage for each variety of database, see link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage].
+* For more information about setting up an external database, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-setup-postgresql-ext-database-containerized[Setting up a customer provided (external) database].
