@@ -2,37 +2,38 @@
 
 = Monitoring device resources on the CLI
 
-Effectively monitor the resources of your device through the CLI, providing you with the tools and commands to track performance and troubleshoot issues.
+Monitor the resources of your device through the CLI, providing you with the tools and commands to track performance and troubleshoot issues.
 
 .Procedure
 
-* To check resource use, add resource monitors in the `resources:` section of the device's specification.
+* Add resource monitors in the `resources:` section of the device's specification.
 
-.Example
-
-Check disk use on the filesystem associated with the path /applications. 
-This can trigger a warning alert if the average use exceeds 75% for more than 30 minutes and a critical alert if it exceeds 90% for over 10 minutes with a sampling interval of 5 seconds.
+For example, add the following monitor for your disk:
 
 [source,yaml]
 ----
-apiVersion: v1alpha1
+apiVersion: flightctl.io/v1alpha1
 kind: Device
 metadata:
-  name: some_device_name
+  name: <device_name>
 spec:
 [...]
   resources:
   - monitorType: Disk
-    samplingInterval: 5s
-    path: /application_data
+    samplingInterval: 5s <1> 
+    path: /application_data <2>
     alertRules:
-    - severity: Warning
+    - severity: Warning <3>
       duration: 30m
       percentage: 75
       description: Disk space for application data is >75% full for over 30m.
-    - severity: Critical
+    - severity: Critical <4>
       duration: 10m
       percentage: 90
       description: Disk space for application data is >90% full over 10m.
 [...]
 ----
+<1> Samples usage every 5 seconds.
+<2> Checks disk usage on the file system that is associated with the `/applications_data` path. 
+<3> Initiates a warning if the average usage exceeds 75% for more than 30 minutes.
+<4> Initiates a critical alert if the average usage exceeds 90% for over 10 minutes.
