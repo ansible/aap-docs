@@ -2,9 +2,12 @@
 
 = Use device lifecycle hooks
 
-You can use device lifecycle hooks to make the agent run user-defined commands at specific points in the device's lifecycle. 
-For example, you can add a shell script to your operating system images that backs up your application data.
-You can then specify that this script is to run and complete successfully before the agent can start updating the system.
+The {RedHatEdge} agent can run user-defined commands at specific points in the device lifecycle by using device lifecycle hooks. 
+For example, you can add a shell script to your operating system images that backs up your application data. 
+You can then specify that the script must run and complete successfully before the agent can start updating the operating system.
+
+As another example, certain applications or system services do not automatically reload their configuration file when the file changes on the disk. 
+You can manually reload the configuration file by specifying a command as another hook, which is called after the agent completes the update process.
 
 The following device lifecycle hooks are supported:
 
@@ -23,8 +26,6 @@ If any action in this hook returns with failure, the agent cancels and rolls bac
 |`afterRebooting` |This hook is called when the agent first starts after a reboot. 
 If any action in this hook returns with failure, the agent reports this but continues starting up.
 |===
-
-For a state diagram defining when each device lifecycle hook is called by the agent, see the ADD LINK[Device API statuses] section.
 
 You can define device lifecycle hooks by adding rule files to one of two locations in the device's filesystem, where `${lifecyclehook}` is the all-lower-case name of the hook you want to define:
 
