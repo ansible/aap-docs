@@ -1,63 +1,19 @@
 [id="edge-manager-manage-apps"]
 
-= Managing applications
+= Managing applications on an edge device
 
-You can deploy, update, or remove applications on a device by updating the list of applications in the device's specification. 
-The next time the agent checks in, it learns of the change in the specification, downloads any new or updated application packages and images from an OCI-compatible registry. 
-Then it deploys them to the appropriate application runtime or removes them from that runtime.
+You can deploy, update, or remove applications on a device by updating the list of applications in the device specification. 
+When the {RedHatEdge} agent checks in and detects the change in the specification, the agent downloads any new or updated application packages and images from an Open Container Initiative (OCI)-compatible registry. 
+Then, the agent deploys the packages to the appropriate application runtime or removes them from that runtime.
 
-The following table shows the application runtimes and formats supported by {RedHatEdge}:
+The {RedHatEdge} supports the `podman-compose` tool as the application runtime and format.
 
-[width="100%",cols="33%,33%,33%,33%,33%",options="header",]
-|===
-|Runtime |Descriptor Format |Package Format |Package Repository |Note |Podman |https://github.com/containers/podman-compose[podman-compose] |(name TBD) |OCI registry |requires `podman-compose` installed on device
+.Prerequisites
 
-|Podman |https://github.com/containers/podman-compose[podman-compose] |(unpackaged) |git or inline |requires `podman-compose` installed on device
+* You must install the {RedHatEdge} CLI.
+* You must log in to the {RedHatEdge} service.
+* Your device must run an operating system image with the `podman-compose` tool installed. 
+For more information, see xref:edge-manager-build-bootc[Building a _bootc_ operating system image for use with the {RedHatEdge}].
 
-|Podman |https://docs.podman.io/en/stable/markdown/podman-systemd.unit.5.html[Quadlet] |(name TBD) |OCI registry |
-
-|Podman
-|https://docs.podman.io/en/stable/markdown/podman-systemd.unit.5.html[Quadlet]
-|(unpackaged) |git or inline |
-
-|MicroShift |Kubernetes manifests from https://helm.sh/docs/helm/helm_template/[Helm templates] |Helm Chart
-|OCI registry |requires `helm` installed on device
-
-|MicroShift |Kubernetes manifests from https://kustomize.io/[kustomize]
-|(unpackaged) |git or inline |
-|===
-
-.Procedure
-
-* To deploy an application to a device, create a new entry in the "applications" section of the device's specification, specifying the following parameters:
-+
-[width="100%",cols="45%,55%",options="header",]
-|===
-|Parameter |Description
-|Name |A user-defined name for the application. This is used when the web UI and CLI list applications.
-
-|Image |A reference to an application package in an OCI registry.
-
-|EnvVars |(Optional) A list of key/value-pairs that are passed to the deployment tool as environment variables or command line flags.
-|===
-+
-For each application in the "applications" section of the device's specification, there is a corresponding device status information that has the following information:
-+
-[width="100%",cols="48%,52%",options="header",]
-|===
-|Status Field |Description
-|Preparing |Application deployed; containers initialized but not yet running.
-
-|Starting |Application started; at least one container running, awaiting results.
-
-|Running |All containers are running.
-
-|Error |All containers failed.
-
-|Unknown |Application started, no containers observed.
-
-|Completed |All containers have completed successfully.
-|===
-
-include::platform/proc-edge-manager-manage-apps-cli.adoc[leveloffset=+1]
-include::platform/proc-edge-manager-create-apps.adoc[leveloffset=+1]
+include::platform/proc-edge-manager-build-app-packages.adoc[leveloffset=+1]
+include::platform/proc-edge-manager-deploy-apps.adoc[leveloffset=+1]
