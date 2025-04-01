@@ -1,0 +1,65 @@
+[id="edge-manager-deploy-apps"]
+
+= Deploying applications to a device using the CLI
+
+Deploy an application package to a device from an OCI registry by using the CLI.
+
+Complete the following steps:
+
+.Procedure
+
+. Specify the application package that you want to deploy in the `spec.applications` field in the `Device` resource:
++
+[source,yaml]
+----
+apiVersion: flightctl.io/v1alpha1
+kind: Device
+metadata:
+  name: <device_name>
+spec:
+[...]
+  applications:
+  - name: wordpress <1>
+    image: quay.io/rhem-demos/wordpress-app:latest <2>
+    envVars: <3>
+      WORDPRESS_DB_HOST: <database_host>
+      WORDPRESS_DB_USER: <user_name>
+      WORDPRESS_DB_PASSWORD: <password>
+[...]
+----
+<1> A user-defined name for the application that is used when the web console and the CLI list applications.
+<2> A reference to an application package in an OCI registry.
+<3> Optional. A list of key-value pairs that are passed to the deployment tool as environment variables or command line flags.
++
+[NOTE]
+====
+For each application in the `applications` section of the device specification, you can find the corresponding device status information.
+====
++
+. Verify the status of an application deployment on a device by inspecting the device status information by running the following command:
++
+[source,bash]
+----
+flightctl get device/<your_device_id> -o yaml
+----
++
+See the following example output:
++
+[source,yaml]
+----
+[...]
+spec:
+  applications:
+  - name: example-app
+    image: quay.io/flightctl-demos/example-app:v1
+status:
+  applications:
+  - name: example-app
+    ready: 3/3
+    restarts: 0
+    status: Running
+  applicationsSummary:
+    info: All application workloads are healthy.
+    status: Healthy
+[...]
+----
