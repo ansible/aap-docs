@@ -1,0 +1,53 @@
+[id="edge-manager-build-app-packages"]
+
+= Building an application package image
+
+The {RedHatEdge} can download application packages from an Open Container Initiative (OCI) compatible registry. 
+You can build an OCI container image that includes your application package in the `podman-compose` format and push the image to your OCI registry.
+
+Complete the following steps:
+
+.Procedure
+
+. Define the functionality of the application in a file called `podman-compose.yaml` that follows the Podman Compose specification:
+
+** Create a file called `Containerfile` with the following content:
++
+[source,bash]
+----
+FROM scratch <1>
+COPY podman-compose.yaml /podman-compose.yaml
+LABEL appType="compose" <2>
+----
+<1> Embed the compose file in a `scratch` container.
+<2> Add the `appType=compose` label.
+
+. Build and push the container image to your OCI registry:
+
+.. Define the image repository that you have permissions to write to by running the following command:
++
+[source,bash]
+----
+OCI_IMAGE_REPO=quai.io/<your_org>/<your_image>
+----
+
+.. Define the image tag by running the following command:
++
+[source,bash]
+----
+OCI_IMAGE_TAG=v1
+----
+
+.. Build the application container image by running the following command:
++
+[source,bash]
+----
+podman build -t ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG} .
+----
+
+.. Push the container image by running the following command:
++
+[source,bash]
+----
+podman push ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG} .
+----
