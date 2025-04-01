@@ -1,0 +1,25 @@
+[id="proc-operator-create-controller-project_{context}"]
+
+= Creating an {ControllerName} project custom resource
+
+A Project is a logical collection of Ansible playbooks, represented in {ControllerName}. For more information see the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_automation_execution/index#controller-projects[Projects] section of the _{TitleControllerUserGuide}_ guide.
+
+.Procedure
+
+* Create a project on {ControllerName} by creating an {ControllerName} project custom resource:
+
+----
+apiVersion: tower.ansible.com/v1alpha1
+kind: AnsibleProject
+metadata:
+  name: git
+spec:
+  repo: https://github.com/ansible/ansible-tower-samples
+  branch: main
+  name: ProjectDemo-git
+  scm_type: git
+  organization: Default
+  description: demoProject
+  connection_secret: controller-access
+  runner_pull_policy: IfNotPresent
+----
