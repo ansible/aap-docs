@@ -9,9 +9,37 @@ To upgrade from {PlatformNameShort} 2.4 to 2.5 with an external database, you mu
 .Prerequisites
 
 * A 2.4 {ControllerName} and {HubName} deployment with an external PostgreSQL 13 database
+* A newly provisioned {PostgresVers} database for the new {Gateway} component
 
 .Procedure
 
+. Create a secret `postgres-config-gateway` with database version 15 credentials for the {Gateway} component. 
+For example:
++
+----
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-config-gateway
+  namespace: aap
+stringData:
+  host: "<DB_HOST_OR_IP>"
+  port: "<DB_PORT>"     # default is 5432
+  database: "<DB_NAME>" # for example "gateway"
+  username: "<DB_USER>" # for example "gateway"
+  password: "<DB_PASSWORD>"
+  sslmode: "prefer"
+  type: "unmanaged"
+type: Opaque
+----
++
+. Add your newly created secret to your {PlatformNameShort} instance:
++
+----
+spec:
+  postgres_configuration_secret: postgres-config-gateway
+----
++
 . Scale down your deployments in their respective namespaces using:
 +
 `oc scale deployment --replicas=0 -n <component-namespace> <component-deployment>`
