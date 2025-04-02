@@ -73,13 +73,14 @@ Use the example inventory file to perform an installation for this topology:
 
 include::snippets/inventory-cont-b-env-a.adoc[]
 
-== Storage requirements
-* Execution environments are pulled into {ControllerName} hybrid nodes and execution nodes that run jobs. The size of these containers influences the storage requirements for `$PATH_WHERE_PODMAN_PUTS_CONTAINER_IMAGES`.
+// Michelle: Removing this section until documentation can be improved - See AAP-42854
+// == Storage requirements
+// * Execution environments are pulled into {ControllerName} hybrid nodes and execution nodes that run jobs. The size of these containers influences the storage requirements for `$PATH_WHERE_PODMAN_PUTS_CONTAINER_IMAGES`.
 
-* The primary determining factors for the size of the database and its storage volume, which defaults to `$POSTGRES_DEFAULT_DATA_DIR`, are:
-** The quantity of job events (lines of output from {ControllerName} jobs) 
-** The quantity of days of job data that are retained
+// * The primary determining factors for the size of the database and its storage volume, which defaults to `$POSTGRES_DEFAULT_DATA_DIR`, are:
+// ** The quantity of job events (lines of output from {ControllerName} jobs) 
+// ** The quantity of days of job data that are retained
 
-* On execution nodes and {ControllerName} control and hybrid nodes, job output is buffered to the disk in `$NAME_OF_RECEPTOR_DIR_VAR`, which defaults to `/tmp`.
+// * On execution nodes and {ControllerName} control and hybrid nodes, job output is buffered to the disk in `$NAME_OF_RECEPTOR_DIR_VAR`, which defaults to `/tmp`.
 
-* The size and quantity of collections synced to {HubName} influence the storage requirements of `$PATH_WHERE_PULP_STORES_COLLECTIONS`.
+// * The size and quantity of collections synced to {HubName} influence the storage requirements of `$PATH_WHERE_PULP_STORES_COLLECTIONS`.
