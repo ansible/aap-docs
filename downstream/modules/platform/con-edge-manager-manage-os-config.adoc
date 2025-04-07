@@ -16,13 +16,13 @@ The {RedHatEdge} agent applies updates to the configuration files while ensuring
 If the user updates both an operating system and configuration set of a device at the same time, the {RedHatEdge} agent updates the operating system first. 
 It then applies the specified set of configuration files.
 
-You can also specify a list of configurations sets that the {RedHatEdge} agent applies in sequence.
+You can also specify a list of configuration sets that the {RedHatEdge} agent applies in sequence.
 In case of a conflict, the last applied configuration set is valid.
 
 [IMPORTANT]
 ====
 After the {RedHatEdge} agent updates the configuration on the disk, the running applications need to reload the new configuration into memory for the configuration to become effective.
 If the update involves a reboot, `systemd` automatically restarts the applications with the new configuration and in the correct order.
-If the update does not involve a reboot, many application can detect changes to their configuration files and automatically reload the files.
+If the update does not involve a reboot, many applications can detect changes to their configuration files and automatically reload the files.
 When an application does not support change detection, you can use device lifecycle hooks to run scripts or commands if certain conditions are met.
 ====
