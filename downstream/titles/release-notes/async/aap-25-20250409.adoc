@@ -1,0 +1,100 @@
+[[aap-25-20250409]]
+
+= {PlatformNameShort} patch release April 9, 2025
+
+This release includes the following components and versions:
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| April 9, 2025  | 
+* {ControllerNameStart} 4.6.11
+* {HubNameStart} 4.10.3
+* {EDAName} 1.1.7
+* Container-based installer {PlatformNameShort} (bundle) 2.5-12
+* Container-based  installer {PlatformNameShort} (online) 2.5-12
+* Receptor 1.5.3
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-11
+* RPM-based installer {PlatformNameShort} (online) 2.5-11
+
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1743660124
+
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1743660958
+
+== General
+
+* The `ansible.controller` collection has been updated to 4.6.11.(AAP-43126)
+
+* Fixed an issue where authentication configuration for *AzureAD/EntraId* groups could not be used in authentication mapping.(AAP-42890)
+
+
+== Enhancements
+
+
+=== Container-based {PlatformNameShort}
+
+* Implemented variables for applying `extra_settings` for {ControllerName}, {EDAName}, {Gateway}, and {HubName} during installation.(AAP-42932)
+
+
+== Bug fixes
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-2877[CVE-2025-2877] `ansible-rulebook`: exposure of inventory passwords in plain text when starting a rulebook activation with verbosity set to debug in {EDAName}.(AAP-42817)
+
+
+=== {PlatformNameShort}
+
+* Fixed an issue where job workflow templates failed with limits.(AAP-33726)
+
+* Fixed an issue where there was non-viable information disclosure for pen testing.(AAP-39977)
+
+
+===  {OperatorPlatformNameShort}
+
+* Fixed an issue on the {OCPShort} Route TLS termination that was always configured with the edge value.(AAP-42051)
+
+
+=== Container based {PlatformNameShort}
+
+* Fixed an issue where backup and restore jobs would fail to restore on `CONT` jobs. Implemented validation and cleanup for service nodes on a restore to a new cluster.(AAP-42781)
+
+* Fixed an issue where podman logs did not show any log messages if the user was not part of the local *administrator* or `systemd-journal` group.(AAP-42755)
+
+* Fixed an issue where the {PlatformNameShort} 2.5 containerized installer was unable to read custom configurations.(AAP-40798)
+
+* Fixed an issue where a remote user was not part of the `systemd-journal` group and could not access container logs.(AAP-42755)
+
+
+=== {ExecEnvNameStart}
+
+* Fixed an issue where there was a Python 3.11 incompatibility by updating `pykerberos` to 1.2.4 in `ee-minimal` and `ee-supported` container images.(AAP-42428)
+
+
+=== {EDAName}
+
+* Fixed an issue where activations attached with some event streams could not be created in deployments configured with *Postgresql* with *mTLS*.(AAP-42268)
+
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where the token refresh prevented {EDAName} worker nodes from re-authenticating tokens.(AAP-42981)
+
+* Fixed an issue where the bundle installer failed to update {ControllerName} and `aap-metrics-utility` in the same run.(AAP-42632)
+
+* Fixed an issue where platform UI was not loading when the {Gateway} was on a *FIPS* enabled {RHEL} 9.(AAP-39146)
+
+
+== Known Issues
+
+* This section provides information about known issues in {PlatformNameShort} 2.5.
+Upgrade issues with the RPM installer.
+ 
+* Upgrading from {RHEL} 9.4 to {RHEL} 9.5 fails when running {Gateway} version 2.5.20250409 or later. To upgrade to {RHEL} 9.5, follow the appropriate steps in this link:https://access.redhat.com/solutions/7112819[KCS article].
+
+* When upgrading {PlatformNameShort} 2.5, you must use the latest installer version 2.5-11. If you use an older installer, the installation might fail. If you encounter a failed installation using an earlier version of the installer, rerun the installation with the latest installer version 2.5-11 or later.
