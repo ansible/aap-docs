@@ -1,159 +1,261 @@
 [id="event-driven-ansible-controller"]
 = {EDAcontroller} variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-
-| `automationedacontroller_activation_workers` | `eda_activation_workers` | _Optional_
-
-Number of workers for ansible-rulebook activation pods in {EDAName}.
-
-Default = (# of cores or threads) * 2 + 1
-
-| `automationedacontroller_admin_email` | `eda_admin_email` | _Optional_
-
-Email address used by Django for the admin user for {EDAcontroller}.
-
-Default = `admin@example.com`
-
-| `automationedacontroller_admin_password` | `eda_admin_password` | _Required_
-
-The admin password used by the {EDAcontroller} instance.
-
-Passwords must be enclosed in quotes when they are provided in plain text in the `inventory` file.
-
-Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
-
-| `automationedacontroller_admin_username` | `eda_admin_user` | Username used by Django to identify and create the admin superuser in {EDAcontroller}.
-
-Default = `admin`
-
-| `automationedacontroller_allowed_hostnames` | | List of additional addresses to enable for user access to {EDAcontroller}.
-
-Default = empty list
-
-| `automationedacontroller_controller_verify_ssl` | | Boolean flag used to verify automation controller's web certificates when making calls from {EDAcontroller}. Verified is `true` and not verified is `false`.
-
-Default = `false`
-
-| `automationedacontroller_disable_hsts` | `eda_nginx_disable_hsts` | _Optional_
-
-Boolean flag to disable HSTS for {EDAcontroller}. 
-
-Default = `false`
-
-| `automationedacontroller_disable_https` | `eda_nginx_disable_https` | _Optional_
-
-Boolean flag to disable HTTPS for {EDAcontroller}. 
-
-Default = `false`
-
-| `automationedacontroller_event_stream_path` | `eda_event_stream_prefix_path` | API prefix path used for {EDAName} event-stream through {Gateway}. 
-
-Default = `/eda-event-streams`
-
-| `automationedacontroller_firewalld_zone` | `eda_firewall_zone` | The firewall zone where {EDAName} related firewall rules are applied. This controls which networks can access {EDAName} based on the zone's trust level.
-
-Default = `public`
-
-| `automationedacontroller_gunicorn_workers` | `eda_gunicorn_workers` | Number of workers for the API served through Gunicorn.
-
-Default = (# of cores or threads) * 2 + 1
-
-| `automationedacontroller_max_running_activations` | `eda_max_running_activations` | _Optional_
-
-The number of maximum activations running concurrently per node.
-
-This is an integer that must be greater than 0.
-
-Default = `12`
-
-| `automationedacontroller_nginx_tls_files_remote` | `eda_tls_remote` | Boolean flag to specify whether cert sources are on the remote host (true) or local (false). 
-
-Default = `false`
-
-| `automationedacontroller_pg_cert_auth` | `eda_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
-
-Default = `false`
-
-| `automationedacontroller_pg_database` | `eda_pg_database` | The name of the PostgreSQL database used by {EDAName}.
-
-RPM default = `automationedacontroller`
-
-Container default = `eda`
-
-| `automationedacontroller_pg_host` | `eda_pg_host` | _Required_ 
-
-The hostname of the PostgreSQL database used by {EDAName}.
-
-Default = `127.0.0.1`
-
-| `automationedacontroller_pg_password` | `eda_pg_password` | Required if not using client certificate authentication.
-
-The password for the {EDAName} PostgreSQL database.
-
-Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
-
-| `automationedacontroller_pg_port` | `eda_pg_port` | Required if not using an internal database.
-
-The port number of the PostgreSQL database used by {EDAName}.
-
-Default = `5432`
-
-| `automationedacontroller_pg_sslmode` | `eda_pg_sslmode` | Determines the level of encryption and authentication for client server connections.
-
-Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
-
-Default = `prefer`
-
-| `automationedacontroller_pg_username` | `eda_pg_username` | The username for the {EDAName} PostgreSQL database.
-
-RPM default = `automationedacontroller`
-
-Container default = `eda`
-
-| `automationedacontroller_pgclient_sslcert` | `eda_pg_tls_cert` | Required if using client certificate authentication.
-
-Path to the PostgreSQL SSL/TLS certificate file for {EDAName}.
-
-| `automationedacontroller_pgclient_sslkey` | `eda_pg_tls_key` | Required if using client certificate authentication.
-
-Path to the PostgreSQL SSL/TLS key file for {EDAName}.
-
-| `automationedacontroller_redis_host` | `eda_redis_host` | The Redis hostname used by {EDAcontroller}.
-
-| `automationedacontroller_redis_port` | `eda_redis_port` | The port used for the Redis host defined by `automationedacontroller_redis_host` for {EDAcontroller}. 
-
-| `automationedacontroller_rq_workers` | |  Number of Redis Queue (RQ) workers used by {EDAcontroller}. RQ workers are Python processes that run in the background.
-
-Default = (# of cores or threads) * 2 + 1
-
-| `automationedacontroller_ssl_cert` | `eda_tls_cert` | _Optional_
-
-Path to the SSL/TLS certificate file for {EDAName}.
-
-| `automationedacontroller_ssl_key` | `eda_tls_key` | _Optional_
-
-Path to the SSL/TLS key file for {EDAName}.
-
-| `automationedacontroller_user_headers` | `eda_nginx_user_headers` | List of additional NGINX headers to add to {EDAcontroller}'s NGINX configuration. 
-
-Default = empty list
-
-| `eda_node_type` | `eda_type` | _Optional_
-
-{EDAcontroller} node type.
-
-Default = `hybrid`
-
-| | `eda_debug` | {EDAcontroller} debug.
-
-Default = `false`
-
-| | `eda_event_stream_url` | {EDAcontroller} event stream URL.
-
-| | `eda_extra_settings` a| Defines additional settings for use by {EDAName} during installation.
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| `automationedacontroller_activation_workers` 
+| `eda_activation_workers` 
+| Number of workers used for ansible-rulebook activation pods in {EDAName}.
+| Optional
+| RPM = (# of cores or threads) * 2 + 1. Container = `2`
+
+| `automationedacontroller_admin_email` 
+| `eda_admin_email` 
+| Email address used by Django for the admin user for {EDAName}.
+| Optional
+| `admin@example.com`
+
+| `automationedacontroller_admin_password` 
+| `eda_admin_password` 
+| {EDAName} administrator password. Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+| Required
+|
+
+| `automationedacontroller_admin_username` 
+| `eda_admin_user` 
+| Username used to identify and create the administrator user in {EDAName}.
+| Optional
+| `admin`
+
+| `automationedacontroller_backend_gunicorn_workers`
+|
+| Number of workers for handling the API served through Gunicorn on worker nodes.
+| Optional
+| `2`
+
+| `automationedacontroller_cache_tls_files_remote`
+|
+| Denote whether the cache cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| `automationedacontroller_client_regen_cert`
+| 
+| Controls whether or not to regenerate {EDAName} client certificates for the platform cache. Set to `true` to regenerate {EDAName} client certificates.
+| Optional
+| `false`
+
+| `automationedacontroller_default_workers`
+|
+| Number of workers used in {EDAName} for application work. 
+| Optional
+| Number of cores or threads
+
+| `automationedacontroller_disable_hsts` 
+| `eda_nginx_disable_hsts` 
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {EDAName}. Set this variable to `true` to disable HSTS.
+| Optional
+| `false`
+
+| `automationedacontroller_disable_https` 
+| `eda_nginx_disable_https` 
+| Controls whether HTTPS is enabled or disabled for {EDAName}. Set this variable to `true` to disable HTTPS.
+| Optional
+| `false`
+
+| `automationedacontroller_event_stream_path` 
+| `eda_event_stream_prefix_path` 
+| API prefix path used for {EDAName} event-stream through {Gateway}.
+| Optional
+| `/eda-event-streams`
+
+| `automationedacontroller_firewalld_zone` 
+| `eda_firewall_zone` 
+| The firewall zone where {EDAName} related firewall rules are applied. This controls which networks can access {EDAName} based on the zone's trust level.
+| Optional
+| RPM = no default set. Container = `public`.
+
+| `automationedacontroller_gunicorn_event_stream_workers`
+| 
+| Number of workers for handling event streaming for {EDAName}.
+| Optional
+| `2`
+
+| `automationedacontroller_gunicorn_workers` 
+| `eda_gunicorn_workers` 
+| Number of workers for handling the API served through Gunicorn.
+| Optional
+| (Number of cores or threads) * 2 + 1
+
+| `automationedacontroller_max_running_activations` 
+| `eda_max_running_activations` 
+| Number of maximum activations running concurrently per node. This is an integer that must be greater than 0.
+| Optional
+| `12`
+
+| `automationedacontroller_nginx_tls_files_remote` 
+| 
+| Denote whether the web cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| `automationedacontroller_pg_cert_auth` 
+| `eda_pg_cert_auth`
+| Controls whether client certificate authentication is enabled or disabled on the {EDAName} PostgreSQL database. Set this variable to `true` to enable client certificate authentication.
+| Optional
+| `false`
+
+| `automationedacontroller_pg_database` 
+| `eda_pg_database` 
+| Name of the PostgreSQL database used by {EDAName}.
+| Optional
+| RPM = `automationedacontroller`. Container = `eda`. 
+
+| `automationedacontroller_pg_host` 
+| `eda_pg_host` 
+| Hostname of the PostgreSQL database used by {EDAName}.
+| Required
+|
+
+| `automationedacontroller_pg_password` 
+| `eda_pg_password` 
+| Password for the {EDAName} PostgreSQL database user. Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| Required if not using client certificate authentication.
+| 
+
+| `automationedacontroller_pg_port` 
+| `eda_pg_port` 
+| Port number for the PostgreSQL database used by {EDAName}.
+| Optional
+| `5342`
+
+| `automationedacontroller_pg_sslmode` 
+| `eda_pg_sslmode` 
+| Determines the level of encryption and authentication for client server connections. Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
+| Optional
+| `prefer`
+
+| `automationedacontroller_pg_username` 
+| `eda_pg_username` 
+| Username for the {EDAName} PostgreSQL database user.
+| Optional
+| RPM = `automationedacontroller`. Container = `eda`.
+
+| `automationedacontroller_pgclient_sslcert` 
+| `eda_pg_tls_cert` 
+| Path to the PostgreSQL SSL/TLS certificate file for {EDAName}.
+| Required if using client certificate authentication.
+|
+
+| `automationedacontroller_pgclient_sslkey` 
+| `eda_pg_tls_key` 
+| Path to the PostgreSQL SSL/TLS key file for {EDAName}.
+| Required if using client certificate authentication.
+| 
+
+| `automationedacontroller_pgclient_tls_files_remote`
+| 
+| Denote whether the PostgreSQL client cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| `automationedacontroller_public_event_stream_url`
+| `eda_event_stream_url`
+| URL for connecting to the event stream. The URL must start with the `http://` or `https://` prefix
+| Optional
+|
+
+| `automationedacontroller_redis_host` 
+| `eda_redis_host` 
+| Hostname of the Redis host used by {EDAName}. 
+| Optional
+| First node in the `[automationgateway]` inventory group
+
+| `automationedacontroller_redis_password` 
+| `eda_redis_password` 
+| Password for {EDAName} Redis.
+| Optional
+| Randomly generated string
+
+| `automationedacontroller_redis_port` 
+| `eda_redis_port` 
+| Port number for the Redis host for {EDAName}.
+| Optional
+| RPM = The value defined in {Gateway}'s implementation (`automationgateway_redis_port`). Container = `6379`
+
+| `automationedacontroller_redis_username`
+| `eda_redis_username`
+| Username for {EDAName} Redis.
+| Optional
+| `eda`
+
+| `automationedacontroller_secret_key`
+| `eda_secret_key`
+| Secret key value used by {EDAName} to sign and encrypt data.
+| Optional
+|
+
+| `automationedacontroller_ssl_cert` 
+| `eda_tls_cert` 
+| Path to the SSL/TLS certificate file for {EDAName}.
+| Optional
+|
+
+| `automationedacontroller_ssl_key` 
+| `eda_tls_key` 
+| Path to the SSL/TLS key file for {EDAName}.
+| Optional
+|
+
+| `automationedacontroller_tls_files_remote`
+| `eda_tls_remote`
+| Denote whether the {EDAName} provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| `automationedacontroller_trusted_origins`
+| 
+| List of host addresses in the form: `<scheme>//:<address>:<port>` for trusted Cross-Site Request Forgery (CSRF) origins.
+| Optional
+| `[]`
+
+| `automationedacontroller_user_headers` 
+| `eda_nginx_user_headers` 
+| List of additional NGINX headers to add to {EDAName}'s NGINX configuration.
+| Optional
+| `[]`
+
+| `automationedacontroller_verify_ssl`
+| 
+| Denotes whether or not to verify {EDAName}'s web certificates when making calls from {EDAName} to itself during installation.
+Set to false to disable web certificate verification.
+| Optional
+| `true`
+
+| `automationedacontroller_websocket_ssl_verify`
+|
+| Controls whether or not to perform SSL verification for the Daphne WebSocket used by Podman to communicate from the pod to the host.
+Set to `false` to disable SSL verification.
+| Optional
+| `true`
+
+| `eda_node_type` 
+| `eda_type` 
+| {EDAName} node type. Valid options include `api`, `event-stream`, `hybrid`, `worker`. 
+| Optional
+| `hybrid`
+
+| 
+| `eda_debug` 
+| Controls whether debug mode is enabled or disabled for {EDAName}. Set to `true` to enable debug mode for {EDAName}.
+| Optional
+| `false`
+
+| 
+| `eda_extra_settings` 
+a| Defines additional settings for use by {EDAName} during installation.
 
 For example: 
 ----
@@ -161,55 +263,73 @@ eda_extra_settings:
   - setting: RULEBOOK_READINESS_TIMEOUT_SECONDS
     value: 120
 ----
+| Optional
+| `[]`
 
-Default = `[]`
+| 
+| `eda_nginx_client_max_body_size` 
+| Maximum allowed size for data sent to {EDAName} through NGINX.
+| Optional 
+| `1m`
 
-| | `eda_main_url` | {EDAcontroller} main URL.
+| 
+| `eda_nginx_hsts_max_age` 
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {EDAName}.
+| Optional
+| `63072000`
 
-| | `eda_nginx_client_max_body_size` | NGINX maximum body size.
+| 
+| `eda_nginx_http_port` 
+| Port number that {EDAName} listens on for HTTP requests.
+| Optional
+| `8082`
 
-Default = `1m`
+| 
+| `eda_nginx_https_port` 
+| Port number that {EDAName} listens on for HTTPS requests.
+| Optional
+| `8445`
 
-| | `eda_nginx_hsts_max_age` | NGINX HSTS maximum age.
+| 
+| `eda_nginx_https_protocols` 
+| Protocols that {EDAName} will support when handling HTTPS traffic.
+| Optional
+| `[TLSv1.2, TLSv1.3]`
 
-Default = `63072000`
+| 
+| `eda_pg_socket` 
+| UNIX socket used by {EDAName} to connect to the PostgreSQL database.
+| Optional
+|
 
-| | `eda_nginx_http_port` | NGINX HTTP port.
+| 
+| `eda_redis_disable_tls` 
+| Controls whether TLS is enabled or disabled for {EDAName} Redis. Set this variable to true to disable TLS.
+| Optional
+| `false`
 
-Default = `8082`
+| 
+| `eda_redis_tls_cert` 
+| Path to the {EDAName} Redis certificate file.
+| Optional
+|
 
-| | `eda_nginx_https_port` | NGINX HTTPS port.
+|
+| `eda_redis_tls_key`
+| Path to the {EDAName} Redis key file.
+| Optional
+|
 
-Default = `8445`
+|
+| `eda_safe_plugins`
+| List of plugins that are allowed to run within {EDAName}. For more information about the usage of this variable, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-add-eda-safe-plugin-var[Adding a safe plugin variable to {EDAcontroller}].
+| Optional
+| `[]`
 
-| | `eda_nginx_https_protocols` | NGINX HTTPS protocols.
+|
+| `eda_workers`
+| Number of {EDAName} workers.
+| Optional
+|
 
-Default = `[TLSv1.2, TLSv1.3]`
-
-| | `eda_pg_socket` | PostgreSQL {EDAName} UNIX socket.
-
-| | `eda_redis_disable_tls` | Disable TLS Redis (for many nodes).
-
-Default = `false`
-
-| | `eda_redis_password` | Redis {EDAcontroller} password (for many nodes).
-
-| | `eda_redis_tls_cert` | _Optional_
-
-Path to the {EDAName} Redis certificate file.
-
-| | `eda_redis_tls_key` | _Optional_
-
-Path to the {EDAName} Redis key file.
-
-| | `eda_redis_username` | Redis {EDAcontroller} username (for many nodes).
-
-| | `eda_safe_plugins` | {EDAcontroller} safe plugins.
-
-| | `eda_secret_key` | The secret key value used by {EDAcontroller} to sign and encrypt data, ensuring secure communication and data integrity between services.
-
-| | `eda_workers` | {EDAcontroller} workers count.
-
-Default = `2`
-
-|====
+|===
