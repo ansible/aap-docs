@@ -123,6 +123,17 @@ Set to `true` to disable HTTPS for the platform UI (HTTP is used instead).
 | | `envoy_http_port` | Port number on which the Envoy proxy listens for incoming HTTP connections.
 | | `envoy_https_port` | Port number on which the Envoy proxy listens for incoming HTTPS connections.
 
+| | `gateway_extra_settings` a| Defines additional settings for use by {Gateway} during installation.
+
+For example:
+----
+gateway_extra_settings:
+  - setting: OAUTH2_PROVIDER['ACCESS_TOKEN_EXPIRE_SECONDS']
+    value: 600
+----
+
+Default = `[]`
+
 | | `gateway_nginx_client_max_body_size` | NGINX maximum body size.
 
 Default = `5m`
