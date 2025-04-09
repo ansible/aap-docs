@@ -104,7 +104,7 @@ oc create token containergroup-service-account --duration=$((365*24))h > contain
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-oc get secret  -n openshift-ingress wildcard-tls -o jsonpath='{.data.ca\.crt}' | base64 -d > containergroup-ca.crt
+oc get secret -n openshift-ingress wildcard-tls -o jsonpath='{.data.ca\.crt}' | base64 -d > containergroup-ca.crt
 ----
 +
 . Use the contents of `containergroup-sa.token` and `containergroup-ca.crt` to provide the information for the xref:ref-controller-credential-openShift[OpenShift or Kubernetes API Bearer Token] required for the container group.
