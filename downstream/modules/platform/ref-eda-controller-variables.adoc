@@ -48,7 +48,7 @@
 | `false`
 
 | `automationedacontroller_default_workers`
-|
+| `eda_workers`
 | Number of workers used in {EDAName} for application work. 
 | Optional
 | Number of cores or threads
@@ -88,6 +88,18 @@
 | Number of workers for handling the API served through Gunicorn.
 | Optional
 | (Number of cores or threads) * 2 + 1
+
+| `automationedacontroller_http_port`
+| `eda_nginx_http_port` 
+| Port number that {EDAName} listens on for HTTP requests.
+| Optional
+| RPM = `80`. Container = `8082`.
+
+| `automationedacontroller_https_port`
+| `eda_nginx_https_port` 
+| Port number that {EDAName} listens on for HTTPS requests.
+| Optional
+| RPM = `443`. Container = `8445`.
 
 | `automationedacontroller_max_running_activations` 
 | `eda_max_running_activations` 
@@ -279,18 +291,6 @@ eda_extra_settings:
 | `63072000`
 
 | 
-| `eda_nginx_http_port` 
-| Port number that {EDAName} listens on for HTTP requests.
-| Optional
-| `8082`
-
-| 
-| `eda_nginx_https_port` 
-| Port number that {EDAName} listens on for HTTPS requests.
-| Optional
-| `8445`
-
-| 
 | `eda_nginx_https_protocols` 
 | Protocols that {EDAName} will support when handling HTTPS traffic.
 | Optional
@@ -325,11 +325,5 @@ eda_extra_settings:
 | List of plugins that are allowed to run within {EDAName}. For more information about the usage of this variable, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-add-eda-safe-plugin-var[Adding a safe plugin variable to {EDAcontroller}].
 | Optional
 | `[]`
-
-|
-| `eda_workers`
-| Number of {EDAName} workers.
-| Optional
-|
 
 |===
