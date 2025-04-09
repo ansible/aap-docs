@@ -38,15 +38,38 @@ metadata:
   name: role-containergroup-service-account
   namespace: containergroup-namespace
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-- apiGroups: [""]
-  resources: ["pods/log"]
-  verbs: ["get"]
-- apiGroups: [""]
-  resources: ["pods/attach"]
-  verbs: ["get", "list", "watch", "create"]
+  - verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - ''
+    resources:
+      - pods
+  - verbs:
+      - get
+    apiGroups:
+      - ''
+    resources:
+      - pods/log
+  - verbs:
+      - create
+    apiGroups:
+      - ''
+    resources:
+      - pods/attach
+  - verbs:
+      - get
+      - create
+      - delete
+    apiGroups:
+      - ''
+    resources:
+      - secrets
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -70,25 +93,18 @@ roleRef:
 oc apply -f containergroup-sa.yml
 ----
 +
-. Get the secret name associated with the service account:
+. Get an API token by generating a service account token:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-export SA_SECRET=$(oc get sa containergroup-service-account -o json | jq '.secrets[0].name' | tr -d '"')
-----
-+
-. Get the token from the secret:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-oc get secret $(echo ${SA_SECRET}) -o json | jq '.data.token' | xargs | base64 --decode > containergroup-sa.token
+oc create token containergroup-service-account --duration=$((365*24))h > containergroup-sa.token
 ----
 +
 . Get the CA certificate:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-oc get secret $SA_SECRET -o json | jq '.data["ca.crt"]' | xargs | base64 --decode > containergroup-ca.crt
+oc get secret -n openshift-ingress wildcard-tls -o jsonpath='{.data.ca\.crt}' | base64 -d > containergroup-ca.crt
 ----
 +
 . Use the contents of `containergroup-sa.token` and `containergroup-ca.crt` to provide the information for the xref:ref-controller-credential-openShift[OpenShift or Kubernetes API Bearer Token] required for the container group.
@@ -100,5 +116,6 @@ For more information, see xref:controller-create-credential[Creating new credent
 
 . From the navigation panel, select {MenuInfrastructureInstanceGroups}.
 . Click btn:[Create group] and select *Create container group*.
-. Enter a name for your new container group and select the credential previously created to associate it to the container group.
+. Enter a name for your new container group and select the credential you created before to associate it to the container group.
 . Click btn:[Create container group].
+. Check the *Customize pod spec* box and edit the *Pod spec override* to include the namespace and service account name that you used in the previous steps.
