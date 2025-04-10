@@ -1,0 +1,160 @@
+metadata:
+  name: creating-a-job-template
+  # you can add additional metadata here
+  instructional: true
+spec:
+  displayName: Creating and running a job or workflow template
+  durationMinutes: 10
+  # Optional type section, will display as a tile on the card
+  type:
+    text: Platform
+    # 'blue' | 'cyan' | 'green' | 'orange' | 'purple' | 'red' | 'grey'
+    color: grey
+  # - The icon defined as a base64 value. Example flow:
+  # 1. Find an .svg you want to use, like from here: https://www.patternfly.org/v4/guidelines/icons/#all-icons
+  # 2. Upload the file here and encode it (output format - plain text): https://base64.guru/converter/encode/image
+  # 3. compose - `icon: data:image/svg+xml;base64,<base64 string from step 2>`
+  # - If empty string (icon: ''), will use a default rocket icon
+  # - If set to null (icon: ~) will not show an icon
+  icon: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIGlkPSJ1dWlkLWFlMzcyZWFiLWE3YjktNDU4ZC04MzkwLWI5OWZiNzhmYzFlNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMzggMzgiPjxwYXRoIGQ9Im0yOCwxSDEwQzUuMDI5NDIsMSwxLDUuMDI5NDIsMSwxMHYxOGMwLDQuOTcwNTgsNC4wMjk0Miw5LDksOWgxOGM0Ljk3MDU4LDAsOS00LjAyOTQyLDktOVYxMGMwLTQuOTcwNTgtNC4wMjk0Mi05LTktOVptNy43NSwyN2MwLDQuMjczMzgtMy40NzY2OCw3Ljc1LTcuNzUsNy43NUgxMGMtNC4yNzMzMiwwLTcuNzUtMy40NzY2Mi03Ljc1LTcuNzVWMTBjMC00LjI3MzM4LDMuNDc2NjgtNy43NSw3Ljc1LTcuNzVoMThjNC4yNzMzMiwwLDcuNzUsMy40NzY2Miw3Ljc1LDcuNzV2MThaIi8+PHBhdGggZD0ibTE0LDEwLjQ3NTU5aC0zYy0uMzQ0NzMsMC0uNjI1LjI4MDI3LS42MjUuNjI1djNjMCwuMzQ0NzMuMjgwMjcuNjI1LjYyNS42MjVoM2MuMzQ0NzMsMCwuNjI1LS4yODAyNy42MjUtLjYyNXYtM2MwLS4zNDQ3My0uMjgwMjctLjYyNS0uNjI1LS42MjVabS0uNjI1LDNoLTEuNzV2LTEuNzVoMS43NXYxLjc1WiIvPjxwYXRoIGQ9Im0yNywxMC40NzU1OWgtM2MtLjM0NDczLDAtLjYyNS4yODAyNy0uNjI1LjYyNXYzYzAsLjM0NDczLjI4MDI3LjYyNS42MjUuNjI1aDNjLjM0NDczLDAsLjYyNS0uMjgwMjcuNjI1LS42MjV2LTNjMC0uMzQ0NzMtLjI4MDI3LS42MjUtLjYyNS0uNjI1Wm0tLjYyNSwzaC0xLjc1di0xLjc1aDEuNzV2MS43NVoiLz48cGF0aCBkPSJtMjcsMjMuNDc1NTloLTNjLS4zNDQ3MywwLS42MjUuMjgwMjctLjYyNS42MjV2M2MwLC4zNDQ3My4yODAyNy42MjUuNjI1LjYyNWgzYy4zNDQ3MywwLC42MjUtLjI4MDI3LjYyNS0uNjI1di0zYzAtLjM0NDczLS4yODAyNy0uNjI1LS42MjUtLjYyNVptLS42MjUsM2gtMS43NXYtMS43NWgxLjc1djEuNzVaIi8+PHBhdGggZD0ibTE0LDIzLjQ3NTU5aC0zYy0uMzQ0NzMsMC0uNjI1LjI4MDI3LS42MjUuNjI1djNjMCwuMzQ0NzMuMjgwMjcuNjI1LjYyNS42MjVoM2MuMzQ0NzMsMCwuNjI1LS4yODAyNy42MjUtLjYyNXYtM2MwLS4zNDQ3My0uMjgwMjctLjYyNS0uNjI1LS42MjVabS0uNjI1LDNoLTEuNzV2LTEuNzVoMS43NXYxLjc1WiIvPjxwYXRoIGQ9Im0yMS4xNTUyNywxMC43NDcwN2MtMS40MDQzLS4zNTkzOC0yLjkwNjI1LS4zNTkzOC00LjMxMDU1LDAtLjMzMzk4LjA4NTk0LS41MzYxMy40MjY3Ni0uNDUwMi43NjA3NC4wODQ5Ni4zMzMwMS40MjI4NS41MzkwNi43NjA3NC40NTAyLDEuMjAzMTItLjMwODU5LDIuNDg2MzMtLjMwODU5LDMuNjg5NDUsMCwuMDUxNzYuMDEzNjcuMTA0NDkuMDE5NTMuMTU1MjcuMDE5NTMuMjc5MywwLC41MzMyLS4xODc1LjYwNTQ3LS40Njk3My4wODU5NC0uMzMzOTgtLjExNjIxLS42NzQ4LS40NTAyLS43NjA3NFoiLz48cGF0aCBkPSJtMTEuNDA3MjMsMTYuNDk1MTJjLS4zMzY5MS0uMDg5ODQtLjY3NDguMTE3MTktLjc2MDc0LjQ1MDItLjE3OTY5LjcwMTE3LS4yNzE0OCwxLjQyNjc2LS4yNzE0OCwyLjE1NTI3LDAsLjcyNzU0LjA5MTgsMS40NTMxMi4yNzE0OCwyLjE1NTI3LjA3MjI3LjI4MjIzLjMyNjE3LjQ2OTczLjYwNTQ3LjQ2OTczLjA1MDc4LDAsLjEwMzUyLS4wMDU4Ni4xNTUyNy0uMDE5NTMuMzMzOTgtLjA4NTk0LjUzNjEzLS40MjY3Ni40NTAyLS43NjA3NC0uMTU0My0uNjAxNTYtLjIzMjQyLTEuMjIxNjgtLjIzMjQyLTEuODQ0NzMsMC0uNjI0MDIuMDc4MTItMS4yNDQxNC4yMzI0Mi0xLjg0NDczLjA4NTk0LS4zMzM5OC0uMTE1MjMtLjY3NDgtLjQ1MDItLjc2MDc0WiIvPjxwYXRoIGQ9Im0yMC44NDQ3MywyNi4yNDMxNmMtMS4yMDMxMi4zMDg1OS0yLjQ4NjMzLjMwODU5LTMuNjg5NDUsMC0uMzM2OTEtLjA4Nzg5LS42NzQ4LjExNjIxLS43NjA3NC40NTAycy4xMTYyMS42NzQ4LjQ1MDIuNzYwNzRjLjcwMjE1LjE3OTY5LDEuNDI3NzMuMjcxNDgsMi4xNTUyNy4yNzE0OHMxLjQ1MzEyLS4wOTE4LDIuMTU1MjctLjI3MTQ4Yy4zMzM5OC0uMDg1OTQuNTM2MTMtLjQyNjc2LjQ1MDItLjc2MDc0LS4wODQ5Ni0uMzMzOTgtLjQyMzgzLS41MzkwNi0uNzYwNzQtLjQ1MDJaIi8+PHBhdGggZD0ibTI2LjU5Mjc3LDE2LjQ5NTEyYy0uMzM0OTYuMDg1OTQtLjUzNjEzLjQyNjc2LS40NTAyLjc2MDc0LjE1NDMuNjAwNTkuMjMyNDIsMS4yMjA3LjIzMjQyLDEuODQ0NzMsMCwuNjIzMDUtLjA3ODEyLDEuMjQzMTYtLjIzMjQyLDEuODQ0NzMtLjA4NTk0LjMzMzk4LjExNjIxLjY3NDguNDUwMi43NjA3NC4wNTE3Ni4wMTM2Ny4xMDQ0OS4wMTk1My4xNTUyNy4wMTk1My4yNzkzLDAsLjUzMzItLjE4NzUuNjA1NDctLjQ2OTczLjE3OTY5LS43MDIxNS4yNzE0OC0xLjQyNzczLjI3MTQ4LTIuMTU1MjcsMC0uNzI4NTItLjA5MTgtMS40NTQxLS4yNzE0OC0yLjE1NTI3LS4wODU5NC0uMzMzMDEtLjQyMzgzLS41NDEwMi0uNzYwNzQtLjQ1MDJaIi8+PHBhdGggZD0ibTIwLjkxMTEzLDE3LjM4NTc0YzAtMS4wNTM3MS0uODU3NDItMS45MTAxNi0xLjkxMTEzLTEuOTEwMTZzLTEuOTExMTMuODU2NDUtMS45MTExMywxLjkxMDE2YzAsLjYyNzc1LjMwODM1LDEuMTgxMDMuNzc3MjIsMS41Mjk2NmwtLjc1ODY3LDMuMDMzODFjLS4wNDY4OC4xODY1Mi0uMDA0ODguMzg0NzcuMTE0MjYuNTM2MTMuMTE4MTYuMTUxMzcuMjk5OC4yNDAyMy40OTIxOS4yNDAyM2gyLjU3MjI3Yy4xOTIzOCwwLC4zNzQwMi0uMDg4ODcuNDkyMTktLjI0MDIzLjExOTE0LS4xNTEzNy4xNjExMy0uMzQ5NjEuMTE0MjYtLjUzNjEzbC0uNzU4NjctMy4wMzM4MWMuNDY4ODctLjM0ODYzLjc3NzIyLS45MDE5Mi43NzcyMi0xLjUyOTY2Wm0tMi4zOTY0OCw0LjA4OTg0bC40ODUzNS0xLjk0MTQxLjQ4NTM1LDEuOTQxNDFoLS45NzA3Wm0uNDg1MzUtMy40Mjg3MWMtLjM2NDI2LDAtLjY2MTEzLS4yOTY4OC0uNjYxMTMtLjY2MTEzcy4yOTY4OC0uNjYwMTYuNjYxMTMtLjY2MDE2LjY2MTEzLjI5NTkuNjYxMTMuNjYwMTYtLjI5Njg4LjY2MTEzLS42NjExMy42NjExM1oiLz48L3N2Zz4=
+  prerequisites:
+    - You have a valid Ansible Automation Platform subscription.
+  description: |-
+    Create and run a job or workflow template.
+
+    Persona: Platform administrator, Automation developer
+  introduction: |-
+   A job template combines an Ansible playbook from a project and the settings required to launch it. 
+   Job templates are used for executing the same job many times and encouraging the reuse of Ansible playbook content. 
+   For more information, see [Creating a job template](https://docs.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index#controller-create-job-template).
+  tasks:
+    - title: Get started with job templates
+      description: |-
+        ## To view a demo job template:
+
+          1. From the navigation panel, select **Automation Execution** > **Templates**.
+
+          2. Click **Demo Job Template**. 
+          As part of the initial setup, a **Demo Job Template** is created to help you get started, but you can also create your own.
+
+    - title: Create a job template
+      description: |-
+        ##To create a job template:
+
+          1. From the navigation panel, select **Automation Execution** > **Templates**.
+          
+          2. On the **Templates** list view, click **Create template → Create job template**.
+
+          3. Complete the following mandatory fields:
+              [If a field has the **Prompt on launch** checkbox selected, launching the job prompts you for the value for that field when launching. Most prompted values override any values set in the job template.]{{admonition tip}}
+           
+              - **Name**: Give a unique name for your job template. 
+              - **Job Type**: Select a job template type.
+              - **Inventory**: Select the inventory that the job template runs against.
+              A system administrator must grant you or your team permissions to be able to use certain inventories in a job template.
+              - **Project**: Select the project containing your Ansible playbooks.
+              - **Playbook**: Specify the playbook that the job template executes.
+              
+              Optional: Complete the following fields:
+
+                  - **Description**: Enter a description as appropriate.
+                  - **ExecutionEnvironment**: Select the container image to use for this job.
+                  - **Credentials**: Select credentials for accessing the nodes this job runs against.
+                  - **Labels**: Optional labels that describe this job template, such as `dev` or `test`.
+                  - **Forks**: The number of parallel or simultaneous processes to use while executing the playbook.
+                  - **Limit**: A host pattern to further constrain the list of hosts managed or affected by the playbook.
+                  - **Verbosity**: Control the level of output Ansible produces as the playbook executes.
+                  - **Job slicing**: Specify the number of slices you want this job template to run.
+                  - **Timeout**: This enables you to specify the length of time (in seconds) that the job might run before it is canceled.
+                  - **Show changes**: If enabled, show the changes made by Ansible tasks, where supported.
+                  - **Instance groups**: Select the instance groups for this job template to run on.
+                  - **Job tags**: Tags are useful when you have a large playbook, and you want to run a specific part of a play or task.
+                  - **Skip tags**: Skip tags are useful when you have a large playbook, and you want to skip specific parts of a play or task.
+                  - **Extra variables**: Apply optional extra variables to be applied to the job template.
+            <p>&nbsp;</p>
+          4. Optional: Configure the following options:
+
+              - **Privilege escalation**: If checked, you enable this playbook to run as an administrator. 
+              This is the equivalent of passing the `--become` option to the `ansible-playbook` command.
+              - **Provisioning callback**:  If checked, you enable a host to call back to the automation controller through the REST API and start the launch of a job from this job template.
+              - **Enable webhook**: If checked, you turn on the ability to interface with a predefined SCM system web service that is used to launch a job template.
+              - **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously.
+              - **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
+              - **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the Instance Groups field to execute the job. 
+              If clear, all available instances in the execution pool are used based on the hierarchy.
+          5. Click **Create job template**.
+      review:
+        instructions: |-
+          #### To verify that you have created a job template:
+          Is the job template listed on the **Templates** list view?
+        failedTaskHelp: This task is not verified yet. Try the task again. For more information about job templates, see the [Job templates](https://docs.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index#controller-job-templates). 
+      summary:
+        success: You have viewed the details of your job template!
+        failed: Try the steps again. 
+
+    - title: Create a worklfow job template
+      description: |-
+        ##To create a workflow job template:
+
+          1. From the navigation panel, select **Automation Execution** > **Templates**.
+          
+          2. On the **Templates** list view, click **Create template → Create workflow job template**.
+
+          3. Complete the following fields:
+              [If a field has the **Prompt on launch** checkbox selected, launching the job prompts you for the value for that field when launching. Most prompted values override any values set in the job template.]{{admonition tip}}
+           
+              - **Name**: Give a unique name for your job template. 
+              - **Description**: Optionally, enter an arbitrary description as appropriate.
+              - **Organization**: Choose the organization to use with this template from the organizations available to the logged in user.
+              - **Inventory**: Optionally, select the inventory to use with this template from the inventories available to the logged in user.
+              - **Limit**: Give a host pattern to further constrain the list of hosts that will be managed or affected by the playbook. 
+              Many patterns are allowed. Refer to Ansible documentation for more information and examples on patterns.
+              - **Source control branch**: Select a branch for the workflow. This branch is applied to all workflow job template nodes that prompt for a branch.
+              - **Labels**: Optional labels that describe this job template, such as 'dev' or 'test'. Use labels to group and filter job templates and completed jobs.
+              - **Job tags**: Tags are useful when you have a large playbook, and you want to run a specific part of a play or task. 
+              Use commas to separate tags.
+              - **Skip Tags**: Skip tags are useful when you have a large playbook, and you want to skip specific parts of a play or task. Use commas to separate multiple tags.
+              - **Extra Variables**: Optional extra variables to be applied to the job template.
+          
+          4. Specify the following **Options** for launching this template, if necessary:
+              - Check **Enable webhook** to turn on the ability to interface with a predefined source code management (SCM) system web service that is used to launch a workflow job template. 
+              GitHub and GitLab are the supported SCM systems.
+                 - If you enable webhooks, other fields display, prompting for additional information:
+                    - **Webhook service**: Select which service to listen for webhooks from.
+                    - **Webhook URL**: Optionally, select a webhook service.
+                    - **Webhook key**: Generated shared secret to be used by the webhook service to sign payloads sent to automation controller. 
+                    You must configure this in the settings on the webhook service so that webhooks from this service are accepted in automation controller.
+              - Check **Enable concurrent jobs** to allow simultaneous runs of this workflow.
+          
+          5. Click **Create workflow job** template.
+
+      review:
+        instructions: |-
+          #### To verify that you have created a worfklow job template:
+          Is the workflow job template listed on the **Templates** list view?
+        failedTaskHelp: This task is not verified yet. Try the task again. For more information about workflow job templates, see [Workflow job templates](https://docs.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index#controller-workflow-job-templates).
+      summary:
+        success: You have viewed the details of your job template!
+        failed: Try the steps again. 
+
+    - title: Launch a job template
+      description: |-
+        ##To launch a job template:
+
+        A benefit of automation controller is the push-button deployment of Ansible playbooks. 
+        You can configure a template to store all the parameters that you would normally pass to the Ansible playbook on the command line. 
+        In addition to the playbooks, the template passes the inventory, credentials, extra variables, and all options and settings that you can specify on the command line.
+
+        Easier deployments drive consistency, by running your playbooks the same way each time, and allowing you to delegate responsibilities.
+        
+        Run a job template by using one of these methods:
+
+        - From the navigation panel, select **Automation Execution** > **Templates** > **Launch template**.
+        - In the job template **Details** view of the job template you want to launch, click **Launch template**.
+
+        For more information, see [Launching a job template](https://docs.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.5/html-single/using_automation_execution/index#controller-launch-job-template).
+
+  conclusion: You successfully completed the creating and running a job or workflow template steps! If you
+    want to learn how to create a rulebook activation, take the **Creating a rulebook activation** quick start.
+
+  nextQuickStart: [creating-a-rulebook-activation]
