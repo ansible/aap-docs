@@ -2,128 +2,241 @@
 [id="ref-gateway-variables"]
 = {GatewayStart} variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-| `automationgateway_admin_email` | `gateway_admin_email` | The email address used for the admin user for {Gateway}.
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-| `automationgateway_admin_password` | `gateway_admin_password` | _Required_
+| `automationgateway_admin_email` 
+| `gateway_admin_email` 
+| Email address used by Django for the admin user for {Gateway}.
+| Optional
+| `admin@example.com`
 
-The admin password used to connect to the {Gateway} instance.
+| `automationgateway_admin_password` 
+| `gateway_admin_password` 
+| {GatewayStart} administrator password. Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+| Required
+| 
 
-Passwords must be enclosed in quotes when they are provided in plain text in the `inventory` file.
+| `automationgateway_admin_username` 
+| `gateway_admin_user` 
+| Username used to identify and create the administrator user in {Gateway}.
+| Optional
+| `admin`
 
-Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
+| `automationgateway_cache_tls_files_remote`
+| 
+| Denote whether the cache cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-| `automationgateway_admin_username` | `gateway_admin_user` | _Optional_
+| `automationgateway_client_regen_cert`
+| 
+| Controls whether or not to regenerate {Gateway} client certificates for the platform cache. Set to `true` to regenerate {Gateway} client certificates.
+| Optional
+| `false`
 
-The username used to identify and create the admin superuser in {Gateway}.
+| `automationgateway_control_plane_port`
+| `gateway_control_plane_port`
+| Port number for the {Gateway} control plane.
+| Optional
+| `50051`
 
-Default = `admin`
+| `automationgateway_debug`
+| 
+| Controls whether debug mode is enabled or disabled for {Gateway}. Set to `true` to enable debug mode for {Gateway}.
+| Optional
+| `false`
 
-| `automationgateway_disable_hsts` | `gateway_nginx_disable_hsts` | _Optional_
+| `automationgateway_disable_hsts` 
+| `gateway_nginx_disable_hsts` 
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {Gateway}. Set this variable to `true` to disable HSTS.
+| Optional
+| `false`
 
-Disable NGINX HSTS.
+| `automationgateway_disable_https` 
+| `gateway_nginx_disable_https` 
+| Controls whether HTTPS is enabled or disabled for {Gateway}. Set this variable to `true` to disable HTTPS.
+| Optional
+| `false`
 
-Default = `false`
+| `automationgateway_firewalld_zone` 
+| `gateway_proxy_firewall_zone` 
+| The firewall zone where {Gateway} related firewall rules are applied. This controls which networks can access {Gateway} based on the zone's trust level.
+| Optional
+| RPM = no default set. Container = 'public'
 
-| `automationgateway_disable_https` | `gateway_nginx_disable_https` | _Optional_
+| `automationgateway_grpc_auth_service_timeout` 
+| `gateway_grpc_auth_service_timeout` 
+| Timeout duration (in seconds) for requests made to the gRPC service on {Gateway}.
+| Optional
+| `30s`
 
-Disable NGINX HTTPS.
+| `automationgateway_grpc_server_max_threads_per_process` 
+| `gateway_grpc_server_max_threads_per_process` 
+| Maximum number of threads that each gRPC server process can create to handle requests on {Gateway}.
+| Optional
+| `10`
 
-Default = `false`
+| `automationgateway_grpc_server_processes` 
+| `gateway_grpc_server_processes` 
+| Number of processes for handling gRPC requests on {Gateway}. 
+| Optional
+| `5`
 
-| `automationgateway_firewalld_zone` | `gateway_proxy_firewall_zone` | The firewall zone where {Gateway} related firewall rules are applied. This controls which networks can access {Gateway} based on the zone's trust level.
+| `automationgateway_http_port`
+| `gateway_nginx_http_port`
+| Port number that {Gateway} listens on for HTTP requests.
+| Optional
+| RPM = `8080`. Container = `8083`.
 
-Default = `public`
+| `automationgateway_https_port`
+| `gateway_nginx_https_port`
+| Port number that {Gateway} listens on for HTTPS requests.
+| Optional
+| RPM = `8443`. Container = `8446`.
 
-| `automationgateway_grpc_auth_service_timeout` | `gateway_grpc_auth_service_timeout` | {GatewayStart} auth server timeout.
+| `automationgateway_main_url` 
+| `gateway_main_url` 
+| URL of the main instance of {Gateway} that clients connect to. Use if you are performing a clustered deployment and you need to use the URL of the load balancer instead of the component's server. The URL must start with `http://` or `https://` prefix.
+| Optional
+|
 
-Default = `30s`
+| `automationgateway_nginx_tls_files_remote`
+| 
+| Denote whether the web cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-| `automationgateway_grpc_server_max_threads_per_process` | `gateway_grpc_server_max_threads_per_process` | {GatewayStart} auth server threads per process.
+| `automationgateway_pg_cert_auth` 
+| `gateway_pg_cert_auth` 
+| Controls whether client certificate authentication is enabled or disabled on the {Gateway} PostgreSQL database. Set this variable to `true` to enable client certificate authentication.
+| Optional
+| `false`
 
-Default = `10`
+| `automationgateway_pg_database` 
+| `gateway_pg_database` 
+| Name of the PostgreSQL database used by {Gateway}.
+| Optional
+| `gateway`
 
-| `automationgateway_grpc_server_processes` | `gateway_grpc_server_processes` | {GatewayStart} auth server processes
+| `automationgateway_pg_host` 
+| `gateway_pg_host` 
+| Hostname of the PostgreSQL database used by {Gateway}.
+| Required
+| 
 
-Default = `5`
+| `automationgateway_pg_password` 
+| `gateway_pg_password` 
+| Password for the {Gateway} PostgreSQL database user. Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| Optional
+|
 
-| `automationgateway_main_url` | `gateway_main_url` | _Optional_
+| `automationgateway_pg_port` 
+| `gateway_pg_port` 
+| Port number for the PostgreSQL database used by {Gateway}.
+| Optional
+| `5432`
 
-The main {Gateway} URL that clients will connect to (e.g. `\https://<gateway_node>`).
+| `automationgateway_pg_sslmode` 
+| `gateway_pg_sslmode` 
+| Controls the SSL mode to use when {Gateway} connects to the PostgreSQL database. Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
+| Optional
+| `prefer`
 
-If not specified, the first the first node in the `[automationgateway]` group will be used when needed.
+| `automationgateway_pg_username` 
+| `gateway_pg_username` 
+| Username for the {Gateway} PostgreSQL database user.
+| Optional
+| RPM = `automationgateway`. Container = `gateway`
 
-| `automationgateway_pg_cert_auth` | `gateway_pg_cert_auth` | Set this variable to `true` to enable client certificate authentication.
+| `automationgateway_pgclient_sslcert` 
+| `gateway_pg_tls_cert` 
+| Path to the PostgreSQL SSL/TLS certificate file for {Gateway}.
+| Required if using client certificate authentication.
+|
 
-Default = `false`
+| `automationgateway_pgclient_sslkey` 
+| `gateway_pg_tls_key` 
+| Path to the PostgreSQL SSL/TLS key file for {Gateway}.
+| Required if using client certificate authentication.
+|
 
-| `automationgateway_pg_database` | `gateway_pg_database` | The name of the PostgreSQL database used by {Gateway}.
+| `automationgateway_pgclient_tls_files_remote`
+|
+| Denote whether the PostgreSQL client cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-RPM default = `automationgateway`
+| `automationgateway_redis_host` 
+| `gateway_redis_host` 
+| Hostname of the Redis host used by {Gateway}. 
+| Optional
+| First node in the `[automationgateway]` inventory group.
 
-Container default = `gateway`
+| `automationgateway_redis_password`
+| `gateway_redis_password`
+| Password for {Gateway} Redis.
+| Optional
+| Randomly generated string.
 
-| `automationgateway_pg_host` | `gateway_pg_host` | _Required_
+| `automationgateway_redis_username`
+| `gateway_redis_username`
+| Username for {Gateway} Redis.
+| Optional
+| `gateway`
 
-The hostname of the PostgreSQL database used by {Gateway}.
+| `automationgateway_secret_key`
+| `gateway_secret_key`
+| Secret key value used by {Gateway} to sign and encrypt data.
+| Optional
+|
 
-Default = `127.0.0.1`
+| `automationgateway_ssl_cert` 
+| `gateway_tls_cert` 
+| Path to the SSL/TLS certificate file for {Gateway}.
+| Optional
+|
 
-| `automationgateway_pg_password` | `gateway_pg_password` | Required if not using client certificate authentication.
+| `automationgateway_ssl_key` 
+| `gateway_tls_key` 
+| Path to the SSL/TLS key file for {Gateway}.
+| Optional
+|
 
-The password for the {Gateway} PostgreSQL database.
+| `automationgateway_tls_files_remote`
+| `gateway_tls_remote`
+| Denote whether the {Gateway} provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| `automationgateway_user_headers`
+| `gateway_nginx_user_headers`
+| List of additional NGINX headers to add to {Gateway}'s NGINX configuration.
+| Optional
+| `[]`
 
-| `automationgateway_pg_port` | `gateway_pg_port` | Required if not using an internal database.
+| `automationgatewayproxy_disable_https`
+| `envoy_disable_https`
+| Controls whether or not HTTPS is disabled when accessing the platform UI. Set to `true` to disable HTTPS (HTTP is used instead).
+| Optional
+| `false`
 
-The port number of the PostgreSQL database used by {Gateway}.
+| `automationgatewayproxy_http_port`
+| `envoy_http_port`
+| Port number on which the Envoy proxy listens for incoming HTTP connections.
+| Optional
+| `80`
 
-Default = `5432`
+| `automationgatewayproxy_https_port`
+| `envoy_https_port`
+| Port number on which the Envoy proxy listens for incoming HTTPS connections.
+| Optional
+| `443`
 
-| `automationgateway_pg_sslmode` | `gateway_pg_sslmode` | Determines the level of encryption and authentication for client server connections.
-
-Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
-
-Default = `prefer`
-
-| `automationgateway_pg_username` | `gateway_pg_username` | The username for the {Gateway} PostgreSQL database.
-
-RPM default = `automationgateway`
-
-Container default = `gateway`
-
-| `automationgateway_pgclient_sslcert` | `gateway_pg_tls_cert` | Required if using client certificate authentication.
-
-Path to the PostgreSQL SSL/TLS certificate file for {Gateway}.
-
-| `automationgateway_pgclient_sslkey` | `gateway_pg_tls_key` | Required if using client certificate authentication.
-
-Path to the PostgreSQL SSL/TLS key file for {Gateway}.
-
-| `automationgateway_redis_host` | `gateway_redis_host` | The Redis hostname used by {Gateway}.
-
-| `automationgateway_redis_port` | `gateway_redis_port` | The Redis {Gateway} port.
-
-Default = `6379`
-
-| `automationgateway_ssl_cert` | `gateway_tls_cert` | _Optional_
-
-Path to the SSL/TLS certificate file for {Gateway}.
-
-| `automationgateway_ssl_key` | `gateway_tls_key` | _Optional_
-
-Path to the SSL/TLS key file for {Gateway}.
-
-| | `envoy_disable_https` | Controls whether or not HTTPS is disabled when accessing the platform UI.
-Set to `true` to disable HTTPS for the platform UI (HTTP is used instead).
-
-| | `envoy_http_port` | Port number on which the Envoy proxy listens for incoming HTTP connections.
-| | `envoy_https_port` | Port number on which the Envoy proxy listens for incoming HTTPS connections.
-
-| | `gateway_extra_settings` a| Defines additional settings for use by {Gateway} during installation.
+| 
+| `gateway_extra_settings` 
+a| Defines additional settings for use by {Gateway} during installation.
 
 For example:
 ----
@@ -131,53 +244,55 @@ gateway_extra_settings:
   - setting: OAUTH2_PROVIDER['ACCESS_TOKEN_EXPIRE_SECONDS']
     value: 600
 ----
+| Optional
+| `[]`
 
-Default = `[]`
+| 
+| `gateway_nginx_client_max_body_size` 
+| Maximum allowed size for data sent to {Gateway} through NGINX.
+| Optional
+| `5m`
 
-| | `gateway_nginx_client_max_body_size` | NGINX maximum body size.
+| 
+| `gateway_nginx_hsts_max_age` 
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {Gateway}.
+| Optional
+| `63072000`
 
-Default = `5m`
+| 
+| `gateway_nginx_https_protocols` 
+| Protocols that {Gateway} will support when handling HTTPS traffic.
+| Optional
+| `[TLSv1.2, TLSv1.3]`
 
-| | `gateway_nginx_hsts_max_age` | NGINX HSTS maximum age.
+| 
+| `gateway_redis_disable_tls` 
+| Controls whether TLS is enabled or disabled for {Gateway} Redis. Set this variable to `true` to disable TLS.
+| Optional
+| `false`
 
-Default = `63072000`
+| `automationgateway_redis_port` 
+| `gateway_redis_port` 
+| Port number for the Redis host for {Gateway}.
+| Optional
+| `6379`
 
-| | `gateway_nginx_http_port` | NGINX HTTP port.
+| 
+| `gateway_redis_tls_cert` 
+| Path to the {Gateway} Redis certificate file.
+| Optional
+|
 
-| | `gateway_nginx_https_port` | NGINX HTTPS port.
+| 
+| `gateway_redis_tls_key` 
+| Path to the {Gateway} Redis key file.
+| Optional
+|
 
-| | `gateway_nginx_https_protocols` | NGINX HTTPS protocols.
+| 
+| `gateway_uwsgi_listen_queue_size` 
+| Number of requests `uwsgi` will allow in the queue on {Gateway} until `uwsgi_processes` can serve them.
+| Optional
+| `4096`
 
-Default = `[TLSv1.2, TLSv1.3]`
-
-| | `gateway_nginx_user_headers` | Custom NGINX headers.
-
-| | `gateway_redis_disable_tls` | Disable TLS Redis.
-
-Default = `false`
-
-| | `gateway_redis_password` | Redis {Gateway} password.
-
-| | `gateway_redis_tls_cert` | _Optional_
-
-Path to the {Gateway} Redis certificate file.
-
-| | `gateway_redis_tls_key` | _Optional_
-
-Path to the {Gateway} Redis key file.
-
-| | `gateway_redis_username` | Redis {Gateway} username.
-
-Default = `gateway`
-
-| | `gateway_secret_key` | The secret key value used by {Gateway} to sign and encrypt data, ensuring secure communication and data integrity between services.
-
-| | `gateway_tls_remote` | {GatewayStart} TLS remote files.
-
-Default = `false`
-
-| | `gateway_uwsgi_listen_queue_size` | {GatewayStart} uWSGI listen queue size.
-
-Default = `4096`
-
-|====
+|===
