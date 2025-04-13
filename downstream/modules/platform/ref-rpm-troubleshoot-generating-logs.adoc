@@ -1,0 +1,61 @@
+[id="ref-rpm-troubleshoot-generating-logs"]
+
+= Gathering {PlatformNameShort} logs
+
+With the `sos` utility, you can collect configuration, diagnostic, and troubleshooting data, and provide those files to Red Hat Technical Support. An `sos` report is a common starting point for Red Hat technical support engineers when performing analysis of a service request for the {PlatformNameShort}. 
+
+As part of the troubleshooting with Red Hat Support, you can collect the `sos` report for each node in your RPM installation of {PlatformNameShort} using the installation inventory and the installer.
+
+.Procedure
+
+. Access the installer folder with the inventory file and run the installer setup script the following command:
++
+`$ ./setup.sh -s`
++
+With this command, you can connect to each node present in the inventory, install the `sos` tool, and generate new logs.
++
+[NOTE]
+====
+If you are running the setup as a non-root user with sudo privileges, you can use the following command:
+----
+$ ANSIBLE_BECOME_METHOD='sudo'
+ANSIBLE_BECOME=True ./setup.sh -s
+---- 
+====
+
+. _Optional_: If required, change the location of the `sos` report files.
++
+The `sos` report files are copied to the `/tmp` folder for the current server. To change the location, specify the new location by using the following command:
++
+----
+$ ./setup.sh -e 'target_sos_directory=/path/to/files' -s
+----
++
+Where `target_sos_directory=/path/to/files` is used to specify the destination directory where the `sos` report will be saved. In this case, the `sos` report is stored in the directory `/path/to/files`.
+
+. Gather the files described on the playbook output and share with the support engineer or directly upload the `sos` report to Red Hat. 
++
+To create an `sos` report with additional information or directly upload the data to Red Hat, use the following command:
++
+----
+$ ./setup.sh -e 'case_number=0000000' -e 'clean=true' -e 'upload=true' -s
+----
++
+.Parameter Reference Table
+[%header, cols="a,a,a"]
+[%autowidth]
+|===
+|Parameter |Description |Default value |
+
+`case_number`| Specifies the support case number that you want. | - |
+
+`clean`| Obfuscates sensitive data that might be present on the `sos` report. | `false` |
+
+`upload`| Automatically uploads the `sos` report data to Red Hat. | `false` |
+|===
+
+To know more about the `sos` report tool, see the KCS article: link:https://access.redhat.com/solutions/3592[What is an sos report and how to create one in Red Hat Enterprise Linux?] 
+
+
+
+
