@@ -48,3 +48,31 @@ The following error message is displayed: +
 `Your trial to the generative AI model has expired. Refer to your IBM Cloud Account to re-enable access to the {ibmwatsonxcodeassistant}.`
 
 To resolve this error, refer to your IBM Cloud account and select an upgrade option. 
+
+== Cannot connect to the Ansible VS Code extension when using a proxy configuration
+
+You might encounter errors when connecting with to the Ansible VS Code extension through a proxy. Connections to the Ansible Lightspeed portal link:https://c.ai.ansible.redhat.com[https://c.ai.ansible.redhat.com] fail and the Ansible logs display one ore more of the following lines that confirm that your proxy is blocking the connection: 
+
+....
+[ansible-lightspeed-oauth] error message: Request failed with status code
+[ansible-lightspeed-oauth] error response data:
+[ansible-lightspeed-user] error response data:
+....
+
+To resolve this issue, you must add the Ansible Lightspeed portal URL link:https://c.ai.ansible.redhat.com[https://c.ai.ansible.redhat.com] and link:https://sso.redhat.com[https://sso.redhat.com] (if RH-SSO is used to authenticate users) in the VS Code proxy settings. 
+
+Perform the following steps:
+
+. Open Visual Studio Code.
+. Navigate to *Code* > *Settings* > *Settings*. 
+. From the *Settings* editor, select menu:Application[Proxy]. 
+. In the *Proxy* field, add the following URLs:
+
+* `*\https://c.ai.ansible.redhat.com/*` 
+* `*\https://sso.redhat.com*`, if RH-SSO is used to authenticate users 
+
+. From the *Proxy Support* list, select *override*. 
++
+You should now be able to access the Ansible Lightspeed portal link:https://c.ai.ansible.redhat.com[https://c.ai.ansible.redhat.com] through a proxy.  
+
+For information about how to set up proxy support in VS Code, see link:https://code.visualstudio.com/docs/setup/network#_proxy-server-support[Proxy server support] in VS Code documentation and link:https://www.chromium.org/developers/design-documents/network-stack/proxy-settings-fallback/[Proxy settings and fallback] in The Chromium Project documentation.
