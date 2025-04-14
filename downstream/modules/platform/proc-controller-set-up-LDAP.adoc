@@ -75,6 +75,39 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 . In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name`. 
 . In the *LDAP User Search* field, enter where to search for users during authentication. 
 +
+----
+{
+"OU=Users,DC=website,DC=com",
+"SCOPE_SUBTREE",
+"(cn=%(user)s)"
+}
+----
++
+If the *LDAP User DN Template* is not set, {PlatformNameShort} authenticates to LDAP using the *Bind DN Template* and *LDAP Bind Password*. Once authenticated, it performs an LDAP search to locate the user specified by this field. If the user is found, {PlatformNameShort} validates the provided password against the user found by the LDAP search. 
+Multiple search queries are supported for users with `LDAPUnion` by entering multiple search terms. For example:
++
+----
+{
+    {
+        "ou=users,dc=example,dc=com",
+        "SCOPE_SUBTREE",
+        "uid=%(user)s"
+    },
+     {
+        "ou=employees,dc=subdivision,dc=com",
+        "SCOPE_SUBTREE",
+        "uid=%(user)s"
+    }
+}
+----
++
+If non-unique users are found during multiple searches, those users will not be able to login to {PlatformNameShort}. Based on the example provided, if a user with `uid=jdoe` was found in both the `ou=users,dc=example,dc=com` and `ou=employees,dc=subdivision,dc=com`, neither `jdoe` user would be able to login. Other users that are found in either branch would still be able to login.
++
+[NOTE]
+====
+If the field  *LDAP User DN Template* is populated, it takes precedence over the  *LDAP User Search* field and only the template will be used to authenticate users.
+====
++
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 +
 . Click btn:[Next].
