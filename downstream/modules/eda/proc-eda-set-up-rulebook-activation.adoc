@@ -51,6 +51,11 @@ Service name:: This defines a service name for Kubernetes to configure inbound c
 Rulebook activation enabled?:: This automatically enables the rulebook activation to run.
 Variables:: The variables for the rulebook are in a JSON or YAML format.
 The content would be equivalent to the file passed through the `--vars` flag of ansible-rulebook command.
++
+[IMPORTANT]
+====
+In the context of {ControllerName} and {EDAcontroller}, you can use both `extra_vars` and credentials to store a variety of information. However, credentials are the preferred method of storing sensitive information such as passwords or API keys because they offer better security and centralized management, whereas `extra_vars` are more suitable for passing dynamic, non-sensitive data.
+====
 Options:: Check the *Skip audit events* option if you do not want to see your events in the Rule Audit.
 
 . Click btn:[Create rulebook activation].
