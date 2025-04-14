@@ -7,6 +7,8 @@
 * When using an external database with {PlatformNameShort}, you must create and maintain that database. Ensure that you clear your external database when uninstalling {PlatformNameShort}.
 
 * {PlatformName} {PlatformVers} uses {PostgresVers} and requires the external (customer supported) databases to have ICU support.
+
+* During configuration of an external database, you must check the external database coverage. For more information, see link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage].
 ====  
 
 {PlatformName} {PlatformVers} uses {PostgresVers} and requires the external (customer supported) databases to have ICU support. Use the following procedure to configure an external PostgreSQL compliant database for use with an {PlatformNameShort} component, for example {ControllerName}, {EDAName}, {HubName}, and {Gateway}.
@@ -47,111 +49,92 @@ If so, connection string parameters override any conflicting command line option
 
 . Create the user, database, and password with the `createDB` or `administrator` role assigned to the user. 
 For further information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
-. Add the database credentials and host details to the installation program's inventory file under the `[all:vars]` group.
-+
-.Without mutual TLS (mTLS) authentication to the database
-Use the following inventory file snippet to configure each component's database without mTLS authentication. Uncomment the configuration you need.
 
-+
-[source,yaml,subs="+attributes"]
-----
-[all:vars]
-# {ControllerNameStart} database variables
-
-# awx_install_pg_host=data.example.com 
-# awx_install_pg_port=<port_number> 
-# awx_install_pg_database=<database_name> 
-# awx_install_pg_username=<username>
-# awx_install_pg_password=<password> # This is not required if you enable mTLS authentication to the database
-# pg_sslmode=prefer # Set to verify-ca or verify-full to enable mTLS authentication to the database
-
-
-# {EDAName} database variables
-
-# automationedacontroller_install_pg_host=data.example.com 
-# automationedacontroller_install_pg_port=<port_number> 
-# automationedacontroller_install_pg_database=<database_name> 
-# automationedacontroller_install_pg_username=<username>
-# automationedacontroller_install_pg_password=<password> # This is not required if you enable mTLS authentication to the database
-# automationedacontroller_pg_sslmode=prefer # Set to verify-full to enable mTLS authentication to the database
-
-
-# {HubNameStart} database variables
-
-# automationhub_pg_host=data.example.com 
-# automationhub_pg_port=<port_number> 
-# automationhub_pg_database=<database_name> 
-# automationhub_pg_username=<username>
-# automationhub_pg_password=<password> # This is not required if you enable mTLS authentication to the database
-# automationhub_pg_sslmode=prefer # Set to verify-ca or verify-full to enable mTLS authentication to the database
-
-
-# {GatewayStart} database variables
-
-# automationgateway_install_pg_host=data.example.com 
-# automationgateway_install_pg_port=<port_number> 
-# automationgateway_install_pg_database=<database_name> 
-# automationgateway_install_pg_username=<username>
-# automationgateway_install_pg_password=<password> # This is not required if you enable mTLS authentication to the database
-# automationgateway_pg_sslmode=prefer # Set to verify-ca or verify-full to enable mTLS authentication to the database
-----
-+
-.With mTLS authentication to the database
-
-Use the following inventory file snippet to configure each component's database with mTLS authentication. Uncomment the configuration you need.
-+
-[source,yaml,subs="+attributes"]
-----
-[all:vars]
-# {ControllerNameStart} database variables
-
-# awx_install_pg_host=data.example.com 
-# awx_install_pg_port=<port_number> 
-# awx_install_pg_database=<database_name> 
-# awx_install_pg_username=<username>
-# pg_sslmode=verify-full # This can be either verify-ca or verify-full
-# pgclient_sslcert=/path/to/cert # Path to the certificate file 
-# pgclient_sslkey=/path/to/key # Path to the key file
-
-
-# {EDAName} database variables
-
-# automationedacontroller_install_pg_host=data.example.com 
-# automationedacontroller_install_pg_port=<port_number> 
-# automationedacontroller_install_pg_database=<database_name> 
-# automationedacontroller_install_pg_username=<username>
-# automationedacontroller_pg_sslmode=verify-full # EDA does not support verify-ca
-# automationedacontroller_pgclient_sslcert=/path/to/cert # Path to the certificate file 
-# automationedacontroller_pgclient_sslkey=/path/to/key # Path to the key file
-
-
-# {HubNameStart} database variables
-
-# automationhub_pg_host=data.example.com 
-# automationhub_pg_port=<port_number> 
-# automationhub_pg_database=<database_name> 
-# automationhub_pg_username=<username>
-# automationhub_pg_sslmode=verify-full # This can be either verify-ca or verify-full
-# automationhub_pgclient_sslcert=/path/to/cert # Path to the certificate file 
-# automationhub_pgclient_sslkey=/path/to/key # Path to the key file
-
-
-# {GatewayStart} database variables
-
-# automationgateway_install_pg_host=data.example.com 
-# automationgateway_install_pg_port=<port_number> 
-# automationgateway_install_pg_database=<database_name> 
-# automationgateway_install_pg_username=<username>
-# automationgateway_pg_sslmode=verify-full # This can be either verify-ca or verify-full
-# automationgateway_pgclient_sslcert=/path/to/cert # Path to the certificate file 
-# automationgateway_pgclient_sslkey=/path/to/key # Path to the key file
-----
-+
 . Run the installation program. If you are using a PostgreSQL database, the database is owned by the connecting user and must have a `createDB` or administrator role assigned to it.
+
 . Check that you can connect to the created database with the credentials provided in the inventory file.
+
 . Check the permission of the user. The user should have the `createDB` or administrator role.
+
+. After you create the PostgreSQL users and databases for each component, add the database credentials and host details in the inventory file under the [all:vars] group.
++
+[source,yaml,subs="+attributes"]
+----
+# {ControllerNameStart}
+pg_host=data.example.com
+pg_database=<database name>
+pg_port=<port_number>
+pg_username=<set your own>
+pg_password=<set your own>
+
+# {GatewayStart}
+automationgateway_pg_host=aap.example.org
+automationgateway_pg_database=<set your own>
+automationgateway_pg_port=<port_number>
+automationgateway_pg_username=<set your own>
+automationgateway_pg_password=<set your own>
+
+# {HubNameStart}
+automationhub_pg_host=data.example.com
+automationhub_pg_database=<database_name>
+automationhub_pg_port=<port_number>
+automationhub_pg_username=<username>
+automationhub_pg_password=<password> 
+
+# {EDAName}
+automationedacontroller_pg_host=data.example.com
+automationedacontroller_pg_database=<database_name>
+automationedacontroller_pg_port=<port_number>
+automationedacontroller_pg_username=<username>
+automationedacontroller_pg_password=<password>
+----
+
+== Optional: Enabling mutual TLS (mTLS) authentication
+
+mTLS authentication is disabled by default. To configure each component's database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
+
+[source,yaml,subs="+attributes"]
+----
+# {ControllerNameStart}
+pgclient_sslcert=/path/to/awx.cert
+pgclient_sslkey=/path/to/awx.key
+pg_sslmode=verify-full or verify-ca
+
+# {GatewayStart}
+automationgateway_pgclient_sslcert=/path/to/gateway.cert
+automationgateway_pgclient_sslkey=/path/to/gateway.key
+automationgateway_pg_sslmode=verify-full or verify-ca
+
+# {HubNameStart}
+automationhub_pgclient_sslcert=/path/to/pulp.cert
+automationhub_pgclient_sslkey=/path/to/pulp.key
+automationhub_pg_sslmode=verify-full or verify-ca
+	
+# {EDAName}
+automationedacontroller_pgclient_sslcert=/path/to/eda.cert
+automationedacontroller_pgclient_sslkey=/path/to/eda.key
+automationedacontroller_pg_sslmode=verify-full or verify-ca
+----
+
+== Optional: Using custom TLS certificates
+
+By default, the installation program generates self-signed TLS certificates and keys for all {PlatformNameShort} services.
+
+If you want to replace these with your own custom certificate and key, then set the following inventory file variables:
+
+[source,yaml,subs="+attributes"]
+----
+aap_ca_cert_file=<path_to_ca_tls_certificate>
+aap_ca_key_file=<path_to_ca_tls_key>
+----
+
+If any of your certificates are signed by a custom Certificate Authority (CA), then you must specify the Certificate Authority’s certificate by using the `custom_ca_cert` inventory file variable:
+[source,yaml,subs="+attributes"]
+----
+custom_ca_cert=<path_to_custom_ca_certificate>
+----
 
 [NOTE]
 ====
-During this procedure, you must check the External Database coverage. For further information, see https://access.redhat.com/articles/4010491
+Note: If you have more than one custom CA certificate, combine them into a single file, then reference the combined certificate with the `custom_ca_cert` inventory file variable.
 ====
