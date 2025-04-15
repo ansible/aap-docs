@@ -83,7 +83,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 ]
 ----
 +
-If the *LDAP User DN Template* is not set, {PlatformNameShort} authenticates to LDAP using the *Bind DN Template* and *LDAP Bind Password*. After authentication, an LDAP search is performed to locate the user specified by this field. If the user is found, {PlatformNameShort} validates the provided password against the user found by the LDAP search. 
+If the *LDAP User DN Template* is not set, the {PlatformNameShort} authenticates to LDAP using the *Bind DN Template* and *LDAP Bind Password*. After authentication, an LDAP search is performed to locate the user specified by this field. If the user is found, {PlatformNameShort} validates the provided password against the user found by the LDAP search. 
 Multiple search queries are supported for users with `LDAPUnion` by entering multiple search terms. For example:
 +
 ----
@@ -101,11 +101,11 @@ Multiple search queries are supported for users with `LDAPUnion` by entering mul
 ]
 ----
 +
-If non-unique users are found during multiple searches, those users will not be able to login to {PlatformNameShort}. Based on the example provided, if a user with `uid=jdoe` was found in both the `ou=users,dc=example,dc=com` and `ou=employees,dc=subdivision,dc=com`, neither `jdoe` user would be able to login. Other users that are found in either branch would still be able to login.
+If non-unique users are found during multiple searches, those users will not be able to log in to {PlatformNameShort}. Based on the example provided, if a user with `uid=jdoe` was found in both the `ou=users,dc=example,dc=com` and `ou=employees,dc=subdivision,dc=com`, neither `jdoe` user would be able to log in. All other unique users that are found in either branch would still be able to log in.
 +
 [NOTE]
 ====
-If the field  *LDAP User DN Template* is populated, it takes precedence over the  *LDAP User Search* field and only the template will be used to authenticate users.
+If the field *LDAP User DN Template* is populated, it takes precedence over the  *LDAP User Search* field and only the template will be used to authenticate users.
 ====
 +
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
