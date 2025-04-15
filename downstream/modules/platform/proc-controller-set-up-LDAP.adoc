@@ -87,18 +87,18 @@ If the *LDAP User DN Template* is not set, {PlatformNameShort} authenticates to 
 Multiple search queries are supported for users with `LDAPUnion` by entering multiple search terms. For example:
 +
 ----
-{
-    {
+[
+    [
         "ou=users,dc=example,dc=com",
         "SCOPE_SUBTREE",
         "uid=%(user)s"
-    },
-     {
+    ],
+     [
         "ou=employees,dc=subdivision,dc=com",
         "SCOPE_SUBTREE",
         "uid=%(user)s"
-    }
-}
+     ]
+]
 ----
 +
 If non-unique users are found during multiple searches, those users will not be able to login to {PlatformNameShort}. Based on the example provided, if a user with `uid=jdoe` was found in both the `ou=users,dc=example,dc=com` and `ou=employees,dc=subdivision,dc=com`, neither `jdoe` user would be able to login. Other users that are found in either branch would still be able to login.
