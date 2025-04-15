@@ -76,11 +76,11 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 . In the *LDAP User Search* field, enter where to search for users during authentication. 
 +
 ----
-{
+[
 "OU=Users,DC=website,DC=com",
 "SCOPE_SUBTREE",
 "(cn=%(user)s)"
-}
+]
 ----
 +
 If the *LDAP User DN Template* is not set, {PlatformNameShort} authenticates to LDAP using the *Bind DN Template* and *LDAP Bind Password*. Once authenticated, it performs an LDAP search to locate the user specified by this field. If the user is found, {PlatformNameShort} validates the provided password against the user found by the LDAP search. 
