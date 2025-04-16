@@ -10,14 +10,22 @@
 
 By default, the installation program generates self-signed TLS certificates and keys for all {PlatformNameShort} services.
 
-If you want to replace these with your own custom certificate and key, then set the following inventory file variables:
+To use your own TLS certificates or a custom Certificate Authority (CA), you can set specific variables in your inventory file.
+
+*Option 1: Use a custom CA to generate all TLS certificates*
+
+To use a custom Certificate Authority (CA) to generate TLS certificates for all {PlatformNameShort} services, set the following variables in your inventory file:
 
 ----
 ca_tls_cert=<path_to_ca_tls_certificate>
 ca_tls_key=<path_to_ca_tls_key>
 ----
 
-If you want to use your own TLS certificates and keys for each service (for example {ControllerName}, {HubName}, {EDAName}), then set the following inventory file variables:
+Use this method when you want {PlatformNameShort} to generate all of the certificates, but you want them signed by a custom CA rather than the default self-signed certificates.
+
+*Option 2: Provide custom TLS certificates for each service*
+
+To manually provide TLS certificates for each individual service (for example {ControllerName}, {HubName}, {EDAName}), set the following variables in your inventory file:
 
 [source,yaml,subs="+attributes"]
 ----
@@ -58,10 +66,14 @@ receptor_tls_cert=<path_to_tls_certificate>
 receptor_tls_key=<path_to_tls_key>
 ----
 
-If any of your certificates are signed by a custom Certificate Authority (CA), then you must specify the Certificate Authority's certificate by using the `custom_ca_cert` inventory file variable.
+Use this method if your organization manages TLS certificates outside of {PlatformNameShort} and requires manual provisioning.
 
-If you have more than one custom CA certificate, combine them into a single file, then reference the combined certificate with the `custom_ca_cert` inventory file variable.
+*Providing a custom CA certificate*
+
+If any of the TLS certificates you manually provided are signed by a custom CA, you must specify the CA certificate by using the following variable in your inventory file:
 
 ----
 custom_ca_cert=<path_to_custom_ca_certificate>
 ----
+
+If you have more than one CA certificate, combine them into a single file and reference the combined certificate with the `custom_ca_cert` variable.
