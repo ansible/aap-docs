@@ -48,3 +48,40 @@ The following error message is displayed: +
 `Your trial to the generative AI model has expired. Refer to your IBM Cloud Account to re-enable access to the {ibmwatsonxcodeassistant}.`
 
 To resolve this error, refer to your IBM Cloud account and select an upgrade option. 
+
+== Cannot connect to Ansible VS code extension when using a proxy configuration or a self-signed certificate or both
+
+You might encounter errors when connecting with to the Ansible VS code extension through a proxy. Connections to the outbound domain `\https://c.ai.ansible.redhat.com` fail and a network error message is displayed. 
+
+To resolve this issue, you must add the URL `\https://c.ai.ansible.redhat.com/` in VS Code proxy settings. If you are using Red Hat Single Sign-On (RH-SSO) to authenticate users, then you must also grant access to `\https://sso.redhat.com` in VS code proxy settings. 
+ 
+To modify the proxy settings in VS code, perform the following tasks:
+
+. Open Visual Studio Code.
+. Navigate to *File > Preferences > Settings*. 
+. Select menu:Application[Proxy] in the sidebar.
+. In the *Http: Proxy* field, add the following URLs to the proxy:
+
+* `\https://c.ai.ansible.redhat.com/` 
+* `\https://sso.redhat.com`, if you are using RH-SSO to authenticate users. 
+. In the *http: Proxy Support* drop down list, select *Override*. 
+
+. Search for and select the following configuration keys:
+ 
+* *Electron Fetch*
+
+* *System Certificates V2* if you are using your own Certificate Authority (CA).
+
+For information about how to set up proxy support in VS Code, see link:https://code.visualstudio.com/docs/setup/network#_proxy-server-support[Proxy server support] in VS Code documentation and link:https://www.chromium.org/developers/design-documents/network-stack/proxy-settings-fallback/[Proxy settings and fallback] in The Chromium Project documentation. 
+
+== Cannot connect to Ansible VS code extension due to network issues
+
+If you encounter network issues, use the *Network Proxy Test* extension to test the connection:
+
+. Install the VS code extension link:https://marketplace.visualstudio.com/items?itemName=chrmarti.network-proxy-test[Network Proxy Test].
+
+. Use the *Network Proxy Test: Test Connection* action to target the server and the endpoint using the parameter `/check/status end-point`.
++
+For example:
++
+`\https://c.ai.ansible.redhat.com/check/status/` to test the connection to {LightspeedShortName} cloud service.
