@@ -1,0 +1,45 @@
+[id="aap-operator-troubleshoot-ext-db_{context}"]
+
+= Troubleshooting an external data base with an unexpected DataStyle set
+
+When upgrading the Ansible Automation Platform Operator you may encounter an error like the following:
+
+----
+NotImplementedError: can't parse timestamptz with DateStyle 'Redwood, SHOW_TIME': '18-MAY-23 20:33:55.765755 +00:00'
+----
+
+Errors like this occur when you have an external database with an unexpected DateStyle set. 
+You can refer to the following steps to resolve this issue. 
+
+.Procedure
+
+. Edit the `/var/lib/pgsql/data/postgres.conf` file on the database server:
++
+----
+# vi /var/lib/pgsql/data/postgres.conf
+----
++
+. Find and comment out the line:
++
+----
+#datestyle = 'Redwood, SHOW_TIME'
+----
++
+. Add the following setting immediately below the newly-commented line:
++
+----
+datestyle = 'iso, mdy'
+----
++
+. Save and close the `postgres.conf` file.
+. Reload the database configuration:
++
+----
+# systemctl reload postgresql
+----
++
+
+[NOTE]
+====
+Running this command does not disrupt database operations.
+====
