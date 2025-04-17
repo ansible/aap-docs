@@ -24,11 +24,23 @@
 | Optional
 | `admin`
 
+| `automationgateway_cache_cert`
+|
+| Path to the certificate file used by {Gateway} for internal caching.
+| Optional
+|
+
+| `automationgateway_cache_key`
+|
+| Path to the key file used by {Gateway} for internal caching.
+| Optional
+|
+
 | `automationgateway_cache_tls_files_remote`
 | 
-| Denote whether the cache cert sources are local to the installation program (`false`) or on the remote component server (`true`).
+| Denote whether the cache client certificate are local to the installation program (`false`) or on the remote component server (`true`).
 | Optional
-| `false`
+| The value defined in `automationgateway_tls_files_remote` which defaults to `false`.
 
 | `automationgateway_client_regen_cert`
 | 
@@ -42,12 +54,6 @@
 | Optional
 | `50051`
 
-| `automationgateway_debug`
-| 
-| Controls whether debug mode is enabled or disabled for {Gateway}. Set to `true` to enable debug mode for {Gateway}.
-| Optional
-| `false`
-
 | `automationgateway_disable_hsts` 
 | `gateway_nginx_disable_hsts` 
 | Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {Gateway}. Set this variable to `true` to disable HSTS.
@@ -58,13 +64,13 @@
 | `gateway_nginx_disable_https` 
 | Controls whether HTTPS is enabled or disabled for {Gateway}. Set this variable to `true` to disable HTTPS.
 | Optional
-| `false`
+| RPM = The value defined in `disable_https` which defaults to `false`. Container = `false`.
 
 | `automationgateway_firewalld_zone` 
 | `gateway_proxy_firewall_zone` 
 | The firewall zone where {Gateway} related firewall rules are applied. This controls which networks can access {Gateway} based on the zone's trust level.
 | Optional
-| RPM = no default set. Container = 'public'
+| RPM = no default set. Container = 'public'.
 
 | `automationgateway_grpc_auth_service_timeout` 
 | `gateway_grpc_auth_service_timeout` 
@@ -106,7 +112,8 @@
 | 
 | Denote whether the web cert sources are local to the installation program (`false`) or on the remote component server (`true`).
 | Optional
-| `false`
+| The value defined in `automationgateway_tls_files_remote` which defaults to `false`.
+
 
 | `automationgateway_pg_cert_auth` 
 | `gateway_pg_cert_auth` 
@@ -118,7 +125,7 @@
 | `gateway_pg_database` 
 | Name of the PostgreSQL database used by {Gateway}.
 | Optional
-| `gateway`
+| RPM = `automationgateway`. Container = `gateway`.
 
 | `automationgateway_pg_host` 
 | `gateway_pg_host` 
@@ -166,7 +173,7 @@
 |
 | Denote whether the PostgreSQL client cert sources are local to the installation program (`false`) or on the remote component server (`true`).
 | Optional
-| `false`
+| The value defined in `automationgateway_tls_files_remote` which defaults to `false`.
 
 | `automationgateway_redis_host` 
 | `gateway_redis_host` 
@@ -220,7 +227,7 @@
 | `envoy_disable_https`
 | Controls whether or not HTTPS is disabled when accessing the platform UI. Set to `true` to disable HTTPS (HTTP is used instead).
 | Optional
-| `false`
+| RPM = The value defined in `disable_https` which defaults to `false`. Container = `false`.
 
 | `automationgatewayproxy_http_port`
 | `envoy_http_port`
@@ -233,6 +240,24 @@
 | Port number on which the Envoy proxy listens for incoming HTTPS connections.
 | Optional
 | `443`
+
+| `nginx_tls_protocols`
+| `gateway_nginx_https_protocols` 
+| Protocols that {Gateway} will support when handling HTTPS traffic.
+| Optional
+| RPM = `[TLSv1.2]`. Container = `[TLSv1.2, TLSv1.3]`.
+
+| `redis_disable_tls`
+| `gateway_redis_disable_tls` 
+| Controls whether TLS is enabled or disabled for {Gateway} Redis. Set this variable to `true` to disable TLS.
+| Optional
+| `false`
+
+| `redis_port` 
+| `gateway_redis_port` 
+| Port number for the Redis host for {Gateway}.
+| Optional
+| `6379`
 
 | 
 | `gateway_extra_settings` 
@@ -258,24 +283,6 @@ gateway_extra_settings:
 | Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for {Gateway}.
 | Optional
 | `63072000`
-
-| 
-| `gateway_nginx_https_protocols` 
-| Protocols that {Gateway} will support when handling HTTPS traffic.
-| Optional
-| `[TLSv1.2, TLSv1.3]`
-
-| 
-| `gateway_redis_disable_tls` 
-| Controls whether TLS is enabled or disabled for {Gateway} Redis. Set this variable to `true` to disable TLS.
-| Optional
-| `false`
-
-| `automationgateway_redis_port` 
-| `gateway_redis_port` 
-| Port number for the Redis host for {Gateway}.
-| Optional
-| `6379`
 
 | 
 | `gateway_redis_tls_cert` 
