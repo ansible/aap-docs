@@ -13,6 +13,13 @@ If the LDAP server you want to connect to has a certificate that is self-signed 
 
 When LDAP is configured, an account is created for any user who logs in with an LDAP username and password and they can be automatically placed into organizations as either regular users or organization administrators. 
 
+Users can log in to their accounts using any case for their username and Ansible Automation Platform will automatically match the lowercase version stored in the system. If a match exists, the lowercase username is used for authentication. If the username entered does not match an existing lowercase version, a new username with all lowercase letters is created and used for future log in, even if entered in a different case. 
+
+[NOTE]
+====
+If a user previously logged in using different case variations of their username, Ansible Automation Platform will now authenticate using the existing lowercase version if it exists. Other case variations of usernames will no longer be valid for log in. 
+====
+
 Users created through an LDAP login should not change their username, first name, last name, or set a local password for themselves. Any changes made to this information is overwritten the next time the user logs in to the platform. 
 
 [IMPORTANT]
