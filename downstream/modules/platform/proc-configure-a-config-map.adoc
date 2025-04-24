@@ -1,0 +1,30 @@
+[id="proc-configure-a-config-map"]
+
+= Create a ConfigMap in the OpenShift UI YAML view 
+
+. From the navigation panel, select ConfigMaps, and then click the Create ConfigMap button.
+On the next screen, select the YAML view tab.
+In the YAML field, enter the following parameters with the appropriate variables set:
++
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: automationcontroller-metrics-utility-configmap
+data:
+  METRICS_UTILITY_SHIP_TARGET: directory
+  METRICS_UTILITY_SHIP_PATH: /metrics-utility
+  METRICS_UTILITY_REPORT_TYPE: CCSP
+  METRICS_UTILITY_PRICE_PER_NODE: '11' # in USD
+  METRICS_UTILITY_REPORT_SKU: MCT3752MO
+  METRICS_UTILITY_REPORT_SKU_DESCRIPTION: "EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+  METRICS_UTILITY_REPORT_H1_HEADING: "CCSP Reporting <Company>: ANSIBLE Consumption"
+  METRICS_UTILITY_REPORT_COMPANY_NAME: "Company Name"
+  METRICS_UTILITY_REPORT_EMAIL: "email@email.com"
+  METRICS_UTILITY_REPORT_RHN_LOGIN: "test_login"
+  METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER: "BUSINESS LEADER"
+  METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER: "PROCUREMENT LEADER"
+----
++
+. Click btn:[Create].
+. To verify that the ConfigMap was created and the `metric utility` is installed, select ConfigMap from the navigation panel and look for your ConfigMap in the list.

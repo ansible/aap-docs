@@ -1,0 +1,109 @@
+[id="ref-report-types"]
+
+= Report types
+This section provides additional configurations for data gathering and report building based on a report type. Apply the environment variables to each report type based on your {PlatformNameShort} installation. 
+
+== CCSPv2
+
+CCSPv2 is a report which shows the following:
+
+* Directly and indirectly managed node usage
+* The content of all inventories
+* Content usage. 
+
+This report's primary use is for partners under the link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] program, but all customers can use it to obtain on-premise reporting showing managed nodes, jobs and content usage across their {ControllerName} organizations.
+
+Set the report type using `METRICS_UTILITY_REPORT_TYPE=CCSPv2`.
+
+=== Optional collectors for `gather` command
+
+You can use the following optional collectors for the `gather` command:
+
+* `main_jobhostsummary`
+** If present by default, this incrementally collects data from the `main_jobhostsummary` table infrom the automation controller database, containing information about jobs runs and managed nodes automated.
+* `main_host`
+** This collects daily snapshots of the `main_host` table from the automation controller database and has managed nodes and hosts present across automation controller inventories,
+*`main_jobevent`
+** This incrementally collects data from the `main_jobevent` table infrom the automation controller database and contains information about which modules, roles, and aAnsible collections are being used.
+* `main_indirectmanagednodeaudit`
+** This incrementally collects data from the `main_indirectmanagednodeaudit` table in thefrom automation controller database and contains information about indirectly managed nodes,
+
+----
+# Example with all optional collectors
+export METRICS_UTILITY_OPTIONAL_COLLECTORS="main_host,main_jobevent,main_indirectmanagednodeaudit"
+----
+
+==== Optional sheets for `build_report` command
+
+You can use the following optional sheets for the `build_report` command:
+
+* `ccsp_summary`
+** This is a landing page specifically for partners under CCSP program.
+This report takes additional parameters to customize the summary page. For more information, see the following example:
++
+----
+export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
+export METRICS_UTILITY_REPORT_SKU=MCT3752MO
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+export METRICS_UTILITY_REPORT_H1_HEADING="CCSP NA Direct Reporting Template"
+export METRICS_UTILITY_REPORT_COMPANY_NAME="Partner A"
+export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_PO_NUMBER="123"
+export METRICS_UTILITY_REPORT_END_USER_COMPANY_NAME="Customer A"
+export METRICS_UTILITY_REPORT_END_USER_CITY="Springfield"
+export METRICS_UTILITY_REPORT_END_USER_STATE="TX"
+export METRICS_UTILITY_REPORT_END_USER_COUNTRY="US"
+----
+* `jobs`
+** This is a list of automation controller jobs launched. It is grouped by job template.
+* `managed_nodes`
+** This is a deduplicated list of managed nodes automated by automation controller.
+* `indirectly_managed_nodes`
+** This is a deduplicated list of indirect managed nodes automated by automation controller.
+* `inventory_scope`
+** This is a deduplicated list managed nodes present across all inventories of automation controller.
+* `usage_by_organizations`
+** This is a list of all automation controller organizations with several metrics showing the organizations usage. This provides data suitable for doing internal chargeback.
+* `usage_by_collections`
+** This is a list of Ansible collections used in automation controller job runs.
+* `usage_by_roles`
+** This is a list of roles used in automation controller job runs.
+*`usage_by_modules`
+** This is a list of modules used in automation controller job runs.
+* `managed_nodes_by_organization`
+** This will generate a sheet per organization, listing managed nodes for every organization with the same content as the managed_nodes sheet.
+* `data_collection_status`
+** This generates a sheet with the status of every data collection done by the `gather` command for the date range the report is built forwe build the report for. To outline the quality of data collected it will  also lists: 
+*** unusual gaps between collections (based on collection_start_timestamp)
+*** gaps in collected intervals (based on since vs until)
++
+----
+# Example with all optional sheets
+export METRICS_UTILITY_OPTIONAL_CCSP_REPORT_SHEETS='ccsp_summary,jobs,managed_nodes,indirectly_managed_nodes,inventory_scope,usage_by_organizations,usage_by_collections,usage_by_roles,usage_by_modules,data_collection_status'
+----
+
+=== Filtering reports by organization
+To filter your report so that only certain organizations are present, use this environment variable with a semicolon separated list of organization names.
+
+`export METRICS_UTILITY_ORGANIZATION_FILTER="ACME;Organization 1"`
+
+This renders only the data from these organizations in the built report. This filter currently doesn’t have any effect on the following optional sheets: `usage_by_collections`, `usage_by_roles`, and `usage_by_modules`.
+
+==== Selecting a date range for your CCSPv2 report
+
+The default behavior of the CCSPv2 report is to build a report for the previous month. The following examples describe how to override this default behavior to select a specific date range for your report:  
+
+----
+# Build report for a specific month
+metrics-utility build_report --month=2025-03 
+
+# Build report for a specific date range, icluding the prvided days
+metrics-utility build_report --since=2025-03-01 --until=2025-03-31
+
+# Build report for a last 6 months from a current date
+metrics-utility build_report --since=6months
+
+# Build report for a last 6 months from a current date overriding an exisitng report
+metrics-utility build_report --since=6months --force
+---

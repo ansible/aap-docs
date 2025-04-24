@@ -1,0 +1,15 @@
+[id="ref-storage-invocation"]
+
+= Storage and invocation
+The `RENEWAL_GUIDANCE` report supports the use of only local disk storage to store the report results. This report does not have a gather data step. It reads directly from the controller HostMetric table, so it does not store any raw data under the `METRICS_UTILITY_SHIP_PATH`.
+
+----
+# All parameters the RENEWAL_GUIDANCE report needs
+export METRICS_UTILITY_SHIP_TARGET=controller_db
+export METRICS_UTILITY_REPORT_TYPE=RENEWAL_GUIDANCE
+export METRICS_UTILITY_SHIP_PATH=/path_to_built_report/...
+
+# Will generate report for 12months back with epehemeral nodes being nodes  
+# automated for less than 1 month.
+metrics-utility build_report --since=12months --ephemeral=1month
+----

@@ -1,0 +1,26 @@
+[id="proc-deploy-controller"]
+
+= Deploy automation controller 
+
+Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report.
+
+. From the navigation panel, select *Installed Operators*.
+. Select {PlatformNameShort}.
+. In the Operator details, select the {controllerName} tab.
+. Click btn:[Create automation controller].
+. Select the YAML view option. 
+The YAML now shows the default parameters for {ControllerName}. 
+The relevant parameters for `metrics-utility` are the following:
++
+[cols="50%,50%",options="header"]
+|====
+| *Parameter* | *Variable*
+| *`metrics_utility_enabled`* | True.
+| *`metrics_utility_cronjob_gather_schedule`* | @hourly or @daily.
+| *`metrics_utility_cronjob_report_schedule`* | @daily or @monthly.
+|====
++
+. Find the `metrics_utility_enabled` parameter and change the variable to true.
+. Find the `metrics_utility_cronjob_gather_schedule` parameter and enter a variable for how often the utility should gather usage information (for example, @hourly or @daily).
+. Find the `metrics_utility_cronjob_report_schedule` parameter and enter a variable for how often the utility generates a report (for example, @daily or @monthly).
+. Click btn:[Create].

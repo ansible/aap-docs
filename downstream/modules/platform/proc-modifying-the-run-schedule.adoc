@@ -8,7 +8,8 @@
 
 You can configure `metrics-utility` to run at specified times and intervals. Run frequency is expressed in cronjobs. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more information. 
 
-== On RHEL
+== On {RHEL}
+
 .Procedure
  
 . From the command line, run: 
@@ -23,13 +24,13 @@ crontab -e
 [source, ]
 ----
 */2 * * * *     metrics-utility gather_automation_controller_billing_data --ship --until=10m
-*/5 * * * *     metrics-utili
-ty build_report
+*/5 * * * *     metrics-utility build_report
 ----
 +
 . Save and close the file.
 
 == On {OCPShort} from the {PlatformNameShort} operator 
+
 .Procedure
 
 . From the navigation panel, select menu:Workloads[Deployments].
@@ -53,3 +54,4 @@ metrics_utility_cronjob_report_schedule:
 . To verify that you have changed the `metrics-utility` running schedule successfully, you can take one or both of the following steps:
 .. return to the `YAML` file and ensure that the parameters described above reflect the correct variables.  
 .. From the navigation menu, select menu:Workloads[Cronjobs] and ensure that your cronjobs show the updated schedule. 
+
