@@ -16,9 +16,7 @@ Specific to container: Redis clusters cannot use hostnames or IPv6 addresses.
 
 | `redis_disable_mtls` 
 |  
-| The IPv4 address used by the Redis cluster to identify each host in the cluster. 
-When defining hosts in the `[redis]` group, use this variable to identify the IPv4 address if the default is not what you want. 
-Specific to container: Redis clusters cannot use hostnames or IPv6 addresses. 
+| Controls whether mTLS is enabled or disabled for Redis. Set this variable to `true` to disable mTLS.
 | Optional 
 | `false`
 
@@ -32,7 +30,7 @@ Specific to container: Redis clusters cannot use hostnames or IPv6 addresses.
 |  
 | Hostname used by the Redis cluster when identifying and routing the host. 
 By default `routable_hostname` is used. 
-|  Optional
+| Optional
 | The value defined in `routable_hostname`
 
 | `redis_mode` 
@@ -50,7 +48,7 @@ For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[
 | `false`
 
 | `redis_tls_cert` 
-|  
+| `redis_tls_cert`
 | Path to the Redis server TLS certificate. 
 | Optional 
 | 
@@ -62,7 +60,7 @@ For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[
 | `false`
 
 | `redis_tls_key` 
-|  
+| `redis_tls_key`
 | Path to the Redis server TLS certificate key. 
 | Optional 
 | 
