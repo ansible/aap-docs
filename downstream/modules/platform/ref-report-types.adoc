@@ -11,7 +11,7 @@ CCSPv2 is a report which shows the following:
 * The content of all inventories
 * Content usage. 
 
-This report's primary use is for partners under the link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] program, but all customers can use it to obtain on-premise reporting showing managed nodes, jobs and content usage across their {ControllerName} organizations.
+The primary use of this report is for partners under the link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] program, but all customers can use it to obtain on-premise reporting showing managed nodes, jobs and content usage across their {ControllerName} organizations.
 
 Set the report type using `METRICS_UTILITY_REPORT_TYPE=CCSPv2`.
 
@@ -89,21 +89,3 @@ To filter your report so that only certain organizations are present, use this e
 `export METRICS_UTILITY_ORGANIZATION_FILTER="ACME;Organization 1"`
 
 This renders only the data from these organizations in the built report. This filter currently doesn’t have any effect on the following optional sheets: `usage_by_collections`, `usage_by_roles`, and `usage_by_modules`.
-
-==== Selecting a date range for your CCSPv2 report
-
-The default behavior of the CCSPv2 report is to build a report for the previous month. The following examples describe how to override this default behavior to select a specific date range for your report:  
-
-----
-# Build report for a specific month
-metrics-utility build_report --month=2025-03 
-
-# Build report for a specific date range, icluding the prvided days
-metrics-utility build_report --since=2025-03-01 --until=2025-03-31
-
-# Build report for a last 6 months from a current date
-metrics-utility build_report --since=6months
-
-# Build report for a last 6 months from a current date overriding an exisitng report
-metrics-utility build_report --since=6months --force
----

@@ -96,13 +96,19 @@ Follow the steps below to configure the run schedule for metrics-utility on {OCP
 +
 [Note]
 ====
-`mtrics-utility` runs as indicated by the parameters you set in the configuration file. 
+`metrics-utility` runs as indicated by the parameters you set in the configuration file. 
 The utility cannot be run manually on {OCPShort}.
 ====
-10.4.2.1. Create a ConfigMap in the OpenShift UI YAML view 
-From the navigation panel on the left side, select ConfigMaps, and then click the Create ConfigMap button.
-On the next screen, select the YAML view tab.
-In the YAML field, enter the following parameters with the appropriate variables set:
+
+== Create a ConfigMap in the OpenShift UI YAML view 
+
+.Procedure
+. From the navigation panel, select menu::ConfigMaps[].
+. Click btn:[Create ConfigMap].
+. On the next screen, select the YAML view tab.
+. In the YAML field, enter the following parameters with the appropriate variables set:
++
+----
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -120,23 +126,8 @@ data:
   METRICS_UTILITY_REPORT_RHN_LOGIN: "test_login"
   METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER: "BUSINESS LEADER"
   METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER: "PROCUREMENT LEADER"
-Click Create.
-To verify that the ConfigMap was created and the metric utility is installed, select ConfigMap from the navigation panel and look for your ConfigMap in the list.
-11.1.2.2. Deploy automation controller 
-Deploy automation controller and specify variables for how often metrics-utility gathers usage information and generates a report.
-From the navigation panel, select Installed Operators.
-Select Ansible Automation Platform.
-In the Operator details, select the automation controller tab.
-Click Create automation controller*.
-Select the YAML view option. The YAML now shows the default parameters for automation controller. The relevant parameters for metrics-utility are the following:
-[cols="50%,50%",options="header"]
-|====
-| *Parameter* | *Variable*
-| *`metrics_utility_enabled`* | True.
-| *`metrics_utility_cronjob_gather_schedule`* | @hourly or @daily.
-| *`metrics_utility_cronjob_report_schedule`* | @daily or @monthly.
-|====
-Find the metrics_utility_enabled parameter and change the variable to true.
-Find the metrics_utility_cronjob_gather_schedule parameter and enter a variable for how often the utility should gather usage information (for example, @hourly or @daily).
-Find the metrics_utility_cronjob_report_schedule parameter and enter a variable for how often the utility generates a report (for example, @daily or @monthly).
-Click Create.
+----
+
+. Click btn:[Create].
+
+. To verify that the ConfigMap was created and `metric utility` is installed, select menu::ConfigMap[] from the navigation panel and look for your ConfigMap in the list.
