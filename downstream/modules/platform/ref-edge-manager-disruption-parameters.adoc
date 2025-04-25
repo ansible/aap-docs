@@ -1,0 +1,33 @@
+[id="edge-manager-disruption-parameters"]
+
+= Disruption budget parameters
+
+* `groupBy`: Defines how devices are grouped when applying the disruption budget. 
+The grouping is done by label keys.
+* `minAvailable`: Specifies the minimum number of devices that must remain available during a rollout.
+* `maxUnavailable`: Limits the number of devices that can be unavailable at the same time.
+
+.Example 
+
+The following shows an example YAML configuration for a fleet specification:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+apiVersion: v1alpha1
+kind: Fleet
+metadata:
+  name: default
+spec:
+  selector:
+    matchLabels:
+      fleet: default
+  rolloutPolicy:
+    disruptionBudget:
+      groupBy: ['site', 'function']
+      minAvailable: 1
+      maxUnavailable: 10
+----
+
+In this example, the grouping is performed on 2 label keys: *site* and *function*. 
+A group for disruption budget consists of all devices in a fleet having the same label values for the preceding label keys. 
+For every such group the conditions defined in this specification are continuously enforced.

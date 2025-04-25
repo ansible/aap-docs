@@ -1,0 +1,12 @@
+[id="edge-manager-limit-device"]
+
+= Limit in device selection
+
+Each batch in the `BatchSequence` strategy might use an optional `limit` parameter to define how many devices should be included in the batch. 
+You can specify the limit can in two ways:
+
+* *Absolute number*: A fixed number of devices to be selected.
+* *Percentage*: The percentage of the total matching device population to be selected.
+
+** If you provide a `selector` with labels, the percentage is calculated based on the number of devices that match the label criteria within the fleet.
+** If you do not provide a `selector`, the percentage is applied to all devices in the fleet.

@@ -1,0 +1,51 @@
+[id="edge-manager-success-threshold"]
+
+= Success threshold
+
+The `successThreshold` defines the percentage of successfully updated devices required to continue the rollout. 
+If the success rate falls below this threshold, the rollout might be paused to prevent further failures.
+
+.Example
+
+The following shows an example YAML configuration for a fleet specification:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+apiVersion: v1alpha1
+kind: Fleet
+metadata:
+  name: default
+spec:
+  selector:
+    matchLabels:
+      fleet: default
+  rolloutPolicy:
+    deviceSelection:
+      strategy: 'BatchSequence'
+      sequence:
+        - selector:
+            matchLabels:
+              site: madrid
+          limit: 1  # Absolute number
+        - selector:
+            matchLabels:
+              site: madrid
+          limit: 80%  # Percentage of devices matching the label criteria within the fleet
+        - limit: 50%  # Percentage of all devices in the fleet
+        - selector:
+            matchLabels:
+              site: paris
+        - limit: 80%
+        - limit: 100%
+    successThreshold: 95%
+----
+
+In this example, there are 6 explicit batches and 1 implicit batch:
+
+* The first batch selects 1 device having a label *site:madrid*.
+* With the second batch 80% of all devices having the label *site:madrid* are either selected for rollout in the current batch or were previously selected for rollout.
+* With the third batch 50% of all devices are either selected for rollout in the current batch or were previously selected for rollout.
+* With the fourth batch all devices that were not previously selected and having the label *site:paris* are selected.
+* With the fifth batch 80% of all devices are either selected for rollout in the current batch or were previously selected for rollout.
+* With the sixth batch 100% of all devices are either selected for rollout in the current batch or were previously selected for rollout.
+* The last implicit batch selects all devices that have not been selected in any previous batch (might be none).
