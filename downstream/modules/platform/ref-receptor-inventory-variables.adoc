@@ -59,8 +59,10 @@ For the `[execution_nodes]` group: `execution`.
 
 | See `peers` for the RPM equivalent variable 
 | `receptor_peers` 
-| Used to indicate which nodes a specific host connects to. Wherever this variable is defined, an outbound connection to the specific host is established. +
-This variable can be a comma-separated list of hosts only and not groups from the inventory. This is resolved into a set of hosts that is used to construct the `receptor.conf` file. +
+a| Used to indicate which nodes a specific host connects to. Wherever this variable is defined, an outbound connection to the specific host is established. The value must be a comma-separated list of hostnames. Do not use inventory group names.
+
+This is resolved into a set of hosts that is used to construct the `receptor.conf` file. 
+
 For example usage, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#adding-execution-nodes_aap-containerized-installation[Adding execution nodes].
 | Optional
 | `[]`
