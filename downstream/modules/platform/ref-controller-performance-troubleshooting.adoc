@@ -11,6 +11,8 @@
 
 * Job output streams from the execution node where the ansible-playbook is actually run to the associated control node. Then the callback receiver serializes this data and writes it to the database. Relevant settings to observe and tune can be found in xref:ref-controller-settings-job-events[Settings for managing job event processing] and xref:ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}].
 * In general, to resolve this symptom it is important to observe the CPU and memory use of the control nodes. If CPU or memory use is very high, you can either horizontally scale the control plane by deploying more virtual machines to be control nodes that naturally spreads out work more, or to modify the number of jobs a control node will manage at a time. For more information, see xref:ref-controller-settings-control-execution-nodes[Capacity settings for control and execution nodes] for more information.
+* Job output delay can occur on initial job runs that use {ExecEnvShort}s that have not been pulled into the platform. 
+The output becomes visible after the job run completes.
 
 *What can you do to increase the number of jobs that {ControllerName} can run concurrently?*
 
