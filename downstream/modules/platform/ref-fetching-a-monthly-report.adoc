@@ -1,27 +1,19 @@
-:_newdoc-version: 2.18.3
-:_template-generated: 2024-07-15
+[id="ref-fetching-a-monthly-report"]
 
-:_mod-docs-content-type: REFERENCE
+= Fetching a monthly report 
 
-[id="fetching-a-monthly-report_{context}"]
-= Fetching a monthly report
+== On {RHEL} 
 
+To fetch a monthly report on RHEL, run:
 
-== On RHEL
-To fetch a monthly report on RHEL, run: 
+`scp -r username@controller_host:$METRICS_UTILITY_SHIP_PATH/data/<YYYY>/<MM>/ /local/directory/`
 
-[source, ]
-----
-scp -r username@controller_host:$METRICS_UTILITY_SHIP_PATH/data/<YYYY>/<MM>/ /local/directory/
-----
+The system savess the generated report as `CCSP-<YEAR>-<MONTH>.xlsx` in the ship path that you specified.
 
-The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified.
-
-== On {OCPShort} from the {PlatformNameShort} operator
+== On {OCPShort} from the {PlatformNameShort} Operator 
 
 Use the following playbook to fetch a monthly consumption report for {PlatformNameShort} on {OCPShort}:
 
-[source, ]
 ----
 - name: Copy directory from Kubernetes PVC to local machine
   hosts: localhost
@@ -104,3 +96,4 @@ Use the following playbook to fetch a monthly consumption report for {PlatformNa
         name: temp-pod
         state: absent
 ----
+
