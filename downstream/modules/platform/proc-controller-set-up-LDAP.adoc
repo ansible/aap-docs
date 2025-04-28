@@ -19,7 +19,7 @@ However, if users are authenticated by different LDAP authenticators, their user
 
 [NOTE]
 ====
-If a user previously logged in using different case variations of their username, {PlatformNameShort} will now map all case variations to the lowercase username. Existing users with other case variations will no longer be valid for log in. A system administrator can delete those case variation users if needed.
+If a user previously logged in using different case variations of their username, {PlatformNameShort} will now map all case variations to the lowercase username. Existing users with other case variations will no longer be valid for log in. However, any existing OAuth tokens for the mixed case username will continue to allow authentication. A system administrator can delete those case variation users if needed.
 ====
 
 Users created through an LDAP login should not change their username, first name, last name, or set a local password for themselves. Any changes made to this information is overwritten the next time the user logs in to the platform. 
