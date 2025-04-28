@@ -98,13 +98,13 @@ endif::container-install[]
 | `bundle_install` 
 | Controls whether or not to perform an offline or bundled installation. Set this variable to `true` to enable an offline or bundled installation.
 | Optional 
-| `false`
+| `false` if using the setup installation program. `true` if using the setup bundle installation program.
 
 | `bundle_install_folder` 
 | `bundle_dir` 
 | Path to the bundle directory used when performing a bundle install. 
 | Required if `bundle_install=true` 
-| `false`
+| RPM = `/var/lib/ansible-automation-platform-bundle`. Container = `<current_dir>/bundle`.
 
 | `custom_ca_cert` 
 | `custom_ca_cert`
@@ -126,12 +126,6 @@ endif::container-install[]
 | Optional 
 | `true`
 
-| `precreate_partition_hours` 
-|  
-| Number of hours worth of events table partitions to pre-create before starting a backup to avoid `pg_dump` locks. 
-| Optional 
-| 3
-
 | `registry_password` 
 | `registry_password` 
 | Password credential for access to the registry source defined in `registry_url`. 
@@ -143,7 +137,7 @@ endif::aap-install[]
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-set-registry-username-password[Setting registry_username and registry_password].
 endif::container-install[]
-| Required if `registry_auth=true` 
+| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
 | 
 
 | `registry_url` 
@@ -163,7 +157,7 @@ endif::aap-install[]
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-set-registry-username-password[Setting registry_username and registry_password].
 endif::container-install[]
-| Required if `registry_auth=true` 
+| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
 | 
 
 | `registry_verify_ssl` 
@@ -187,7 +181,7 @@ endif::container-install[]
 | `routable_hostname` 
 | `routable_hostname` 
 | Used if the machine running the installation program can only route to the target host through a specific URL. 
-For example, if you use short names in your inventory, but the node running the installation program can only resolve that host by using a FQDN. If `routable_hostname` is not set, it should default to `ansible_host`. 
+For example, if you use short names in your inventory, but the node running the installation program can only resolve that host by using a FQDN. If `routable_hostname` is not set, it defaults to `ansible_host`. 
 If you do not set `ansible_host`, `inventory_hostname` is used as a last resort. This variable is used as a host variable for particular hosts and not under the `[all:vars]` section. 
 For further information, see link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#assigning-a-variable-to-one-machine-host-variables[Assigning a variable to one machine: host variables].
 | Optional 
