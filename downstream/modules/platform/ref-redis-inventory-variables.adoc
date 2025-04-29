@@ -1,0 +1,68 @@
+[id="ref-redis-inventory-variables"]
+
+= Redis variables
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| `redis_cluster_ip` 
+| `redis_cluster_ip` 
+| The IPv4 address used by the Redis cluster to identify each host in the cluster. 
+When defining hosts in the `[redis]` group, use this variable to identify the IPv4 address if the default is not what you want. 
+Specific to container: Redis clusters cannot use hostnames or IPv6 addresses. 
+| Optional 
+| RPM = Discovered IPv4 address from Ansible facts. If IPv4 address is not available, IPv6 address is used. Container = Discovered IPv4 address from Ansible facts.
+
+| `redis_disable_mtls` 
+|  
+| Controls whether mTLS is enabled or disabled for Redis. Set this variable to `true` to disable mTLS.
+| Optional 
+| `false`
+
+| `redis_firewalld_zone` 
+| `redis_firewall_zone` 
+| The firewall zone where Redis related firewall rules are applied. This controls which networks can access Redis based on the zone's trust level. 
+| Optional 
+| RPM = no default set. Container = `public`.
+
+| `redis_hostname` 
+|  
+| Hostname used by the Redis cluster when identifying and routing the host. 
+By default `routable_hostname` is used. 
+| Optional
+| The value defined in `routable_hostname`
+
+| `redis_mode` 
+| `redis_mode` 
+| The Redis mode to use for your {PlatformNameShort} installation. 
+Valid options include: `standalone` and `cluster`. 
+For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[Caching and queueing system] in _{TitlePlanningGuide}_.
+| Optional 
+| `cluster`
+
+| `redis_server_regen_cert` 
+|  
+| Denotes whether or not to regenerate the {PlatformNameShort} managed TLS key pair for Redis. 
+| Optional 
+| `false`
+
+| `redis_tls_cert` 
+| `redis_tls_cert`
+| Path to the Redis server TLS certificate. 
+| Optional 
+| 
+
+| `redis_tls_files_remote` 
+|  
+| Denote whether the Redis provided certificate files are local to the installation program (`false`) or on the remote component server (`true`). 
+| Optional 
+| `false`
+
+| `redis_tls_key` 
+| `redis_tls_key`
+| Path to the Redis server TLS certificate key. 
+| Optional 
+| 
+
+|===
