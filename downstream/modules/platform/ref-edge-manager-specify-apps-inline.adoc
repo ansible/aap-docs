@@ -1,0 +1,44 @@
+[id="edge-manager-specify-apps-inline"]
+
+= Specify applications inline in the device specification
+
+Application manifests are specified inline in a device's specification, so you do not need to build an OCI registry application package.
+ 
+The inline application provider accepts a list of application content with the following parameters:
+ 
+|===
+| Parameter | Description 
+| Path | The relative path to the file on the device. Note that any existing file is overwritten. 
+| Content (Optional) | The plain text (UTF-8) or base64-encoded content of the file. 
+| ContentEncoding | How the contents are encoded. Must be either "plain" or "base64". Defaults to "plain". 
+|===
+
+.Example
+
+[source,yaml]
+----
+apiVersion: flightctl.io/v1alpha1
+kind: Device
+metadata:
+  name: some_device_name
+spec:
+[...]
+  applications:
+    - name: my-app
+      appType: compose
+      inline:
+        - content: |
+            version: "3.8"
+            services:
+              service1:
+                image:  quay.io/flightctl-tests/alpine:v1
+                command: ["sleep", "infinity"]
+          path: podman-compose.yaml
+[...]
+----
+
+[NOTE]
+====
+Inline compose applications can have two paths at most. 
+You must name the first one `podman-compose.yaml`, and the second (override) `podman-compose.override.yaml`.
+====
