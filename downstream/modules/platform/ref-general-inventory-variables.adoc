@@ -2,81 +2,133 @@
 
 = General variables
 
-[cols="50%,50%,50%",options="header"]
-|====
-| *RPM variable name* | *Container variable name* | *Description*
-| `aap_ca_cert_file` |`ca_tls_cert` | Define a Certification Authority certificate along with a matching key when you want the installation program to create leaf certificates for each product for you.
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
 
-| `aap_ca_cert_files_remote` | `ca_tls_remote` | Denote whether the CA provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| `aap_ca_cert_file` 
+|`ca_tls_cert` 
+| Path to the user provided CA certificate file used to generate SSL/TLS certificates for all {PlatformNameShort} services.
+// This content is used in RPM installation
+ifdef::aap-install[]
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+endif::aap-install[] 
+// This content is used in Containerized installation
+ifdef::container-install[]
+For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+endif::container-install[]
+| Optional
+|
 
-Default = `false`
+| `aap_ca_cert_files_remote` 
+| `ca_tls_remote` 
+| Denote whether the CA certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
 
-| `aap_ca_key_file` | `ca_tls_key` | Define the key for the matching certificate when you want the installation program to create leaf certificates for each product for you.
+| `aap_ca_cert_size`
+| 
+| Bit size of the internally managed CA certificate private key.
+| Optional
+| `4096`
 
-| `bundle_install` | `bundle_install` | Set to `true` to enable a bundled installation. 
+| `aap_ca_key_file` 
+| `ca_tls_key` 
+| Path to the key file for the CA certificate provided in `aap_ca_cert_file` (RPM) and `ca_tls_cert` (Container).
+// This content is used in RPM installation
+ifdef::aap-install[]
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+endif::aap-install[] 
+// This content is used in Containerized installation
+ifdef::container-install[]
+For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+endif::container-install[]
+| Optional
+| 
 
-Default = `false`
+| `aap_ca_passphrase_cipher`
+|
+| Cipher used for signing the internally managed CA certificate private key.
+| Optional
+| `aes256`
 
-| `bundle_install_folder` | `bundle_dir`| Specify the path to the bundle directory when performing a bundle install.
+| `aap_ca_regenerate`
+|
+| Denotes whether or not to re-initiate the internally managed CA certificate key pair.
+| Optional
+| `false`
 
-Container default = `false`
+| `aap_service_cert_size` 
+|  
+| Bit size of the component key pair managed by the internal CA. 
+| Optional 
+| `4096`
 
-RPM Default = `/var/lib/ansible-automation-platform-bundle`
+| `aap_service_regen_cert` 
+|  
+| Denotes whether or not to re-initiate the component key pair managed by the internal CA. 
+| Optional 
+| `false`
 
-| `custom_ca_cert` | `custom_ca_cert` | The path to the custom CA certificate file.
+| `aap_service_san_records` 
+|  
+| A list of additional SAN records for signing a service. Assign these to components in the inventory file as host variables rather than group or all variables. All strings must also contain their corresponding SAN option prefix such as `DNS:` or `IP:`. 
+| Optional 
+| `[]`
 
-If set, this installs a custom CA certificate to the system truststore.
+| `backup_dest` 
+|  
+| Directory local to `setup.sh` for the final backup file. 
+| Optional 
+| The value defined in `setup_dir`.
 
-| `enable_insights_collection` | | The default install registers the node to the {InsightsName} for the {PlatformName} Service if the node is registered with Subscription Manager. 
+| `backup_dir` 
+| `backup_dir` 
+| Directory used to store backup files. 
+| Optional 
+| RPM = `/var/backups/automation-platform/`. Container = `~/backups`
 
-Set to `false` to disable.
+| `backup_file_prefix` 
+|  
+| Prefix used for the file backup name for the final backup file. 
+| Optional 
+| `automation-platform-backup`
 
-Default = `true`
+| `bundle_install` 
+| `bundle_install` 
+| Controls whether or not to perform an offline or bundled installation. Set this variable to `true` to enable an offline or bundled installation.
+| Optional 
+| `false` if using the setup installation program. `true` if using the setup bundle installation program.
 
-| `nginx_tls_protocols` | | Defines support for `ssl_protocols` in NGINX.
+| `bundle_install_folder` 
+| `bundle_dir` 
+| Path to the bundle directory used when performing a bundle install. 
+| Required if `bundle_install=true` 
+| RPM = `/var/lib/ansible-automation-platform-bundle`. Container = `<current_dir>/bundle`.
 
-Values available `TLSv1`, `TLSv1.1`, `TLSv1.2`, `TLSv1.3`.
+| `custom_ca_cert` 
+| `custom_ca_cert`
+| Path to the custom CA certificate file. This is required if any of the TLS certificates you manually provided are signed by a custom CA. 
+// This content is used in RPM installation
+ifdef::aap-install[]
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+endif::aap-install[] 
+// This content is used in Containerized installation
+ifdef::container-install[]
+For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+endif::container-install[]
+| Optional 
+|
 
-The `TLSv1.1` and `TLSv1.2` parameters only work when OpenSSL 1.0.1 or higher is used.
+| `enable_insights_collection` 
+|  
+| The default install registers the node to the {InsightsName} for the {PlatformName} Service if the node is registered with Subscription Manager. Set to `false` to disable this functionality. 
+| Optional 
+| `true`
 
-The `TLSv1.3` parameter only works when OpenSSL 1.1.1 or higher is used.
-
-If `nginx_tls-protocols = ['TLSv1.3']` only `TLSv1.3` is enabled. To set more than one protocol use `nginx_tls_protocols = ['TLSv1.2', 'TLSv.1.3']`.
-
-Default = `TLSv1.2`
-
-| `nginx_user_http_config` | | List of NGINX configurations for `/etc/nginx/nginx.conf` under the `http` section. 
-
-Each element in the list is provided into `http nginx config` as a separate line. 
-
-Default = {}
-
-| | `pcp_firewall_zone` | The firewall zone where Performance Co-Pilot related firewall rules are applied. This controls which networks can access Performance Co-Pilot based on the zone's trust level. 
-
-Default = `public`
-
-| `redis_cluster_ip` | `redis_cluster_ip` | The IPv4 address used by the Redis cluster to identify each host in the cluster.
-
-Redis clusters cannot use hostnames or IPv6 addresses. When defining hosts in the `[redis]` group, use this variable to identify the IPv4 address if the default is not what you want. 
-
-| `redis_disable_mtls` | | Controls whether mTLS is enabled or disabled for Redis. Set this variable to `true` to disable mTLS.
-
-| `redis_firewalld_zone` | `redis_firewall_zone` | The firewall zone where Redis related firewall rules are applied. This controls which networks can access Redis based on the zone's trust level.
-
-Default = `public`
-
-| `redis_mode` | `redis_mode` | The Redis mode to use for your {PlatformNameShort} installation.
-
-Possible values are: `standalone` and `cluster`.
-
-For more information about Redis, see link:{URLPlanningGuide}/ha-redis_planning[Caching and queueing system] in _{TitlePlanningGuide}_.
-
-Default = `cluster`
-
-| `registry_password` | `registry_password` | Required if performing an online non-bundled installation.
-
-The password credential for access to the registry source defined in `registry_url`.
-
+| `registry_password` 
+| `registry_password` 
+| Password credential for access to the registry source defined in `registry_url`. 
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
@@ -85,15 +137,18 @@ endif::aap-install[]
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-set-registry-username-password[Setting registry_username and registry_password].
 endif::container-install[]
+| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| 
 
-| `registry_url` | `registry_url` | URL for the registry source. 
+| `registry_url` 
+| `registry_url` 
+| URL of the registry source from which to pull {ExecEnvShort} images. 
+| Optional 
+| `registry.redhat.io`
 
-Default = `registry.redhat.io`
-
-| `registry_username` | `registry_username` | Required if performing an online non-bundled installation.
-
-The username credential for access to the registry source defined in `registry_url`.
-
+| `registry_username` 
+| `registry_username` 
+| Username credential for access to the registry source defined in `registry_url`. 
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
@@ -102,55 +157,97 @@ endif::aap-install[]
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-set-registry-username-password[Setting registry_username and registry_password].
 endif::container-install[]
+| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| 
 
-| `registry_verify_ssl` | `registry_tls_verify` | Controls whether SSL/TLS certificate verification should be enabled or disabled when making HTTPS requests.
+| `registry_verify_ssl` 
+| `registry_tls_verify` 
+| Controls whether SSL/TLS certificate verification is enabled or disabled when making HTTPS requests. 
+| Optional 
+| `true`
 
-Default = `true`
+| `restore_backup_file` 
+|  
+| Path to the tar file used for the platform restore. 
+| Optional 
+| `{{ setup_dir }}/automation-platform-backup-latest.tar.gz`
 
-| `routable_hostname` |`routable_hostname` | This variable is used if the machine running the installation program can only route to the target host through a specific URL. For example, if you use short names in your inventory, but the node running the installation program can only resolve that host by using a FQDN.
+| `restore_file_prefix` 
+|  
+| Path prefix for the staged restore components. 
+| Optional 
+| `automation-platform-restore`
 
-If `routable_hostname` is not set, it should default to `ansible_host`. If you do not set `ansible_host`, `inventory_hostname` is used as a last resort.
-
-This variable is used as a host variable for particular hosts and not under the `[all:vars]` section. 
-
+| `routable_hostname` 
+| `routable_hostname` 
+| Used if the machine running the installation program can only route to the target host through a specific URL. 
+For example, if you use short names in your inventory, but the node running the installation program can only resolve that host by using a FQDN. If `routable_hostname` is not set, it defaults to `ansible_host`. 
+If you do not set `ansible_host`, `inventory_hostname` is used as a last resort. This variable is used as a host variable for particular hosts and not under the `[all:vars]` section. 
 For further information, see link:https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html#assigning-a-variable-to-one-machine-host-variables[Assigning a variable to one machine: host variables].
+| Optional 
+| 
 
-|| `backup_dir` | The location of the backup directory on the Ansible host. Used when performing backup and restore.
+|  
+| `ca_tls_key_passphrase` 
+| Passphrase used to decrypt the key provided in `ca_tls_key`. 
+| Optional 
+| 
 
-Default = `~/backups`
+| 
+| `container_compress` 
+| Compression software to use for compressing container images. 
+| Optional 
+| `gzip`
 
+| 
+| `container_keep_images`   
+| Controls whether or not to keep container images when uninstalling {PlatformNameShort}. 
+Set to `true` to keep container images when uninstalling {PlatformNameShort}. 
+| Optional 
+| `false`
 
-| | `container_compress` | Container compression software.
+| 
+| `container_pull_images` 
+| Controls whether or not to pull newer container images during installation. 
+Set to `false` to prevent pulling newer container images during installation. 
+| Optional 
+| `true`
 
-Default = `gzip`
+| 
+| `pcp_firewall_zone` 
+| The firewall zone where Performance Co-Pilot related firewall rules are applied. This controls which networks can access Performance Co-Pilot based on the zone's trust level. 
+| Optional 
+| public
 
-| | `container_keep_images` | Keep container images.
+| 
+| `registry_auth` 
+| Set whether or not to use registry authentication. When this variable is set to true, `registry_username` and `registry_password` are required. 
+| Optional 
+| `true`
 
-Default = `false`
+| 
+| `registry_ns_aap` 
+| {PlatformNameShort} registry namespace. 
+| Optional 
+| `ansible-automation-platform-26`
 
-| | `container_pull_images` | Pull newer container images.
+| 
+| `registry_ns_rhel`
+| RHEL registry namespace. 
+| Optional 
+| `rhel8`
 
-Default = `true`
-
-| | `registry_auth` | Use registry authentication.
-
-Default = `true`
-
-| | `registry_ns_aap` | {PlatformNameShort} registry namespace.
-
-Default = `ansible-automation-platform-25`
-
-| | `registry_ns_rhel` | RHEL registry namespace.
-
-Default = `rhel8`
-
-| `use_archive_compression` | | Controls at the global level whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
-
-Default = `true`
+| `use_archive_compression` 
+| 
+| Controls at the global level whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
 
 This functionality can be controlled at the component level using the `<componentName>_use_archive_compression` variable. 
+| Optional
+| `true`
 
-| `<componentName>_use_archive_compression` | a| Enables or disables archive compression on a component level by specifying the component in `<componentName>`.  
+| `<componentName>_use_archive_compression` 
+| 
+a| Enables or disables archive compression on a component level by specifying the component in `<componentName>`.  
 
 For example:
 
@@ -162,17 +259,20 @@ For example:
 
 * `automationedacontroller_use_archive_compression=true`
 
-Default = `true`
-
 This functionality can be controlled at the global level using the `use_archive_compression` variable.
+| Optional
+| `true`
 
-| `use_db_compression` | | Controls at the global level whether the database-related backup files will be compressed before being sent to the host to run the backup operation. 
-
-Default = `true`
-
+| `use_db_compression` 
+| 
+| Controls at the global level whether the database-related backup files will be compressed before being sent to the host to run the backup operation. 
 This functionality can be controlled at the component level using the `<componentName>_use_db_compression` variable. 
+| Optional
+| `true`
 
-| `<componentName>_use_db_compression` | a| Enables or disables archive compression on a database level by specifying the component in `<componentName>`.  
+| `<componentName>_use_db_compression` 
+| 
+a| Enables or disables archive compression on a database level by specifying the component in `<componentName>`.  
 
 For example:
 
@@ -184,11 +284,11 @@ For example:
 
 * `automationedacontroller_use_db_compression=true`
 
-Default = `true`
-
 This functionality can be controlled at the global level using the `use_db_compression` variable.
+| Optional
+| `true`
 
-|====
+|===
 
 
 
