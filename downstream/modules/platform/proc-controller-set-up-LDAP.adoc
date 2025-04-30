@@ -8,7 +8,7 @@ As a platform administrator, you can configure LDAP as the source for account au
 
 [NOTE]
 ====
-If the LDAP server you want to connect to has a certificate that is self-signed or signed by a corporate internal certificate authority (CA), the CA certificate must be added to the system’s trusted CAs. Otherwise, connection to the LDAP server will result in an error that the certificate issuer is not recognized.
+If the LDAP server you want to connect to has a certificate that is self-signed or signed by an internal certificate authority (CA), the CA certificate must be added to the system’s trusted CAs. Otherwise, connection to the LDAP server will result in an error that the certificate issuer is not recognized.
 ====
 
 When LDAP is configured, an account is created for any user who logs in with an LDAP username and password and they can be automatically placed into organizations as either regular users or organization administrators. 
@@ -37,32 +37,55 @@ CN=josie,CN=users,DC=website,DC=com
 ----
 +
 . In the *LDAP Bind Password* text field, enter the password to use for the binding user.
-. Select a group type from the *LDAP Group Type* list. The *LDAP Group Type* list includes the following groups:
+. Select a group type from the *LDAP Group Type* list. 
 +
-* `PosixGroupType`
-* `GroupOfNamesType`
-* `GroupOfUniqueNamesType`
-* `ActiveDirectoryGroupType`
-* `OrganizationalRoleGroupType`
-* `MemberDNGroupType`
-* `NISGroupType`
-* `NestedGroupOfNamesType`
-* `NestedGroupOfUniqueNamesType`
-* `NestedActiveDirectoryGroupType`
-* `NestedOrganizationalRoleGroupType`
-* `NestedMemberDNGroupType`
-* `PosixUIDGroupType`
+The group type defines the class name of the group, which manages the groups associated with users in your LDAP directory and is returned by the search specified in step 14. The group type, along with group parameters and the group search, is used to find and assign groups to users during log in, and can also be evaluated during the mapping process. The following table lists the available group types, along with their descriptions and the necessary parameters for each. By default, LDAP groups will be mapped to Django groups by taking the first value of the cn attribute. You can specify a different attribute with `name_attr`. For example, `name_attr='cn'`.
++
+.Available LDAP group types
+[cols="40%,40%,20%",options="header"]
+|===
+| *LDAP Group Type* | *Description* | *Initializer method (_init_)*
+| `PosixGroupType` | Handles the `posixGroup` object class. This checks for both primary group and group membership. | `name_attr='cn'`
+| `MemberDNGroupType` | Handles the grouping mechanisms wherein the group object contains a list of its member DNs. | `member_attr, name_attr='cn'`
+| `GroupOfNamesType` | Handles the `groupOfNames` object class. Equivalent to `MemberDNGroupType('member')`. | `name_attr='cn'`
+| `GroupOfUniqueNamesType` | Handles the `groupOfUniqueNames` object class. Equivalent to `MemberDNGroupType('uniqueMember')`. | `name_attr='cn'`
+| `ActiveDirectoryGroupType` | Handles the Active Directory groups. Equivalent to `MemberDNGroupType('member')`. | `name_attr='cn'`
+| `OrganizationalRoleGroupType` | Handles the `organizationalRole` object class. Equivalent to `MemberDNGroupType('roleOccupant')`. | `name_attr='cn'`
+| `NestedGroupOfNamesType` | Handles the `groupOfNames` object class. Equivalent to `NestedMemberDNGroupType('member')`. | `member_attr, name_attr='cn'`
+| `NestedGroupOfUniqueNamesType` | Handles the `groupOfUniqueNames` object class. Equivalent to `NestedMemberDNGroupType('uniqueMember')`. | `name_attr='cn'`
+| `NestedActiveDirectoryGroupType` | Handles the Active Directory groups. Equivalent to `NestedMemberDNGroupType('member')`. | `name_attr='cn'`
+| `NestedOrganizationalRoleGroupType` | Handles the `organizationalRole` object class. Equivalent to `NestedMemberDNGroupType('roleOccupant')`. | `name_attr='cn'`
+|===
 +
 [NOTE]
 ====
 The group types that are supported by {PlatformNameShort} use the underlying link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django-auth-ldap library]. To specify the parameters for the selected group type, see Step 13 of this procedure.
 ====
-. To use *LDAP User DN Template* as an alternative to user search, enter the name of the template. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. If this setting has a value it will be used instead of the *LDAP User Search* setting.
-. *LDAP Start TLS* is disabled by default. To enable TLS when the LDAP connection is not using SSL, set the switch to *On*.
+. To use *LDAP User DN Template* as an alternative to user search, enter the name of the template. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. If this setting has a value it will be used instead of the *LDAP User Search* setting. For example:
++
+----
+uid=%(username)s,cn=users,cn=accounts,dc=example,dc=com
+----
++
+where: `uid` is the user identifier, `cn` is the common name and `dc` is the domain component.
++
+[NOTE]
+====
+If this setting has a value it will be used instead of the LDAP User Search setting. 
+====
++
+. *LDAP Start TLS* is disabled by default. To enable TLS when the LDAP connection is not using SSL, set the switch to *On*. StartTLS allows your LDAP connection to be upgraded from an unencrypted connection to a secure connection using Transport Layer Security (TLS). To enable StartTLS when the LDAP connection is not using SSL, set the switch to *On*.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
-. Enter any *LDAP Connection Options* to set for the LDAP connection. 
+. Enter any *LDAP Connection Options* to set for the LDAP connection. LDAP referrals are disabled by default (to prevent certain LDAP queries from hanging with Active Directory). Option names should be strings, such as the following:
++
+----
+OPT_REFERRALS: 0
+OPT_NETWORK_TIMEOUT: 30
+----
+See the link:https://www.python-ldap.org/en/python-ldap-3.4.3/reference/ldap.html#options[python-LDAP Reference] for possible options and values that can be set.
++
 . Depending on the selected *LDAP Group Type*, different parameters are available in the *LDAP Group Type Parameters* field to account for this. `LDAP_GROUP_TYPE_PARAMS` is a dictionary, which is converted to `kwargs` and passed to the *LDAP Group Type* class selected. There are two common parameters used by group types: `name_attr` and `member_attr`. Where `name_attr` defaults to `cn` and `member_attr` defaults to `member`: 
 +
 ----
@@ -71,9 +94,26 @@ include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
 To determine the parameters that a specific *LDAP Group Type* requires, refer to the link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django_auth_ldap documentation] on the classes `init` parameters.
 +
-. In the *LDAP Group Search* field, specify which groups should be searched and how to search them. 
-. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name`. 
-. In the *LDAP User Search* field, enter where to search for users during authentication. 
+. In the *LDAP Group Search* field, specify which groups should be searched and how to search them. For example:
++
+----
+[
+"dc=example,dc=com",
+"SCOPE_SUBTREE",
+"(objectClass=group)"
+ ]
+----
++
+. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name`. For example:
++
+----
+[
+"first_name": "givenName",
+"last_name": "sn",
+"email": "mail"
+]
+----
+. In the *LDAP User Search* field, enter where to search for users during authentication. For example:
 +
 ----
 [
