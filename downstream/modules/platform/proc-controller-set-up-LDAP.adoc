@@ -30,7 +30,7 @@ Migration of LDAP authentication settings are not supported for 2.4 to 2.5 in th
 include::snippets/snip-gw-authentication-auto-migrate.adoc[]
 
 . In the *LDAP Server URI* field, enter or modify the list of LDAP servers to which you want to connect. This field supports multiple addresses.
-. In the *LDAP Bind DN text* field, enter the Distinguished Name (DN) to specify the user that the {PlatformNameShort} uses to connect to the LDAP server. For example:
+. In the *LDAP Bind DN text* field, enter the Distinguished Name (DN) to specify the user that the {PlatformNameShort} uses to connect to the LDAP server as shown in the following example:
 +
 ----
 CN=josie,CN=users,DC=website,DC=com
@@ -39,7 +39,7 @@ CN=josie,CN=users,DC=website,DC=com
 . In the *LDAP Bind Password* text field, enter the password to use for the binding user.
 . Select a group type from the *LDAP Group Type* list. 
 +
-The group type defines the class name of the group, which manages the groups associated with users in your LDAP directory and is returned by the search specified in step 14. The group type, along with group parameters and the group search, is used to find and assign groups to users during log in, and can also be evaluated during the mapping process. The following table lists the available group types, along with their descriptions and the necessary parameters for each. By default, LDAP groups will be mapped to Django groups by taking the first value of the cn attribute. You can specify a different attribute with `name_attr`. For example, `name_attr='cn'`.
+The group type defines the class name of the group, which manages the groups associated with users in your LDAP directory and is returned by the search specified in Step 14 of this procedure. The group type, along with group parameters and the group search, is used to find and assign groups to users during log in, and can also be evaluated during the mapping process. The following table lists the available group types, along with their descriptions and the necessary parameters for each. By default, LDAP groups will be mapped to Django groups by taking the first value of the cn attribute. You can specify a different attribute with `name_attr`. For example, `name_attr='cn'`.
 +
 .Available LDAP group types
 [cols="40%,40%,20%",options="header"]
@@ -61,7 +61,7 @@ The group type defines the class name of the group, which manages the groups ass
 ====
 The group types that are supported by {PlatformNameShort} use the underlying link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django-auth-ldap library]. To specify the parameters for the selected group type, see Step 13 of this procedure.
 ====
-. To use *LDAP User DN Template* as an alternative to user search, enter the name of the template. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. If this setting has a value it will be used instead of the *LDAP User Search* setting. For example:
+. You can use *LDAP User DN Template* as an alternative to user search. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. Enter the name of the template as shown in the following example:
 +
 ----
 uid=%(username)s,cn=users,cn=accounts,dc=example,dc=com
@@ -71,14 +71,14 @@ where: `uid` is the user identifier, `cn` is the common name and `dc` is the dom
 +
 [NOTE]
 ====
-If this setting has a value it will be used instead of the LDAP User Search setting. 
+If this setting has a value it will be used instead of the *LDAP User Search* setting. 
 ====
 +
 . *LDAP Start TLS* is disabled by default. To enable TLS when the LDAP connection is not using SSL, set the switch to *On*. StartTLS allows your LDAP connection to be upgraded from an unencrypted connection to a secure connection using Transport Layer Security (TLS). To enable StartTLS when the LDAP connection is not using SSL, set the switch to *On*.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
-. Enter any *LDAP Connection Options* to set for the LDAP connection. LDAP referrals are disabled by default (to prevent certain LDAP queries from hanging with Active Directory). Option names should be strings, such as the following:
+. Enter any *LDAP Connection Options* to set for the LDAP connection. LDAP referrals are disabled by default (to prevent certain LDAP queries from hanging with Active Directory). Option names should be strings as shown in the following example:
 +
 ----
 OPT_REFERRALS: 0
@@ -94,7 +94,7 @@ See the link:https://www.python-ldap.org/en/python-ldap-3.4.3/reference/ldap.htm
 +
 To determine the parameters that a specific *LDAP Group Type* requires, refer to the link:https://django-auth-ldap.readthedocs.io/en/latest/reference.html#django_auth_ldap.config.LDAPGroupType[django_auth_ldap documentation] on the classes `init` parameters.
 +
-. In the *LDAP Group Search* field, specify which groups should be searched and how to search them. For example:
+. In the *LDAP Group Search* field, specify which groups should be searched and how to search them as shown in the following example:
 +
 ----
 [
@@ -104,7 +104,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
  ]
 ----
 +
-. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name`. For example:
+. In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name` as shown in the following example:
 +
 ----
 [
@@ -113,7 +113,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 "email": "mail"
 ]
 ----
-. In the *LDAP User Search* field, enter where to search for users during authentication. For example:
+. In the *LDAP User Search* field, enter where to search for users during authentication as shown in the following example:
 +
 ----
 [
@@ -124,7 +124,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 ----
 +
 If the *LDAP User DN Template* is not set, the {PlatformNameShort} authenticates to LDAP using the *Bind DN Template* and *LDAP Bind Password*. After authentication, an LDAP search is performed to locate the user specified by this field. If the user is found, {PlatformNameShort} validates the provided password against the user found by the LDAP search. 
-Multiple search queries are supported for users with `LDAPUnion` by entering multiple search terms. For example:
+Multiple search queries are supported for users with `LDAPUnion` by entering multiple search terms as shown in the following example:
 +
 ----
 [
