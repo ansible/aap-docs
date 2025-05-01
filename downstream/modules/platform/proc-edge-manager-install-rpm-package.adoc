@@ -1,0 +1,65 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="edge-manager-install-rpm-package"]
+
+= Installing the {RedHatEdge} RPM package
+
+.Prerequisites
+
+* An active {PlatformNameShort} subscription.
+* Podman installed for managing containers.
+* A {RHEL} host with:
+
+** Minimal installation
+** 4 cores and 16GB RAM (minimum recommended)
+** Administrative access (root or sudo-capable user)
+** SSH access
+
+.Procedure
+
+. SSH into your {RHEL} host.
+. Install the necessary repositories and packages:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo dnf copr enable -y @redhat-et/flightctl
+sudo dnf install -y flightctl-services
+----
++
+To install a specific version, use:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo dnf install -y flightctl-services-0.6.0~rc1-1.el9.x86_64
+----
+
+. Start the services:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo systemctl start flightctl.target
+----
++
+. Verify that services are running:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo podman ps
+----
++
+You should see these 6 services running:
++
+
+* flightctl-db
+* flightctl-kv
+* flightctl-api
+* flightctl-periodic
+* flightctl-worker
+* flightctl-ui
+
++
+. Go to the UI at the `baseDomain` stored in the service configuration file:
++
+`cat /etc/flightctl/service-config.yaml | grep baseDomain:`
++
+Visit the displayed `baseDomain` in your web browser to access the UI.
