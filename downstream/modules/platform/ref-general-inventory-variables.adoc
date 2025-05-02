@@ -187,6 +187,22 @@ For further information, see link:https://docs.ansible.com/ansible/latest/invent
 | Optional 
 | 
 
+| `use_archive_compression` 
+| `use_archive_compression`
+a| Controls at a global level whether the filesystem-related backup files are compressed before being sent to the host to run the backup operation. If set to `true`, a `tar.gz` file is generated on each {PlatformNameShort} host and then gzip compression is used. If set to `false`, a simple tar file is generated. 
+
+You can control this functionality at a component level by using the `<component_name>_use_archive_compression` variables. 
+| Optional
+| `true`
+
+| `use_db_compression` 
+| `use_db_compression`
+a| Controls at a global level whether the database-related backup files are compressed before being sent to the host to run the backup operation. 
+
+You can control this functionality at a component level by using the `<component_name>_use_db_compression` variables. 
+| Optional
+| `true`
+
 |  
 | `ca_tls_key_passphrase` 
 | Passphrase used to decrypt the key provided in `ca_tls_key`. 
@@ -220,6 +236,12 @@ Set to `false` to prevent pulling newer container images during installation.
 | public
 
 | 
+| `pcp_use_archive_compression`
+| Controls whether archive compression is enabled or disabled for Performance Co-Pilot. You can control this functionality globally by using `use_archive_compression`.
+| Optional
+| `true`
+
+| 
 | `registry_auth` 
 | Set whether or not to use registry authentication. When this variable is set to true, `registry_username` and `registry_password` are required. 
 | Optional 
@@ -236,57 +258,6 @@ Set to `false` to prevent pulling newer container images during installation.
 | RHEL registry namespace. 
 | Optional 
 | `rhel8`
-
-| `use_archive_compression` 
-| 
-| Controls at the global level whether the filesystem-related backup files will be compressed before being sent to the host to run the backup operation. If set to true, a `tar.gz` file is generated on each {PlatformNameShort} host, and then the gzip compression is used. If set to false, a simple tar file is generated. 
-
-This functionality can be controlled at the component level using the `<componentName>_use_archive_compression` variable. 
-| Optional
-| `true`
-
-| `<componentName>_use_archive_compression` 
-| 
-a| Enables or disables archive compression on a component level by specifying the component in `<componentName>`.  
-
-For example:
-
-* `automationgateway_use_archive_compression=true`
-
-* `automationcontroller_use_archive_compression=true`
-
-* `automationhub_use_archive_compression=true`
-
-* `automationedacontroller_use_archive_compression=true`
-
-This functionality can be controlled at the global level using the `use_archive_compression` variable.
-| Optional
-| `true`
-
-| `use_db_compression` 
-| 
-| Controls at the global level whether the database-related backup files will be compressed before being sent to the host to run the backup operation. 
-This functionality can be controlled at the component level using the `<componentName>_use_db_compression` variable. 
-| Optional
-| `true`
-
-| `<componentName>_use_db_compression` 
-| 
-a| Enables or disables archive compression on a database level by specifying the component in `<componentName>`.  
-
-For example:
-
-* `automationgateway_use_db_compression=true`
-
-* `automationcontroller_use_db_compression=true`
-
-* `automationhub_use_db_compression=true`
-
-* `automationedacontroller_use_db_compression=true`
-
-This functionality can be controlled at the global level using the `use_db_compression` variable.
-| Optional
-| `true`
 
 |===
 
