@@ -6,11 +6,11 @@
 |===
 | RPM variable name | Container variable name | Description | Required or optional | Default
 
-| 
-| `postgresql_admin_database`
-| Database name used for connections to the PostgreSQL database server.
+| `install_pg_port`
+| `postgresql_port` 
+| Port number for the PostgreSQL database.
 | Optional
-| `postgres`
+| `5432`
 
 | `postgres_firewalld_zone` 
 | `postgresql_firewall_zone` 
@@ -24,13 +24,6 @@
 See link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-database-settings[PostgreSQL database configuration and maintenance for {ControllerName}] for help selecting a value.
 | Optional
 | `1024`
-
-| 
-| `postgresql_admin_password` 
-| Password for the PostgreSQL admin user. +
-When used, the installation program creates each component’s database and credentials.
-| Required if using `postgresql_admin_username`.
-|
 
 | `postgres_ssl_cert` 
 | `postgresql_tls_cert` 
@@ -49,6 +42,19 @@ When used, the installation program creates each component’s database and cred
 | Controls whether SSL/TLS is enabled or disabled for the PostgreSQL database.
 | Optional
 | `false`
+
+| 
+| `postgresql_admin_database`
+| Database name used for connections to the PostgreSQL database server.
+| Optional
+| `postgres`
+
+| 
+| `postgresql_admin_password` 
+| Password for the PostgreSQL admin user. +
+When used, the installation program creates each component’s database and credentials.
+| Required if using `postgresql_admin_username`.
+|
 
 | 
 | `postgresql_admin_username` 
@@ -83,12 +89,6 @@ Set to `true` to keep databases during uninstall.
 | Optional
 | `scram-sha-256`
 
-| `install_pg_port`
-| `postgresql_port` 
-| Port number for the PostgreSQL database.
-| Optional
-| `5432`
-
 | 
 | `postgresql_shared_buffers` 
 | Memory allocation (in MB) for shared memory buffers.
@@ -100,5 +100,11 @@ Set to `true` to keep databases during uninstall.
 | Denote whether the PostgreSQL provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
 | Optional
 | `false`
+
+| 
+| `postgresql_use_archive_compression`
+| Controls whether archive compression is enabled or disabled for PostgreSQL. You can control this functionality globally by using `use_archive_compression`.
+| Optional
+| `true`
 
 |===
