@@ -13,6 +13,15 @@ If the LDAP server you want to connect to has a certificate that is self-signed 
 
 When LDAP is configured, an account is created for any user who logs in with an LDAP username and password and they can be automatically placed into organizations as either regular users or organization administrators. 
 
+{PlatformNameShort} treats usernames as case-insensitive in LDAP. It sends the username that was entered without modification to the LDAP provider for authentication. After successful authentication, the platform converts the username to lowercase and stores it in the database. For example, if a user logs in as `JDOE`, their platform username will be `jdoe`. If the user logs in again as `JDoe`, their username will still be `jdoe`.
+
+However, if {PlatformNameShort} is configured with multiple LDAP authenticators, and the same user IDs exist across them, their usernames might differ. For instance, `JDOE` might have the username `jdoe`, while `jDOE` could be assigned `jdoe-<some hash>`.
+
+[NOTE]
+====
+If a user previously logged in using different case variations of their username, {PlatformNameShort} maps all case variations to the lowercase username. Existing users with other case variations are not valid for interactive log in. However, any existing OAuth tokens for the mixed case username still allow authentication. A system administrator can delete those case variation users if needed.
+====
+
 Users created through an LDAP login should not change their username, first name, last name, or set a local password for themselves. Any changes made to this information is overwritten the next time the user logs in to the platform. 
 
 [IMPORTANT]
