@@ -14,21 +14,23 @@ ifdef::context[:parent-context: {context}]
 
 [role="_abstract"]
 
+== Overview
+
 The {AAPchatbot} is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
 
-The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses large language models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
+The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower the Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
 
 {AAPchatbot} requires the following configurations:
 
 * Installation of {PlatformNameShort} {PlatformVers} on {OCPShort}
-* Deployment of an LLM served by either Red Hat Enterprise Linux® AI or Red Hat OpenShift AI
+* Deployment of an LLM served by Red Hat AI platforms, such as Red Hat Enterprise Linux® AI or Red Hat OpenShift AI
 
 [NOTE]
 ====
-Red Hat does not collect any telemetry data from user interactions with the {AAPchatbot}. 
+Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
 ====
 
-== Accessing the {AAPchatbot}
+== Process for deploying and using the {AAPchatbot}
 
 Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
 
@@ -38,15 +40,16 @@ Perform the following tasks to set up and use the {AAPchatbot} in your {Platform
 | Description
 
 |Deploy the {AAPchatbot} on {OCPShort}
-a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for all Ansible users so that they can get answers to their questions about the {PlatformNameShort}.
+a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for all Ansible users in the organization.
 
 Perform the following tasks:
 
-. Create a chatbot configuration secret.
-. Reconfigure the {PlatformNameShort} to use the chatbot connection secret. 
+. Install and configure the {PlatformNameShort} operator
+. Create a chatbot configuration secret
+. Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret 
 
 | Access and use the {AAPchatbot}
-| All Ansible users belonging to an organization that has {AAPchatbot} configured who want to use the intelligent assistant to answer questions about the {PlatformNameShort}.
+| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}.
 |====
 
 == Prerequisites
@@ -60,7 +63,7 @@ Perform the following tasks:
 
 *For the Large Language Model (LLM)*:
 
-* You must have configured a Large Language Model (LLM) provider that you will use before deploying the {AAPchatbot}. You can use an LLM served by either Red Hat Enterprise Linux® AI or Red Hat OpenShift AI.
+* You must have configured a Large Language Model (LLM) provider that you will use before deploying the {AAPchatbot}. You can use an LLM served by Red Hat AI platforms, such as Red Hat Enterprise Linux® AI or Red Hat OpenShift AI.
 +
 For more information, see the following resources:
 
@@ -69,10 +72,12 @@ For more information, see the following resources:
 ** link:https://www.redhat.com/en/products/ai/openshift-ai[Red Hat OpenShift AI] product page
 ** link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai/[Red Hat OpenShift AI documentation]
 
+
 include::platform/proc-install-aap-operator-chatbot.adoc[leveloffset=+1]
 include::platform/proc-create-chatbot-config-secret.adoc[leveloffset=+1]
 include::platform/proc-update-aap-operator-yaml-chatbot.adoc[leveloffset=+1]
 include::platform/con-using-chatbot.adoc[leveloffset=+1]
+
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]

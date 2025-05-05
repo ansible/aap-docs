@@ -2,11 +2,11 @@
 
 = Updating the YAML file of the {PlatformNameShort} operator 
 
-After you create the chatbot authorization secret, you must select this secret in your {PlatformNameShort} operator configuration.
+After you create the chatbot authorization secret, you must update the YAML file of the {PlatformNameShort} operator to use the secret.
 
 .Procedure
 . Log in to {OCP} as an administrator.
-. Go to menu:Operators[Installed Operators].
+. Navigate to menu:Operators[Installed Operators].
 . From the list of installed operators, select the *{PlatformNameShort}* operator.
 . Locate and select the *{PlatformNameShort}* custom resource, and then click the required app.
 . Select the *YAML* tab.
@@ -22,23 +22,23 @@ spec:
 
 .Verification
 . Verify that the chat interface service is running successfully:
-.. Go to menu:Workloads[Pods].
-.. Filter with the term *API* and ensure that the following APIs are displayed in *Running* status:
+.. Navigate to menu:Workloads[Pods].
+.. Filter with the term *api* and ensure that the following APIs are displayed in *Running* status:
 +
 * `myaap-lightspeed-api-<version number>`
 * `myaap-lightspeed-chatbot-api-<version number>`
 
 . Verify that the chat interface is displayed on the {PlatformNameShort}:
 .. Access the {PlatformNameShort}:
-... Go to menu:Operators[Installed Operators].
+... Navigate to menu:Operators[Installed Operators].
 ... From the list of installed operators, click *Ansible Automation Platform*. 
 ... Locate and select the *Ansible Automation Platform* custom resource, and then click the app that you created.
-... From the *Details* tab, record the following information:
-* From the *URL* field, record the URL of the {PlatformNameShort}. 
-* From the *Gateway Admin User* field, record the login username.
-* From the *Gateway Admin password* field, record the login password. 
-... Log in to the {PlatformNameShort} using the URL and username and password that you recorded earlier. 
-.. Access the {AAPchatbot} chat interface:
+... From the *Details* tab, record the information available in the following fields:
+* *URL*: This is the URL of your {PlatformNameShort} instance. 
+* *Gateway Admin User*: This is the username to log into your {PlatformNameShort} instance.
+* *Gateway Admin password*: This is the password to log into your {PlatformNameShort} instance. 
+... Log in to the {PlatformNameShort} using the URL, username, and password that you recorded earlier. 
+.. Access the {AAPchatbot}:
 ... Click the {AAPchatbot} icon image:chatbot-icon.png[{AAPchatbot} icon] that is displayed  at the top right corner of the taskbar. 
 ... Verify that the chat interface is displayed, as shown in the following image:
 +
