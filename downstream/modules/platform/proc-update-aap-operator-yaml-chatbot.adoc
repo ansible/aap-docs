@@ -1,0 +1,46 @@
+[id="proc-update-aap-operator-chatbot"]
+
+= Updating the YAML file of the {PlatformNameShort} operator 
+
+After you create the chatbot authorization secret, you must update the YAML file of the {PlatformNameShort} operator to use the secret.
+
+.Procedure
+. Log in to {OCP} as an administrator.
+. Navigate to menu:Operators[Installed Operators].
+. From the list of installed operators, select the *{PlatformNameShort}* operator.
+. Locate and select the *{PlatformNameShort}* custom resource, and then click the required app.
+. Select the *YAML* tab.
+. Scroll the text to find the `spec:` section, and add the following details under the `spec:` section:
++
+----
+spec:
+  lightspeed:
+    disabled: false
+    chatbot_config_secret_name: <name of your chatbot configuration secret>
+----
+. Click *Save*. The {AAPchatbot} service takes a few minutes to set up. 
+
+.Verification
+. Verify that the chat interface service is running successfully:
+.. Navigate to menu:Workloads[Pods].
+.. Filter with the term *api* and ensure that the following APIs are displayed in *Running* status:
++
+* `myaap-lightspeed-api-<version number>`
+* `myaap-lightspeed-chatbot-api-<version number>`
+
+. Verify that the chat interface is displayed on the {PlatformNameShort}:
+.. Access the {PlatformNameShort}:
+... Navigate to menu:Operators[Installed Operators].
+... From the list of installed operators, click *Ansible Automation Platform*. 
+... Locate and select the *Ansible Automation Platform* custom resource, and then click the app that you created.
+... From the *Details* tab, record the information available in the following fields:
+* *URL*: This is the URL of your {PlatformNameShort} instance. 
+* *Gateway Admin User*: This is the username to log into your {PlatformNameShort} instance.
+* *Gateway Admin password*: This is the password to log into your {PlatformNameShort} instance. 
+... Log in to the {PlatformNameShort} using the URL, username, and password that you recorded earlier. 
+.. Access the {AAPchatbot}:
+... Click the {AAPchatbot} icon image:chatbot-icon.png[{AAPchatbot} icon] that is displayed  at the top right corner of the taskbar. 
+... Verify that the chat interface is displayed, as shown in the following image:
++
+[.thumb]
+image:aap-ansible-lightspeed-intelligent-assistant.png[{AAPchatbot}].
