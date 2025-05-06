@@ -73,7 +73,7 @@ The group types that are supported by {PlatformNameShort} use the underlying lin
 . You can use *LDAP User DN Template* as an alternative to user search. This approach is more efficient for user lookups than searching if it is usable in your organizational environment. Enter the name of the template as shown in the following example:
 +
 ----
-uid=%(username)s,cn=users,cn=accounts,dc=example,dc=com
+uid=%(user)s,cn=users,cn=accounts,dc=example,dc=com
 ----
 +
 where: `uid` is the user identifier, `cn` is the common name and `dc` is the domain component.
@@ -116,11 +116,11 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 . In the *LDAP User Attribute Map* field, enter user attributes to map LDAP fields to your {PlatformNameShort} users, for example, `email` or `first_name` as shown in the following example:
 +
 ----
-[
+{
 "first_name": "givenName",
 "last_name": "sn",
 "email": "mail"
-]
+}
 ----
 . In the *LDAP User Search* field, enter where to search for users during authentication as shown in the following example:
 +
