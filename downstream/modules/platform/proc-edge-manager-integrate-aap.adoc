@@ -31,42 +31,23 @@ global:
 	    oAuthToken: <your-oauth-token> <7>
 ----
 +
-----
 <1> The domain name or IP for the host, this is automatically set when the RPM is installed but you can override this. 
 It is the only field that is mandatory.
-
 <2> Set this to `aap` to enable {PlatformNameShort} authentication.
-
 <3> Set to `false`.
-
 Only set this to `true` to skip TLS certificate verification for the {PlatformNameShort} URLs. 
 For production environments, consider configuring a CA certificate (see the Certificates section).
-
 <4> The internal facing API URL for the running {PlatformNameShort} instance that makes requests against.
 You can configure this URL to be an internally accessible URL for the running {PlatformNameShort} instance. 
 For example, if there are separate internal or external ingresses.
-
 <5> The externally accessible URL of your running {PlatformNameShort} instance.
-
 <6> The Client ID of the OAuth application configured in {PlatformNameShort} for the {RedHatEdge}. 
 If you do not have one yet, you can leave this empty and give an `oAuthToken` to allow the setup to create it.
-
 <7> An OAuth token with write permissions for the "Default" organization in your {PlatformNameShort} instance. 
 This is only needed if you want the setup process to automatically create the OAuth application. 
 Once created, this token is no longer necessary.
-----
 
-. Configure network access for the Podman containers: 
 +
-[literal, options="nowrap" subs="+attributes"]
-----
-PODMAN_NETWORK_INTERFACE=$(sudo podman network inspect flightctl | jq -r .[0].network_interface)
-sudo firewall-cmd --permanent --zone=trusted --add-interface=$PODMAN_NETWORK_INTERFACE
-sudo firewall-cmd --permanent --zone=trusted --add-masquerade
-sudo firewall-cmd --reload
-----
-+
-
 . Start the services:
 +
 [literal, options="nowrap" subs="+attributes"]
