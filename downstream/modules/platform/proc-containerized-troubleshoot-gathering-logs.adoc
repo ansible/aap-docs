@@ -1,0 +1,58 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-containerized-troubleshoot-gathering-logs_{context}"]
+
+= Gathering {PlatformNameShort} logs
+
+With the `sos` utility, you can collect configuration, diagnostic, and troubleshooting data, and give those files to Red Hat Technical Support. An `sos` report is a common starting point for Red Hat technical support engineers when performing analysis of a service request for {PlatformNameShort}. 
+
+You can collect an `sos` report for each host in your containerized {PlatformNameShort} deployment by running the `log_gathering` playbook with the appropriate parameters.
+
+.Procedure
+
+. Go to the {PlatformNameShort} installation directory.
+
+. Run the `log_gathering` playbook. This playbook connects to each host in the inventory file, installs the `sos` tool, and generates the `sos` report.
++
+----
+$ ansible-playbook -i <path_to_inventory_file> ansible.containerized_installer.log_gathering
+----
++
+. Optional: To define additional parameters, specify them with the `-e` option. For example:
++
+----
+$ ansible-playbook -i <path_to_inventory_file> ansible.containerized_installer.log_gathering -e 'target_sos_directory=<path_to_files>' -e 'case_number=0000000' -e 'clean=true' -e 'upload=true' -s
+----
++
+.. You can use the `-s` option to step through each task in the playbook and confirm its execution. This is optional but can be helpful for debugging.
+
+.. The following is a list of the parameters you can use with the `log_gathering` playbook:
++
+.Parameter reference
+[options="header"]
+|====
+| Parameter name | Description | Default 
+
+| `target_sos_directory`
+| Used to change the default location for the `sos` report files. 
+| `/tmp` directory of the current server.
+
+| `case_number`
+| Specifies the support case number if relevant to the log gathering.
+|
+
+| `clean`
+| Obfuscates sensitive data that might be present on the `sos` report.
+| `false`
+
+| `upload`
+| Automatically uploads the `sos` report data to Red Hat.
+| `false`
+|====
++
+. Gather the `sos` report files described in the playbook output and share them with the support engineer or directly upload the `sos` report to Red Hat using the `upload=true` additional parameter.
+
+[role="_additional-resources"]
+.Additional resources
+
+* For more information about the `sos` report tool, see link:https://access.redhat.com/solutions/3592[What is an sos report and how to create one in {RHEL}?]
