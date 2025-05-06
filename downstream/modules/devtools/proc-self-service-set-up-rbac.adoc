@@ -1,0 +1,38 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-set-up-rbac_{context}"]
+= Setting up RBAC
+
+RBAC is set up in the Helm chart with the `admin` user set as the RBAC administrator (`rbac_admin`). 
+
+This procedure describes how to create a role in {SelfServiceShort} that allows only a selected team to view and execute particular templates.
+
+.Prerequisites
+* As the admin user in  your {PlatformNameShort} instance, you have created a user, for example `example-user`.
++
+See
+link:{URLCentralAuth}/gw-managing-access#proc-controller-creating-a-user[Creating a user]
+in the _{TitleCentralAuth}_ guide. 
+* You have added this user as a member of a team, for example `example-team`.
++
+See
+link:{URLCentralAuth}/gw-managing-access#proc-gw-team-add-user[Adding users to a team]
+in the _{TitleCentralAuth}_ guide. 
+
+.Procedure
+. In a browser, log in to your {SelfServiceShort} instance as the {PlatformNameShort} `admin` user.
+. In the navigation panel, select menu:Administration[RBAC].
+. In the *RBAC* view, click *Create*.
++
+The *Create Role* view appears.
++
+.. Enter a name for the role.
+.. Select the user or group that you want to allow to use the role.
+.. In the *Add Permission policies* section, select the plug-ins that you want to enable for the role.
+.. Select *Permission* in the list of plug-ins to configure the fine-grained permission policies for the role.
+. Click *Next*.
+. Review the settings that you have selected for the role.
+. Click *Create* to create the role.
+
