@@ -1,0 +1,45 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-view-deployment-logs_{context}"]
+= Viewing the deployment logs
+
+. In a browser, log in to your OpenShift instance.
+. In the *Developer* view,
+navigate to the *Topology* view for the namespace where you deployed the Helm chart. 
++
+. The deployment appears: the label on the icon is `D`.
++
+The name of the deployment is `<installation-name>-backstage`,
+for example `<my-aap-self-service-technical-preview-backstage>`.
+. Click the icon representing the deployment.
+. The *Details* pane for the deployment opens.
+. Select the *Resources* tab.
+. Click *View* logs for the deployment pod in the *Pods* section:
++
+image::self-service-view-deployment-logs.png[Deployment on OpenShift console]
++
+The *Pod details* page opens for the deployment pod.
+. Select the *Logs* tab in the *Pod details* page.
+. To view the install messages,
+select the `install-dynamic-plugins` container from the *INIT CONTAINERS* section of the dropdown list of containers:
++
+image::self-service-view-install-messages.png[View install messages]
++
+The log stream displays the progress of the installation of the plug-ins from the plug-in registry. 
++
+The log stream for successful installation of the plug-ins resembles the following output:
++
+----
+ ======= Installing dynamic plugin http://plugin-registry:8080/ansible-backstage-plugin-catalog-backend-module-rhaap-dynamic-0.1.0.tgz
+ *=> Grabbing package archive through pm pack'
+ •=› Vertfying package Integrity
+ •*> Extracting package archtve /dynamtc-plugtns-root/anstble-backstage-plugtn-catalog-backend-nodule-rhaap-dynamic-0.1.0.tgz
+ •*› Removing package archive /dynamic-plugins-root/ansible-backstage-plugin-catalog-backend-module-rhaap-dynamic-0.1.0. tgz
+ -> Successfully installed dynamic plugin http://plugin-registry:8080/ansible-backstage-plugin-catalog-backend-module-rhaap-dynamic-0.1.0.tgz
+----
+. Select the *Environment* tab in the *Pod details* page to view the environment variables for the containers.
+If you set additional environment variables in your Helm chart, check that they are listed here.
++
+image::self-service-pod-env-variables.png[Pod environment variables]
+
+
