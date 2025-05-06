@@ -1,6 +1,6 @@
-[id="controller-keep-subscription-in-compliance"]
+[id="controller-keep-subscription-in-compliance_{context}"]
 
-= Troubleshooting: Keep your subscription in compliance
+= Keeping your subscription in compliance
 
 Your subscription has two possible statuses:
 
@@ -8,7 +8,6 @@ Your subscription has two possible statuses:
 * *Out of compliance*: Indicates that you have exceeded the number of hosts in your subscription.
 //image::gs-controller-license-non-compliant.png[Subscription out of compliance]
 
-ifdef::controller-UG,controller-AG[]
 Compliance is computed as follows:
 
 [literal, options="nowrap" subs="+attributes"]
@@ -23,11 +22,11 @@ Where:
 
 Other important information displayed are:
 
-* *Hosts automated*: Host count automated by the job, which consumes the license count.
-* *Hosts imported*: Host count considering unique host names across all inventory sources. This number does not impact hosts remaining.
-* *Hosts remaining*: Total host count minus hosts automated.
-* *Hosts deleted*: Hosts that were deleted, freeing the license capacity.
-* *Active hosts previously deleted*: Number of hosts now active that were previously deleted.
+* *Hosts automated*: The number of hosts automated by the job, which consumes the license count.
+* *Hosts imported*: The number of hosts considering unique host names across all inventory sources. This number does not impact hosts remaining.
+* *Hosts remaining*: The number of hosts minus the number of hosts automated.
+* *Hosts deleted*: The number of hosts that were deleted, freeing the license capacity.
+* *Active hosts previously deleted*: The number of hosts now active that were previously deleted.
 
 For example, if you have a subscription capacity of 10 hosts:
 
@@ -35,27 +34,3 @@ For example, if you have a subscription capacity of 10 hosts:
 * 3 hosts were automated again, now you have 11 hosts, which puts you over the subscription limit of 10 (non-compliant).
 * If you delete hosts, refresh the subscription details to see the change in count and status.
 
-= Viewing the host activity
-
-.Procedure
-//[ddacosta] I don't see a Host Metrics menu selection off the standalone navigation panel. Should it be Resources > Hosts? If so, add replace with {MenuInfrastructureHosts}
-//[ddacosta] For 2.5 Host Metrics is off the Analytics menu. Use {MenuAAHostMetrics}
-. In the navigation panel, select menu:Host Metrics[] to view the activity associated with hosts, such as those that have been automated and deleted.
-+
-Each unique hostname is listed and sorted by the user's preference.
-+
-image::ug-host-metrics.png[Host metrics]
-+
-[NOTE]
-====
-A scheduled task automatically updates these values on a weekly basis and deletes jobs with hosts that were last automated more than a year ago.
-====
-
-. Delete unnecessary hosts directly from the Host Metrics view by selecting the desired hosts and clicking btn:[Delete].
-+
-These are soft-deleted, meaning their records are not removed, but are not being used and thereby not counted towards your subscription.
-endif::controller-UG,controller-AG[]
-
-ifdef::controller-GS,controller-AG[]
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#controller-keep-subscription-in-compliance[Troubleshooting: Keeping your subscription in compliance] in _{ControllerUG}_.
-endif::controller-GS,controller-AG[]
