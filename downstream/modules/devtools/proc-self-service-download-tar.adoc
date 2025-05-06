@@ -1,0 +1,47 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-download-tar_{context}"]
+= Downloading the TAR files
+
+. Create a directory on your local machine to store the `.tar` files.
++
+----
+$ mkdir /path/to/<ansible-backstage-plugins-local-dir-changeme>
+----
+. Set an environment variable (`$DYNAMIC_PLUGIN_ROOT_DIR`) to represent the directory path.
++
+----
+$ export DYNAMIC_PLUGIN_ROOT_DIR=/path/to/<ansible-backstage-plugins-local-dir-changeme>
+----
+. Download the latest `.tar` file for the plug-ins from the
+link:{PlatformDownloadUrl}[Red Hat Ansible Automation Platform Product Software downloads page].
++
+The format of the filename is `ansible-backstage-rhaap-bundle-x.y.z.tar.gz`. 
++
+Substitute the Ansible plug-ins release version, for example `1.0.0`, for `x.y.z`.
+. Extract the `ansible-backstage-rhaap-bundle-<version-number>.tar.gz` contents to `$DYNAMIC_PLUGIN_ROOT_DIR`.
++
+----
+$ tar --exclude='*code*' -xzf ansible-backstage-rhaap-bundle-x.y.z.tar.gz -C $DYNAMIC_PLUGIN_ROOT_DIR
+----
++
+Substitute the Ansible plug-ins release version, for example `1.0.0`, for `x.y.z`.
+
+.Verification
+
+Run `ls` to verify that the extracted files are in the `$DYNAMIC_PLUGIN_ROOT_DIR` directory:
+
+----
+$ ls $DYNAMIC_PLUGIN_ROOT_DIR
+ansible-plugin-backstage-rhaap-x.y.z.tgz
+ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity
+ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+ansible-plugin-backstage-rhaap-backend-x.y.z.tgz.integrity
+ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz.integrity
+
+----
+
+The files with the `.integrity` file type contain the plugin SHA value.
+The SHA value is used during the plug-in configuration.
+

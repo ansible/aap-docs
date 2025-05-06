@@ -1,0 +1,25 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-generate-oauth-token_{context}"]
+= Generating a token for user authentication
+
+You must create a token in {PlatformNameShort}.
+The token is used in an OpenShift secret for {PlatformNameShort} authentication.
+
+.Procedure
+. Log in to your instance of {PlatformNameShort} as the `admin` user.
+. Navigate to {MenuControllerUsers}.
+. Select the `admin` user.
+. Select the *Tokens* tab
+. Click *Create Token*.
+. Select your OAuth application.
+In the *Scope* menu, select `Write`.
+// +
+// image::self-service-create-oauth-app.png[Create OAuth application]
+. Click *Create Token* to generate the token.
+. Save the new token.
++
+The token is used in an OpenShift secret that is fetched by the Helm chart.
+
