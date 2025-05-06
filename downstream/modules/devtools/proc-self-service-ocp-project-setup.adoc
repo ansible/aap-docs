@@ -1,0 +1,45 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-ocp-project-setup_{context}"]
+= Setting up a project for {SelfServiceShort} in OpenShift
+
+. In a terminal, log in to OpenShift using your credentials:
++
+----
+oc login <OpenShift_API_URL> -u <username>
+----
++
+For example:
++
+----
+$ oc login https://api.<my_cluster>.com:6443 -u kubeadmin
+WARNING: Using insecure TLS client config. Setting this option is not supported!
+
+Console URL: https://api.<my_cluster>.com:6443/console
+Authentication required for https://api.<my_cluster>.com:6443 (openshift)
+Username: kubeadmin
+Password:
+Login successful.
+
+You have access to 22 projects, the list has been suppressed. You can list all projects with 'oc projects'
+
+Using project "default".
+----
+. Create a new project:
++
+----
+$ oc new-project <AAP-self-service-technical-preview_project_name>
+----
+Example output:
++
+----
+Now using project "my-project" on server "https://openshift.example.com:6443".
+----
+. Open your new project:
++
+----
+oc project <AAP-self-service-technical-preview_project_name>
+----
+

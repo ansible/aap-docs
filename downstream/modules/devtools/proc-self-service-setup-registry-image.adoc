@@ -1,0 +1,44 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-setup-registry-image_{context}"]
+= Setting up the plugin registry image
+
+Set up a registry in your OpenShift cluster to host the plug-ins and make them available for installation.
+
+.Procedure
+
+. Log in to your {OCPShort} instance with credentials to create a new application.
+. Open your OpenShift project for {SelfServiceShort}.
++
+----
+$ oc project <AAP-self-service-technical-preview_project_name>
+----
+. Run the following commands to create a plug-in registry build in in your OpenShift project.
++
+----
+$ oc new-build httpd --name=plugin-registry --binary
+$ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+$ oc new-app --image-stream=plugin-registry
+----
+
+.Verification
+
+Verify that the plugin-registry was deployed successfully:
+
+. Open the *Topology* view in the *Developer* perspective for your project in the OpenShift web console.
+. Click the plug-in registry to view the details pane. 
++
+image::self-service-plugin-registry.png[Developer perspective]
++
+(1) Plug-in registry
+. Click the *terminal* tab and log in to the container.
+. In the terminal, run `ls` to confirm that the `.tar` files are in the plugin registry.
++
+----
+ansible-plugin-backstage-rhaap-x.y.z.tgz
+ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+----
++
+The version numbers and file names can differ.
+

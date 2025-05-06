@@ -1,0 +1,33 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-create-oauth-app_{context}"]
+= Creating an OAuth application
+
+To use the Helm chart to deploy {SelfServiceShort}, you must have set up an OAuth application on your {PlatformNameShort} instance.
+However, you cannot run automation on your {PlatformNameShort} instance until you have deployed your {SelfServiceShort} Helm chart,
+because the OAuth configuration requires the URL for your deployment.
+
+Create the OAuth Application on your {PlatformNameShort} instance,
+using a placeholder name for the deployment URL. 
+
+After deploying {SelfServiceShort}, you must replace the placeholder value with your deployment to your OAuth application.
+
+The steps below describe how to create an OAuth Application in the {PlatformNameShort} Platform console. 
+
+.Procedure
+. Open your {PlatformNameShort} instance in a browser and log in.
+. Navigate to {MenuAMAdminOauthApps}.
+. Click *Create OAuth Application*.
+. Complete the fields in the form,
+adding a placeholder text (for example `http:example.com`) in the *Redirect URIs* field:
++
+image::self-service-create-oauth-app.png[Create OAuth application]
+. Click *Create OAuth application*.
++
+The *Application information* popup displays the `clientId` and `clientSecret` values.
+. Copy the `clientId` and `clientSecret` values and save them.
++
+These values are used in an OpenShift secret for {PlatformNameShort} authentication.
+

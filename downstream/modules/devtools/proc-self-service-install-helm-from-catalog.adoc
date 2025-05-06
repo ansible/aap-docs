@@ -1,0 +1,34 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-helm-from-catalog_{context}"]
+= Configuring the {SelfServiceShort} Helm chart from the OpenShift catalog
+
+.Prerequisites
+. You have created a project for {SelfServiceShort} in OpenShift.
+. You have created a plugin registry in your project.
+. You have set up secrets for {PlatformNameShort} authentication and SCM authentication.
+
+.Procedure
+. In a browser, navigate to your OpenShift project for {SelfServiceShort}.
+. Click the *Helm* option in the OpenShift sidebar.  
+. In the *Helm* page, click *Create* and select *Helm Release*. 
+. Search for `AAP` in the Helm Charts filter,
+and select the `AAP Technical Preview: Self-service automation` chart. 
+. In the modal dialog on the chart page, click *Create*.
+. Select the *YAML view* in the *Create Helm Release* page.
+. Locate the `clusterRouteBase` key in the YAML file and replace the placeholder value with the base URL of your OpenShift instance.
++
+The base URL is the URL portion of your OpenShift URL that follows `\https://console.openshift.console`,
+for example `apps.example.com`:
++
+----
+  redhat-developer-hub
+    global:
+      clusterRouterBase: apps.example.com
+----
+. The Helm chart is set up for the Default {PlatformNameShort} organization.
++
+To update the Helm chart to use a different organization,
+update the value for the `catalog.providers.rhaap.development.orgs` key from `default` to your {PlatformNameShort} organization name. 
+. Click *Create* to launch the deployment.
+
