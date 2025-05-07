@@ -13,7 +13,7 @@ Set up a registry in your OpenShift cluster to host the plug-ins and make them a
 ----
 $ oc project <AAP-self-service-technical-preview_project_name>
 ----
-. Run the following commands to create a plug-in registry build in in your OpenShift project.
+. Run the following commands to create a plugin registry build in in your OpenShift project.
 +
 ----
 $ oc new-build httpd --name=plugin-registry --binary
@@ -26,7 +26,10 @@ $ oc new-app --image-stream=plugin-registry
 Verify that the plugin-registry was deployed successfully:
 
 . Open the *Topology* view in the *Developer* perspective for your project in the OpenShift web console.
-. Click the plug-in registry to view the details pane. 
+. Select the plugin registry icon to open the *plugin-registry* details pane.
+. In the *Pods* section of the *plugin-registry* details pane, click *View logs* for the
+`plugin-registry-&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;-&#0035;&#0035;&#0035;&#0035;` pod.
+// Can't use multiple hashtags characters in Asciidoc: Asciidoctor interprets them as special characters.
 +
 image::self-service-plugin-registry.png[Developer perspective]
 +
