@@ -147,7 +147,7 @@ link:https://access.redhat.com/security/cve/cve-2025-26699[CVE-2025-26699] `auto
 
 * LDAP Authenticator field `USER_SEARCH` field now properly supports LDAP Unions. Previously you could only define one search term in the field like:
 
-====
+----
 [
   "ou=users,dc=example,dc=com",
   "SCOPE_SUBTREE",
@@ -165,7 +165,7 @@ link:https://access.redhat.com/security/cve/cve-2025-26699[CVE-2025-26699] `auto
     "uid=%(user)s"
   ]
 ]
-====
+----
 
 * `USER_DN_TEMPLATE` will still take precedence over the `USER_SEARCH` field. If non-unique users are found when performing multiple searches, those users will be unable to login to {PlatformNameShort}.(AAP-42883)
 
