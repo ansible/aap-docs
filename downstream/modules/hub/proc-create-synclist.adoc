@@ -20,6 +20,7 @@ When syncing content, keep in mind that {HubName} does not check other repositor
 
 * You have a valid {PlatformNameShort} subscription.
 * You have organization administrator permissions for {Console}.
+* You have created a link:{URLHubManagingContent}/managing-cert-valid-content#create-requirements-file_cloud-sync[requirements file].
 * The following domain names are part of either the firewall or the proxy's allowlist.
 They are required for successful connection and download of collections from {HubName} or Galaxy server:
 ** `galaxy.ansible.com`
@@ -34,15 +35,9 @@ The following domain names must be in the allow list:
 
 .Procedure
 
-. Log in to `{Console}`.
-. Navigate to menu:Automation Hub[Collections].
-. Set the *Sync* toggle switch on each collection to exclude or include it on your synclist.
-+
-[NOTE]
-====
-You will only see the *Sync* toggle switch if you have administrator permissions.
-====
-+
-. To initiate the remote repository synchronization, navigate to your {PlatformNameShort} and select {MenuACAdminRepositories}.
+. From the navigation panel, select {MenuACAdminRemotes}.
+. Find the remote you want to sync from and click the pencil icon to edit. 
+. Find the field labeled *Requirements file*. There, you can either paste the contents of your requirements file, or upload the file from your hard drive by selecting the upload button.
+. Click btn:[Save remote].  
+. To begin synchronization, from the navigation panel select {MenuACAdminRepositories}.
 . In the row containing the repository you want to sync, click the btn:[More Actions] icon *{MoreActionsIcon}* and select *Sync repository* to initiate the remote repository synchronization to your {PrivateHubName}. 
-. Optional: If your remote repository is already configured, update the collections content that you made available to local users by manually synchronizing Red Hat {CertifiedName} to your {PrivateHubName}.
