@@ -1,0 +1,34 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-sync-frequency_{context}"]
+= Adjusting synchronization frequency between {PlatformNameShort} and {SelfServiceShort}
+
+The Helm chart defines how frequently users,
+teams and organization configuration information is synchronized from {PlatformNameShort} to {SelfServiceShort}. 
+
+The frequency is set by the `catalog.providers.rhaap.schedule.frequency` key.
+By default, the synchronization occurs hourly. 
+
+* To adjust the synchronization frequency, edit the value for the `catalog.providers.rhaap.schedule.frequency` key in the Helm chart. 
++
+----
+        catalog:
+          ...
+          providers:
+            rhaap:
+              '{{- include "catalog.providers.env" . }}':
+                schedule:
+                  frequency: {minutes: 60}
+                  timeout: {seconds: 30}
+
+----
+
+[NOTE]
+====
+Increasing the synchronization frequency generates extra traffic.
+
+Bear this in mind when deciding the frequency, particularly if you have a large number of users.
+====
+
+// To run a synchronization outside of the scheduled frequency, restart your self-service technical preview instance. 
+

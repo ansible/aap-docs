@@ -9,16 +9,17 @@
 . You have set up secrets for {PlatformNameShort} authentication and SCM authentication.
 
 .Procedure
-. In a browser, navigate to your OpenShift project for {SelfServiceShort}.
+. In a browser, navigate to your OpenShift project for {SelfServiceShort} that you created earlier.
+. Select the *Developer* view.
 . Click the *Helm* option in the OpenShift sidebar.  
 . In the *Helm* page, click *Create* and select *Helm Release*. 
 . Search for `AAP` in the Helm Charts filter,
 and select the `AAP Technical Preview: Self-service automation` chart. 
 . In the modal dialog on the chart page, click *Create*.
 . Select the *YAML view* in the *Create Helm Release* page.
-. Locate the `clusterRouteBase` key in the YAML file and replace the placeholder value with the base URL of your OpenShift instance.
+. Locate the `clusterRouterBase` key in the YAML file and replace the placeholder value with the base URL of your OpenShift instance.
 +
-The base URL is the URL portion of your OpenShift URL that follows `\https://console.openshift.console`,
+The base URL is the URL portion of your OpenShift URL that follows `\https://console-openshift-console`,
 for example `apps.example.com`:
 +
 ----
@@ -29,6 +30,6 @@ for example `apps.example.com`:
 . The Helm chart is set up for the Default {PlatformNameShort} organization.
 +
 To update the Helm chart to use a different organization,
-update the value for the `catalog.providers.rhaap.development.orgs` key from `default` to your {PlatformNameShort} organization name. 
+update the value for the `catalog.providers.rhaap.orgs` key from `Default` to your {PlatformNameShort} organization name. 
 . Click *Create* to launch the deployment.
 
