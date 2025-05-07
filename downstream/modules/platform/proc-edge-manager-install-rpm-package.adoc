@@ -36,12 +36,19 @@ cat /etc/flightctl/service-config.yaml | grep baseDomain:
 
 . SSH into your {RHEL} host.
 . Install the necessary repositories and packages:
+.. If {PlatformNameShort} repositories are already enabled, run:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-sudo dnf copr enable -y @redhat-et/flightctl
 sudo dnf install -y flightctl-services
 sudo systemctl enable flightctl.target
+----
++
+.. If {PlatformNameShort} repositories are not yet enabled, run the following example command based on the version of {RHEL} and architecture of your host:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
 ----
 +
 To install a specific version, use:
@@ -50,7 +57,7 @@ To install a specific version, use:
 ----
 sudo dnf install -y flightctl-services-0.7.0
 ----
-
++
 . Start the services:
 +
 [literal, options="nowrap" subs="+attributes"]
