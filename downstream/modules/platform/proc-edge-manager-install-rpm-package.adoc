@@ -6,7 +6,7 @@
 
 .Prerequisites
 
-* An active {PlatformNameShort} subscription.
+* An active {PlatformNameShort} subscription with a running instance and the necessary API URLs and OAuth credentials.
 * Podman installed for managing containers.
 * A {RHEL} host with:
 
@@ -15,6 +15,32 @@
 ** Administrative access (root or sudo-capable user)
 ** SSH access
 
+.Procedure
+
+. SSH into your {RHEL} host.
+. Install the necessary repositories and packages:
+** Ensure that the {PlatformNameShort} repositories are enabled by running:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo dnf install -y flightctl-services
+sudo systemctl enable flightctl.target
+----
++
+** Install the {RedHatEdge} service by running the following example command based on the version of {RHEL} and architecture of your host:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
+----
++
+. Update the installed `/etc/flightctl/service-config.yaml` to set the `baseDomain`:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo vi /etc/flightctl/service-config.yaml
+----
++
 [IMPORTANT]
 ====
 Ensure that you set the `baseDomain` in the service configuration correctly. 
@@ -31,32 +57,6 @@ You can check the currently configured `baseDomain` using:
 cat /etc/flightctl/service-config.yaml | grep baseDomain:
 ----
 ====
-
-.Procedure
-
-. SSH into your {RHEL} host.
-. Install the necessary repositories and packages:
-.. If {PlatformNameShort} repositories are already enabled, run:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-sudo dnf install -y flightctl-services
-sudo systemctl enable flightctl.target
-----
-+
-.. If {PlatformNameShort} repositories are not yet enabled, run the following example command based on the version of {RHEL} and architecture of your host:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
-----
-+
-To install a specific version, use:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-sudo dnf install -y flightctl-services-0.7.0
-----
 +
 . Start the services:
 +
@@ -69,7 +69,7 @@ sudo systemctl start flightctl.target
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-sudo podman ps
+sudo systemctl list-units flightctl-*.service
 ----
 +
 You should see these 7 services running:
