@@ -3,47 +3,58 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="enable-pac_{context}"]
-= enable PaC
+= Enabling policy enforcement
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
+During installation, you must configure your {PlatformNameShort} instance to include the policy enforcement feature. You can do this by modifying the feature flag variables in your configuration file.
+Follow the instructions below relevant to your installation type.
 
-.Prerequisites
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
-* Do not use imperative statements in the Prerequisites section.
+== {OCPShort} Installation
 
-.Procedure
-. Make each step an instruction.
-. Include one imperative sentence for each step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing, and this other thing, and then select *Next*.
-. Use an unnumbered bullet (*) if the procedure includes only one step.
-+
-NOTE: You can add text, tables, code examples, images, and other items to a step. However, these items must be connected to the step with a plus sign (+). Any items under the .Procedure heading and before one of the following approved headings that are not connected to the last step with a plus sign cannot be converted to DITA.
+For {OCPShort} installations, you must modify the {PlatformNameShort} custom resource. Add the following to the spec section: 
 
-.Verification
-Delete this section if it does not apply to your module. Provide the user with verification methods for the procedure, such as expected output or commands that confirm success or failure.
+[source,yaml]
+----
+spec: 
+  feature_flags: 
+    FEATURE_POLICY_AS_CODE_ENABLED: True 
+----
 
-* Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
-* List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the verification includes only one step.
+After applying the changes, wait for the operator to complete the update process. The operator will automatically handle the necessary service restarts and configuration updates.
 
-.Troubleshooting
-Delete this section if it does not apply to your module. Provide the user with troubleshooting steps.
+== RPM Installation
 
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the troubleshooting includes only one step.
+For RPM-based installations, modify the inventory file used by the installer to add the following variable: 
 
-.Next steps
-* Delete this section if it does not apply to your module.
-* Provide a bulleted list of links that contain instructions that might be useful to the user after they complete this procedure.
-* Use an unnumbered bullet (*) if the list includes only one step.
+[source,yaml]
+----
+feature_flags: 
+  FEATURE_POLICY_AS_CODE_ENABLED: True 
+----
 
-NOTE: Do not use *Next steps* to provide a second list of instructions.
+See link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#defining-variables-at-runtime[Defining variables at runtime] for more on adding vars. After modifying the inventory file, rerun the installer to apply changes. 
+
+== Containerized Installation
+
+For containerized installations, modify the inventory file used by the installer to add: 
+
+[source,yaml]
+----
+feature_flags: 
+  FEATURE_POLICY_AS_CODE_ENABLED: True 
+----
+
+After modifying the inventory file, rerun the installer to apply the changes. 
+
+== Verifying feature flag status
+
+To verify that the feature flag is enabled, you can check the feature flags state endpoint:
+
+[source,yaml]
+----
+https://<your-aap-host>/api/controller/v2/feature_flags_state/
+----
+The endpoint will return a `JSON` response containing the current state of all feature flags, including `FEATURE_POLICY_AS_CODE_ENABLED`.
 
 [role="_additional-resources"]
 .Additional resources
-* link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide]
-* xref:some-module_{context}[]
-
+* link:https://access.redhat.com/articles/7109282[How to set feature flags for {PlatformName}]
