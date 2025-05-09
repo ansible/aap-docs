@@ -1,0 +1,91 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="edge-manager-install-rpm-package"]
+
+= Installing the {RedHatEdge} RPM package
+
+.Prerequisites
+
+* An active {PlatformNameShort} subscription with a running instance and the necessary API URLs and OAuth credentials.
+* Podman installed for managing containers.
+* A {RHEL} host with:
+
+** Minimal installation
+** 4 cores and 16GB RAM (minimum recommended)
+** Administrative access (root or sudo-capable user)
+** SSH access
+
+.Procedure
+
+. SSH into your {RHEL} host.
+. Install the necessary repositories and packages:
+** Ensure that the {PlatformNameShort} repositories are enabled by running:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo dnf install -y flightctl-services
+sudo systemctl enable flightctl.target
+----
++
+** Install the {RedHatEdge} service by running the following example command based on the version of {RHEL} and architecture of your host:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
+----
++
+. Update the installed `/etc/flightctl/service-config.yaml` to set the `baseDomain`:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo vi /etc/flightctl/service-config.yaml
+----
++
+[IMPORTANT]
+====
+Ensure that you set the `baseDomain` in the service configuration correctly. 
+By default, the installation process attempts to automatically set this value based on the IP address of your {RHEL} host.
+
+However, if your environment uses a specific domain name to access this host, for example `rhem-example.com`, it is recommended that you manually update the `baseDomain` in `/etc/flightctl/service-config.yaml` to this hostname.
+
+Setting the `baseDomain` correctly ensures that all generated URLs, certificates, and internal configurations within the {RedHatEdge} are accurate for your network setup. 
+This is especially important for integration with {PlatformNameShort} and for ensuring that the UI is accessible through the intended domain name.
+
+You can check the currently configured `baseDomain` using:
+
+----
+cat /etc/flightctl/service-config.yaml | grep baseDomain:
+----
+====
++
+. Start the services:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo systemctl start flightctl.target
+----
++
+. Verify that services are running:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+sudo systemctl list-units flightctl-*.service
+----
++
+You should see these 7 services running:
++
+
+* flightctl-db
+* flightctl-kv
+* flightctl-api
+* flightctl-periodic
+* flightctl-worker
+* flightctl-ui
+* flightctl-cli-artifacts
+
++
+. Go to the UI at the `baseDomain` stored in the service configuration file:
++
+`cat /etc/flightctl/service-config.yaml | grep baseDomain:`
++
+Visit the displayed `baseDomain` in your web browser to access the UI.
