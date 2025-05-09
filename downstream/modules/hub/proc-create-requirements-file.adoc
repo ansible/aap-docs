@@ -5,7 +5,7 @@
 [id="create-requirements-file_{context}"]
 = Creating a requirements file
 
-Use a requirements file to add collections to your {HubName}. Requirements files are in YAML format and list the collections that you want to install in your {HubName}. After you create your requirements.yml file listing the collections you want to install, you will then run the install command to add the collections to your hub instance. 
+Use a requirements file to add collections to your {HubName}. Requirements files are in YAML format and list the collections that you want to install in your {HubName}. 
 
 A standard `requirements.yml` file contains the following parameters:
 
@@ -14,7 +14,7 @@ A standard `requirements.yml` file contains the following parameters:
 
 .Procedure
 
-. Create your requirements file.
+* Create your requirements file.
 +
 In YAML format, collection information in your requirements file should look like this:
 +
@@ -24,19 +24,9 @@ collections:
  name: namespace.collection_name
  version: 1.0.0
 ----
-+
-. After you have created your requirements file listing information for each collection that you want to install, navigate to the directory where the file is located and run the following command:
+[Important]
+====
+Be sure to specify the collection version number, otherwise you will sync all collection versions. Syncing all versions can require more space than expected.
+====
 
-[source,bash]
-----
-$ ansible-galaxy collection install -r requirements.yml
-----
-
-== Installing an individual collection from the command line
-
-To install an individual collection to your {HubName}, run the following command: 
-
-[source,bash]
-----
-$ ansible-galaxy collection install namespace.collection_name
-----
+To sync the collections in your requirements file, follow the steps in link:{URLHubManagingContent}/managing-cert-valid-content#proc-create-synclist[Syncing Ansible content collections].
