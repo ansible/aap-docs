@@ -1,0 +1,35 @@
+:_newdoc-version: 2.18.4
+:_template-generated: 2025-05-08
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-pac-settings_{context}"]
+= Configuring policy enforcement settings
+
+You can specify how your {PlatformNameShort} instance interacts with OPA by modifying your global settings.
+
+.Procedure
+. From the navigation panel, select {MenuSetPolicy}.
+. Click *Edit policy settings*.
+. On the Policy Settings page, fill out the following fields: 
++
+OPA Server hostname:: Enter the name of the host that connects to the OPA service.
+OPA server port:: Enter the port that connects to the OPA service.
+Use SSL for OPA connection:: Toggle this switch to enable an SSL connection to the OPA service.
+OPA REST API version:: Enter the REST API version provided by OPA.
+OPA authentication type:: Select the OPA authentication type.
+OPA custom authentication header:: Enter a custom header to be appended to request headers for OPA authentication.
+OPA request timeout:: Enter the number of seconds until the connection times out.
+OPA request retry count:: Enter a figure for the number of times a request can attempt to connect to the OPA service before failing.
++
+. Depending on your authentication type, you may need to fill out the following fields.
+.. If you selected Token as your authentication type:
++
+OPA authentication token:: Enter the OPA authentication token.
++
+.. If you selected Certificate as your authentication type:
++
+OPA client certificate content:: Enter content of the CA certificate for mTLS authentication.
+OPA client key content:: Enter the client key for mTLS authentication.
+OPA CA certificate content:: Enter the content of the CA certificate for mTLS authentication.
++
+. Click btn:[Save policy settings].
