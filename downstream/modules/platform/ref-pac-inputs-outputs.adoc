@@ -3,22 +3,40 @@
 :_mod-docs-content-type: REFERENCE
 
 [id="pac-inputs-outputs_{context}"]
-= pac-inputs-outputs
+= Policy enforcement inputs and outputs
 
-Write a short introductory paragraph that provides an overview of the module.
+== Input data
+Use the following inputs to craft policies for use in policy enforcement.
 
-A reference module provides data that users might want to look up, but do not need to remember. It has a very strict structure, often in the form of a list or a table. A well-organized reference module enables users to scan it quickly to find the details they want.
-
-AsciiDoc markup to consider for reference data:
-
-.Unordered list
-* For more details on writing reference modules, see the link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-* Use a consistent system for file names, IDs, and titles.
-For tips, see _Anchor Names and File Names_ in link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide].
-
-.Labeled list
-Term 1:: Definition
-Term 2:: Definition
+[cols="1,1,1",options="header"]
+|===
+Input|Type|Description
+id|Integer|The job’s unique identifier
+name|String|Job template name
+created|Datetime (ISO 8601)|Timestamp indicating when the job was created
+created by|object|Information about the user who created the job. id  (integer): Unique identifier for the user,Username  (String): Creator username,Is_superuser  (Boolean): indicates if the user is a superuser
+credentials|List of objects|Credentials associated with job execution. id  (integer): the credential’s unique identifier,name  (String): credential name,description  (String): credential description,organization  (Integer or Null): Organization identifier associated with the credential,credential_type  (Integer): credential type identifier,managed  (Boolean): indicates if the credential is managed internally,"kind  (String): Credential type ( ssh ,  cloud ,  kubernetes , etc)",cloud  (Boolean): Indicates if the credential is for cloud services,kubernetes  (Boolean): Indicates if the credential is for Kubernetes services
+execution_environment|Object|Details about the execution environment used for the job. id  (Integer): the execution environment’s unique identifier,name  (String): execution environment name,image  (String): Container image used for execution,pull  (String): Pull policy for the execution environment
+extra_vars|JSON|Extra variables provided for job execution.
+forks|Integer|The number of parallel processes used for job execution
+hosts_count|Integer|The number of hosts targeted by the job
+instance_group|Object|"Information about the instance group handling the job, including:. ",id  (Integer): the instance group’s unique identifier,name  (String): the instance group name,Capacity  (Integer): the available capacity in the group,jobs_running  (Integer): the number of currently-running jobs,jobs_total  (Integer): Total jobs handled by the group,max_concurrent_jobs  (Integer): maximum concurrent jobs allowed,max_forks  (Integer): Maximum forks allowed
+inventory|Object|"Inventory details used in the job execution, including:.",id  (Integer): The inventory’s unique identifier,name  (String): The inventory name,description  (String): Description of the inventory,kind  (String): the inventory type,total_hosts  (Integer): the total number of hosts in the inventory,total_groups  (Integer): the total number of groups in the inventory,has_inventory_sources  (Boolean) Indicates if the inventory has external sources,total_inventory_sources  (Integer): the  number of external inventory sources,has_active_failures  (Boolean): Indicates if there are active failures in the inventory,hosts_with_active_failures  (Integer): the number of hosts with active failures,inventory_sources  (Array): external inventory sources associated with the inventory
+job_template|Object|"Information about the job template, including:",id  (Integer): the job template’s unique identifier,name  (String): the job template name,"job_type  (String): type of job (for example,  run )"
+job_type|Choice (String)|Type of job execution. Allowed values are:,run ,check ,scan
+job_type_name|String|Human-readable name for the job type
+labels|List of objects|"Labels associated with the job, including: ",id  (Integer): the label’s unique identifier,name  (String): the label name,organization  (Object): the organization associated with the label,id  (Integer): the organization’s unique identifier,name  (String): the organization name
+launch_type|Choice (String)|How the job was launched. Allowed values include: ,manual  : Manual,relaunch  : Relaunch,callback  : Callback,scheduled  : Scheduled,dependency  : Dependency,workflow : Workflow,webhook  : webhook,sync  : Sync,scm  : SCM update
+limit|String|The limit applied to the job execution
+launched_by|Object|"Information about the user who launched the job, including: ",id  (Integer): the user’s unique identifier,name  (String): the user’s name,"type : (String): the user type (for example,  user ,  system , etc)",url : (String): the user’s API URL
+organization|Object|"Information about the organization associated with the job, including: ",id  (Integer): the organization’s unique identifier,name  (String): the organization name
+playbook|String|The playbook used in the job execution
+project|Object|"Details about the project associated with the job, including: ",id  (Integer): the project’s unique identifier,name  (String): the project name,status  (Choice-String): the project status,successful : Successful,failed : Failed,error : Error,"scm_type  (String): Source control type ( git ,  svn , etc)",scm_url  (String): the source control repository URL,scm_branch  (String): the branch used in the repository,scm_refspec  (String): RefSpec for the repository,scm_clean  (Boolean): Whether the SCM is cleaned before updates,scm_track_submodules  (Boolean): whether submodules are tracked,scm_delete_on_update  (Boolean): whether SCM deletes files on update
+scm_branch|String|The specific branch to use for SCM
+scm_revision|String|SCM revision used for the job
+workflow_job|Object|Workflow job details, if the job is part of a workflow
+workflow_job_template|Object|Workflow job template details
+|===
 
 .Table
 [options="header"]
@@ -28,8 +46,5 @@ Term 2:: Definition
 |Row 2, column 1|Row 2, column 2|Row 2, column 3
 |====
 
-[role="_additional-resources"]
-.Additional resources
-* link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide]
-* xref:some-module_{context}[]
+
 
