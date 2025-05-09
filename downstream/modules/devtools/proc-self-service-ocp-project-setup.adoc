@@ -3,9 +3,9 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-ocp-project-setup_{context}"]
-= Setting up a project for {SelfServiceShort} in OpenShift
+= Setting up an {OCPShort} project using `oc`
 
-. In a terminal, log in to OpenShift using your credentials:
+. In a terminal, log in to {OCPShort} using your credentials:
 +
 ----
 oc login <OpenShift_API_URL> -u <username>
@@ -27,22 +27,26 @@ You have access to 22 projects, the list has been suppressed. You can list all p
 
 Using project "default".
 ----
-. Create a new project.
-+
-Lowercase alphanumeric characters (`a-z`, `0-9`) and the hyphen character (`-`) are permitted for project names.
-The underscore (`_`) character is not permitted.
+. Create a new project. Use a unique project name.
 +
 ----
 $ oc new-project <self-service-technical-preview-project-name>
 ----
-Example output:
++
+Lowercase alphanumeric characters (`a-z`, `0-9`) and the hyphen character (`-`) are permitted for project names.
+The underscore (`_`) character is not permitted.
+The maximum length for project names is 63 characters.
++
+Example:
 +
 ----
+$ oc new-project <my-project>
+
 Now using project "my-project" on server "https://openshift.example.com:6443".
 ----
 . Open your new project:
 +
 ----
-oc project <AAP-self-service-technical-preview_project_name>
+$ oc project <self-service-technical-preview-project-name>
 ----
 
