@@ -3,47 +3,27 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="configure-pac-settings_{context}"]
-= configure pac settings
+= Configuring policy enforcement settings
 
-Write a short introductory paragraph that provides an overview of the module. The introduction should include what the module will help the user do and why it will be beneficial to the user. Include key words that relate to the module to maximize search engine optimization.
-
-.Prerequisites
-* A bulleted list of conditions that must be satisfied before the user starts the steps in this module.
-* Prerequisites can be full sentences or sentence fragments; however, prerequisite list items must be parallel.
-* Do not use imperative statements in the Prerequisites section.
+You can specify how your {PlatformNameShort} instance interacts with OPA by modifying your global settings.
 
 .Procedure
-. Make each step an instruction.
-. Include one imperative sentence for each step, for example:
-.. Do this thing and then select *Next*.
-.. Do this other thing, and this other thing, and then select *Next*.
-. Use an unnumbered bullet (*) if the procedure includes only one step.
-+
-NOTE: You can add text, tables, code examples, images, and other items to a step. However, these items must be connected to the step with a plus sign (+). Any items under the .Procedure heading and before one of the following approved headings that are not connected to the last step with a plus sign cannot be converted to DITA.
-
-.Verification
-Delete this section if it does not apply to your module. Provide the user with verification methods for the procedure, such as expected output or commands that confirm success or failure.
-
-* Provide an example of expected command output or a pop-up window that the user receives when the procedure is successful.
-* List actions for the user to complete, such as entering a command, to determine the success or failure of the procedure.
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the verification includes only one step.
-
-.Troubleshooting
-Delete this section if it does not apply to your module. Provide the user with troubleshooting steps.
-
-* Make each step an instruction.
-* Use an unnumbered bullet (*) if the troubleshooting includes only one step.
-
-.Next steps
-* Delete this section if it does not apply to your module.
-* Provide a bulleted list of links that contain instructions that might be useful to the user after they complete this procedure.
-* Use an unnumbered bullet (*) if the list includes only one step.
-
-NOTE: Do not use *Next steps* to provide a second list of instructions.
-
-[role="_additional-resources"]
-.Additional resources
-* link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide]
-* xref:some-module_{context}[]
-
+. From the navigation panel, select {MenuSetPolicy}.
+. Click *Edit policy settings*.
+. On the Policy Settings page, fill out the following fields: 
+.. *OPA Server hostname*: Enter the name of the host that connects to the OPA service.
+.. *OPA server port*: Enter the port that connects to the OPA service.
+.. *Use SSL for OPA connection*: Toggle this switch to enable an SSL connection to the OPA service.
+.. *OPA REST API version*: Enter the REST API version provided by OPA.
+.. *OPA authentication type*: Select the OPA authentication type.
+.. *OPA custom authentication header* : Enter a custom header to be appended to request headers for OPA authentication.
+.. *OPA request timeout*: Enter the number of seconds until the connection times out.
+.. *OPA request retry count* : Enter a figure for the number of times a request can attempt to connect to the OPA service before failing.
+. Depending on your authentication type, you may need to fill out the following fields.
+.. If you selected Token as your authentication type:
+... *OPA authentication token* : Enter the OPA authentication token.
+.. If you selected Certificate as your authentication type:
+... *OPA client certificate content* : Enter content of the CA certificate for mTLS authentication.
+... *OPA client key content* : Enter the client key for mTLS authentication.
+... *OPA CA certificate content* : Enter the content of the CA certificate for mTLS authentication.
+. Click btn:[Save policy settings].
