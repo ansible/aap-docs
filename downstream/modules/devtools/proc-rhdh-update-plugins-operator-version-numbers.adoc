@@ -10,7 +10,7 @@
 This example uses a ConfigMap file called `rhaap-dynamic-plugins-config`.
 . Update `x.y.z` with the version numbers for the updated {AAPRHDHShort}.
 . Update the integrity values for each plug-in with the `.integrity` value from the corresponding extracted {AAPRHDHShort} `.tar` file.
-// For example, use the `.integrity` value from `ansible-plugin-backstage-rhaap-x.y.z.tgz` for the `ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity` key.
+// For example, use the `.integrity` value from `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz` for the `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity` key.
 +
 ----
 kind: ConfigMap
@@ -22,18 +22,18 @@ data:
    ...
    plugins: # Update the Ansible plug-in entries below with the updated plugin versions
      - disabled: false
-       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
-       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity
 	 ...
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
-       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-backend-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz.integrity
        ...
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
-       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz.integrity
 	 ...
 
 ----
