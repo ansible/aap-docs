@@ -3,8 +3,8 @@
 = Variables in job templates
 
 Along with any extra variables set in the job template and survey, {ControllerName} automatically adds the following variables to the job environment. 
-Also note, awx_``* variables are defined by the system and cannot be overridden. 
-Variables about the job context, such as ``awx_job_template_name are not affected if they are set in `extra_vars`.
+Also note, `awx_*` variables are defined by the system and cannot be overridden. 
+Variables about the job context, such as `awx_job_template_name` are not affected if they are set in `extra_vars`.
 
 * `awx_job_id`: The job ID for this job run.
 * `awx_job_launch_type`: The description to indicate how the job was started:
@@ -23,10 +23,10 @@ Variables about the job context, such as ``awx_job_template_name are not affecte
 * `awx_project_scm_branch`: The configured default project SCM branch for the project the job template uses.
 * `awx_job_scm_branch`: If the SCM Branch is overwritten by the job, the value is shown here.
 * `awx_user_email`: The user email of the controller user that started this job. This is not available for callback or scheduled jobs.
-* `awx_user_first_name`: The user's first name of the controller user that started this job. This is not available for callback or scheduled jobs.
-* `awx_user_id`: The user ID of the controller user that started this job. This is not available for callback or scheduled jobs.
-* `awx_user_last_name`: The user's last name of the controller user that started this job. This is not available for callback or scheduled jobs.
-* `awx_user_name`: The user name of the controller user that started this job. This is not available for callback or scheduled jobs.
+* `awx_user_first_name`: The user's first name of the {ControllerName} user that started this job. This is not available for callback or scheduled jobs.
+* `awx_user_id`: The user ID of the {ControllerName} user that started this job. This is not available for callback or scheduled jobs.
+* `awx_user_last_name`: The last name of the {ControllerName} user that started this job. This is not available for callback or scheduled jobs.
+* `awx_user_name`: The user name of the {ControllerName} user that started this job. This is not available for callback or scheduled jobs.
 * `awx_schedule_id`: If applicable, the ID of the schedule that launched this job.
 * `awx_schedule_name`: If applicable, the name of the schedule that launched this job.
 * `awx_workflow_job_id`: If applicable, the ID of the workflow job that launched this job.
@@ -35,6 +35,3 @@ Variables about the job context, such as ``awx_job_template_name are not affecte
 * `awx_inventory_name`: If applicable, the name of the inventory this job uses.
 
 For compatibility, all variables are also given an "awx" prefix, for example, `awx_job_id`.
-
-
-
