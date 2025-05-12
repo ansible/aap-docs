@@ -19,19 +19,19 @@
 
 . SSH into your {RHEL} host.
 . Install the necessary repositories and packages:
-** Ensure that the {PlatformNameShort} repositories are enabled by running:
+** Ensure that the {PlatformNameShort} repositories are enabled by running the following example command based on the version of {RHEL} and architecture of your host:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
+----
++
+** Install the {RedHatEdge} service by running:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
 sudo dnf install -y flightctl-services
 sudo systemctl enable flightctl.target
-----
-+
-** Install the {RedHatEdge} service by running the following example command based on the version of {RHEL} and architecture of your host:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
 ----
 +
 . Update the installed `/etc/flightctl/service-config.yaml` to set the `baseDomain`:
