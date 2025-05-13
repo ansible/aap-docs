@@ -10,7 +10,19 @@ Containerized {PlatformNameShort} runs the component services as Podman based co
 
 . Log in to the {RHEL} host as your non-root user.
 +
-. Set a hostname that is a fully qualified domain name (FQDN):
+. Ensure the hostname associated with your host is set as a fully qualified domain name (FQDN).
+.. To check the hostname associated with your host, run the following command:
++
+----
+hostname -f
+----
++
+Example output:
++
+----
+aap.example.org
+----
+.. If the hostname is not a FQDN, you can set it with the following command:
 +
 ----
 sudo hostnamectl set-hostname <your_hostname>
@@ -23,19 +35,22 @@ sudo subscription-manager register
 ----
 +
 
-. Run `sudo dnf repolist` to validate that only the BaseOS and AppStream repositories are set up and enabled on the host:
+. Verify that only the BaseOS and AppStream repositories are enabled on the host:
 +
 ----
 $ sudo dnf repolist
+----
++
+Example output:
++
+----
 Updating Subscription Management repositories.
 repo id                                                    repo name
 rhel-9-for-x86_64-appstream-rpms                           Red Hat Enterprise Linux 9 for x86_64 - AppStream (RPMs)
 rhel-9-for-x86_64-baseos-rpms                              Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)
 ----
 +
-. Ensure that only these repositories are available to the {RHEL} host. For more information about managing custom repositories, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_software_with_the_dnf_tool/assembly_managing-custom-software-repositories_managing-software-with-the-dnf-tool[Managing custom software repositories].
-
-. Ensure that the host has DNS configured and can resolve host names and IP addresses by using a fully qualified domain name (FQDN). This is essential to ensure services can talk to one another.
+. Ensure the host can resolve host names and IP addresses using DNS. This is essential to ensure services can talk to one another.
 
 . Install `ansible-core`:
 +
@@ -53,8 +68,7 @@ sudo dnf install -y wget git-core rsync vim
 
 [role="_additional-resources"]
 .Additional resources
-* For more information about registering your RHEL system, see link:{BaseURL}/subscription_central/1-latest/html-single/getting_started_with_rhel_system_registration/index[Getting Started with RHEL System Registration].
+* For more information about registering your {RHEL} host and attaching a subscription, see link:{URLCentralAuth}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching your {PlatformName} Subscription].
 * For information about configuring unbound DNS, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Setting up an unbound DNS server].
 * For information about configuring DNS using BIND, see link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Setting up and configuring a BIND DNS server].
 * For more information about `ansible-core`, see link:https://docs.ansible.com/ansible/latest/[Ansible Core Documentation].
-
