@@ -1,0 +1,24 @@
+[id="operator-scaling-down-aap"]
+
+= Scaling down {OperatorPlatformName} deployments
+
+For scenarios like upgrades, migrations, or disaster recovery, you can use the `idle_aap` variable to scale down all aap Deployments and StatefulSets at once. 
+See the following procedure for how to do this. 
+
+.Procedure
+
+. Log in to {OCP}.
+. Go to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Select *All Instances* and go to your *AnsibleAutomationPlatform* instance.
+. Click the {MoreActionsIcon} icon and then select btn:[Edit AnsibleAutomationPlatform].
+. In the *YAML view* paste the following YAML code under the `spec:` section:
++
+----
+idle_aap: true
+----
++
+. Click btn:[Save].
+
+Setting the value to true scales down all your active deployments, setting the value to false scales the deployments back up. 
+
