@@ -19,26 +19,26 @@ You do not need to reload the deployment manually .
 +
 ----
      - disabled: false
-       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
        integrity: <SHA512 value>
 	 ...
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
        integrity: <SHA512 value>
        ...
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
        integrity: <SHA512 value>
 ----
 .. Click btn:[Save].
 . To completely remove all the Ansible plugins remove the entire list entries that contain
 +
 ----
-http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz
-http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
-http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
+http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz
+http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
+http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
 ----
 . Open the custom {RHDH}ConfigMap, `app-config-rhdh`.
 .. Remove the `locations:` block to delete the templates from the {RHDHShort} instance.

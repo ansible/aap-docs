@@ -17,7 +17,7 @@ The example ConfigMap used in the following procedure is called `rhaap-dynamic-p
 . Select the `rhaap-dynamic-plugins-config` ConfigMap from the list.
 . Select the *YAML* tab to edit the `rhaap-dynamic-plugins-config` ConfigMap.
 . In the `data.dynamic-plugins.yaml.plugins` block, add the three dynamic plug-ins from the plug-in registry.
-** For the `integrity` hash values, use the `.integrity` files in your `$DYNAMIC_PLUGIN_ROOT_DIR` directory that correspond to each plug-in, for example use `ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity` for the `ansible-plugin-backstage-rhaap-x.y.z.tgz` plug-in.
+** For the `integrity` hash values, use the `.integrity` files in your `$DYNAMIC_PLUGIN_ROOT_DIR` directory that correspond to each plug-in, for example use `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity` for the `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz` plug-in.
 ** Replace `x.y.z` with the correct version of the plug-ins.
 +
 ----
@@ -30,8 +30,8 @@ data:
    ...
    plugins:
      - disabled: false
-       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-x.y.z.tgz'
-       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-x.y.z.tgz.integrity
+       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            frontend:
@@ -47,16 +47,16 @@ data:
                    path: /ansible
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-x.y.z.tgz
-       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-backend-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            backend:
              ansible.plugin-backstage-rhaap-backend: null
      - disabled: false
        package: >-
-         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz
-       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-x.y.z.tgz.integrity
+         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz.integrity
        pluginConfig:
          dynamicPlugins:
            backend:
