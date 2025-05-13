@@ -1,19 +1,21 @@
+:_mod-docs-content-type: REFERENCE
+
 [id="cont-aap-system-requirements"]
 
 = System requirements
 Use this information when planning your installation of containerized {PlatformNameShort}.
 
 .Prerequisites
-* A non-root user for the {RHEL} host, with sudo or other Ansible supported privilege escalation (sudo is recommended). This user is responsible for the installation of containerized {PlatformNameShort}.
-* SSH public key authentication for the non-root user (if installing on remote hosts). For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
-** If doing a self contained local VM based installation, you can use `ansible_connection=local`.
-* Internet access from the {RHEL} host if you are using the default online installation method.
-* The appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
+* Ensure a non-root user is configured on the {RHEL} host, with `sudo` or other Ansible supported privilege escalation (`sudo` is recommended). This user is responsible for the installation of containerized {PlatformNameShort}.
+* For remote host installations, ensure SSH public key authentication is configured for the non-root user. For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
+* For self-contained (All-in-one) installations, ensure each host entry in your inventory file is configured to connect to the local machine by adding `ansible_connection=local`, for example `<hostname> ansible_connection=local`.
+* Ensure internet access  is available from the {RHEL} host if you are using the default online installation method.
+* Ensure the appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
 
 [IMPORTANT]
 ====
 Storing container images on an NFS share is not supported by Podman. To use an NFS share for the user home directory, set up the Podman storage backend path outside of the NFS share. 
-For more information, see link:https://www.redhat.com/en/blog/rootless-podman-nfs[Rootless Podman and NFS]
+For more information, see link:https://www.redhat.com/en/blog/rootless-podman-nfs[Rootless Podman and NFS].
 ====
 
 == {PlatformNameShort} system requirements

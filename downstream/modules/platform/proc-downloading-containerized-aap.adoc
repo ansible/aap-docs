@@ -11,16 +11,27 @@ Choose the installation program you need based on your {RHEL} environment intern
 
 .Procedure
 
-. Download the latest installer `.tar` file from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page]. 
+. Download the latest installer `.tar.gz` file from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page]. 
 .. For online installations: *{PlatformNameShort} {PlatformVers} Containerized Setup*
 .. For offline or bundled installations: *{PlatformNameShort} {PlatformVers} Containerized Setup Bundle*
 
-. Copy the installation program `.tar` file and the optional manifest `.zip` file onto your {RHEL} host.
-
-. Decide where you want the installation program to reside on the file system. 
+. Copy the installation program `.tar.gz` file and the optional manifest `.zip` file onto your {RHEL} host.
+.. You can use the `scp` command to securely copy the files. The basic syntax for `scp` is:
++
+----
+scp [options] <path_to_source_file> <path_to_destination>
+----
++
+Use the following `scp` command to copy the installation program `.tar.gz` file to an AWS EC2 instance with a private key (replace the placeholder `<>` values with your actual information):
++
+----
+scp -i <path_to_private_key> ansible-automation-platform-containerized-setup-<version_number>.tar.gz ec2-user@<remote_host_ip_or_hostname>:<path_to_destination>
+----
++
+. Decide where you want the installation program to reside on the file system. This is referred to as your installation directory.
 .. Installation related files are created under this location and require at least 15 GB for the initial installation.
 
-. Unpack the installation program `.tar` file into your installation directory, and go to the unpacked directory. 
+. Unpack the installation program `.tar.gz` file into your installation directory, and go to the unpacked directory. 
 +
 .. To unpack the online installer:
 +
@@ -34,3 +45,7 @@ $ tar xfvz ansible-automation-platform-containerized-setup-<version>.tar.gz
 $ tar xfvz ansible-automation-platform-containerized-setup-bundle-<version>-<arch_name>.tar.gz
 ----
 
+[role="_additional-resources"]
+.Additional resources
+
+* For more information about using `scp`, see link:https://man7.org/linux/man-pages/man1/scp.1.html[scp(1) - Linux manual page].
