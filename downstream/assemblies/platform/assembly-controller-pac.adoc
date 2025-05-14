@@ -10,7 +10,7 @@ endif::[]
 ifdef::context[]
 [id="controller-pac_{context}"]
 endif::[]
-= Implementing policy enforcement in your {PlatformNameShort} instance
+= Implementing policy enforcement
 
 :context: controller-pac
 
@@ -18,9 +18,9 @@ Policy enforcement at automation runtime is a feature that uses encoded rules to
 
 OPA, or link:https://www.openpolicyagent.org/docs/latest/[Open Policy Agent], is a policy engine that offloads policy decisions from your Ansible instance. When it is triggered, the policy enforcement feature connects to OPA to retrieve policies specified in your configuration, and applies policy rules to your automation content. If OPA detects a policy violation, it will stop the action and give your user information about the policy violation.
 
-== Prerequisites
+.Prerequisites
 
-Before you can implement policy enforcement in your Ansible instance, you must have: 
+Before you can implement policy enforcement in your {PlatformNameShort} instance, you must have: 
 
 * An {PlatformNameShort} 2.5 deployment with the `FEATURE_POLICY_AS_CODE_ENABLED` feature flag set to `TRUE`.
 * Access to an OPA server that is reachable from your {PlatformNameShort} deployment.
@@ -46,5 +46,5 @@ include::platform/proc-pac-add-policy-to-inventory.adoc[leveloffset=+1]
 
 include::platform/proc-pac-add-policy-to-template.adoc[leveloffset=+1]
 
-// include::platform/ref-pac-inputs-outputs.adoc[leveloffset=+1]
+include::platform/ref-pac-inputs-outputs.adoc[leveloffset=+1]
 
