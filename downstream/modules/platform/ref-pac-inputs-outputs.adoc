@@ -26,9 +26,9 @@ a|
 * `name` (string): credential name
 * `description` (string): credential description
 * `organization` (integer or null): organization identifier associated with the credential
-* `credential_type` (integer): credential type identifer
+* `credential_type` (integer): credential type identifier
 * `managed` (boolean): indicates if the credential is managed internally
-* `kind` (string): credential type (`ssh`, `cloud`, `kubernetes`, etc)
+* `kind` (string): credential type ( such as `ssh`, `cloud`, or `kubernetes`)
 |`execution_environment`|Object|Details about the {ExecEnvShort} used for the job.
 a|
 * `id` (integer): the {ExecEnvShort}'s unique identifier
@@ -109,7 +109,7 @@ a|
 ** `successful`: Successful
 ** `failed`: failed
 ** `error`: error
-* `scm_type`(string): source control type (`git`, `svn`, etc)
+* `scm_type`(string): source control type (such as`git`, or `svn`)
 * `scm_url` (string): the source control repository URL
 * `scm_branch` (string): the branch used in the repository
 * `scm_refspec` (string): RefSpec for the repository
@@ -122,6 +122,7 @@ a|
 |`workflow_job_template`|Object|Workflow job template details|n/a
 |====
 
+.Example
 The following code block shows example input data from a demo job template launch:
 [source,rego]
 ----
@@ -247,6 +248,7 @@ The following code block shows example input data from a demo job template launc
 |`violations`|List of strings|Reasons why the action is not permitted
 |====
 
+.Example
 The following code block shows an example of expected output from the OPA policy query:
 [source,rego]
 ----
