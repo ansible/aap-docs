@@ -113,7 +113,15 @@ Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED]
 certificate verify failed: self signed certificate in certificate chain (_ssl.c:1006)'))
 ----
 
-To resolve this error, you can disable the SSL protection between the model server and the Ansible Lightspeed service. For example, you can disable the SSL protection when you are on a testing environment. To disable the SSL protection, you must add the following extra setting in the {LightspeedShortName} Custom Resource Definition (CRD) YAML file under the `spec:` section:
+To resolve this error, use one of the following workarounds based on your {PlatformName} version:
+
+.For {PlatformName} {PlatformVers}:
+
+Specify the optional key/value pair as `model_verify_ssl=true` in the model secret to connect to an {ibmwatsonxcodeassistant} model. For details about the procedure, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
+
+.For {PlatformName} 2.4:
+
+You can disable the SSL protection between the model server and the Ansible Lightspeed service. For example, you can disable the SSL protection when you are on a testing environment. To disable the SSL protection, you must add the following extra setting in the {LightspeedShortName} Custom Resource Definition (CRD) YAML file under the `spec:` section:
 ----
 extra_settings:
     - setting: ANSIBLE_AI_MODEL_MESH_API_VERIFY_SSL
