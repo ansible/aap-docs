@@ -1,22 +1,21 @@
+:_mod-docs-content-type: REFERENCE
+
 [id="ref-ansible-inventory-variables"]
 
 = Ansible variables
 
 The following variables control how {PlatformNameShort} interacts with remote hosts.
 
-For more information about variables specific to certain plugins, see the documentation for link:https://docs.ansible.com/ansible-core/devel/collections/ansible/builtin/index.html[Ansible.Builtin].
-
-For a list of global configuration options, see link:https://docs.ansible.com/ansible-core/devel/reference_appendices/config.html[Ansible Configuration Settings].
-
+.Ansible variables
 [cols="50%,50%",options="header"]
-|====
-| *Variable* | *Description*
-| `ansible_connection` | The connection plugin used for the task on the target host.
+|===
+| Variable | Description
+| `ansible_connection` | The connection plugin used for the task on the target host. This can be the name of any Ansible connection plugin.
 
-This can be the name of any of Ansible connection plugins.
-SSH protocol types are `smart`, `ssh`, or `paramiko`.
+SSH protocol types are `smart`, `ssh`, or `paramiko`. You can also use `local` to run tasks on the control node itself.
 
 Default = `smart`
+
 | `ansible_host` | The IP address or name of the target host to use instead of `inventory_hostname`.
 | `ansible_password` | The password to authenticate to the host.
 
@@ -48,4 +47,9 @@ Useful if using multiple keys and you do not want to use an SSH agent.
 Do not change this variable unless `/bin/sh` is not installed on the target machine or cannot be run from sudo.
 | `inventory_hostname` | This variable takes the hostname of the machine from the inventory script or the Ansible configuration file.
 You cannot set the value of this variable. Because the value is taken from the configuration file, the actual runtime hostname value can vary from what is returned by this variable.
-|====
+|===
+
+[role="_additional-resources"]
+.Additional resources
+* For more information about variables specific to certain plugins, see the documentation for link:https://docs.ansible.com/ansible-core/devel/collections/ansible/builtin/index.html[Ansible.Builtin].
+* For a list of global configuration options, see link:https://docs.ansible.com/ansible-core/devel/reference_appendices/config.html[Ansible Configuration Settings].
