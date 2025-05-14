@@ -1,0 +1,48 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-telemetry-disable_{context}"]
+= Disabling telemetry data collection
+
+You can disable and enable the telemetry data collection feature for {SelfServiceShort} in the ConfigMap for your {OCPShort} project.
+
+. Log in to the {OCPShort} console and open the project for {SelfServiceShort} in the *Developer* perspective.
+. Open the ConfigMap:
+.. Select the *Topology* view.
+.. Select menu:Workloads[Config Maps].
+.. Select the `<installation-name>-backstage-app-config` ConfigMap, for example `my-aap-self-service-tech-preview-backstage-app-config`.
+.. Click the ConfigMap to open its *Details* page.
+.. Select the *YAML* tab.
+. Update the ConfigMap:
+** To disable telemetry data collection,
+set `disabled` to `true` for `package: ./dynamic-plugins/dist/backstage-community-plugin-analytics-provider-segment` in the `global.dynamic.plugins` section.  
++
+----
+global:
+  ...
+  dynamic:
+    ...
+    plugins:
+      ...
+      package: ./dynamic-plugins/dist/backstage-community-plugin-analytics-provider-segment
+    - disabled: true
+
+----
+** To enable telemetry data collection,
+set `disabled` to `false` for `package: ./dynamic-plugins/dist/backstage-community-plugin-analytics-provider-segment` in the `global.dynamic.plugins` section.  
++
+----
+global:
+  ...
+  dynamic:
+    ...
+    plugins:
+      ...
+      package: ./dynamic-plugins/dist/backstage-community-plugin-analytics-provider-segment
+    - disabled: false
+
+----
+. Click btn:[Save] to apply the changes to the ConfigMap.
+. Restart the pod so that your deployment uses the latest configuration.
+
