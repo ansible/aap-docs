@@ -1,8 +1,11 @@
+:_mod-docs-content-type: ASSEMBLY
+
 ifdef::context[:parent-context: {context}]
 
 :context: performance-considerations
 
-[id="assembly-specify-dedicted-nodes"]
+[id="assembly-specify-dedicted-nodes_{context}"]
+
 = Specifying dedicated nodes
 
 A Kubernetes cluster runs on top of many Virtual Machines or nodes (generally anywhere between 2 and 20 nodes). 
@@ -15,6 +18,12 @@ Schedule the control plane nodes to run on different nodes to the automation job
 If the control plane pods share nodes with the job pods, the control plane can become resource starved and degrade the performance of the whole application.
 
 include::platform/ref-assign-pods-to-nodes.adoc[leveloffset=+1]
+
 include::platform/proc-specify-nodes-job-execution.adoc[leveloffset=+1]
-include::platform/proc-set-custom-pod-timeout.adoc[leveloffset=+1]
+
+include::platform/ref-set-custom-pod-timeout.adoc[leveloffset=+1]
+
 include::platform/ref-schedule-jobs-worker-nodes.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
