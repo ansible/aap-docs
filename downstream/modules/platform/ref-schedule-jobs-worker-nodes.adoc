@@ -1,4 +1,6 @@
-[id="ref-schedule-jobs-worker-nodes"]
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-schedule-jobs-worker-nodes_{context}"]
 
 = Jobs scheduled on the worker nodes
 
@@ -6,7 +8,7 @@ Both {ControllerName} and Kubernetes play a role in scheduling a job.
 
 When a job is launched, its dependencies are fulfilled, meaning any project updates or inventory updates are launched by {ControllerName} as required by the job template, project, and inventory settings.
 
-If the job is not blocked by other business logic in {Controllername} and there is control capacity in the control plane to start the job, the job is submitted to the dispatcher.
+If the job is not blocked by other business logic in {ControllerName} and there is control capacity in the control plane to start the job, the job is submitted to the dispatcher.
 The default settings of the "cost" to control a job is 1 _capacity_.
 So, a control pod with 100 capacity is able to control up to 100 jobs at a time.
 Given control capacity, the job transitions from _pending_ to _waiting_.
