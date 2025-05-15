@@ -1,13 +1,27 @@
+:_mod-docs-content-type: ASSEMBLY
+
 ifdef::context[:parent-context: {context}]
 
 :context: performance-considerations
 
-[id="assembly-pod-spec-modifications"]
+[id="assembly-pod-spec-modifications_{context}"]
+
 = Pod specification modifications
 
+A pod in Kubernetes is the smallest deployable compute unit, consisting of one or more containers sharing networking and storage on a single host. 
+{PlatformName} uses a default pod specification, which can be customized with a user-defined YAML or JSON document.
+
 include::platform/con-pod-specification-mods.adoc[leveloffset=+1]
+
 include::platform/proc-customizing-pod-specs.adoc[leveloffset=+1]
+
 include::platform/proc-enable-pods-ref-images.adoc[leveloffset=+1]
+
 include::platform/ref-resource-management-pods-containers.adoc[leveloffset=+1]
-include::platform/ref-requests-limits.adoc[leveloffset=+1]
-include::platform/ref-resource-types.adoc[leveloffset=+1]
+
+include::platform/ref-requests-limits.adoc[leveloffset=+2]
+
+include::platform/ref-resource-types.adoc[leveloffset=+2]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
