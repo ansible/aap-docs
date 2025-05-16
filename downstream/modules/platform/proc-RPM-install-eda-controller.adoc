@@ -15,9 +15,9 @@ Perform a new {PlatformNameShort} 2.5 RPM-based installation of {EDAcontroller} 
 +
 [subs="+attributes"]
 ----
-# This is the enterprise installer inventory file
-# Please consult the docs if you are unsure what to add
-# For all optional variables please consult the Red Hat documentation:
+# This is the {PlatformNameShort} mixed enterprise installer inventory file
+# Consult the docs if you are unsure what to add
+# For all optional variables consult the Red Hat documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_installation
 
 # This section is for your platform gateway hosts
@@ -25,12 +25,22 @@ Perform a new {PlatformNameShort} 2.5 RPM-based installation of {EDAcontroller} 
 [automationgateway]
 gateway1.example.org
 gateway2.example.org
+gateway3.example.org
 
 # This section is for your {EDAcontroller} hosts
 # -----------------------------------------------------
 [automationedacontroller]
 eda1.example.org
 eda2.example.org
+eda3.example.org
+
+[redis]
+gateway1.example.org
+gateway2.example.org
+gateway3.example.org
+eda1.example.org
+eda2.example.org
+eda3.example.org
 
 [all:vars]
 # Common variables
