@@ -3,22 +3,32 @@
 [id="uninstalling-containerized-aap"]
 = Uninstalling containerized {PlatformNameShort}
 
-[role="_abstract"]
+Uninstall your {ContainerBase} of {PlatformNameShort}.
 
-When performing a reinstall following an uninstall that preserves the databases, you must use the previously generated {PlatformNameShort} secret key values to access the preserved databases.
+.Prerequisites
 
-Before performing an uninstall, collect the existing secret keys by running the following command:
+You have done the following: 
+
+* Logged in to the {RHEL} host as your dedicated non-root user.
+
+.Procedure
+
+* If you intend to reinstall {PlatformNameShort} and want to use the preserved databases, you must collect the existing secret keys by running the following command:
++
 ----
 $ podman secret inspect --showsecret <secret_key_variable> | jq -r .[].SecretData
 ----
++
 For example:
++
 ----
 $ podman secret inspect --showsecret controller_secret_key | jq -r .[].SecretData
 ----
++
+* For more information about the `*_secret_key` variables, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables].
 
-For more information about the `*_secret_key` variables, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables].
+* Run the `uninstall` playbook:
 
-To uninstall a containerized deployment, run the `uninstall` playbook:
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall
 ----
