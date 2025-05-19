@@ -33,6 +33,14 @@ The following domain names must be in the allow list:
 ** `ansible-galaxy.s3.amazonaws.com`
 * SSL inspection is disabled either when using self signed certificates or for the Red Hat domains.
 
+[IMPORTANT]
+
+====
+
+Before you begin your content sync, consult the Knowledgebase article link:https://access.redhat.com/articles/7118757[Resource requirements for syncing automation content] to ensure that you have the resources to sync the collections you need. 
+
+====
+
 .Procedure
 
 . From the navigation panel, select {MenuACAdminRemotes}.
@@ -40,4 +48,13 @@ The following domain names must be in the allow list:
 . Find the field labeled *Requirements file*. There, you can either paste the contents of your requirements file, or upload the file from your hard drive by selecting the upload button.
 . Click btn:[Save remote].  
 . To begin synchronization, from the navigation panel select {MenuACAdminRepositories}.
-. In the row containing the repository you want to sync, click the {MoreActionsIcon} icon and select the image:sync.png[Sync repository,15,15] *Sync repository* icon to initiate the remote repository synchronization to your {PrivateHubName}. 
+. In the row containing the repository you want to sync, click the {MoreActionsIcon} icon and select the image:sync.png[Sync repository,15,15] *Sync repository* icon to initiate the remote repository synchronization to your {PrivateHubName}.
+. On the modal that appears, you can toggle the following options:
+* *Mirror*: Select if you want your repository content to mirror the remote repository's content.
+* *Optimize*: Select if you want to sync only when no changes are reported by the remote server.
+. Click btn:[Sync] to complete the sync. 
+
+.Verification
+The *Sync status* column updates to notify you whether the  synchronization is successful.
+
+* Navigate to {MenuACCollections} to confirm that your collections content has synchronized successfully.
