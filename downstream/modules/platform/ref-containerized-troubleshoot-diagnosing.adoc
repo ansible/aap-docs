@@ -1,10 +1,11 @@
-[id="ref-containerized-troubleshoot-diagnosing"]
+:_mod-docs-content-type: REFERENCE
+[id="diagnosing-the-problem_{context}"]
 
 = Diagnosing the problem
 
 For general container-based troubleshooting, you can inspect the container logs for any running service to help troubleshoot underlying issues.
 
-.Identifying the running containers
+*Identifying the running containers*
 
 To get a list of the running container names run the following command:
 
@@ -39,9 +40,9 @@ automation-hub-worker-1
 automation-hub-worker-2
 ----
 
-.Inspecting the logs
+*Inspecting the logs*
 
-To inspect any running container logs run the `journalctl` command:
+To inspect any running container logs, run the `journalctl` command:
 
 ----
 $ journalctl CONTAINER_NAME=<container_name>
@@ -63,7 +64,7 @@ To view the logs of a running container in real-time, run the `podman logs -f` c
 $ podman logs -f <container_name>
 ----
 
-.Controlling container operations
+*Controlling container operations*
 
 You can control operations for a container by running the `systemctl` command:
 
@@ -98,7 +99,7 @@ Oct 08 11:44:13 aap.example.org automation-gateway-proxy[1919]: [2024-10-08 10:4
 Oct 08 11:44:13 aap.example.org automation-gateway-proxy[1919]: [2024-10-08 10:44:13.856][2][info][upstream] [external/envoy/source/common/upstream/cds_ap
 ----
 
-.Getting container information about the execution plane
+*Getting container information about the execution plane*
 
 To get container information about {ControllerName}, {EDAName}, and `execution_nodes` nodes, prefix any Podman commands with either:
 
