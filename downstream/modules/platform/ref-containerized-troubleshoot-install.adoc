@@ -96,7 +96,7 @@ systemctl start automation-controller-web.service --user
 systemctl status automation-controller-web.service --user
 ----
 +
-The output will look like the following if everything is running correctly:
+The output looks like the following if everything is running correctly:
 +
 ----
 Sep 29 10:59:26 daap1.lan automation-controller-web[30274]: WSGI app 0 (mountpoint='/') ready in 3 seconds on interpreter 0x1a458c10 pid: 17 (default app)
@@ -130,7 +130,7 @@ TASK [ansible.containerized_installer.automationcontroller : Create the receptor
 fatal: [ec2-13-48-25-168.eu-north-1.compute.amazonaws.com]: FAILED! => {"changed": false, "msg": "Can't create container receptor", "stderr": "Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1\n", "stderr_lines": ["Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1"], "stdout": "", "stdout_lines": []}
 ----
 
-If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. To resolve this issue you need to make more space available on the system.
+If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. To resolve this issue you must make more space available on the system.
 
 *"Install container tools" task fails due to unavailable packages*
 
