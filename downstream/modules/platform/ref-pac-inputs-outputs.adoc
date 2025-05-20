@@ -11,17 +11,21 @@ Use the following inputs and outputs to craft policies for use in policy enforce
 [options="header"]
 
 |====
-|*Input*|*Type*|*Description*|*Supported parameters*
-|`id`|Integer|The job's unique identifier|n/a
-|`name`|String|Job template name|n/a
-|`created`|Datetime (ISO 8601)|Timestamp indicating when the job was created|n/a
-|`created by`|Object|Information about the user who created the job.
-a| 
+|*Input*|*Type*|*Description*
+|`id`|Integer|The job's unique identifier
+|`name`|String|Job template name
+|`created`|Datetime (ISO 8601)|Timestamp indicating when the job was created
+|`created by`|Object
+a|
+Information about the user who created the job.
+
 * `id`(integer): Unique identifier for the user
 * `username`(string): creator username
 * `is_superuser`(boolean): indicates if the user is a superuser
-|`credentials`|List of objects|Credentials associated with job execution
-a| 
+|`credentials`|List of objects
+a|
+Credentials associated with job execution.
+
 * `id` (integer): the credential's unique identifier
 * `name` (string): credential name
 * `description` (string): credential description
@@ -29,17 +33,21 @@ a|
 * `credential_type` (integer): credential type identifier
 * `managed` (boolean): indicates if the credential is managed internally
 * `kind` (string): credential type ( such as `ssh`, `cloud`, or `kubernetes`)
-|`execution_environment`|Object|Details about the {ExecEnvShort} used for the job.
+|`execution_environment`|Object
 a|
+Details about the {ExecEnvShort} used for the job.
+
 * `id` (integer): the {ExecEnvShort}'s unique identifier
 * `name` (string): {ExecEnvShort} name
 * `image` (string): container image used for execution
 * `pull` (string): pull policy for the {ExecEnvShort}
-|`extra_vars`|JSON|Extra variables provided for job execution|n/a
-|`forks`|Integer|The number of parallel processes used for job execution|n/a
-|`hosts_count`|Integer|The number of hosts targeted by the job|n/a
-|`instance_group`|Object|Information about the instance group handling the job.
+|`extra_vars`|JSON|Extra variables provided for job execution
+|`forks`|Integer|The number of parallel processes used for job execution
+|`hosts_count`|Integer|The number of hosts targeted by the job
+|`instance_group`|Object
 a|
+Information about the instance group handling the job, including:
+
 * `id` (integer): the instance group's unique identifier
 * `name` (string): the instance group  name
 * `capacity` (integer): the available capacity in the group
@@ -47,8 +55,10 @@ a|
 * `jobs_total` (integer): total jobs handled by the group
 * `max_concurrent_jobs` (integer): maximum concurrent jobs allowed
 * `max_forks` (integer): maximum forks allowed
-|`inventory`|Object|Inventory details used in the job execution
+|`inventory`|Object
 a|
+Inventory details used in the job execution, including:
+
 * `id` (integer): the inventory's unique identifier
 * `name` (string): The inventory's name
 * `description` (string): inventory description
@@ -60,26 +70,34 @@ a|
 * `has_active_failures` (boolean): indicates if there are active failures in the inventory
 * `hosts_with_active_failures` (boolean): the number of hosts with active failures
 * `inventory_sources` (array): external inventory sources associated with the inventory
-|`job_template`|Object|Information about the job template
+|`job_template`|Object
 a|
+Information about the job template, including:
+
 * `id` (integer): the job template's unique identifier
 * `name` (string): the job template's name
 * `job_type` (string): type of job (for example, `run`)
-|`job_type`|Choice (String)|Type of job execution
+|`job_type`|Choice (String)
 a|
+Type of job execution. Allowed values are:
+
 * `run`
 * `check`
 * `scan`
-|`job_type_name`|String|Human-readable name for the job type|n/a
-|`labels`|List of objects|Labels associated with the job
+|`job_type_name`|String|Human-readable name for the job type
+|`labels`|List of objects
 a|
+Labels associated with the job, including:
+
 * `id` (integer): the label's unique identifier
 * `name` (string): the label name
 * `organization` (object): the organization associated with the label
 ** `id` (integer): the organization's unique identifier
 ** `name` (string): the organization name
-|`launch_type`|Choice (String)|How the job was launched.
+|`launch_type`|Choice (String)
 a|
+How the job was launched. Allowed values include:
+
 * `manual`: manual
 * `relaunch`: relaunch
 * `callback`: callback
@@ -89,20 +107,26 @@ a|
 * `webhook`: webhook
 * `sync`: sync
 * `scm`: SCM update
-|`limit`|String|The limit applied to the job execution.|n/a
-|`launched_by`|Object|Information about the user who launched the job
+|`limit`|String|The limit applied to the job execution.
+|`launched_by`|Object
 a|
+Information about the user who launched the job, including:
+
 * `id` (integer): the user's unique identifier
 * `name` (string): the user name
 * `type` (type): the user type (for example, `user`, `system`, etc)
 * `url` (string): the user's API URL
-|`organization`|Object|Information about the organization associated with the job
+|`organization`|Object
 a|
+Information about the organization associated with the job, including:
+
 * `id` (integer): the organization's unique identifier
 * `name` (name): the organization's name
-|`playbook`|String|The playbook used in the job execution|n/a
-|`project`|Object|Details about the project associated with the job.
+|`playbook`|String|The playbook used in the job execution
+|`project`|Object
 a|
+Details about the project associated with the job, including:
+
 * `id` (integer): the project's unique identifier
 * `name` (string): the project name
 * `status` (choice-string): the project status
@@ -116,10 +140,10 @@ a|
 * `scm_clean` (boolean): whether the SCM is cleaned before updates
 * `scm_track_submodules` (boolean): whether submodules are tracked
 * `scm_delete_on_update` (boolean): whether SCM deletes files on update
-|`scm_branch`|String|The specific branch to use for SCM|n/a
-|`scm_revision`|String|SCM revision used for the job|n/a
-|`workflow_job`|Object|Workflow job details, if the job is part of a workflow|n/a
-|`workflow_job_template`|Object|Workflow job template details|n/a
+|`scm_branch`|String|The specific branch to use for SCM
+|`scm_revision`|String|SCM revision used for the job
+|`workflow_job`|Object|Workflow job details, if the job is part of a workflow
+|`workflow_job_template`|Object|Workflow job template details
 |====
 
 .Example
