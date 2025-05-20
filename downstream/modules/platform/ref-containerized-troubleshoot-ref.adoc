@@ -1,8 +1,9 @@
-[id="ref-containerized-troubleshoot-ref"]
+:_mod-docs-content-type: REFERENCE
+[id="containerized-ansible-automation-platform-reference_{context}"]
 
 = Containerized {PlatformNameShort} reference
 
-.Can you give details of the architecture for the {PlatformNameShort} containerized design?
+*Can you give details of the architecture for the {PlatformNameShort} containerized design?*
 
 We use as much of the underlying native {RHEL} technology as possible. Podman is used for the container runtime and management of services. 
 
@@ -32,12 +33,6 @@ registry.redhat.io/rhel8/redis-6                                      latest    
 registry.redhat.io/rhel8/postgresql-13                                latest      9b65bc3d0413  2 weeks ago  765 MB
 ----
 
-//Describe AAP Controller containers:
-
-//Describe AAP Hub containers:
-
-//Describe EDA Controller containers:
-
 Containerized {PlatformNameShort} runs as rootless containers for enhanced security by default. This means you can install containerized {PlatformNameShort} by using any local unprivileged user account. Privilege escalation is only needed for certain root level tasks, and by default is not needed to use root directly.
 
 The installation program adds the following files to the filesystem where you run the installation program on the underlying {RHEL} host:
@@ -59,7 +54,7 @@ $ tree -L 1
 ├── roles
 ----
 
-The installation root directory includes other containerized services that make use of Podman volumes for example. 
+The installation root directory includes other containerized services that make use of Podman volumes. 
 
 Here are some examples for further reference:
 
@@ -114,7 +109,7 @@ receptor/
     └── receptor.sock.lock
 ----
 
-After installation, you will also find other pieces in the local users home directory such as the `.cache` directory:
+After installation, you will also find other files in the local user's `/home` directory such as the `.cache` directory:
 
 ----
 .cache/
@@ -149,7 +144,7 @@ The `.config` directory:
         └── sockets.target.wants
 ----
 
-This is specific to Podman and conforms to the Open Container Initiative (OCI) specifications. When you run Podman as the root user `/var/lib/containers` is used by default, for standard users the hierarchy under `$HOME/.local` is used.
+This is specific to Podman and conforms to the Open Container Initiative (OCI) specifications. When you run Podman as the root user `/var/lib/containers` is used by default. For standard users the hierarchy under `$HOME/.local` is used.
 
 The `.local` directory:
 
@@ -177,11 +172,7 @@ local       redis_run
 
 The execution plane is isolated from the control plane main services to ensure it does not affect the main services.
 
-*Control plane services*
-
 Control plane services run with the standard Podman configuration and can be found in: `~/.local/share/containers/storage`.
-
-*Execution plane services*
 
 Execution plane services ({ControllerName}, {EDAName} and execution nodes) use a dedicated configuration found in `~/aap/containers/storage.conf`. This separation prevents execution plane containers from affecting the control plane services.
 
@@ -196,13 +187,15 @@ CONTAINER_HOST=unix://run/user/<user uid>/podman/podman.sock podman <subcommand>
 ----
 
 
-.How can I see host resource utilization statistics?
+*How can I see host resource utilization statistics?*
 
-* Run:
+Run the following command to display host resource utilization statistics:
 
 ----
 $ podman container stats -a
 ----
+
+Example output based on a Dell sold and offered containerized {PlatformNameShort} solution (DAAP) install that utilizes ~1.8 GB RAM:
 
 ----
 ID            NAME                           CPU %       MEM USAGE / LIMIT  MEM %       NET IO      BLOCK IO    PIDS        CPU TIME    AVG CPU %
@@ -214,29 +207,30 @@ c1458367ca9c  redis                          0.48%       10.52MB / 3.761GB  0.28
 ef712cc2dc89  postgresql                     0.09%       21.88MB / 3.761GB  0.58%       0B / 0B     0B / 0B     21          15.571059s  0.80%
 ----
 
-The previous is an example of a Dell sold and offered containerized {PlatformNameShort} solution (DAAP) install and utilizes ~1.8Gb RAM.
-
-
-.How much storage is used and where?
+*How much storage is used and where?*
 
 The container volume storage is under the local user at `$HOME/.local/share/containers/storage/volumes`.
 
-. To view the details of each volume run:
+. To view the details of each volume, run the following command:
 +
 ----
 $ podman volume ls
 ----
 +
-. Then run:
+. Run the following command to display detailed information about a specific volume:
 +
 ----
 $ podman volume inspect <volume_name>
 ----
 
-Here is an example:
+For example:
 
 ----
 $ podman volume inspect postgresql
+----
+
+Example output:
+----
 [
     {
         "Name": "postgresql",
@@ -252,15 +246,15 @@ $ podman volume inspect postgresql
 ]
 ----
 
-
 Several files created by the installation program are located in `$HOME/aap/` and bind-mounted into various running containers.
 
-
-. To view the mounts associated with a container run:
+. To view the mounts associated with a container run the following command:
 +
 ----
 $ podman ps --format "{{.ID}}\t{{.Command}}\t{{.Names}}"
 ----
++
+Example output:
 +
 ----
 89e779b81b83	run-postgresql	postgresql
@@ -285,11 +279,13 @@ a3ba05136446	pulpcore-worker	automation-hub-worker-2
 ----
 +
 
-. Then run:
+. Run the following command:
 +
 ----
 $ podman inspect <container_name> | jq -r .[].Mounts[].Source
 ----
++
+Example output:
 +
 ----
 /home/aap/.local/share/containers/storage/volumes/receptor_run/_data
@@ -314,17 +310,9 @@ $ podman inspect <container_name> | jq -r .[].Mounts[].Source
 /home/aap/aap/controller/etc/launch_awx_task.sh
 /home/aap/aap/controller/etc/tower.cert
 ----
-
 +
-
-. If the `jq` RPM is not installed, install with:
+. If the `jq` RPM is not installed, install it by running the following command:
 +
 ----
 $ sudo dnf -y install jq
 ----
-
-// Reference How do I check on the health of the service and that all components are running?
-// <describe how to ask `systemctl`` about health of units for aap services>
-// I am experiencing errors and want to look for the application logs, where do I look?
-// <describe where logs are, should be journalctl>
-

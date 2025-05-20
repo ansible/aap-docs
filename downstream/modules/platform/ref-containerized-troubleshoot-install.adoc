@@ -1,27 +1,15 @@
-[id="ref-containerized-troubleshoot-install"]
+:_mod-docs-content-type: REFERENCE
+[id="troubleshooting-containerized-ansible-automation-platform-installation_{context}"]
 
 = Troubleshooting containerized {PlatformNameShort} installation
 
-//Upgrades How do I update my components with a new image?
-//<described how to get new containers to pull/run>
+*The installation takes a long time, or has errors, what should I check?*
 
-//The UI is inaccessible. What should I check?
-//What should I check for?
-//Database migrations - where?
-//Are containers running web UI services - details?
+. Ensure your system meets the minimum requirements as outlined in link:{URLContainerizedInstall}/aap-containerized-installation#system-requirements[System requirements]. Factors such as improper storage choices and high latency when distributing across many hosts will all have an impact on installation time.
 
-// I cannot log in to the UI
+. Review the installation log file which is located by default at `./aap_install.log`. You can change the log file location within the `ansible.cfg` file in the installation directory.
 
-//How do I check or reset the admin password?
-//How do I check any LDAP configured logins?
-
-.The installation takes a long time, or has errors, what should I check?
-
-. Ensure your system meets the minimum requirements as outlined in the installation guide. Items such as improper storage choices and high latency when distributing across many hosts will all have a significant impact.
-
-. Check the installation log file located by default at `./aap_install.log` unless otherwise changed within the local installer `ansible.cfg`.
-
-. Enable task profiling callbacks on an ad hoc basis to give an overview of where the installation program spends the most time. To do this, use the local `ansible.cfg` file. Add a callback line such as this under the `[defaults]` section:
+. Enable task profiling callbacks on an ad hoc basis to give an overview of where the installation program spends the most time. To do this, use the local `ansible.cfg` file. Add a callback line under the `[defaults]` section, for example:
 
 ----
 $ cat ansible.cfg
@@ -29,9 +17,9 @@ $ cat ansible.cfg
 callbacks_enabled = ansible.posix.profile_tasks
 ----
 
-.{ControllerNameStart} returns an error of 413
+*{ControllerNameStart} returns an error of 413*
 
-This error is due to `manifest.zip` license files that are larger than the `nginx_client_max_body_size` setting. If this error occurs, you will need to change the installation inventory file to include the following variables:
+This error happens when `manifest.zip` license files that are larger than the `nginx_client_max_body_size` setting. If this error occurs, change the inventory file to include the following variables:
 
 ----
 nginx_disable_hsts=false
@@ -41,23 +29,26 @@ nginx_client_max_body_size=20m
 nginx_user_headers=[]
 ----
 
-The current default setting of `20m` should be enough to avoid this issue.
+The current default setting of `20m` should prevent this issue.
 
-.The installation failed with a “502 Bad Gateway” when going to the controller UI.
+*The installation failed with a “502 Bad Gateway” when going to the controller UI*
 
-This error can occur and manifest itself in the installation application output as:
+This error can be seen in the installation process output as the following:
 
 ----
 TASK [ansible.containerized_installer.automationcontroller : Wait for the Controller API to te ready] ******************************************************
 fatal: [daap1.lan]: FAILED! => {"changed": false, "connection": "close", "content_length": "150", "content_type": "text/html", "date": "Fri, 29 Sep 2023 09:42:32 GMT", "elapsed": 0, "msg": "Status code was 502 and not [200]: HTTP Error 502: Bad Gateway", "redirected": false, "server": "nginx", "status": 502, "url": "https://daap1.lan:443/api/v2/ping/"}
 ----
 
-* Check if you have an `automation-controller-web` container running and a systemd service.
+Confirm that you have an `automation-controller-web` container running.
 
-[NOTE]
-====
-This is used at the regular unprivileged user not system wide level. If you have used `su` to switch to the user running the containers, you must set your `XDG_RUNTIME_DIR` environment variable to the correct value to be able to interact with the user `systemctl` units. Run the command `export XDG_RUNTIME_DIR="/run/user/$UID"`.
-====
+This is used at the regular unprivileged user not at the system wide level. If you have used `su` to switch to the user running the containers, you must set your `XDG_RUNTIME_DIR` environment variable to the correct value to be able to interact with the user `systemctl` units:
+
+----
+export XDG_RUNTIME_DIR="/run/user/$UID"
+----
+
+To confirm that you have an `automation-controller-web` container running, use the following commands:
 
 ----
 podman ps | grep web
@@ -67,40 +58,46 @@ podman ps | grep web
 systemctl --user | grep web
 ----
 
-No output indicates a problem.
+No output from running these commands indicates a problem. To resolve the issue:
 
 
-. Try restarting the `automation-controller-web` service:
+. Restart the `automation-controller-web` service:
 +
 ----
 systemctl start automation-controller-web.service --user
 ----
 +
-----
-systemctl --user | grep web
-----
+. Check the status of the service:
 +
 ----
 systemctl status automation-controller-web.service --user
 ----
++
+The following example output indicates that the port is already, or still, in use by another service. In this case nginx:
 +
 ----
 Sep 29 10:55:16 daap1.lan automation-controller-web[29875]: nginx: [emerg] bind() to 0.0.0.0:443 failed (98: Address already in use)
 Sep 29 10:55:16 daap1.lan automation-controller-web[29875]: nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)
 ----
 +
-The output indicates that the port is already, or still, in use by another service. In this case `nginx`.
-
-. Run:
+. Run the following command to stop the nginx service:
 +
 ----
 sudo pkill nginx
 ----
 +
-. Restart and status check the web service again.
-
-Normal service output should look similar to the following, and should still be running:
-
+. Restart the automation-controller-web service and check the status:
++
+----
+systemctl start automation-controller-web.service --user
+----
++
+----
+systemctl status automation-controller-web.service --user
+----
++
+The output looks like the following if everything is running correctly:
++
 ----
 Sep 29 10:59:26 daap1.lan automation-controller-web[30274]: WSGI app 0 (mountpoint='/') ready in 3 seconds on interpreter 0x1a458c10 pid: 17 (default app)
 Sep 29 10:59:26 daap1.lan automation-controller-web[30274]: WSGI app 0 (mountpoint='/') ready in 3 seconds on interpreter 0x1a458c10 pid: 20 (default app)
@@ -123,21 +120,21 @@ Sep 29 10:59:54 daap1.lan automation-controller-web[30274]: 2023-09-29 09:59:54,
 Sep 29 10:59:54 daap1.lan automation-controller-web[30274]: 2023-09-29 09:59:54,139 INFO success: cache-clear entered RUNNING state, process has stayed up fo>
 Sep 29 10:59:54 daap1.lan automation-controller-web[30274]: 2023-09-29 09:59:54,139 INFO success: cache-clear entered RUNNING state, process has stayed up
 ----
++
+. Run the installation program again to ensure everything installs as expected.
 
-You can run the installation program again to ensure everything installs as expected.
-
-.When attempting to install containerized {PlatformNameShort} in {AWS} you receive output that there is no space left on device
+*When attempting to install containerized {PlatformNameShort} in {AWS} you receive output that there is no space left on device*
 
 ----
 TASK [ansible.containerized_installer.automationcontroller : Create the receptor container] ***************************************************
 fatal: [ec2-13-48-25-168.eu-north-1.compute.amazonaws.com]: FAILED! => {"changed": false, "msg": "Can't create container receptor", "stderr": "Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1\n", "stderr_lines": ["Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1"], "stdout": "", "stdout_lines": []}
 ----
 
-If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. You will need to make more space available. The documentation specifies a minimum of 40GB for a single-node deployment of containerized {PlatformNameShort}.
+If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. To resolve this issue you must make more space available on the system.
 
-."Install container tools" task fails due to unavailable packages
+*"Install container tools" task fails due to unavailable packages*
 
-This error occurs in the installation application output as:
+This error can be seen in the installation process output as the following:
 
 ----
 TASK [ansible.containerized_installer.common : Install container tools] **********************************************************************************************************
