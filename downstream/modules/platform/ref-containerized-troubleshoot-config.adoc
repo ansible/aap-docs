@@ -1,10 +1,11 @@
-[id="ref-containerized-troubleshoot-config"]
+:_mod-docs-content-type: REFERENCE
+[id="troubleshooting-containerized-ansible-automation-platform-configuration_{context}"]
 
 = Troubleshooting containerized {PlatformNameShort} configuration
 
-// New items have appeared within installation program directory once an install has been run. What are these items?
+*Sometimes the post install for seeding my {PlatformNameShort} content errors out* 
 
-.Sometimes the post install for seeding my {PlatformNameShort} content errors out. This could manifest itself as output similar to this:
+This could manifest itself as output similar to this:
 
 ----
 TASK [infra.controller_configuration.projects : Configure Controller Projects | Wait for finish the projects creation] ***************************************
@@ -13,11 +14,8 @@ FAILED - RETRYING: [daap1.lan]: Configure Controller Projects | Wait for finish 
 failed: [daap1.lan] (item={'failed': 0, 'started': 1, 'finished': 0, 'ansible_job_id': '536962174348.33944', 'results_file': '/home/aap/.ansible_async/536962174348.33944', 'changed': False, '__controller_project_item': {'name': 'AAP Config-As-Code Examples', 'organization': 'Default', 'scm_branch': 'main', 'scm_clean': 'no', 'scm_delete_on_update': 'no', 'scm_type': 'git', 'scm_update_on_launch': 'no', 'scm_url': 'https://github.com/user/repo.git'}, 'ansible_loop_var': '__controller_project_item'}) => {"__projects_job_async_results_item": {"__controller_project_item": {"name": "AAP Config-As-Code Examples", "organization": "Default", "scm_branch": "main", "scm_clean": "no", "scm_delete_on_update": "no", "scm_type": "git", "scm_update_on_launch": "no", "scm_url": "https://github.com/user/repo.git"}, "ansible_job_id": "536962174348.33944", "ansible_loop_var": "__controller_project_item", "changed": false, "failed": 0, "finished": 0, "results_file": "/home/aap/.ansible_async/536962174348.33944", "started": 1}, "ansible_job_id": "536962174348.33944", "ansible_loop_var": "__projects_job_async_results_item", "attempts": 30, "changed": false, "finished": 0, "results_file": "/home/aap/.ansible_async/536962174348.33944", "started": 1, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
 ----
 
-The `infra.controller_configuration.dispatch` role uses an asynchronous loop with 30 retries to apply each configuration type, and the default delay between retries is 1 second. If the configuration is large, this might not be enough time to apply everything before the last retry occurs. 
+The `infra.controller_configuration.dispatch` role uses an asynchronous loop with 30 retries to apply each configuration type, and the default delay between retries is 1 second. If the configuration is large, this might not be enough time to apply everything before the last retry occurs.
 
-Increase the retry delay by setting the `controller_configuration_async_delay` variable to something other than 1 second. For example, setting it to 2 seconds doubles the retry time. The place to do this would be in the repository where the controller configuration is defined. It could also be added to the `[all:vars]` section of the installation program inventory file.
+Increase the retry delay by setting the `controller_configuration_async_delay` variable to 2 seconds for example. You can set this variable in the `[all:vars]` section of the installation program inventory file.
 
-A few instances have shown that no additional modification is required, and re-running the installation program again worked.
-
-//I have updated a configuration file, how do I get changes to apply?
-//<describe how to restart service for each component>
+Re-run the installation program to ensure everything works as expected.
