@@ -12,14 +12,14 @@ Use the following inputs and outputs to craft policies for use in policy enforce
 
 |====
 |*Input*|*Type*|*Description*
-|`id`|Integer|The job's unique identifier
+|`id`|Integer|The job's unique identifier.
 |`name`|String|Job template name
-|`created`|Datetime (ISO 8601)|Timestamp indicating when the job was created
+|`created`|Datetime (ISO 8601)|Timestamp indicating when the job was created.
 |`created by`|Object
 a|
 Information about the user who created the job.
 
-* `id`(integer): Unique identifier for the user
+* `id`(integer): Unique identifier for the user.
 * `username`(string): creator username
 * `is_superuser`(boolean): indicates if the user is a superuser
 |`credentials`|List of objects
@@ -41,9 +41,9 @@ Details about the {ExecEnvShort} used for the job.
 * `name` (string): {ExecEnvShort} name
 * `image` (string): container image used for execution
 * `pull` (string): pull policy for the {ExecEnvShort}
-|`extra_vars`|JSON|Extra variables provided for job execution
-|`forks`|Integer|The number of parallel processes used for job execution
-|`hosts_count`|Integer|The number of hosts targeted by the job
+|`extra_vars`|JSON|Extra variables provided for job execution.
+|`forks`|Integer|The number of parallel processes used for job execution.
+|`hosts_count`|Integer|The number of hosts targeted by the job.
 |`instance_group`|Object
 a|
 Information about the instance group handling the job, including:
@@ -84,7 +84,7 @@ Type of job execution. Allowed values are:
 * `run`
 * `check`
 * `scan`
-|`job_type_name`|String|Human-readable name for the job type
+|`job_type_name`|String|Human-readable name for the job type.
 |`labels`|List of objects
 a|
 Labels associated with the job, including:
@@ -140,10 +140,10 @@ Details about the project associated with the job, including:
 * `scm_clean` (boolean): whether the SCM is cleaned before updates
 * `scm_track_submodules` (boolean): whether submodules are tracked
 * `scm_delete_on_update` (boolean): whether SCM deletes files on update
-|`scm_branch`|String|The specific branch to use for SCM
-|`scm_revision`|String|SCM revision used for the job
-|`workflow_job`|Object|Workflow job details, if the job is part of a workflow
-|`workflow_job_template`|Object|Workflow job template details
+|`scm_branch`|String|The specific branch to use for SCM.
+|`scm_revision`|String|SCM revision used for the job.
+|`workflow_job`|Object|Workflow job details, if the job is part of a workflow.
+|`workflow_job_template`|Object|Workflow job template details.
 |====
 
 .Example
