@@ -1,6 +1,12 @@
+ifdef::context[:parent-context: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+
 [id="controller-jobs"]
 
 = Jobs in {ControllerName}
+
+:context: jobs-in-controller
 
 A job is an instance of {ControllerName} launching an Ansible Playbook against an inventory of hosts.
 
@@ -13,13 +19,15 @@ image::ug-jobs-list-all-expanded.png[Jobs list expanded]
 
 From this screen you can complete the following tasks:
 
+* In the *Domains* taskbar you can specify a domain to make relevant resources easily accessible.
+Click the image:wrench.png[Wrench,15,15] icon to edit the existing labels or btn:[Add Domain] to set up your own.
 * View details and standard output of a particular job 
 * Relaunch image:rightrocket.png[Launch,15,15] jobs
-* Cancel or Remove selected jobs
+* Cancel or delete selected jobs
 
 The relaunch operation only applies to relaunches of playbook runs and does not apply to project or inventory updates, system jobs, and workflow jobs.
-When a job relaunches, the *Jobs Output* view is displayed.
-Selecting any type of job also takes you to the *Job Output* view for that job, where you can filter jobs by various criteria:
+When a job relaunches, the *Output* view is displayed.
+Selecting any type of job also takes you to the *Output* view for that job, where you can filter jobs by various criteria:
 
 image::ug-job-details-view-filters.png[Job details view filters]
 
@@ -30,24 +38,47 @@ You can include as many events in the filter as necessary.
 For more information about using the search, see the xref:assembly-controller-search[Search] section.
 
 include::platform/con-controller-inventory-sync-jobs.adoc[leveloffset=+1]
+
 include::platform/ref-controller-inventory-sync-details.adoc[leveloffset=+2]
+
 include::platform/con-controller-scm-inventory-jobs.adoc[leveloffset=+1]
+
 include::platform/ref-controller-scm-inventory-details.adoc[leveloffset=+2]
+
 include::platform/con-controller-playbook-run-jobs.adoc[leveloffset=+1]
+
 include::platform/ref-controller-playbook-run-search.adoc[leveloffset=+2]
+
 //Commenting this out until I know what it's talking about.
 //include::platform/ref-controller-host-details.adoc[leveloffset=+2]
+
 include::platform/ref-controller-playbook-run-details.adoc[leveloffset=+2]
+
 include::platform/con-controller-playbook-access-info-sharing.adoc[leveloffset=+2]
+
 include::platform/ref-controller-isolation-functionality.adoc[leveloffset=+2]
+
 include::platform/con-controller-capacity-determination.adoc[leveloffset=+1]
+
 include::platform/con-controller-resource-determination-capacity.adoc[leveloffset=+2]
+
 include::platform/ref-controller-memory-relative-capacity.adoc[leveloffset=+3]
+
 include::platform/ref-controller-cpu-relative-capacity.adoc[leveloffset=+3]
+
 include::platform/con-controller-capacity-job-impacts.adoc[leveloffset=+2]
+
 include::platform/con-controller-impact-of-job-types.adoc[leveloffset=+3]
+
 include::platform/proc-controller-select-capacity.adoc[leveloffset=+3]
+
 include::platform/con-controller-job-branch-overriding.adoc[leveloffset=+1]
+
 include::platform/con-controller-source-tree-copy.adoc[leveloffset=+2]
+
 include::platform/con-controller-project-revision-behavior.adoc[leveloffset=+2]
+
 include::platform/ref-controller-git-refspec.adoc[leveloffset=+2]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
