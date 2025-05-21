@@ -1,15 +1,23 @@
 :_mod-docs-content-type: REFERENCE
 
-[id="cont-aap-system-requirements"]
+[id="system-requirements"]
 
 = System requirements
 Use this information when planning your installation of containerized {PlatformNameShort}.
 
 .Prerequisites
-* Ensure a non-root user is configured on the {RHEL} host, with `sudo` or other Ansible supported privilege escalation (`sudo` is recommended). This user is responsible for the installation of containerized {PlatformNameShort}.
+* Ensure a dedicated non-root user is configured on the {RHEL} host. 
+** This user requires `sudo` or other Ansible supported privilege escalation (`sudo` is recommended) to perform administrative tasks during the installation. 
+** This user is responsible for the installation of containerized {PlatformNameShort}.
+** This user is also the service account for the containers running {PlatformNameShort}.
+
+* For managed nodes, ensure a dedicated user is configured on each node. {PlatformNameShort} connects as this user to run tasks on the node.
+** For more information about configuring a dedicated user on each node, see link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Preparing the managed nodes for containerized installation].
+
 * For remote host installations, ensure SSH public key authentication is configured for the non-root user. For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
-* For self-contained (All-in-one) installations, ensure each host entry in your inventory file is configured to connect to the local machine by adding `ansible_connection=local`, for example `<hostname> ansible_connection=local`.
-* Ensure internet access  is available from the {RHEL} host if you are using the default online installation method.
+
+* Ensure internet access is available from the {RHEL} host if you are using the default online installation method.
+
 * Ensure the appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
 
 [IMPORTANT]
@@ -47,4 +55,4 @@ If performing a bundled installation of the {GrowthTopology} with `hub_seed_coll
 [role="_additional-resources"]
 .Additional resources
 * For more information about the scope of coverage for each variety of database, see link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage].
-* For more information about setting up an external database, see link:{URLContainerizedInstall}/ansible_automation_platform_containerized_installation#proc-setup-postgresql-ext-database-containerized[Setting up a customer provided (external) database].
+* For more information about setting up an external database, see link:{URLContainerizedInstall}/aap-containerized-installation#proc-setup-postgresql-ext-database-containerized[Setting up a customer provided (external) database].
