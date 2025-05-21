@@ -1,8 +1,3 @@
-////
-Retains the context of the parent assembly if this assembly is nested within another assembly.
-For more information about nesting assemblies, see: https://redhat-documentation.github.io/modular-docs/#nesting-assemblies
-See also the complementary step on the last line of this file.
-////
 
 ifdef::context[:parent-context: {context}]
 
@@ -14,70 +9,12 @@ ifdef::context[:parent-context: {context}]
 
 [role="_abstract"]
 
-== Overview
+As a system administrator, you can deploy {AAPchatbot} on {PlatformNameShort} {PlatformVers} on {OCPShort}.
 
-The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort} as a Technology Preview release. It is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
-
-The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower the Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
-
-{AAPchatbot} requires the following configurations:
-
-* Installation of {PlatformNameShort} {PlatformVers} on {OCPShort}
-* Deployment of an LLM served by Red Hat AI platforms, such as Red Hat Enterprise Linux® AI or Red Hat OpenShift AI
-
-[IMPORTANT]
-====
-* Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
-* {AAPchatbot} is available as a Technology Preview feature only.
-+
-Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
-+
-For more information about the support scope of Red Hat Technology Preview features, see  link:https://access.redhat.com/support/offerings/techpreview[Technology Preview Features Support Scope].
-====
-
-== Process for deploying and using the {AAPchatbot}
-
-Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
-
-[%header,cols="35%,65%"]
-|====
-| Task 
-| Description
-
-|Deploy the {AAPchatbot} on {OCPShort}
-a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for all Ansible users in the organization.
-
-Perform the following tasks:
-
-. Install and configure the {PlatformNameShort} operator
-. Create a chatbot configuration secret
-. Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret 
-
-| Access and use the {AAPchatbot}
-| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}.
-|====
-
-== Prerequisites
-
-*For the {PlatformNameShort} {PlatformVers}*: 
-
-* Your system meets the minimum system requirements for installing the {OperatorPlatformNameShort} and the required infrastructure topology. For more information, see link:{URLTopologies}/ocp-topologies[Operator topologies] in _{TitleTopologies}_.
-* You have installed {PlatformNameShort} {PlatformVers} on your {OCPShort} environment. 
-* You have administrator privileges for the {PlatformNameShort}.
-* You have provisioned an OpenShift cluster with Operator Lifecycle Management installed.
-
-*For the Large Language Model (LLM)*:
-
-* You must have configured a Large Language Model (LLM) provider that you will use before deploying the {AAPchatbot}. You can use an LLM served by Red Hat AI platforms, such as Red Hat Enterprise Linux® AI or Red Hat OpenShift AI.
-+
-For more information, see the following resources:
-
-** link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[Red Hat Enterprise Linux AI] product page
-** link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_ai/[Red Hat Enterprise Linux AI documentation]
-** link:https://www.redhat.com/en/products/ai/openshift-ai[Red Hat OpenShift AI] product page
-** link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai/[Red Hat OpenShift AI documentation]
+include::platform/con-about-lightspeed-intelligent-assistant.adoc[leveloffset=+1]
 
 == Deploying the {AAPchatbot}
+
 include::platform/proc-install-aap-operator-chatbot.adoc[leveloffset=+2]
 
 include::platform/proc-create-chatbot-config-secret.adoc[leveloffset=+2]
