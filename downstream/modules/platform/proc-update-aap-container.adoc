@@ -1,4 +1,4 @@
-[id="proc-update-aap-container"]
+[id="updating-containerized-ansible-automation-platform"]
 
 = Updating containerized {PlatformNameShort}
 
@@ -14,32 +14,12 @@ You have done the following:
 
 * Created a backup of your {PlatformNameShort} deployment. For more information, see xref:proc-backup-aap-container[Backing up container-based {PlatformNameShort}].
 
+* Logged in to the {RHEL} host as your dedicated non-root user.
+
+* Followed the steps in link:{URLContainerizedInstall}/aap-containerized-installation#downloading-ansible-automation-platform[Downloading {PlatformNameShort}] to download the latest version of containerized {PlatformNameShort} and copied the installation program to your {RHEL} Host.
+
 .Procedure
 
-. Download the latest version of the containerized installer from the link:{PlatformDownloadUrl}[{PlatformNameShort} download].
-
-.. For online installations *{PlatformNameShort} {PlatformVers} Containerized Setup*
-
-.. For offline or bundled installations: *{PlatformNameShort} {PlatformVers} Containerized Setup Bundle*
-
-. Copy the installation program `.tar` file onto your {RHEL} host.
-
-. Decide where you want the installation program to reside on the filesystem. Installation related files will be created under this location and require at least 10 GB for the initial installation.
-
-. Unpack the installation program `.tar` file into your installation directory, and go to the unpacked directory.
-
-.. To unpack the online installer:
-+
-----
-$ tar xfvz ansible-automation-platform-containerized-setup-<version>.tar.gz
-----
-+
-.. To unpack the offline or bundled installer:
-+ 
-----
-$ tar xfvz ansible-automation-platform-containerized-setup-bundle-<version>-<arch name>.tar.gz
-----
-+
 . Edit the `inventory` file to match your required configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can change the parameters to match any modifications to your environment.
 
 . Run the `install` playbook:
