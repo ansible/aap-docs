@@ -1,0 +1,81 @@
+[id="con-about-lightspeed-intelligent-assistant_{context}"]
+
+= Overview
+
+[role="_abstract"]
+
+The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort} as a Technology Preview release. It is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
+
+The {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
+
+[IMPORTANT]
+====
+* Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
+* {AAPchatbot} is available as a Technology Preview feature only.
++
+Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
++
+For more information about the support scope of Red Hat Technology Preview features, see  link:https://access.redhat.com/support/offerings/techpreview[Technology Preview Features Support Scope].
+====
+
+= Prerequisites
+
+*For {PlatformNameShort} {PlatformVers}*: 
+
+* You have installed {PlatformNameShort} {PlatformVers} on your {OCPShort} environment. 
+* You have administrator privileges for the {PlatformNameShort}.
+* You have provisioned an OpenShift cluster with Operator Lifecycle Management installed.
+
+*For the Large Language Model (LLM)*:
+
+* You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. 
+
+An LLM is a type of machine learning model that can interpret and generate human-like language. When an LLM is used with the {AAPchatbot}, the LLM can interpret questions accurately and provide helpful answers in a conversational manner.
+
+As part of the Technology Preview release, {AAPchatbot} can rely on the following Software as a Service (SaaS) LLM providers:
+
+* {OpenAI}
++
+To use {OpenAI} with the {AAPchatbot}, you need access the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI} API platform].
+
+* {RHELAI}
++
+{RHELAI} is OpenAI API-compatible and is configured in a similar manner to the OpenAI provider. You can configure {RHELAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI}] product page.
+
+* {OCPAI}
++
+{OCPAI} is OpenAI API-compatible and is configured in a similar manner to the {OpenAI} provider. You can configure {OCPAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI}] product page.
+
+* {IBMwatsonxai}
++
+To use IBM watsonx with the {AAPchatbot}, you need an account with link:https://www.ibm.com/products/watsonx-ai[IBM watsonx].
+
+* {AzureOpenAI}
++
+To use Microsoft Azure with the {AAPchatbot}, you need access to link:https://azure.microsoft.com/en-us/products/ai-services/openai-service[{AzureOpenAI}]. 
+
+[NOTE]
+====
+For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider. 
+====
+
+= Process
+Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
+
+[%header,cols="35%,65%"]
+|====
+| Task 
+| Description
+
+|Deploy the {AAPchatbot} on {OCPShort}
+a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for all Ansible users in the organization.
+
+Perform the following tasks:
+
+. Install and configure the {PlatformNameShort} operator
+. Create a chatbot configuration secret
+. Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret 
+
+| Access and use the {AAPchatbot}
+| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}.
+|====
