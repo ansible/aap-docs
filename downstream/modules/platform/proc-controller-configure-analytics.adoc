@@ -6,20 +6,21 @@ When you imported your license for the first time, you were automatically opted 
 
 .Prerequisites
 
-* A service account created with the Analytics Administrator viewer role in console.redhat.com.
+* A service account created with the *Automation Analytics Viewer* role in console.redhat.com.
 For more information, see link:https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[Creating a service account].
 
 .Procedure
 
-. From the navigation panel, select menu:{MenuAEAdminSettings}[System].
+. From the navigation panel, select {MenuSetSystem}.
 . Click btn:[Edit].
-. Toggle the *Gather data for {Analytics}* switch and enter your Red Hat customer credentials:
-+
-* *Red Hat Client ID for Analytics*: Enter the client ID you received when you created your service account to send data to {Analytics}.
-* *Red Hat Client Secret for Analytics*: Enter the client secret you received when you created your service account to send data to {Analytics}.
-* *Red Hat Client ID for Subscriptions*: Enter the client ID you received when you created your service account to retrieve subscription and content information.
-* *Red Hat Client Secret for Subscriptions*: Enter the client secret you received when you created your service account to retrieve subscription and content information.
-* *Last gathered entries from the data collection service of Automation Analytics*: 
-* *Automation Analytics Gather Interval*: Interval (in seconds) between data gathering.
-+
+. In the field labeled *Red Hat Client ID for Analytics*, enter the client ID you received when you created your service account to retrieve subscription and content information.
+. In the field labeled *Red Hat Client Secret for Analytics*, enter the client secret you received when you created your service account to send data to {Analytics}.
+. In the *Options* list select the checkbox to *Gather data for Automation Analytics*.
 . Click btn:[Save].
+
+.Verification
+
+After configuring the service account, run a test job to ensure everything is set up correctly.
+
+. From the navigation panel, select menu:{MenuTopAE}[Jobs] to launch a job.
+. Check link:https://console.redhat.com/ansible/automation-analytics/reports[analytics at console.redhat.com] to confirm that the data is being posted.
