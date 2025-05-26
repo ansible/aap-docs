@@ -1,6 +1,10 @@
 [id="cont-aap-hub-storage"]
 
-= Configuring Amazon S3 storage for {HubName}
+= Configuring storage for {HubName}
+
+Configure storage backends for {HubName} including Amazon S3, Azure Blob Storage, and Network File System (NFS) storage.
+
+== Configuring Amazon S3 storage for {HubName}
 
 Amazon S3 storage is a type of object storage that is supported in containerized installations. When using an AWS S3 storage backend, set `hub_storage_backend` to `s3`. The AWS S3 bucket needs to exist before running the installation program.
 
@@ -24,7 +28,7 @@ hub_s3_extra_settings:
 
 For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings[django-storages documentation - Amazon S3].
 
-= Configuring Azure Blob Storage for {HubName}
+== Configuring Azure Blob Storage for {HubName}
 
 Azure Blob storage is a type of object storage that is supported in containerized installations. 
 When using an Azure blob storage backend, set `hub_storage_backend` to `azure`. The Azure container needs to exist before running the installation program.
@@ -49,7 +53,7 @@ hub_azure_extra_settings:
 
 For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/azure.html#settings[django-storages documentation - Azure Storage].
 
-= Configuring Network File System (NFS) storage for {HubName}
+== Configuring Network File System (NFS) storage for {HubName}
 
 NFS is a type of shared storage that is supported in containerized installations. Shared storage is required when installing more than one instance of {HubName} with a `file` storage backend. When installing a single instance of the {HubName}, shared storage is optional.
 
