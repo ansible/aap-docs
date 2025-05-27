@@ -6,9 +6,19 @@ ifdef::context[:parent-context: {context}]
 :context: activate-aap
 
 [role="_abstract"]
+
+Ansible subscriptions require a service account from {Console}. You must link:{BaseURL}/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[create a service account] and use the client ID and client secret to activate your subscription.  
+
+[NOTE]
+====
+If you enter your client ID and client secret but are unable to locate your subscription, you may not have the correct permissions set on your service account. Refer to link:https://access.redhat.com/articles/7112649[Configure Ansible Automation Platform to authenticate through service account credentials] for additional information and troubleshooting guidance.
+====
+
+For Red Hat Satellite, input your Satellite username and Satellite password in the fields below. 
+
 {PlatformName} uses available subscriptions or a subscription manifest to authorize the use of {PlatformNameShort}. To obtain a subscription, you can do either of the following:
 
-. Use your Red Hat customer or Satellite credentials when you launch {PlatformNameShort}.
+. Use your Red Hat service account or Satellite credentials when you launch {PlatformNameShort}.
 . Upload a subscriptions manifest file either using the {PlatformName} interface or manually in an Ansible playbook.
 
 ifndef::operationG[]

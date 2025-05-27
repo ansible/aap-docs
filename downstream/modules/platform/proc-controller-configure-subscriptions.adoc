@@ -4,12 +4,21 @@
 
 You can use the *Subscription* menu to view the details of your subscription, such as compliance, host-related statistics, or expiry, or you can apply a new subscription.
 
+Ansible subscriptions require a service account from {Console}. You must link:{BaseURL}/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[create a service account] and use the client ID and client secret to activate your subscription.  
+
+[NOTE]
+====
+If you enter your client ID and client secret but are unable to locate your subscription, you may not have the correct permissions set on your service account. Refer to link:https://access.redhat.com/articles/7112649[Configure Ansible Automation Platform to authenticate through service account credentials] for additional information and troubleshooting guidance.
+====
+
+For Red Hat Satellite, input your Satellite username and Satellite password in the fields below. 
+
 .Procedure
 . From the navigation panel, select {MenuSetSubscription}. The *Subscription* page is displayed.
 //[ddacosta] - Removing images but they can be added back if requested.
 //image::settings_subscription_page.png[Initial subscriptions page]
 . Click btn:[Edit subscription].
-. You can either enter your Red Hat Username and Password, or attach a current Subscription Manifest in the *Welcome* page.
+. You can either enter your service account or Satellite credentials, or attach a current Subscription Manifest in the *Welcome* page.
 //[ddacosta] - Removing images but they can be added back if requested.
 //image::subscriptions_first-page.png[Suscriptions page for password or manifest]
 . Click btn:[Next] and agree to the terms of the license agreement.
