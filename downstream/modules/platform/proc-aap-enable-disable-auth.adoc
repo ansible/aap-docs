@@ -1,0 +1,46 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="aap-enable-disable-auth_{context}"]
+
+= Enabling and disabling the local authenticator
+
+As a platform administrator, you can enable or disable authenticators. However, disabling your local authenticator can have significant impacts and should only be done under specific circumstances. Before you disable your local authenticator, you must consider the following:
+
+Local account inaccessibility:: Disabling the local authenticator prevents all local accounts, including the default `admin` account from logging in.
+Potential inaccessibility:: Disabling the local authenticator without having at least one other configured authenticator can render the {PlatformNameShort} environment completely inaccessible.
+Dependency on enterprise authentication provider:: If the local authenticator is disabled and an issue occurs with the configured enterprise authentication provider, the platform will become inaccessible until the enterprise authentication provider issue is resolved.
+
+.Prerequisites
+
+* You have at least one other authenticator method configured. 
+* You have at least one administrator account that can authenticate using your alternate authenticator.
+
+.Procedure
+
+[CAUTION]
+====
+Disabling the local authenticator without an alternative authentication in place can result in a locked environment. 
+====
+
+. From the navigation panel, select {MenuAMAuthentication}.
+. Ensure that at least one other authenticator type is configured and enabled.
+. Select your *Local Authenticator*.
+. Toggle the *Enabled* switch to the off position to disable the local authenticator.
+
+.Troubleshooting
+
+If the local authenticator is disabled without another authentication method configured, or if an issue arises with your configured enterprise authentication provider, making the {PlatformNameShort} inaccessible, you can re-enable the local authenticator from the command line as follows:
+
+. List the available authenticators and retrieve the ID of your local authenticator by running the following command:
++
+----
+aap-gateway-api authenticators --list
+----
++
+. Enable the local authenticator using its ID:
++
+----
+aap-gateway-manage authenticators --enable :id
+----
++
+where: `:id` is the ID of the local authenticator obtained from the previous step.
