@@ -1,0 +1,16 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="loading-order-grpc-settings-py_{context}"]
+
+= Loading order of settings
+
+[role="_abstract"]
+The {Gateway} utilizes the Dynaconf library for managing its application settings. Dynaconf follows a layered configuration approach, where settings are loaded from multiple sources in a defined order, with later sources overriding earlier ones. {PlatformNameShort} loads settings in the following sequence: 
+
+. *Application settings.py:* This file is in the application itself and defines the loading order and location of additional settings files. 
+. *Application default settings:* The platform loads default settings from a defaults.py file, which is part of the application itself. This file includes general configurations for both the API Server and the gRPC server.
+. *Customer override file:* The `/etc/ansible-automation-platform/gateway/settings.py` file is automatically installed and can be used to override any configuration in `defaults.py`. Changes to this file affect both the API and gRPC servers.
+. *Application gRPC default settings:* After the customer override file, the application loads additional default settings for the gRPC server only from the `grpc_default.py` file. Specifically, this file includes database OPTIONS for the gRPC server, such as the keepalive parameters.
+. *Customer gRPC override file:* The file `/etc/ansible-automation-platform/gateway/grpc_settings.py`, if present, is loaded next and any settings contained in this file are applied only to the gRPC server.
+. *Platform override settings file:* Any settings in the `/etc/ansible-automation-platform/settings.py` file are applied to both the gRPC server and the API server. If there are multiple {PlatformNameShort} services on a single node, items in this file are applied to all services.  
+. *ENV vars:* Environment variables, where you can configure certain {PlatformNameShort} settings outside of the configuration files, are loaded last. They override any previously loaded settings. 
