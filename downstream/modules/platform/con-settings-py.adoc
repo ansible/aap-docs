@@ -1,0 +1,31 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="settings-py_{context}"]
+
+= `settings.py` file
+
+[role="_abstract"]
+As a platform administrator, you can modify the `settings.py` file to configure various aspects of {PlatformNameShort}, such as database connections, logging configurations, caching, and more.
+
+There are two `settings.py` files; the default `settings.py` that is part of the codebase and must not be edited, and an override file that can be used to override the default values. 
+
+The location and management of the override `settings.py` file can differ based on your deployment (RPM-based, {ContainerBase}, or {OperatorBase}). 
+
+== RPM deployments
+
+The override `settings.py` file in an RPM-based setup can be edited directly, and changes take effect after restarting the {Gateway} service. However, it’s important to use the proper syntax and values. The override `settings.py` file is located in the following directory:
+
+----
+/etc/ansible-automation-platform/gateway/settings.py
+----
+
+== Container-based deployments
+For {ContainerBase} deployments, {PlatformNameShort} runs within containers and the `settings.py` file is included inside the container. However, directly editing the `settings.py` file in {ContainerBase} deployments is not recommended because the `settings.py` file is overwritten during upgrades or new installs. 
+
+To customize settings in {ContainerBase} deployments, you can use the `extra_settings` parameter to ensure that customizations persist through installer updates. For more information, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables] in the {TitleContainerizedInstall} guide. 
+
+== Operator-based deployments
+
+For {OperatorBase} deployments, the `settings.py` file is typically located inside the container, however, users cannot modify the `settings.py` files directly in the container because containers in {OCP} are read-only.
+
+Instead, for operator-based deployments, you can modify the settings for the {Gateway} using the `spec.extra_settings` parameter on the {PlatformNameShort} custom resource.

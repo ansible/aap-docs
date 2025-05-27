@@ -1,0 +1,19 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="grpc-settings-py_{context}"]
+
+= `grpc_settings.py` file
+
+[role="_abstract"]
+Platform administrators can use the `grpc_settings.py` file to define special or custom parameters for the gRPC server. 
+
+There are two gRPC settings files; the default `grpc_default.py` that is part of the codebase and must not be edited, and an override file that can be used to override the default values. The `grpc_default.py` file includes database keepalive OPTIONS to help maintain a healthy gRPC connection and prevent interruptions. If it was necessary to change these defaults, the `grpc_settings.py` file can be used to override values from the `grpc_defauly.py` file.
+
+The location and management of the override `grpc_settings.py` file can differ based on your deployment (RPM-based, {ContainerBase} or {OperatorBase}). 
+
+== RPM deployments
+
+The override `grpc_settings.py` file in an RPM-based setup can be edited directly, and changes take effect after restarting the gateway systemd service. However, it’s important to use the proper syntax and values. The override `grpc_settings.py` file is located in the following directory:
+----
+/etc/ansible-automation-platform/gateway/grpc_settings.py
+----
