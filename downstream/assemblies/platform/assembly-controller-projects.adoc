@@ -1,3 +1,5 @@
+:_mod-docs-content-type: ASSEMBLY
+
 [id="controller-projects"]
 ifdef::controller-GS[]
 = Managing projects
@@ -6,7 +8,7 @@ ifdef::controller-UG[]
 = Projects
 endif::controller-UG[]
 
-A Project is a logical collection of Ansible playbooks, represented in {ControllerName}.
+A project is a logical collection of Ansible playbooks, represented in {ControllerName}.
 You can manage playbooks and playbook directories different ways:
 
 * By placing them manually under the Project Base Path on your {ControllerName} server.
@@ -27,13 +29,14 @@ It is configured in `/etc/tower/conf.d/custom.py`.
 Use caution when editing this file, as incorrect settings can disable your installation.
 ====
 
-The Projects page displays the list of the projects that are currently available. 
+The *Projects* page displays the list of the projects that are currently available. 
 
 A *Demo Project* is provided that you can work with initially.
 
 //image:projects-list-all.png[Projects - home]
 
-The default view is collapsed (*Compact*) with project name and its status, but you can use the image:arrow.png[Arrow,15,15] next to each entry to expand for more information.
+// Not in the latest 2.5 UI [AAP-45087]
+//The default view is collapsed (*Compact*) with project name and its status, but you can use the image:arrow.png[Arrow,15,15] next to each entry to expand for more information.
 
 //image:projects-list-all-expanded.png[Projects - expanded]
 
@@ -80,13 +83,31 @@ credential.
 //====
 
 include::platform/proc-controller-adding-a-project.adoc[leveloffset=+1]
+
+include::platform/proc-projects-manage-playbooks-manually.adoc[leveloffset=+2]
+
+include::platform/ref-projects-manage-playbooks-with-source-control.adoc[leveloffset=+2]
+
+include::platform/proc-scm-git-subversion.adoc[leveloffset=+3]
+
+include::platform/proc-scm-insights.adoc[leveloffset=+3]
+
+include::platform/proc-scm-remote-archive.adoc[leveloffset=+3]
+
 include::platform/proc-controller-updating-a-project.adoc[leveloffset=+1]
+
 include::platform/ref-work-with-permissions.adoc[leveloffset=+1]
+
 //include::platform/ref-work-with-notifications.adoc[leveloffset=+1]
+
 //include::platform/ref-work-with-job-templates.adoc[leveloffset=+1]
+
 //include::platform/ref-work-with-schedules.adoc[leveloffset=+1]
+
 include::platform/ref-projects-galaxy-support.adoc[leveloffset=+1]
+
 include::platform/ref-projects-collections-support.adoc[leveloffset=+1]
+
 endif::controller-UG[]
 
 ifdef::controller-GS[]
@@ -96,6 +117,8 @@ This Getting Started Guide uses lightweight examples to get you up and running. 
 ====
 
 include::platform/proc-controller-set-up-project.adoc[leveloffset=+1]
+
 include::platform/proc-controller-edit-project.adoc[leveloffset=+1]
+
 include::platform/proc-controller-sync-project.adoc[leveloffset=+1]
 endif::controller-GS[]
