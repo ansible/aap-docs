@@ -26,7 +26,7 @@ The cache directory is a subdirectory inside the global projects folder.
 You can copy the content from the cache location to `<job private directory>/requirements_roles`.
 
 By default, {ControllerName} has a system-wide setting that enables you to dynamically download roles from the `roles/requirements.yml` file for SCM projects. 
-You can turn off this setting in the *Job Settings* screen from the navigation panel {MenuSetJob}, by switching the *Enable Role Download* toggle to *Off*.
+You can turn off this setting in the *Job Settings* screen from the navigation panel {MenuSetJob}, by unchecking the *Enable Role Download* box.
 
 //image:configure-tower-jobs-download-roles.png[image]
 
@@ -45,7 +45,7 @@ The second one is _provision-role_ and it is referenced by the `roles/requiremen
 
 Jobs download the most recent roles before every job run. 
 Roles and collections are locally cached for performance reasons. 
-You must select *Update Revision on Launch* in the project *Options* to ensure that the upstream role is re-downloaded before each job run:
+You must select *Update revision on launch* in the project *Options* to ensure that the upstream role is re-downloaded before each job run:
 
 image:projects-scm-update-options-update-on-launch-checked.png[update-on-launch]
 
@@ -53,7 +53,7 @@ The update happens much earlier in the process than the sync, so this identifies
 
 For more information and examples on the syntax of the `requirements.yml` file, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#installing-multiple-roles-from-a-file[role requirements section] in the Ansible documentation.
 
-If there are any directories that must be specifically exposed, you can specify those in the *Job Settings* screen from the navigation panel {MenuSetJob}, in *Paths to Expose to isolated Jobs*.
+If there are any directories that must be specifically exposed, you can specify those in the *Job Settings* screen from the navigation panel {MenuSetJob}, in *Paths to expose to isolated Jobs*.
 You can also update the following entry in the settings file:
 
 [literal, options="nowrap" subs="+attributes"]
