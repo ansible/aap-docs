@@ -1,7 +1,7 @@
 
 [id="delete-collection"]
 
-= Deleting a collection on {HubName}
+= Deleting a collection
 
 You can further manage your collections by deleting unwanted collections, if the collection is not dependent on other collections. The *Dependencies* tab on a collection displays a list of other collections that use the current collection.
 
@@ -10,19 +10,15 @@ You can further manage your collections by deleting unwanted collections, if the
 * You have *Delete Collections* permissions.
 
 .Procedure
-//[ddacosta] For 2.5 this will be Log in to Ansible Automation Platform and select Automation Content. Automation hub opens in a new tab. From the navigation ...
-. Log in to your {PrivateHubName}.
+
+. Log in to your {PlatformNameShort}.
 . From the navigation panel, select {MenuACCollections}.
 . Before deleting the collection, check to see if it has collections that are dependent on it:
 ** Click the *Dependencies* tab for that collection. If it is blank, you will be able to delete the collection. If the *Dependencies* tab is not blank, you must delete these dependencies before you can delete the collection.
 . Click the collection to delete.
 . Click the btn:[More Actions] icon *{MoreActionsIcon}*, and then select an option:
-.. *Delete entire collection* to delete all versions in this collection.
-.. *Delete version [number]* to delete the current version of this collection. You can change versions by using the *Version* drop-down menu.
-+
-[NOTE]
-====
-If the selected collection has any dependencies with other collections, these actions are disabled until you delete those dependencies. Click the *Dependencies* tab to see a list of dependencies to delete.
-====
-+
+.. *Delete version from system* removes the specific version of the collection from the entire instance, including all repositories and namespaces.
+.. *Delete version from repository* removes the specific version of the collection from the repository where it was uploaded. This does not affect the collection in other repositories or namespaces.
+.. *Delete entire collection from repository* removes all versions of the entire collection from the repository where it was uploaded, but does not affect other repositories or namespaces.
+.. *Delete entire collection from system* removes all versions of the entire collection from the instance, including all repositories and namespaces.
 . When the confirmation window opens, verify that the collection or version number is correct, and then select *Delete*.
