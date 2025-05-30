@@ -4,15 +4,35 @@
 
 = Selecting an authentication type
 
-On the first screen of the wizard you can select the type of authenticator plugin you want to configure. 
+On the *Authentication Methods* page you can select the type of authenticator plugin you want to configure.
 
 .Procedure
 
 . From the navigation panel, select {MenuAMAuthentication}.
 . Click btn:[Create authentication].
+. Enter a unique *Name* for the authenticator. The name is required, must be unique across all authenticators, and must not be longer than 512 characters. This becomes the unique identifier generated for the authenticator.
 +
-The *Create Authentication* wizard is displayed, where you can follow the prompts to configure your preferred authentication method.
+[NOTE]
+====
+Changing the name does not update the unique identifier of the authenticator. For example, if you create an authenticator with the name `My Authenticator` and later change it to `My LDAP Authenticator` you will not be able to create another authenticator with the name `My Authenticator` because the unique identifier is still in use.
+====
 +
 . Select the authenticator type from the *Authentication type* list. See xref:gw-config-authentication-type[Configuring an authentication type] for the complete list of authentication plugins available.
+. The *Authentication details* section automatically updates to show the fields relevant to the selected authentication type. See the respective sections in Configuring an authentication type for the required details.
 +
-. Click btn:[Next] to xref:gw-configure-auth-details[Configure authentication details].
+For all authentication types you can enter a *Name*, *Additional Authenticator Fields* and *Create Objects*.
++
+. Enable or disable *Enabled* to specify if the authenticator should be enabled or disabled. If enabled, users are able to login from the authenticator. If disabled, users will not be allowed to login from the authenticator.
+. Enable or disable *Create Object* to specify whether the authenticator should create teams and organizations in the system when a user logs in.
++
+Enabled:: Teams and organizations defined in the authenticator maps are created and the users added to them.
+Disabled:: Organizations and teams defined in the authenticator maps will not be created automatically in the system. However, if they already exist (i.e. created by a superuser), users who trigger the maps are granted access to them.
++
+. Enable or disable *Remove Users*. If enabled, any access previously granted to a user is removed when they authenticate from this source. If disabled, permissions are only added or removed from the user based on the results of this authenticator's authenticator mappings.
++
+For example, assume a user has been granted the `is_superuser` permission in the system. And that user will log into an authenticator whose maps will not formulate an opinion as to whether or not the user should be a superuser.
+If *Remove Users* is enabled, the `is_superuser` permission will be removed from the user, the authenticator maps will not have an opinion as to whether it should be there or not so, after login the user will not have the `is_superuser` permission.
++
+If *Remove Users* is disabled, the `is_superuser` permission _will not_ be removed from the user. The authenticator maps will not have an opinion as to whether it should be there or not so after login the user _will_ have the `is_superuser` permission.
++
+. Click btn:[Create mapping] and proceed to xref:gw-define-rules-triggers[Define authentication mapping rules and triggers].
