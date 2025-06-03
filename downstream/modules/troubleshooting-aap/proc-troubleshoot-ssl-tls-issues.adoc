@@ -1,0 +1,42 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="troubleshooting-ssl-tls-issues"]
+
+= Troubleshooting SSL/TLS issues
+
+To troubleshoot issues with SSL/TLS, verify the certificate chain, use the correct certificates, and confirm that a trusted Certificate Authority (CA) signed the certificate. 
+
+.Procedure
+
+. Check if the server is reachable over SSL/TLS.
+.. Run the following command to confirm whether the server is reachable over SSL/TLS and to see the full certificate chain:
++
+----
+# true | openssl s_client -showcerts -connect <fqdn_or_ip>:<port>
+----
++
+.. Replace `<fqdn_or_ip>` and `<port>` with suitable values.
+. Verify the certificate details.
+.. Run the following command to view the details of a certificate:
++
+----
+# openssl x509 -in <path_to_certificate> -noout -text
+----
++
+. Replace `<path_to_certificate>` with the path to the certificate file you want to inspect.
++
+The result of the command shows information such as:
+
+* Subject - The entity the certificate has been issued to.
+* Issuer - The CA that issued the certificate.
+* Validity "Not Before" - The date the certificate was issued.
+* Validity "Not After" - The date the certificate expires.
++
+. Verify a trusted CA signed the certificate.
+.. Run the following command to verify that a specific certificate is valid and was signed by a trusted CA:
++
+----
+openssl verify -CAfile <path_to_ca_public_certificate> <path_to_server_certificate_file_to_verify>
+----
++
+.. If the command returns `OK`, it means the certificate file is valid and signed by a trusted CA.
