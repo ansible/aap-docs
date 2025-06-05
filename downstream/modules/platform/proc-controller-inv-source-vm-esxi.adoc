@@ -1,0 +1,32 @@
+[id="proc-controller-inv-source-vm-esxi"]
+
+= VMware ESXi
+
+Use the following procedure to configure a VMWare-ESXI sourced inventory.
+
+.Procedure
+. From the navigation panel, select {MenuInfrastructureInventories}.
+. Select the inventory name you want to add a source to, and click the *Sources* tab.
+. Click btn:[Create source].
+. Enter a *Name* for the source (required).
+. In the *Create source* page, select *VMware ESXi* from the *Source* list.
+. The *Create source* window expands with additional fields.
+Enter the following details:
+
+* *Credential*: Choose from an existing VMware credential.
+For more information, see xref:controller-credentials[Managing user credentials].
+
+. Use the *Verbosity* menu to select the level of output on any inventory source's update jobs.
+. Optional: You can specify the host filter, enabled variables or values, and update options as described in xref:proc-controller-add-source[Adding a source].
+. Use the *Source Variables* field to override variables used by the `vmware_inventory` inventory plugin.
+Enter variables by using either JSON or YAML syntax.
+Use the radio button to toggle between the two.
+
+The VMware ESxi plugin is supplied link:https://github.com/ansible-collections/vmware.vmware/blob/main/plugins/inventory/esxi_hosts.py[here].
+
+[NOTE]
+====
+VMWare properties have changed from lower case to camel case. 
+{ControllerNameStart} provides aliases for the top-level keys, but lower case keys in nested properties have been discontinued. 
+For a list of valid and supported properties, see link:https://docs.ansible.com/ansible/4/scenario_guides/vmware_scenarios/vmware_inventory_vm_attributes.html[Using Virtual machine attributes in VMware dynamic inventory plugin].
+====
