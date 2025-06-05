@@ -1,5 +1,5 @@
 // Module included in the following assemblies:
-// assembly-platform-whats-next.adoc
+// assembly-using-builder.adoc
 
 :_mod-docs-content-type: PROCEDURE
 
@@ -18,7 +18,8 @@ If you installed {PrivateHubName} separately from {PlatformNameShort}, you can u
 touch ./group_vars/automationcontroller
 ----
 +
-. Paste the following content into `./group_vars/automationcontroller`. Adjust the settings to fit your environment:
+. Paste the following content into `./group_vars/automationcontroller`. 
+Adjust the settings to fit your environment:
 +
 ----
 # Automation Hub Registry
@@ -36,6 +37,11 @@ global_job_execution_environments:
   - name: "Minimal execution environment"
     image: "automationhub.example.org/ee-minimal-rhel8:latest"
 ----
++
+[NOTE]
+====
+For information on obtaining `registry_username` and `registry_password`, see link:{URLInstallationGuide}/index#proc-set-registry-username-password[Setting registry_username and registry_password]
+====
 +
 . Run the `./setup.sh` script
 +

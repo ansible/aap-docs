@@ -4,14 +4,49 @@
 
 {Builder} is a command line tool that automates the process of building {ExecEnvName} by using metadata defined in various Ansible Collections or created by the user.
 
+[NOTE]
+====
+You must build an {ExecEnvShort} before you can create it using {ControllerName}. 
+After building it, you must push it to a repository (such as quay) and then, when creating an {ExecEnvShort} in the UI with {ControllerName}, you must point to that repository to use it in {PlatformNameShort} to use it, for example, in a job template.
+====
+
 include::builder/con-why-builder.adoc[leveloffset=+1]
+
 include::builder/proc-installing-builder.adoc[leveloffset=+1]
+
 include::platform/con-building-an-execution-environment-in-a-disconnected-environment.adoc[leveloffset=+1]
+
 include::builder/con-building-definition-file.adoc[leveloffset=+1]
+
+include::platform/creating-the-custom-execution-environment-definition.adoc[leveloffset=+1]
 
 include::builder/proc-executing-build.adoc[leveloffset=+1]
 
-include::assembly-definition-file-breakdown.adoc[leveloffset=+1]
+include::builder/con-definition-file-breakdown.adoc[leveloffset=+1]
+
+include::builder/ref-build-args-base-image.adoc[leveloffset=+2]
+
+//include::builder/con-ansible-config-file-path.adoc[leveloffset=+1]
+include::builder/con-definition-dependencies.adoc[leveloffset=+2]
+
+include::builder/con-galaxy-dependencies.adoc[leveloffset=+3]
+
+include::builder/con-python-dependencies.adoc[leveloffset=+3]
+
+include::builder/con-system-dependencies.adoc[leveloffset=+3]
+
+include::builder/ref-definition-file-images.adoc[leveloffset=+3]
+
+include::builder/con-additional-build-files.adoc[leveloffset=+1]
+
+include::builder/con-additional-custom-build-steps.adoc[leveloffset=+1]
+
+include::platform/proc-update-ee-image-locations.adoc[leveloffset=+2]
+
 include::builder/con-optional-build-command-arguments.adoc[leveloffset=+1]
+
 include::builder/con-container_file.adoc[leveloffset=+1]
+
 include::builder/proc-creating-containerfile-no-image.adoc[leveloffset=+1]
+
+include::builder/ref-example-yaml-image-files.adoc[leveloffset=+1]
