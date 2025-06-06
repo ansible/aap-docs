@@ -1,17 +1,20 @@
-//Used in downstream/titles/aap-installation-guide/platform/assembly-disconnected-installation.adoc
+//Used in downstream/titles/builder/builder/assembly-using builder.adoc
 
 :_newdoc-version: 2.15.1
 :_template-generated: 2024-02-05
 :_mod-docs-content-type: PROCEDURE
 
-[id="creating-the-custom-execution-environment-definition_{context}"]
+[id="creating-the-custom-execution-environment-definition"]
 = Creating the custom {ExecEnvShort} definition
 
 [role="_abstract"]
 
-Once the {Builder} RPM is installed, use the following steps to create your custom {ExecEnvShort}.
+When you have installed {Builder}, use the following steps to create your custom {ExecEnvShort}.
 
-. Create a directory for the build artifacts used when creating your custom {ExecEnvShort}.	Any new files created with the steps below will be created under this directory.
+.Procedure
+
+. Create a directory to store your custom {ExecEnvShort} build artifacts.	
+Any new files created with the following steps are created under this directory.
 +
 ----
 $ mkdir $HOME/custom-ee $HOME/custom-ee/files
@@ -22,12 +25,11 @@ $ cd $HOME/custom-ee/
 . Create an `execution-environment.yml` file that defines the requirements for your custom {ExecEnvShort}. 
 +
 [NOTE]
-
 ====
-Version 3 of the execution environment definition format is required, so ensure the `execution-environment.yml` file contains `version: 3` explicitly before continuing.
+Version 3 of the {ExecEnvShort} definition format is required, so ensure the `execution-environment.yml` file contains `version: 3` explicitly before continuing.
 ====
 +
-.. Override the base image to point to the minimal execution environment available in your {PrivateHubName}.
+.. Override the base image to point to the minimal {ExecEnvShort} available in your {PrivateHubName}.
 
 .. Define the additional build files needed to point to any disconnected content sources that will be used in the build process.
 Your custom `execution-environment.yml` file should look similar to the following example:
@@ -84,7 +86,7 @@ $ cat files/ansible.cfg
 server_list = private_hub
 
 [galaxy_server.private_hub]
-url = https://private-hub.example.com/api/galaxy/
+url = /https://private-hub.example.com/api/galaxy/
 ----
 +
 . Create a `pip.conf` file under the `files/` subdirectory which points to the internal PyPI mirror (a web server or something like Nexus):
@@ -97,10 +99,13 @@ trusted-host = <pypi_mirror_fqdn>
 ----
 +
 
-. Optional: If you use a `bindep.txt` file to add RPMs the custom {ExecEnvShort}, create a `custom.repo` file under the `files/` subdirectory that points to your disconnected Satellite or other location hosting the RPM repositories. If this step is necessary, uncomment the steps in the example `execution-environment.yml` file that correspond with the `custom.repo` file.
+. Optional: If you use a `bindep.txt` file to add RPMs the custom {ExecEnvShort}, create a `custom.repo` file under the `files/` subdirectory that points to your disconnected Satellite or other location hosting the RPM repositories. 
+If this step is necessary, uncomment the steps in the example `execution-environment.yml` file that correspond with the `custom.repo` file.
 +
 
-The following example is for the UBI repos. Other local repos can be added to this file as well. The URL path may need to change depending on where the mirror content is located on the web server. 
+The following example is for the UBI repositories. 
+Other local repositories can be added to this file as well. 
+The URL path might need to change depending on where the mirror content is located on the web server. 
 +
 ----
 $ cat files/custom.repo
@@ -119,9 +124,9 @@ gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 gpgcheck = 1
 ----
 +
-. Add the CA certificate used to sign the private automation hub web server certificate. If the private automation hub uses self-signed certificates provided by the installer:
+. Add the CA certificate used to sign the {PrivateHubName} web server certificate. If the {PrivateHubName} uses self-signed certificates provided by the installer:
 +
-.. Copy the file `/etc/pulp/certs/pulp_webserver.crt` from your private automation hub and name it `hub-ca.crt`.
+.. Copy the file `/etc/pulp/certs/pulp_webserver.crt` from your {PrivateHubName} and name it `hub-ca.crt`.
 
 .. Add the `hub-ca.crt` file to the `files/` subdirectory.
 +
@@ -131,7 +136,7 @@ gpgcheck = 1
 .. Make a copy of that CA certificate and name it `hub-ca.crt`.
 .. Add the `hub-ca.crt` file to the `files/`` subdirectory.
 +
-. Once the preceeding steps have been completed, create your python `requirements.txt` and ansible collection `requirements.yml` files, with the content needed for your custom {ExecEnvShort} image. 
+. When you have completed the preceding steps, create your python `requirements.txt` and ansible collection `requirements.yml` files, with the content needed for your custom {ExecEnvShort} image. 
 +
 
 [NOTE]

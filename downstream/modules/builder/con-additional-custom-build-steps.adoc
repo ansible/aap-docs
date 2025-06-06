@@ -2,9 +2,11 @@
 
 = Additional custom build steps
 
-You can specify custom build commands for any build phase in the `additional_build_steps` section of the definition file. This allows fine-grained control over the build phases.
+You can specify custom build commands for any build phase in the `additional_build_steps` section of the definition file. 
+This allows fine-grained control over the build phases.
 
-Use the `prepend_` and `append_` commands to add directives to the `Containerfile` that run either before or after the main build steps are executed. The commands must conform to any rules required for the runtime system.
+Use the `prepend_` and `append_` commands to add directives to the `Containerfile` that run either before or after the main build steps are executed. 
+The commands must conform to any rules required for the runtime system.
 
 See the following table for a list of values that can be used in `additional_build_steps`:
 
@@ -12,33 +14,26 @@ See the following table for a list of values that can be used in `additional_bui
 |===
 | Value | Description
 
-| `prepend_base`
-| Allows you to insert commands before building the base image.
+| `prepend_base` | Allows you to insert commands before building the base image.
 
-| `append_base`
-| Allows you to insert commands after building the base image.
+| `append_base` | Allows you to insert commands after building the base image.
 
-| `prepend_galaxy`
-| Allows you to insert before building the galaxy image.
+| `prepend_galaxy` | Allows you to insert before building the galaxy image.
 
-| `append_galaxy`
-| Allows you to insert after building the galaxy image.
+| `append_galaxy` | Allows you to insert after building the galaxy image.
 
-| `prepend_builder`
-| Allows you to insert commands before building the Python builder image.
+| `prepend_builder` | Allows you to insert commands before building the Python builder image.
 
-| `append_builder`
-| Allows you to insert commands after building the Python builder image.
+| `append_builder` | Allows you to insert commands after building the Python builder image.
 
-| `prepend_final`
-| Allows you to insert before building the final image.
+| `prepend_final` | Allows you to insert before building the final image.
 
-| `append_final`
-| Allows you to insert after building the final image.
+| `append_final` | Allows you to insert after building the final image.
 
 |===
 
-The syntax for `additional_build_steps` supports both multi-line strings and lists. See the following examples:
+The syntax for `additional_build_steps` supports both multi-line strings and lists. 
+See the following examples:
 
 .A multi-line string entry
 [example]
@@ -59,3 +54,75 @@ append_final:
 - RUN ls -la /etc
 ----
 ====
+
+.Copying arbitrary files to {ExecEnvShort}s
+[example]
+====
+----
+additional_build_files:
+  # copy arbitrary files next to this EE def into the build context - we can refer to them later...
+  - src: files/rootCA.crt
+    dest: configs
+
+additional_build_steps:
+  prepend_base:
+    # copy a custom CA cert into the base image and recompute the trust database
+    # because this is in "base", all stages will inherit (including the final EE)
+    - COPY _build/configs/rootCA.crt /usr/share/pki/ca-trust-source/anchors
+    - RUN update-ca-trust
+----
+====
+The `additional_build_files` section enable you to add `rootCA.crt` to the build context directory. 
+When this file is copied to the build context directory, it can be used in the build process. 
+To use the file, copy it from the build context directory using the COPY directive specified in the prepend_base step of the additional_build_steps section.
+You can perform any action based upon the copied file, such as in this example updating dynamic configuration of CA certificates by running RUN update-ca-trust.
+
+
+.Building {ExecEnvShort}s with environment variables
+
+The following example file specifies environment variables that might be required for the build process. 
+To achieve this functionality it uses the `ENV` variable definition in the `prepend_base` step of the additional_build_steps section.
+
+[example]
+====
+----
+—
+additional_build_steps:
+  prepend_base:
+    - ENV FOO=bar
+    - RUN echo $FOO > /tmp/file1.txt
+----
+====
+The same environment variables can be used in the later stage of the build process.
+
+.Building {ExecEnvShort}s with environment variables for Galaxy configuration
+
+{Builder} schema 3 enables you to perform complex scenarios such as specifying custom Galaxy configurations. 
+You can use this approach to pass sensitive information, such as authentication tokens, into the {ExecEnvShort} build without leaking them into the final execution environment image.
+
+The following example uses {Galaxy} Server environment variables.
+
+[example]
+====
+----
+additional_build_steps:
+  prepend_galaxy:
+    # Environment variables used for Galaxy client configurations
+    - ENV ANSIBLE_GALAXY_SERVER_LIST=automation_hub
+    - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL=https://console.redhat.com/api/automation-hub/content/xxxxxxx-synclist/
+    - ENV ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL=https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
+    # define a custom build arg env passthru - we still also have to pass
+    # `--build-arg ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN` to get it to pick it up from the env
+    - ARG ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN
+
+options:
+  package_manager_path: /usr/bin/microdnf  # downstream images use non-standard package manager
+----
+====
+
+You can provide environment variables such as `ANSIBLE_GALAXY_SERVER_LIST`, `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL` and `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL` using the `ENV` directive. For more information, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[Galaxy User Guide] in the Ansible documentation.
+
+For security reasons, you must not store sensitive information in `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN`. 
+You can use the ARG directive to receive sensitive information from the user as input.
+
+`–build-args` can be used to provide this information while invoking the ansible-builder command.
