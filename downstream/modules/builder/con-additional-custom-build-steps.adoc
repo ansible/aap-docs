@@ -55,11 +55,7 @@ append_final:
 ----
 ====
 
-== Copying arbitrary files to {ExecEnvShort}s
-
-{Builder} version 3 schema provides the option to copy files to an execution environment image. 
-The following example file copies arbitrary files to an execution environment.
-
+.Copying arbitrary files to {ExecEnvShort}s
 [example]
 ====
 ----
@@ -82,9 +78,8 @@ To use the file, copy it from the build context directory using the COPY directi
 You can perform any action based upon the copied file, such as in this example updating dynamic configuration of CA certificates by running RUN update-ca-trust.
 
 
-== Building {ExecEnvShort}s with environment variables
+.Building {ExecEnvShort}s with environment variables
 
-{Builder} version 3 schema provides the option to specify environment variables that can be used in the build process.
 The following example file specifies environment variables that might be required for the build process. 
 To achieve this functionality it uses the `ENV` variable definition in the `prepend_base` step of the additional_build_steps section.
 
@@ -125,10 +120,9 @@ options:
 ----
 ====
 
-You can provide environment variables such as `ANSIBLE_GALAXY_SERVER_LIST `, `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL` and `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL` using the `ENV` directive. For more information, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[Galaxy User Guide] in the Ansible documentation.
+You can provide environment variables such as `ANSIBLE_GALAXY_SERVER_LIST`, `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_URL` and `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_AUTH_URL` using the `ENV` directive. For more information, see the link:https://docs.ansible.com/ansible/latest/galaxy/user_guide.html#configuring-the-ansible-galaxy-client[Galaxy User Guide] in the Ansible documentation.
 
 For security reasons, you must not store sensitive information in `ANSIBLE_GALAXY_SERVER_AUTOMATION_HUB_TOKEN`. 
 You can use the ARG directive to receive sensitive information from the user as input.
 
 `–build-args` can be used to provide this information while invoking the ansible-builder command.
-====
