@@ -8,6 +8,11 @@ The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort
 
 The {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
 
+{AAPchatbot} requires the following configurations:
+
+* Installation of Ansible Automation Platform 2.5 on Red Hat OpenShift Container Platform
+* Deployment of an LLM served by either a Red Hat AI platform or a third-party AI platform. To know the LLM providers that you can use, see xref:#LLMproviders[LLM providers]. 
+
 [IMPORTANT]
 ====
 * Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
@@ -20,13 +25,14 @@ For more information about the support scope of Red Hat Technology Preview featu
 
 = Prerequisites
 
-*For {PlatformNameShort} {PlatformVers}*: 
+== {PlatformNameShort} {PlatformVers} 
 
 * You have installed {PlatformNameShort} {PlatformVers} on your {OCPShort} environment. 
 * You have administrator privileges for the {PlatformNameShort}.
 * You have provisioned an OpenShift cluster with Operator Lifecycle Management installed.
 
-*For the Large Language Model (LLM)*:
+[#LLMproviders]
+== Large Language Model (LLM) provider
 
 You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. 
 
@@ -34,9 +40,7 @@ An LLM is a type of machine learning model that can interpret and generate human
 
 As part of the Technology Preview release, {AAPchatbot} can rely on the following Software as a Service (SaaS) LLM providers:
 
-* {OpenAI}
-+
-To use {OpenAI} with the {AAPchatbot}, you need access the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI} API platform].
+*Red Hat LLM providers*
 
 * {RHELAI}
 +
@@ -44,20 +48,26 @@ To use {OpenAI} with the {AAPchatbot}, you need access the link:https://www.redh
 
 * {OCPAI}
 +
-{OCPAI} is OpenAI API-compatible and is configured in a similar manner to the {OpenAI} provider. You can configure {OCPAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI}] product page.
-
-* {IBMwatsonxai}
-+
-To use IBM watsonx with the {AAPchatbot}, you need an account with link:https://www.ibm.com/products/watsonx-ai[IBM watsonx].
-
-* {AzureOpenAI}
-+
-To use Microsoft Azure with the {AAPchatbot}, you need access to link:https://azure.microsoft.com/en-us/products/ai-services/openai-service[{AzureOpenAI}]. 
+{OCPAI} is OpenAI API-compatible and is configured in a similar manner to the {OpenAI} provider. You can configure {OCPAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/openshift-ai[{OCPAI}] product page.
 
 [NOTE]
 ====
 For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider. 
 ====
+
+*Third-party LLM providers*
+
+* {IBMwatsonxai}
++
+To use IBM watsonx with the {AAPchatbot}, you need an account with link:https://www.ibm.com/products/watsonx-ai[{IBMwatsonxai}].
+
+* {OpenAI}
++
+To use {OpenAI} with the {AAPchatbot}, you need access the link:https://openai.com/api/[{OpenAI} API platform].
+
+* {AzureOpenAI}
++
+To use Microsoft Azure with the {AAPchatbot}, you need access to link:https://azure.microsoft.com/en-us/products/ai-services/openai-service[{AzureOpenAI}]. 
 
 = Process
 Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
