@@ -8,109 +8,14 @@ A `ContainerGroup` is a type of `InstanceGroup` that has an associated credentia
 
 * A namespace that you can launch into.
 Every cluster has a "default" namespace, but you can use a specific namespace.
-* A service account that has the roles that enable it to launch and manage pods in this namespace.
+* A service account that has the roles that enable it to launch and manage pods in this namespace. 
+For more information, see link:{URLControllerUserGuide}/controller-instance-and-container-groups#controller-create-service-account[Creating a service account in {OCPShort} or Kubernetes].
 * If you are using {ExecEnvShort}s in a private registry, and have a container registry credential associated with them in {ControllerName}, the service account also needs the roles to get, create, and delete secrets in the namespace.
 If you do not want to give these roles to the service account, you can pre-create the `ImagePullSecrets` and specify them on the pod spec for the `ContainerGroup`.
 In this case, the {ExecEnvShort} must not have a container registry credential associated, or {ControllerName} attempts to create the secret for you in the namespace.
 * A token associated with that service account.
 An OpenShift or Kubernetes Bearer Token.
 * A CA certificate associated with the cluster.
-
-The following procedure explains how to create a service account in an OpenShift cluster or Kubernetes, to be used to run jobs in a container group through {ControllerName}.
-After the service account is created, its credentials are provided to {ControllerName} in the form of an OpenShift or Kubernetes API Bearer Token credential.
-
-.Procedure
-
-. To create a service account, download and use the following sample service account example, `containergroup sa` and change it as required to obtain the credentials:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: containergroup-service-account
-  namespace: containergroup-namespace
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: role-containergroup-service-account
-  namespace: containergroup-namespace
-rules:
-  - verbs:
-      - get
-      - list
-      - watch
-      - create
-      - update
-      - patch
-      - delete
-    apiGroups:
-      - ''
-    resources:
-      - pods
-  - verbs:
-      - get
-    apiGroups:
-      - ''
-    resources:
-      - pods/log
-  - verbs:
-      - create
-    apiGroups:
-      - ''
-    resources:
-      - pods/attach
-  - verbs:
-      - get
-      - create
-      - delete
-    apiGroups:
-      - ''
-    resources:
-      - secrets
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: role-containergroup-service-account-binding
-  namespace: containergroup-namespace
-subjects:
-- kind: ServiceAccount
-  name: containergroup-service-account
-  namespace: containergroup-namespace
-roleRef:
-  kind: Role
-  name: role-containergroup-service-account
-  apiGroup: rbac.authorization.k8s.io
-----
-+
-. Apply the configuration from `containergroup-sa.yml`:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-oc apply -f containergroup-sa.yml
-----
-+
-. Get an API token by generating a service account token:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-oc create token containergroup-service-account --duration=$((365*24))h > containergroup-sa.token
-----
-+
-. Get the CA certificate:
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-oc get secret -n openshift-ingress wildcard-tls -o jsonpath='{.data.ca\.crt}' | base64 -d > containergroup-ca.crt
-----
-+
-. Use the contents of `containergroup-sa.token` and `containergroup-ca.crt` to provide the information for the xref:ref-controller-credential-openShift[OpenShift or Kubernetes API Bearer Token] required for the container group.
-
-To create a container group, create an xref:ref-controller-credential-openShift[OpenShift or Kubernetes API Bearer Token] credential to use with your container group.
-For more information, see xref:controller-create-credential[Creating new credentials].
 
 .Procedure
 
