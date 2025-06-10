@@ -1,0 +1,31 @@
+:_mod-docs-content-type: ASSEMBLY
+
+[id="setting-up-a-customer-provided-external-database"]
+ifdef::context[:parent-context: {context}]
+
+= Setting up a customer provided (external) database
+
+[IMPORTANT]
+====
+* When using an external database with {PlatformNameShort}, you must create and maintain that database. Ensure that you clear your external database when uninstalling {PlatformNameShort}.
+
+* {PlatformName} {PlatformVers} uses {PostgresVers} and requires the customer provided (external) database to have ICU support.
+
+* During configuration of an external database, you must check the external database coverage. For more information, see link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage].
+====
+
+There are two possible scenarios for setting up an external database:
+
+. An external database with PostgreSQL admin credentials
+. An external database without PostgreSQL admin credentials
+
+include::platform/proc-setup-ext-db-with-admin-creds.adoc[leveloffset=+1]
+
+include::platform/proc-setup-ext-db-without-admin-creds.adoc[leveloffset=+1]
+
+include::platform/proc-enable-hstore-extension.adoc[leveloffset=+1]
+
+include::platform/proc-configure-ext-db-mtls.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

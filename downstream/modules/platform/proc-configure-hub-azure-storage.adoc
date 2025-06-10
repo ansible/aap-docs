@@ -1,0 +1,28 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-hub-azure-storage"]
+= Configuring Azure Blob Storage for {HubName}
+
+Azure Blob storage is a type of object storage that is supported in containerized installations. When using an Azure blob storage backend, set `hub_storage_backend` to `azure`. The Azure container needs to exist before running the installation program.
+
+.Procedure
+
+. Ensure your Azure container exists before proceeding with the installation.
+. Add the following variables to your inventory file under the `[all:vars]` group to configure Azure Blob storage:
++
+* `hub_azure_account_key`
+* `hub_azure_account_name`
+* `hub_azure_container`
+* `hub_azure_extra_settings`
++
+You can pass extra parameters through an Ansible `hub_azure_extra_settings` dictionary. For example:
++
+[source,yaml,subs="+attributes"]
+----
+hub_azure_extra_settings:
+  AZURE_LOCATION: foo
+  AZURE_SSL: True
+  AZURE_URL_EXPIRATION_SECS: 60
+----
++
+For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/azure.html#settings[django-storages documentation - Azure Storage].
