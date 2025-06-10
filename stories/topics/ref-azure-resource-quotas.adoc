@@ -1,25 +1,25 @@
-[id="proc-azure-resource-quotas_{context}"]
+[id="ref-azure-resource-quotas_{context}"]
 
 = Azure resource quotas and infrastructure limits
 
-Microsoft imposes resource limits within each Azure region. The CPU limit is the most likely to impact {AAPonAzureName}.
+Microsoft imposes resource limits within each Azure region. 
+The CPU limit is the most likely to impact {AAPonAzureName}.
 
 Before you install {AAPonAzureNameShort}, ensure that you have capacity to deploy the managed application into your desired region.
-Refer to xref:con-azure-infrastructure-usage_azure-intro[Ansible Automation Platform on Microsoft Azure infrastructure usage] for infrastructure requirements.
+Refer to link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#con-azure-infrastructure-usage_azure-intro[Ansible Automation Platform on Microsoft Azure infrastructure usage] for infrastructure requirements.
 
 == Regional vCPU limits
 
-The Azure resources used during the deployment of the managed application temporarily exceed the resource requirements in xref:con-azure-infrastructure-usage_azure-intro[Ansible Automation Platform on Microsoft Azure infrastructure usage].
+The Azure resources used during the deployment of the managed application temporarily exceed the resource requirements in link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#con-azure-infrastructure-usage_azure-intro[Ansible Automation Platform on Microsoft Azure infrastructure usage].
 The `Total Regional vCPUs` quota is temporarily consumed when deploying the managed application.
 
 Every Azure region has a separate `Total Regional vCPUs` quota.
 To prevent installation failure, ensure that you have at least 80 DDSv5 and 8 DSV3 vCPUs available in the Azure region where you want to deploy the managed application.
 
-The following steps describe how to view the resource quotas for your subscription the Azure console:
-
-. In the Azure console, search for *Quotas* and open the *My Quotas* page.
-. Select the region where you wish to deploy the managed application to view your allocation and usage metrics for that region.
-Ensure that you have selected a single region. Viewing all regions at once does not show the limitations of a single Azure region.
+You can view the resource quotas for your subscription from the Azure console. 
+Open the *My Quotas* page and select the region where you wish to deploy the managed application to view your allocation and usage metrics for that region.
+Ensure that you have selected a single region. 
+Viewing all regions at once does not show the limitations of a single Azure region.
 
 == Regional StandardCore limits
 
@@ -41,7 +41,7 @@ details:
       Limit: '10', Usage: '10' Requested: '1'.
 ----
 
-.Requesting StandardCore limit increase
+== Requesting StandardCore limit increase
 
 The `StandardCore` metric is not displayed in the *My Quotas* page in the Azure console. To request the value of your regional limit, contact Microsoft directly.
 

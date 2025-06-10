@@ -1,0 +1,27 @@
+[id="proc-azure-route-to-vnets_{context}"]
+
+= Routing to your VNets
+
+Add a route for each spoke network that you would like {PlatformNameShort} to communicate with, for automation or for accessing the user interfaces.
+
+.Procedure
+
+. Navigate to *Route Tables* in the Azure portal.
+. In the list of route tables, select the route table for the {AAPonAzureNameShort} managed application.
++
+The name of the {PlatformNameShort} route table uses the following convention:
++
+----
+aks-agentpool-<numbers>-routetable
+----
+. From the route table menu bar, click *Routes* > *Add*.
+. Configure routing to your VNets for each spoke network that you would like {PlatformNameShort} to communicate with, for both automation or accessing the user interfaces.
+. For each route that you add, enter the following information:
+** *Route name*: Enter a route name for the spoke network that you want {PlatformNameShort} to route to
+** *Address Prefix*: The CIDR block of the spoke network
+** *Next Hop Type*: _Virtual network gateway_
+. Click *OK* to save the new route to the route list.
+
+.Verification
+
+After you have configured the routing rules, traffic is routed to and from {PlatformNameShort} on Azure through your hub network.

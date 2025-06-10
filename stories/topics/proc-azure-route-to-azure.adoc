@@ -1,0 +1,19 @@
+[id="proc-azure-route-to-azure_{context}"]
+
+= Routing to {AAPonAzureNameShort}
+
+use the *Route Tables* page in the Azure portal to route traffic to {PlatformNameShort}.
+
+.Procedure 
+
+. Navigate to *Route Tables* in the Azure portal.
+. As part of your hub-and-spoke configuration, you created one or more route tables to define the routes between the networks. Click on one of these route tables.
+. From the route table menu bar, click *Routes* > *Add*.
+. Configure routes from your existing networks to send traffic to {PlatformNameShort}. You must configure routes for any network requesting {PlatformNameShort} user interfaces and for any network that will have automation performed against its resources.
+For each route that you add, enter the following information:
+** *Route name*: Enter a route name for the {PlatformNameShort} managed application network
+** *Address Prefix*: The CIDR block of the managed application kubernetes cluster
+** *Next Hop Type*: _Virtual network gateway_
+. Click *OK* to save the new route to the route list.
+
+Repeat this procedure for all other route tables where you want to route traffic to {PlatformNameShort}.
