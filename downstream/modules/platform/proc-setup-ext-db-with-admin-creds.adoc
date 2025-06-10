@@ -1,0 +1,16 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="setup-ext-db-with-admin-creds"]
+= Setting up an external database with PostgreSQL admin credentials
+
+If you have PostgreSQL admin credentials, you can supply them in the inventory file and the installation program creates the PostgreSQL users and databases for each component for you. The PostgreSQL admin account must have `SUPERUSER` privileges.
+
+.Procedure
+
+* To configure the PostgreSQL admin credentials, add the following variables to the inventory file under the `[all:vars]` group:
++
+[source,yaml,subs="+attributes"]
+----
+postgresql_admin_username=<set your own>
+postgresql_admin_password=<set your own>
+----

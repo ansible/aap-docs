@@ -1,0 +1,79 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="setup-ext-db-without-admin-creds"]
+= Setting up an external database without PostgreSQL admin credentials
+
+If you do not have PostgreSQL admin credentials, then PostgreSQL users and databases need to be created for each component ({Gateway}, {ControllerName}, {HubName}, and {EDAName}) before running the installation program.
+
+.Procedure
+
+. Connect to a PostgreSQL compliant database server with a user that has `SUPERUSER` privileges.
++
+[source,bash,subs="+attributes"]
+----
+# psql -h <hostname> -U <username> -p <port_number>
+----
++
+For example:
++
+[source,bash,subs="+attributes"]
+----
+# psql -h db.example.com -U superuser -p 5432
+----
++
+. Create the user with a password and ensure the `CREATEDB` role is assigned to the user. For more information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
++
+[source,sql,subs="+attributes"]
+----
+CREATE USER <username> WITH PASSWORD <password> CREATEDB;
+----
++
+For example:
++
+[source,sql,subs="+attributes"]
+----
+CREATE USER hub_user WITH PASSWORD <password> CREATEDB;
+----
++
+. Create the database and add the user you created as the owner.
++
+[source,sql,subs="+attributes"]
+----
+CREATE DATABASE <database_name> OWNER <username>;
+----
++
+For example:
++
+[source,sql,subs="+attributes"]
+----
+CREATE DATABASE hub_database OWNER hub_user;
+----
++
+. When you have created the PostgreSQL users and databases for each component, you can supply them in the inventory file under the `[all:vars]` group.
++
+[source,yaml,subs="+attributes"]
+----
+# {GatewayStart}
+gateway_pg_host=aap.example.org
+gateway_pg_database=<set your own>
+gateway_pg_username=<set your own>
+gateway_pg_password=<set your own>
+
+# {ControllerNameStart}
+controller_pg_host=aap.example.org
+controller_pg_database=<set your own>
+controller_pg_username=<set your own>
+controller_pg_password=<set your own>
+
+# {HubNameStart}
+hub_pg_host=aap.example.org
+hub_pg_database=<set your own>
+hub_pg_username=<set your own>
+hub_pg_password=<set your own>
+
+# {EDAName}
+eda_pg_host=aap.example.org
+eda_pg_database=<set your own>
+eda_pg_username=<set your own>
+eda_pg_password=<set your own>
+----

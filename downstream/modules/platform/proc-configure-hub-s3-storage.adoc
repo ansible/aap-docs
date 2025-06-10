@@ -1,0 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-hub-s3-storage"]
+= Configuring Amazon S3 storage for {HubName}
+
+Amazon S3 storage is a type of object storage that is supported in containerized installations. When using an AWS S3 storage backend, set `hub_storage_backend` to `s3`. The AWS S3 bucket needs to exist before running the installation program.
+
+.Procedure
+
+. Ensure your AWS S3 bucket exists before proceeding with the installation.
+. Add the following variables to your inventory file under the `[all:vars]` group to configure S3 storage:
++
+* `hub_s3_access_key`
+* `hub_s3_secret_key`
+* `hub_s3_bucket_name`
+* `hub_s3_extra_settings`
++
+You can pass extra parameters through an Ansible `hub_s3_extra_settings` dictionary. For example:
++
+[source,yaml,subs="+attributes"]
+----
+hub_s3_extra_settings:
+  AWS_S3_MAX_MEMORY_SIZE: 4096
+  AWS_S3_REGION_NAME: eu-central-1
+  AWS_S3_USE_SSL: True
+----
+
+[role="_additional-resources"]
+.Additional resources
+* For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings[django-storages documentation - Amazon S3].
