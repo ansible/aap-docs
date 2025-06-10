@@ -120,3 +120,42 @@ The installer upgrades {ControllerName} and {HubName} from 2.4 to {PlatformNameS
 * Verify that everything has upgraded to 2.5 and is working properly in one of two ways: 
 ** performing an SSH to {ControllerName} and {EDAName}.
 ** In the unified UI, navigate to *Help > About* to verify the RPM versions are at 2.5.
+
+
+== Removing {EDAName} 2.4 and adding {EDAName} 2.5
+
+{PlatformNameShort} {PlatformVers} supports upgrades from {PlatformNameShort} 2.4 environments for all components, except for {EDAName}. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible. Therefore, you must first upgrade the 2.4 services (using the inventory file to specify {ControllerName} and {HubName} VMs only) to get them to the initial version of {PlatformNameShort} {PlatformVers}.
+
+After all the services are at the same version, you must remove the {EDAName} 2.4 database, then add {EDAName} 2.5 and run the installer once again. After the installation is completed, reconnect {MenuAD} ({EDAcontroller}) to {MenuTopAE} ({ControllerName}) to run rulebook activations. 
+
+.Procedure
+. Shut down the old {EDAName} 2.4 host.
+. Remove the Event-Driven Ansible 2.4 database by performing the following steps:
+.. Log in to your database host as a normal user.
+.. Run the following command:
++
+`$ sudo -i`
+.. When prompted, enter your password.
+.. Run the following command:
++
+`$ sudo su - postgres`
+.. Delete the existing database and create a database:
++
+`$ dropdb --<username> automationedacontroller --force automationedacontroller`
+.. When prompted, reenter your password.
+. Add the Event-Driven Ansible 2.5 host and related variables in the inventory file:
++
+[source,]
+----
+[automationcontroller]
+<The new Event-Driven Ansible 2.5 host>
+automationedacontroller_admin_password='<eda-password>'
+automationedacontroller_pg_host=<Your existing database host>
+automationedacontroller_pg_password='<password>'
+----
+. After updating the inventory file, rerun the installer using the `setup.sh` script:
++
+`$ ./setup.sh`
+. After the installation is completed, reconnect {MenuAD} ({EDAcontroller}) to {MenuTopAE} ({ControllerName}) to run rulebook activations successfully. 
++
+For information about the procedure, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_decisions/eda-set-up-rhaap-credential-type[{PlatformName} credential] in the _{TitleEDAUserGuide} guide_.
