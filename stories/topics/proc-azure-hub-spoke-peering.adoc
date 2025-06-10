@@ -10,17 +10,17 @@
 * You have identified the following:
 ** The CIDR blocks of your existing VNets (including VPNs and direct connects) that need access to {AAPonAzureNameShort} UIs.
 ** The CIDR blocks of your existing VNets (including VPNs and direct connects) that  contain hosts or endpoints for {AAPonAzureNameShort}.
-** The CIDR blocks of the {AAPonAzureNameShort} VNet from the managed resource group of the application. Refer to xref:proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed resource group] for instructions.
+** The CIDR blocks of the {AAPonAzureNameShort} VNet from the managed resource group of the application. Refer to link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed resource group] for instructions.
 
 Before peering any networks, ensure that there is no network address space overlap between your private VNets and your {AAPonAzureNameShort} network.
 
 .Procedure
 
-. Find the CIDR Block for the {AAPonAzureNameShort} managed application Kubernetes cluster. See xref:proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed application Kubernetes cluster].
-. Configure Network Peering with the {PlatformNameShort} Subnet. See xref:proc-azure-nw-peering-aap-subnet_azure-hub-spoke-peering[Configuring Network Peering with the {PlatformNameShort} Subnet].
+. Find the CIDR Block for the {AAPonAzureNameShort} managed application Kubernetes cluster. See link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#proc-azure-find-cluster-cidr_azure-hub-spoke-peering[Finding the CIDR Block of the managed application Kubernetes cluster].
+. Configure Network Peering with the {PlatformNameShort} Subnet. See link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#proc-azure-nw-peering-aap-subnet_azure-hub-spoke-peering[Configuring Network Peering with the {PlatformNameShort} Subnet].
 . Update the route tables:
 .. Configure route tables from your existing networks to send traffic to the managed application CIDR. You must add routes to the routing tables of every network requesting {PlatformNameShort} user interfaces and of every network that will have automation performed against its resources.
-See xref:routing-to-aap[Routing to {AAPonAzureNameShort}].
+See link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#proc-azure-route-to-azure_azure-hub-spoke-peering[Routing to {AAPonAzureNameShort}].
 .. Configure routing to your VNets for each spoke network that you would like {PlatformNameShort} to communicate with, for automation or for accessing the user interfaces.
-See xref:routing-to-private-nw[Routing to your VNets].
+See link:{BaseURL}/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#proc-azure-route-to-vnets_azure-hub-spoke-peering[Routing to your VNets].
 
