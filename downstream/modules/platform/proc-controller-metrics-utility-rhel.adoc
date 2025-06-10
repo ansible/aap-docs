@@ -1,11 +1,8 @@
-:_newdoc-version: 2.18.3
-:_template-generated: 2024-07-15
 :_mod-docs-content-type: PROCEDURE
 
-[id="configuring-the-metrics-utility"]
-= Configuring metrics-utility
+[id="controller-metrics-utility-rhel"]
 
-== On {RHEL} 
+= On {RHEL} 
 
 .Prerequisites:
 
@@ -101,72 +98,3 @@ metrics-utility build_report
 ----
 +
 The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 2.
-
-== On {OCPShort} from the {PlatformNameShort} operator
-
-Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
-
-Follow the steps below to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
-
-.Prerequisites:
-* A running OpenShift cluster
-* An operator-based installation of {PlatformNameShort} on {OCPShort}. 
-
-NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on {OCPShort}.
-
-=== Create a ConfigMap in the OpenShift UI YAML view
-
-. From the navigation panel on the left side, select *ConfigMaps*, and then click the *Create ConfigMap* button.
-. On the next screen, select the *YAML view* tab.
-. In the `YAML` field, enter the following parameters with the appropriate variables set: 
-+
-[source, ]
-----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: automationcontroller-metrics-utility-configmap
-data:
-  METRICS_UTILITY_SHIP_TARGET: directory
-  METRICS_UTILITY_SHIP_PATH: /metrics-utility
-  METRICS_UTILITY_REPORT_TYPE: CCSP
-  METRICS_UTILITY_PRICE_PER_NODE: '11' # in USD
-  METRICS_UTILITY_REPORT_SKU: MCT3752MO
-  METRICS_UTILITY_REPORT_SKU_DESCRIPTION: "EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
-  METRICS_UTILITY_REPORT_H1_HEADING: "CCSP Reporting <Company>: ANSIBLE Consumption"
-  METRICS_UTILITY_REPORT_COMPANY_NAME: "Company Name"
-  METRICS_UTILITY_REPORT_EMAIL: "email@email.com"
-  METRICS_UTILITY_REPORT_RHN_LOGIN: "test_login"
-  METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER: "BUSINESS LEADER"
-  METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER: "PROCUREMENT LEADER"
-----
-+
-. Click btn:[Create].
-. To verify that the ConfigMap was created and the metric utility is installed, select *ConfigMap* from the navigation panel and look for your ConfigMap in the list.
-
-
-=== Deploy {ControllerName}
-
-Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report. 
-
-. From the navigation panel, select *Installed Operators*.
-. Select {PlatformNameShort}.
-. In the Operator details, select the *{ControllerName}* tab.
-. Click btn:[Create {ControllerName}]*.
-. Select the *YAML view* option. The `YAML` now shows the default parameters for {ControllerName}. 
-The relevant parameters for `metrics-utility` are the following: 
-+
-----
-[cols="50%,50%",options="header"]
-|====
-| *Parameter* | *Variable*
-| *`metrics_utility_enabled`* | True.
-| *`metrics_utility_cronjob_gather_schedule`* | @hourly or @daily.
-| *`metrics_utility_cronjob_report_schedule`* | @daily or @monthly.
-|====
-----
-+
-. Find the `metrics_utility_enabled` parameter and change the variable to `true`.
-. Find the `metrics_utility_cronjob_gather_schedule` parameter and enter a variable for how often the utility should gather usage information (for example, @hourly or @daily). 
-. Find the `metrics_utility_cronjob_report_schedule` parameter and enter a variable for how often the utility generates a report (for example, @daily or @monthly).
-. Click btn:[Create].

@@ -1,0 +1,32 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="modify-the-run-schedule-on-OCP"]
+
+= Modifying the run schedule on {OCPShort} from the {PlatformNameShort} operator 
+
+Adjust the execution schedule of the `metrics-utility` within your {PlatformNameShort} deployment running on {OCPShort}. 
+
+.Procedure
+
+. From the navigation panel, select menu:Workloads[Deployments].
+. On the next screen, select *automation-controller-operator-controller-manager*.
+. Beneath the heading *Deployment Details*, click the down arrow button to change the number of pods to zero. This pauses the deployment so you can update the running schedule. 
+. From the navigation panel, select *Installed Operators*. 
+. From the list of installed operators, select {PlatformNameShort}. 
+. On the next screen, select the {ControllerName} tab. 
+. From the list that appears, select your {ControllerName} instance. 
+. On the next screen, select the `YAML` tab. 
+. In the `YAML` file, find the following parameters and enter a variable representing how often `metrics-utility` should gather data and how often it should produce a report: 
++
+[source, ]
+----
+metrics_utility_cronjob_gather_schedule:
+metrics_utility_cronjob_report_schedule: 
+----
++
+. Click btn:[Save].
+. From the navigation menu, select menu:Deployments[] and then select *automation-controller-operator-controller-manager*.
+. Increase the number of pods to 1.
+. To verify that you have changed the `metrics-utility` running schedule successfully, you can take one or both of the following steps:
+.. Return to the `YAML` file and ensure that the previously described parameters reflect the correct variables.  
+.. From the navigation menu, select menu:Workloads[Cronjobs] and ensure that your cronjobs show the updated schedule. 
