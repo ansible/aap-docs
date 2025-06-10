@@ -1,0 +1,16 @@
+[id="proc-deprovision-isolated-groups"]
+
+= Deprovisioning isolated instance groups
+You have the option to manually remove any isolated instance groups using the `awx-manage` deprovisioning utility.
+
+WARNING: Use the deprovisioning command to only remove isolated instance groups. 
+To deprovision instance groups from your {AutomationMesh} architecture, use the xref:proc-deprovisioning-groups[Deprovisioning groups using the installer] method instead.
+
+.Procedure
+
+* Run the following command, replacing `__<name>__` with the name of the instance group:
++
+[subs="+quotes"]
+----
+$ awx-manage unregister_queue --queuename=__<name>__
+----
