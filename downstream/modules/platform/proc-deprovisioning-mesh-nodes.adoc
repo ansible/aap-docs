@@ -13,12 +13,12 @@ You can deprovision any of your inventory’s hosts except for the first host sp
 .Procedure
 
 * Append `*node_state=deprovision*` to nodes in the installer file you want to deprovision.
++ 
+The following example inventory file deprovisions two nodes from an {AutomationMesh} configuration.
 
-.Example
-
-This example inventory file deprovisions two nodes from an {AutomationMesh} configuration.
-
-
+.Deprovision nodes
+[example]
+====
 -----
 [automationcontroller]
 126-addr.tatu.home ansible_host=192.168.111.126  node_type=control
@@ -34,3 +34,4 @@ peers=connected_nodes
 100-addr.tatu.home ansible_host=192.168.111.100 peers=110-addr.tatu.home node_type=hop
 
 -----
+====
