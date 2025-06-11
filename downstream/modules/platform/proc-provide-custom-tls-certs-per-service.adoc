@@ -1,0 +1,53 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-provide-custom-tls-certs-per-service"]
+= Providing custom TLS certificates for each service
+
+Use this method if your organization manages TLS certificates outside of {PlatformNameShort} and requires manual provisioning.
+
+.Procedure
+* To manually provide TLS certificates for each individual service (for example, {ControllerName}, {HubName}, and {EDAName}), set the following variables in your inventory file:
++
+[source,yaml,subs="+attributes"]
+----
+# {GatewayStart}
+gateway_tls_cert=<path_to_tls_certificate>
+gateway_tls_key=<path_to_tls_key>
+gateway_pg_tls_cert=<path_to_tls_certificate>
+gateway_pg_tls_key=<path_to_tls_key>
+gateway_redis_tls_cert=<path_to_tls_certificate>
+gateway_redis_tls_key=<path_to_tls_key>
+
+# {ControllerNameStart}
+controller_tls_cert=<path_to_tls_certificate>
+controller_tls_key=<path_to_tls_key>
+controller_pg_tls_cert=<path_to_tls_certificate>
+controller_pg_tls_key=<path_to_tls_key>
+
+# {HubNameStart}
+hub_tls_cert=<path_to_tls_certificate>
+hub_tls_key=<path_to_tls_key>
+hub_pg_tls_cert=<path_to_tls_certificate>
+hub_pg_tls_key=<path_to_tls_key>
+
+# {EDAName}
+eda_tls_cert=<path_to_tls_certificate>
+eda_tls_key=<path_to_tls_key>
+eda_pg_tls_cert=<path_to_tls_certificate>
+eda_pg_tls_key=<path_to_tls_key>
+eda_redis_tls_cert=<path_to_tls_certificate>
+eda_redis_tls_key=<path_to_tls_key>
+
+# PostgreSQL
+postgresql_tls_cert=<path_to_tls_certificate>
+postgresql_tls_key=<path_to_tls_key>
+
+# Receptor
+receptor_tls_cert=<path_to_tls_certificate>
+receptor_tls_key=<path_to_tls_key>
+
+# Redis
+redis_tls_cert=<path_to_tls_certificate>
+redis_tls_key=<path_to_tls_key>
+----
+
