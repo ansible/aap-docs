@@ -2,7 +2,7 @@
 
 [id="controller-metrics-utility-rhel"]
 
-= On {RHEL} 
+= Configuring metrics-utility on {RHEL} 
 
 .Prerequisites:
 
@@ -22,18 +22,30 @@ See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs
 crontab -e
 ----
 +
-. Specify the following variables to indicate where the report is deposited in your file system:
+. Create two scripts in your user's home director in order to set correct variables to ensure that `metrics-utility` gathers all relevant data.
+.. In `/home/my-user/cron-gather`:
 +
 [source, ]
 ----
+#!/bin/sh
+# Specify the following variables to indicate where the report is deposited in your file system
 export METRICS_UTILITY_SHIP_TARGET=directory
 export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
+# Run the following command to gather and store the data in the provided SHIP_PATH directory:
+metrics-utility gather_automation_controller_billing_data --ship --until=10m
 ----
 +
-. Set these variables to generate a report: 
+.. In `/home/my-user/cron-report`:
 +
 [source, ]
 ----
+export METRICS_UTILITY_REPORT_TYPE=CCSP
+#!/bin/sh
+# Specify the following variables to indicate where the report is deposited in your file system
+export METRICS_UTILITY_SHIP_TARGET=directory
+export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
+# Set these variables to generate a report:
+export METRICS_UTILITY_REPORT_TYPE=CCSPv2
 export METRICS_UTILITY_REPORT_TYPE=CCSP
 export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
 export METRICS_UTILITY_REPORT_SKU=MCT3752MO
@@ -44,21 +56,31 @@ export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
 export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
 export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
 export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
+
+# Build the report
+metrics-utility build_report
 ----
 +
-. Run the following command to gather and store the data in the provided `SHIP_PATH` directory:
-+
-[source, ]
-----
-metrics-utility gather_automation_controller_billing_data --ship --until=10m
-----
-+
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 AM. 
+. To ensure that these files are executable, run: 
 +
 [source, ]
 ----
-0 */1 * * * metrics-utility gather_automation_controller_billing_data --ship --until=10m
-0 4 2 * *  metrics-utility build_report
+chmod a+x /home/my-user/cron-gather /home/my-user/cron-report
+----
++
+. To open the cron file for editing, run:
++
+[source, ]
+----
+crontab -e
+----
++
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run on the second day of each month at 4:00 AM. 
++
+[source, ]
+----
+0 */1 * * * /home/my-user/cron-gather
+0 4 2 * * /home/my-user/cron-report
 ----
 +
 . Save and close the file.
@@ -69,7 +91,7 @@ metrics-utility gather_automation_controller_billing_data --ship --until=10m
 crontab -l
 ----
 +
-. You can also check the logs to ensure that data is being collected. Run: 
+. To ensure that data is being collected, run: 
 +
 [source, ]
 ----
