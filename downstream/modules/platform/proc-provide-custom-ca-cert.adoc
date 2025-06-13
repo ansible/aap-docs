@@ -1,0 +1,15 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="providing-a-custom-ca-certificate"]
+= Providing a custom CA certificate
+
+When you manually provide TLS certificates, those certificates might be signed by a custom CA. Provide a custom CA certificate to ensure proper authentication and secure communication within your environment. If you have multiple custom CA certificates, you must merge them into a single file.
+
+.Procedure
+* If any of the TLS certificates you manually provided are signed by a custom CA, you must specify the CA certificate by using the following variable in your inventory file:
++
+----
+custom_ca_cert=<path_to_custom_ca_certificate>
+----
++
+If you have more than one CA certificate, combine them into a single file and reference the combined certificate with the `custom_ca_cert` variable.
