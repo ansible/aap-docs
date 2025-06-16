@@ -164,29 +164,9 @@ Suppose you have a  Control plane with nodes A, B, C, D
 
 The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so once the connection is created, the receptor can communicate in both directions. 
 ====
-+
-*Example*
-+
-The following is an example peering set up for three controller nodes:
-+
-Controller node A --> Controller node B
-+
-Controller node A --> Controller node C
-+
-Controller node B --> Controller node C
-+
-You can force the listener by setting
-+
-`receptor_listener=True`
-+
-However, a connection Controller B --> A is likely to be rejected as that connection already exists.
-+
-This means that nothing connects to Controller A as Controller A is creating the connections to the other nodes, and the following command does not return anything on Controller A:
-+
-`[root@controller1 ~]# ss -ntlp | grep 27199 [root@controller1 ~]#`
-+
+
 . Run the following playbook on the machine where you want to update your automation mesh:
-+
+
 ----
 ansible-playbook -i inventory.yml install_receptor.yml
 ----
@@ -207,10 +187,29 @@ After this playbook runs, your automation mesh is configured.
 
 image::instances_list_view2.png[Instances list view]
 
+The following is a peering set up for three controller nodes:
+
+Controller node A --> Controller node B
+
+Controller node A --> Controller node C
+
+Controller node B --> Controller node C
+
+You can force the listener by setting
+
+`receptor_listener=True`
+
+However, a connection Controller B --> A is likely to be rejected as that connection already exists.
+
+This means that nothing connects to Controller A as Controller A is creating the connections to the other nodes, and the following command does not return anything on Controller A:
+
+`[root@controller1 ~]# ss -ntlp | grep 27199 [root@controller1 ~]#`
+
 ifdef::operator-mesh[]
-To remove an instance from the mesh, see xref:ref-removing-instances[Removing instances].
+To remove an instance from the mesh, see link:{URLOperatorMesh}/assembly-automation-mesh-operator-aap#ref-removing-instances[Removing instances].
 endif::operator-mesh[]
 
 ifdef::controller-UG[]
-To remove an instance from the mesh, see xref:ref-removing-instances[Removing instances].
+To remove an instance from the mesh, see link:{URLControllerUserGuide}/assembly-controller-instances#ref-removing-instances[Removing instances].
 endif::controller-UG[]
+r
