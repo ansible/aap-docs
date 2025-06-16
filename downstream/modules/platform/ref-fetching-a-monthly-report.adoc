@@ -2,15 +2,20 @@
 
 = Fetching a monthly report 
 
-== On {RHEL} 
+Fetch a monthly report from {PlatformNameShort} to gather usage metrics and create a consumption-based billing report. To fetch a monthly report on {RHEL} or on {OCPShort}, use the following procedures:
 
-To fetch a monthly report on RHEL, run:
+== Fetching a monthly report on {RHEL} 
 
+Use the following procedure to fetch a monthly report on {RHEL}:
+
+.Procedure 
+
+. Run:
 `scp -r username@controller_host:$METRICS_UTILITY_SHIP_PATH/data/<YYYY>/<MM>/ /local/directory/`
 
 The system savess the generated report as `CCSP-<YEAR>-<MONTH>.xlsx` in the ship path that you specified.
 
-== On {OCPShort} from the {PlatformNameShort} Operator 
+== Fetching a monthly report on {OCPShort} from the {PlatformNameShort} Operator 
 
 Use the following playbook to fetch a monthly consumption report for {PlatformNameShort} on {OCPShort}:
 
