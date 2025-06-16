@@ -1,14 +1,31 @@
 //Tested system configuration snippet for container (CONT) topologies
 [options="header"]
 |====
-| Type | Description 
+| Type | Description | Notes
 | Subscription 
 a| 
 * Valid {PlatformName} subscription
 * Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
-| Operating system | {RHEL} 9.2 or later minor versions of {RHEL} 9
-| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
-| Ansible-core | Ansible-core version {CoreInstVers} or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
-| Database | {PostgresVers}
+|
+
+| Operating system 
+| {RHEL} 9.2 or later minor versions of {RHEL} 9
+| 
+
+| CPU architecture 
+| x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
+|
+
+| `ansible-core` 
+| `ansible-core` version {CoreUseVers} or later. 
+| {PlatformNameShort} uses the system-wide `ansible-core` package to install the platform, but uses `ansible-core` {CoreUseVers} for both its control plane and built-in execution environments. The required version is bundled within the platform's components, so you do not need to manually install it on your host system.
+
+| Browser 
+| A currently supported version of Mozilla Firefox or Google Chrome.
+|
+
+| Database 
+| {PostgresVers}
+|
+
 |====
