@@ -6,11 +6,13 @@
 
 Occasionally, rulebook activations might fail due to a variety of reasons that can be resolved. In many cases, log filtering provides information that could be helpful in determining the cause of activation failure.
 
-For improved log filtering, there are two different tracking IDs available for troubleshooting after an action is performed (for example, when you initiate a rulebook activation): 
+For improved log filtering, there are two different tracking IDs available for troubleshooting after an action is performed (for example, when you initiate a rulebook activation). Both tracking IDs are universally unique identifiers (UUIDs): 
 
 * *Log tracking ID* `[tid]`- Created for each activation and persists across all activation instances. It allows users to track the complete history of an activation and its lifecycle. The Log tracking ID can be retrieved from the activation instance logs under the History tab.
 
 * *X-request-ID* `[rid]` - A standard HTTP header that is returned to the user as part of the HTTP response. If you want to fetch this ID, you must inspect the HTTP response headers. This ID results from actions such as triggering a restart of an activation. It allows tracking of a specific API request from {Gateway} to {EDAcontroller}.
+
+You can use both tracking IDs to locate specific log entries in your backend logs (for example, API or worker logs).
 
 Review the list of possible issues and how you can resolve them.
 
