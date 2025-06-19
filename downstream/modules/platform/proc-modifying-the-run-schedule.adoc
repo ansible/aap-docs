@@ -5,9 +5,14 @@
 [id="modifying-the-run-schedule_{context}"]
 = Modifying the run schedule
 
-You can configure `metrics-utility` to run at specified times and intervals. Run frequency is expressed in cronjobs. See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility] for more information. 
+You can configure `metrics-utility` to run at specified times and intervals. Run frequency is expressed in cronjobs. For more information on the cron utility, see link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux ‘Cron’ utility].
 
-== On RHEL
+To modify the run schedule on {RHEL} and on {OCPShort}, use one of the following procedures:
+
+== Modifying the run schedule on {RHEL}
+
+Use the folowing procedure to modify the run schedule on {RHEL}.
+
 .Procedure
  
 . From the command line, run: 
@@ -22,19 +27,22 @@ crontab -e
 [source, ]
 ----
 */2 * * * *     metrics-utility gather_automation_controller_billing_data --ship --until=10m
-*/5 * * * *     metrics-utili
-ty build_report
+*/5 * * * *     metrics-utility build_report
 ----
 +
 . Save and close the file.
 
-== On {OCPShort} from the {PlatformNameShort} operator 
+== Modifying the run schedule on {OCPShort} from the {PlatformNameShort} operator 
+
+Use the following procedure to adjust the execution schedule of the `metrics-utility` within your {PlatformNameShort} deployment running on {OCPShort}:
+
 .Procedure
 
 . From the navigation panel, select menu:Workloads[Deployments].
 . On the next screen, select *automation-controller-operator-controller-manager*.
 . Beneath the heading *Deployment Details*, click the down arrow button to change the number of pods to zero. This will pause the deployment so you can update the running schedule. 
-. From the navigation panel, select *Installed Operators*. From the list of installed operators, select {PlatformNameShort}. 
+. From the navigation panel, select *Installed Operators*. 
+. From the list of installed operators, select {PlatformNameShort}. 
 . On the next screen, select the {ControllerName} tab. 
 . From the list that appears, select your {ControllerName} instance. 
 . On the next screen, select the `YAML` tab. 
