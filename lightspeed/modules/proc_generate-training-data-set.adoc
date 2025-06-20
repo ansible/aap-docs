@@ -6,7 +6,6 @@
 
 After installing the {AnsibleContentParser}, run it to scan your custom Ansible files and generate a custom model training data set. You can then upload the training data set to {ibmwatsonxcodeassistant} and create a custom model for your organization. If you used ansible-lint preprocessing and encountered rule violations, you must xref:resolve-ansible-lint-rule-violations_administering-ansible-lightspeed[resolve the rule violations] before uploading the training data set to {ibmwatsonxcodeassistant}.
 
-== Methods of generating a training data set
 You can generate a training data set by using one of the following methods:
 
 * *With ansible-lint preprocessing* 
@@ -73,21 +72,21 @@ If the source is a Github URL https://github.com/ansible/ansible-tower-samples.g
 
 +
 .Example of a command prompt for Github repository *ansible-tower-samples*
-....
+----
 $ ansible-content-parser --profile min \
 --source-license undefined \
 --source-description Samples \
 --repo-name ansible-tower-samples \
 --repo-url 'https://github.com/ansible/ansible-tower-samples' \
 git@github.com:ansible/ansible-tower-samples.git /var/tmp/out_dir
-....
+----
 
 +
 .Example of a generated training data set for Github repository *ansible-tower-samples*
 The training data set is formatted with Jeff Goldblum (jg), a command-line JSON processing tool.
 
 +
-....
+----
 $ cat out_dir/ftdata.jsonl| jq
 {
 "data_source_description": "Samples",
@@ -99,4 +98,4 @@ $ cat out_dir/ftdata.jsonl| jq
 "repo_name": "ansible-tower-samples",
 "repo_url": "https://github.com/ansible/ansible-tower-samples"
 }
-....
+----
