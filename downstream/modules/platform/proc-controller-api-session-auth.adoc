@@ -1,3 +1,5 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="controller-api-session-auth"]
 
 = Using session authentication
@@ -18,10 +20,9 @@ Use the curl tool to see the activity that occurs when you log in to {Controller
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-curl -k -c - https://<controller-host>/api/login/
+$ curl -k -c - https://<gateway server name>/api/gateway/v1/login/
 
-localhost       FALSE   /       FALSE   0   csrftoken
-AswSFn5p1qQvaX4KoRZN6A5yer0Pq0VG2cXMTzZnzuhaY0L4tiidYqwf5PXZckuj
+$YOUR_AAP_URL FALSE / TRUE 1780539778 csrftoken GODXonA5LyV1uAs8zvcD2k12DQJC74oB
 ----
 +
 . `POST` to the `/api/login/` endpoint with username, password, and `X-CSRFToken=<token-value>`:
@@ -29,17 +30,31 @@ AswSFn5p1qQvaX4KoRZN6A5yer0Pq0VG2cXMTzZnzuhaY0L4tiidYqwf5PXZckuj
 [literal, options="nowrap" subs="+attributes"]
 ----
 curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
---referer https://<awx-host>/api/login/ \
--H 'X-CSRFToken: K580zVVm0rWX8pmNylz5ygTPamgUJxifrdJY0UDtMMoOis5Q1UOxRmV9918BUBIN' \
---data 'username=root&password=reverse' \
---cookie 'csrftoken=K580zVVm0rWX8pmNylz5ygTPamgUJxifrdJY0UDtMMoOis5Q1UOxRmV9918BUBIN' \
-https://<awx-host>/api/login/ -k -D - -o /dev/null
+
+--referer https://<gateway server name>/api/gateway/v1/login/ \
+
+-H 'X-CSRFToken: <token-value>' \
+
+--data 'username=admin&password=$YOUR_ADMIN_PASSWORD' \
+
+--cookie 'csrftoken=GODXonA5LyV1uAs8zvcD2k12DQJC74oB' \
+
+https://<gateway server name>/api/gateway/v1/login/ -k -D - -o /dev/null
+----
+
+. Access and test the APIs that need authentication, for example `/api/controller/v2/settings/all/`:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+$ curl -X GET -H 'Cookie: <cookieID>;' https://<gateway server name>/api/controller/v2/settings/all/ -k
 ----
 
 All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
 For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
 
-The following is an example of a typical response:
+.Verification 
+
+The following shows a typical response:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
