@@ -1,0 +1,29 @@
+:_content-type: CONCEPT
+
+[id="resolve-ansible-lint-rule-violations_{context}"]
+
+= About ansible-lint rule violations
+
+By default, the {AnsibleContentParser} uses ansible-lint rules to scan your Ansible files and ensure that the content adheres to Ansible best practices. If rule violations are found, the {AnsibleContentParser} excludes these files from the generated output. In such scenarios, it is recommended that you fix the files with rule violations before uploading the training data set to {ibmwatsonxcodeassistant}. 
+
+By default, ansible-lint applies the rules that are configured in `ansible-lint/src/ansiblelint/rules` while scanning your Ansible files. For more information about ansible-lint rules, see the link:https://ansible.readthedocs.io/projects/lint/[Ansible Lint documentation].   
+
+== How does the {AnsibleContentParser} handle rule violations?
+
+* *Using autofixes*
++
+The {AnsibleContentParser} runs ansible-lint with the `--fix=all` option to perform autofixes, which can fix or simplify fixing issues identified by that rule.
++
+If ansible-lint identifies rule violations that have an associated autofix, it automatically fixes or simplifies the issues that violate the rules. If ansible-lint identifies rule violations that do not have an associated autofix, it reports these instances as rule violations which you must fix manually. 
+For more information about autofixes, see link:https://ansible.readthedocs.io/projects/lint/autofix/[Autofix] in Ansible Lint Documentation. 
+
+* *Using syntax-checks*
++
+Ansible-lint also performs syntax checks while scanning your Ansible files. If any syntax-check errors are found, ansible-lint stops processing the files. 
+For more information about syntax-check errors, see link:https://ansible.readthedocs.io/projects/lint/rules/syntax-check/[syntax-check] in Ansible Lint Documentation.
++
+The {AnsibleContentParser} handles syntax-check rule violations in the following manner:
+
+** If `syntax-check` errors are found in the first execution of ansible-lint, the {AnsibleContentParser} generates a list of files that contain the rule violations.
+
+** If one or more `syntax-check` errors are found in the first execution of ansible-lint, the {AnsibleContentParser} runs ansible-lint again but excludes the files with syntax-check errors. After the scan is completed, the {AnsibleContentParser} generates a list of files that contain rule violations. The list includes all files that caused syntax-check errors as well as other rule violations.  The {AnsibleContentParser} excludes files with rule violations in all future scans, and the final training data set does not include data from the excluded files.
