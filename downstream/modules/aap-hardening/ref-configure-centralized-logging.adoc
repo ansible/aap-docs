@@ -1,0 +1,26 @@
+[id="ref-configure-centralized-logging"]
+
+= Configure centralized logging
+
+Centralized logging is essential to assist in monitoring system security and performing large-scale log analysis. 
+The _Confidentiality, Integrity, and Availability_ (CIA) triad, which originated from a combination of ideas from the US military and government, is the model that is the foundation for proper security system development and best practices. Centralized logging falls under the Integrity aspect to assist in identifying if data or systems have been tampered with. 
+The logging to a centralized system enables troubleshooting automation across multiple systems by collecting all logs in the single location, therefore making it easier to identify issues, analyze trends, and correlate events from different servers, especially in a complex {PlatformNameShort} deployment. 
+Manually checking individual machines would be time consuming so centralized logging is valuable with debugging in addition to meeting security best practices. 
+This ensures the overall system health and stability and assists in identifying potential security threats. 
+In addition to the logging configuration, the failure to log due to storage capacity, hardware failure as well as high availability architecture should be taken into consideration. 
+
+There are several additional benefits including:
+
+* The data is sent in JSON format over a HTTP connection using minimal service-specific tweaks engineered in a custom handler or through an imported library. 
+The types of data that are most useful to the controller are job fact data, job events/job runs, activity stream data, and log messages. 
+* Deeper insights into the automation process by analyzing logs from different parts of the infrastructure, including playbook execution details, task outcomes, and system events.
+* Identifying performance bottlenecks and optimizing the Ansible playbooks by analyzing execution times and resource usage from the logs. 
+* Centralized logging helps meet compliance mandates by providing a single source of truth for auditing purposes. 
+* Third Party integration with a centralized log management platform like Splunk, Logstash, ElasticSearch, or Loggly to collect and analyze logs. 
+
+The logging aggregator service works with the following monitoring and data analysis systems:
+
+* Splunk
+* Loggly
+* Sumologic
+* Elastic stack (formerly ELK stack)
