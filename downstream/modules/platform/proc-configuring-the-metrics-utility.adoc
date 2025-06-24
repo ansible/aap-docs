@@ -5,63 +5,80 @@
 [id="configuring-the-metrics-utility"]
 = Configuring metrics-utility
 
-== On {RHEL} 
+Configure the `metrics-utility` to gather and report usage data for your {PlatformNameShort}, both on {RHEL} and {OCPShort}.
+
+== Configuring metrics-utility on {RHEL} 
 
 .Prerequisites:
 
 * An active {PlatformNameShort} subscription
 
-Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
+`metrics-utility` is included with {PlatformNameShort}, so you do not need a separate installation. 
 The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
 You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
 See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
 
 .Procedure
 
-. In the cron file, set the following variables to ensure `metrics-utility` gathers the relevant data. To open the cron file for editing, run: 
+. Create two scripts in your user's home directory in order to set correct variables to ensure that `metrics-utility` gathers all relevant data:
+.. In `/home/my-user/cron-gather`:
++
+[source, ]
+----
+#!/bin/sh
+
+# Specify the following variables to indicate where the report is deposited in your file system:
+export METRICS_UTILITY_SHIP_TARGET=directory
+export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
+
+# Run the following command to gather and store the data in the provided SHIP_PATH directory:
+metrics-utility gather_automation_controller_billing_data --ship --until=10m
+----
++
+.. In `/home/my-user/cron-report`:
++
+[source, ]
+----
+#!/bin/sh
+
+# Specify the following variables to indicate where the report is deposited in your file system:
+export METRICS_UTILITY_SHIP_TARGET=directory
+export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
+
+# Set these variables to generate a report:
+export METRICS_UTILITY_REPORT_TYPE=CCSPv2
+export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
+export METRICS_UTILITY_REPORT_SKU=MCT3752MO
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+@@ -44,21 +51,31 @@ export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
+export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
+
+# Build the report
+metrics-utility build_report
+----
++
+. To ensure that these files are executable, run: 
++
+[source, ]
+----
+chmod a+x /home/my-user/cron-gather /home/my-user/cron-report
+----
++
+. To open the cron file for editing, run:
 +
 [source, ]
 ----
 crontab -e
 ----
 +
-. Specify the following variables to indicate where the report is deposited in your file system:
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using the link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run on the second day of each month at 4:00 AM. 
 +
 [source, ]
 ----
-export METRICS_UTILITY_SHIP_TARGET=directory
-export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
-----
-+
-. Set these variables to generate a report: 
-+
-[source, ]
-----
-export METRICS_UTILITY_REPORT_TYPE=CCSP
-export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
-export METRICS_UTILITY_REPORT_SKU=MCT3752MO
-export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
-export METRICS_UTILITY_REPORT_H1_HEADING="CCSP Reporting <Company>: ANSIBLE Consumption"
-export METRICS_UTILITY_REPORT_COMPANY_NAME="Company Name"
-export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
-export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
-export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
-export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
-----
-+
-. Add the following parameter to gather and store the data in the provided SHIP_PATH directory in the `./report_data` subdirectory: 
-+
-[source, ]
-----
-metrics-utility gather_automation_controller_billing_data --ship --until=10m
-----
-+
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run every second day of each month at 4:00 AM. 
-+
-[source, ]
-----
-0 */1 * * * metrics-utility gather_automation_controller_billing_data --ship --until=10m
-0 4 2 * *  metrics-utility build_report
+0 */1 * * * /home/my-user/cron-gather
+0 4 2 * * /home/my-user/cron-report
 ----
 +
 . Save and close the file.
@@ -72,7 +89,7 @@ metrics-utility gather_automation_controller_billing_data --ship --until=10m
 crontab -l
 ----
 +
-. You can also check the logs to ensure that data is being collected. Run: 
+. To ensure that data is being collected, run: 
 +
 [source, ]
 ----
@@ -93,28 +110,24 @@ May  8 09:46:03 ip-10-0-6-23 CROND[51669]: (root) CMDEND (metrics-utility gather
 May  8 09:46:26 ip-10-0-6-23 crontab[51659]: (root) END EDIT (root)
 ----
 +
-. Run the following command to build a report for the previous month:
-+
-[source, ]
-----
-metrics-utility build_report
-----
-+
-The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 2.
 
-== On {OCPShort} from the {PlatformNameShort} operator
+The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 3.
 
-Metrics-utility is included in the {OCPShort} image beginning with version 4.12. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
+== Configuring metrics-utility on {OCPShort} from the {PlatformNameShort} operator
 
-Follow the steps below to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
+`metrics-utility` is included in the {OCPShort} {ControllerName} image for versions 4.12, 4.5.12, and 4.6. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
+
+Create a *ConfigMap* in the OpenShift UI YAML view and deploy automation controller to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
 
 .Prerequisites:
 * A running OpenShift cluster
 * An operator-based installation of {PlatformNameShort} on {OCPShort}. 
 
-NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. The utility cannot be run manually on {OCPShort}.
+NOTE:  `metrics-utility` will run as indicated by the parameters you set in the configuration file. 
 
 === Create a ConfigMap in the OpenShift UI YAML view
+
+To inject the `metrics-utility` cronjobs with configuration data, use the following procedure to create a ConfigMap in the OpenShift UI YAML view:
 
 . From the navigation panel on the left side, select *ConfigMaps*, and then click the *Create ConfigMap* button.
 . On the next screen, select the *YAML view* tab.
@@ -147,7 +160,9 @@ data:
 
 === Deploy {ControllerName}
 
-Deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report. 
+To deploy {ControllerName} and specify variables for how often `metrics-utility` gathers usage information and generates a report, use the following procedure: 
+
+.Procedure
 
 . From the navigation panel, select *Installed Operators*.
 . Select {PlatformNameShort}.
