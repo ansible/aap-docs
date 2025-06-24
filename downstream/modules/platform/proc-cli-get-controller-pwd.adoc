@@ -4,35 +4,7 @@
 
 [id="proc-cli-get-controller-pwd{context}"]
 
-= Fetching {Gateway} login details from the {OCPShort} CLI
-
-To login to the {Gateway}, you need the web address and the password.
-
-== Fetching the {Gateway} web address
-
-A {OCP} route exposes a service at a host name, so that external clients can reach it by name.
-When you created the {Gateway} instance, a route was created for it.
-The route inherits the name that you assigned to the {Gateway} object in the YAML file.
-
-Use the following command to fetch the routes:
-
-[subs="+quotes"]
------
-oc get routes -n __<platform_namespace>__
------
-
-In the following example, the `_example_` {Gateway} is running in the `_ansible-automation-platform_` namespace.
-
------
-$ oc get routes -n ansible-automation-platform
-
-NAME      HOST/PORT                                              PATH   SERVICES          PORT   TERMINATION     WILDCARD
-example   example-ansible-automation-platform.apps-crc.testing          example-service   http   edge/Redirect   None
------
-
-The address for the {Gateway} instance is `example-ansible-automation-platform.apps-crc.testing`.
-
-== Fetching the {Gateway} password
+= Fetching the {Gateway} password
 
 The YAML block for the {Gateway} instance in the `AnsibleAutomationPlatform` object assigns values to the _name_ and _admin_user_ keys.
 
@@ -69,14 +41,3 @@ metadata:
   namespace: ansible-automation-platform
 
 ----- 
-
-== Decoding the {Gateway} password
-
-After you have found your gateway password, you must decode it from base64. 
-
-* Run the following command to decode your password from base64:
-+
-----
-oc get secret/example-admin-password -o jsonpath={.data.password} | base64 --decode
-----
-+
