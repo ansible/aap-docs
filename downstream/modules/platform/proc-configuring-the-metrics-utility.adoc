@@ -13,21 +13,21 @@ Configure the `metrics-utility` to gather and report usage data for your {Platfo
 
 * An active {PlatformNameShort} subscription
 
-Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
+`metrics-utility` is included with {PlatformNameShort}, so you do not need a separate installation. 
 The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
 You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
 See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
 
 .Procedure
 
-. Create two scripts in your user's home director in order to set correct variables to ensure that `metrics-utility` gathers all relevant data.
+. Create two scripts in your user's home directory in order to set correct variables to ensure that `metrics-utility` gathers all relevant data:
 .. In `/home/my-user/cron-gather`:
 +
 [source, ]
 ----
 #!/bin/sh
 
-# Specify the following variables to indicate where the report is deposited in your file system
+# Specify the following variables to indicate where the report is deposited in your file system:
 export METRICS_UTILITY_SHIP_TARGET=directory
 export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
 
@@ -41,7 +41,7 @@ metrics-utility gather_automation_controller_billing_data --ship --until=10m
 ----
 #!/bin/sh
 
-# Specify the following variables to indicate where the report is deposited in your file system
+# Specify the following variables to indicate where the report is deposited in your file system:
 export METRICS_UTILITY_SHIP_TARGET=directory
 export METRICS_UTILITY_SHIP_PATH=/awx_devel/awx-dev/metrics-utility/shipped_data/billing
 
@@ -73,7 +73,7 @@ chmod a+x /home/my-user/cron-gather /home/my-user/cron-report
 crontab -e
 ----
 +
-. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run on the second day of each month at 4:00 AM. 
+. To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using the link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run on the second day of each month at 4:00 AM. 
 +
 [source, ]
 ----
@@ -117,13 +117,13 @@ The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and wil
 
 `metrics-utility` is included in the {OCPShort} {ControllerName} image for versions 4.12, 4.5.12, and 4.6. If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
 
-Create a ConfigMap in the OpenShift UI YAML view and deploy automation controller to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
+Create a *ConfigMap* in the OpenShift UI YAML view and deploy automation controller to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator.
 
 .Prerequisites:
 * A running OpenShift cluster
 * An operator-based installation of {PlatformNameShort} on {OCPShort}. 
 
-NOTE: Metrics-utility will run as indicated by the parameters you set in the configuration file. 
+NOTE:  `metrics-utility` will run as indicated by the parameters you set in the configuration file. 
 
 === Create a ConfigMap in the OpenShift UI YAML view
 
