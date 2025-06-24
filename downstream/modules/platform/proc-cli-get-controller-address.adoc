@@ -1,0 +1,30 @@
+
+[id="proc-cli-get-controller-address{context}"]
+
+= Fetching the {Gateway} web address
+
+A {OCP} route exposes a service at a host name, so that external clients can reach it by name.
+When you created the {Gateway} instance, a route was created for it.
+The route inherits the name that you assigned to the {Gateway} object in the YAML file.
+
+.Procedure
+
+* Use the following command to fetch the routes:
+
+[subs="+quotes"]
+-----
+oc get routes -n __<platform_namespace>__
+-----
+
+.Verification 
+
+You can see in the following example, the `_example_` {Gateway} is running in the `_ansible-automation-platform_` namespace.
+
+-----
+$ oc get routes -n ansible-automation-platform
+
+NAME      HOST/PORT                                              PATH   SERVICES          PORT   TERMINATION     WILDCARD
+example   example-ansible-automation-platform.apps-crc.testing          example-service   http   edge/Redirect   None
+-----
+
+The address for the {Gateway} instance is `example-ansible-automation-platform.apps-crc.testing`.
