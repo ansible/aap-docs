@@ -12,8 +12,9 @@ You can also create custom instance groups in the API after the install has fini
 
 The current behavior expects a member of an `instance_group_*` to be part of `automationcontroller` or `execution_nodes` group. 
 
-.Example
-
+.Define instance groups
+[example]
+====
 [literal, options="nowrap" subs="+attributes"]
 ----
 [automationcontroller]
@@ -27,8 +28,9 @@ peers=execution_nodes
 [instance_group_test]
 110-addr.tatu.home ansible_host=192.168.111.110 receptor_listener_port=8928
 ----
+====
 
-After you run installation program, the following error appears:
+After you run the {Installer}, the following error appears:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -36,7 +38,7 @@ TASK [ansible.automation_platform_installer.check_config_static : Validate mesh 
 fatal: [126-addr.tatu.home -> localhost]: FAILED! => {"msg": "The host '110-addr.tatu.home' is not present in either [automationcontroller] or [execution_nodes]"}
 ----
 
-To fix this, move the box `110-addr.tatu.home` to an `execution_node` group:
+To fix this, move the box `110-addr.tatu.home` to an `execution_node` group,  as follows:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -61,5 +63,5 @@ TASK [ansible.automation_platform_installer.check_config_static : Validate mesh 
 ok: [126-addr.tatu.home -> localhost] => {"changed": false, "mesh": {"110-addr.tatu.home": {"node_type": "execution", "peers": [], "receptor_control_filename": "receptor.sock", "receptor_control_service_name": "control", "receptor_listener": true, "receptor_listener_port": 8928, "receptor_listener_protocol": "tcp", "receptor_log_level": "info"}, "126-addr.tatu.home": {"node_type": "control", "peers": ["110-addr.tatu.home"], "receptor_control_filename": "receptor.sock", "receptor_control_service_name": "control", "receptor_listener": false, "receptor_listener_port": 27199, "receptor_listener_protocol": "tcp", "receptor_log_level": "info"}}}
 ----
 
-After you upgrade from {ControllerName} 4.0 or earlier, the legacy `instance_group_` member likely has the awx code installed.
+After upgrading from {ControllerName} 4.0 or earlier, the legacy `instance_group_` member likely has the awx code installed.
 This places that node in the `automationcontroller` group.
