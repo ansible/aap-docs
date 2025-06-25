@@ -1,0 +1,33 @@
+[id="ansible-inside-pull-ee-registry_{context}"]
+
+= Pulling an {ExecEnvShort} from the Red Hat registry
+
+You can pull {ExecEnvShort} images from the Red Hat registry using a container engine such as Podman.
+The following procedure uses `podman pull`.
+Refer to catalog.redhat.com for other installation methods available.
+
+. Log in to the Red Hat registry.
++
+[source,bash]
+----
+$ podman login registry.redhat.io
+Username: {REGISTRY-SERVICE-ACCOUNT-USERNAME}
+Password: {REGISTRY-SERVICE-ACCOUNT-PASSWORD}
+Login Succeeded!
+----
+. Run the following command to pull an {ExecEnvShort}.
++
+[source,bash]
+----
+$ podman pull registry.redhat.io/ansible-automation-platform/<execution-env-name>
+----
++
+Replace `<execution-env-name>` with the {ExecEnvShort} that you want to use.
++
+For example, the following command pulls a RHEL8 minimal {ExecEnvShort}:
++
+[source,bash]
+----
+$ podman pull registry.redhat.io/ansible-automation-platform/ee-minimal-rhel8:2.16.9-2
+----
+
