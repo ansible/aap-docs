@@ -1,8 +1,13 @@
 [id="proc-gs-use-base-execution-env_{context}"]
 
-= Using the base automation {ExecEnvShort}
+= Using the base {ExecEnvNameSing}
 
-Your subscription with Ansible Automation Platform gives you access to some base {ExecEnvName}. You can use a base {ExecEnvName} as a starting point for creating a customized {ExecEnvShort}. 
+Your subscription with {PlatformNameShort} gives you access to some base {ExecEnvName}. You can use a base {ExecEnvShort} as a starting point for creating a customized {ExecEnvShort}.
+
+{PlatformNameShort} includes the following default execution environments:
+
+* `Minimal` - Includes the latest Ansible-core 2.15 release along with Ansible Runner, but does not include collections or other content
+* `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
 
 Base images included with {PlatformNameShort} are hosted on the Red Hat Ecosystem Catalog (registry.redhat.io).
 
@@ -25,26 +30,6 @@ $ podman login registry.redhat.io
 $podman pull registry.redhat.io/aap/<image name>
 ----
 
-== Customize the base execution environment image
-
-{PlatformNameShort} includes the following default execution environments:
-
-* `Minimal` - Includes the latest Ansible-core 2.15 release along with Ansible Runner, but does not include collections or other content
-* `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
-
-While these environments cover many automation use cases, you can add additional items to customize these containers for your specific needs. For more information about customizing your execution environment, see link:{URLBuilder}/assembly-publishing-exec-env#proc-customize-ee-image[Customizing an existing automation {ExecEnvShort} image] in the {TitleBuilder} guide. 
-
-== About {Builder}
-
-You also have the option of creating an entirely new {ExecEnvShort} with {Builder}, also referred to as {ExecEnvShort} builder. 
-{Builder} is a command line tool you can use to create an {ExecEnvShort} for Ansible. 
-You can only create {ExecEnvShort}s with {Builder}. 
-
-To build your own {ExecEnvShort}, you must: 
-
-* Download {Builder}
-* Create a definition file that defines your {ExecEnvShort}	
-* Create an {ExecEnvShort} image based on the definition file
-
-For more information about building an {ExecEnvShort}, see link:{LinkBuilder}.
+.Additional resources
+While these environments cover many automation use cases, you can also customize these containers for your specific needs. For more information about customizing your execution environment, see link:{URLBuilder}/assembly-publishing-exec-env#proc-customize-ee-image[Customizing an existing automation {ExecEnvShort} image] in the {TitleBuilder} guide. 
  
