@@ -1,3 +1,5 @@
+:_mod-docs-content-type: REFERENCE
+
 [id="ref-controller-group-name-vars-filtering"]
 
 = Filtering on group name and variables
@@ -13,8 +15,8 @@ This is the recommended approach.
 * Define one group. In the definition, include the condition that the group and host variables must match specific values.
 Use the `limit` pattern to return all the hosts in the new group.
 
-.Example:
-
+.Example
+====
 The following inventory file defines four hosts and sets group and host variables.
 It defines a product group, a sustaining group, and it sets two hosts to a shutdown state.
 
@@ -59,7 +61,7 @@ are in the intersection of those two groups, which is documented in link:https:/
 +
 When a variable is or is not defined (depending on the host), you can give a default.
 For example, use `| default("running")` if you know what value it should have when it is not defined. 
-This helps with debugging, as described in xref:ref-controller-inv-debugging-tips[Debugging tips].
+This helps with debugging, as described in link:{URLControllerUserGuide}/controller-inventories#ref-controller-inv-debugging-tips[Debugging tips].
 +
 . *Construct 1 group, limit to group*:
 +
@@ -77,3 +79,4 @@ groups:
 This input creates one group that only includes hosts that match both criteria. 
 The limit is then just the group name by itself, returning *host2*. 
 The same as the earlier approach.
+====
