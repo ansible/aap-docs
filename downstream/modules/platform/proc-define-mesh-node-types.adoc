@@ -155,15 +155,6 @@ Run the following command to open port 27199 for receptor communication (Make su
 ----
 sudo firewall-cmd --permanent --zone=public --add-port=27199/tcp
 ----
-+
-[NOTE]
-====
-It might be the case that some servers do not listen on receptor port (the default is 27199)
-
-Suppose you have a  Control plane with nodes A, B, C, D
-
-The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so once the connection is created, the receptor can communicate in both directions. 
-====
 
 . Run the following playbook on the machine where you want to update your automation mesh:
 
@@ -187,6 +178,12 @@ After this playbook runs, your automation mesh is configured.
 
 image::instances_list_view2.png[Instances list view]
 
+[NOTE]
+====
+It might be the case that some servers do not listen on the receptor port (the default is 27199)
+
+Suppose you have a Control plane with nodes A, B, and C
+
 The following is a peering set up for three controller nodes:
 
 Controller node A --> Controller node B
@@ -204,6 +201,9 @@ However, a connection Controller B --> A is likely to be rejected as that connec
 This means that nothing connects to Controller A as Controller A is creating the connections to the other nodes, and the following command does not return anything on Controller A:
 
 `[root@controller1 ~]# ss -ntlp | grep 27199 [root@controller1 ~]#`
+
+The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so once the connection is created, the receptor can communicate in both directions. 
+====
 
 ifdef::operator-mesh[]
 To remove an instance from the mesh, see link:{URLOperatorMesh}/assembly-automation-mesh-operator-aap#ref-removing-instances[Removing instances].
