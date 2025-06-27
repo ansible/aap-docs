@@ -2,11 +2,9 @@
 
 [id="manually-scan-repo_{context}"]
 
-= Manually scanning your Git repositories
+= Manually scanning the repository from the {AnsibleCodeBot}  dashboard
 
-You can manually scan your Git repositories if you did not set up a scanning schedule for your {AnsibleCodeBot} or if you do not want to wait for the next scheduled scan. If you manually scan your repository, and no pull request was created, it is likely so because a duplicate pull request already exists. You can scan your repository from both the {AnsibleCodeBot} dashboard and GitHub.
-
-== Manually scanning the repository from the {AnsibleCodeBot}  dashboard
+You can manually scan your Git repositories if you did not set up a scanning schedule for your {AnsibleCodeBot} or if you do not want to wait for the next scheduled scan.
 
 .Procedure
 . Log in to the link:https://bot.ai.ansible.redhat.com/console[{AnsibleCodeBot} dashboard]. 
@@ -24,25 +22,3 @@ NOTE: If you do not see your repository in the *Repositories* list, you can add 
 The repository's scan history is displayed along with the scan start time, scan status, type of scan (scheduled or manual), link to the pull request if it was created, and the log message if the scan failed. 
 
 . To view your repository on GitHub, click the *Ellipsis* icon (image:ansible-code-bot-dashboard-kebab-icon.png[Ellipsis icon]) beside the repository and select *View repository*. 
-
-== Manually scanning the repository from GitHub
-
-.Procedure
-. In GitHub, go to the main page of the repository that you want to scan.
-. To modify the repository settings, click the *Settings* icon beside the *About* area. 
-. In the *Topics* field, enter the keyword topic *ansible-code-bot-scan* to the repository. 
-+
-The following illustration shows the keyword topic for starting a manual scan:
-+
-image::lightspeed-ansible-code-bot-manual-trigger-setting.png[{AnsibleCodeBot} settings]
-+
-. Click *Save changes*. 
-+
-Based on the repository webhook event, {AnsibleCodeBot} starts a manual scan of your repository.
-If the avoid duplicate pull requests condition is not met, then the manual scan results in a new pull request with all the necessary {AnsibleCodeBot} recommendations. 
-
-[role="_additional-resources"]
-.Additional resources
-
-* xref:troubleshooting-code-bot_troubleshooting-lightspeed[Troubleshooting {AnsibleCodeBot} errors]
-
