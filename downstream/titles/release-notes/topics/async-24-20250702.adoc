@@ -1,0 +1,99 @@
+[id="async-24-20250702"]
+
+= {PlatformNameShort} patch release July 2, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| July 2, 2025  | 
+* {ControllerNameStart} 4.5.24
+* {EDAcontroller} 1.0.7
+* {HubNameStart} 4.9.4
+* {LightspeedShortName} 2.4.250225
+* {PlatformNameShort}-collection installer (online) 2.4-12
+* {PlatformNameShort}-collection installer (bundle) 2.4-12
+* Receptor 1.5.5
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1750877268
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1750878254
+
+
+
+== General
+
+* The `ansible.controller` collection has been updated to 4.5.24.(AAP-48350)
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-22871[CVE-2025-2287] `receptor`: Request smuggling due to acceptance of invalid chunked data in net/http.(AAP-47165)
+
+
+== {PlatformNameShort}
+
+=== Features
+
+* Fresh installs on {PlatformNameShort} 2.4 will use the PostgreSQL 15 image.(AAP-45607)
+
+
+== {LightspeedShortName}
+
+=== Features
+
+* PostgreSQL 15 support, including upgrade logic for managed database deployments.(AAP-45612)
+
+
+== {ControllerNameStart}
+
+== Features
+
+* PostgreSQL 15 support, including upgrade logic for managed database deployments.(AAP-45609)
+
+=== Bug Fixes
+
+* Fixed an issue where the Fact Storage was not working when {ControllerName}'s time zone is different from UTC.(AAP-45925)
+
+
+== {HubNameStart}
+
+=== Features
+
+* PostgreSQL 15 support, including upgrade logic for managed database deployments.(AAP-45610)
+
+
+== {EDAName}
+
+== Features
+
+* PostgreSQL 15 support, including upgrade logic for managed database deployments.(AAP-45611)
+
+== Bug Fixes
+
+* Fixed an intermittent activation failure when using Podman 5.x (shipped starting from RHEL 9.5).(AAP-42284)
+
+
+== Receptor
+
+=== Bug Fixes
+
+* Fixed an issue where connections that had cancelled context were not removed.(AAP-47996)
+
+
+== RPM-based {PlatformNameShort}
+
+=== Enhancements
+
+* PostgreSQL has been updated to 15.(AAP-46764)
+
+=== Bug Fixes
+
+* Fixed an issue where the bundle installer failed to update the {ControllerName} and `aap-metrics-utility` in the same run.(AAP-47173)
