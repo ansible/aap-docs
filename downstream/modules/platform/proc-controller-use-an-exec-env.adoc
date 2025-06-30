@@ -3,10 +3,10 @@
 = Adding an {ExecEnvShort} to a job template
 
 .Prerequisites
-//[ddacosta converting xref to a link because this content is shared in multiple docs]
-* An {ExecEnvShort} must have been created using ansible-builder as described in link:{URLControllerUserGuide}/assembly-controller-execution-environments#ref-controller-build-exec-envs[Build an {ExecEnvShort}].
-When an {ExecEnvShort} has been created, you can use it to run jobs.
-Use the {ControllerName} UI to specify the {ExecEnvShort} to use in your job templates.
+
+* You must build an {ExecEnvShort} as described in link:{URLControllerUserGuide}/assembly-controller-execution-environments#ref-controller-build-exec-envs[Build an {ExecEnvShort}] before you can create it using {ControllerName}.
++
+After building it, you must push it to a repository (such as quay) and then, when creating an {ExecEnvShort} in the UI with {ControllerName}, you must point to that repository to use it in {PlatformNameShort} to use it, for example, in a job template.
 * Depending on whether an {ExecEnvShort} is made available for global use or tied to an organization, you must have the appropriate level of administrator privileges to use an {ExecEnvShort} in a job.
 Execution environments tied to an organization require Organization administrators to be able to run jobs with those {ExecEnvShort}s.
 * Before running a job or job template that uses an {ExecEnvShort} that has a credential assigned to it, ensure that the credential contains a username, host, and password.
