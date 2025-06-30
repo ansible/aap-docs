@@ -1,0 +1,219 @@
+[[aap-25-20250702]]
+
+= {PlatformNameShort} patch release July 2, 2025
+
+This release includes the following components and versions:
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| July 2, 2025| 
+* {ControllerNameStart} 4.6.16
+* {HubNameStart} 4.10.5
+* {EDAName} 1.1.11
+* Container-based installer {PlatformNameShort} (bundle) 2.5-16
+* Container-based installer {PlatformNameShort} (online) 2.5-16
+* Receptor 1.5.7
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-15
+* RPM-based installer {PlatformNameShort} (online) 2.5-15
+
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1750901111
+
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1750901870
+
+
+== General
+
+* Allows running `ansible.platform` collection modules in `check_mode`.(AAP-45246)
+
+* The `ansible.eda` collection has been updated to 2.8.1.(AAP-48324)
+
+* The `ansible.platform` collection has been updated to 2.5.20250702.(AAP-48344)
+
+* The `ansible.controller` collection has been updated to 4.6.16.(AAP-48347)
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-22871[CVE-2025-22871] `receptor`: Request smuggling due to acceptance of invalid chunked data in net/http.(AAP-45132)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-22871[CVE-2025-22871] `automation-gateway-proxy-openssl32`: Request smuggling due to acceptance of invalid chunked data in net/http.(AAP-45130)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-22871[CVE-2025-22871] `automation-gateway-proxy-openssl30`: Request smuggling due to acceptance of invalid chunked data in net/http.(AAP-45129)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-22871[CVE-2025-22871] `automation-gateway-proxy`: Request smuggling due to acceptance of invalid chunked data in net/http.(AAP-45128)
+
+
+== {PlatformNameShort}
+
+=== Enhancements
+
+* Refactored `V1RootView.get()` and improve reverse lookup logic.(AAP-47366)
+
+* Refactored `process_statuses()` method to reduce its cognitive complexity.(AAP-47341)
+
+* All UI elements related to policy enforcement are visible to all users. See the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/configuring_automation_execution/controller-pac[policy enforcement documentation] for more information. (AAP-47006)
+
+* On the inventory source form, for a source type of *VMware ESXi* the user will be able to select credentials of type *VMware vCenter*.(AAP-46784)
+
+* Reduced the cognitive complexity of method `migrate_resource()` in `migrate_service_data.py` from 56 to < =15.(AAP-45822)
+
+* Reduce the cognitive complexity of the `process_fields()` method in `serializers/preference.py` file.(AAP-45820)
+
+* Reduced the cognitive complexity of `unique_fields_for_model()` method to below 15.(AAP-45819)
+
+=== Bug fixes
+
+* Fixed an issue that did not allow role assignments using `object_ansible_id` in the `role_user_assignment` module.(AAP-48042)
+
+* Fixed an issue that did not allow the `object_id` field in the `role_user_assignment` module to accept a list of items.(AAP-47979)
+
+* Fixed an example task in the `ansible.platform.token` module.(AAP-47976)
+
+* Fixed an issue to `aap_*` parameters in `ansible.platform.token` module that resulted in user reminders not being sent out.(AAP-47975)
+
+* Fixed an API error messaging in the event a user logs in as the admin user via legacy *auth* on one component, then tries to do so via the other component.(AAP-47541)
+
+* Fixed an issue where API records could be missing or duplicated across pages.(AAP-47504)
+
+* Fixed a bug that was causing the UI to throw an error when launching a workflow job template with both *Prompt on Launch* and *Survey* enabled.(AAP-46813)
+
+* Fixed an issue where the {Gateway} *OpenAPI* schema file was not being generated correctly.(AAP-46639)
+
+* Fixed an issue where modules in the `ansible.platform` collection did not accept `AAP_*` variable for authentication.(AAP-45363)
+
+* Fixed an issue where there was a missing option in the ansible.platform.user module to allow setting the `is_platform_auditor` flag on a user.(AAP-45244)
+
+* Fixed an issue where an extra validation to handle incorrect user input in the variables field was needed, as the API did not return an error for it.(AAP-42563)
+
+* Fixed an issue with the *Hosts* links in the *Resource Counts* section of the overview page to redirect to the *Hosts* page, filtered by either *Show only ready hosts* or *Show only failed hosts* depending on which count was clicked on.(AAP-42288)
+
+* Fixed an issue where API records could be missing or duplicated across pages.(AAP-41842)
+
+
+== {OperatorPlatformNameShort}
+
+=== Enhancements
+
+* Annotation can now be added to the route by specifying *spec.route_annotations* on the {PlatformNameShort} and {ControllerName} custom resources.(AAP-45952)
+
+* New installations of {LightspeedShortName} using the {PlatformNameShort} Custom Resource will automatically integrate with {PlatformNameShort}'s *OAuth* mechanism. The `auth_config_secret_name` setting is optional.(AAP-45686)
+
+=== Bug fixes
+
+* Fixed an issue where the `jquery` version included in the redirect page did not match the version from the rest framework directory.(AAP-47160)
+
+* Fixed an issue where the ingress class name could not be configured on the {HubName} CR.(AAP-47054)
+
+* Fixed an issue where there was a missing resources limit on {HubName} API `init` containers.(AAP-47053)
+
+* Fixed an issue where the resources limit on worker pods could not be configured.(AAP-47045)
+
+* Fixed an issue where there was no `readinessProbe` configuration in the PostgreSQL `statefulset` definition.(AAP-47043)
+
+
+== {ControllerNameStart}
+
+=== Features
+
+* Added AWX `dispatcherd` integration.(AAP-45800)
+
+=== Bug Fixes
+
+* Fixed a race condition where job templates with duplicate names in the same organization could be created.(AAP-45968)
+
+* Fixed an issue where `ole_user_assignments` failed to query for `object_ansible_id`. Enabled query filtering for fields `user_ansible_id`, `team_ansible_id`, and `object_ansible_id` on the role assignment API endpoints.(AAP-45443)
+
+* Fixed an issue where some credential types were not populated after upgrading. This adds a new migration to accomplish this.(AAP-44233)
+
+* Fixed an issue where there were large numbers of jobs queued that were stuck in waiting status.(AAP-44143)
+
+
+== {HubNameStart}
+
+=== Enhancements
+
+* Any user can search and filter using AI keywords to find AI related collections in {HubName}.(AAP-43138)
+
+=== Bug Fixes
+
+* Fixed an issue where there was an error when installing collections that exist in both rh-certified and community.(AAP-24271)
+
+
+== Container-based {PlatformNameShort}
+
+=== Enhancements
+
+* Validate that nodes are configured with at least 16G of RAM.(AAP-47542)
+
+=== Bug Fixes
+
+* Fixed an issue where the TLS Certificate Authority (CA) certificate for Receptor mesh configuration when providing TLS certificates were not signed by the internal CA.(AAP-48065)
+
+* Fixed a missing user parameter for the sos report command on the `log_gathering` playbook.(AAP-47718)
+
+* Fixed an issue where the `jquery` version included in the redirect page did not match the version from the rest framework directory.(AAP-47074)
+
+
+== {EDAName}
+
+=== Features
+
+* API REST supports the editing of the URL of the project.(AAP-47459)
+
+* Prior to this release, we suggested utilizing `ansible.builtin.set_fact` within playbooks. We now advise using `ansible.builtin.set_stats` as it enables seamless integration with job templates. We encourage migrating from `ansible.builtin.set_fact` to `ansible.builtin.set_stats` for optimal results, although `ansible.builtin.set_fact` will continue to be supported.(AAP-46841)
+
+=== Enhancements
+
+* Previously, when a project `url/branch/scm_refspec` was edited, users had to manually trigger a project resync through either the UI or API. Now, {EDAName} automatically does a resync in case one of `url/branch/scm_refspec` is modified.(AAP-46254)
+
+* Relevant settings and versions are emitted in logs when the worker starts.(AAP-40984)
+
+=== Bug Fixes
+
+* Fixed an issue when using `gather_facts` in a rulebook a user had to provide an inventory. This is only available when running ansible-rulebook as a CLI. When the rulebook with `gather_facts` is run as part of Activation the `gather_facts` is ignored, since Activations does not include inventory.(AAP-47846)
+
+* Fixed an issue where DE images that use an SHA digest in the URI would fail to pull. This is now addressed, enabling user reminders to be sent actively.(AAP-47725)
+
+* Fixed an issue introduced in #1296 where we were running under the advisory lock and not the actual import/sync task, but the proxy that schedules the job for rq and `dispatcherd`.(AAP-47554)
+
+* Fixed an issue where there were no validations to `URL`, `branch/tag/commit`, and `refspec` fields when creating or updating a project.(AAP-47227)
+
+* Fixed an issue on k8s-based deployments where activations would hang while being deleted or disabled.(AAP-46559)
+
+* Fixed an issue where the activation could get stuck in the *disabling* or *deleting* state under {OCPShort}.(AAP-45298)
+
+
+== Receptor
+
+=== Bug Fixes
+
+* Fixed an issue where jobs were in a failed status with message *Receptor detail: Finished*. EOF is now handled correctly when the pod is ready.(AAP-46484)
+
+
+== RPM-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where redis-platform would not restart on restore.(AAP-47689)
+
+* Fixed an issue where old service nodes were not removed from {Gateway} when the installer ran with a new host or new host names.(AAP-47651)
+
+* Fixed an issue where restore was failing when a non-default port was used for {PlatformNameShort} managed database.(AAP-47639)
+
+* Fixed an issue where some pages didn't render properly when non-default `umask` was being used.(AAP-47377)
+
+* Fixed an issue where the {EDAName} script was not starting `nginx` on restart.(AAP-46511)
+
+* Fixed an issue where the credentials associated to decision environments would not be updated with the site information defined in the source inventory during restore.(AAP-46271)
+
+* Fixed an issue where the receptor certificate tasks would require switching to a receptor user.(AAP-46189)
+
+* Fixed an issue where the firewall was not opening event stream ports.(AAP-45684)
