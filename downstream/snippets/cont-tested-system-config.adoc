@@ -2,14 +2,35 @@
 .System configuration
 [options="header"]
 |====
-| Type | Description 
+| Type | Description | Notes
 | Subscription 
 a| 
 * Valid {PlatformName} subscription
 * Valid {RHEL} subscription (to consume the BaseOS and AppStream repositories)
-| Operating system | {RHEL} 9.2 or later minor versions of {RHEL} 9
-| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
-| Ansible-core | Ansible-core version {CoreInstVers} or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
-| Database | {PostgresVers}
+|
+
+| Operating system 
+| {RHEL} 9.2 or later minor versions of {RHEL} 9
+| 
+
+| CPU architecture 
+| x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
+|
+
+| `ansible-core` 
+a| 
+* For the installation: `ansible-core` version {CoreInstVers}. 
+* For {PlatformNameShort} operation: `ansible-core` version {CoreUseVers}.
+a| 
+* The installation program uses the `ansible-core` {CoreInstVers} package from the RHEL 9 AppStream repository. 
+* {PlatformNameShort} bundles `ansible-core` version {CoreUseVers} for its operation, so you do not need to install it manually.
+
+| Browser 
+| A currently supported version of Mozilla Firefox or Google Chrome.
+|
+
+| Database 
+| {PostgresVers}
+|
+
 |====
