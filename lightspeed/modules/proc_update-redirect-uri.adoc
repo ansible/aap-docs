@@ -10,12 +10,7 @@ When Ansible users log in or log out of Ansible Lightspeed service, the {Platfor
 * You have created and deployed a {LightspeedShortName} instance to your namespace.
 
 .Procedure
-. Get the URL of the Ansible Lightspeed instance:
-.. Go to {OCP}.
-.. Select menu:Networking[Routes].
-.. Locate the {LightspeedShortName} instance that you created. 
-.. Copy the Location URL of the {LightspeedShortName} instance.
-
+. In {OCP}, select menu:Networking[Routes] and locate the {LightspeedShortName} instance that you created. This is the URL of the Ansible Lightspeed instance.
 . Update the *login* redirect URI:
 .. In the automation controller, go to menu:Administration[Applications].
 .. Select the Lightspeed Oauth application that you created.
@@ -37,14 +32,15 @@ The Redirect URL must include the following information:
 
 . Update the *logout* redirect URI based on your setup:
 +
-*Procedure when both the {LightspeedShortName} instance and automation controller are installed using {PlatformNameShort} operator*:
+--
+* *Procedure when both the {LightspeedShortName} instance and automation controller are installed using {PlatformNameShort} operator*:
 
 .. Log in to the cluster on which the {PlatformNameShort} instance is running. 
 .. Identify the *AutomationController* custom resource.
 .. Select *[YAML view]*. 
 .. Add the following entry to the YAML file:
 +
-....
+----
 ```yaml
   spec:
   ...
@@ -52,7 +48,7 @@ The Redirect URL must include the following information:
     - setting: LOGOUT_ALLOWED_HOSTS
       value: "'<lightspeed_route-HostName>'"
   ```
-....
+----
 +
 [IMPORTANT]
 ====
@@ -73,7 +69,7 @@ If you are running multiple instances of {LightspeedShortName} application with 
 
 .. Apply the revised YAML. This task restarts the automation controller pods.
 
-*Procedure when the {PlatformNameShort} operator is run on a virtual machine*:
+* *Procedure when the {PlatformNameShort} operator is run on a virtual machine*:
 
 .. Log in to the virtual machine with the {PlatformNameShort} controller.
 .. In the */etc/tower/conf.d/custom.py* file, add the following parameter: +
@@ -92,7 +88,7 @@ For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`
 .. Restart the automation controller by executing the following command: +
 `$ automation-controller-service restart`
 
-*Procedure when the platform gateway is run on a virtual machine*:
+* *Procedure when the platform gateway is run on a virtual machine*:
 
 .. Log in to the virtual machine with the platform gateway.
 .. Add the following parameter in either the *gateway/settings.py* file or in the *ansible-automation-platform/gateway/settings.py* file: +
@@ -106,7 +102,8 @@ For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`
 
 * Use double quotes exactly as specified in the codeblock.
 ====
+--
 
 [role="_additional-resources"]
 .Additional resources
-* xref:troubleshooting-lightspeed-onpremise-config_troubleshooting-lightspeed[Troubleshooting {LightspeedShortName} on-premise deployment errors]
+* xref:ref-troubleshooting-lightspeed-onpremise-config_troubleshooting-lightspeed[Troubleshooting {LightspeedShortName} on-premise deployment errors]

@@ -6,28 +6,30 @@
 
 After the {AnsibleContentParser} scans your Ansible files, it generates the training data set in an output directory. The training data set includes a *ftdata.jsonl* file, which is the main output of the {AnsibleContentParser}. The file is available in JSON Lines file format, where each line entry represents a JSON object. You must upload this JSONL file to {ibmwatsonxcodeassistant} to create a custom model. 
 
-== Structure of custom model training data set 
+.Result
 
-The following is the file structure of an output directory: 
-....
+The generated output directory has the following file structure: 
+----
 output/
-  |-- ftdata.jsonl  # Training dataset <1>
-  |-- report.txt   # A human-readable report <2>
+  |-- ftdata.jsonl  # Training dataset
+  |-- report.txt   # A human-readable report
   |
-  |-- repository/ <3>
+  |-- repository/
   |     |-- (files copied from the source repository)
   |
-  |-- metadata/ <4>
+  |-- metadata/ 
         |-- (metadata files generated during the execution)
-....
-.Where:
-<1> *ftdata.jsonl*: A training data set file, which is the main output of the {AnsibleContentParser}. The file is available in JSON Lines files format, where each line entry represents a JSON object. You must upload this JSONL file in {ibmwatsonxcodeassistant} to create a custom model.
-<2> *report.txt*: A human-readable text file that provides a summary of all {AnsibleContentParser} executions.
-<3> *repository*: A directory that contains files from the source repository. Sometimes, ansible-lint updates the directory according to the configured rules, so the file contents of the output directory might differ from the source repository.
-<4> *metadata*: A directory that contains multiple metadata files that are generated during each {AnsibleContentParser} execution.
+----
 
-=== Using report.txt file to resolve ansible-lint rule violations
-The *report.txt* file, that can be used to resolve ansible-lint rule violations, contains the following information:
+Where:
+
+* *ftdata.jsonl*: A training data set file, which is the main output of the {AnsibleContentParser}. The file is available in JSON Lines files format, where each line entry represents a JSON object. You must upload this JSONL file in {ibmwatsonxcodeassistant} to create a custom model.
+* *report.txt*: A human-readable text file that provides a summary of all {AnsibleContentParser} executions.
+* *repository*: A directory that contains files from the source repository. Sometimes, ansible-lint updates the directory according to the configured rules, so the file contents of the output directory might differ from the source repository.
+* *metadata*: A directory that contains multiple metadata files that are generated during each {AnsibleContentParser} execution.
+
+.Next steps
+You can use the *report.txt* file to resolve ansible-lint rule violations. The *report.txt* file contains the following information:
 
 * File counts per type: A list of files according to their file types, such as playbooks, tasks, handlers, and jinja2. 
 * List of Ansible files that were identified: A list of files identified by ansible-lint with a file name, a file type, and whether the file was excluded from further processing, or automatically fixed by ansible-lint.
