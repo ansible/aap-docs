@@ -1,3 +1,5 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="controller-set-up-azure"]
 
 ifndef::controller-AG[]
@@ -51,12 +53,13 @@ include::snippets/snip-gw-authentication-auto-migrate.adoc[]
 + 
 [NOTE]
 ====
-Groups coming from {MSEntraID} use unique IDs instead of group names. When creating group maps for a {MSEntraID} authenticator you must use the unique IDs.
+You can identify groups coming from Microsoft Entra ID can be identified using either unique IDs or group names. 
+When creating group mappings for a Microsoft Entra ID authenticator, you can use either the unique ID or the group name.
 
 By default, {MSEntraID} uses groups as the default group claim name. So, be sure to either set the value to the default or to any custom override you have set in your IdP. The current default is set to preserve the existing behavior unless explicitly changed.
 ====
-
-Following instructions for link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[registering your application with the Microsoft identity platform], supply the key (shown at one time only) to the client for authentication. 
++
+. Following instructions for link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[registering your application with the Microsoft identity platform], supply the key (shown at one time only) to the client for authentication. 
 +
 . Copy and paste the secret key created for your {MSEntraID}/{Azure} AD application to the *OIDC Secret* field.
 +
@@ -74,7 +77,7 @@ include::snippets/snip-gw-authentication-next-steps.adoc[]
 
 [role="_additional-resources"]
 .Additional resources
-For application registering basics in {MSEntraID}/{Azure} AD, see the link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?] overview.
+* link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?]
 endif::[]
 
 ifdef::controller-AG[]
