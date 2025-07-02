@@ -1,0 +1,83 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rpm-containerized-post-import"]
+= Reconciling the target environment post-import
+
+Perform the following post-import reconciliation steps to ensure your target environment is fully functional and correctly configured.
+
+.Procedure
+. Deprovision the {Gateway} configuration.
++
+SSH to the host serving a {Gateway} container as the same rootless user used in the source environment export, and run the following commands to remove the {Gateway} proxy configuration:
++
+----
+$ podman exec -it automation-gateway bash
+----
++
+----
+$ aap-gateway-manage migrate
+----
++
+----
+$ aap-gateway-manage shell_plus
+>>> HTTPPort.objects.all().delete(); ServiceNode.objects.all().delete(); ServiceCluster.objects.all().delete()
+----
+
+. Transfer custom configurations and settings.
++
+Edit the inventory file and apply any relevant `extra_settings` to each component by using the `component_extra_settings`. 
+
+. Re-run the installation program on the target environment by using the same inventory from the installation.
+
+. Validate instances for automation execution.
++
+SSH to the host serving an `automation-controller-task` container as the rootless user, and run the following commands to validate and remove instances that are orphaned from the source artifact:
++
+----
+$ podman exec -it automation-controller-task bash
+----
++
+----
+$ awx-manage list_instances
+----
++
+Find nodes that are no longer part of this cluster. A good indicator is nodes with 0 capacity as they have failed their health checks:
++
+----
+[ungrouped capacity=0]
+[DISABLED] node1.example.org capacity=0 node_type=hybrid version=X.Y.Z heartbeat="..."
+[DISABLED] node2.example.org capacity=0 node_type=execution version ansible-runner-X.Y.Z heartbeat="..."
+----
++
+Remove those nodes with `awx-manage`, leaving only the `aap-controller-task` instance:
++
+----
+awx-manage deprovision_instance --host=node1.example.org
+awx-manage deprovision_instance --host=node2.example.org
+----
+
+. Repair orphaned {HubName} content links for Pulp.
++
+Run the following command from any host that has direct access to the {HubName} address:
++
+----
+$ curl -d '{"verify_checksums": true}' -X POST -k https://<gateway_url>/api/galaxy/pulp/api/v3/repair/ -u <gateway_admin_user>:<gateway_admin_password>
+----
+
+. Reconcile instance groups configuration.
+.. Go to {MenuInfrastructureInstanceGroups}. 
+.. Select the *Instance Group* and then select the *Instances* tab. 
+.. Associate or disassociate instances as required.
+
+. Reconcile decision environments and credentials.
+.. Go to {MenuADDecisionEnvironments}.
+.. Edit each decision environment which references a registry URL either unrelated or no longer accessible to this new environment. For example, the {HubName} decision environment might need to be adjusted for the target {HubName} environment.
+.. Select each associated credential to these decision environments and ensure their addresses align with the new environment.
+
+. Reconcile execution environments and credentials.
+.. Go to {MenuInfrastructureExecEnvironments}.
+.. Check each {ExecEnvShort} image and verify their addresses against the new environment.
+.. Go to {MenuAECredentials}.
+.. Edit each credential and ensure that all environment specific information aligns with the new environment.
+
+. Verify any further customizations or configurations after the migration, such as RBAC rules with instance groups.

@@ -1,0 +1,76 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rpm-containerized-target-prep"]
+= Preparing and assessing the target environment
+
+To prepare your target environment, perform the following steps.
+
+.Procedure
+
+. Validate the file system home folder size and make sure it has enough space to transfer the artifact.
+. Transfer the artifact to the nodes where you will be working by using `scp` or any preferred file transfer method. It is recommended that you work from the {Gateway} node as it will have access to most systems. However, if you have access or file system space limitations due to the PostgreSQL dumps, then work from the database node.
+. Download the latest version of containerized {PlatformNameShort} from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page]. 
+. Validate the artifact checksum.
+. Extract the artifact on the home folder for the user running the containers.
++
+----
+$ cd ~
+----
++
+----
+$ sha256sum-check artifact.tar.sha256
+----
++
+----
+$ tar xf artifact.tar
+----
++
+----
+$ cd artifact
+----
++
+----
+$ sha256sum-check sha256sum.txt
+----
+
+. Generate inventory file for containerized deployment.
++
+Configure the inventory file to match the same topology as the source environment. Configure the component database names and the `secret_key` values seen on the `secrets.yml` file from the artifact. You can do this by either setting the extra variables in the inventory file or by using the `secrets.yml` file as an additional variables file when running the installation program.
++
+.. Option 1: Extra variables in the inventory file
++
+----
+$ egrep 'pg_database_key' inventory
+controller_pg_database=<redacted>
+controller_secret_key=<redacted>
+gateway_pg_database=<redacted>
+gateway_secret_key=<redacted>
+hub_pg_database=<redacted>
+hub_secret_key=<redacted>
+_hub_database_fields=<redacted>
+----
++
+[NOTE]
+====
+The `_hub_database_fields` value comes from the `hub_db_fields_encryption_key` value in your secret.
+====
++
+.. Option 2: Additional variables file
++
+----
+$ ansible-playbook -i inventory ansible.containerized_installer.install -e @~/artifact/secrets.yml -e "_hub_database_fields='{{ hub_db_fields_encryption_key }}'"
+----
+
+. Install and configure the containerized target environment.
+. Verify PostgreSQL database version is on version 15.
+. Create a backup of the initial containerized environment.
++
+----
+$ ansible-playbook -i <path_to_inventory> ansible.containerized_installer.backup
+----
+
+. Ensure the fresh installation is functional.
+
+[role="_additional-resources"]
+.Additional resources
+* For more information about performing a backup, see link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up containerized {PlatformNameShort}].
