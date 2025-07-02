@@ -2,13 +2,28 @@
 
 = Setting up a custom domain without {AWSPrivateLink}
 
-If you are not planning to either connect to the UI or use Automation Mesh through AWS PrivateLink, the following steps can be followed to configure your DNS.
+If you are not planning to either connect to the UI or use {AWSPrivateLink}, complete the following procedure to configure your DNS.
 
 .Procedure
 
-. Identify the canonical names of the Load Balancers of your deployment. A DNS lookup can be used on the Red Hat generated URL to identify the DNS names for both Load Balancers:
+. Identify the canonical names of the load balancers of your deployment. A DNS lookup can be used on the Red Hat generated URL to identify the DNS names for both Load Balancers:
++
+----
+Shell
 
+# Replace the URL with the "platform" URL of your deployment
+dig platform.cus-<id>.aws.ansiblecloud.com
+----
++
+----
+Shell
 
+# Replace the URL with the "mesh-ingress" URL of your deployment 
+dig mesh-ingress-0.cus-<id>.aws.ansiblecloud.com
+----
 . Create DNS CNAME records for your custom domain using the following hostnames pointing to the DNS names identified in the previous step:
+* platform (for example, `platform.aap._example_.com``) → `cus-xxxxx-alb-11111111.us-east-1.elb.amazonaws.com`
+* mesh-ingress-0 (for example, `mesh-ingress-0.aap._example_.com)  → `xxxxx.elb.us-east-1.amazonaws.com`
+* mesh-ingress-1 (for example, `mesh-ingress-1.aap._example_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
 
 
