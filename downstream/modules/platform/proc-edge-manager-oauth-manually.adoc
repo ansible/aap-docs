@@ -4,25 +4,29 @@
 
 = Setting up the OAuth application manually
 
+Manually set up an OAuth application within your {PlatformNameShort} instance. 
+This is important for enabling token-based authentication and integrating external applications such as the {RedHatEdge}.
+
 .Procedure
 
 . From the navigation panel on your {PlatformNameShort} instance, go to menu:{MenuAM}[OAuth Applications].
 . Click btn:[Create OAuth application].
 . Enter the following details:
 ** *Name*: Enter a name such as "Red Hat Edge Manager".
-** *URL*: The `baseDomain` of your {PlatformNameShort} UI.
+This is the name visible in the {PlatformNameShort} UI.
+** *URL*: The `baseDomain` of your {PlatformNameShort} UI with `https://`.
+** *Organization*: Select *Default*.
 ** *Authorization grant type*: Select *Authorization code*.
 ** *Client*: Select *Public*.
 ** *Redirect URIs*: 
-*** The redirect configured for your UI is your `baseDomain` with a /callback route appended, such as `https://your-edge-manager-ip-or-domain/callback`.
-*** To provide a redirect for console usage, configure a redirect URI, such as `http://127.0.0.1/callback`.
-. Copy the *Client ID* and update *oAuthApplicationClientId* in your configuration file with this value when {URLEdgeManager}/assembly-edge-manager-install#edge-manager-integrate-aap[Integrating with {PlatformNameShort}].
-
-[NOTE]
-====
-URIs must be separated by spaces in the *Redirect URIs* field, not commas or other delimiters.
-====
+*** The redirect configured for your UI is your `baseDomain` with a /callback route appended, such as `https://your-edge-manager-ip-or-domain:443/callback`.
+If you have more than one URI, enter them in this field separated by a space, not commas or other delimiters.
+*** To provide a redirect for CLI usage (`flightctl login`), configure a redirect URI, such as `http://127.0.0.1/callback`.
+. Click btn:[Create OAuth application].
+An *Application Links* section is now visible in the navigation panel.
+. Copy the *Client ID* as you need it to update the *oAuthApplicationClientId* in your `service-config.yaml` file with this value.
+. Go to the link:{URLEdgeManager}/assembly-edge-manager-install#edge-manager-integrate-aap[Integrating with Ansible Automation Platform] section for the steps to edit your `service-config.yaml` file and complete setting up the OAuth application manually.
 
 .Additional resources
 
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/access_management_and_authentication/gw-token-based-authentication[Configuring access to external applications with token-based authentication]. 
+* link:{URLCentralAuth}/gw-token-based-authentication[Configuring access to external applications with token-based authentication]
