@@ -50,7 +50,7 @@ In an enterprise deployment, the components run on different nodes. Run the comm
 ====
 
 . Import database dumps to the containerized environment.
-.. If you are using an {PlatformNameShort} managed database, you need to create a temporary container to run the `psql` and `pg_restore` commands. Run this command from the database node.
+.. If you are using an {PlatformNameShort} managed database, you must create a temporary container to run the `psql` and `pg_restore` commands. Run this command from the database node.
 +
 ----
 $ podman run -it --rm --name postgresql_restore_temp --network host --volume ~/aap/tls/extracted:/etc/pki/ca-trust/extracted:z --volume ~/aap/postgresql/server.crt:/var/lib/pgsql/server.crt:ro,z --volume ~/aap/postgresql/server.key:/var/lib/pgsql/server.key:ro,z --volume ~/artifact:/var/lib/pgsql/backups:ro,z registry.redhat.io/rhel8/postgresql-15:latest bash

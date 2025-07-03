@@ -64,17 +64,17 @@ Run the following command from any host that has direct access to the {HubName} 
 $ curl -d '{"verify_checksums": true}' -X POST -k https://<gateway_url>/api/galaxy/pulp/api/v3/repair/ -u <gateway_admin_user>:<gateway_admin_password>
 ----
 
-. Reconcile instance groups configuration.
+. Reconcile instance groups configuration:
 .. Go to {MenuInfrastructureInstanceGroups}. 
 .. Select the *Instance Group* and then select the *Instances* tab. 
 .. Associate or disassociate instances as required.
 
-. Reconcile decision environments and credentials.
+. Reconcile decision environments and credentials:
 .. Go to {MenuADDecisionEnvironments}.
-.. Edit each decision environment which references a registry URL either unrelated or no longer accessible to this new environment. For example, the {HubName} decision environment might need to be adjusted for the target {HubName} environment.
+.. Edit each decision environment which references a registry URL either unrelated or no longer accessible to this new environment. For example, the {HubName} decision environment might require modification for the target {HubName} environment.
 .. Select each associated credential to these decision environments and ensure their addresses align with the new environment.
 
-. Reconcile execution environments and credentials.
+. Reconcile execution environments and credentials:
 .. Go to {MenuInfrastructureExecEnvironments}.
 .. Check each {ExecEnvShort} image and verify their addresses against the new environment.
 .. Go to {MenuAECredentials}.

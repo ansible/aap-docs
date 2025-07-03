@@ -58,7 +58,7 @@ Adjust the filesystem size or mount an external filesystem as needed before perf
 +
 [NOTE]
 ====
-This procedure assumes that all target files will be sent to the `/tmp` filesystem. You might need to adjust the commands to match your environment's needs.
+This procedure assumes that all target files will be sent to the `/tmp` filesystem. You might want to adjust the commands to match your environment's needs.
 ====
 
 . Stage the manually created artifact on the {Gateway} node.
@@ -81,7 +81,7 @@ This procedure assumes that all target files will be sent to the `/tmp` filesyst
 
 . Perform database dumps of all components on the {Gateway} node within the artifact created previously.
 +
-To run the `psql` and `pg_restore` commands, you will need to create a temporary container and run the commands inside of it. This command must be run from the database node.
+To run the `psql` and `pg_restore` commands, you must create a temporary container and run the commands inside of it. This command must be run from the database node.
 +
 ----
 $ podman run -it --rm --name postgresql_restore_temp --network host --volume ~/aap/tls/extracted:/etc/pki/ca-trust/extracted:z --volume ~/aap/postgresql/server.crt:/var/lib/pgsql/server.crt:ro,z --volume ~/aap/postgresql/server.key:/var/lib/pgsql/server.key:ro,z --volume /tmp/backups/artifact:/var/lib/pgsql/backups:ro,z registry.redhat.io/rhel8/postgresql-15:latest bash
