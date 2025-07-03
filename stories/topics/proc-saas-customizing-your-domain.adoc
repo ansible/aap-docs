@@ -1,3 +1,4 @@
+:_mod-docs-content-type: <PROCEDURE>
 [id="proc-saas-customizing-your-domain"]
 
 = Planning for your custom domain
@@ -5,15 +6,28 @@
 [role="_abstract"]
 Complete the following procedure to configure a custom domain for your {PlatformNameShort} deployment.
 
+.Prerequisites
+* Ensure that you have management privileges over the domain or subdomain you intend to use so that you can add multiple records.
+* Ensure the DNS servers that you use to resolve records are accessible wherever you intend to use the domain.
+* You must use the same format and domain for all URLs in the deployment (for example, `aap._example_.com`). 
+
+
 .Procedure
 
-. Identify the domain or subdomain that you intend to use:
-.. Ensure that you are managing the domain or subdomain you intend to use so that you can add multiple records.
-.. Ensure the DNS servers that you use to resolve records are accessible wherever you intend to use the domain.
-.. You must use the same format and domain for all URLs in the deployment (for example, `aap._example_.com`). 
-. Create the TLS certificate:
-.. For your custom domain, ensure that all subdomains are located in the Subject Alternative Name (SAN) parameter so that the certificate can be valid for them.
-.. As an alternative, you can also generate a wildcard certificate for subdomains of your primary custom domain.
+. Identify the domain or subdomain that you intend to use.
++
+[NOTE]
+====
+Examples below use `aap._example_.com` for custom URLs.
+====
+. Create the TLS certificate. 
++
+[NOTE]
+====
+Ensure that all subdomains are located in the Subject Alternative Name (SAN) parameter so that the certificate can be valid for them.
+====
++
+As an alternative, you can also generate a wildcard certificate for subdomains of your primary custom domain.
 +
 [NOTE]
 ====
@@ -28,10 +42,10 @@ Complete the following procedure to configure a custom domain for your {Platform
 + 
 [NOTE]
 ====
-Avoid providing password protected files since that mmight prevent Red Hat SRE team’s ability to deploy them through service management automation.
+Avoid providing password-protected files since that mmight prevent Red Hat SRE team’s ability to deploy them through service management automation.
 ====
 
-. The SRE team applies the configuration to your deployment and verifies the functionality.
+. Wait for the SRE team to apply the configuration to your deployment and verify its functionality before proceeding to your next steps.
 . After your configuration is complete, perform the following actions:
 .. Log in to the {PlatformNameShort} Dashboard.
 .. From the navigation panel, select menu:Settings[Automation Execution][System].

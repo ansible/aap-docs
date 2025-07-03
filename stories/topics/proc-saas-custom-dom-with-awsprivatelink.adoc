@@ -1,3 +1,4 @@
+:_mod-docs-content-type: <PROCEDURE>
 [id="proc-saas-custom-dom-with-awsprivatelink"]
 
 = Setting up a custom domain with {AWSPrivateLink}
@@ -6,12 +7,21 @@ If you are planning to either connect to the {PlatformNameShort} UI or use {Auto
 
 .Procedure 
 
-. Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to our {AWSPrivateLink} Endpoint Service. 
+. Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to our {AWSPrivateLink} endpoint service by perfoming the following steps:
+.. Navigate to the {AWS} portal and select menu:VPC[Endpoints]. 
+.. Click the *VPC* endpoint for {SaaSonAWS}.
+.. Retrieve the *DNS names* in the Details tab.
 +
+There are a few entries. Ensure that you select the one that is not {AWSPrivateLink}-dependent and does not have `us-east-1a` or `us-east-1b` as part of the DNS name (for example, `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`).
++
+Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that endpoint by using:
++
+----
+Shell
+aws ec2 describe-vpc-endpoints --vpc-endpoint-ids vpce-xxxx --query 'VpcEndpoints[0].DnsEntries[*].DnsName'
+----
 
-There will be a few entries, make sure that you grab the one that is not {AWSPrivateLink}-dependent (for example, `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`).
-
-. After you have the main DNS name, create CNAME records for your custom domain and point the following hostnames to the retrieved DNS name:
+. After you have the DNS name, create the DNS CNAME records for your custom domain using the following hostnames pointing to the DNS name identified in the previous step:
 .. platform (for example, `platform.aap._example_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-0 platform (for example, `platform.aap._example_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-1 (for example, `mesh-ingress-1.aap._example_.com``) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
