@@ -1,4 +1,4 @@
-:_mod-docs-content-type: <PROCEDURE>
+:_mod-docs-content-type: PROCEDURE
 
 [id="edge-manager-install-CLI"]
 
@@ -9,13 +9,11 @@ To install the {RedHatEdge} CLI, complete the following steps:
 .Procedure 
 
 . Enable the subscription manager for the repository appropriate for your system by running the following command:
-//The following command is for ACM, confirm steps for AAP.
 +
 [source,bash]
 ----
-subscription-manager repos --enable rhacm-2.13-for-rhel-<version>-<arch>-rpms
+sudo subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
 ----
-
 +
 For a full list of available repositories for the {RedHatEdge}, see the link:{URLEdgeManager}/assembly-edge-manager-images#edge-manager-additional-resources-images[_Additional resources_] section.
 
@@ -26,3 +24,5 @@ For a full list of available repositories for the {RedHatEdge}, see the link:{UR
 ----
 sudo dnf install flightctl
 ----
+
+If you link:{URLEdgeManager}/assembly-edge-manager-install#edge-manager-oauth-manually[set up the OAuth application manually], you also need to make sure that one utility `xdg-open`, `x-www-browser`, or `www-browser` is available, for example, by installing `xdg-utils`.
