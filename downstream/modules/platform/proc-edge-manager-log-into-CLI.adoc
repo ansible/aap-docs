@@ -1,0 +1,50 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="edge-manager-log-into-CLI"]
+
+= Logging into the {RedHatEdge} through the CLI
+
+How you log in the Red Hat Edge Manager depends on whether you choose the link:{URLEdgeManager}/assembly-edge-manager-install#edge-manager-oauth-auto[automatic] or link:{URLEdgeManager}/assembly-edge-manager-install#edge-manager-oauth-manually[manual] method when you initially set up the application.
+
+.Procedure
+
+* If you use the automatic setup you can create a personal access token, even only with Read scope (under the profile icon in the top right corner of your {PlatformNameShort} UI > *User details* > *Tokens* tab) and then use this token to log in directly through the CLI, with the following example syntax:
++
+[source,bash]
+----
+flightctl login https://<your-edge-manager-ip-or-domain>:3443 --token=<your-aap-oauth-token> --insecure-skip-tls-verify
+----
+
+* If you use the manual setup, use the *Client ID* to log in through a web-based process, with the following example syntax:
++
+[source,bash]
+----
+flightctl login https://<your-edge-manager-ip-or-domain>:3443 --web --client-id=<your-aap-client-id> --insecure-skip-tls-verify
+----
++
+** This opens in a web browser and asks you to approve.
++
+The `--insecure-skip-tls-verify` parameter is used only if you have not generated your own valid certificates.
+
+.Next steps
+
+Use the following commands to help you with the CLI:
+
+* To output a list of available commands, use:
++
+[source,bash]
+----
+flightctl
+----
+* To output both the flightctl CLI version and the back-end {RedHatEdge} version, use:
++
+[source,bash]
+----
+flightctl version
+----
+
+[IMPORTANT]
+====
+To ensure supportability and proper functionality, the version of the flightctl CLI must match the version of the {RedHatEdge} in use. 
+Mismatched versions are not supported.
+====

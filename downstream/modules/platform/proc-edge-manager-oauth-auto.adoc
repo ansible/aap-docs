@@ -4,6 +4,9 @@
 
 = Setting up the OAuth application automatically
 
+Automatic setup of an OAuth application by generating an OAuth token within {PlatformNameShort} and adding it to your configuration file. 
+Upon service startup, the application is automatically created, and the client ID updated.
+ 
 .Procedure
 
 . Generate an OAuth token in {PlatformNameShort}:
@@ -11,20 +14,5 @@
 .. Select a user with write permissions to the *Default* organization (admin user recommended).
 .. Click the *Tokens* tab for that user.
 .. Click btn:[Create token] and enter the relevant details.
-. Add the token to *oAuthToken* in your configuration file, for example:
-+
-[source,yaml]
-----
-global:
-  baseDomain: <your-edge-manager-ip-or-domain>
-  auth:
-    type: aap
-    insecureSkipTlsVerify: true
-    aap:
-      apiUrl: https://your-aap-instance.example.com
-      externalApiUrl: https://your-aap-instance.example.com
-      oAuthApplicationClientId:  # Leave empty
-      oAuthToken: <your-oauth-token>
-----
-
-When you start the services, the OAuth application is created automatically, and the *oAuthApplicationClientId* is updated in the configuration file.
+... *Scope*: Select *Write*.
+. Go to the link:{URLEdgeManager}/assembly-edge-manager-install#edge-manager-integrate-aap[Integrating with {PlatformNameShort}] section for the steps to edit your `service-config.yaml` file and complete setting up the OAuth application automatically.
