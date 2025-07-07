@@ -1,0 +1,29 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-use-custom-tls-certificates_{context}"]
+
+= Using custom TLS certificates
+
+By default, the installation program generates self-signed TLS certificates and keys for all {PlatformNameShort} services. However, you can optionally use custom TLS certificates.
+
+.Procedure
+
+* To replace these with your own custom certificate and key, set the following inventory file variables:
++
+[source,yaml,subs="+attributes"]
+----
+aap_ca_cert_file=<path_to_ca_tls_certificate>
+aap_ca_key_file=<path_to_ca_tls_key>
+----
+
+* If any of your certificates are signed by a custom Certificate Authority (CA), then you must specify the Certificate Authority's certificate by using the `custom_ca_cert` inventory file variable:
++
+[source,yaml,subs="+attributes"]
+----
+custom_ca_cert=<path_to_custom_ca_certificate>
+----
++
+[NOTE]
+====
+If you have more than one custom CA certificate, combine them into a single file, then reference the combined certificate with the `custom_ca_cert` inventory file variable.
+====

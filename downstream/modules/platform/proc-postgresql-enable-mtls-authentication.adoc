@@ -1,0 +1,33 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-enable-mtls-authentication_{context}"]
+
+= Enabling mutual TLS (mTLS) authentication
+
+mTLS authentication is disabled by default; however, you can optionally enable the authentication. 
+
+.Procedure
+To configure each component's database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
+
+[source,yaml,subs="+attributes"]
+----
+# {ControllerNameStart}
+pgclient_sslcert=/path/to/awx.cert
+pgclient_sslkey=/path/to/awx.key
+pg_sslmode=verify-full or verify-ca
+
+# {GatewayStart}
+automationgateway_pgclient_sslcert=/path/to/gateway.cert
+automationgateway_pgclient_sslkey=/path/to/gateway.key
+automationgateway_pg_sslmode=verify-full or verify-ca
+
+# {HubNameStart}
+automationhub_pgclient_sslcert=/path/to/pulp.cert
+automationhub_pgclient_sslkey=/path/to/pulp.key
+automationhub_pg_sslmode=verify-full or verify-ca
+	
+# {EDAName}
+automationedacontroller_pgclient_sslcert=/path/to/eda.cert
+automationedacontroller_pgclient_sslkey=/path/to/eda.key
+automationedacontroller_pg_sslmode=verify-full or verify-ca
+----
