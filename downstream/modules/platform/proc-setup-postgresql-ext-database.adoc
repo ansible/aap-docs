@@ -1,4 +1,6 @@
-[id="proc-setup-postgresql-ext-database"]
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-setup-postgresql-ext-database_{context}"]
 
 = Setting up an external (customer supported) database
 
@@ -88,53 +90,3 @@ automationedacontroller_pg_port=<port_number>
 automationedacontroller_pg_username=<username>
 automationedacontroller_pg_password=<password>
 ----
-
-== Optional: Enabling mutual TLS (mTLS) authentication
-
-mTLS authentication is disabled by default. To configure each component's database with mTLS authentication, add the following variables to your inventory file under the `[all:vars]` group and ensure each component has a different TLS certificate and key:
-
-[source,yaml,subs="+attributes"]
-----
-# {ControllerNameStart}
-pgclient_sslcert=/path/to/awx.cert
-pgclient_sslkey=/path/to/awx.key
-pg_sslmode=verify-full or verify-ca
-
-# {GatewayStart}
-automationgateway_pgclient_sslcert=/path/to/gateway.cert
-automationgateway_pgclient_sslkey=/path/to/gateway.key
-automationgateway_pg_sslmode=verify-full or verify-ca
-
-# {HubNameStart}
-automationhub_pgclient_sslcert=/path/to/pulp.cert
-automationhub_pgclient_sslkey=/path/to/pulp.key
-automationhub_pg_sslmode=verify-full or verify-ca
-	
-# {EDAName}
-automationedacontroller_pgclient_sslcert=/path/to/eda.cert
-automationedacontroller_pgclient_sslkey=/path/to/eda.key
-automationedacontroller_pg_sslmode=verify-full or verify-ca
-----
-
-== Optional: Using custom TLS certificates
-
-By default, the installation program generates self-signed TLS certificates and keys for all {PlatformNameShort} services.
-
-If you want to replace these with your own custom certificate and key, then set the following inventory file variables:
-
-[source,yaml,subs="+attributes"]
-----
-aap_ca_cert_file=<path_to_ca_tls_certificate>
-aap_ca_key_file=<path_to_ca_tls_key>
-----
-
-If any of your certificates are signed by a custom Certificate Authority (CA), then you must specify the Certificate Authority’s certificate by using the `custom_ca_cert` inventory file variable:
-[source,yaml,subs="+attributes"]
-----
-custom_ca_cert=<path_to_custom_ca_certificate>
-----
-
-[NOTE]
-====
-If you have more than one custom CA certificate, combine them into a single file, then reference the combined certificate with the `custom_ca_cert` inventory file variable.
-====
