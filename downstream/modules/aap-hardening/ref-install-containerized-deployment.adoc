@@ -1,0 +1,13 @@
+[id="ref-install-containerized-deployment"]
+
+= Install a Containerized deployment of {PlatformNameShort} with an external vault file
+
+For containerized installations of Ansible Automation Platform, use the following playbook invocation:
+
+`ansible-playbook ansible.containerized_installer.install -e @vault.yml \ --ask-become-pass`
+
+Ensure the vault file is present in the directory where the playbook is invoked, and only include the variables in the vault. 
+
+Do not define the variables in the inventory file.
+
+This modular approach to handling sensitive variables provides a secure and flexible method for both RPM-based and container-based {PlatformNameShort} deployments.

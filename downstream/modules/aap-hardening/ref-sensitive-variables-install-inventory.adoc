@@ -3,25 +3,27 @@
 
 [id="ref-sensitive-variables-install-inventory_{context}"]
 
-= Sensitive variables in the installation inventory
+= Using an Ansible vault to secure sensitive variables
 
 [role="_abstract"]
 
-The installation inventory file contains a number of sensitive variables, mainly those used to set the initial passwords used by {PlatformNameShort}, which are normally kept in plain text in the inventory file. To prevent unauthorized viewing of these variables, you can keep these variables in an encrypted link:https://docs.ansible.com/ansible/latest/vault_guide/index.html[Ansible vault]. 
+The installation inventory file for {PlatformNameShort }contains a number of sensitive variables, such as default administrative and database passwords. 
+By default, these are stored in plain text. 
+To enhance security and comply with organizational policies, encrypt these variables using an Ansible vault file. 
 
-To do this, go to the installer directory 
+To create an Ansible vault file, go to the installer directory 
 
-`cd /path/to/ansible-automation-platform-setup-bundle-2.5-1-x86_64`
+`cd /path/to/ansible-automation-platform-setup-bundle-2.5-<version>`
 
 and create a vault file
 
 `ansible-vault create vault.yml`
 
-You are prompted for a password to the new Ansible vault. 
-Do not lose the vault password because it is required every time you need to access the vault file, including during day-two operations and performing backup procedures. 
-You can secure the vault password by storing it in an encrypted password manager or in accordance with your organizational policy for storing passwords securely.
+You are prompted for a password for the vault file. 
+This password is required for day-two operations and backups. 
+Store it securely, as per your organizations security policy, for example, using a password manager.
 
-Add the sensitive variables to the vault, for example:
+When you have set up and secured your Ansible vault, add your sensitive variables, for example:Add the sensitive variables to the vault, for example:
 
 //Added containerized variables RPM/containerized:
 
@@ -36,5 +38,4 @@ automationedacontroller_pg_password/eda_pg_password: <secure_eda_db_password>
 -/gateway_pg_password:<secure_gateway_db_password>
 ----
 
-Make sure these variables are not also present in the installation inventory file. To use the new Ansible vault with the {Installer}, run it with the command `./setup.sh -e @vault.yml -- --ask-vault-pass`.
-
+Ensure these variables are not duplicated in the plaintext installation inventory file.
