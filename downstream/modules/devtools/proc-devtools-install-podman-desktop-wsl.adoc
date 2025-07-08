@@ -1,4 +1,5 @@
 [id="devtools-install-podman-desktop-wsl_{context}"]
+:_mod-docs-content-type: PROCEDURE
 
 = Requirements for {ToolsName} on Windows
 
@@ -8,7 +9,7 @@ If you are installing {ToolsName} on a container in {VSCode} on Windows, there a
 * Windows Subsystem for Linux(WSL2)
 * Podman Desktop
 
-== Installing WSL
+.Procedure
 
 . Install WSL2 without a distribution:
 +
@@ -23,9 +24,6 @@ Edit the `%USERPROFILE%/wsl.conf` file and add the following lines to force `cgr
 [wsl2]
 kernelCommandLine = cgroup_no_v1="all"
 ----
-
-== Installing Podman Desktop on a Windows machine
-
 . Install Podman Desktop. Follow the instructions in
 link:https://podman-desktop.io/docs/installation/windows-install[Installing Podman Desktop and Podman on Windows]
 in the Podman Desktop documentation.
@@ -41,10 +39,8 @@ $ podman info | findstr cgroup
 ----
 $ podman run hello
 ----
-
-== Configuring settings for Podman Desktop
-
-. Add a `%USERPROFILE%\bin\docker.bat` file with the following content:
+. Configure the settings for Podman Desktop.
+Add a `%USERPROFILE%\bin\docker.bat` file with the following content:
 +
 ----
 @echo off
@@ -52,50 +48,9 @@ podman %*
 ----
 +
 This avoids having to install Docker as required by the {VSCode} `Dev Container` extension.
-. Add the `%USERPROFILE%\bin` directory to the `PATH`.
+. Add the `%USERPROFILE%\bin` directory to the `PATH`:
 .. Select *Settings* and search for "Edit environment variables for your account" to display all of the user environment variables.
 .. Highlight "Path" in the top user variables box, click btn:[Edit] and add the path.
 .. Click btn:[Save] to set the path for any new console that you open.
 
-
-// https://podman-desktop.io/docs/installation/windows-install
-
-// Moved to general requirements section 
-// == Configuring the `Dev Containers` extension
-// 
-// . Replace docker with podman in the `Dev Containers` extension settings:
-// .. In {VSCode}, open the settings editor.
-// .. Search for `@ext:ms-vscode-remote.remote-containers`.
-// +
-// Alternatively, click the *Extensions* icon in the activity bar and click the gear icon for the `Dev Containers` extension.
-// . Set `Dev > Containers:Docker Path` to `podman`.
-// . Set `Dev > Containers:Docker Compose Path` to `podman-compose`.
-
-// == Adding the .devcontainer file
-// 
-// . Click the `Remote` (image:vscode-remote-icon.png[Remote,15,15]) icon.
-// + In the dropdown menu that appears, select the option to connect to the WSL machine.
-// . Open a terminal window  in {VSCode}.
-// . Create a .devcontainer directory:
-// +
-// ----
-// $  mkdir .devcontainer
-// ----
-// . Create a `devcontainer.json` file:
-// +
-// ----
-// $ touch .devcontainer/devcontainer.json
-// ----
-// . Add the following code to the `.devcontainer/devcontainer.json` file:
-// +
-// include::snippets/podman-devcontainer.json[]
-// . Log in to the Red Hat registry:
-// ----
-// $ podman login registry.redhat.io
-// ----
-// . Click the `Remote` (image:vscode-remote-icon.png[Remote,15,15]) icon. In the dropdown menu that appears, select *Reopen in Container*.
-// 
-// .Verification
-// 
-// When the directory reopens in a container, the *Remote ()* status displays `Dev Container: ansible-dev-container`.
 
