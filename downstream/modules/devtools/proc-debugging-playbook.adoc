@@ -1,11 +1,12 @@
 [id="debugging-playbook_{context}"]
+:_mod-docs-content-type: PROCEDURE
 
 = Debugging your playbook
 
-== Error messages
+Learn how to use {VSCode} to identify and understand error messages in playbooks.
 
-The following playbook contains multiple errors:
-
+. The following playbook contains multiple errors. Copy and paste it into a new file in {VSCode}.
++
 ----
 - name:
   hosts: localhost 
@@ -13,16 +14,16 @@ The following playbook contains multiple errors:
    - name: 
      ansible.builtin.ping:
 ----
-
++
 The errors are indicated with a wavy underline in {VSCode}.
-Hover your mouse over an error to view the details:
-
+. Hover your mouse over an error to view the details:
++
 image::ansible-lint-errors.png[Popup message explaining a playbook error]
-
-The errors are listed in the *Problems* tab of the {VSCode} terminal.
-Playbook files that contain errors are indicated with a number in the *Explorer* pane:
-
+. Playbook files that contain errors are indicated with a number in the *Explorer* pane.
+. Select the *Problems* tab of the {VSCode} terminal to view a list of the errors.
++
 image::ansible-lint-errors-explorer.png[Playbook errors shown in Problems tab and explorer list]
++
+`$[0].tasks[0].name None is not of type 'string'` indicates that the playbook does not have a label. 
 
-`$[0].tasks[0].name None is not of type 'string'` indicates that the playbook does not have a label.  
 
