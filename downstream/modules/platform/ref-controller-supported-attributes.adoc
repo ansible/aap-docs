@@ -1,3 +1,5 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="controller-supported-attributes"]
 
 The following are the supported job attributes:
@@ -5,7 +7,7 @@ The following are the supported job attributes:
 * `allow_simultaneous` - (boolean) Indicates if multiple jobs can run simultaneously from the job template associated with this job.
 * `controller_node` - (string) The instance that manages the isolated {ExecEnvShort}.
 * `created` - (datetime) The timestamp when this job was created.
-* `custom_virtualenv` - (string) The custom virtual environment used to execute the job.
+* `custom_virtualenv` - (string) The custom virtual environment used to run the job.
 * `description` - (string) An optional description of the job.
 * `diff_mode` - (boolean) If enabled, textual changes made to any templated files on the host are shown in the standard output.
 * `elapsed` - (decimal) The elapsed time in seconds that the job has run.
@@ -19,7 +21,7 @@ Note that some conditions, such as unreachable hosts can still prevent handlers 
 * `job_explanation` - (string) The status field to indicate the state of the job if it was not able to run and capture `stdout`.
 * `job_slice_count` - (integer) If run as part of a sliced job, this is the total number of slices (if 1, job is not part of a sliced job).
 * `job_slice_number` - (integer) If run as part of a sliced job, this is the ID of the inventory slice operated on (if not part of a sliced job, attribute is not used).
-* `job_tags` - (string) Only tasks with specified tags execute.
+* `job_tags` - (string) Only tasks with specified tags run.
 * `job_type` - (choice) This can be `run`, `check`, or `scan`.
 * `launch_type` - (choice) This can be `manual`, `relaunch`, `callback`, `scheduled`, `dependency`, `workflow`, `sync`, or `scm`.
 * `limit` - (string) The playbook execution limited to this set of hosts, if specified.
@@ -93,10 +95,10 @@ Note that some conditions, such as unreachable hosts can still prevent handlers 
 **** `results` - The list of dictionaries representing labels. 
 For example, {"id": 5, "name": "database jobs"}.
 
-You can reference information about a job in a custom notification message using grouped curly brackets {{ }}. 
-Specific job attributes are accessed using dotted notation, for example, {{ job.summary_fields.inventory.name }}. 
+You can reference information about a job in a custom notification message by using grouped curly brackets {{ }}. 
+Access specific job attributes by using dotted notation, for example, {{ job.summary_fields.inventory.name }}. 
 You can add any characters used in front or around the braces, or plain text, for clarification, such as "#" for job ID and single-quotes to denote some descriptor. 
-Custom messages can include a number of variables throughout the message:
+Custom messages can include several variables throughout the message:
 
 [literal, options="nowrap" subs="+attributes"]
 ----
@@ -133,7 +135,3 @@ In cases of approval-related notifications, both `url` and `workflow_url` are th
  'credential': 'Stub credential',
  'created_by': 'admin'}
 ----
-
-
-
-
