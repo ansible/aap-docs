@@ -10,68 +10,72 @@ After you prepare the {RHEL} host, download {PlatformNameShort}, and configure t
 
 You have done the following:
 
-* xref:preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
-* xref:preparing-the-managed-nodes-for-containerized-installation[Prepared the managed nodes]
-* xref:downloading-ansible-automation-platform[Downloaded {PlatformNameShort}]
-* xref:configuring-inventory-file[Configured the inventory file]
+* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
+* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Prepared the managed nodes]
+* link:{URLContainerizedInstall}/aap-containerized-installation#downloading-ansible-automation-platform[Downloaded {PlatformNameShort}]
+* link:{URLContainerizedInstall}/aap-containerized-installation#configuring-inventory-file[Configured the inventory file]
 * Logged in to the {RHEL} host as your non-root user
 
 .Procedure
 
 * Go to the installation directory on your {RHEL} host.
 * Run the `install` playbook:
++
 ----
 ansible-playbook -i <inventory_file_name> ansible.containerized_installer.install
 ----
-
++
 For example:
++
 ----
 ansible-playbook -i inventory ansible.containerized_installer.install
 ----
-
++
 You can add additional parameters to the installation command as needed:
++
 ----
 ansible-playbook -i <inventory_file_name> -e @<vault_file_name> --ask-vault-pass -K -v ansible.containerized_installer.install
 ----
-
++
 For example:
++
 ----
 ansible-playbook -i inventory -e @vault.yml --ask-vault-pass -K -v  ansible.containerized_installer.install
 ----
 
-* `-i <inventory_file_name>` - The inventory file to use for the installation.
-* `-e @<vault_file_name> --ask-vault-pass` - (Optional) If you are using a vault to store sensitive variables, add this to the installation command.
-* `-K` - (Optional) If your privilege escalation requires you to enter a password, add this to the installation command. You are then prompted for the BECOME password.
-* `-v` - (Optional) You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so use it only as needed or requested by Red Hat support.
+** `-i <inventory_file_name>` - The inventory file to use for the installation.
+** `-e @<vault_file_name> --ask-vault-pass` - (Optional) If you are using a vault to store sensitive variables, add this to the installation command.
+** `-K` - (Optional) If your privilege escalation requires you to enter a password, add this to the installation command. You are then prompted for the BECOME password.
+** `-v` - (Optional) You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so use it only as needed or requested by Red Hat support.
 
-The installation of containerized {PlatformNameShort} begins.
+* The installation of containerized {PlatformNameShort} begins.
 
 .Verification
 
 * After the installation completes, verify that you can access the platform UI which is available by default at the following URL:
-
++
 ----
 https://<gateway_node>:443
 ----
-
-Log in as the admin user with the credentials you created for `gateway_admin_username` and `gateway_admin_password`.
-
-The default ports and protocols used for {PlatformNameShort} are 80 (HTTP) and 443 (HTTPS). You can customize the ports with the following variables:
-
++
+* Log in as the admin user with the credentials you created for `gateway_admin_username` and `gateway_admin_password`.
++
+* The default ports and protocols used for {PlatformNameShort} are 80 (HTTP) and 443 (HTTPS). You can customize the ports with the following variables:
++
 ----
 envoy_http_port=80
 envoy_https_port=443
 ----
-
-If you want to disable HTTPS, set `envoy_disable_https` to `true`:
-
++
+* If you want to disable HTTPS, set `envoy_disable_https` to `true`:
++
 ----
 envoy_disable_https: true
 ----
 
 [role="_additional-resources"]
 .Additional resources
-* For more information about privilege escalation, see link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html[Understanding privilege escalation: become].
-* For more information about securing sensitive variables, see link:{URLHardening}/hardening-aap#ref-sensitive-variables-install-inventory_hardening-aap[Sensitive variables in the installation inventory] in _{TitleHardening}_.
-* For more information about post installation instructions see link:{LinkGettingStarted}
-* For more information about troubleshooting your containerized {PlatformNameShort} installation, see link:{URLContainerizedInstall}/troubleshooting-containerized-ansible-automation-platform[Troubleshooting containerized {PlatformNameShort}].
+* link:https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_privilege_escalation.html[Understanding privilege escalation: become]
+* link:{URLHardening}/hardening-aap#ref-sensitive-variables-install-inventory_hardening-aap[Sensitive variables in the installation inventory]
+* link:{URLGettingStarted}[Getting started with {PlatformNameShort}]
+* link:{URLContainerizedInstall}/troubleshooting-containerized-ansible-automation-platform[Troubleshooting containerized {PlatformNameShort}]

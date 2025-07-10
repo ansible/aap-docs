@@ -1,5 +1,6 @@
 :_mod-docs-content-type: REFERENCE
-[id="containerized-ansible-automation-platform-reference_{context}"]
+
+[id="containerized-ansible-automation-platform-reference"]
 
 = Containerized {PlatformNameShort} reference
 
@@ -39,19 +40,19 @@ The installation program adds the following files to the filesystem where you ru
 
 ----
 $ tree -L 1
-.
-├── aap_install.log
-├── ansible.cfg
-├── collections
-├── galaxy.yml
-├── inventory
-├── LICENSE
-├── meta
-├── playbooks
-├── plugins
-├── README.md
-├── requirements.yml
-├── roles
+    .
+    ├── aap_install.log
+    ├── ansible.cfg
+    ├── collections
+    ├── galaxy.yml
+    ├── inventory
+    ├── LICENSE
+    ├── meta
+    ├── playbooks
+    ├── plugins
+    ├── README.md
+    ├── requirements.yml
+    ├── roles
 ----
 
 The installation root directory includes other containerized services that make use of Podman volumes. 
@@ -61,62 +62,62 @@ Here are some examples for further reference:
 The `containers` directory includes some of the Podman specifics used and installed for the execution plane:
 
 ----
-containers/
-├── podman
-├── storage
-│   ├── defaultNetworkBackend
-│   ├── libpod
-│   ├── networks
-│   ├── overlay
-│   ├── overlay-containers
-│   ├── overlay-images
-│   ├── overlay-layers
-│   ├── storage.lock
-│   └── userns.lock
-└── storage.conf
+    containers/
+    ├── podman
+    ├── storage
+    │   ├── defaultNetworkBackend
+    │   ├── libpod
+    │   ├── networks
+    │   ├── overlay
+    │   ├── overlay-containers
+    │   ├── overlay-images
+    │   ├── overlay-layers
+    │   ├── storage.lock
+    │   └── userns.lock
+    └── storage.conf
 ----
 
 The `controller` directory has some of the installed configuration and runtime data points:
 
 ----
-controller/
-├── data
-│   ├── job_execution
-│   ├── projects
-│   └── rsyslog
-├── etc
-│   ├── conf.d
-│   ├── launch_awx_task.sh
-│   ├── settings.py
-│   ├── tower.cert
-│   └── tower.key
-├── nginx
-│   └── etc
-├── rsyslog
-│   └── run
-└── supervisor
-    └── run
+    controller/
+    ├── data
+    │   ├── job_execution
+    │   ├── projects
+    │   └── rsyslog
+    ├── etc
+    │   ├── conf.d
+    │   ├── launch_awx_task.sh
+    │   ├── settings.py
+    │   ├── tower.cert
+    │   └── tower.key
+    ├── nginx
+    │   └── etc
+    ├── rsyslog
+    │   └── run
+    └── supervisor
+        └── run
 ----
 
 The `receptor` directory has the {AutomationMesh} configuration:
 
 ----
-receptor/
-├── etc
-│   └── receptor.conf
-└── run
-    ├── receptor.sock
-    └── receptor.sock.lock
+    receptor/
+    ├── etc
+    │   └── receptor.conf
+    └── run
+        ├── receptor.sock
+        └── receptor.sock.lock
 ----
 
 After installation, you will also find other files in the local user's `/home` directory such as the `.cache` directory:
 
 ----
-.cache/
-├── containers
-│   └── short-name-aliases.conf.lock
-└── rhsm
-    └── rhsm.log
+    .cache/
+    ├── containers
+    │   └── short-name-aliases.conf.lock
+    └── rhsm
+        └── rhsm.log
 ----
 
 As services are run using rootless Podman by default, you can use other services such as running `systemd` as non-privileged users. Under `systemd` you can see some of the component service controls available:
@@ -124,24 +125,24 @@ As services are run using rootless Podman by default, you can use other services
 The `.config` directory:
 
 ----
-.config/
-├── cni
-│   └── net.d
-│       └── cni.lock
-├── containers
-│   ├── auth.json
-│   └── containers.conf
-└── systemd
-    └── user
-        ├── automation-controller-rsyslog.service
-        ├── automation-controller-task.service
-        ├── automation-controller-web.service
-        ├── default.target.wants
-        ├── podman.service.d
-        ├── postgresql.service
-        ├── receptor.service
-        ├── redis.service
-        └── sockets.target.wants
+    .config/
+    ├── cni
+    │   └── net.d
+    │       └── cni.lock
+    ├── containers
+    │   ├── auth.json
+    │   └── containers.conf
+    └── systemd
+        └── user
+            ├── automation-controller-rsyslog.service
+            ├── automation-controller-task.service
+            ├── automation-controller-web.service
+            ├── default.target.wants
+            ├── podman.service.d
+            ├── postgresql.service
+            ├── receptor.service
+            ├── redis.service
+            └── sockets.target.wants
 ----
 
 This is specific to Podman and conforms to the Open Container Initiative (OCI) specifications. When you run Podman as the root user `/var/lib/containers` is used by default. For standard users the hierarchy under `$HOME/.local` is used.
@@ -149,12 +150,12 @@ This is specific to Podman and conforms to the Open Container Initiative (OCI) s
 The `.local` directory:
 
 ----
-.local/
-└── share
-    └── containers
-        ├── cache
-        ├── podman
-        └── storage
+    .local/
+    └── share
+        └── containers
+            ├── cache
+            ├── podman
+            └── storage
 ----
 
 As an example `.local/storage/volumes` contains what the output from `podman volume ls` provides:
