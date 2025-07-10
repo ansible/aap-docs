@@ -9,7 +9,7 @@ You can set up projects to manage and store your rulebooks in {EDAcontroller}.
 * You are logged in to the {PlatformNameShort} Dashboard as a Content Consumer.
 * You have set up a credential, if necessary.
 For more information, see the xref:eda-set-up-credential[Setting up credentials] section.
-* You have an existing repository containing rulebooks that are integrated with playbooks contained in a repository to be used by {ControllerName}.
+* You have an existing repository containing rulebooks.
 
 .Procedure
 // [ddacosta] I'm not sure whether there will be an EDA specific dashboard in the gateway. Step 1 might need to change to something like "Log in to AAP".
@@ -21,15 +21,15 @@ For more information, see the xref:eda-set-up-credential[Setting up credentials]
 Name:: Enter project name.
 Description:: This field is optional.
 Source control type:: Git is the only source control type available for use. This field is optional.
-Source control URL:: Enter Git, SSH, or HTTP[S] protocol address of a repository, such as GitHub or GitLab. This field is not editable.
+Source control URL:: Enter Git, SSH, or HTTP[S] protocol address of a repository, such as GitHub or GitLab. This field is editable. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-projects#eda-editing-a-project[Editing a project] to view details of how editing this field impacts rulebook activations.
 +
 [NOTE]
 ====
 This field accepts SSH private key or private key phrase. To enable the use of these private keys, your project URL must begin with `git@`.
 ====
-Proxy:: This is used to access access HTTP or HTTPS servers. This field is optional.
-Source control branch/tag/commit:: This is the branch to checkout. In addition to branches, you can input tags, commit hashes, and arbitrary refs. Some commit hashes and refs may not be available unless you also provide a custom refspec. This field is optional.
-Source control refspec:: A refspec to fetch (passed to the Ansible git module). This parameter allows access to references via the branch field not otherwise available. This field is optional.
+Proxy:: This is used to access HTTP or HTTPS servers. This field is optional.
+Source control branch/tag/commit:: This is the branch to checkout. In addition to branches, you can input tags, commit hashes, and arbitrary refs. Some commit hashes and refs may not be available unless you also provide a custom refspec. This field is optional and editable. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-projects#eda-editing-a-project[Editing a project] to view details of how editing this field impacts rulebook activations.
+Source control refspec:: A refspec to fetch (passed to the Ansible git module). This parameter allows access to references via the branch field not otherwise available. This field is optional and editable. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-projects#eda-editing-a-project[Editing a project] to view details of how editing this field impacts rulebook activations.
 For more information, see link:https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html#examples[Examples].
 Source control credential:: You must have this credential to utilize the source control URL. This field is optional.
 Content signature validation credential:: Enable content signing to verify that the content has remained secure when a project is synced. If the content has been tampered with, the job will not run. This field is optional.
