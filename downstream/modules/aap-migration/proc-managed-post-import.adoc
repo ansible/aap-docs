@@ -1,12 +1,21 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="managed-post-import"]
-= Reconciling the target environment post-import
+= Reconciling the target environment post-migration
 
-After importing your migration artifact, perform the following steps to reconcile your target environment.
+After a successful migration, perform the following tasks:
 
 .Procedure
-. Work with your provider to reconcile any `SECRET_KEY` differences.
-. Update {Gateway} configurations as permitted in Managed {PlatformNameShort}.
-. Adjust workflows to align with Managed {PlatformNameShort} architecture.
-. Identify and implement workarounds for unsupported configurations.
+. Log in to the Managed {PlatformNameShort} instance by using the local administrator account to confirm that data was properly imported.
+. You might need to perform the following actions based on the configuration of the source deployment:
+.. Reconfigure SSO authenticators and mappings to reflect the new URLs.
+.. Update {PrivateHubName} content to reflect the new URLs.
+... Run the following command to update {HubName} repositories: 
++
+----
+`curl -d '{"verify_checksums": true }' -X POST -k https://<platform_url>/api/galaxy/pulp/api/v3/repair/ -u <admin_user>:<admin_password>`
+----
+... Perform a sync on any repositories configured in {HubName}.
+... Push any custom execution environments from the source {HubName} to the target {HubName}.
+.. Reconfigure {AutomationMesh}.
+. Following migration, you can request standard SRE tasks through support tickets for the SRE team to perform such as configuration of custom certificates, a custom domain, or connectivity through private endpoints.
