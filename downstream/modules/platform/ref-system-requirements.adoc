@@ -66,6 +66,8 @@ The following are necessary for you to work with project updates and collections
 
 .Additional notes for {PlatformName} requirements
 
+* The {PlatformNameShort} database backups are staged on each node at `/var/backups/automation-platform` through the variable `backup_dir`. You might need to mount a new volume to `/var/backups` or change the staging location with the variable `backup_dir` to prevent issues with disk space before running the `./setup.sh -b` script.
+
 * If performing a bundled {PlatformNameShort} installation, the installation setup.sh script attempts to install ansible-core (and its dependencies) from the bundle for you.
 
 * If you have installed Ansible-core manually, the {PlatformNameShort} installation setup.sh script detects that Ansible has been installed and does not attempt to reinstall it.
