@@ -3,7 +3,7 @@
 
 = Setting up a custom domain without {AWSPrivateLink}
 
-If you are not planning to connect to the UI or use {AWSPrivateLink}, complete the following procedure to configure your DNS.
+If you are not planning to connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
 
 .Procedure
 
@@ -26,8 +26,6 @@ Shell
 dig mesh-ingress-0.cus-<id>.aws.ansiblecloud.com
 ----
 . Create DNS CNAME records for your custom domain using the following hostnames pointing to the DNS names identified in the previous step:
-* platform (for example, `platform.aap._example_.com``) → `cus-xxxxx-alb-11111111.us-east-1.elb.amazonaws.com`
-* mesh-ingress-0 (for example, `mesh-ingress-0.aap._example_.com)  → `xxxxx.elb.us-east-1.amazonaws.com`
-* mesh-ingress-1 (for example, `mesh-ingress-1.aap._example_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
-
-
+* platform (for example, `platform._exampledomain_.com`) → `cus-xxxxx-alb-11111111.us-east-1.elb.amazonaws.com`
+* mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
+* mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`

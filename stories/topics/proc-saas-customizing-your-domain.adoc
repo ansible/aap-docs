@@ -9,43 +9,30 @@ Complete the following procedure to configure a custom domain for your {Platform
 .Prerequisites
 * Ensure that you have management privileges over the domain or subdomain you intend to use so that you can add multiple records.
 * Ensure the DNS servers that you use to resolve records are accessible wherever you intend to use the domain.
-* You must use the same format and domain for all URLs in the deployment (for example, `aap._example_.com`). 
+* Ensure that you use the same format and domain for all URLs in the deployment (for example, Examples use `aap._example_.com`). 
 
 
 .Procedure
 
 . Identify the domain or subdomain that you intend to use.
 . Create the TLS certificate. 
-+
-[NOTE]
-====
-Ensure that all subdomains are located in the Subject Alternative Name (SAN) parameter so that the certificate can be valid for them.
-====
-+
-As an alternative, you can also generate a wildcard certificate for subdomains of your primary custom domain.
+.. To ensure the validity of a TLS certificate for a custom domain, you must confirm that the certificate is generated for the platform record and all mesh-ingress records are included in the Subject Alternative Name (SAN) parameter. Alternatively, you can opt to generate a wildcard certificate to cover the subdomains of your primary custom domain.
 +
 [NOTE]
 ====
 The RedHat SRE team requires an expiration date of at least one year or longer for current certificate rotation models supported by the service.
 ====
-  
-. Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment supplying the following information:
+ 
+. Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment and supply the following information:
 * Company Name
 * Deployment information (for example, `cus-xxxx`)
 * Custom domain (for example, `aap._example_.com``)
-* Certificate and private key (must be uploaded as separate files)
-+ 
-[NOTE]
-====
-Avoid providing password-protected files since that mmight prevent Red Hat SRE team’s ability to deploy them through service management automation.
-====
 
-. Wait for the SRE team to apply the configuration to your deployment and verify its functionality before proceeding to your next steps.
+. Allow the SRE team to apply the configuration to your deployment, verify the functionality, and collaborate on follow-up steps via the support ticket.
 . After your configuration is complete, perform the following actions:
-.. Log in to the {PlatformNameShort} Dashboard.
-.. From the navigation panel, select menu:Settings[Automation Execution][System].
+.. From the {PlatformNameShort} navigation panel, select menu:Settings[Automation Execution][System].
 .. Apply the custom domain to your deployment. 
 +
-The {MenuTopAE} section will no longer display your original mesh-ingresses as peers. Instead, new ones will be generated, utilizing the custom domain. 
+Your original mesh-ingresses won't be available; new ones using the custom domain will be created instead. 
 .. Reconfigure your execution nodes if you configured them previously with the old domain.
 
