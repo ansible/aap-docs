@@ -3,27 +3,27 @@
 
 = Setting up a custom domain with {AWSPrivateLink}
 
-If you are planning to either connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
+If you are planning to connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
 
 .Procedure 
 
-. Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to our {AWSPrivateLink} endpoint service by perfoming the following steps:
+. Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to {AWSPrivateLink} endpoint service by perfoming the following steps:
 .. Navigate to the {AWS} portal and select menu:VPC[Endpoints]. 
-.. Click the *VPC* endpoint for {SaaSonAWS}.
+.. Click the *VPC* Endpoint for {SaaSonAWS}.
 .. Retrieve the *DNS names* in the Details tab.
 +
-There are a few entries. Ensure that you select the one that is not {AWSPrivateLink}-dependent and does not have `us-east-1a` or `us-east-1b` as part of the DNS name (for example, `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`).
+There are a few entries. Ensure that you select the one that is not Availability Zone (AZ) dependent and does not have `us-east-1a` or `us-east-1b` as part of the DNS name (for example, `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`).
 +
-Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that endpoint by using:
+Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that endpoint by entering:
 +
 ----
 Shell
 aws ec2 describe-vpc-endpoints --vpc-endpoint-ids vpce-xxxx --query 'VpcEndpoints[0].DnsEntries[*].DnsName'
 ----
 
-. After you have the DNS name, create the DNS CNAME records for your custom domain using the following hostnames pointing to the DNS name identified in the previous step:
-.. platform (for example, `platform.aap._example_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
-.. mesh-ingress-0 platform (for example, `mesh-ingress-0.aap._example_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
-.. mesh-ingress-1 (for example, `mesh-ingress-1.aap._example_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+. After you have retrieved the DNS name, create the DNS CNAME records for your custom domain using the following hostnames pointing to the DNS name identified in the previous step:
+.. platform (for example, `platform._exampledomain_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+.. mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+.. mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 
 
