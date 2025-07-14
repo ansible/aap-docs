@@ -12,38 +12,36 @@ ifdef::context[:parent-context: {context}]
 
 Migrating your {PlatformName} deployment to the {OperatorPlatformNameShort} allows you to take advantage of the benefits provided by a Kubernetes native operator, including simplified upgrades and full lifecycle support for your {PlatformName} deployments.
 
+You can use the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/ansible_automation_platform_migration[{TitleMigration}] guide for help with migrating. 
+
 [NOTE]
 ====
 Upgrades of {EDAName} version 2.4 to 2.5 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible.
 ====
 
-Use these procedures to migrate any of the following deployments to the {OperatorPlatformNameShort}:
-
-* OpenShift cluster A to OpenShift cluster B
-* OpenShift namespace A to OpenShift namespace B
-* Virtual machine (VM) based or containerized VM {PlatformNameShort} 2.5 → {PlatformNameShort} 2.5
-
-include::platform/con-aap-migration-considerations.adoc[leveloffset=+1]
-
-include::platform/con-aap-migration-prepare.adoc[leveloffset=+1]
-
-include::platform/proc-aap-migration-backup.adoc[leveloffset=+2]
-
-include::platform/proc-create-secret-key-secret.adoc[leveloffset=+2]
-
-include::platform/proc-create-postresql-secret.adoc[leveloffset=+2]
-
-include::platform/proc-verify-network-connectivity.adoc[leveloffset=+2]
-
-include::platform/proc-aap-migration.adoc[leveloffset=+1]
-
-include::platform/proc-aap-create-aap-object.adoc[leveloffset=+2]
-
-include::platform/con-post-migration-cleanup.adoc[leveloffset=+1]
-
-include::platform/proc-post-migration-delete-instance.adoc[leveloffset=+2]
-
-include::platform/proc-post-migration-unlink-db.adoc[leveloffset=+2]
-
+//[gmurray 07/14/25 ]The following modules will need to be deprecated eventually, commenting out for now incase we need to roll back, I also need to confirm which are used in 2.4. Best thing would be to archive these when we cease supporting 2.4 
+//
+//include::platform/con-aap-migration-considerations.adoc[leveloffset=+1]
+//
+//include::platform/con-aap-migration-prepare.adoc[leveloffset=+1]
+//
+//include::platform/proc-aap-migration-backup.adoc[leveloffset=+2]
+//
+//include::platform/proc-create-secret-key-secret.adoc[leveloffset=+2]
+//
+//include::platform/proc-create-postresql-secret.adoc[leveloffset=+2]
+//
+//include::platform/proc-verify-network-connectivity.adoc[leveloffset=+2]
+//
+//include::platform/proc-aap-migration.adoc[leveloffset=+1]
+//
+//include::platform/proc-aap-create-aap-object.adoc[leveloffset=+2]
+//
+//include::platform/con-post-migration-cleanup.adoc[leveloffset=+1]
+//
+//include::platform/proc-post-migration-delete-instance.adoc[leveloffset=+2]
+//
+//include::platform/proc-post-migration-unlink-db.adoc[leveloffset=+2]
+//
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]
