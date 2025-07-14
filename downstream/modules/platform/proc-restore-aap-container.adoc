@@ -1,31 +1,92 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="proc-restore-aap-container"]
-
 = Restoring containerized {PlatformNameShort}
 
-Restore your {ContainerBase} of {PlatformNameShort} from a backup.
+Restore your {ContainerBase} of {PlatformNameShort} from a backup, or to a different environment.
 
 .Prerequisites
-
-You have done the following: 
-
-* Logged in to the {RHEL} host as your dedicated non-root user.
+* You have logged in to the {RHEL} host as your dedicated non-root user.
+* You have a backup of your {PlatformNameShort} deployment. For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up container-based {PlatformNameShort}].
+* If restoring to a different environment with the same hostnames, you have performed a fresh installation on the target environment with the same topology as the original (source) environment.
 
 .Procedure
+. Go to the installation directory on your {RHEL} host.
 
-. Go to the {PlatformName} installation directory on your {RHEL} host.
-
-. Run the `restore` playbook:
+. Perform the relevant restoration steps:
+** If you are restoring to the same environment with the same hostnames, run the `restore` playbook:
 +
 ----
 $ ansible-playbook -i <path_to_inventory> ansible.containerized_installer.restore
 ----
-
++
 This restores the important data deployed by the containerized installer such as:
-
++
 * PostgreSQL databases
 * Configuration files
 * Data files
-
++
 By default, the backup directory is set to `./backups`. You can change this by using the `backup_dir` variable in your `inventory` file.
+
+** If you are restoring to a different environment with different hostnames, perform the following additional steps before running the `restore` playbook:
++
+[IMPORTANT]
+Restoring to a different environment with different hostnames is not recommended and is intended only as a workaround.
++
+... For each component, identify the backup file from the source environment that contains the PostgreSQL dump file.
++
+For example:
++
+----
+$ cd ansible-automation-platform-containerized-setup-2.5-XX/backups
+----
++
+----
+$ tar tvf gateway_env1-gateway-node1.tar.gz | grep db
+
+-rw-r--r-- ansible/ansible 4850774 2025-06-30 11:05 aap/backups/awx.db
+----
+... Copy the backup files from the source environment to the target environment.
+... Rename the backup files on the target environment to reflect the new node names.
++
+For example:
++
+----
+$ cd ansible-automation-platform-containerized-setup-2.5-XX/backups
+----
++
+----
+$ mv gateway_env1-gateway-node1.tar.gz gateway_env2-gateway-node1.tar.gz
+----
+... For enterprise topologies, ensure that the component backup file containing the `component.db` file is listed first in its group within the inventory file.
++
+For example:
++
+----
+$ cd ansible-automation-platform-containerized-setup-2.5-XX
+----
++
+----
+$ ls backups/gateway*
+
+gateway_env2-gateway-node1.tar.gz
+gateway_env2-gateway-node2.tar.gz
+----
++
+----
+$ tar tvf backups/gateway_env2-gateway-node1.tar.gz | grep db
+
+-rw-r--r-- ansible/ansible 416687 2025-06-30 11:05 aap/backups/gateway.db
+----
++
+----
+$ tar tvf backups/gateway_env2-gateway-node2.tar.gz | grep db
+----
++
+----
+$ vi inventory
+
+[automationgateway]
+env2-gateway-node1
+env2-gateway-node2
+----
