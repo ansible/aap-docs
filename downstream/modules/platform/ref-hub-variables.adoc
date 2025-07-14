@@ -10,28 +10,28 @@
 
 | `automationhub_admin_password` 
 | `hub_admin_password` 
-| {HubNameStart} administrator password. +
+| {HubNameStart} administrator password. 
 Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `”`, or `@`.
 | Required 
 | 
 
 | `automationhub_api_token`
 |
-| Set the existing token for the installation program. +
+| Set the existing token for the installation program. 
 For example, a regenerated token in the {HubName} UI will invalidate an existing token. Use this variable to set that token in the installation program the next time you run the installation program.
 | Optional
 |
 
 | `automationhub_auto_sign_collections` 
 | `hub_collection_auto_sign` 
-| If a collection signing service is enabled, collections are not signed automatically by default. +
+| If a collection signing service is enabled, collections are not signed automatically by default. 
 Set this variable to `true` to sign collections by default.
 | Optional
 | `false`
 
 | `automationhub_backup_collections` 
 | 
-| {HubNameMain} provides artifacts in `/var/lib/pulp`. These artifacts are automatically backed up by default. +
+| {HubNameMain} provides artifacts in `/var/lib/pulp`. These artifacts are automatically backed up by default. 
 Set this variable to `false` to prevent backup or restore of `/var/lib/pulp`.
 | Optional
 | `true`
@@ -50,7 +50,7 @@ Set this variable to `false` to prevent backup or restore of `/var/lib/pulp`.
 
 | `automationhub_collection_seed_repository`
 | 
-| Controls the type of content to upload when `hub_seed_collections` is set to `true`. +
+| Controls the type of content to upload when `hub_seed_collections` is set to `true`. 
 Valid options include: `certified`, `validated`
 | Optional
 | Both certified and validated are enabled by default.
@@ -88,36 +88,36 @@ Valid options include: `true`, `false`, `auto`
 
 | `automationhub_disable_hsts` 
 | `hub_nginx_disable_hsts` 
-| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {HubName}. +
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for {HubName}. 
 Set this variable to `true` to disable HSTS.
 | Optional
 | `false`
 
 | `automationhub_disable_https` 
 | `hub_nginx_disable_https` 
-| Controls whether HTTPS is enabled or disabled for {HubName}. +
+| Controls whether HTTPS is enabled or disabled for {HubName}. 
 Set this variable to `true` to disable HTTPS.
 | Optional
 | `false`
 
 | `automationhub_enable_api_access_log` 
 |  
-| Controls whether logging is enabled or disabled at `/var/log/galaxy_api_access.log`. +
-The file logs all user actions made to the platform, including username and IP address. +
+| Controls whether logging is enabled or disabled at `/var/log/galaxy_api_access.log`. 
+The file logs all user actions made to the platform, including username and IP address. 
 Set this variable to `true` to enable this logging.
 | Optional
 | `false`
 
 | `automationhub_enable_unauthenticated_collection_access` 
 |  
-| Controls whether read-only access is enabled or disabled for unauthorized users viewing collections or namespaces for {HubName}. +
+| Controls whether read-only access is enabled or disabled for unauthorized users viewing collections or namespaces for {HubName}. 
 Set this variable to `true` to enable read-only access.
 | Optional
 | `false`
 
 | `automationhub_enable_unauthenticated_collection_download` 
 | 
-| Controls whether or not unauthorized users can download read-only collections from {HubName}. +
+| Controls whether or not unauthorized users can download read-only collections from {HubName}. 
 Set this variable to `true` to enable download of read-only collections.
 | Optional
 | `false`
@@ -137,7 +137,7 @@ Set to `true` to require the user to change the default administrator password d
 
 | `automationhub_importer_settings` 
 | `hub_galaxy_importer` 
-|  Dictionary of settings to pass to the `galaxy-importer.cfg` configuration file. These settings control how the `galaxy-importer` service processes and validates Ansible content. +
+|  Dictionary of settings to pass to the `galaxy-importer.cfg` configuration file. These settings control how the `galaxy-importer` service processes and validates Ansible content. 
 Example values include: `ansible-doc`, `ansible-lint`, and `flake8`.
 | Optional
 |
@@ -150,7 +150,7 @@ Example values include: `ansible-doc`, `ansible-lint`, and `flake8`.
 
 | `automationhub_pg_cert_auth` 
 | `hub_pg_cert_auth` 
-| Controls whether client certificate authentication is enabled or disabled on the {HubName} PostgreSQL database. +
+| Controls whether client certificate authentication is enabled or disabled on the {HubName} PostgreSQL database. 
 Set this variable to `true` to enable client certificate authentication.
 | Optional
 | `false`
@@ -159,19 +159,18 @@ Set this variable to `true` to enable client certificate authentication.
 | `hub_pg_database` 
 | Name of the PostgreSQL database used by {HubName}.
 | Optional
-| RPM = `automationhub` +
+| RPM = `automationhub`.
 Container = `pulp`
 
 | `automationhub_pg_host` 
 | `hub_pg_host` 
 | Hostname of the PostgreSQL database used by {HubName}.
 | Required
-| RPM = `127.0.0.1` +
-Container = 
+| RPM = `127.0.0.1`. Container = no default.
 
 | `automationhub_pg_password` 
 | `hub_pg_password` 
-| Password for the {HubName} PostgreSQL database user. +
+| Password for the {HubName} PostgreSQL database user.
 Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
 | Optional
 |
@@ -184,7 +183,7 @@ Use of special characters for this variable is limited. The `!`, `#`, `0` and `@
 
 | `automationhub_pg_sslmode` 
 | `hub_pg_sslmode` 
-| Controls the SSL/TLS mode to use when {HubName} connects to the PostgreSQL database. +
+| Controls the SSL/TLS mode to use when {HubName} connects to the PostgreSQL database. 
 Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
 | Optional
 | `prefer`
@@ -193,8 +192,7 @@ Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, 
 | `hub_pg_username` 
 | Username for the {HubName} PostgreSQL database user.
 | Optional
-| RPM = `automationhub` +
-Container = `pulp`
+| RPM = `automationhub`. Container = `pulp`.
 
 | `automationhub_pgclient_sslcert` 
 | `hub_pg_tls_cert` 
@@ -217,24 +215,24 @@ Container = `pulp`
 
 | `automationhub_require_content_approval` 
 | 
-| Controls whether content signing is enabled or disabled for {HubName}. +
-By default when you upload collections to {HubName}, an administrator must approve it before they are made available to users. +
+| Controls whether content signing is enabled or disabled for {HubName}. 
+By default when you upload collections to {HubName}, an administrator must approve it before they are made available to users. 
 To disable the content approval flow, set the variable to `false`.
 | Optional
 | `true`
 
 | `automationhub_restore_signing_keys`
 |
-| Controls whether or not existing signing keys should be restored from a backup. +
+| Controls whether or not existing signing keys should be restored from a backup. 
 Set to `false` to disable restoration of existing signing keys.
 | Optional
 | `true`
 
 | `automationhub_seed_collections` 
 | `hub_seed_collections` 
-| Controls whether or not pre-loading of collections is enabled. +
-When you run the bundle installer, validated content is uploaded to the `validated` repository, and certified content is uploaded to the `rh-certified` repository. By default, certified content and validated content are both uploaded. +
-If you do not want to pre-load content, set this variable to `false`. +
+| Controls whether or not pre-loading of collections is enabled. 
+When you run the bundle installer, validated content is uploaded to the `validated` repository, and certified content is uploaded to the `rh-certified` repository. By default, certified content and validated content are both uploaded. 
+If you do not want to pre-load content, set this variable to `false`. 
 For the RPM-based installer, if you only want one type of content, set this variable to `true` and set the `automationhub_collection_seed_repository` variable to the type of content you want to include.
 | Optional
 | `true`
@@ -277,7 +275,7 @@ For the RPM-based installer, if you only want one type of content, set this vari
 
 |`generate_automationhub_token` 
 | 
-| Controls whether or not a token is generated for {HubName} during installation. By default, a token is automatically generated during a fresh installation. +
+| Controls whether or not a token is generated for {HubName} during installation. By default, a token is automatically generated during a fresh installation. 
 If set to `true`, a token is regenerated during installation.
 | Optional
 | `false`
@@ -327,7 +325,7 @@ hub_extra_settings:
 
 | 
 | `hub_azure_extra_settings` 
-| Defines extra parameters for the Azure blob storage backend. +
+| Defines extra parameters for the Azure blob storage backend. 
 For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/azure.html#settings[django-storages documentation - Azure Storage].
 | Optional
 | `{}`
@@ -394,7 +392,7 @@ For more information about the list of parameters, see link:https://django-stora
 
 | 
 | `hub_s3_extra_settings` 
-| Used to define extra parameters for the AWS S3 storage backend. +
+| Used to define extra parameters for the AWS S3 storage backend. 
 For more information about the list of parameters, see link:https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings[django-storages documentation - Amazon S3].
 | Optional
 | `{}`
@@ -419,7 +417,7 @@ For more information about the list of parameters, see link:https://django-stora
 
 |  
 | `hub_storage_backend` 
-| {HubNameStart} storage backend type. +
+| {HubNameStart} storage backend type. 
 Possible values include: `azure`, `file`, `s3`.
 | Optional
 | `file`
