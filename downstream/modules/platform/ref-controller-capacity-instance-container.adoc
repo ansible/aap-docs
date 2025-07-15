@@ -15,5 +15,5 @@ Use the `max_concurrent_jobs` and `max_forks` settings available on instance gro
 ----
 ((number of worker nodes in kubernetes cluster) * (memory available on each worker)) / (memory request on pod_spec) = maximum number of forks
 ----
-** For example, given a single worker node with 8 Gb of Memory, we determine that the `max forks` we want to run is 81. This way, either 39 jobs with 1 fork can run (task impact is always forks + 1), or 2 jobs with forks set to 39 can run.
+** For example, given a single worker node with 8 GB of Memory, we determine that the `max forks` we want to run is 81. This way, either 39 jobs with 1 fork can run (task impact is always forks + 1), or 2 jobs with forks set to 39 can run.
 * You might have other business requirements that motivate using `max_forks` or `max_concurrent_jobs` to limit the number of jobs launched in a container group.
