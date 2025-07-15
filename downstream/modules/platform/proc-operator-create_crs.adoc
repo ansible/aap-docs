@@ -6,11 +6,11 @@
 
 After upgrading to the latest version of {OperatorPlatformNameShort} on {OCPShort}, you can create an {PlatformNameShort} custom resource (CR) that specifies the names of your existing deployments, in the same namespace.
 
-.Procedure
-This example outlines the steps to deploy a new {EDAName} setup after upgrading to the latest version, with existing {ControllerName} and {HubName} deployments already in place.
-
+The following example outlines the steps to deploy a new {EDAName} setup after upgrading to the latest version, with existing {ControllerName} and {HubName} deployments already in place.
 
 The link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_performance-considerations[Appendix] contains more examples of {PlatformNameShort} CRs for different deployments.
+
+.Procedure
 
 . Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
@@ -42,7 +42,7 @@ spec:
     disabled: false
 ----
 . Click btn:[Create].
-
++
 [NOTE]
 ====
 You can override the operator’s default image for {ControllerName}, {HubName}, or platform-resource app images by specifying the preferred image on the YAML spec.
@@ -50,6 +50,7 @@ This enables upgrading a specific deployment, like a controller, without updatin
 
 The recommended approach however, is to upgrade the operator and use the default image values. 
 ====
++
 
 .Verification
 Navigate to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify whether all instances have deployed correctly.
