@@ -20,7 +20,7 @@ The same external database (PostgreSQL instance) can be used for both {HubName},
 The following section outlines the steps to configure an external database for your {ControllerName} on a {OperatorPlatformNameShort}.
 
 .Prerequisite
-The external database must be a PostgreSQL database that is the version supported by the current release of {PlatformNameShort}.
+The external database must be a PostgreSQL database that is the version supported by the current release of {PlatformNameShort}. The external postgres instance credentials and connection information must be stored in a secret, which is then set on the {ControllerName} spec.
 
 [NOTE]
 ====
@@ -28,8 +28,6 @@ The external database must be a PostgreSQL database that is the version supporte
 ====
 
 .Procedure
-
-The external postgres instance credentials and connection information must be stored in a secret, which is then set on the {ControllerName} spec.
 
 . Create a `postgres_configuration_secret` YAML file, following the template below:
 +
