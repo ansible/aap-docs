@@ -1,0 +1,39 @@
+:_mod-docs-content-type: PROCEDURE
+[id="proc-saas-customizing-your-domain"]
+
+= Planning for your custom domain
+
+[role="_abstract"]
+The following steps are required as preparatory activities to set up the custom URL.
+
+.Prerequisites
+* Ensure that you have management over the domain or subdomain you intend to use in order to add multiple records.
+* Ensure the DNS servers that you use to resolve the record must be accessible wherever you intend to use the domain.
+* Ensure that you use the same domain for all URLs in the deployment (for example, use `exampledomain.com` for custom URLs). 
+
+
+.Procedure
+
+. Identify the domain or subdomain that you intend to use.
+. Create the TLS certificate. 
+.. To ensure the validity of a TLS certificate for a custom domain, you must confirm that the certificate is generated for the platform record and all mesh-ingress records are included in the Subject Alternative Name (SAN) parameter. Alternatively, you can opt to generate a wildcard certificate to cover the subdomains of your primary custom domain.
++
+[NOTE]
+====
+The Red Hat SRE team requires an expiration date of at least one year or longer for current certificate rotation models supported by the service.
+====
+ 
+. Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment and supply the following information:
+* Company Name
+* Deployment information (for example, `cus-xxxx`)
+* Custom domain (for example, `_exampledomain_.com`)
+
+. Allow the SRE team to apply the configuration to your deployment, verify the functionality, and collaborate with you on follow-up steps via the support ticket.
+. After your configuration is complete, perform the following actions:
+.. From the {PlatformNameShort} navigation panel, select {MenuSetAutomationExecution} and click *System*. 
+.. On the *System Settings* page, click btn:[Edit] and and update the *Base URL of the service*.
+.. Apply the custom domain to your deployment. 
++
+Your original mesh-ingresses will not be available; new ones using the custom domain are created instead. 
+.. Reconfigure your execution nodes if you configured them previously with the old domain.
+

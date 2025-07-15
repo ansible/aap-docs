@@ -1,0 +1,29 @@
+:_mod-docs-content-type: PROCEDURE
+[id="proc-saas-custom-dom-with-awsprivatelink"]
+
+= Setting up a custom domain with {AWSPrivateLink}
+
+If you are planning to connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
+
+.Procedure 
+
+. Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to {AWSPrivateLink} endpoint service by perfoming the following steps:
+.. Log in to the {AWS} portal and select menu:VPC[Endpoints]. 
+.. Click the *VPC* Endpoint for {SaaSonAWS}.
+.. Retrieve the *DNS names* in the Details tab.
++
+There are a few entries. To find the correct DNS name, go to the *Details* tab and look for the entry that is not tied to a specific Availability Zone (AZ). For instance, choose `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com` rather than one that includes an AZ like `us-east-1a` or `us-east-1b`.
++
+Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that endpoint by entering:
++
+----
+Shell
+aws ec2 describe-vpc-endpoints --vpc-endpoint-ids vpce-xxxx --query 'VpcEndpoints[0].DnsEntries[*].DnsName'
+----
+
+. After you have retrieved the DNS name, create the DNS CNAME records for your custom domain using the following hostnames pointing to the DNS name identified in the previous step:
+.. platform (for example, `platform._exampledomain_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+.. mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+.. mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
+
+
