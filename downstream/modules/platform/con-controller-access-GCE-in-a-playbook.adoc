@@ -1,0 +1,14 @@
+[id="con-controller-access-GCE-in-a-playbook"]
+
+= Access Google Compute Engine credentials in an Ansible Playbook
+
+You can get GCE credential parameters from a job runtime environment:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+vars:
+  gce:
+    email: '{{ lookup("env", "GCE_EMAIL") }}'
+    project: '{{ lookup("env", "GCE_PROJECT") }}'
+    pem_file_path: '{{ lookup("env", "GCE_PEM_FILE_PATH") }}'
+----
