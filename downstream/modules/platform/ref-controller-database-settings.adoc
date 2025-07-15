@@ -6,7 +6,6 @@
 
 To improve the performance of {ControllerName}, you can configure the following configuration parameters in the database:
 
-
 *Maintenance* 
 
 The `VACUUM` and `ANALYZE` tasks are important maintenance activities that can impact performance. In normal PostgreSQL operation, tuples that are deleted or obsoleted by an update are not physically removed from their table; they remain present until a `VACUUM` is done. Therefore it's necessary to do VACUUM periodically, especially on frequently-updated tables. `ANALYZE` collects statistics about the contents of tables in the database, and stores the results in the `pg_statistic` system catalog. Subsequently, the query planner uses these statistics to help determine the most efficient execution plans for queries. The autovacuuming PostgreSQL configuration parameter automates the execution of `VACUUM` and `ANALYZE` commands. Setting autovacuuming to *true* is a good practice. However, autovacuuming will not occur if there is never any idle time on the database. If it is observed that autovacuuming is not sufficiently cleaning up space on the database disk, then scheduling specific vacuum tasks during specific maintenance windows can be a solution. 
@@ -17,7 +16,22 @@ To improve the performance of the PostgreSQL server, configure the following _Gr
 
 * `shared_buffers`: determines how much memory is dedicated to the server for caching data. The default value for this parameter is 128 MB. When you modify this value, you must set it between 15% and 25% of the machine's total RAM. 
 
-NOTE: You must restart the database server after changing the value for shared_buffers.
+[NOTE]
+====
+If you are compiling Postgres against OpenSSL 3.2, your system regresses to remove the parameter for User during startup. You can rectify this by using the BIO_get_app_data call instead of open_get_data. Only an administrator can make these changes, but it impacts all users connected to the PostgreSQL database. f you update your systems without the OpenSSL patch, you are not impacted, and you do not need to take action.
+====
+
+[NOTE]
+====
+You must restart the database server after changing the value for `shared_buffers`.
+====
+
+[WARNING]
+====
+If you are compiling Postgres against OpenSSL 3.2, your system regresses to remove the parameter for User during startup. You can rectify this by using the BIO_get_app_data call instead of open_get_data. Only an administrator can make these changes, but it impacts all users connected to the PostgreSQL database.
+
+If you update your systems without the OpenSSL patch, you are not impacted, and you do not need to take action.
+====
 
 * `work_mem`: provides the amount of memory to be used by internal sort operations and hash tables before disk-swapping. Sort operations are used for order by, distinct, and merge join operations. Hash tables are used in hash joins and hash-based aggregation. The default value for this parameter is 4 MB. Setting the correct value of the `work_mem` parameter improves the speed of a search by reducing disk-swapping.
 ** Use the following formula to calculate the optimal value of the `work_mem` parameter for the database server: 
@@ -38,7 +52,11 @@ NOTE: Setting a large `work_mem` can cause the PostgreSQL server to go out of me
 Total RAM * 0.05
 ----
 
-NOTE: Set `maintenance_work_mem` higher than `work_mem` to improve performance for vacuuming. 
+[NOTE]
+====
+Set `maintenance_work_mem` higher than `work_mem` to improve performance for vacuuming. 
+====
 
 .Additional resources
-For more information on autovacuuming settings, see link:https://www.postgresql.org/docs/13/runtime-config-autovacuum.html[Automatic Vacuuming].
+
+* link:https://www.postgresql.org/docs/13/runtime-config-autovacuum.html[Automatic Vacuuming]
