@@ -1,0 +1,50 @@
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context: {context}]
+
+:context: saas-control-plane
+[id="assembly-saas-control-plane"]
+
+= Control plane
+
+The {PlatformNameShort} control plane includes the application UIs, APIs, components, and services used for managing automation. 
+Red{nbsp}Hat manages these within its own infrastructure.
+
+Each customer deployment is fully isolated at the infrastructure layer. 
+Every deployment provisions its own dedicated network, compute, and database resources, remaining entirely independent from all other customer environments. 
+By enforcing this level of isolation, there is a reduce the risk of data leakage or unauthorized cross-deployment interactions, ensuring that actions and information remain confined within their designated environments.
+
+image::AWS_tenant_isolation.png[The diagram shows two customer deployments. Both deployments are identical, however the diagram illustrated that each deployment is isolated by an independent and unconnected AWS infastructure.]
+
+include::topics/con-saas-customer-access.adoc[leveloffset=+1]
+
+include::topics/con-saas-service-uptime.adoc[leveloffset=+1]
+
+include::topics/con-saas-sre-access-and-management.adoc[leveloffset=+1]
+
+include::topics/con-saas-backup-and-diaster-recovery.adoc[leveloffset=+1]
+
+include::topics/con-saas-infastructure-monitoring.adoc[leveloffset=+1]
+
+include::topics/con-saas-application-monitoring-and-customer-audits.adoc[leveloffset=+1]
+
+include::topics/con-saas-status-notification.adoc[leveloffset=+1]
+
+include::topics/con-saas-security.adoc[leveloffset=+1]
+
+include::topics/con-saas-identity-and-access-management.adoc[leveloffset=+2]
+
+include::topics/con-saas-encryption.adoc[leveloffset=+2]
+
+include::topics/con-saas-hosted-components.adoc[leveloffset=+1]
+
+include::topics/con-saas-custom-domain.adoc[leveloffset=+1]
+
+include::topics/proc-saas-customizing-your-domain.adoc[leveloffset=+2]
+
+include::topics/proc-saas-custom-dom-without-awsprivatelink.adoc[leveloffset=+2]
+
+include::topics/proc-saas-custom-dom-with-awsprivatelink.adoc[leveloffset=+2]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
