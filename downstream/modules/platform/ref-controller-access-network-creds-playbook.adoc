@@ -1,0 +1,13 @@
+[id="ref-controller-access-network-creds-playbook"]
+
+= Access network credentials in an ansible playbook
+
+You can get the username and password parameters from a job runtime environment:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+vars:
+  network:
+    username: '{{ lookup("env", "ANSIBLE_NET_USERNAME") }}'
+    password: '{{ lookup("env", "ANSIBLE_NET_PASSWORD") }}'
+----
