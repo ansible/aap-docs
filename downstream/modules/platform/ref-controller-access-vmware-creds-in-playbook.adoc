@@ -1,0 +1,14 @@
+[id="ref-controller-access-vmware-creds-in-playbook"]
+
+= Access VMware vCenter credentials in an ansible playbook
+
+You can get VMware vCenter credential parameters from a job runtime environment:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+vars:
+  vmware:
+    host: '{{ lookup("env", "VMWARE_HOST") }}'
+    username: '{{ lookup("env", "VMWARE_USER") }}'
+    password: '{{ lookup("env", "VMWARE_PASSWORD") }}'
+----
