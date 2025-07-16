@@ -4,32 +4,32 @@
 
 = Migrating from the community version of {Terraform}
 
-When you migrate from {TerraformCommunityName} Edition (TCE) to {TerraformEnterpriseShortName} (TFE) or HashiCorp Cloud Platform (HCP) {Terraform}, you are not migrating the collection itself. Instead, you are adapting your existing usage to work with {TerraformEnterpriseShortName}. After you migrate, you will be able to leverage {PlatformNameShort}.
+When you migrate from {TerraformCommunityName} Edition (TCE) to {TerraformEnterpriseShortName} (TFE) or {TerraformCloudShortName}, you are not migrating the collection itself. Instead, you are adapting your existing usage to work with {TerraformEnterpriseShortName} or {TerraformCloudShortName}. After you migrate, you will be able to leverage {PlatformNameShort}.
 
 [NOTE]
 ====
-The `cloud.terraform` collection only supports the CLI-driven workflow in HashiCorp Cloud Platform (HCP) {Terraform}.
+The `cloud.terraform` collection only supports the CLI-driven workflow in {TerraformCloudShortName}.
 ====
 
 .Prerequisites
 
 * Use the latest supported version of {Terraform} (1.11 or higher).
 * Follow the `tf-migrate` CLI instructions under **Additional resources** below.
-* Ensure that the HCP {Terraform} and TFE workspace is not set to automatically apply plans.
+* Ensure that the {TerraformCloudShortName} or TFE workspace is not set to automatically apply plans.
 
 .Procedure
 
-. To prevent errors when running playbooks against TFE or TCE, do the following actions before running a playbook:
+. To prevent errors when running playbooks against TFE or {TerraformCloudShortName}, do the following actions before running a playbook:
 
-.. Confirm that the {Terraform} version in the execution environment is the same as the version stated in TFE or TCE.
-.. Perform an initialization in TFE of TCE:
+.. Confirm that the {Terraform} version in the execution environment is the same as the version stated in TFE or {TerraformCloudShortName}.
+.. Perform an initialization in TFE or {TerraformCloudShortName}:
 +
 ----
 terraform init
 ----
 +
 .. If you have a local state file in your execution environment, delete the local state file.
-.. Get a token from HCP {Terraform} and {TerraformEnterpriseShortName}, which you will use to create the credential in a later step. Ensure the token has the necessary permissions based on the team or user token to execute the desired capabilities in the playbook.
+.. Get a token from {TerraformCloudShortName} or {TerraformEnterpriseShortName}, which you will use to create the credential in a later step. Ensure the token has the necessary permissions based on the team or user token to execute the desired capabilities in the playbook.
 .. Remove the backend config and files from your playbook definition.
 .. Add the workspace within the default setting in your TF config or an environment variable if you want to define the workspace outside updating the playbook itself.
 +
