@@ -1,8 +1,8 @@
 [id="ref-install-containerized-deployment"]
 
-= Using an external vault file with a Containerized deployment of {PlatformNameShort}
+= Using an external vault file with a containerized installation
 
-For containerized installations of {PlatformNameShort}, you can use the provided automation execution playbook with the external vault file.
+For containerized installations of {PlatformNameShort}, use the provided automation execution playbook with the external vault file.
 
 Use the following sensitive variables:
 ----
@@ -11,15 +11,17 @@ gateway_admin_password:  <secure_password>
 gateway_pg_password:  <secure_password>
 controller_admin_password:  <secure_password>
 controller_pg_password:  <secure_password>
-hub_admin_password:  <secure_password>
+hub_admin_password:  <secure_password>c
 hub_pg_password:  <secure_password>
 eda_admin_password:  <secure_password>
 eda_pg_password: <secure_password>
 ----
-To use the new Ansible vault with the {Installer}, ensure the file, for example, `vault.yml`, contains all required sensitive variables and run it with the following command: 
+To use the new Ansible vault with the {Installer}, use the following procedure:
 
+.Procedure
+. Ensure your vault file, for example, `vault.yml`, contains all required sensitive variables.
+. Run the container installer using the following command: 
++
 `ansible-playbook ansible.containerized_installer.install -e @vault.yml –ask-become-pass`.
 
-Ensure that the vault file is located in the working directory, or provide the full path. Do not duplicate the encrypted variables in the plaintext inventory file.
-
-By securing sensitive values with ansible vault, both RPM-based and containerized installations of {PlatformNameShort} benefit from improved security, password hygiene, and maintainability.
+Ensure that the vault file is located in the working directory, or provide the full path. Do not duplicate the encrypted variables in the `plaintext` inventory file.
