@@ -7,13 +7,11 @@ Uninstall your {ContainerBase} of {PlatformNameShort}.
 
 .Prerequisites
 
-You have done the following: 
-
-* Logged in to the {RHEL} host as your dedicated non-root user.
+* You have logged in to the {RHEL} host as your dedicated non-root user.
 
 .Procedure
 
-* If you intend to reinstall {PlatformNameShort} and want to use the preserved databases, you must collect the existing secret keys by running the following command:
+. If you intend to reinstall {PlatformNameShort} and want to use the preserved databases, you must collect the existing secret keys by running the following command:
 +
 ----
 $ podman secret inspect --showsecret <secret_key_variable> | jq -r .[].SecretData
@@ -24,28 +22,32 @@ For example:
 ----
 $ podman secret inspect --showsecret controller_secret_key | jq -r .[].SecretData
 ----
+
+. Run the `uninstall` playbook:
 +
-* For more information about the `*_secret_key` variables, see link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables].
-
-* Run the `uninstall` playbook:
-
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall
 ----
 
-This stops all systemd units and containers and then deletes all resources used by the containerized installer such as:
+** This stops all systemd units and containers and then deletes all resources used by the containerized installer such as:
 
-* configuration and data directories and files
-* systemd unit files
-* Podman containers and images
-* RPM packages
+*** configuration and data directories and files
+*** systemd unit files
+*** Podman containers and images
+*** RPM packages
 
-To keep container images, set the `container_keep_images` parameter to `true`.
+** To keep container images, set the `container_keep_images` parameter to `true`.
++
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall -e container_keep_images=true
 ----
 
-To keep PostgreSQL databases, set the `postgresql_keep_databases` parameter to `true`.
+** To keep PostgreSQL databases, set the `postgresql_keep_databases` parameter to `true`.
++
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.uninstall -e postgresql_keep_databases=true
 ----
+
+[role="_additional-resources"]
+.Additional resources
+* link:{URLContainerizedInstall}/appendix-inventory-files-vars[Inventory file variables]
