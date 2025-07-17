@@ -20,35 +20,21 @@ For example:
 ----
 # psql -h db.example.com -U superuser -p 5432
 ----
-+
+
 . Create the user with a password and ensure the `CREATEDB` role is assigned to the user. For more information, see link:https://www.postgresql.org/docs/13/user-manag.html[Database Roles].
 +
 [source,sql,subs="+attributes"]
 ----
 CREATE USER <username> WITH PASSWORD <password> CREATEDB;
 ----
-+
-For example:
-+
-[source,sql,subs="+attributes"]
-----
-CREATE USER hub_user WITH PASSWORD <password> CREATEDB;
-----
-+
+
 . Create the database and add the user you created as the owner.
 +
 [source,sql,subs="+attributes"]
 ----
 CREATE DATABASE <database_name> OWNER <username>;
 ----
-+
-For example:
-+
-[source,sql,subs="+attributes"]
-----
-CREATE DATABASE hub_database OWNER hub_user;
-----
-+
+
 . When you have created the PostgreSQL users and databases for each component, you can supply them in the inventory file under the `[all:vars]` group.
 +
 [source,yaml,subs="+attributes"]
