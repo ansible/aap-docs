@@ -11,6 +11,11 @@ Disk space:: Review your disk space requirements to ensure you have enough room 
 System credentials:: Confirm you have the required system credentials when working with a local database or a remote database. 
 On local systems, you might need `root` or `sudo` access, depending on how credentials are set up. 
 On remote systems, you might need different credentials to grant you access to the remote system you are trying to backup or restore.
++
+[NOTE]
+====
+The {PlatformNameShort} database backups are staged on each node at `/var/backups/automation-platform` through the variable `backup_dir`. You might need to mount a new volume to `/var/backups` or change the staging location with the variable `backup_dir` to prevent issues with disk space before running the `./setup.sh -b` script.
+====
 
 Version:: You must always use the most recent minor version of a release to backup or restore your {PlatformNameShort} installation version. 
 For example, if the current platform version you are on is 2.0.x, only use the latest 2.0 installer.
