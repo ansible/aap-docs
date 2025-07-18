@@ -18,7 +18,7 @@ Policy enforcement at automation runtime is a feature that uses encoded rules to
 
 OPA, or link:https://www.openpolicyagent.org/docs/latest/[Open Policy Agent], is a policy engine that offloads policy decisions from your Ansible instance. When it is triggered, the policy enforcement feature connects to OPA to retrieve policies specified in your configuration, and applies policy rules to your automation content. If OPA detects a policy violation, it will stop the action and give your user information about the policy violation.
 
-.Prerequisites
+*Prerequisites*
 
 Before you can implement policy enforcement in your {PlatformNameShort} instance, you must have: 
 
@@ -27,7 +27,8 @@ Before you can implement policy enforcement in your {PlatformNameShort} instance
 * Configured {PlatformNameShort} with settings required for authenticating to your OPA server.
 * Some familiarity with OPA and the Rego language, which is the language policies are written in.
 
-For policy enforcement to work correctly, you must both configure the OPA server in your policy settings, and associate a specific policy with a particular resource (for example, a particular organization, inventory, or job template). 
+For policy enforcement to work correctly, you must both configure the OPA server in your policy settings, and associate a specific policy with a particular resource.
+For example, a particular organization, inventory, or job template. 
 
 [NOTE]
 ====
@@ -49,4 +50,3 @@ include::platform/proc-pac-add-policy-to-inventory.adoc[leveloffset=+2]
 include::platform/proc-pac-add-policy-to-template.adoc[leveloffset=+2]
 
 include::platform/ref-pac-inputs-outputs.adoc[leveloffset=+1]
-
