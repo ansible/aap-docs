@@ -1,0 +1,19 @@
+[id="ref-controller-file-directory-structure"]
+
+= Ansible file and directory structure
+
+If you are creating a common set of roles to use across projects, these should be accessed through source control submodules, or a common location such as `/opt`. 
+Projects should not expect to import roles or content from other projects.
+
+For more information, see the link https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html[General tips] from the Ansible documentation. 
+
+[NOTE]
+====
+* Avoid using the playbooks `vars_prompt` feature, as {ControllerName} does not interactively permit `vars_prompt` questions. 
+If you cannot avoid using `vars_prompt`, see the xref:controller-surveys-in-job-templates[Surveys in job templates] functionality.
+
+* Avoid using the playbooks `pause` feature without a timeout, as {ControllerName} does not permit canceling a pause interactively.
+If you cannot avoid using `pause`, you must set a timeout.
+====
+
+Jobs use the playbook directory as the current working directory, although jobs must be coded to use the `playbook_dir` variable rather than relying on this.
