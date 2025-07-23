@@ -4,23 +4,27 @@
 
 = awx-manage utility
 
-The `awx-manage` utility supports the following options:
+To collect and manage host metric data and related cluster information in {PlatformNameShort}, use the `awx-manage` utility.
 
+.Procedure
+
+. The `awx-manage` utility supports the following options:
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 awx-manage host_metric --csv
 ----
-
-This command produces host metric data, a host metrics summary file, and a cluster info file. 
-To package all the files into a single tarball for distribution and sharing use:
-
++
+. This command produces host metric data, a host metrics summary file, and a cluster info file. 
+To package all the files into a single tar file for distribution and sharing, use:
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 awx-manage host_metric --tarball
 ----
-
-To specify the number of rows (`<n>`) to output to each file:
-
++
+. To specify the number of rows (`<n>`) to output to each file:
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 awx-manage host_metric --tarball --rows_per_file <n>
@@ -32,4 +36,6 @@ awx-manage host_metric --tarball --rows_per_file <n>
 
 {Analytics} receives and uses the JSON file.
 
-For more information on using `metrics-utility` CLI, see link:{LinkControllerAdminGuide}/assembly-controller-metrics[Usage reporting with metrics-utility]
+.Additional resources
+
+* link:{LinkControllerAdminGuide}/assembly-controller-metrics[Usage reporting with metrics-utility]
