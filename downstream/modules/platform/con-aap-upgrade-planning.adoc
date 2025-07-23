@@ -22,7 +22,7 @@ When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {C
 ====
 +
 * Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
-* Ensure you have a backup of an {PlatformNameShort} 2.4 environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and link:{LinkOperatorBackup} for the specific topology of the environment.
+* Ensure you have a backup of an {PlatformNameShort} 2.4 environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
 * Ensure you capture your inventory or instance group details before upgrading.
 * Ensure you have upgraded to the latest version of {PlatformNameShort} 2.4 before upgrading your {PlatformName}.
 * Upgrades of {EDAName} version 2.4 to 2.5 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible. For more information, see xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerName} and {HubName} 2.4 and {EDAName} 2.5 with unified UI upgrades].
@@ -33,7 +33,7 @@ If you are currently running {EDAcontroller} 2.5, it is recommended that you dis
 * {PlatformNameShort} 2.5 offers a centralized Redis instance in both link:{URLPlanningGuide}/ha-redis_planning#gw-single-node-redis_planning[standalone] and link:{URLPlanningGuide}/ha-redis_planning#gw-clustered-redis_planning[clustered] topologies. For information on how to configure Redis, see link:{URLInstallationGuide}/assembly-platform-install-scenario#redis-config-enterprise-topology_platform-install-scenario[Configuring Redis] in the {TitleInstallationGuide} guide.
 * When upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, connections to the {Gateway} URL might fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: `Error connecting to Controller API`
 +
-To resolve this issue, for each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each controller host. You must then restart each controller host so that the URL changes are implemented. For more information, see _Upgrading_ in link:{LinkTroubleshootingAAP}. 
+To resolve this issue, for each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each controller host. You must then restart each controller host so that the URL changes are implemented. For more information, see _Upgrading_ in {LinkTroubleshootingAAP}. 
 
 
 [role="_additional-resources"]
@@ -41,5 +41,5 @@ To resolve this issue, for each controller host, add the {Gateway} URL as a trus
 * link:{URLCentralAuth}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching a subscription]
 * xref:con-backup-aap_aap-upgrading-platform[Backup and restore]
 * link:{URLControllerAdminGuide}/controller-clustering[Clustering]
-* link:{LinkPlanningGuide}
+* {LinkPlanningGuide}
 
