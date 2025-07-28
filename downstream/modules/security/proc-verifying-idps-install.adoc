@@ -1,18 +1,14 @@
-////
-Base the file name and the ID on the module title. For example:
-* file name: proc-doing-procedure-a.adoc
-* ID: [id="doing-procedure-a_{context}"]
-* Title: = Doing procedure A
-
-The ID is an anchor that links to the module. Avoid changing it after the module has been published to ensure existing links are not broken.
-////
+:_mod-docs-content-type: PROCEDURE
 
 [id="proc-verifying-ids-install_{context}"]
 
 = Verifying your IDPS installation
 
-To verify that Snort has been configured successfully, call it via `sudo` and ask for the version:
+Use the following procedure to verify that Snort has been configured successfully:
 
+.Procedure
+. Call snort using `sudo` and ask for the version:
++
 ----
   $ sudo snort --version
 
@@ -26,8 +22,10 @@ To verify that Snort has been configured successfully, call it via `sudo` and as
         Using ZLIB version: 1.2.7
 ----
 
-Verify that the service is actively running via `sudo systemctl`:
-
+. Verify that the service is actively running using the following command:
++
+`sudo systemctl`:
++
 ----
 $ sudo systemctl status snort
 ● snort.service - Snort service
@@ -39,6 +37,6 @@ $ sudo systemctl status snort
 [...]
 ----
 
-If the Snort service is not actively running, restart it with `systemctl restart snort` and recheck the status.
+. If the Snort service is not actively running, restart it with `systemctl restart snort` and recheck the status.
 
-Once you confirm the service is actively running, exit the Snort server by simultaneously pressing `CTRL` and `D`, or by typing `exit` on the command line. All further interaction will be done through Ansible from the Ansible control host.
+. When you confirm that the service is actively running, exit the Snort server by simultaneously pressing `CTRL` and `D`, or by typing `exit` on the command line. All further interaction will be done through {PlatformNameShort} from the Ansible control host.

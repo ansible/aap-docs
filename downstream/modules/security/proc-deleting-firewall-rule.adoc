@@ -1,15 +1,8 @@
-////
-Base the file name and the ID on the module title. For example:
-* file name: proc-doing-procedure-a.adoc
-* ID: [id="doing-procedure-a_{context}"]
-* Title: = Doing procedure A
-
-The ID is an anchor that links to the module. Avoid changing it after the module has been published to ensure existing links are not broken.
-////
+:_mod-docs-content-type: PROCEDURE
 
 [id="proc-deleting-rule_{context}"]
 
-== Deleting a firewall rule
+= Deleting a firewall rule
 
 [role="_abstract"]
 Use the acl_manager role to delete a security rule.
@@ -27,7 +20,7 @@ Use the acl_manager role to delete a security rule.
 $ ansible-galaxy install ansible_security.acl_manager
 ----
 
-. Using CLI, create a new playbook with the acl_manger role and set the parameters (e.g., source object, destination object, access rule between the two objects):
+. Using CLI, create a new playbook with the acl_manger role and set the parameters, for example, source object, destination object, access rule between the two objects:
 +
 ----
 - name: delete block list entry
@@ -43,7 +36,7 @@ $ ansible-galaxy install ansible_security.acl_manager
         ansible_network_os: checkpoint
 ----
 
-. Run the playbook $ ansible-navigator run --ee false <playbook.yml>:
+. Run the playbook `$ ansible-navigator run --ee false <playbook.yml>`:
 +
 image::security-delete-rule.png[Playbook with deleted firewall rule]
 
