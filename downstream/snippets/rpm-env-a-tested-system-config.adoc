@@ -4,12 +4,15 @@
 |====
 | Type | Description |
 | Subscription | Valid {PlatformName} subscription |
-| Operating system 
-a| 
-* {RHEL} 8.8 or later minor versions of {RHEL} 8. 
-* {RHEL} 9.2 or later minor versions of {RHEL} 9. |
+| Operating system | {RHEL} 9.4 or later minor versions of {RHEL} 9. |
 | CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power) |
 | `ansible-core` | `ansible-core` version {CoreUseVers} or later | {PlatformNameShort} uses the system-wide ansible-core package to install the platform, but uses ansible-core 2.16 for both its control plane and built-in execution environments.
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome |
-| Database | {PostgresVers} | External (customer supported) databases require ICU support.
+| Database 
+a| 
+* For {PlatformNameShort} managed databases: {PostgresVers}
+* For customer provided (external) databases: {PostgresVers}, 16, or 17.
+a| 
+* External (customer supported) databases require ICU support.
+* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with {PostgresVers}.
 |====
