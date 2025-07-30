@@ -44,18 +44,25 @@ Red{nbsp}Hat has tested the following configurations to install and run {Platfor
 .Tested system configurations
 [options="header"]
 |====
-| Type | Description 
-| Subscription | Valid {PlatformName} subscription
-| Operating system | {RHEL} 9.2 or later minor versions of {RHEL} 9
-| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power)
+| Type | Description | Notes
+| Subscription | Valid {PlatformName} subscription |
+| Operating system | {RHEL} 9.2 or later minor versions of {RHEL} 9 |
+| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power) |
 | Red Hat OpenShift  
 a| 
 * Version: 4.14
 * num_of_control_nodes: 1
 * num_of_worker_nodes: 1 
-| Ansible-core | Ansible-core version {CoreUseVers} or later
-| Browser | A currently supported version of Mozilla Firefox or Google Chrome.
-| Database | {PostgresVers}
+|
+| Ansible-core | Ansible-core version {CoreUseVers} or later |
+| Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
+| Database 
+a| 
+* For {PlatformNameShort} managed databases: {PostgresVers}
+* For customer provided (external) databases: {PostgresVers}, 16, or 17.
+a| 
+* External (customer supported) databases require ICU support.
+* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with {PostgresVers}.
 |====
 
 == Example custom resource file 
