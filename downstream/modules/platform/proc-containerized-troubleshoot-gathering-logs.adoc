@@ -3,6 +3,7 @@
 
 = Gathering {PlatformNameShort} logs
 
+[role="_abstract"]
 With the `sos` utility, you can collect configuration, diagnostic, and troubleshooting data, and give those files to Red Hat Technical Support. An `sos` report is a common starting point for Red Hat technical support engineers when performing analysis of a service request for {PlatformNameShort}. 
 
 You can collect an `sos` report for each host in your containerized {PlatformNameShort} deployment by running the `log_gathering` playbook with the appropriate parameters.
@@ -31,19 +32,15 @@ $ ansible-playbook -i <path_to_inventory_file> ansible.containerized_installer.l
 [options="header"]
 |====
 | Parameter name | Description | Default 
-
 | `target_sos_directory`
 | Used to change the default location for the `sos` report files. 
 | `/tmp` directory of the current server.
-
 | `case_number`
 | Specifies the support case number if relevant to the log gathering.
 |
-
 | `clean`
 | Obfuscates sensitive data that might be present on the `sos` report.
 | `false`
-
 | `upload`
 | Automatically uploads the `sos` report data to Red Hat.
 | `false`
