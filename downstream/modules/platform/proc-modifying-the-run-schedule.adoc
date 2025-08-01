@@ -1,5 +1,3 @@
-:_newdoc-version: 2.18.3
-:_template-generated: 2024-07-15
 :_mod-docs-content-type: PROCEDURE
 
 [id="modifying-the-run-schedule_{context}"]
@@ -14,17 +12,12 @@ To modify the run schedule on {RHEL} and on {OCPShort}, use one of the following
  
 . From the command line, run: 
 +
-[source, ]
-----
-crontab -e 
-----
-+
+`crontab -e` 
+
 . After the code editor has opened, update the `gather` and `build` parameters using cron syntax as shown below: 
 +
-[source, ]
-----
-*/2 * * * *     metrics-utility gather_automation_controller_billing_data --ship --until=10m
-*/5 * * * *     metrics-utility build_report
-----
+`*/2 * * * *     metrics-utility gather_automation_controller_billing_data --ship --until=10m`
 +
+`*/5 * * * *     metrics-utility build_report`
+
 . Save and close the file.

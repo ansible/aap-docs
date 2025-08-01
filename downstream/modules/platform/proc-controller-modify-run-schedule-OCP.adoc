@@ -4,7 +4,7 @@
 
 = Modifying the run schedule on {OCPShort} from the {PlatformNameShort} operator 
 
-Adjust the execution schedule of the `metrics-utility` within your {PlatformNameShort} deployment running on {OCPShort}. 
+To adjust the execution schedule of the `metrics-utility` within your {PlatformNameShort} deployment running on {OCPShort}, use the following procedure: 
 
 .Procedure
 
@@ -18,12 +18,10 @@ Adjust the execution schedule of the `metrics-utility` within your {PlatformName
 . On the next screen, select the `YAML` tab. 
 . In the `YAML` file, find the following parameters and enter a variable representing how often `metrics-utility` should gather data and how often it should produce a report: 
 +
-[source, ]
-----
-metrics_utility_cronjob_gather_schedule:
-metrics_utility_cronjob_report_schedule: 
-----
+`metrics_utility_cronjob_gather_schedule:`
 +
+`metrics_utility_cronjob_report_schedule:` 
+
 . Click btn:[Save].
 . From the navigation menu, select menu:Deployments[] and then select *automation-controller-operator-controller-manager*.
 . Increase the number of pods to 1.

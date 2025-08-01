@@ -1,0 +1,41 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-optional-build-sheets"]
+
+= Optional sheets for `build_report` command
+
+You may use the following optional sheets for the `build_report` command:
+
+* `ccsp_summary`
+** This is a landing page specifically for partners under the CCSP program. It shows managed node usage by each {ControllerName} organization.
+** This report takes additional parameters to customize the summary page. For more information, see the following example:
++
+----
+export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
+export METRICS_UTILITY_REPORT_SKU=MCT3752MO
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+export METRICS_UTILITY_REPORT_H1_HEADING="CCSP Reporting <Company>: ANSIBLE Consumption"
+export METRICS_UTILITY_REPORT_COMPANY_NAME="Company Name"
+export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
+export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
+----
+
+* `managed_nodes`
+** This is a deduplicated list of managed nodes automated by {ControllerName}.
+* `indirectly_managed_nodes`
+** This is a deduplicated list of indirect managed nodes automated by {ControllerName}.
+* `inventory_scope`
+** This is a deduplicated list of managed nodes present across all inventories of {ControllerName}.
+* `usage_by_collections`
+** This is a list of Ansible collections used in {ControllerName} job runs.
+* `usage_by_roles`
+** This is a list of roles used in {ControllerName} job runs.
+*`usage_by_modules`
+** This is a list of modules used in {ControllerName}job runs.
+
+----
+# Example with all optional sheets
+export METRICS_UTILITY_OPTIONAL_CCSP_REPORT_SHEETS='ccsp_summary,managed_nodes,indirectly_managed_nodes,inventory_scope,usage_by_collections,usage_by_roles,usage_by_modules'
+----
