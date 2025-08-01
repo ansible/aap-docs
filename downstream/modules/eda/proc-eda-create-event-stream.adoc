@@ -1,3 +1,4 @@
+:_mod-docs-content-type: PROCEDURE
 [id="eda-create-event-stream"] 
 
 = Creating an event stream
@@ -7,7 +8,7 @@ You can create event streams that will be attached to a rulebook activation.
 .Prerequisites
 
 * If you will be attaching your event stream to a rulebook activation, ensure that your activation has a decision environment and project already set up.
-* If you plan to connect to {ControllerName} to run your rulebook activation, ensure that you have created a {PlatformName} credential type in addition to the decision environment and project. For more information, see xref:eda-set-up-rhaap-credential[Setting up a {PlatformName} credential].
+* If you plan to connect to {ControllerName} to run your rulebook activation, ensure that you have created a {PlatformName} credential type in addition to the decision environment and project. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_decisions/eda-set-up-rhaap-credential-type#eda-set-up-rhaap-credential[Setting up a {PlatformName} credential].
 
 .Procedure
 
@@ -36,13 +37,17 @@ The event stream's event forwarding can be disabled for testing purposes while d
 
 . Click btn:[Create event stream].
 
+.Results
 After creating your event stream, the following outputs occur:
 
 * The Details page is displayed. From there or the Event Streams list view, you can edit or delete it. Also, the Event Streams page shows all of the event streams you have created and the following columns for each event: *Events received*, *Last event received*, and *Event stream type*. As the first two columns receive external data through the event stream, they are continuously updated to let you know they are receiving events from remote systems.
 * If you disabled the event stream, the Details page is displayed with a warning message, *This event stream is disabled*. 
-* Your new event stream generates a URL that is necessary when you configure the webhook on the remote system that sends events.
-
++
 [NOTE]
 ====
 After an event stream is created, the associated credential cannot be deleted until the event stream it is attached to is deleted.
 ====
+
+* Your new event stream generates a URL that is necessary when you configure the webhook on the remote system that sends events.
+
+
