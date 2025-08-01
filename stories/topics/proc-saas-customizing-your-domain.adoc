@@ -4,7 +4,9 @@
 = Planning for your custom domain
 
 [role="_abstract"]
-The following steps are required as preparatory activities to set up the custom URL.
+To set up a custom domain for your deployment, you must complete several preparatory steps, including domain identification and TLS certificate creation.
+This procedure outlines the necessary planning activities to ensure a successful custom URL configuration with Red Hat SRE assistance.
+
 
 .Prerequisites
 * Ensure that you have management over the domain or subdomain you intend to use in order to add multiple records.
@@ -18,11 +20,14 @@ The following steps are required as preparatory activities to set up the custom 
 . Create the TLS certificate. 
 .. To ensure the validity of a TLS certificate for a custom domain, you must confirm that the certificate is generated for the platform record and all mesh-ingress records are included in the Subject Alternative Name (SAN) parameter. Alternatively, you can opt to generate a wildcard certificate to cover the subdomains of your primary custom domain.
 +
-[NOTE]
+[IMPORTANT]
 ====
-The Red Hat SRE team requires an expiration date of at least one year or longer for current certificate rotation models supported by the service.
+TLS Certificate requirements for custom domains:
+
+* Initial setup: When providing a new certificate, it must have an expiration date of at least one year or longer. This is a requirement for our certificate management process.
+* Renewal: You are responsible for monitoring your certificate's expiration. To ensure uninterrupted service, you must begin the support process to renew it at least 14 days before it expires.
 ====
- 
++
 . Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment and supply the following information:
 * Company Name
 * Deployment information (for example, `cus-xxxx`)
