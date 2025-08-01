@@ -1,0 +1,56 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-optional-sheets"]
+
+= Optional sheets for `build_report` command
+
+You can use the following optional sheets for the `build_report` command:
+
+* `ccsp_summary`
+** This is a landing page specifically for partners under CCSP program.
+This report takes additional parameters to customize the summary page. For more information, see the following example:
++
+----
+export METRICS_UTILITY_PRICE_PER_NODE=11.55 # in USD
+export METRICS_UTILITY_REPORT_SKU=MCT3752MO
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat Ansible Automation Platform, Full Support (1 Managed Node, Dedicated, Monthly)"
+export METRICS_UTILITY_REPORT_H1_HEADING="CCSP NA Direct Reporting Template"
+export METRICS_UTILITY_REPORT_COMPANY_NAME="Partner A"
+export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_PO_NUMBER="123"
+export METRICS_UTILITY_REPORT_END_USER_COMPANY_NAME="Customer A"
+export METRICS_UTILITY_REPORT_END_USER_CITY="Springfield"
+export METRICS_UTILITY_REPORT_END_USER_STATE="TX"
+export METRICS_UTILITY_REPORT_END_USER_COUNTRY="US"
+----
+* `jobs`
+** This is a list of {ControllerName} jobs launched. It is grouped by job template.
+* `managed_nodes`
+** This is a deduplicated list of managed nodes automated by {ControllerName}.
+* `indirectly_managed_nodes`
+** This is a deduplicated list of indirect managed nodes automated by {ControllerName}.
+* `inventory_scope`
+** This is a deduplicated list of managed nodes present across all inventories of {ControllerName}.
+* `usage_by_organizations`
+** This is a list of all {ControllerName} organizations with several metrics showing the organizations usage. This provides data suitable for doing internal chargeback.
+* `usage_by_collections`
+** This is a list of Ansible collections used in a {ControllerName} job runs.
+* `usage_by_roles`
+** This is a list of roles used in {ControllerName} job runs.
+* `usage_by_modules`
+** This is a list of modules used in {ControllerName} job runs.
+* `managed_nodes_by_organization`
+** This generates a sheet per organization, listing managed nodes for every organization with the same content as the managed_nodes sheet.
+* `data_collection_status`
+** This generates a sheet with the status of every data collection done by the `gather` command for the date range the report is built for. 
+
+To outline the quality of data collected it also lists: 
+
+*** unusual gaps between collections (based on collection_start_timestamp)
+*** gaps in collected intervals (based on since vs until)
++
+----
+# Example with all optional sheets
+export METRICS_UTILITY_OPTIONAL_CCSP_REPORT_SHEETS='ccsp_summary,jobs,managed_nodes,indirectly_managed_nodes,inventory_scope,usage_by_organizations,usage_by_collections,usage_by_roles,usage_by_modules,data_collection_status'
+----
