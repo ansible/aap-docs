@@ -9,13 +9,13 @@
 * An active {PlatformNameShort} subscription
 
 Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
-The following commands gather the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
+The following procedure gathers the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
 You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
 See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
 
 .Procedure
 
-. Create two scripts in your user's home director in order to set correct variables to ensure that `metrics-utility` gathers all relevant data.
+. Create two scripts in your user's home directory to set correct variables to ensure that `metrics-utility` gathers all relevant data.
 .. In `/home/my-user/cron-gather`:
 +
 [source, ]
@@ -58,42 +58,28 @@ metrics-utility build_report
 +
 . To ensure that these files are executable, run: 
 +
-[source, ]
-----
-chmod a+x /home/my-user/cron-gather /home/my-user/cron-report
-----
-+
+`chmod a+x /home/my-user/cron-gather /home/my-user/cron-report`
+
 . To open the cron file for editing, run:
 +
-[source, ]
-----
-crontab -e
-----
-+
+`crontab -e`
+
 . To configure the run schedule, add the following parameters to the end of the file and specify how often you want `metrics-utility` to gather information and build a report using link:https://www.redhat.com/sysadmin/linux-cron-command[cron syntax]. In the following example, the `gather` command is configured to run every hour at 00 minutes. The `build_report` command is configured to run on the second day of each month at 4:00 AM. 
 +
-[source, ]
-----
-0 */1 * * * /home/my-user/cron-gather
-0 4 2 * * /home/my-user/cron-report
-----
+`0 */1 * * * /home/my-user/cron-gather`
 +
+`0 4 2 * * /home/my-user/cron-report`
+
 . Save and close the file.
 . To verify that you saved your changes, run:
 +
-[source, ]
-----
-crontab -l
-----
-+
+`crontab -l`
+
 . To ensure that data is being collected, run: 
 +
-[source, ]
-----
-cat /var/log/cron 
-----
+`cat /var/log/cron` 
 +
-The following is an example of the output. Note that time and date might vary depending on how your configure the run schedule:
+The following is a typical output. Note that time and date might vary depending on how your configure the run schedule:
 +
 [source, ]
 ----
@@ -108,4 +94,4 @@ May  8 09:46:26 ip-10-0-6-23 crontab[51659]: (root) END EDIT (root)
 ----
 +
 
-The generated report will have the default name CCSP-<YEAR>-<MONTH>.xlsx and will be deposited in the ship path that you specified in step 1a.
+The generated report will have the default name `CCSP-<YEAR>-<MONTH>.xlsx` and is saved in the ship path that you specified in step 1a.
