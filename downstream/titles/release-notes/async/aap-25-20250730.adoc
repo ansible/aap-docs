@@ -1,0 +1,125 @@
+[[aap-25-20250730]]
+
+= {PlatformNameShort} patch release July 30, 2025
+
+This release includes the following components and versions:
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| July 30, 2025| 
+* {ControllerNameStart} 4.6.18
+* {HubNameStart} 4.10.6
+* {EDAName} 1.1.11
+* Container-based installer {PlatformNameShort} (bundle) 2.5-17
+* Container-based installer {PlatformNameShort} (online) 2.5-17
+* Receptor 1.5.7
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-16
+* RPM-based installer {PlatformNameShort} (online) 2.5-16
+
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1753402603
+
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1753403065
+
+
+
+== General
+
+* The `redhat.rhel_system_roles` collection has been updated to 1.95.7.(AAP-49916)
+
+* The `ansible.windows` collection has been updated to 2.8.0.(AAP-49923)
+
+* The `ansible.eda` collection has been updated to 2.8.2.(AAP-49997)
+
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-7738[CVE-2025-7738] `python3.11-django-ansible-base`: Hide plain text *OAuth2* secrets on GitHub Enterprise and GitHub Enterprise organization authenticator configuration views in platform-gateway.(AAP-49561)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-2099[CVE-2025-2099] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: Regular Expression Denial of Service (ReDoS) in uggingface/transformers.(AAP-48621)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-5988[CVE-2025-5988] `automation-gateway`: CSRF origin checking is disabled.(AAP-50374)
+
+
+
+== {PlatformNameShort}
+
+=== Features
+
+* `PosixUIDGroupType` can be selected for LDAP Group Type.(AAP-49347)
+
+=== Enhancements
+
+* Optimized the handling of web socket messages from the Workflow Visualizer.(AAP-46800)
+
+=== Bug fixes
+
+* Fixed the fields `content_type` for role user assignments to indicate that null values are valid responses from the API.(AAP-49494)
+
+* Fixed the fields `team_ansible_id` for role team assignments to indicate that null values can be POSTed to the API.(AAP-49812)
+
+* Fixed an issue where `auto-complete` was not disabled on all forms for sensitive information such as usernames, passwords, secret keys, etc.(AAP-49079)
+
+* Fixed an issue related to workflow job template limits overriding workflow job template node limits upon save.(AAP-48946)
+
+* Fixed the *Min* and *Max* Limit values displayed on the *Edit Survey* form.(AAP-39933)
+
+* Fixed an issue where the case insensitivity for authentication map user attribute names and values and for group names was not available. Feature flag `FEATURE_CASE_INSENSITIVE_AUTH_MAPS` must be set to true to enable case insensitive comparisons.(AAP-49327)
+
+* Fixed an issue that adds an OIDC Callback URL field that, after creation of authenticator, displays the URL to use in setting up the IdP. The URL field is displayed on the creation page and this field is to be left blank.(AAP-49874)
+
+
+
+== {ControllerNameStart}
+
+=== Enhancements
+
+* Update the injectors for the {PlatformNameShort} credential type to work across collection.(AAP-47877)
+
+=== Bug Fixes
+
+* Removed API version from hard-coded URL in inventory plugin.(AAP-48443)
+
+* Fixed a *404* error for workflow nodes.(AAP-47362)
+
+* Fixed an issue where the {ControllerName} pod was not working after an upgrade to `aap-operator.v2.5.0-0.1750901870`.(AAP-48771)
+
+
+
+== Container-based {PlatformNameShort}
+
+=== Enhancements
+
+* Added an exclusion parameter for Container-based {PlatformNameShort} Backup, allowing users to specify snapshot paths to be excluded from the backup process.(AAP-50114)
+
+=== Bug Fixes
+
+* Fixed the issue where execution instances removed from the inventory would still be visible on the Topology View.(AAP-48615)
+
+* Fixed a bug when restoring {HubName} to a new cluster when using NFS for the hub data filesystem.(AAP-48568)
+
+* Fixed permission issues when restoring {HubName} when using NFS storage.(AAP-50118)
+
+
+
+== RPM-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* {EDAName} node type is now properly checked during restore.(AAP-49004)
+
+* Fixed an issue where *gRPC* server port was not configured properly when non-default value was used.(AAP-48543)
+
+* Fixed an issue where the firewall role logic improperly restricted {EDAName} event stream ports. Firewall ports are now restricted to event hosts, enhancing network security for {EDAName} users.(AAP-49792)
+
+* Fixed an issue where the gunicorn timeout to {EDAName} API service unit was not passed.(AAP-49858)
+
+* Fixed an issue where envoy, nginx, web server, and jwt token timeouts were not aligned, and caused issues where requests time out but work continues, or tokens expire before they are used.(AAP-49153)
