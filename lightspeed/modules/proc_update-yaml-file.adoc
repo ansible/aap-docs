@@ -1,0 +1,24 @@
+:_content-type: PROCEDURE
+
+[id="update-yaml-file_{context}"]
+
+= Updating the YAML file of the {PlatformNameShort} operator 
+
+After you create the model configuration secret, you must update the YAML file of the {PlatformNameShort} operator to use the secret.
+
+.Procedure
+. Go to the {OCP}.
+. Select menu:Operators[Installed Operators].
+. From the list of installed operators, select the *{PlatformNameShort}* operator.
+. Locate and select the *{PlatformNameShort}* custom resource, and then click the required app.
+. Select the *YAML* tab.
+. Scroll the text to find the `Lightspeed` category, and add the following details under the `spec:` section:
++
+----
+spec:
+  lightspeed:
+    disabled: false
+    model_config_secret_name: <Name of the model configuration secret that you recently created.>
+----
+. Click *Save*. The Ansible Lightspeed service takes a few minutes to set up. 
+
