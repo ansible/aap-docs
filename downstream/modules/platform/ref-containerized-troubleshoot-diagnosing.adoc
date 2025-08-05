@@ -14,36 +14,91 @@ To get a list of the running container names run the following command:
 $ podman ps --all --format "{{.Names}}"
 ----
 
-Example output:
+.Container details
+[options="header" cols="1,1,2"]
+|===
+|Component group |Container name |Purpose
 
-----
-postgresql
-redis-unix
-redis-tcp
-receptor
-automation-controller-rsyslog
-automation-controller-task
-automation-controller-web
-automation-eda-api
-automation-eda-daphne
-automation-eda-web
-automation-eda-worker-1
-automation-eda-worker-2
-automation-eda-activation-worker-1
-automation-eda-activation-worker-2
-automation-eda-scheduler
-automation-gateway-proxy
-automation-gateway
-automation-hub-api
-automation-hub-content
-automation-hub-web
-automation-hub-worker-1
-automation-hub-worker-2
-----
+|{ControllerNameStart}
+|`automation-controller-rsyslog`
+|Handles centralized logging for {ControllerName}.
+
+|{ControllerNameStart}
+|`automation-controller-task`
+|Manages and runs tasks related to {ControllerName}, such as running playbooks and interacting with inventories.
+
+|{ControllerNameStart}
+|`automation-controller-web`
+|A web server that provides a REST API for {ControllerName}. This is accessed and routed through {Gateway} for user interaction.
+
+|{EDAName}
+|`automation-eda-api`
+|Exposes the API for {EDAName}, allowing external systems to trigger and manage event-driven automations.
+
+|{EDAName}
+|`automation-eda-daphne`
+|A web server for {EDAName}, handling WebSocket connections and serving static files.
+
+|{EDAName}
+|`automation-eda-web`
+|A web server that provides a REST API for {EDAName}. This is accessed and routed through {Gateway} for user interaction.
+
+|{EDAName}
+|`automation-eda-worker-<number>`
+|These containers run the automation rules and playbooks based on incoming events.
+
+|{EDAName}
+|`automation-eda-activation-worker-<number>`
+|These containers manage the activation of automation rules, ensuring they run when specific conditions are met.
+
+|{EDAName}
+|`automation-eda-scheduler`
+|Responsible for scheduling and managing recurring tasks and rule activations.
+
+|{GatewayStart}
+|`automation-gateway-proxy`
+|Acts as a reverse proxy, routing incoming requests to the appropriate {PlatformNameShort} services.
+
+|{GatewayStart}
+|`automation-gateway`
+|Responsible for authentication, authorization, and overall request handling for the platform, all of which is exposed through a REST API and served by a web server.
+
+|{HubNameStart}
+|`automation-hub-api`
+|Provides the API for {HubName}, enabling interaction with collection content, user management, and other {HubName} functionality.
+
+|{HubNameStart}
+|`automation-hub-content`
+|Manages and serves Ansible Content Collections, roles, and modules stored in {HubName}.
+
+|{HubNameStart}
+|`automation-hub-web`
+|A web server that provides a REST API for {HubName}. This is accessed and routed through {Gateway} for user interaction.
+
+|{HubNameStart}
+|`automation-hub-worker-<number>`
+|These containers handle background tasks for {HubName}, such as content synchronization, indexing, and validation.
+
+|Performance Co-Pilot
+|`pcp`
+|If Performance Co-Pilot Monitoring is enabled, this container is used for system performance monitoring and data collection.
+
+|PostgreSQL
+|`postgresql`
+|Hosts the PostgreSQL database for {PlatformNameShort}.
+
+|Receptor
+|`receptor`
+|Facilitates secure and reliable communication within {PlatformNameShort}.
+
+|Redis
+|`redis-<suffix>`
+|Responsible for caching, real-time analytics and fast data retrieval.
+|===
 
 *Inspecting the logs*
 
-To inspect any running container logs, run the `journalctl` command:
+Containerized {PlatformNameShort} uses `journald` for Podman logging. To inspect any running container logs, run the `journalctl` command:
 
 ----
 $ journalctl CONTAINER_NAME=<container_name>
