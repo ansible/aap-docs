@@ -1,0 +1,26 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-access-ocp_{context}"]
+= Accessing the disconnected OpenShift environment
+
+.Prerequisites
+Ensure you have the necessary kubeconfig and permissions (e.g., cluster-admin for setting up image pull secrets or insecure registries).
+
+.Procedure
+. In a terminal, log in to your disconnected OpenShift cluster using the `oc` CLI.
++
+----
+oc login --token=<your_token> --server=<your_openshift_api_url>
+----
++
+Use the following command if you have a kubeconfig:
++
+----
+export KUBECONFIG=/path/to/your/kubeconfig
+oc login
+----
+. Ensure that your OpenShift cluster is configured to trust your disconnected registry:
+.. Use `ImageContentSourcePolicy` for mirroring.
+.. Use `additionalTrustedCA` in `image.config.openshift.io/cluster` for self-signed certificates.
+.. Use  `insecure-registries` for plain HTTP.
+
