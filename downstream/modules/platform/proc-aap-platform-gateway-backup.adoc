@@ -3,14 +3,23 @@
 [id="aap-platform-gateway-backup_{context}"]
 
 = Backing up your {PlatformNameShort} deployment
+
 Regularly backing up your *{PlatformNameShort}* deployment is vital to protect against unexpected data loss and application errors. *{PlatformNameShort}* hosts any enabled components (such as, {ControllerName}, {HubName}, and {EDAName}), when you back up *{PlatformNameShort}* the operator will also back up these components.
 
+[NOTE]
+====
+{OperatorPlatformNameShort} creates a PersistentVolumeClaim (PVC) for your {PlatformNameShort} Backup automatically.
+You can use your own pre-created PVC by using the `backup_pvc` spec and specifying your PVC.
+====
+
 .Prerequisites
+
 * You must be authenticated on OpenShift cluster.
 * You have installed {OperatorPlatformNameShort} on the cluster.
 * You have deployed a *{PlatformNameShort}* instance using the {OperatorPlatformNameShort}.
 
 .Procedure 
+
 . Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
 . Select your {OperatorPlatformNameShort} deployment.
@@ -24,10 +33,8 @@ When creating the *{PlatformNameShort} Backup* resource it also creates backup r
 +
 . In the *Name* field, enter a name for the backup.
 . In the *Deployment name* field, enter the name of the deployed {PlatformNameShort} instance being backed up. For example if your {PlatformNameShort} deployment must be backed up and the deployment name is aap, enter 'aap' in the *Deployment name* field.
-. Click btn:[Create].
-
-This results in an *AnsibleAutomationPlatformBackup* resource. The  the resource YAML is similar to the following:
-
+. Click btn:[Create]. This results in an *AnsibleAutomationPlatformBackup* resource similar to the following:
++
 ----
 apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatformBackup
@@ -38,14 +45,10 @@ spec:
   no_log: true
   deployment_name: aap
 ----
-
-[NOTE]
-====
-{OperatorPlatformNameShort} creates a PersistentVolumeClaim (PVC) for your {PlatformNameShort} Backup automatically.
-You can use your own pre-created PVC by using the `backup_pvc` spec and specifying your PVC.
-====
++
 
 .Verification 
+
 To verify that your backup was successful you can:
 
 . Log in to {OCP}.
