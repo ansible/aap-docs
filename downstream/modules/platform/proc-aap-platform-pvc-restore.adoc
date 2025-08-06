@@ -1,0 +1,80 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="aap-platform-pvc-restore_{context}"]
+
+= Recovering your {PlatformNameShort} deployment from a PVC
+
+A persistent volume claim (PVC) is a storage volume that stores data for automation hub and automation controller applications.
+These PVCs are independent of the applications and persist even if an application is deleted.
+You can restore data from a PVC as an alternative to recovering from an *{PlatformNameShort}* backup.
+
+For more information see the _Finding and deleting PVCs_ section of the link:{BaseURL}/red_hat_ansible_automation_platform/{PlayformVers}/html-single/installing_on_openshift_container_platform/index[Installing on OpenShift Container Platform] guide.
+
+
+.Prerequisites
+
+* You have an existing PVC containing a backup
+* You have installed the {OperatorPlatformNameShort} on {OCP}.
+
+.Procedure 
+
+. Log in to {OCP}.
+. Navigate to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Go to your *All Instances* tab, and click btn:[Create New].
+. Select *{PlatformNameShort} Restore* from the list.
+. For *Name* enter the name for the recovery deployment. 
+. For *New {PlatformNameShort} Name* enter the new name for your {PlatformNameShort} instance. 
+. For *Backup Source* select *PVC*.
+.. *Backup PVC:* Enter the name of your PVC.
+.. *Backup Directory:* Enter the path to your backup directory on your PVC.
+. For *Backup name* enter the name you chose when creating the backup.
+. Under *YAML view* paste in the following example:
++
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatformRestore
+metadata:
+  name: aap
+spec:
+  deployment_name: aap
+  backup_source: PVC
+  backup_pvc: aap-backup-claim
+  backup_dir: '/backups/aap-openshift-backup-2025-06-23-18:28:29'
+
+  controller:
+    backup_source: PVC
+    backup_pvc: aap-controller-backup-claim
+    backup_dir: '/backups/tower-openshift-backup-2025-06-23-182910'
+
+  hub:
+    backup_source: PVC
+    backup_pvc: aap-hub-backup-claim
+    backup_dir: '/backups/openshift-backup-2025-06-23-182853'
+    storage_type: file
+
+  eda:
+    backup_source: PVC
+    backup_pvc: aap-eda-backup-claim
+    backup_dir: '/backups/eda-openshift-backup-2025-06-23-18:29:11'
+----
++
+. Click btn:[Create].
+
+.Verification 
+
+Your backups starts restoring under the *AnsibleAutomationPlatformRestores* tab.
+
+[NOTE]
+====
+The recovery is not complete until all the resources are successfully restored. Depending on the size of your database this this can take some time.
+====
+
+. Go to menu:Workloads[Pods].
+. Confirm that all pods are in a *Running* or *Completed* state.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index[Installing on OpenShift Container Platform]
