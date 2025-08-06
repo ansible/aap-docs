@@ -11,12 +11,12 @@ Alternatively, if the `ImagePullSecret` already exists in the container group na
 
 Note that the image used by a job running in a container group is always overridden by the Execution Environment associated with the job.
 
-.Use of pre-created ImagePullSecrets (Advanced)
+*Use of pre-created ImagePullSecrets (Advanced)*
 If you want to use this workflow and pre-create the `ImagePullSecret`, you can source the necessary information to create it from your local `.dockercfg` file on a system that has previously accessed a secure container registry.
 
+The `.dockercfg file`, or `$HOME/.docker/config.json` for newer Docker clients, is a Docker credentials file that stores your information if you have previously logged into a secured or insecure registry.
 
 .Procedure
-The `.dockercfg file`, or `$HOME/.docker/config.json` for newer Docker clients, is a Docker credentials file that stores your information if you have previously logged into a secured or insecure registry.
 
 . If you already have a `.dockercfg` file for the secured registry, you can create a secret from that file by running the following command:
 +
@@ -65,6 +65,8 @@ $ oc secrets link builder <pull_secret_name>
 ----
 + 
 . Optional: For builds, you must also reference the secret as the pull secret from within your build configuration.
+
+.Verification
 
 When the container group is successfully created, the *Details* tab of the newly created container group remains. This allows you to review and edit your container group information. 
 This is the same menu that is opened if you click the btn:[Edit] icon *&#9998;* from the *Instance Group* link. 
