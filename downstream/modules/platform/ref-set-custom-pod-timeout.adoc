@@ -3,6 +3,7 @@
 [id="ref-set-custom-pod-timeout_{context}"]
 
 = Extra settings
+
 With `extra_settings`, you can pass many custom settings by using the awx-operator. 
 The parameter `extra_settings` is appended to `/etc/tower/settings.py` and can be an alternative to the `extra_volumes` parameter.
 
@@ -12,7 +13,7 @@ The parameter `extra_settings` is appended to `/etc/tower/settings.py` and can b
 | `extra_settings` | Extra settings | ‘’
 |====
 
-.Example configuration of `extra_settings` parameter
+*Example configuration of `extra_settings` parameter*
 
 [options="nowrap" subs="+quotes,attributes"]
 ----
@@ -28,7 +29,7 @@ The parameter `extra_settings` is appended to `/etc/tower/settings.py` and can b
         value: "500"
 ----
 
-.Custom pod timeouts
+*Custom pod timeouts*
 
 A container group job in {ControllerName} transitions to the `running` state just before you submit the pod to the Kubernetes API. 
 {ControllerNameStart} then expects the pod to enter the `Running` state before `AWX_CONTAINER_GROUP_POD_PENDING_TIMEOUT` seconds has elapsed. 
