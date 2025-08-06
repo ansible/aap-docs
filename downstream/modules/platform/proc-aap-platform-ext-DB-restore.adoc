@@ -1,23 +1,20 @@
 :_mod-docs-content-type: PROCEDURE
 
-[id="aap-platform-gateway-restore_{context}"]
+[id="aap-platform-ext-DB-restore_{context}"]
 
-= Recovering your {PlatformNameShort} deployment
+= Recovering your {PlatformNameShort} deployment from an external database
 
-*{PlatformNameShort}* manages any enabled components (such as, {ControllerName}, {HubName}, and {EDAName}), when you recover *{PlatformNameShort}* you also restore these components.
+You can restore an external database on {OCP} using the Operator. Use the following procedure to restore from an external database.
 
-In previous versions of the {OperatorPlatformNameShort}, it was necessary to create a restore object for each component of the platform. 
-Now, you create a single *AnsibleAutomationPlatformRestore* resource, which  creates and manages the other restore objects: 
-
-* AutomationControllerRestore
-* AutomationHubRestore
-* EDARestore
+[IMPORTANT]
+====
+Restoring from an external database force drops the database, which overrides your existing external database.
+====
 
 .Prerequisites
 
-* You must be authenticated with an OpenShift cluster.
-* You have installed the {OperatorPlatformNameShort} on the cluster.
-* The *AnsibleAutomationPlatformBackups* deployment is available in your cluster.
+* You have an external database. 
+* You have installed the {OperatorPlatformNameShort} on {OCPShort}.
 
 .Procedure 
 
@@ -28,8 +25,24 @@ Now, you create a single *AnsibleAutomationPlatformRestore* resource, which  cre
 . Select *{PlatformNameShort} Restore* from the list.
 . For *Name* enter the name for the recovery deployment. 
 . For *New {PlatformNameShort} Name* enter the new name for your {PlatformNameShort} instance. 
+* If restoring to the same name {PlatformNameShort} then you must add `force_drop_db: true` to drop the database on restore.
 . *Backup Source* defaults to *CR*.
 . For *Backup name* enter the name you chose when creating the backup. 
+Under *YAML view* paste in the following example:
++
+----
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatformRestore
+metadata:
+  name: aaprestore
+spec:
+  deployment_name: aap
+  backup_name: aapbackup
+  controller:
+    force_drop_db: true
+----
++
 . Click btn:[Create].
 
 .Verification
