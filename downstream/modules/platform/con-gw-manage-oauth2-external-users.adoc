@@ -1,0 +1,17 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-manage-oauth2-external-users"]
+
+= Manage OAuth2 token creation for external users
+
+{PlatformName} is designed with a default security posture that prevents users authenticated through external providers, such as LDAP, SAML, or SSO, from creating OAuth2 tokens for programmatic API access. 
+When an external user tries to generate such a token, the following message appears: 
+`403: Forbidden' error with the message: '(access_denied) OAuth2 Tokens cannot be created by users associated with an external authentication provider`.
+
+This default behavior is a deliberate security measure. 
+{PlatformNameShort} prioritizes centralized control over token generation, which encourages administrators to select the appropriate method for enabling OAuth 2.0 user token generation for external authentication providers.
+
+It is important to understand that an OAuth2 token is created within {PlatformNameShort}, and {PlatformNameShort} itself manages its lifecycle, including its expiration. 
+This lifecycle is independent of the user's session with their external Identity Provider (IdP). 
+For example, if a user generates an {PlatformNameShort} token and their account is later disabled in the external IdP, the {PlatformNameShort} token remains valid until it expires or is manually revoked. 
+Being aware of this interaction is crucial for a secure configuration, as it highlights the need for compensating controls if you enable token creation for external users.
