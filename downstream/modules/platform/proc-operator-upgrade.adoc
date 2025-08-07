@@ -4,13 +4,18 @@
 
 = Upgrading the {OperatorPlatformNameShort}
 
-To upgrade to the latest version of {OperatorPlatformNameShort} on {OCPShort}, you can do the following:
+To upgrade to the latest version of {OperatorPlatformNameShort} on {OCPShort}, you can use the following procedure:
+
+[NOTE]
+====
+If you are on version 2.4, it is recommended to skip 2.5 and upgrade straight to version {PlatformVers}. 
+====
 
 .Prerequisites 
 
-* Read the link:{URLReleaseNotes}[{TitleReleaseNotes}] for 2.5 
+* Read the {LinkReleaseNotes} for {PlatformVers} 
 
-* [Optional] You need to deploy all of your {PlatformName} services ({ControllerNAme}, {HubName}, {EDAName}) to the same, single namespace before upgrading to 2.5 (only for existing deployments). For more information see, link:https://access.redhat.com/solutions/7092056[Migrating from one namespace to another].
+* [Optional] You must deploy all of your {PlatformName} services ({ControllerNAme}, {HubName}, {EDAName}) to the same, single namespace before upgrading to {PlatformVers} (only for existing deployments). For more information see, link:https://access.redhat.com/solutions/7092056[Migrating from one namespace to another].
 * Review the link:{URLOperatorBackup}[{TitleOperatorBackup}] guide and backup your services:
 ** AutomationControllerBackup
 ** AutomationHubBackup
@@ -22,14 +27,25 @@ Upgrading from {EDAName} 2.4 is not supported. If you are using {EDAName} 2.4 in
 ====
 
 .Procedure
+
 . Log in to {OCPShort}.
 . Navigate to menu:Operators[Installed Operators].
 . Select the {OperatorPlatformNameShort} installed on your project namespace.
 . Select the *Subscriptions* tab.
-. Change the channel from stable-2.4 to stable-2.5. An InstallPlan is created for the user.
-. Click btn:[Preview InstallPlan].
+. Depending on your current version change the channel:
+.. 2.4: Change from *stable-2.4* to *stable-2.6*
+.. 2.5: Change from *stable-2.5* to *stable-2.6*
+. This creates an InstallPlan for the user.  Click btn:[Preview InstallPlan].
 . Click btn:[Approve].
 . Create a Custom Resource (CR) using the {PlatformNameShort} UI. The {ControllerName} and {HubName} UIs remain until all SSO configuration is supported in the {Gateway} UI.
+
+.Verification 
+
+You can confirm you have upgraded successfully by navigating to menu:Operators[Installed Operators], here under {PlatformNameShort} you can see the version number, begins with 2.6.x.
+
+Additionally, go to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify if all instances upgraded correctly. 
+All pods should display either a *Running* or *Completed status*, with no pods displaying an error status.
+
 
 [role="_additional-resources"]
 .Additional resources
