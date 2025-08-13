@@ -28,7 +28,7 @@ See the *Operation* field to determine the behavior of the trigger if more than 
 Group identifiers must be entered in lowercase. For example, `cn=johnsmith,dc=example,dc=com` instead of `CN=johnsmith,DC=example,DC=com`.
 ====
 +
-Attribute:: The map is true or false based on a users attributes coming from the source system. See link:{URLCentralAuth}/gw-configure-authentication#gw-authenticator-map-examples[Authenticator map examples] for information on using *Attribute* triggers.
+Attribute:: The map is true or false based on a users attributes coming from the source system. See link:{URLCentralAuth}/gw-configure-authentication#gw-authenticator-map-examples[Authenticator map examples] for information about using *Attribute* triggers.
 +
 When defining an attribute trigger, the authentication mapping expands to include the following selections:
 +
@@ -36,7 +36,7 @@ When defining an attribute trigger, the authentication mapping expands to includ
 +
 [NOTE]
 ====
-If you would like to experiment with multiple attribute maps you can do that through the API but the UI form will remove multi-attribute maps if the authenticator is saved through the UI. When adding multiple attributes to a map, the *Operation* will also apply to the attributes.
+If you want to experiment with multiple attribute maps you can do that through the API but the UI form will remove multi-attribute maps if the authenticator is saved through the UI. When adding multiple attributes to a map, the *Operation* will also apply to the attributes.
 ====
 +
 * *Attribute:* The name of the attribute coming from the source system this trigger will be evaluated against. For example, if you wanted the trigger to fire based on the user's last name and the last name field in the source system was called `users_last_name` you would enter the value ‘users_last_name’ in this field.
@@ -46,10 +46,10 @@ If you would like to experiment with multiple attribute maps you can do that thr
 ** *matches*: The *Value* on the trigger is treated as a python regular expression and does an link:https://docs.python.org/3/library/re.html#re.match[Regular expression match (re.match)] (with case ignore on) between the specified *Value* and the value returned from the source system. For example, if the trigger's *Value* was ‘Jo’ the trigger would return _True_ if the value from the source was ‘John‘ or ‘Joanne‘ or any other value which matched the regular expression ‘Jo’. The trigger would return _False_ if the sources value for the attribute was ‘Dan’ because ‘Dan’ does not match the regular expression ‘Jo’. 
 ** *ends with*: The trigger will see if the value provided by the source ends with the specified *Value* of the trigger. For example, if the source provided a value of ‘John’ the trigger would be _True_ if its *Value* was set to ‘n’ or ‘on’. The trigger would be _False_ if its *Value* was set to ‘z’ because the value ‘John’ coming from the source does not end with the value ’z’ specified by the trigger.
 ** *equal*: The trigger will see if the value provided by the source is equal to (in its entirety) the specified *Value* of the trigger. For example, if the source returned the value ‘John’, the trigger would be _True_ if its *Value* was set to ‘John’. Any value other than ‘John’ returned from the source would set this trigger to _False_.
-** *in*: The *in* condition will see if the value matches one of several values. When *in* is specified as the *Comparison*, the *Value* field can be a comma separated list. For example, if a trigger had a *Value* of ‘John,Donna’ the trigger would be _True_ if the attribute coming from the source had either the value ‘John’ or ‘Donna’. Otherwise, the trigger would be _False_.
+** *in*: The *in* condition will see if the value matches one of several values. When *in* is specified as the *Comparison*, the *Value* field can be a comma-separated list. For example, if a trigger had a *Value* of ‘John,Donna’ the trigger would be _True_ if the attribute coming from the source had either the value ‘John’ or ‘Donna’. Otherwise, the trigger would be _False_.
 ** *Value*: The value that a users attribute will be matched against based on the *Comparison* field. See examples in the *Comparison* definition in this section. 
 +
 [NOTE]
 ====
-If the *Comparison* type is *in*, this field can be a comma separated list (without spaces).
+If the *Comparison* type is *in*, this field can be a comma-separated list (without spaces).
 ====
