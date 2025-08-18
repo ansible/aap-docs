@@ -21,25 +21,29 @@ The *System Settings* page is displayed.
 * *Proxy IP allowed list*: If the service is behind a reverse proxy or load balancer, use this setting to configure the proxy IP addresses from which the service should trust custom `REMOTE_HOST_HEADERS`   header values. 
 +
 If this setting is an empty list (the default), the headers specified by `REMOTE_HOST_HEADERS` are trusted unconditionally.
-* *CSRF Trusted Origins List*: If the service is behind a reverse proxy or load balancer, use this setting to configure the `schema://addresses` from which the service should trust Origin header values.
-* *Red Hat customer username*: This username is used to send data to Automation Analytics.
-* *Red Hat customer password*: This password is used to send data to Automation Analytics.
-* *Red Hat or Satellite username*: This username is used to send data to Automation Analytics.
-* *Red Hat or Satellite password*: This password is used to send data to Automation Analytics.
+* *Red Hat Client ID for anaytics* Client ID used to send data to {Analytics}.
+* *Red Hat Client Secret for analytics* Client secret used to send data to {Analytics}.
+* *Red Hat Client ID for subscriptions* Client ID used to retrieve subscription and content information.
+* *Red Hat Client Secret for Subsciptions* Client secret used to retrieve subscription and content information
+//* *CSRF Trusted Origins List*: If the service is behind a reverse proxy or load balancer, use this setting to configure the `schema://addresses` from which the service should trust Origin header values.
+//* *Red Hat customer username*: This username is used to send data to Automation Analytics.
+//* *Red Hat customer password*: This password is used to send data to Automation Analytics.
+//* *Red Hat or Satellite username*: This username is used to send data to Automation Analytics.
+//* *Red Hat or Satellite password*: This password is used to send data to Automation Analytics.
 * *Global default {ExecEnvShort}*: The {ExecEnvShort} to be used when one has not been configured for a job template.
 * *Custom virtual environment paths*: Paths where {ControllerName} looks for custom virtual environments. 
 +
 Enter one path per line.
 +
-* *Last gather date for Automation Analytics*: Set the date and time.
+//* *Last gather date for Automation Analytics*: Set the date and time.
 //This field has been removed by https://github.com/ansible/awx/pull/15497
-//* *Last gathered entries from the data collection service of {Analytics}*: Do not enter anything in this field.
+* *Last gathered entries from the data collection service of {Analytics}*: Do not enter anything in this field.
 * *{Analytics} Gather Interval*: Interval (in seconds) between data gathering. 
 +
 If *Gather data for {Analytics}* is set to false, this value is ignored.
 +
-* *Last cleanup date for HostMetrics*: Set the date and time.
-* *Last computing date of HostMetricSummaryMonthly*: Set the date and time.
+//* *Last cleanup date for HostMetrics*: Set the date and time.
+//* *Last computing date of HostMetricSummaryMonthly*: Set the date and time.
 * *Remote Host Headers*: HTTP headers and meta keys to search to decide remote hostname or IP. 
 Add additional items to this list, such as `HTTP_X_FORWARDED_FOR`, if behind a reverse proxy. 
 For more information, see link:{URLAAPOperationsGuide}/assembly-configuring-proxy-support[Configuring proxy support for {PlatformName}].
@@ -49,10 +53,14 @@ This setting is used to configure the upload URL for data collection for Automat
 +
 You can select the following options:
 +
+** No subscription: Deletion of host_metrics will not be considered for purposes of managed host counting.
+** Usage based on unique managed nodes ina large hostorical time frame and delete functionality for no longer used managed nodes. 
+
+You can set the following options:
 * *Enable Activity Stream*: Set to enable capturing activity for the activity stream.
 * *Enable Activity Stream for Inventory Sync*: Set to enable capturing activity for the activity stream when running inventory sync.
 * *All Users Visible to Organization Admins*: Set to control whether any organization administrator can view all users and teams, even those not associated with their organization.
-* *Organization Admins Can Manage Users and Teams*: Set to control whether any organization administrator has the privileges to create and manage users and teams. 
+* *Organization Admins Can Manage Users and Teams*: Set to control whether an organization administrator has the privileges to create and manage users and teams. 
 +
 You might want to disable this ability if you are using an LDAP or SAML integration.
 * *Gather data for Automation Analytics*: Set to enable the service to gather data on automation and send it to {Analytics}.
