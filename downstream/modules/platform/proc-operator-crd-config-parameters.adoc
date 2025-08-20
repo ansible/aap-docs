@@ -1,0 +1,31 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-crd-config-parameters_{context}"]
+
+= Discovering custom resource definition configuration parameters
+
+The {OperatorPlatformNameShort} manages multiple custom resources (CRs), each with its own configuration parameters. Use the `oc explain` command to discover all available configuration options for the `AnsibleAutomationPlatform` CR and its nested components.
+
+.Procedure
+
+. To see all available configuration parameters for a top-level CR, run:
++
+----
+oc explain ansibleautomationplatform.spec
+----
++
+. To view specific nested sections, query them directly:
++
+----
+oc explain automationcontroller.spec.postgres_configuration_secret
+oc explain automationcontroller.spec.route_tls_termination_mechanism
+----
++
+. To explore all nested fields at once, use the `--recursive` flag:
++
+----
+oc explain automationcontroller.spec --recursive
+----
+
+
+

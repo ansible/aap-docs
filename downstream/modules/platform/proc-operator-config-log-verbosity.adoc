@@ -1,0 +1,32 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-config-log-verbosity_{context}"]
+
+= Configuring log verbosity
+
+You can show task output for debugging by setting `no_log` to `false` on the {ControllerName} CR specification. The operator logs then shows the output for any failed tasks where `no_log` was set to `true`.
+
+.Procedure
+
+. Edit the {ControllerName} CR and set the `no_log` field to `false` in the spec.
++
+----
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: controller-demo
+spec:
+  no_log: false
+----
++
+[NOTE]
+====
+This might expose sensitive data in the logs. On production clusters, this value must generally be set to `true` unless you are actively debugging an issue.
+====
++
+. To increase the Ansible Playbook verbosity from the operator, set the verbosity level using an annotation:
++
+----
+annotations:
+    ansible.sdk.operatorframework.io/verbosity: "4"
+----
