@@ -1,0 +1,28 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-viewing-operator-logs_{context}"]
+
+= Viewing operator logs
+
+The following procedure is an example of how to view the logs for an `automation-controller-operator` pod.
+
+.Procedure
+
+. To find the pod name, run:
++
+----
+oc get pods | grep operator
+----
++
+. View the logs for the pod, run:
++
+----
+oc logs <operator-pod-name> -f
+----
++
+* Alternatively, to view the logs without first getting the pod name, run:
++
+----
+oc logs deployments/automation-controller-operator-controller-manager -c automation-controller-manager -f
+----
+
