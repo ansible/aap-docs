@@ -20,14 +20,21 @@ Hop nodes use minimal CPU and memory, so vertically scaling hop nodes does not i
 
 [NOTE]
 ====
-Direct connections shown in the diagram between the Client and {HubName}, {EDAName}, and {ControllerName} only apply to systems upgraded from {PlatformName} 2.4 to {PlatformName} {PlatformVers} to provide backward compatibility.
-The connection does not exist for {PlatformName} {PlatformVers}.
+The following diagraam shows client initiated connections between {PlatformNameShort} components. Direct connections shown in the diagram between the Client and {HubName}, {EDAName}, and {ControllerName} only apply to systems upgraded from {PlatformName} 2.4 to {PlatformName} {PlatformVers} to provide backward compatibility.
 ====
 
-The following table indicates the destination port and the direction of network traffic:
+.{PlatformNameShort} Client initiated network ports and protocols 
+image::network_client_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
 
-.{PlatformNameShort} Network ports and protocols 
-image::aap-network-ports-protocols.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
+[NOTE]
+====
+The following diagram shows internally initiated connections between {PlatformNameShort} components for new installs {PlatformName} {PlatformVers}.
+====
+
+.{PlatformNameShort} Internally initiated network ports and protocols 
+image::network_internally_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
+
+The following table indicates the destination port and the direction of network traffic:
 
 [NOTE]
 ====
@@ -38,85 +45,121 @@ If you choose to configure them to suit your environment, you might experience a
 .Network ports and protocols
 [cols="12%,12%,17%,17%,20%,27%,27%",options="header",]
 |===
-| Port | Protocol | Service | Source | Destination | Required for | Installer Inventory Variable 
-| 22 | TCP | SSH | Installer node | {HubNameStart} | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | Controller node | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | {EDAName} node | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | Execution node | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | Hop node | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | Hybrid node | Installation (temporary) | `ansible_port`
-| 22 | TCP | SSH | Installer node | PostgreSQL database| Remote access during installation (temporary) | `pg_port`
-| 80/443 | TCP | HTTP/HTTPS | Installer node | {HubNameStart} | Allows installer node to push the execution environment image to {HubName} when using the bundle installer. | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | {EDAName} node | {HubNameStart} | Pull container decision environments | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | {EDAName} node | {ControllerNameStart} | Launch {ControllerName} jobs | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | Pull collections | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | Execution node | {HubNameStart} | Allows execution nodes to pull the execution environment image from {HubName}. | Fixed value
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {GatewayStart} |  This is the ingress above the {Gateway} that is customer controlled and can load balance requests to multiple gateways. | This port is customer managed outside of {PlatformNameShort}.
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | Link between gateway and {PlatformNameShort} components | 
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | Link between gateway and {PlatformNameShort} components | 
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | Link between gateway and {PlatformNameShort} components | 
-//Lines removed after consulting with Shane McDonald for AAP-37353
-//| 80/443 | TCP | HTTP/HTTPS | Receptor | Execution node | OCP Mesh ingress |
-//| 80/443 | TCP | HTTP/HTTPS | Receptor | Hop node | OCP Mesh ingress | 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {ControllerNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node | {HubNameStart} | Only relevant if accessing the component directly from {GatewayStart} | `automationgatweway_main_url` 
-| 80/443 | TCP | HTTP/HTTPS | HA Proxy load balancer/Ingress Node |  {EDAName} | Only relevant if accessing the component directly from {GatewayStart} | `automationgateway_main_url` 
-| 443 | TCP | HTTPS | Remote execution node (Client) | Controller node | Web UI/API 
-// Line removed after consulting with Shane McDonald for AAP-37353
-//This exposes the mesh ingress receptor entry point for inbound connections.
-| `nginx_https_port`
-| 5432 | TCP | PostgreSQL | Controller node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationcontroller_pg_port`
-| 5432 | TCP | PostgreSQL | {EDAName} node | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationedacontroller_pg_port`
-| 5432 | TCP | PostgreSQL | {HubNameStart} | PostgreSQL database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationhub_pg_port`
-| 5432 | TCP | PostgreSQL | {GatewayStart} | External database | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationgateway_pg_port`
-| 6379 | TCP | Redis | {EDAName} | Redis node | Job launching | 
-| 6379 | TCP | Redis | {GatewayStart} | Redis node | Data storage and retrieval | 
-| 6443 | TCP | HTTP/HTTPS | Controller node | {OCPShort} |  Only required when using container groups to run jobs. | Host name of OpenShift API server
-| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart} | nginx | 
-| 16379 | TCP | Redis | Redis nodes | Redis nodes | Redis cluster bus port for a resilient Redis configuration | 
-| 27199 | TCP | Receptor | Controller node | Execution node | Configurable
+| Node | Port | Source | Protocol | Service | Required for | Installer Inventory Variable 
+| {HubNameStart} | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
 
-Mesh nodes directly peered to controllers. 
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| {HubNameStart} | 80/443 | Installer node | TCP | HTTP/HTTPS | Enables installer node to push the execution environment image to automation hub when using the bundle installer. | `ansible_port`
+| {HubNameStart}  | 80/443 | {ControllerNameStart} | TCP | HTTP/HTTPS | Pull collections |
+| {HubNameStart} | 80/443 | {EDAName} node | TCP | HTTP/HTTPS | Pull container decision environments |
+| {HubNameStart} | 80/443 | Execution node | TCP | HTTP/HTTPS | Allows execution nodes to pull the execution environment image from {HubName} |
+| {HubNameStart} | 80/443| Gateway load balancer/Ingress node | TCP | HTTP/HTTPS | Only relevant if accessing the component directly from {Gateway} | `automationgateway_main_url`
+| {HubNameStart} | 443 | {GatewayStart} | TCP | HTTPS | Link between {Gateway} and {PlatformNameShort} components |
+| {HubNameStart} | 6379 | {EDAName} | TCP | Redis | | 
+| {ControllerNameStart} | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
+
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| {ControllerNameStart} | 80/443 | {EDAName} | TCP | HTTP/HTTPS | Launch {ControllerName} jobs | 
+| {ControllerNameStart} | 80/443 | {GatewayStart} | TCP | HTTP/HTTPS | Link between {Gateway} and {PlatformNameShort} components |
+| {ControllerNameStart} | 80/443 | Gateway load balancer/Ingress node | TCP | HTTP/HTTPS | Only relevant if accessing the component directly from Platform gateway | 
+| {ControllerNameStart} | 27199 | Execution node |  TCP | Receptor |  Configurable
+
+Mesh nodes directly peered to controllers.
 
 Direct nodes involved. 
-27199 communication can be both ways (depending on installation inventory) for execution nodes
+
+27199 communication can be both ways (depending on installation inventory) for execution nodes.
+The connection itself can been established in either direction. But communications once established are always bidirectional.
+
+For more information on use of peers in inventory scripts, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/automation_mesh_for_vm_environments/index#defining-node-types[Defining automation mesh node types] | `receptor_listener_port`
+
+`peers`
+| {EDAName} | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
+
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| {EDAName} | 80/443 | {GatewayStart} | TCP | HTTP/HTTPS | Link between {Gateway} and {PlatformNameShort} components | 
+| {EDAName} | 80/443 | Gateway load balancer/Ingress node | TCP | HTTP/HTTPS | Only relevant if accessing the component directly from {Gateway} | `automationgateway_main_url
+| {EDAName} | 8443 | {GatewayStart} | TCP | HTTPS | Receiving event stream traffic |  
+| Execution node | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
+
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| Execution node | 443 | Gateway load balancer/Ingress node | TCP | HTTPS | | `automationgateway_main_url` 
+| Execution node | 27199 | {ControllerNameStart} | TCP | Receptor | Configurable
+
+Mesh nodes directly peered to controllers.
+
+Direct nodes involved. 
+
+27199 communication can be both ways (depending on installation inventory) for execution nodes.
+The connection itself can been established in either direction. But communications once established are always bidirectional.
+
+For more information on use of peers in inventory scripts, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/automation_mesh_for_vm_environments/index#defining-node-types[Defining automation mesh node types] | `receptor_listener_port`
+
+`peers`
+| Execution node | 27199 | {OCPShort} | TCP | Receptor | | 
+| Hop node | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
+
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| Hop node | 27199 | {ControllerNameStart} | TCP | Receptor | Configurable
+ENABLE connections from hop nodes to Receptor port if relayed through hop nodes.
 | `receptor_listener_port`
+| Hop node | 27199 | Execution node | TCP | Receptor | Configurable
+
+Mesh nodes directly peered to controllers.
+
+Direct nodes involved. 
+
+27199 communication can be both ways (depending on installation inventory) for execution nodes.
+The connection itself can been established in either direction. But communications once established are always bidirectional.
+
+For more information on use of peers in inventory scripts, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/automation_mesh_for_vm_environments/index#defining-node-types[Defining automation mesh node types] | `receptor_listener_port`
 
 `peers`
-| 27199 | TCP | Receptor | Controller node | Hop node | Configurable
+| Hybrid node | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
 
-ENABLE connections from hop nodes to Receptor port if relayed through hop nodes. | `receptor_listener_port`
+* Install
+* Configure
+* Upgrade 
+| `ansible_port`
+| Hybrid node | 27199 | {ControllerNameStart} | TCP | Receptor | Configurable
+ENABLE connections from {ControllerName} to Receptor port if relayed through non-hop connected nodes. | `receptor_listener_port`
 
-`peers`
-| 27199 | TCP | Receptor | Controller node | Hybrid node | Configurable
+`peers` 
+| PostgreSQL database | 22 | Installer node | TCP | SSH a| Management of {PlatformNameShort}
 
-ENABLE connections from controllers to Receptor port if relayed through non-hop connected nodes. | `receptor_listener_port`
+* Install
+* Configure
+* Upgrade 
+| `pg_port`
 
-`peers`
-| 27199 | TCP | Receptor | Execution node | Hop node | Configurable
+| PostgreSQL database | 5432 | {ControllerNameStart} | TCP | PostgreSQL |Open only if the internal database is used along with another component. Otherwise, this port should not be open.| `automationcontroller_pg_port`
 
-Mesh 27199 communication can be both ways (depending on installation inventory) for execution nodes
-
-ALLOW connection from controller(s) to Receptor port |
-`receptor_listener_port`
-
-`peers`
-| 27199 | TCP | Receptor | Hop node | Execution node | Configurable
-
-Mesh 27199 communication can be both ways (depending on installation inventory) for execution nodes | `receptor_listener_port`
-
-`peers`
-| 27199 | TCP | Receptor | Execution node | Controller node | Configurable
-
-Mesh 27199 communication can be both ways (depending on installation inventory) for execution nodes
-
-ALLOW connection from controller(s) to Receptor port |
-`receptor_listener_port`
-
-`peers`
-| 27199 | TCP | Receptor | OCP cluster | Execution node |  |
-| 8443 | TCP | HTTPS | {GatewayStart} | {EDAName} node | Receiving event stream traffic |  |
-//| 50051 | TCP | GRPC | {GatewayStart} | {GatewayStart} |  | 
+| PostgreSQL database | 5432 | {EDAName} | TCP | PostgreSQL | Open only if the internal database is used along with another component. Otherwise, this port should not be open. | `automationedacontroller_pg_port`
+| PostgreSQL | 5432 | {HubNameStart} | TCP | PostgreSQL | Open only if the internal database is used along with another component. Otherwise, this port should not be open
+| `automationhub_pg_port`
+| {OCPShort} | 6443 | {ControllerNameStart} | TCP | HTTP/HTTPS | Only required when using container groups to run jobs. | Host name of OpenShift API server
+| Redis node | 6379 | {ControllerNameStart} | TCP | Redis | Job launching |
+| Redis node | 6379 | {EDAName} | TCP | Redis | Job launching | 
+| Redis node | 6379 | {HubNameStart} | TCP | Redis | Job launching | 
+| Redis node | 6379 | {GatewayStart} | TCP | Redis | Data storage and retrieval | 
+| Redis node | 16379 | Redis node | TCP | Redis | Redis cluster bus port for a resilient Redis configuration |
+| Mesh ingress | 443| Execution node | Receptor | HTTPS | If using mesh ingress, ensure that outbound HTTPS (port 443) is allowed from the execution nodes to the OpenShift route URL.|
+| {GatewayStart} | 8443 | {GatewayStart} | TCP  | HTTPS | nginx | 
 |===
 
 [NOTE]
