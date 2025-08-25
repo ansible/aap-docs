@@ -22,7 +22,7 @@ Complete the generic steps with changes to the following steps:
 [source,bash]
 ----
 FROM registry.redhat.io/rhel9/bootc-image-builder:latest
-RUN subscription-manager repos --enable rhacm-2.13-for-rhel-9-$(uname -m)-rpms && \
+RUN subscription-manager repos --enable ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms
     dnf -y install flightctl-agent && \
     dnf -y clean all && \
     systemctl enable flightctl-agent.service
