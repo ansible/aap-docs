@@ -67,3 +67,17 @@ This backs up the important data deployed by the containerized installer such as
 * Data files
 
 . By default, the backup directory is set to `./backups`. You can change this by using the `backup_dir` variable in your `inventory` file.
+
+.Next steps
+
+To customize the backup, use the following variables in your `inventory` file.
+* Change the backup destination directory from the default `./backups` by using the `backup_dir` variable.
+* Exclude paths that contain duplicated data, such as snapshot subdirectories, by using the `hub_data_path_exclude` variable. For instance, to exclude a .snapshots subdirectory, specify hub_data_path_exclude=['*/.snapshots/*'] in your inventory file.
+**  Alternatively, you can use the command-line interface with the `-e` flag to pass this variable at runtime:
++
+----
+$ ansible-playbook -i inventory ansible.containerized_installer.backup -e hub_data_path_exclude="['*/.snapshots/*']"
+----
+
+
+
