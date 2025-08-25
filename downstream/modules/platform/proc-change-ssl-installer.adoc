@@ -7,6 +7,14 @@
 [role="_abstract"]
 The following procedure describes how to change the SSL certificate and key in the inventory file.
 
+.Prerequisites
+
+* If there is an intermediate certificate authority, you must append it to the server certificate.
+* Both {ControllerName} and {HubName} use NGINX so the server certificate must be in PEM format.
+* Use the correct order for the certificates: The server certificate comes first, followed by the intermediate certificate authority.
+
+For further information, see the link:http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate[ssl certificate section of the NGINX documentation].
+
 .Procedure
 
 . Copy the new SSL certificates and keys to a path relative to the {PlatformNameShort} installer.
