@@ -16,8 +16,19 @@ Traffic is stateful, so there is no need to open a private link in the reverse d
 
 == {AWSPrivateLink} connectivity out of the {PlatformNameShort} control plane
 
-To enable {AWSPrivateLink} connectivity from the control plane to your private resources, create one or more Endpoint Services in your VPC and work with Red{nbsp}Hat to create the consuming Endpoints.
-With this in place, the {PlatformNameShort} control plane can connect privately to your resources such as registries, repositories, and execution nodes.
-Traffic is stateful, so there is no need to open a private link in the reverse direction for responses to Transmission Control Protocol (TCP) requests that originate from the control plane VPC.
+You can configure {PlatformNameShort} to use external resources such as source code repositories, container registries, and execution nodes. By default, the control plane connects to these resources over the public internet. However, if your resources are not publicly available, you can leverage {AWSPrivateLink} to securely access your private resources without traversing the public internet.
 
+{AWSPrivateLink} connectivity allows the {PlatformNameShort} control plane to connect privately to your resources including, registries, repositories, and execution nodes. Traffic is stateful, eliminating the need to open a private link in the reverse direction for responses to Transmission Control Protocol (TCP) requests that originate from the control plane VPC.
 
+To enable {AWSPrivateLink} connectivity from the control plane to your private resources, create one or more Endpoint Services in your VPC. Then reach out to Red Hat support to create the consuming Endpoints.
+
+[IMPORTANT]
+====
+When creating the Endpoint Service in your VPC, you must enable the *Private DNS* option. This ensures that the {PlatformNameShort} control plane can resolve and connect to your service using the specified domain over {AWSPrivateLink}.
+Private DNS enables DNS queries from {PlatformNameShort} resolve to the private IP addresses of the interface endpoint, facilitating secure and direct communication over PrivateLink.
+====
+
+[NOTE]
+====
+This document does not cover all steps required for PrivateLink connectivity. To complete PrivateLink connectivity, you must work with Red Hat through the Customer Support portal.
+====
