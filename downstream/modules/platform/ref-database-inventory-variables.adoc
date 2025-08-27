@@ -17,6 +17,24 @@ Inventory file variables for the database used with {PlatformNameShort}.
 | Optional
 | `5432`
 
+| `postgres_extra_settings`
+| `postgresql_extra_settings`	
+a| Defines additional settings for use by PostgreSQL.
+
+Example usage for RPM:
+----
+postgresql_extra_settings:
+   ssl_ciphers: 'HIGH:!aNULL:!MD5'
+----
+Example usage for containerized:
+----
+postgresql_extra_settings:
+  - setting: ssl_ciphers
+    value: 'HIGH:!aNULL:!MD5' 
+----
+| Optional
+|
+
 | `postgres_firewalld_zone` 
 | `postgresql_firewall_zone` 
 | The firewall zone where PostgreSQL related firewall rules are applied. This controls which networks can access PostgreSQL based on the zone's trust level.
