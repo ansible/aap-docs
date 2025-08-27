@@ -12,6 +12,12 @@ Team mappings can be specified separately for each account authentication.
 
 When Team mapping is positively evaluated, a specified team and its organization are created, if they don't exist if the related authenticator is allowed to create objects.
 
+[IMPORTANT]
+====
+When configuring team mappings with an Attribute trigger, use the `or` operation. 
+The `and` operation requires every single value in a list to match the comparison criteria for the trigger to be successful. 
+This is rarely the intended behavior, as you typically want a match on at least one value in the list.
+====
 
 .Procedure
 
@@ -27,6 +33,3 @@ When Team mapping is positively evaluated, a specified team and its organization
 [role="_additional-resources"]
 .Next steps
 include::snippets/snip-gw-mapping-next-steps.adoc[]
-
-
-
