@@ -1,0 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-inspect-k8s-resource_{context}"]
+
+= Inspecting a {OCPShort} resource
+
+To inspect a {OCPShort} resource, you must use the `oc` command to get a summary or the full YAML definition of the resource.
+
+.Procedure
+
+. To view a human-readable summary of a resource, run:
++
+----
+oc describe -n <namespace> <resource> <resource-name>
+----
++
+. To view the complete YAML definition of a resource, use the `-o yaml` flag:
++
+----
+oc get -n <namespace> <resource> <resource-name> -o yaml
+----
++
+* For example, to get the YAML for the `automationcontroller` custom resource, run:
++
+----
+oc get -n aap automationcontroller aap -o yaml
+----
+
+
+
