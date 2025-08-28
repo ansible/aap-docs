@@ -1,0 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-collect-diagnostic-data_{context}"]
+
+= Collecting Diagnostic Data
+
+Use the `oc adm must-gather` command to collect comprehensive diagnostic data about your cluster and the {PlatformNameShort} components. This data is essential when contacting Red Hat Support.
+
+.Procedure
+
+. To start the `must-gather` tool, run:
++
+----
+oc adm must-gather --image=registry.redhat.io/ansible-automation-platform-25/aap-must-gather-rhel8
+----
++
+. View the collected data, use the `omc` tool to query the `must-gather` tarball as if it were a live cluster.
++
+----
+omc use <path-to-must-gather>
+omc get pods
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://access.redhat.com/solutions/6997224[How to collect diagnostics data from Ansible Automation Platform running on OpenShift?]
+* link:https://access.redhat.com/solutions/4387261[How to generate a sos report within nodes without SSH in OpenShift Container Platform 4]
+
+
