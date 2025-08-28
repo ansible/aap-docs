@@ -1,0 +1,31 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-defining-nest-parameter_{context}"]
+
+= Defining a parameter on a nested component
+
+To define a parameter, such as the `resource_requirements` for Automation Controller, you add the configuration to the parent {PlatformNameShort} CR YAML. 
+This ensures that the {PlatformNameShort} CR is the single source of truth for your deployment.
+
+.Procedure
+
+. Log in to {OCPShort}.
+. Navigate to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Go to the {PlatformNameShort} tab and click the name of your CR.
+. In the *YAML view* tab, locate the *spec* section.
+. Add the `automationcontroller` parameter with the nested `resource_requirements` parameter and its value:
++
+----
+spec:
+  database:
+    resource_requirements:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+    storage_requirements:
+      requests:
+        storage: 100Gi
+----
++
+. Click btn:[Save] to apply the changes. The operator automatically applies this configuration to the {ControllerName} component.
