@@ -1,0 +1,23 @@
+// Module included in the following assemblies:
+// assembly-view-key-metrics.adoc
+
+
+[id="proc-installing-automation-dashboard"]
+
+= Installing {AutomationDashboardName}
+
+.Prerequisites
+
+* One of the following tested configurations:
+** RHEL 9 x86 or ARM based physical or virtual host. 
+** Postgres v15 database. 
+[IMPORTANT]
+Do not attempt to install {AutomationDashboardName} on the same host(s) as {PlatformNameShort}.
+* Access to _baseos_ and _{PlatformNameShort}stream_ repo packages for the RHEL 9 host.
+* A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the $HOMEDIR of the user account.
+* URL details for access to your {PlatformNameShort} instances.
+* An {PlatformNameShort} oauth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
+* Access to download the installation bundle providing installation components for the {AutomationDashboardName}.
+* Open firewall access to allow for communications. This includes HTTPS/443 from the {AutomationDashboardName} to the {PlatformNameShort} instance(s), but ports are configurable.
+* Access to port 8447.
+* A supported version of `ansible-core` installed on supported RHEL versions.
