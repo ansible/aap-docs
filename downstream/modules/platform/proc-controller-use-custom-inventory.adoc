@@ -1,0 +1,37 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-controller-use-custom-inventory"]
+
+= Using a custom inventory plugin
+
+This describes how to use the `servicenow.itsm` collection inventory plugin to sync inventory on {PlaatformNameShort}.
+
+.Procedure
+
+. Create and sync a project using a Source Control Git repository that includes the following files:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+>> requirements.yml
+--- 
+collections: - name: servicenow.itsm 
+
+
+>> inventories/myinventory.now.yml 
+# Create a file following the example below. It must have a configuration file extension ending in either "now.yml" or "now.yaml". 
+plugin: servicenow.itsm.now 
+query: 
+- os: = Linux Red Hat 
+- os: = Windows XP 
+keyed_groups: 
+- key: os 
+  prefix: os
+----
++
+[NOTE]
+==== 
+Refer to the official link:https://console.redhat.com/ansible/automation-hub/repo/published/servicenow/itsm/content/inventory/now/[Ansible documentation] for detailed guidance on using and configuring the `servicenow.itsm.now` plugin.
+====
+
+. Create an inventory by setting the source to *Sourced from a Project*, selecting the new project, and choose `/(project root)` in the inventory file section.
+. Synchronize the source in the inventory.
