@@ -21,3 +21,113 @@ Do not attempt to install {AutomationDashboardName} on the same host(s) as {Plat
 * Open firewall access to allow for communications. This includes HTTPS/443 from the {AutomationDashboardName} to the {PlatformNameShort} instance(s), but ports are configurable.
 * Access to port 8447.
 * A supported version of `ansible-core` installed on supported RHEL versions.
+
+.Procedure
+
+Use the following steps to install {AutomationDashboardName} on your Red Hat Enterprise Linux (RHEL) 9 host:
+
+. Copy the installation source file to your RHEL 9 host.
+. Untar the installation source. This requires approximately 500 MB of disk space. For this example, the user's home directory (`/home/ec2-user`) is used.
++
+[source,bash]
+----
+tar -xzf ansible-automation-reports-containerized-setup-bundle.tar.gz
+cd ansible-automation-reports-containerized-setup/
+----
+
+. Verify that the necessary software is installed by running the following commands:
++
+[source,bash]
+----
+sudo dnf install ansible-core
+ansible-galaxy collection install -r requirements.yml
+----
+
+. Copy the example inventory file and modify it before running the installer.
++
+[source,bash]
+----
+cp -i inventory.example inventory
+vi inventory
+----
+
+. Review and update the inventory configuration with your specific environment details.
++
+[NOTE]
+This is an example of a tested inventory configuration. You must update the following values for your environment:
+* All RHEL 9 host occurrences from `ec2-54-147-26-173.compute-1.amazonaws.com` to your FQDN host.
+* All `_admin_password` or `_pg_password` values. Change the word `changeme` to match your passwords.
+
+[source,ini]
+----
+# This is our {AutomationDashboardName} reporter front-end application
+[automationreporter]
+ec2-54-147-26-173.compute-1.amazonaws.com ansible_connection=local
+
+# These are any required vars for the installation and shouldn't be removed
+[automationreporter:vars]
+aap_auth_provider_name=AAP24-example.com-8443
+aap_auth_provider_protocol=https
+
+# aap_auth_provider_url depends on AAP version:
+#   AAP 2.4 (controller API): DNS_OR_IP/api
+#   AAP 2.5 (gateway API): DNS_OR_IP
+aap_auth_provider_url=aap24.example.com:8443/api
+
+# aap_auth_provider_user_data_endpoint depends on AAP version:
+#   AAP 2.4 (controller API): /v2/me/
+#   AAP 2.5 (gateway API): /api/gateway/v1/me/
+aap_auth_provider_user_data_endpoint=/v2/me/
+
+aap_auth_provider_user_data_endpoint=/v2/me/
+aap_auth_provider_check_ssl=false
+aap_auth_provider_client_id=changeme
+aap_auth_provider_client_secret=changeme
+initial_sync_days=1
+
+# This is for our Postgresql database, by default hosted on the same reporter host
+[database]
+ec2-54-147-26-173.compute-1.amazonaws.com ansible_connection=local
+
+# Mandatory vars needed for the installation - modify values to match your environment
+[all:vars]
+postgresql_admin_username=postgres
+postgresql_admin_password=changeme
+
+# AAP Reporter - mandatory
+# --------------------------
+reporter_pg_containerized=True
+reporter_admin_password=changeme
+reporter_pg_host=ec2-54-147-26-173.compute-1.amazonaws.com
+reporter_pg_username=aapreporter
+reporter_pg_password=changeme
+reporter_pg_database=aapreports
+
+# The installation is supplied as a bundle containing the container images
+# Modify the bundle_dir if necessary to reflect your location
+bundle_install=true
+bundle_dir=/home/ec2-user/ansible-automation-reports-containerized-setup/bundle
+----
+
+. Run the installer.
++
+[source,bash]
+----
+ansible-playbook -i inventory ansible.containerized_installer.reporter_install
+----
+
+.Verification
+
+. See the following example output for reference.
++
+[source,text]
+----
+PLAY RECAP *********************************************************************************************************************************************
+ec2-54-147-26-173.compute-1.amazonaws.com : ok=126  changed=51   unreachable=0    failed=0    skipped=42   rescued=0    ignored=0
+localhost              : ok=12  changed=0    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0
+----
+
+.Troubleshooting
+
+* Alternative configurations are possible (for example, the database for {AutomationDashboardName} can be set on a different host). This requires additional changes to variables in the inventory file.
+* Consult the section “Inventory variables” below for available variables.
