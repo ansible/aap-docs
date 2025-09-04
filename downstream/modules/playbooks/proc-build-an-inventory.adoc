@@ -1,3 +1,5 @@
+:_mod-docs-content-type: PROCEDURE
+
 [id="proc-build-an-inventory"]
 
 = Building an inventory
@@ -21,15 +23,11 @@ Add a new `[myhosts]` group to the inventory.ini file and specify the IP address
 
 Verify your inventory, using:
 
-----
-ansible-inventory -i inventory.ini --list
-----
+`ansible-inventory -i inventory.ini --list`
 
 Ping the `myhosts` group in your inventory, using:
 
-----
-ansible myhosts -m ping -i inventory.ini
-----
+'ansible myhosts -m ping -i inventory.ini`
 
 Pass the `-u` option with the Ansible command if the username is different on the control node and the managed node(s).
 
@@ -59,31 +57,3 @@ Pass the `-u` option with the Ansible command if the username is different on th
 
 You have successfully built an inventory.
 
-== Inventories in INI or YAML format
-You can create inventories in either INI files or in YAML. 
-In most cases, such as the preceding example, INI files are straightforward and easy to read for a small number of managed nodes.
-Creating an inventory in YAML format becomes a sensible option as the number of managed nodes increases. 
-
-For example, the following is an equivalent of the `inventory.ini` that declares unique names for managed nodes and uses the `ansible_host` field:
-
-----
-myhosts:
-  hosts:
-    my_host_01:
-      ansible_host: 192.0.2.50
-    my_host_02:
-      ansible_host: 192.0.2.51
-    my_host_03:
-      ansible_host: 192.0.2.52
-----
-
-== Tips for building inventories
-
-* Ensure that group names are meaningful and unique. 
-* Group names are also case sensitive.
-* Do not use spaces, hyphens, or preceding numbers (use floor_19, not 19th_floor) in group names.
-* Group hosts in your inventory logically according to their What, Where, and When:
-
-** What: Group hosts according to the topology, for example: db, web, leaf, spine.
-** Where: Group hosts by geographic location, for example: datacenter, region, floor, building.
-** When: Group hosts by stage, for example: development, test, staging, production.
