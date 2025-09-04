@@ -1,0 +1,76 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-upgrade-2.4-to-2.6"]
+
+= Upgrades from {PlatformNameShort} 2.4 to 2.6
+
+It is possible for customers to upgrade directly from {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6. 
+All {ControllerName} users will be moved.
+
+As part of the install/upgrade, the gateway `migrate_service_data` command copies the assignments without changing the names from {ControllerName} and {HubName} to the {Gateway}.
+
+On startup, these 2.6 services rename their service-specific role to a platform-wide role, as in the following table.
+
+[cols="50%,50%",options="header"]
+|===
+| *2.4 role* | *2.6 equivalent* 
+| {ControllerNameStart} auditor | Platform auditor
+| {ControllerNameStart} superuser/administrator (flag) | Platform superuser/administrator (flag)
+| {ControllerNameStart} organization admin | Organization administrator
+| {ControllerNameStart} organization member | Organization member
+| {ControllerNameStart} team admin | Team administrator
+| {HubNameStart} administrator | Team member (user)
+| {ControllerNameStart} team member (user) | Team member (user)
+| {HubNameStart} team member (user) | Team member (user)
+|===
+
+In addition:
+
+* {ControllerNameStart} becomes the opinionated source of data for users, teams, roles, and organizations as part of the upgrade. The {Gateway} is the destination for this information. 
+
+* {ControllerNameStart} entity relationships (memberships) should be the same in {Gateway} after upgrade, that is, a user is associated with the same organization, team or role set that they were in {ControllerName} after upgrade. 
+This applies to both entities moved during upgrade, and any entity created in {ControllerName} that might be moved post upgrade as well, such as a new user/team/organization added and related through {ControllerName}APIs in a 2.6 environment.
+
+* {ControllerNameStart} user types should map to {Gateway} user types during upgrade.
+
+{ControllerNameStart} in {PlatformNameShort} 2.4 enabled a user to inherit permissions from multiple teams simultaneously. 
+This capability was never exposed through the user interface; it was only possible to map a user directly to a team. 
+It was possible to create this team structure with REST APIs and collections.
+
+For example 
+
+User &#8658; Team A &#8658; Team B
+
+This will be changed to a direct user-to-teams mapping:
+
+User &#8658; Team A
+User &#8658; Team B
+
+If you are upgrading to {PlatformNameShort} 2.5 and later, these versions no longer support nested teams across UI, API, and collections. 
+Customers upgrading from {PlatformNameShort} 2.4 must plan for this change. 
+However,  a user can still belong to one or more teams, and inherit those multiple team permissions simultaneously:
+
+* Where team names match between {HubName} and {Gateway}, for example, "Team A" exists in both, user memberships from {HubName} will be transferred to the corresponding team in {Gateway}. This reduces the need to manually recreate memberships.
+
+* Before upgrading from 2.4 to 2.6, customers must plan to change any integrations or automations that implement nested teams so that teams are mapped directly to users after the upgrade.
+
+* If the username is only in {EDAName} or {HubName}, they will not be moved to 2.6. 
+Users will need to reset passwords, which should still have the same permissions. 
+If this user also has the same username on {ControllerName} (that is, a duplicate username) then only the {ControllerName} username will be part of regular data movement. 
+
+* Data movement also moves {PrivateHubName} but excludes {EDAName} data.
+
+* {EDAName} users will not be moved to {Gateway} and must be recreated manually after upgrading.
+
+* {HubNameStart} users must be recreated if they cannot be moved as part of the upgrade.
+
+* {HubNameStart} admins will be converted to normal users if they are able to be merged.
+
+* The {PlatformNameShort} UI will be updated to reflect the {ControllerName} data moved as platform-level entities along with their respective roles.
+
+* {ControllerNameStart}-specific API endpoints will continue to be available in 2.6. This prevents existing API configurations from breaking.
+
+* The {ControllerName} setting *Organization Admins Can Manage Users and Teams* applies to organization admins in 2.6.
+
+
+
