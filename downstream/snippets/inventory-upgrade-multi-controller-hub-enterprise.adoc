@@ -1,0 +1,99 @@
+//Inventory file for upgrading from 2.4 multi controller and hub to 2.6 enterprise topology
+
+[source,yaml,subs="+attributes"]
+----
+# This is the RPM-based Ansible Automation Platform installer inventory file intended for upgrading from a 2.4 multi node automation controller and automation hub deployment to a 2.6 enterprise deployment.
+
+# For all optional variables consult the Red Hat documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation
+
+# This section is for your platform gateway hosts - NEW for 2.6 enterprise topology
+# -----------------------------------------------------
+[automationgateway]
+gateway1.example.org
+gateway2.example.org
+
+# This section is for your automation controller hosts from your 2.4 inventory
+# -----------------------------------------------------
+[automationcontroller]
+controller1.example.org
+controller2.example.org
+
+[automationcontroller:vars]
+peers=execution_nodes
+
+# This section is for your execution hosts from your 2.4 inventory
+# -----------------------------------------------------
+[execution_nodes]
+hop1.example.org node_type='hop'
+exec1.example.org
+exec2.example.org
+
+# This section is for your automation hub hosts from your 2.4 inventory
+# -----------------------------------------------------
+[automationhub]
+hub1.example.org
+hub2.example.org
+
+# This section is for your Event-Driven Ansible controller hosts - NEW for 2.6 enterprise topology
+# -----------------------------------------------------
+[automationedacontroller]
+eda1.example.org
+eda2.example.org
+
+# This section is for your Redis hosts - NEW for 2.6 enterprise topology
+# -----------------------------------------------------
+[redis]
+gateway1.example.org
+gateway2.example.org
+hub1.example.org
+hub2.example.org
+eda1.example.org
+eda2.example.org
+
+[all:vars]
+# Common variables from your 2.4 inventory
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#general-variables
+# -----------------------------------------------------
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+
+# Platform gateway - NEW for 2.6 enterprise topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#platform-gateway-variables
+# -----------------------------------------------------
+automationgateway_admin_password=<set your own>
+automationgateway_main_url=<set your own> #Set to the URL of the load balancer
+automationgateway_pg_host=<set your own>
+automationgateway_pg_database=<set your own>
+automationgateway_pg_username=<set your own>
+automationgateway_pg_password=<set your own>
+
+# Automation controller variables from your 2.4 inventory
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#controller-variables
+# -----------------------------------------------------
+admin_password=<set your own>
+pg_host=<set your own>
+pg_database=<set your own>
+pg_username=<set your own>
+pg_password=<set your own>
+
+# Automation hub variables from your 2.4 inventory
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#hub-variables
+# -----------------------------------------------------
+automationhub_admin_password=<set your own>
+automationhub_pg_host=<set your own>
+automationhub_pg_database=<set your own>
+automationhub_pg_username=<set your own>
+automationhub_pg_password=<set your own>
+# This variable is no longer used for load balancer configuration in 2.6: 
+# automationhub_main_url=<set your own>
+
+# Event-Driven Ansible controller - NEW for 2.6 enterprise topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-variables
+# -----------------------------------------------------
+automationedacontroller_admin_password=<set your own>
+automationedacontroller_pg_host=<set your own>
+automationedacontroller_pg_database=<set your own>
+automationedacontroller_pg_username=<set your own>
+automationedacontroller_pg_password=<set your own>
+----
