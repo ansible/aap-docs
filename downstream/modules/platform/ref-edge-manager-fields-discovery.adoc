@@ -32,9 +32,9 @@ flightctl get devices --field-selector 'metadata.alias contains cluster'
 
 The `metadata.alias` field is checked with the containment operator `contains` to see if it has the value `cluster`.
 
-.Examples
+*Examples*
 
-.Example 1: Excluding a specific device by name
+*Example 1: Excluding a specific device by name*
 
 The following command filters out a specific device by its name:
 
@@ -43,7 +43,7 @@ The following command filters out a specific device by its name:
 flightctl get devices --field-selector 'metadata.name!=c3tkb18x9fw32fzx5l556n0p0dracwbl4uiojxu19g2'
 ----
 
-.Example 2: Filter by owner, labels, and creation timestamp
+*Example 2: Filter by owner, labels, and creation timestamp*
 
 This command retrieves devices owned by `Fleet/pos-fleet`, located in the `us` region, and created in 2024:
 
@@ -51,8 +51,7 @@ This command retrieves devices owned by `Fleet/pos-fleet`, located in the `us` r
 ----
 flightctl get devices --field-selector 'metadata.owner=Fleet/pos-fleet, metadata.creationTimestamp >= 2024-01-01T00:00:00Z, metadata.creationTimestamp < //2025-01-01T00:00:00Z' -l 'region=us'
 ----
-
-.Example 3: Filter by Owner, Labels, and Device Status
+*Example 3: Filter by Owner, Labels, and Device Status*
 
 This command retrieves devices owned by `Fleet/pos-fleet`, located in the `us` region, and with a `status.updated.status` of either `Unknown`
 or `OutOfDate`:
