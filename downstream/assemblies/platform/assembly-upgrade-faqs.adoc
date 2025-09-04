@@ -14,7 +14,7 @@ For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{Pl
 
 Which {RHEL} versions are supported for RPM and containerized installations?::
 RPM installations will continue to be supported exclusively on {RHEL} 9. 
-Containerized installations support both {RHEL} 9.4 or later versions of Red Hat Enterprise Linux 9 and {RHEL} 10 or later versions of {RHEL} 10 for enterprise topologies.
+Containerized installations support both {RHEL} 9.4 or later versions of {RHEL} 9 and {RHEL} 10 or later versions of {RHEL} 10 for enterprise topologies.
 
 What is the difference between "upgrade" and "migration" in {PlatformNameShort} 2.6?::
 An upgrade is an application action, such as updating {PlatformNameShort} 2.5 to 2.6. 
@@ -23,7 +23,7 @@ New service components are not explicitly required between versions 2.5 and 2.6.
 
 Can I upgrade from 2.4 to 2.6 or must I upgrade to 2.5 first?::
 Yes you can upgrade directly to 2.6. 
-However note that there may be new system requirements you will need to update before upgrading. 
+However note that there may be new system requirements you must update before upgrading. 
 
 How will managed cloud customers be upgraded to {PlatformNameShort} 2.6?::
 All managed cloud customers on {Azure} and {AWS} will be upgraded to 2.6. 
@@ -39,8 +39,8 @@ The installer will manage new components introduced in version 2.5 for direct 2.
 //When upgrading from 2.4 to 2.6 (applies only to RPM or {OCPShort}), what’s different about the upgrade process compared with the 2.4 to 2.5 process?::
 //See the Overview of upgrade improvements section.
 
-I’m using {EDAName} (EDA) in 2.4, can I upgrade EDA to 2.6?::
-If you are using {PlatformNameShort} 2.4 with the technical preview of EDA controller but want to upgrade to the {PlatformNameShort} 2.6 with EDA, you must install a new instance of {PlatformNameShort} 2.6 and manually re-create your EDA configurations in the new, fully integrated environment.
+I’m using {EDAName} in 2.4, can I upgrade {EDAName} to 2.6?::
+If you are using {PlatformNameShort} 2.4 with the technical preview of {EDAcontroller} but want to upgrade to the {PlatformNameShort} 2.6 with {EDAName}, you must install a new instance of {PlatformNameShort} 2.6 and manually re-create your {EDAName} configurations in the new, fully integrated environment.
 
 Will my existing 2.4 or 2.5 OAuth Applications/Tokens, Credentials/Customer Credentials, and Personal Access Tokens still work after upgrading to 2.6?::
 For upgrades from {PlatformNameShort}  2.4 or 2.5 to {PlatformNameShort}  2.6, some manual configuration is required:
@@ -48,15 +48,16 @@ For upgrades from {PlatformNameShort}  2.4 or 2.5 to {PlatformNameShort}  2.6, s
 ** {ControllerNameStart}: You can view and edit existing {ControllerName} applications, but you cannot create new ones. They still function, but they might be removed in a future release. You should plan to migrate to platform OAuth applications.
 ** {PlatformNameShort}: Platform OAuth applications provide an updated interface and are the standard for future use. You will transition to these applications.
 * Tokens:
-** {ControllerNameStart}: {ControllerName} personal access tokens (PATs) are deprecated. You will move to platform gateway PATs.
+** {ControllerNameStart}: {ControllerNameStart} personal access tokens (PATs) are deprecated. You will move to platform gateway PATs.
 ** {PlatformNameShort}: Platform tokens provide an updated interface and are the standard for future use. You will transition to these tokens.
 * Authenticator configurations:
-** {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6: The migration of all authenticator configurations from the automation controller to the {Gateway} is automated. This includes third-party authentication configurations and sensitive data like SAML private keys or OAuth secret keys. If you use custom LDAP certificates, you must manually migrate them.
-** {PlatformNameShort} 2.5 to {PlatformNameShort} 2.6: Authenticator configurations are not automatically migrated. LDAP settings configured in {PlatformNameShort} 2.5 remain as they were after upgrading to 2.6.
+** {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6: The migration of all authenticator configurations from the {ControllerName} to the {Gateway} is automated. This includes third-party authentication configurations and sensitive data like SAML private keys or OAuth secret keys. If you use custom LDAP certificates, you must manually migrate them.
+** {PlatformNameShort} 2.5 to {PlatformNameShort} 2.6: Authenticator configurations are not automatically migrated. 
+LDAP settings configured in {PlatformNameShort} 2.5 remain as they were after upgrading to 2.6.
 
 What RBAC ({Gateway} and/or {ControllerName}) control permissions will be missing in version 2.6?::
 
-* *For 2.4 to 2.6 upgrades:* During the upgrade, authenticators and their mappings from the controller are imported into the gateway, therefore you don't need to manually migrate authenticators.
+* *For 2.4 to 2.6 upgrades:* During the upgrade, authenticators and their mappings from the controller are imported into the gateway; therefore, you don't need to manually migrate authenticators.
 * *For 2.5 to 2.6 upgrades:* Authenticators and their mappings in the {Gateway} continue to function as is, because no changes are imported.
 
 Which version of PostgreSQL does {PlatformNameShort} 2.6 support?:: 
