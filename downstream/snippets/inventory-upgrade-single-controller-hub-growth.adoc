@@ -1,0 +1,85 @@
+//Inventory file for upgrading from 2.4 single controller and hub to 2.6 growth topology
+
+[source,yaml,subs="+attributes"]
+----
+# This is the RPM-based {PlatformNameShort} installer inventory file intended for upgrading from a 2.4 single {ControllerName} and {HubName} deployment to a 2.6 growth deployment.
+
+# Consult the {PlatformNameShort} product documentation about this topology's tested hardware configuration.
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/tested_deployment_models/rpm-topologies
+# For all optional variables consult the {PlatformNameShort} documentation:
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation
+
+# This section is for your {Gateway} hosts - NEW for 2.6 growth topology
+# -----------------------------------------------------
+[automationgateway]
+gateway.example.org
+
+# This section is for your {ControllerName} hosts from your 2.4 inventory
+# -----------------------------------------------------
+[automationcontroller]
+controller.example.org
+
+[automationcontroller:vars]
+peers=execution_nodes
+
+# This section is for your execution hosts - NEW for 2.6 growth topology
+# -----------------------------------------------------
+[execution_nodes]
+exec.example.org
+
+# This section is for your {HubName} hosts from your 2.4 inventory
+# -----------------------------------------------------
+[automationhub]
+hub.example.org
+
+# This section is for your {EDAName} hosts - NEW for 2.6 growth topology
+# -----------------------------------------------------
+[automationedacontroller]
+eda.example.org
+
+# This section is for the {PlatformNameShort} database from your 2.4 inventory file
+# -----------------------------------------------------
+[database]
+db.example.org
+
+[all:vars]
+
+# Common variables from your 2.4 inventory file
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#general-variables
+# -----------------------------------------------------
+registry_username=<your RHN username>
+registry_password=<your RHN password>
+
+# Common variables - NEW for 2.6 growth topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#general-variables
+# -----------------------------------------------------
+redis_mode=standalone
+
+# {GatewayStart} - NEW for 2.6 growth topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#platform-gateway-variables
+# -----------------------------------------------------
+automationgateway_admin_password=<set your own>
+automationgateway_pg_host=db.example.org
+automationgateway_pg_password=<set your own>
+
+# {ControllerNameStart} variables from your 2.4 inventory file
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#controller-variables
+# -----------------------------------------------------
+admin_password=<set your own>
+pg_host=db.example.org
+pg_password=<set your own>
+
+# {HubNameStart} - NEW for 2.6 growth topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#hub-variables
+# -----------------------------------------------------
+automationhub_admin_password=<set your own>
+automationhub_pg_host=db.example.org
+automationhub_pg_password=<set your own>
+
+# {EDAName} - NEW for 2.6 growth topology
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-variables
+# -----------------------------------------------------
+automationedacontroller_admin_password=<set your own>
+automationedacontroller_pg_host=db.example.org
+automationedacontroller_pg_password=<set your own>
+----
