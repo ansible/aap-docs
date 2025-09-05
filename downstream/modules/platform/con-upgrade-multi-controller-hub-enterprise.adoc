@@ -1,0 +1,66 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="upgrade-multi-controller-hub-enterprise"]
+= Upgrading a 2.4 multi node {ControllerName} and {HubName} deployment to a {PlatformVers} {EnterpriseTopology}
+
+[role="_abstract"]
+You can upgrade your 2.4 multi node {ControllerName} and {HubName} deployment to a {PlatformVers} {EnterpriseTopology}. This section outlines the infrastructure changes, requirements, and an example inventory for upgrading.
+
+== 2.4 infrastructure topology diagram
+
+This diagram outlines the 2.4 infrastructure topology that Red Hat has tested with this deployment model.
+
+.2.4 infrastructure topology diagram
+image::rpm-b-controller-hub-2-4.png[2.4 multi controller and hub topology]
+
+== {PlatformVers} infrastructure topology diagram
+
+This diagram outlines the {PlatformVers} infrastructure topology that Red Hat has tested with this deployment model.
+
+.{PlatformVers} infrastructure topology diagram
+image::rpm-b-controller-hub-2.6.png[2.6 multi controller and hub enterprise topology]
+
+== Requirements for upgrading a multi {ControllerName} node and {HubName} deployment
+
+The following table highlights the requirements for upgrading from {PlatformNameShort} version 2.4 to {PlatformVers}.
+
+[cols="1,1,1",options="header"]
+|====
+|Existing 2.4 topology |Tested {PlatformVers} topology |Requirements for each VM
+
+a| Redundant deployment with {ControllerName} and {HubName}:
+
+* Two {ControllerName} VMs
+* Two {HubName} VMs
+* One {AutomationMesh} hop node VM
+* Two {AutomationMesh} execution node VMs
+* One customer-provided (external) {PostgresVers} database
+* One HA proxy load balancer in front of {ControllerName} and {HubName}
+
+a| Enterprise topology:
+
+* Two {Gateway} with colocated Redis VMs
+* Two {ControllerName} VMs
+* Two {PrivateHubName} with colocated Redis VMs
+* Two {EDAcontroller} with colocated Redis VMs
+* One {AutomationMesh} hop node VM
+* Two {AutomationMesh} execution node VMs
+* One customer-provided (external) {PostgresVers} database
+* One HA proxy load balancer in front of {Gateway}
+
+*Note*: Redis high availability requires 6 VMs. Redis can be colocated with {HubName}, {Gateway}, or {EDAName} components, but it cannot be colocated with {ControllerName}, execution nodes, or the PostgreSQL database.
+
+|See the link:{URLTopologies}/rpm-topologies#rpm-b-env-a[RPM {EnterpriseTopology}] section of the _{TitleTopologies}_ guide.
+
+|====
+
+== Example inventory file
+
+The following inventory file has been updated with the necessary changes to upgrade to the {PlatformVers} {EnterpriseTopology}.
+
+[IMPORTANT]
+====
+If your 2.4 inventory file uses `automationhub_main_url` for a load balancer, you must remove this variable from your {PlatformVers} inventory file. The load balancer is now expected to be configured in front of {Gateway} (`automationgateway_main_url`).
+====
+
+include::../snippets/inventory-upgrade-multi-controller-hub-enterprise.adoc[]
