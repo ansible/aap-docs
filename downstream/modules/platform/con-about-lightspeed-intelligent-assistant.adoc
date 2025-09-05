@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort} as a Technology Preview release. It is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
+The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort} as a Technology Preview release. It is an intuitive chat interface embedded within the {PlatformNameShort}, using generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
 
 The {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
 
@@ -25,16 +25,14 @@ Technology Preview features are not supported with Red Hat production service le
 For more information about the support scope of Red Hat Technology Preview features, see  link:https://access.redhat.com/support/offerings/techpreview[Technology Preview Features Support Scope].
 ====
 
-= Prerequisites
-
-= {PlatformNameShort} {PlatformVers}
+= {PlatformNameShort} {PlatformVers} requirements
 
 * You have installed {PlatformNameShort} {PlatformVers} on your {OCPShort} environment. 
 * You have administrator privileges for the {PlatformNameShort}.
 * You have provisioned an OpenShift cluster with Operator Lifecycle Management installed.
 
 [#LLMproviders]
-== Large Language Model (LLM) provider
+= Large Language Model (LLM) provider requirements
 
 You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. 
 
@@ -76,7 +74,7 @@ To use Microsoft Azure with the {AAPchatbot}, you need access to link:https://az
 Many self-hosted or self-managed model servers claim API compatibility with {OpenAI}. It is possible to configure the {AAPchatbot} {OpenAI} provider to point to an API-compatible model server. If the model server is truly API-compatible, especially with respect to authentication, then it might work. These configurations have not been tested by Red Hat, and issues related to their use are outside the scope of Technology Preview support.
 ====
 
-= Process
+= Process for configuring and using the {AAPchatbot}
 Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
 
 [%header,cols="35%,65%"]
@@ -89,10 +87,10 @@ a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for 
 
 Perform the following tasks:
 
-. Install and configure the {PlatformNameShort} operator
-. Create a chatbot configuration secret
-. Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret 
+. xref:proc-install-operator-chatbot_deploying-chatbot-operator[Install] and xref:proc-configure-operator-chatbot_deploying-chatbot-operator[configure] the {PlatformNameShort} operator.
+. xref:proc-create-chatbot-config-secret_deploying-chatbot-operator[Create a chatbot configuration secret].
+. xref:proc-update-aap-operator-chatbot_deploying-chatbot-operator[Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret].
 
 | Access and use the {AAPchatbot}
-| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}.
+| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. For more details, see xref:con-using-chatbot_deploying-chatbot-operator[Using the {AAPchatbot}].
 |====
