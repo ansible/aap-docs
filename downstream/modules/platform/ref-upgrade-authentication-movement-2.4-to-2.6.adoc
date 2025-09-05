@@ -4,7 +4,7 @@
 
 = Authentication movement
 
-During an upgrade from {PlatformNameShort} 2.4 to 2.6, all authentication provider configurations and their associated user, organization, and team mappings are migrated from the legacy controller to the new {Gateway}.
+During an upgrade from {PlatformNameShort} 2.4 to 2.6, all authentication provider configurations and their associated user, organization, and team mappings are moved from the legacy controller to the new {Gateway}.
 
 .Prerequisites
 
@@ -14,15 +14,16 @@ During an upgrade from {PlatformNameShort} 2.4 to 2.6, all authentication provid
 +
 [WARNING]
 ====
-This is a critical step for data recovery in case any issues occur during the migration process.
+This is a critical step for data recovery in case any issues occur during the movement process.
 ====
 
 .Post upgrade
 
-* *Update the callback URLs* in your _Identity Provider_ (IdP) configurations after the migration. This is necessary for OAuth and SSO providers to function correctly with the new platform gateway architecture. For more information, see [Updating callback URLs for OAuth and SSO providers][linkTBD].
+* *Update the callback URLs* in your _Identity Provider_ (IdP) configurations after the movement. This is necessary for OAuth and SSO providers to function correctly with the new {Gateway} architecture. For more information, see [Updating callback URLs for OAuth and SSO providers][linkTBD].
 * *Reestablish custom certificates for LDAPS* if your LDAP authentication uses custom certificates in the system's trust store. This configuration is not automatically migrated and you must manually reestablish it.
 
-The migration of existing authentication configurations from a Red Hat Ansible Automation Platform 2.4 automation controller to the new 2.6 platform gateway is automated. The following tables show how settings and mappings from the old automation controller schema are transformed to fit the new {Gateway} API schema.
+The movement of existing authentication configurations from a {PlatformName} 2.4 {ControllerName} to the new 2.6 {Gateway} is automated. 
+The following tables show how settings and mappings from the old {ControllerName} schema are transformed to fit the new {Gateway} API schema.
 
 *Authentication type: OIDC*
 
