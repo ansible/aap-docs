@@ -2,18 +2,18 @@
 
 [source,yaml,subs="+attributes"]
 ----
-# This is the RPM-based Ansible Automation Platform installer inventory file intended for upgrading from a 2.4 multi node automation controller and automation hub deployment to a 2.6 enterprise deployment.
+# This is the RPM-based {PlatformNameShort} installer inventory file intended for upgrading from a 2.4 multi node {ControllerName} and {HubName} deployment to a 2.6 enterprise deployment.
 
 # For all optional variables consult the Red Hat documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation
 
-# This section is for your platform gateway hosts - NEW for 2.6 enterprise topology
+# This section is for your {Gateway} hosts - NEW for 2.6 enterprise topology
 # -----------------------------------------------------
 [automationgateway]
 gateway1.example.org
 gateway2.example.org
 
-# This section is for your automation controller hosts from your 2.4 inventory
+# This section is for your {ControllerName} hosts from your 2.4 inventory
 # -----------------------------------------------------
 [automationcontroller]
 controller1.example.org
@@ -29,13 +29,13 @@ hop1.example.org node_type='hop'
 exec1.example.org
 exec2.example.org
 
-# This section is for your automation hub hosts from your 2.4 inventory
+# This section is for your {HubName} hosts from your 2.4 inventory
 # -----------------------------------------------------
 [automationhub]
 hub1.example.org
 hub2.example.org
 
-# This section is for your Event-Driven Ansible controller hosts - NEW for 2.6 enterprise topology
+# This section is for your {EDAName} hosts - NEW for 2.6 enterprise topology
 # -----------------------------------------------------
 [automationedacontroller]
 eda1.example.org
@@ -58,7 +58,7 @@ eda2.example.org
 registry_username=<your RHN username>
 registry_password=<your RHN password>
 
-# Platform gateway - NEW for 2.6 enterprise topology
+# {GatewayStart} - NEW for 2.6 enterprise topology
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#platform-gateway-variables
 # -----------------------------------------------------
 automationgateway_admin_password=<set your own>
@@ -68,7 +68,7 @@ automationgateway_pg_database=<set your own>
 automationgateway_pg_username=<set your own>
 automationgateway_pg_password=<set your own>
 
-# Automation controller variables from your 2.4 inventory
+# {ControllerNameStart} variables from your 2.4 inventory
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#controller-variables
 # -----------------------------------------------------
 admin_password=<set your own>
@@ -77,7 +77,7 @@ pg_database=<set your own>
 pg_username=<set your own>
 pg_password=<set your own>
 
-# Automation hub variables from your 2.4 inventory
+# {HubNameStart} variables from your 2.4 inventory
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#hub-variables
 # -----------------------------------------------------
 automationhub_admin_password=<set your own>
@@ -88,7 +88,7 @@ automationhub_pg_password=<set your own>
 # This variable is no longer used for load balancer configuration in 2.6: 
 # automationhub_main_url=<set your own>
 
-# Event-Driven Ansible controller - NEW for 2.6 enterprise topology
+# {EDAName} - NEW for 2.6 enterprise topology
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-variables
 # -----------------------------------------------------
 automationedacontroller_admin_password=<set your own>

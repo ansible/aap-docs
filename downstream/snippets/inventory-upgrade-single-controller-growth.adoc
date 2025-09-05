@@ -2,18 +2,18 @@
 
 [source,yaml,subs="+attributes"]
 ----
-# This is the RPM-based Ansible Automation Platform installer inventory file intended for upgrading from a 2.4 single automation controller deployment to a 2.6 growth deployment.
-# Consult the Ansible Automation Platform product documentation about this topology's tested hardware configuration.
+# This is the RPM-based {PlatformNameShort} installer inventory file intended for upgrading from a 2.4 single {ControllerName} deployment to a 2.6 growth deployment.
+# Consult the {PlatformNameShort} product documentation about this topology's tested hardware configuration.
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/tested_deployment_models/rpm-topologies
-# For all optional variables consult the Ansible Automation Platform documentation:
+# For all optional variables consult the {PlatformNameShort} documentation:
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation
 
-# This section is for your platform gateway hosts - NEW for 2.6 growth topology
+# This section is for your {Gateway} hosts - NEW for 2.6 growth topology
 # -----------------------------------------------------
 [automationgateway]
 gateway.example.org
 
-# This section is for your automation controller hosts from your 2.4 inventory
+# This section is for your {ControllerName} hosts from your 2.4 inventory
 # -----------------------------------------------------
 [automationcontroller]
 controller.example.org
@@ -26,17 +26,17 @@ peers=execution_nodes
 [execution_nodes]
 exec.example.org
 
-# This section is for your automation hub hosts - NEW for 2.6 growth topology
+# This section is for your {HubName} hosts - NEW for 2.6 growth topology
 # -----------------------------------------------------
 [automationhub]
 hub.example.org
 
-# This section is for your Event-Driven Ansible controller hosts - NEW for 2.6 growth topology
+# This section is for your {EDAName} hosts - NEW for 2.6 growth topology
 # -----------------------------------------------------
 [automationedacontroller]
 eda.example.org
 
-# This section is for the Ansible Automation Platform database from your 2.4 inventory file
+# This section is for the {PlatformNameShort} database from your 2.4 inventory file
 # -----------------------------------------------------
 [database]
 db.example.org
@@ -54,28 +54,28 @@ registry_password=<your RHN password>
 # -----------------------------------------------------
 redis_mode=standalone
 
-# Platform gateway - NEW for 2.6 growth topology
+# {GatewayStart} - NEW for 2.6 growth topology
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#platform-gateway-variables
 # -----------------------------------------------------
 automationgateway_admin_password=<set your own>
 automationgateway_pg_host=db.example.org
 automationgateway_pg_password=<set your own>
 
-# Automation controller variables from your 2.4 inventory file
+# {ControllerNameStart} variables from your 2.4 inventory file
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#controller-variables
 # -----------------------------------------------------
 admin_password=<set your own>
 pg_host=db.example.org
 pg_password=<set your own>
 
-# Automation hub - NEW for 2.6 growth topology
+# {HubNameStart} - NEW for 2.6 growth topology
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#hub-variables
 # -----------------------------------------------------
 automationhub_admin_password=<set your own>
 automationhub_pg_host=db.example.org
 automationhub_pg_password=<set your own>
 
-# Event-Driven Ansible controller - NEW for 2.6 growth topology
+# {EDAName} - NEW for 2.6 growth topology
 # https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars#event-driven-ansible-variables
 # -----------------------------------------------------
 automationedacontroller_admin_password=<set your own>
