@@ -45,7 +45,14 @@ spec:
 . Click btn:[Create].
 
 .Verification
-Go to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify if all instances deployed correctly.
+* Go to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify if all instances deployed correctly.
++
 You should see the *{PlatformNameShort}* instance and the deployed *AutomationController*, *EDA*, and *AutomationHub* instances here.
-
++
 Alternatively you can check by the command line, run: `oc get route` 
+
+* Verify that all the pods are running successfully, by performing the following steps:
+
+. Navigate to menu:Workloads[Pods].
+. Switch to the project named as described in the namespace metadata in the *YAML* configuration view.
+. Verify that all pods display either a *Running* or *Completed* status, with no pods displaying an error status.
