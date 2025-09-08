@@ -22,17 +22,14 @@ callbacks_enabled = ansible.posix.profile_tasks
 
 *{ControllerNameStart} returns an error of 413*
 
-This error happens when `manifest.zip` license files that are larger than the `nginx_client_max_body_size` setting. If this error occurs, change the inventory file to include the following variables:
+This error occurs when `manifest.zip` license files that are larger than the `controller_nginx_client_max_body_size` setting. If this error occurs, update the inventory file to include the following variable:
 
 ----
-nginx_disable_hsts=false
-nginx_http_port=8081
-nginx_https_port=8444
-nginx_client_max_body_size=20m
-nginx_user_headers=[]
+controller_nginx_client_max_body_size=5m
 ----
 
-The current default setting of `20m` should prevent this issue.
+The default setting of `5m` should prevent this issue, but you can increase the value as needed.
+
 
 *When attempting to install containerized {PlatformNameShort} in {AWS} you receive output that there is no space left on device*
 
