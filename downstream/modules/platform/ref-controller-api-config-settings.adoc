@@ -4,7 +4,7 @@
 
 = Configuration settings
 
-There are two named-URL-related configuration settings available under `/api/v2/settings/named-url/: NAMED_URL_FORMATS` and `NAMED_URL_GRAPH_NODES`.
+There are two named-URL-related configuration settings available under `/api/controller/v2/settings/named-url/: NAMED_URL_FORMATS` and `NAMED_URL_GRAPH_NODES`.
 
 `NAMED_URL_FORMATS` is a read only key-value pair list of all available named URL identifier formats. 
 The following shows an example `NAMED_URL_FORMATS`:
@@ -41,7 +41,7 @@ If a resource can have named URL, its objects must have a `named_url` field that
 That field is only visible under detail view, not list view. 
 You can access specified resource objects by using accurately generated named URL. 
 This the object and its related URLs. 
-For example, if `/api/v2/res_name/obj_slug/` is valid, `/api/v2/res_name/obj_slug/related_res_name/` is also valid.
+For example, if `/api/controller/v2/res_name/obj_slug/` is valid, `/api/controller/v2/res_name/obj_slug/related_res_name/` is also valid.
 
 `NAMED_URL_FORMATS` are instructive enough to compose human-readable unique identifiers and named URLs themselves. 
 For ease-of-use, every object of a resource that can have named URL has a related field `named_url` that displays that object's named URL. 
@@ -51,7 +51,7 @@ For more information, see the help text of the API browser if a resource object 
 You can manually decide the named URL label, for example with ID 5.
 To compose a named URL for this specific resource object by using `NAMED_URL_FORMATS`, first look up the labels field of `NAMED_URL_FORMATS` to get the identifier format `<name>++<organization.name>`:
 
-* The first part of the URL format is `<name>`, which indicates that you can find the label resource detail in `/api/v2/labels/5/`, and look for `name` field in returned JSON. 
+* The first part of the URL format is `<name>`, which indicates that you can find the label resource detail in `/api/controller/v2/labels/5/`, and look for `name` field in returned JSON. 
 If you have the `name` field with value `Foo`, then the first part of the unique identifier is `Foo`.
 * The second part of the format is double plus sign {plus}{plus}. 
 That is the delimiter that separates different parts of a unique identifier. 
@@ -59,11 +59,11 @@ Append them to the unique identifier to get `Foo++`.
 * The third part of the format is `<organization.name>`, which indicates that the field is not in the current label object under investigation, but in an organization that the label object points to. 
 As the format indicates, look up the organization in the related field of the current returned JSON. 
 That field might not exist. 
-If it exists, follow the URL given in that field, for example, `/api/v2/organizations/3/`, to get the details of the specific organization, extract its name field, for example, "Default", and append it to the current unique identifier. Since `<organizations.name>` is the last part of the format, it generates the following named URL: `/api/v2/labels/Foo++Default/`.
+If it exists, follow the URL given in that field, for example, `/api/gateway/v1/organizations/3/`, to get the details of the specific organization, extract its name field, for example, "Default", and append it to the current unique identifier. Since `<organizations.name>` is the last part of the format, it generates the following named URL: `/api/controller/v2/labels/Foo++Default/`.
 +
 In the case where an organization does not exist in the related field of the label object detail, append an empty string instead. 
 This does not alter the current identifier. 
-Therefore, `Foo++` becomes the final unique identifier and the resulting generated named URL becomes `/api/v2/labels/Foo{plus}{plus}/`.
+Therefore, `Foo++` becomes the final unique identifier and the resulting generated named URL becomes `/api/controller/v2/labels/Foo{plus}{plus}/`.
 
 An important aspect of generating a unique identifier for named URL has to do with reserved characters. 
 As the identifier is part of a URL, the following reserved characters by URL standard are encoded by percentage symbols: `;/?:@=&[]`. 
