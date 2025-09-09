@@ -1,0 +1,15 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="vault-auth-architecture"]
+
+= Authentication architecture
+
+[role="_abstract"]
+
+The `hashicorp.vault` collection manages authentication through environment variables and client initialization. This approach enhances security by preventing sensitive credentials from being passed directly as module parameters within playbook tasks. Instead, `hashicorp.vault` injects credentials into job templates with environment variables, so you get simpler, cleaner task definitions while ensuring that authentication details remain secure.
+
+The following authentication types are supported:
+
+* *Token authentication:* Set the `VAULT_TOKEN` environment variable.
+
+Optionally, you can configure parameters for the token. If parameters are not provided, then the module uses env vars.
