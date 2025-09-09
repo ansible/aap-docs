@@ -12,19 +12,19 @@
 ** RHEL 9 x86 or ARM based physical or virtual host. 
 ** Postgres v15 database. 
 [IMPORTANT]
-Do not attempt to install {AutomationDashboardName} on the same host(s) as {PlatformNameShort}.
+Do not attempt to install {AutomationDashboardName} on the same hosts as {PlatformNameShort}.
 * Access to _baseos_ and _{PlatformNameShort}stream_ repo packages for the RHEL 9 host.
 * A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the $HOMEDIR of the user account.
 * URL details for access to your {PlatformNameShort} instances.
-* An {PlatformNameShort} oauth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
+* An {PlatformNameShort} 0Auth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
 * Access to download the installation bundle providing installation components for the {AutomationDashboardName}.
-* Open firewall access to allow for communications. This includes HTTPS/443 from the {AutomationDashboardName} to the {PlatformNameShort} instance(s), but ports are configurable.
+* Open firewall access to allow for communications. This includes HTTPS/443 from the {AutomationDashboardName} to the {PlatformNameShort} instances, but ports are configurable.
 * Access to port 8447.
 * A supported version of `ansible-core` installed on supported RHEL versions.
 
 .Procedure
 
-Use the following steps to install {AutomationDashboardName} on your Red Hat Enterprise Linux (RHEL) 9 host:
+Use the following steps to install {AutomationDashboardName} on your {RHEL} (RHEL) 9 host:
 
 . Copy the installation source file to your RHEL 9 host.
 . Untar the installation source. This requires approximately 500 MB of disk space. For this example, the user's home directory (`/home/ec2-user`) is used.
@@ -51,14 +51,12 @@ cp -i inventory.example inventory
 vi inventory
 ----
 
-. Review and update the inventory configuration with your specific environment details.
-+
-[NOTE]
-This is an example of a tested inventory configuration. You must update the following values for your environment:
-* All RHEL 9 host occurrences from `ec2-54-147-26-173.compute-1.amazonaws.com` to your FQDN host.
-* All `_admin_password` or `_pg_password` values. Change the word `changeme` to match your passwords.
+. Review and update the inventory configuration with your specific environment details, including the following variables:
+.. All RHEL 9 host occurrences from `ec2-54-147-26-173.compute-1.amazonaws.com` to your FQDN host.
+.. All `_admin_password` or `_pg_password` values. Change the word `changeme` to match your passwords.
 
-[source,ini]
++
+[source,bash]
 ----
 # This is our {AutomationDashboardName} reporter front-end application
 [automationreporter]
@@ -118,8 +116,8 @@ ansible-playbook -i inventory ansible.containerized_installer.reporter_install
 
 .Verification
 
-. See the following example output for reference.
-+
+See the following example output for reference.
+
 [source,text]
 ----
 PLAY RECAP *********************************************************************************************************************************************
