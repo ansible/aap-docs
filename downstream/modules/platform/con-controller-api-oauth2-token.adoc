@@ -32,9 +32,12 @@ For more information, see link:{URLCentralAuth}/gw-token-based-authentication[Co
 
 Token authentication is best used for any programmatic use of the {ControllerName} API, such as Python scripts or tools such as curl.
 
-.Curl example
+*Curl example*
 
-'curl -u user:password -k -X POST https://<platform-host>/api/gateway/v1/tokens/`
+[literal, options="nowrap" subs="+attributes"]
+----
+curl -u user:password -k -X POST https://<gateway-server>/api/controller/v2/tokens/
+----
 
 This call returns JSON data with the following:
 
@@ -47,7 +50,7 @@ You can use the value of the `token` property to perform a `GET` request for an 
 curl -k -X GET \
   -H “Content-Type: application/json”
   -H “Authorization: Bearer <oauth2-token-value>” \
-  https://<platform-host>/api/controller/v2/hosts/ 
+  https://<gateway server name>/api/controller/v2/hosts/
 ----
 
 You can also run a job by making a `POST` to the job template that you want to start:
@@ -58,20 +61,33 @@ curl -k -X POST \
   -H "Authorization: Bearer <oauth2-token-value>" \
   -H "Content-Type: application/json" \
   --data '{"limit" : "ansible"}' \
-  https://<controller-host>/api/v2/job_templates/14/launch/
+  https://<gateway server name>/api/controller/v2/job_templates/14/launch/
+----
+
+*Python example*
+
+link:https://pypi.org/project/awxkit/[awxkit] is an open source tool that makes it easy to use HTTP requests to access the {ControllerName} API.
+You can have awxkit get a PAT on your behalf by using the awxkit login command.
+For more information, see link:https://docs.ansible.com/automation-controller/latest/html/controllercli/index.html[AWX Command Line Interface].
+
+If you need to write custom requests, you can write a Python script by using Python library requests, such as the following example:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+import requests
+oauth2_token_value = 'y1Q8ye4hPvT61aQq63Da6N1C25jiA'   # your token value from controller
+url = 'https://<gateway server name>/api/gateway/v1/users/
+payload = {}
+headers = {'Authorization': 'Bearer ' + oauth2_token_value,}
+
+# makes request to controller user endpoint
+response = requests.request('GET', url, headers=headers, data=payload,
+allow_redirects=False, verify=False)
+
+# prints json returned from controller with formatting
+print(json.dumps(response.json(), indent=4, sort_keys=True))
 ----
 
 .Additional resources
 
-For more information about obtaining OAuth2 access tokens and how to use OAuth 2 in the context of external applications, see link:{URLCentralAuth}/gw-token-based-authentication[Configuring access to external applications with token-based authentication].
-
-[discrete]
-== Enabling external users to create OAuth 2 tokens
-
-By default, external users such as those created by single sign-on are not able to generate OAuth tokens for security purposes.
-
-.Procedure
-
-. From the navigation panel, select {MenuSetGateway}.
-. Select btn:[Edit {Gateway} settings].
-. Enable the option to *Allow external users to create OAuth2 tokens*.
+* link:{URLCentralAuth}/gw-token-based-authentication[Configuring access to external applications with token-based authentication]
