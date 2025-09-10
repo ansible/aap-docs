@@ -1,0 +1,37 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="config-jwt-algorithms"]
+
+= Configuring JWT_Algorthims manually
+
+To resolve the authentication failure, manually provide the list of supported algorithms in the platform gateway configuration.
+
+.Procedure
+
+. From the navigation panel, select {MenuAMAuthentication}.
+. Select your OIDC authenticator from the list.
+. Click btn:[Edit authentication] and locate the *OIDC JWT Algorithm(s)* field.
+. Enter the list of supported algorithms as a YAML list or a JSON array. 
+These algorithms are typically available from your IdP's OpenID Connect (OIDC) discovery endpoint.
++
+*Example*
++
+----
+[
+    "PS384",
+    "ES384",
+    "RS384",
+    "HS256",
+    "HS512",
+    "ES256",
+    "RS256",
+    "HS384",
+    "ES512",
+    "PS256",
+    "PS512",
+    "RS512"
+]
+----
++
+. Save your changes. 
+The system uses these specified algorithms for token verification, resolving any authentication failures related to their absence.

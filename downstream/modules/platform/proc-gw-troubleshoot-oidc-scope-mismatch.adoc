@@ -1,0 +1,25 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="troubleshoot-oidc-scope-mismatch"]
+
+= Troubleshooting Generic OIDC scope mismatches
+
+Authentication fails when the Identity Provider (IdP) does not support the default scopes automatically appended by the system.
+
+To prevent the system from appending this default scope, you must add a setting to your authenticator configuration.
+
+.Procedure
+
+. From the navigation panel, select {MenuAMAuthentication}.
+. Select your OIDC authenticator from the list.
+. Click btn:[Edit authentication]. 
+. In the *Additional Authenticator Fields* section, add the following attribute and value. 
+This input box supports either YAML or JSON. 
+Ensure you add this key-value pair on a new line if there are other fields present: 
++
+[source,yaml]
+----
+IGNORE_DEFAULT_SCOPE: True
+----
+. Save your changes. 
+The authenticator now only uses the scopes you explicitly defined, resolving any authentication failures related to unsupported scopes.
