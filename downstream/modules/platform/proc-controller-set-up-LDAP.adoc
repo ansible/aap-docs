@@ -8,26 +8,26 @@ As a platform administrator, you can configure LDAP as the source for account au
 
 [NOTE]
 ====
-If the LDAP server you want to connect to has a certificate that is self-signed or signed by an internal certificate authority (CA), the CA certificate must be added to the system’s trusted CAs. Otherwise, connection to the LDAP server will result in an error that the certificate issuer is not recognized.
+If the LDAP server you want to connect to has a certificate that is self-signed or signed by an internal certificate authority (CA), the CA certificate must be added to the system's trusted CAs. Otherwise, connection to the LDAP server will result in an error that the certificate issuer is not recognized.
 ====
 
-When LDAP is configured, an account is created for any user who logs in with an LDAP username and password and they can be automatically placed into organizations as either regular users or organization administrators. 
+Your LDAP certificate is not automatically migrated if you use the default {RHEL} truststore.
+If you are upgrading {PlatformNameShort} and your LDAP authentication relies on a certificate added to the system's truststore, this LDAP certificate configuration is not automatically migrated for you to {Gateway} in {PlatformNameShort} 2.6.
 
-{PlatformNameShort} treats usernames as case-insensitive in LDAP. It sends the username that was entered without modification to the LDAP provider for authentication. After successful authentication, the platform converts the username to lowercase and stores it in the database. For example, if a user logs in as `JDOE`, their platform username will be `jdoe`. If the user logs in again as `JDoe`, their username will still be `jdoe`.
+* *For upgrades from {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6*: 
 
-However, if {PlatformNameShort} is configured with multiple LDAP authenticators, and the same user IDs exist across them, their usernames might differ. For instance, `JDOE` might have the username `jdoe`, while `jDOE` could be assigned `jdoe-<some hash>`.
+** The migration of all authenticator configurations from {ControllerName} to {Gateway} are automated. 
+This includes moving third-party authentication configuration and sensitive configuration data, such as SAML private keys or OAuth secret keys, from {ControllerName} to {Gateway}. 
+However, if you are using custom LDAP certificates you still need to complete the following procedure for these certificates.
 
-[NOTE]
-====
-If a user previously logged in using different case variations of their username, {PlatformNameShort} maps all case variations to the lowercase username. Existing users with other case variations are not valid for interactive log in. However, any existing OAuth tokens for the mixed case username still allow authentication. A system administrator can delete those case variation users if needed.
-====
+** The `is_superuser` and `is_system_auditor` flags in your `LDAP AUTH_LDAP_USER_FLAGS_BY_GROUP` settings are successfully migrated to the new {Gateway}.
+However, the `is_active flag` is not available in {Gateway} and therefore is not migrated. 
+Instead you can use a deny rule to prevent access to the system by users.
 
-Users created through an LDAP login should not change their username, first name, last name, or set a local password for themselves. Any changes made to this information is overwritten the next time the user logs in to the platform. 
+* *For upgrades from {PlatformNameShort} 2.5 to {PlatformNameShort} 2.6*: Authenticator configurations are not automatically migrated from {ControllerName}. 
+If you configured authentication in {PlatformNameShort} 2.5, those settings remain as currently configured after upgrading to 2.6. 
+If you used a custom certificate in 2.5 for LDAP you need to migrate that as well.
 
-[IMPORTANT]
-====
-Migration of LDAP authentication settings are not supported for 2.4 to 2.5 in the platform UI. If you are upgrading from {PlatformNameShort} 2.4 to 2.5, be sure to save your authentication provider data before upgrading. 
-====
 
 .Procedure
 
@@ -36,7 +36,7 @@ Migration of LDAP authentication settings are not supported for 2.4 to 2.5 in th
 . Enter a *Name* for this authentication configuration. 
 . Select *LDAP* from the *Authentication type* list. The *Authentication details* section automatically updates to show the fields relevant to the selected authentication type.
 
-include::snippets/snip-gw-authentication-auto-migrate.adoc[]
+//include::snippets/snip-gw-authentication-auto-migrate.adoc[]
 
 . In the *LDAP Server URI* field, enter or modify the list of LDAP servers to which you want to connect. This field supports multiple addresses.
 . In the *LDAP Bind DN text* field, enter the Distinguished Name (DN) to specify the user that the {PlatformNameShort} uses to connect to the LDAP server as shown in the following example:
