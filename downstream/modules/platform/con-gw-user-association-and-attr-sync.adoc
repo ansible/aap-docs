@@ -1,0 +1,37 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="user-association-and-attr-sync"]
+
+= User association and attribute synchronization
+
+{PlatformName} {PlatformVers} manages user accounts and synchronizes attributes by centralizing user identification around a verified email address. 
+This approach gives users the option to sign in with existing accounts from different sources while maintaining a consistent user profile and access permissions.
+
+When a user logs into the platform for the first time with an authenticator, such as Local, GitHub, SAML, or LDAP, the system evaluates the username and email address. 
+If a single, verified email match exists, the external user is linked to that existing platform account.
+
+* Subsequent logins with the same authenticator and external Unique Identifier (UID) directly sign the user into their linked account.
+* If a user's external UID changes, the system re-triggers the email-based linking logic. 
+If the new UID's email matches the existing account, the new authenticator is linked. 
+If the email does not match or is not provided, a new user account might be created.
+* If a user's external email changes, the platform does not automatically update the email address in the existing account, but the user can still sign in and a new account with the new email is created for the user.
+
+This strategy addresses historical inconsistencies:
+
+* *{PlatformNameShort} 2.4*: Inconsistent authentication across multiple backends could lead to login failures.
+* *{PlatformNameShort} 2.5*: {GatewayStart} created new users with hashed usernames, for example, `username-abc123`, when a user authenticated with many providers, which created administrative issues.
+
+In {PlatformNameShort} {PlatformVers}, if a user had a "hashed" account from {PlatformNameShort} 2.5, such as `bob-hash` due to a username collision, that association is honored for that authenticator. 
+However, for new authentications from other identity providers, the platform now maps to the user's primary account, such as, `bob`, provided a single matching email exists. 
+This consolidates user identities and prevents the creation of new hashed accounts. 
+If users should have been previously merged you can delete the user-<hash> account from {PlatformNameShort} and on a subsequent login, the users are merged based on emails as described above.
+
+[IMPORTANT]
+====
+* *Authenticators without email*: If an authenticator such as RADIUS or TACACS+ does not return an email address, a new account is created on first sign-in. 
+To ensure consistent future access, manually add an email to the account after creation.
+* *Multiple users with the same email*: If an email from an authenticator matches multiple existing platform accounts, the sign-in process fails.
+* *LDAP usernames*: The platform treats LDAP usernames as case-insensitive. 
+It converts the username to lowercase and stores it in the database.
+* `associated_authenticators field`: For this unified association, the `associated_authenticators` field in the API is adjusted to support multiple UIDs per user.
+====
