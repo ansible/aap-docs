@@ -10,6 +10,24 @@ The `hashicorp.vault` collection manages authentication through environment vari
 
 The following authentication types are supported:
 
-* *Token authentication:* Set the `VAULT_TOKEN` environment variable.
+* **appRole authentication:** Use either one of the following methods when using appRole authentication:
 
-Optionally, you can configure parameters for the token. If parameters are not provided, then the module uses env vars.
+** Set the `VAULT_APPROLE_ROLE_ID` and `VAULT_APPROLE_SECRET_ID` environment variables. When you use environment variable, you must also create a custom credential type and credentials that will be passed to the job template.
+
+** Directly pass the `role_id` and `secret_id` parameters to the tasks, for example:
++
+----
+- name: Create a secret with AppRole authentication
+  hashicorp.vault.kv2_secret:
+    url: https://vault.example.com:8200
+    auth_method: approle
+    role_id: "{{ vault_role_id }}"
+    secret_id: "{{ vault_secret_id }}"
+    path: myapp/config
+    data:
+      api_key: secret-api-key
+----
+
+* **Token authentication:** Set the `VAULT_TOKEN` environment variable. 
++
+Optionally, you can configure parameters for the token. If parameters are not provided, then the module uses environment variables.
