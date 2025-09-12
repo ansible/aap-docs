@@ -2,10 +2,21 @@
 
 [id="proc-controller-add-organization-user"]
 
-= Adding a user to an organization
+= Assigning a user to an organization
 
-You can provide a user with access to an organization by adding them to the organization and managing the roles associated with the user. To add a user to an organization, the user must already exist. For more information, see xref:proc-controller-creating-a-user[Creating a user]. 
-To add roles for a user, the role must already exist. See xref:proc-gw-create-roles[Creating a role] for more information.
+You can provide a user with access to an organization, and therefore the resources within the organization, by assigning them to the organization and managing the organization roles associated with the user. 
+
+You can view a list of users associated with an organization, along with the roles each user is directly assigned, in the organization's *Users* tab. 
+When you manage a user's organization roles in the Users tab, you can also see how the user was assigned their roles, whether indirectly, or through association with a team, or through direct user assignment by an administrator. 
+
+[NOTE]
+
+====
+If a user is assigned a "team member" role, this likely indicates that they have an indirectly-assigned role. To see a user's indirectly-assigned roles, click the pencil icon image:leftpencil.png[Edit page,15,15] to view and manage roles, and then click "View indirectly-assigned organization roles" in the page banner.
+====
+
+To assign a user to an organization, the user must already exist. For more information, see xref:proc-controller-creating-a-user[Creating a user]. 
+To assign roles to a user, the role must already exist. See xref:proc-gw-create-roles[Creating a role] for more information.
 
 // [[hherbly] removed for 2.6] The following tab selections are available when adding users to an organization. When user accounts from the {ControllerName} organization have been migrated to {PlatformNameShort} 2.5 during the upgrade process, the *Automation Execution* tab shows content based on whether the users were added to the organization prior to migration.  
 
@@ -13,12 +24,12 @@ To add roles for a user, the role must already exist. See xref:proc-gw-create-ro
 
 // Automation Execution:: Reflects users that were added directly to the {ControllerName} organization prior to an upgrade and migration. From this tab, you can only view existing memberships in {ControllerName} and remove those memberships but not you can not add new memberships. 
 
-New user memberships to an organization must be added at the platform level.
+// New user memberships to an organization must be added at the platform level.
 
 .Procedure
 . From the navigation panel, select {MenuAMOrganizations}.
 . From the *Organizations* list view, select the organization to which you want to add a user. 
-. Click the *Users* tab, then btn:[Assign Users] to add users.
+. Click the *Users* tab, then click btn:[Assign Users] to add users.
 // . Select the *{PlatformNameShort}* tab and click btn:[Add users] to add user access to the team, or select the *Automation Execution* tab to view or remove user access from the team.
 . Select one or more users from the list by clicking the checkbox next to the name to add them as members.
 . Click btn:[Next].
@@ -31,13 +42,17 @@ include::snippets/snip-gw-roles-note-multiple-components.adoc[]
 +
 [NOTE]
 ====
-A user with associated roles retains them if they are reassigned to another organization.
+A user with roles associated with an organization loses those roles if they are removed from the organization.
 ====
 +
-. To remove a particular user from the organization, select *Remove user* from the *More actions {MoreActionsIcon}* list next to the user. This launches a confirmation dialog, asking you to confirm the removal.
-. To manage roles for users in an organization, click the *{SettingsIcon}* icon next to the user and select *Manage roles*. 
+. To remove a particular user from the organization, select *Remove user* from the *More actions {MoreActionsIcon}* list next to the user. This launches a confirmation dialog, asking you to confirm the removal. Note that removing a user from an organization will also remove all organization roles that the user is indirectly assigned from that specific organization.
+. To manage roles for users in an organization, click the *{SettingsIcon}* icon next to the user and select *Manage roles*. You can manage organization roles that are directly assigned to a user by selecting or de-selecting the checkboxes. Double-check the component column to ensure you are selecting the desired role in the correct component context.
 
+[TIP]
 
+====
 
+From this screen, you can view, but not manage, indirectly-assigned roles that a user has inherited from a team assignment. To view indirectly-assigned roles, along with the team assignment they originated from, click the link labeled "View indirectly assigned organization roles" in the banner beneath the page heading. To manage roles indirectly assigned to a user through a team assignment, manage that team's organization role assignments or remove the user from that team [LINK]
+====
 
 
