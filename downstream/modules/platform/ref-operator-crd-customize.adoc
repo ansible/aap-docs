@@ -1,0 +1,213 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-operator-crd-customize_{context}"]
+
+= Customizing your resource requirements
+
+Customize resource requirements for your {PlatformNameShort} components to optimize performance and resource allocation in your specific environment. 
+The following section provides a complete code block with the default resource requirements for each component. The main reasons for customizing your resource requirements include:
+
+* Performance Tuning: Increase resource limits for components that perform heavy workloads.
+* To comply with a `ResourceQuota` enforced by the cluster admin.
+* Resource Constrained Environments: Decrease resource requests to conserve cluster resources in development or test environments.
+* Environment Specifics: Align the resource allocation with the capacity of your OpenShift or Kubernetes cluster nodes.
+
+You can use this reference as a starting point. Copy the full code block for your {PlatformNameShort} instance and modify the values for the components you want to change. 
+This method helps ensure all default settings are applied correctly, reducing the risk of deployment errors.
+
+
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: aap-custom-limits
+spec:
+
+  api:
+    replicas: 1
+    resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1000Mi
+  redis:
+    replicas: 1
+    resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
+  database:
+    resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 800Mi
+
+  controller:
+    disabled: false
+    uwsgi_processes: 2
+    task_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 150Mi
+      limits:
+        cpu: 1000m
+        memory: 1500Mi
+    web_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 200Mi
+      limits:
+        cpu: 200m
+        memory: 1600Mi
+    ee_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 1000m
+        memory: 500Mi
+    redis_resource_requirements:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
+    rsyslog_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 250Mi
+    init_container_resource_requirements:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 200Mi
+  eda:
+    disabled: false
+    api:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 50m
+          memory: 350Mi
+        limits:
+          cpu: 500m
+          memory: 400Mi
+    ui:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 150Mi
+    scheduler:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 50m
+          memory: 200Mi
+        limits:
+          cpu: 500m
+          memory: 250Mi
+    worker:
+      replicas: 2
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+        limits:
+          cpu: 250m
+          memory: 250Mi
+    default_worker:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 200Mi
+        limits:
+          cpu: 500m
+          memory: 400Mi
+    activation_worker:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 150Mi
+        limits:
+          cpu: 500m
+          memory: 400Mi
+    event_stream:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 25m
+          memory: 150Mi
+        limits:
+          cpu: 100m
+          memory: 300Mi
+  hub:
+    disabled: false
+    storage_type: file
+    file_storage_storage_class: efs-sc
+    file_storage_size: 10Gi
+    api:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 150m
+          memory: 256Mi
+        limits:
+          cpu: 800m
+          memory: 500Mi
+    content:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 150m
+          memory: 256Mi
+        limits:
+          cpu: 800m
+          memory: 1200Mi
+    worker:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 150m
+          memory: 256Mi
+        limits:
+          cpu: 800m
+          memory: 400Mi
+    web:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 300Mi
+    redis:
+      replicas: 1
+      resource_requirements:
+        requests:
+          cpu: 100m
+          memory: 250Mi
+        limits:
+          cpu: 300m
+          memory: 400Mi
+----
