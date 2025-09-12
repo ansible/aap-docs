@@ -6,7 +6,7 @@ When you receive the result for a collection, something similar to the following
 
 [literal, options="nowrap" subs="+attributes"]
 ----
-{'count': 25, 'next': 'http://testserver/api/v2/some_resource?page=2', 'previous': None, 'results': [ ... ] }
+{'count': 25, 'next': 'http://testserver/api/controller/v2/some_resource?page=2', 'previous': None, 'results': [ ... ] }
 ----
 
 .Procedure
@@ -19,11 +19,14 @@ However, you can change this limit by setting the value in `/etc/tower/conf.d/<s
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/model_verbose_name?page_size=100&page=2
+http://<gateway server name>/api/controller/v2/model_verbose_name?page_size=100&page=2
 ----
-
++
+[NOTE]
+====
 The preceding and following links returned with the results set these query string parameters automatically.
 
 Do not request page sizes greater than 200.
 
 The user interface uses smaller values to avoid scrolling.
+====
