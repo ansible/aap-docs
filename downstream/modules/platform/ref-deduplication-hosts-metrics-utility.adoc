@@ -1,0 +1,9 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-deduplication-hosts-metrics-utility"]
+
+= Deduplication of hosts for `metrics-utility` reports
+
+Deduplication changes how `metrics-utility` merges individual host records into countable managed nodes when building reports. Deduplication identifies identical hosts to ensure an accurate count of unique hosts. 
+
+`metrics-utility` tracks individual hosts based on their hostnames. Any entries that use the same hostname are tracked as the same host. Additional deduplication strategies are also available using the following environment variable: `METRICS_UTILITY_DEDUPLICATOR=`.
