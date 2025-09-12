@@ -71,15 +71,20 @@ metrics-utility build_report
 `0 4 2 * * /home/my-user/cron-report`
 
 . Save and close the file.
-. To verify that you saved your changes, run:
+
+.Verification 
+
+Use the following verification steps to ensure correct configuration:
+
+. To confirm that your `cron` job entries have been saved correctly, run:
 +
 `crontab -l`
-
-. To ensure that data is being collected, run: 
++
+. Inspect the `cron` log to verify that the `cron` daemon is executing the commands and that `metrics-utility` is producing output:
 +
 `cat /var/log/cron` 
 +
-The following is a typical output. Note that time and date might vary depending on how your configure the run schedule:
+For reference, see the following example output:
 +
 [source, ]
 ----
@@ -95,3 +100,6 @@ May  8 09:46:26 ip-10-0-6-23 crontab[51659]: (root) END EDIT (root)
 +
 
 The generated report will have the default name `CCSP-<YEAR>-<MONTH>.xlsx` and is saved in the ship path that you specified in step 1a.
+
+[NOTE]
+Time and date might vary depending on how your configure the run schedule.
