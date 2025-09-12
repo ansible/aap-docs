@@ -3,29 +3,9 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="upgrade-controller-hub-eda-unified-ui_{context}"]
-= Automation controller and automation hub 2.4 and Event-Driven Ansible 2.5 with unified UI upgrades
+= Using migration path for 2.4 instances with managed databases
 
-{PlatformNameShort} 2.5 supports upgrades from {PlatformNameShort} 2.4 environments for all components, with the exception of {EDAName}. You can also configure a mixed environment with {EDAName} from 2.5 connected to a legacy 2.4 cluster. Combining install methods (OCP, RPM, Containerized) within such a topology is not supported by {PlatformNameShort}.
-
-[NOTE]
-If you are running the 2.4 version of {EDAName} in production, before you upgrade, contact Red Hat support or your account representative for more information on how to move to {PlatformNameShort} 2.5.
-
-Supported topologies described in this document assume that:
-
-* 2.4 services will only include {ControllerName} and {HubName}.
-* 2.5 parts will always include {EDAName} and the unified UI ({Gateway}).
-* Combining install methods for these topologies is not supported.
-
-== Upgrade considerations
-
-* You must maintain two separate inventory files: one for the 2.4 services and one for the 2.5 services.
-* You must maintain two separate "installations" within this scenario: one for the 2.4 services and one for the 2.5 services. 
-* You must "upgrade" the two separate "installations" separately.
-* To upgrade to a consistent component version topology, consider the following: 
-** You must manually combine the inventory file configuration from the 2.4 inventory into the 2.5 inventory and run upgrade on ONLY the 2.5 inventory file. 
-** You must be using an external database for both the 2.4 inventory as well as the 2.5 inventory. 
-** Customers using "managed database" instances for either 2.4 or 2.5 inventory must migrate to an external database first, before upgrading.
-
+Use this procedure if you have migration path for 2.4 instances with managed databases. 
 
 .Prerequisites
 
@@ -40,83 +20,12 @@ DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of
 
 .Procedure
 
-=== Migration path for 2.4 instances with managed databases
+* *For standalone node managed database*
 
-*Standalone node managed database*
+** Convert the database node to an external one, removing it from the inventory. The PostgreSQL node will continue working and will not lose the {PlatformNameShort}-provided setup, but you are responsible for managing its configuration afterward.
 
-Convert the database node to an external one, removing it from the inventory. The PostgreSQL node will continue working and will not lose the {PlatformNameShort}-provided setup, but you are responsible for managing its configuration afterward.
+* *For collocated managed database*
 
-*Collocated managed database*
-
-. Backup
-. Restore with standalone managed database node instead of collocated.
+. Back up
+. Restore with standalone managed database node instead of collocated
 . Unmanaged standalone database
-
-=== Migration path for 2.4 services with 2.5 services
-
-If you installed {PlatformNameShort} 2.5 to use {EDAName} in a supported scenario, you can upgrade your {PlatformNameShort} 2.4 {ControllerName} and {HubName} to {PlatformNameShort} 2.5 by following these steps:
-
-* Merge 2.4 inventory data into the 2.5 inventory. The example below shows the inventory file for {ControllerName} and {HubName} for 2.4 and the inventory file for {EDAName} and the unified UI ({Gateway}) for 2.5, respectively, as the starting point, and what the merged inventory looks like. 
-
-*Inventory files from 2.4*
-
-[source,bash]
-----
-[automationcontroller]
-controller-1
-controller-2
-
-[automationhub]
-hub-1
-hub-2
-
-[all:vars]
-# Here we have the admin passwd, db credentials, etc.
-----
-
-*Inventory files from 2.5*
-[source,]
-----
-[edacontroller]
-eda-1
-eda-2
- 
-[gateway]
-gw-1
-gw-2
- 
-[all:vars]
-# Here we have admin passwd, db credentials etc.
-----
-
-*Merged Inventory*
-[source,]
-----
-[automationcontroller]
-controller-1
-controller-2
- 
-[automationhub]
-hub-1
-hub-2
- 
-[edacontroller]
-eda-1
-eda-2
- 
-[gateway]
-gw-1
-gw-2
- 
-[all:vars]
-# Here we have admin passwd, db credentials etc from both inventories above
-----
-
-* Run `setup.sh`
-The installer upgrades {ControllerName} and {HubName} from 2.4 to {PlatformNameShort} 2.5.latest, {EDAName} and the unified UI ({Gateway}) from the fresh install of 2.5 to the latest version of 2.5, and connects {ControllerName} and {HubName} properly with the unified UI ({Gateway}) node to initialize the unified experience. 
-
-.Verification
-
-* Verify that everything has upgraded to 2.5 and is working properly in one of two ways: 
-** performing an SSH to {ControllerName} and {EDAName}.
-** In the unified UI, navigate to *Help > About* to verify the RPM versions are at 2.5.
