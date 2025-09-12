@@ -1,0 +1,79 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-host-scripts-directories"]
+
+= Preparing host directories and scripts
+
+To prepare host directories and scripts, create two shell scripts on your host machine to execute `metrics-utility` commands inside your running container.
+
+.Procedure
+. Modify your inventory file to enable metrics-utility container deployment by adding the following line under the [all:vars] section:
++
+----
+metrics_utility_enabled=true
+----
++
+This setting instructs the installer to create and configure a dedicated `automation-controller-metrics-utility` container as part of your {PlatformNameShort} deployment. Be sure to place this line under the `[all:vars]` header in your inventory file, alongside your other global variables. Re-run the installer script to activate the container if your {PlatformNameShort} deployment has already been configured.
+. Run the following command to create the host report destination directory:
++
+----
+mkdir -p /home/my-user/aap/controller/data/
+----
++
+This directory on your host machine stores the final generated reports.
+. Create a file named `/home/my-user/cron-gather` (replace `/home/my-user/` with your desired path) and add the following content to create the `cron-gather` script:
++
+----
+#!/bin/sh
+
+# Specify the following variables to indicate where the report is deposited in your file system
+export METRICS_UTILITY_SHIP_TARGET=directory
+export METRICS_UTILITY_SHIP_PATH=/metrics_utility/data
+
+# Run metrics-utility inside the running container
+podman exec \
+  -e METRICS_UTILITY_SHIP_TARGET="$METRICS_UTILITY_SHIP_TARGET" \
+  -e METRICS_UTILITY_SHIP_PATH="$METRICS_UTILITY_SHIP_PATH" \
+  automation-controller-task \
+  metrics-utility gather_automation_controller_billing_data --ship --until=10m
+----
++
+This script runs `metrics-utility` to gather billing data from your {PlatformNameShort} instance and store it temporarily inside the container.
+. Create a file named `/home/my-user/cron-report` (replace `/home/my-user/` with your desired path) and add the following content to create the `cron-report` script:
++
+----
+#!/bin/sh
+
+# --- Configuration Variables ---
+# Define variables for the metrics utility parameters
+export METRICS_UTILITY_SHIP_TARGET="directory"
+export METRICS_UTILITY_SHIP_PATH="/metrics_utility/data" # This is the *internal* path in the container
+export METRICS_UTILITY_REPORT_TYPE="CCSPv2"
+export METRICS_UTILITY_PRICE_PER_NODE="11.55"
+export METRICS_UTILITY_REPORT_SKU="MCT3752MO"
+export METRICS_UTILITY_REPORT_SKU_DESCRIPTION="EX: Red Hat {PlatformNameShort}, Full Support (1 Managed Node, Dedicated, Monthly)"
+export METRICS_UTILITY_REPORT_H1_HEADING="CCSP Reporting <Company>: ANSIBLE Consumption"
+export METRICS_UTILITY_REPORT_COMPANY_NAME="Company Name"
+export METRICS_UTILITY_REPORT_EMAIL="email@email.com"
+export METRICS_UTILITY_REPORT_RHN_LOGIN="test_login"
+export METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="BUSINESS LEADER"
+export METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="PROCUREMENT LEADER"
+
+podman exec \
+  -e METRICS_UTILITY_SHIP_TARGET="$METRICS_UTILITY_SHIP_TARGET" \
+  -e METRICS_UTILITY_SHIP_PATH="$METRICS_UTILITY_SHIP_PATH" \
+  -e METRICS_UTILITY_REPORT_TYPE="$METRICS_UTILITY_REPORT_TYPE" \
+  -e METRICS_UTILITY_PRICE_PER_NODE="$METRICS_UTILITY_PRICE_PER_NODE" \
+  -e METRICS_UTILITY_REPORT_SKU="$METRICS_UTILITY_REPORT_SKU" \
+  -e METRICS_UTILITY_REPORT_SKU_DESCRIPTION="$METRICS_UTILITY_REPORT_SKU_DESCRIPTION" \
+  -e METRICS_UTILITY_REPORT_H1_HEADING="$METRICS_UTILITY_REPORT_H1_HEADING" \
+  -e METRICS_UTILITY_REPORT_COMPANY_NAME="$METRICS_UTILITY_REPORT_COMPANY_NAME" \
+  -e METRICS_UTILITY_REPORT_EMAIL="$METRICS_UTILITY_REPORT_EMAIL" \
+  -e METRICS_UTILITY_REPORT_RHN_LOGIN="$METRICS_UTILITY_REPORT_RHN_LOGIN" \
+  -e METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER="$METRICS_UTILITY_REPORT_COMPANY_BUSINESS_LEADER" \
+  -e METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER="$METRICS_UTILITY_REPORT_COMPANY_PROCUREMENT_LEADER" \
+  "automation-controller-metrics-utility" \
+  metrics-utility build_report
+----
++
+This script METRICS_UTILITY_REPORT_SKU_DESCRIPTION `metrics-utility` to build a report from the gathered data and then copy the final report from the container to your specified host directory.
