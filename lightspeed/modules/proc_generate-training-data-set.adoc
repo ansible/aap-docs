@@ -45,9 +45,8 @@ The following table lists the required parameters.
 
 +
 For example:
-If the source is a Github URL https://github.com/ansible/ansible-tower-samples.git, and the output directory is `/tmp/out`, the command prompt is as follows: 
-+
-`$ ansible-content-parser https://github.com/ansible/ansible-tower-samples.git /tmp/out`
+If the source is a Github URL `\https://github.com/ansible/ansible-tower-samples.git`, and the output directory is `/tmp/out`, the command prompt is 
+`$ ansible-content-parser \https://github.com/ansible/ansible-tower-samples.git /tmp/out`.
 
 . Optional: To generate a training data set with additional information, specify the following parameters while running the {AnsibleContentParser}.
 +
@@ -72,7 +71,8 @@ If the source is a Github URL https://github.com/ansible/ansible-tower-samples.g
 |===
 
 +
-.Example of a command prompt for Github repository *ansible-tower-samples*
+*Example of a command prompt for Github repository ansible-tower-samples*
++
 ----
 $ ansible-content-parser --profile min \
 --source-license undefined \
@@ -81,11 +81,10 @@ $ ansible-content-parser --profile min \
 --repo-url 'https://github.com/ansible/ansible-tower-samples' \
 git@github.com:ansible/ansible-tower-samples.git /var/tmp/out_dir
 ----
-
 +
-.Example of a generated training data set for Github repository *ansible-tower-samples*
+*Example of a generated training data set for Github repository ansible-tower-samples*
++
 The training data set is formatted with Jeff Goldblum (jg), a command-line JSON processing tool.
-
 +
 ----
 $ cat out_dir/ftdata.jsonl| jq
