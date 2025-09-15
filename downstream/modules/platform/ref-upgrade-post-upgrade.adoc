@@ -1,0 +1,37 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-upgrade-post-upgrade"]
+
+= Post upgrade
+
+It is imperative that administrators verify the assigned permissions for all teams in the platform-wide authentication gateway immediately after the upgrade:
+
+* Ensure the transferred team members have the correct access rights in the Ansible Automation Platform environment based on the filesystem.  
+* Make sure all members that have been merged are, in fact, the same member. Incorrect permissions could lead to access issues or security vulnerabilities.
+
+* When upgrade to {PlatformNameShort} 2.6 is complete, user accounts that exist in both the {HubName} and {ControllerName} systems will be unified, and {Gateway} IAM will be the source of truth for users after the data movement. 
+* {HubNameStart} and {EDAName} users must either be recreated or the users that moved from {ControllerName} given permission to use those services.
+
+After your upgrade to {ControllerName} 2.6 is complete, verify that you can log in to the upgraded platform with your existing controller credentials (username/password).
+
+[NOTE]
+====
+To do this, you have must have a controller account on {PlatformNameShort} 2.4 or 2.5 with administrative privileges.
+====
+
+The following table provides next steps for each type of user after they have upgraded. 
+
+[cols="50%,50%",options="header"]
+|====
+| If you are this type of user before upgrading:| Then take these actions after the upgrade:
+| An {ControllerName} administrator (no {HubName} account) |
+Log in with your {ControllerName} username and password; you are now a gateway administrator.
+| An {ControllerName} normal user (no {HubName} account) |
+Log in with your {ControllerName} username and password; you are now a gateway normal user.
+| A {HubName} user (no {ControllerName} account) |
+Request a password reset from your administrator. When you log in with your new password you will be a gateway normal user. You will retain your hub-related permissions. 
+| An {ControllerName} and {HubName} user (with the same username in both services) |
+Log in with your {ControllerName} username and password; your previous two accounts will be merged and you are now a gateway normal user.
+| An {HubName} user with SSO (no {ControllerName} account) |
+Log in with your SSO credentials; you are now a gateway normal user. 
+
