@@ -19,12 +19,17 @@ See {LinkTopologies} for more information on topology options.
 h| Subscription | Valid {PlatformName} subscription |
 h| Operating system  
 a|
-* {RHEL} 8.8 or later minor versions of {RHEL} 8
-* {RHEL} 9.2 or later minor versions of {RHEL} 9 | {PlatformName} are also supported on OpenShift, see {LinkOperatorInstallation} for more information.
+* {RHEL} 9.4 or later minor versions of {RHEL} 9 | {PlatformName} are also supported on OpenShift, see {LinkOperatorInstallation} for more information.
 h| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power) |
 h| Ansible-core | Ansible-core version {CoreUseVers} or later | {PlatformNameShort} uses the system-wide ansible-core package to install the platform, but uses ansible-core {CoreUseVers} for both its control plane and built-in execution environments.
 h| Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
-h| Database | {PostgresVers} | {PlatformName} {PlatformVers} requires the external (customer supported) databases to have ICU support.
+h| Database 
+a| 
+* For {PlatformNameShort} managed databases: {PostgresVers}.
+* For customer provided (external) databases: {PostgresVers}, 16, or 17.
+a| 
+* External (customer supported) databases require ICU support.
+* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with {PostgresVers}.
 |====
 
 .Virtual machine requirements
