@@ -7,22 +7,24 @@
 If the {AnsibleContentParser} finds ansible-lint rule violations in your Ansible files, it is recommended that you fix the files with rule violations before uploading the training data set to {ibmwatsonxcodeassistant}. If you do not resolve the rule violations, the  {AnsibleContentParser} excludes these files from the generated output.
 
 .Procedure
-Use one of the following methods to resolve ansible-lint rule violations:
 
-* Run the {AnsibleContentParser} with the  `--no-exclude` option
+* Use one of the following methods to resolve ansible-lint rule violations:
+
+** Run the {AnsibleContentParser} with the  `--no-exclude` option
 +
 If any rule violations, including syntax-check errors, are found, the execution is aborted with an error and no training data set is created.
 
-* Limit the set of rules that ansible-lint uses to scan your data with the `--profile` option
+** Limit the set of rules that ansible-lint uses to scan your data with the `--profile` option
 +
 It is recommended that you fix the files with rule violations. However, if you do not want to modify the source files, you can limit the set of rules that ansible-lint uses to scan your data. 
 To limit the set of rules that ansible-lint uses to scan your data, specify the `--profile` option with a predefined profile (for example, `min`, `basic`, `moderate`, `safety`, `shared`, or `production` profiles) or by using ansible-lint configuration files. For more information, see the link:https://ansible.readthedocs.io/projects/lint/[Ansible Lint documentation]. 
 
-* Run the {AnsibleContentParser} by skipping ansible-lint preprocessing
+** Run the {AnsibleContentParser} by skipping ansible-lint preprocessing
 +
 You can run the content parser without ansible-lint preprocessing. The {AnsibleContentParser} generates a training data set without scanning for ansible-lint rule violations. 
 +
-To run the {AnsibleContentParser} without ansible-lint preprocessing, execute the following command: +
+To run the {AnsibleContentParser} without ansible-lint preprocessing, execute the following command:
++
 `$ ansible-content-parser _source_ _output_ _-S_`
 +
 Where:

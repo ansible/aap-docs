@@ -72,7 +72,8 @@ If you are running multiple instances of {LightspeedShortName} application with 
 * *Procedure when the {PlatformNameShort} operator is run on a virtual machine*:
 
 .. Log in to the virtual machine with the {PlatformNameShort} controller.
-.. In the */etc/tower/conf.d/custom.py* file, add the following parameter: +
+.. In the */etc/tower/conf.d/custom.py* file, add the following parameter: 
++
 `LOGOUT_ALLOWED_HOSTS = "<lightspeed_route-HostName>"`
 +
 [IMPORTANT]
@@ -85,13 +86,15 @@ For example, the correct hostname would be `my-aiconnect-instance.somewhere.com`
 
 * Use the single and double quotes in pairs; do not mix single quotes with double quotes.
 ====
-.. Restart the automation controller by executing the following command: +
+.. Restart the automation controller by executing the following command: 
++
 `$ automation-controller-service restart`
 
 * *Procedure when the platform gateway is run on a virtual machine*:
 
 .. Log in to the virtual machine with the platform gateway.
-.. Add the following parameter in either the *gateway/settings.py* file or in the *ansible-automation-platform/gateway/settings.py* file: +
+.. Add the following parameter in either the *gateway/settings.py* file or in the *ansible-automation-platform/gateway/settings.py* file: 
++
 `LOGOUT_ALLOWED_HOSTS = "<lightspeed_route-HostName>"`
 +
 [IMPORTANT]
