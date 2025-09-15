@@ -31,7 +31,7 @@ Do not attempt to install {AutomationDashboardName} on the same host(s) as {Plat
 
 .Procedure
 
-. Access the *.tar.gz* installation source.
+. Access the link: https://drive.google.com/drive/folders/1_neE8fWZ78oSsnSwoL6kfgbIIURsed1V[*.tar.gz*] installation source.
 . Copy the installation source file to your RHEL 9 host.
 . Untar the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory, /home/<username>.
 +
@@ -173,7 +173,7 @@ bundle_dir='{{ lookup("ansible.builtin.env", "PWD") }}/bundle'
 +
 [source,bash]
 ----
-ansible-playbook -i inventory ansible.containerized_installer.dashboard_install
+ansible-playbook -i inventory collections/ansible_collections/ansible/containerized_installer/playbooks/reporter_install.yml
 ----
 
 .Verification
