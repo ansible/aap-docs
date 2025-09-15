@@ -15,15 +15,14 @@ To successfully sign and publish {CertifiedName}, you must configure {PrivateHub
 
 * A GPG key pair. If you do not have one, you can generate one using the `gpg --full-generate-key` command.
 * Your public-private key pair has proper access for configuring content signing on {OperatorHub}.
-* You have `kubectl` or `oc` CLI access to your OpenShift cluster.
 
 .Procedure
 
-. Create a ConfigMap for signing scripts. The ConfigMap you create will contain the scripts used by the signing service for collections and container images. 
+. Create a ConfigMap for signing scripts. The ConfigMap you create contains the scripts used by the signing service for collections and container images. 
 +
 [NOTE]
 ====
-This script acts as the signing service and must generate an ascii-armored detached `gpg` signature for that file using the key specified through the `PULP_SIGNING_KEY_FINGERPRINT` environment variable.
+This script is used as part of the signing service and must generate an ascii-armored detached `gpg` signature for that file using the key specified through the `PULP_SIGNING_KEY_FINGERPRINT` environment variable.
 ====
 +
 The script prints out a JSON structure with the following format.
@@ -119,3 +118,6 @@ spec:
     signing_scripts_configmap: "signing-scripts"
 ----
 +
+[role="_additional-resources"]
+.Next steps
+link:{URLHubManagingContent}/managing-cert-valid-content#proc-using-content-signing-services-in-pah[Using content signing services in {PrivateHubName}]
