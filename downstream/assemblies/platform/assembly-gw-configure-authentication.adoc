@@ -9,6 +9,24 @@ ifdef::context[:parent-context: {context}]
 Using the authentication settings in {PlatformNameShort}, you can set up a simplified login through several authentication methods, such as LDAP and SAML.
 Depending on the authentication method you select, you will be required to enter different information to complete the configuration. Be sure to include all the information required for your configuration needs.
 
+[IMPORTANT]
+====
+* During an upgrade to {PlatformNameShort} {PlatformVers}, {Gateway} uses a new central authentication service.
+
+* After the upgrade, local users that used to exist in {ControllerName} can be automatically converted into local {Gateway} users. 
+Other types of authentication from {ControllerName}, such as LDAP, SAML, or OIDC, are migrated to {Gateway} but gateway might need additional configuration before those users are ready for use.
+====
+
+Local user passwords are not automatically synchronized between {ControllerName} and {Gateway} after an upgrade. 
+{GatewayStart} uses the following process to authenticate a local user for the first time:
+
+* {GatewayStart} attempts to authenticate the user with the gateway password.
+* If the attempt fails, {Gateway} authenticates the user with the {ControllerName} password.
+* On successful authentication, {Gateway} updates the user's password in its database.
+* The user is authenticated directly by {Gateway} on subsequent logins.
+
+For more information, see link:{URLUpgrade}(RPM upgrade and migration).
+
 == Prerequisites
 
 * A running installation of {PlatformNameShort} {PlatformVers}
