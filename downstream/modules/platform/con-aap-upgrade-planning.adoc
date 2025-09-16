@@ -7,35 +7,36 @@
 [role="_abstract"]
 Before you begin the upgrade process, review the following considerations to plan and prepare your {PlatformNameShort} deployment:
 
-== NEW Prerequisites
-
-* General
-** Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
-** Prior to upgrading your {PlatformName}, ensure you have reviewed {LinkPlanningGuide} for a successful upgrade. You can then download the desired version of the {PlatformNameShort} installer, configure the inventory file in the installation bundle to reflect your environment, and then run the installer.
-** You can only upgrade from {PlatformNameShort} 2.4 and 2.5 to {PlatformVers}.
-** Upgrade to {PlatformNameShort} installer version 2.6-11 or later. Do not upgrade to an earlier installer version.
-** Ensure you have a backup of an {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
-** Ensure you capture your inventory or instance group details before upgrading.
-** Ensure you have upgraded to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading your {PlatformName}.
+== {PlatformNameShort} requirements
+* Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
+* Review {LinkPlanningGuide} for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to {PlatformVers}.
+* Upgrade to {PlatformNameShort} installer version 2.6-11 or later. Do not upgrade to an earlier installer version.
+* Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
+* Capture your inventory or instance group details before upgrading.
+* Upgrade to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading to {PlatformName} {PlatformVers}.
 +
 [IMPORTANT]
 ====
-When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
+When upgrading from {PlatformNameShort} 2.4 to 2.6, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
 ====
 
-** Before upgrading your {PlatformName}, ensure that you have upgraded to {ControllerName} 4.5 or later. 
-
-** {PlatformNameShort} 2.4 to 2.6 upgrades now include link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{GatewayStart}]. Ensure you review the 2.6 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
-** {PlatformNameShort} includes the {Gateway}, which has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for {PlatformVers}, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
-* Ensure that you have reviewed the link:{URLPlanningGuide}/ha-redis_planning#gw-centralized-redis_planning[centralized Redis] instance offered by {PlatformNameShort} for both standalone and clustered topologies.
+* Review the {Gateway} requirements:
+** {PlatformNameShort} 2.4 to 2.6 upgrades include the link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{Gateway}]. Ensure you review the 2.6 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
+** {GatewayStart} has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for {PlatformVers}, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
+** When upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, connections to the {Gateway} URL might fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: `Error connecting to Controller API`
 +
+To resolve this issue, for each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each controller host. You must then restart each controller host so that the URL changes are implemented. For more information, see _Upgrading_ in {LinkTroubleshootingAAP}. 
+
+* Review the link:{URLPlanningGuide}/ha-redis_planning#gw-centralized-redis_planning[centralized Redis] instance offered by {PlatformNameShort} for both standalone and clustered topologies.
++
+** {PlatformNameShort} 2.5 offers a centralized Redis instance in both link:{URLPlanningGuide}/ha-redis_planning#gw-single-node-redis_planning[standalone] and link:{URLPlanningGuide}/ha-redis_planning#gw-clustered-redis_planning[clustered] topologies. For information on how to configure Redis, see link:{URLInstallationGuide}/assembly-platform-install-scenario#redis-config-enterprise-topology_platform-install-scenario[Configuring Redis] in the {TitleInstallationGuide} guide.
 ** 6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM except for automation controller, execution nodes, or the PostgreSQL database. 
-** External Redis is not supported for RPM-based deployments of Ansible Automation Platform.
+** External Redis is not supported for RPM-based deployments of {PlatformNameShort}.
 
-* Limitations
-** Upgrades of {EDAName} version 2.4 to 2.5 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.5 are not compatible. For more information, see xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerName} and {HubName} 2.4 and {EDAName} 2.5 with unified UI upgrades].
+* Limitation:
+** Upgrades of {EDAName} version 2.4 to 2.6 are not supported. Database migrations between {EDAName} 2.4 and {EDAName} 2.6 are not compatible. For more information, see xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerName} and {HubName} 2.4 and {EDAName} 2.6 with unified UI upgrades].
 +
-If you are currently running {EDAcontroller} 2.5, it is recommended that you disable all {EDAName} activations before upgrading to ensure that only new activations run after the upgrade process is complete.
+If you are currently running {EDAcontroller} 2.6, it is recommended that you disable all {EDAName} activations before upgrading to ensure that only new activations run after the upgrade process is complete.
 
 == System requirements
 
@@ -45,8 +46,7 @@ If you are currently running {EDAcontroller} 2.5, it is recommended that you dis
 | Type | Description | Notes 
 h| Subscription | Valid {PlatformName} subscription |
 h| Operating system  
-a|
-* {RHEL} 9.4 or later minor versions of {RHEL} 9 | {PlatformName} are also supported on OpenShift, see {LinkOperatorInstallation} for more information.
+| {RHEL} 9.4 or later minor versions of {RHEL} 9 | {PlatformName} are also supported on OpenShift, see {LinkOperatorInstallation} for more information.
 h| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power) |
 h| Ansible-core | Ansible-core version {CoreUseVers} or later | {PlatformNameShort} uses the system-wide ansible-core package to install the platform, but uses ansible-core {CoreUseVers} for both its control plane and built-in execution environments.
 h| Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
@@ -65,14 +65,14 @@ a|
 ** Customer provided or configured database - This is an external database that is provided by the customer, whether on bare metal, virtual machine, container, or cloud hosted service.
 {PlatformNameShort} requires customer provided (external) database to have ICU support.
 * PostgreSQL user passwords are hashed with SCRAM-SHA-256 secure hashing algorithm before storing in the database.
-* Ensure you have a backup of an {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
+* Ensure that you back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
 
 == User privileges
 * Ensure a dedicated non-root user is configured on the Red Hat Enterprise Linux host.
 
 ** This user requires sudo or other Ansible supported privilege escalation (sudo is recommended) to perform administrative tasks during the installation.
 ** This user is responsible for the installation of RPM {PlatformNameShort}.
-** You can obtain root access either through the sudo command, or through privilege escalation. You can de-escalate privileges from root to users such as AWX, PostgreSQL, Event-Driven Ansible, or Pulp.
+** You can obtain root access either through the sudo command, or through privilege escalation. You can de-escalate privileges from root to users such as AWX, PostgreSQL, {EDAName}, or Pulp.
 ** An NTP client is configured on each node.
 
 [role="_additional-resources"]
