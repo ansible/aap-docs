@@ -9,11 +9,11 @@ Before you begin the upgrade process, review the following considerations to pla
 
 == {PlatformNameShort} requirements
 * Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
-* Review {LinkPlanningGuide} for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to {PlatformVers}.
+* Review {LinkPlanningGuide} for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to 2.6.
 * Upgrade to {PlatformNameShort} installer version 2.6-11 or later. Do not upgrade to an earlier installer version.
 * Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
 * Capture your inventory or instance group details before upgrading.
-* Upgrade to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading to {PlatformName} {PlatformVers}.
+* Upgrade to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading to {PlatformName} 2.6.
 +
 [IMPORTANT]
 ====
@@ -22,15 +22,15 @@ When upgrading from {PlatformNameShort} 2.4 to 2.6, the API endpoints for the {C
 
 * Review the {Gateway} requirements:
 ** {PlatformNameShort} 2.4 to 2.6 upgrades include the link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{Gateway}]. Ensure you review the 2.6 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
-** {GatewayStart} has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for {PlatformVers}, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
-** When upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, connections to the {Gateway} URL might fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: `Error connecting to Controller API`
+** {GatewayStart} has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for 2.6, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
+** When upgrading from {PlatformNameShort} 2.4 to 2.6, connections to the {Gateway} URL might fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: `Error connecting to Controller API`
 +
-To resolve this issue, for each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each controller host. You must then restart each controller host so that the URL changes are implemented. For more information, see _Upgrading_ in {LinkTroubleshootingAAP}. 
+To resolve this issue, for each {ControllerName} host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each {ControllerName} host. You must then restart each {ControllerName} host so that the URL changes are implemented. For more information, see _Upgrading_ in {LinkTroubleshootingAAP}. 
 
 * Review the link:{URLPlanningGuide}/ha-redis_planning#gw-centralized-redis_planning[centralized Redis] instance offered by {PlatformNameShort} for both standalone and clustered topologies.
 +
-** {PlatformNameShort} 2.5 offers a centralized Redis instance in both link:{URLPlanningGuide}/ha-redis_planning#gw-single-node-redis_planning[standalone] and link:{URLPlanningGuide}/ha-redis_planning#gw-clustered-redis_planning[clustered] topologies. For information on how to configure Redis, see link:{URLInstallationGuide}/assembly-platform-install-scenario#redis-config-enterprise-topology_platform-install-scenario[Configuring Redis] in the {TitleInstallationGuide} guide.
-** 6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM except for automation controller, execution nodes, or the PostgreSQL database. 
+** {PlatformNameShort} 2.6 offers a centralized Redis instance in both link:{URLPlanningGuide}/ha-redis_planning#gw-single-node-redis_planning[standalone] and link:{URLPlanningGuide}/ha-redis_planning#gw-clustered-redis_planning[clustered] topologies. For information on how to configure Redis, see link:{URLInstallationGuide}/assembly-platform-install-scenario#redis-config-enterprise-topology_platform-install-scenario[Configuring Redis] in the {TitleInstallationGuide} guide.
+** 6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database. 
 ** External Redis is not supported for RPM-based deployments of {PlatformNameShort}.
 
 * Limitation:
