@@ -1,20 +1,57 @@
 :_mod-docs-content-type: ASSEMBLY
 
 [id="upgrade-infrastructure-changes"]
-= Tested deployment model upgrades for RPM installations
+= Infrastructure changes by deployment type
 
 [role="_abstract"]
-There are additional requirements for both {GrowthTopology} and {EnterpriseTopology} when upgrading to {PlatformNameShort} version {PlatformVers}. Red Hat has tested and recommends the following scenarios for RPM-based deployments:
+You can review the infrastructure changes required when upgrading to {PlatformNameShort} {PlatformVers}. The infrastructure changes vary depending on your current version, deployment method, and target topology.
 
-* 2.4 single {ControllerName} node deployment to a {PlatformVers} {GrowthTopology}
-* 2.4 single node {ControllerName} and {HubName} deployment to a {PlatformVers} {GrowthTopology}
-* 2.4 multi node {ControllerName} deployment to a {PlatformVers} {EnterpriseTopology}
-* 2.4 multi node {ControllerName} and {HubName} deployment to a {PlatformVers} {EnterpriseTopology}
+* RPM and Operator-based deployments: Upgrade directly from version 2.4 or 2.5 to {PlatformVers}
+* Container-based deployments: Upgrade from version 2.5 to {PlatformVers} (upgrades from 2.4 are not supported)
 
-include::platform/con-upgrade-single-controller-growth.adoc[leveloffset=+1]
+Each deployment type section includes topology diagrams, infrastructure requirements, and configuration examples to help you plan your upgrade.
 
-include::platform/con-upgrade-single-controller-hub-growth.adoc[leveloffset=+1]
+== RPM-based deployments
 
-include::platform/con-upgrade-multi-controller-enterprise.adoc[leveloffset=+1]
+The following sections describe the tested infrastructure changes for RPM-based deployments. For step-by-step upgrade instructions, see {LinkUpgrade}.
 
-include::platform/con-upgrade-multi-controller-hub-enterprise.adoc[leveloffset=+1]
+include::platform/con-upgrade-single-controller-growth.adoc[leveloffset=+2]
+
+include::platform/con-upgrade-single-controller-hub-growth.adoc[leveloffset=+2]
+
+include::platform/con-upgrade-multi-controller-enterprise.adoc[leveloffset=+2]
+
+include::platform/con-upgrade-multi-controller-hub-enterprise.adoc[leveloffset=+2]
+
+include::platform/con-rpm-upgrade-growth-topology.adoc[leveloffset=+2]
+
+include::platform/con-rpm-upgrade-enterprise-topology.adoc[leveloffset=+2]
+
+== Container-based deployments
+
+The following sections describe the tested infrastructure changes for container-based deployments. For step-by-step upgrade instructions, see link:{URLContainerizedInstall}/aap-containerized-installation#updating-containerized-ansible-automation-platform[Updating containerized Ansible Automation Platform].
+
+[NOTE]
+====
+include::../snippets/container-upgrades.adoc[]
+====
+
+include::platform/con-container-upgrade-growth-topology.adoc[leveloffset=+2]
+
+include::platform/con-container-upgrade-enterprise-topology.adoc[leveloffset=+2]
+
+== Operator-based deployments
+
+The following sections describe the tested infrastructure changes for Operator-based deployments. For step-by-step upgrade instructions, see link:{URLOperatorInstallation}/operator-upgrade_licensing-gw[Upgrading Red Hat Ansible Automation Platform Operator on Red Hat OpenShift Container Platform].
+
+include::platform/con-operator-upgrade-single-controller-growth.adoc[leveloffset=+2]
+
+include::platform/con-operator-upgrade-single-controller-hub-growth.adoc[leveloffset=+2]
+
+include::platform/con-operator-upgrade-multi-controller-enterprise.adoc[leveloffset=+2]
+
+include::platform/con-operator-upgrade-multi-controller-hub-enterprise.adoc[leveloffset=+2]
+
+include::platform/con-operator-upgrade-growth-topology.adoc[leveloffset=+2]
+
+include::platform/con-operator-upgrade-enterprise-topology.adoc[leveloffset=+2]
