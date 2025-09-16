@@ -1,27 +1,27 @@
 :_mod-docs-content-type: CONCEPT
 
 [id="con-upgrade-controller-hub-eda-unified-ui_{context}"]
-= Automation controller and automation hub 2.4 and Event-Driven Ansible 2.5 with unified UI upgrades
+= Automation controller and automation hub 2.4 and Event-Driven Ansible 2.6 with unified UI upgrades
 
-{PlatformNameShort} 2.5 supports upgrades from {PlatformNameShort} 2.4 environments for all components, with the exception of {EDAName}. You can also configure a mixed environment with {EDAName} from 2.5 connected to a legacy 2.4 cluster. Combining install methods (OCP, RPM, Containerized) within such a topology is not supported by {PlatformNameShort}.
+{PlatformNameShort} {PlatformVers} supports upgrades from {PlatformNameShort} 2.4 environments for all components, with the exception of {EDAName}. You can also configure a mixed environment with {EDAName} from 2.6 connected to a legacy 2.4 cluster. Combining install methods (OCP, RPM, Containerized) within such a topology is not supported by {PlatformNameShort}.
 
 [NOTE]
 ====
-If you are running the 2.4 version of {EDAName} in production, before you upgrade, contact Red Hat support or your account representative for more information on how to move to {PlatformNameShort} 2.5.
+If you are running the 2.4 version of {EDAName} in production, before you upgrade, contact Red Hat support or your account representative for more information on how to move to {PlatformNameShort} {PlatformVers}.
 ====
 
 Supported topologies described in this document assume that:
 
 * 2.4 services will only include {ControllerName} and {HubName}.
-* 2.5 parts will always include {EDAName} and the unified UI ({Gateway}).
+* 2.6 parts will always include {EDAName} and the unified UI ({Gateway}).
 * Combining installation methods for these topologies is not supported.
 
 == Upgrade considerations
 
-* You must maintain two separate inventory files: one for the 2.4 services and one for the 2.5 services.
-* You must maintain two separate installations within this scenario: one for the 2.4 services and one for the 2.5 services. 
+* You must maintain two separate inventory files: one for the 2.4 services and one for the 2.6 services.
+* You must maintain two separate installations within this scenario: one for the 2.4 services and one for the 2.6 services. 
 * You must upgrade the two separate installations separately.
 * To upgrade to a consistent component version topology, consider the following: 
-** You must manually combine the inventory file configuration from the 2.4 inventory into the 2.5 inventory and run upgrade on ONLY the 2.5 inventory file. 
-** You must be using an external database for both the 2.4 inventory as well as the 2.5 inventory. 
-** Customers using managed database instances for either 2.4 or 2.5 inventory must migrate to an external database first, before upgrading.
+** You must manually combine the inventory file configuration from the 2.4 inventory into the 2.6 inventory and run the upgrade on the 2.6 inventory file ONLY. 
+** You must be using an external database for both the 2.4 inventory and 2.6 inventory. 
+** Customers using managed database instances for either 2.4 or 2.6 inventory must migrate to an external database first, before upgrading.
