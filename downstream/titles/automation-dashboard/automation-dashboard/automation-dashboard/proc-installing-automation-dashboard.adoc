@@ -21,7 +21,7 @@ Do not attempt to install {AutomationDashboardName} on the same host(s) as {Plat
 * Access to _baseos_ and _{PlatformNameShort}stream_ repo packages for the RHEL 9 host.
 * A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the $HOMEDIR of the user account.
 * URL details for access to your {PlatformNameShort} instances.
-* An {PlatformNameShort} 0Auth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
+* An {PlatformNameShort} OAuth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
 * Access to download the installation bundle providing installation components for the {AutomationDashboardName}.
 * Open firewall access to allow for bi-directional communication between AAP instances and the {AutomationDashboardName}. 
 ** This includes HTTPS/443 (or your {PlatformNameShort} configured port) from the dashboard to the Ansible Automation Platform instance(s).
@@ -54,7 +54,7 @@ ansible-galaxy collection install -r requirements.yml
 .. Create an OAuth2 application using the following steps : 
 ... *For Ansible 2.4*:
 +
-* Navigate  to https://AAP_GATEWAY_FQDN:/#/applications 
+* Navigate  to https://AAP_GATEWAY_FQDN/#/applications 
 +
 ... *For Ansible 2.5 and 2.6*:
 +
@@ -72,7 +72,7 @@ ansible-galaxy collection install -r requirements.yml
 The values for *Name*, *Organization*, and HTTPS port number for {PlatformNameShort} are configurable. The examples provided in this document assume use of port 443. 
 +
 .. Save the `client_id` and `client_secret information` inputs into  the inventory file.
-.. Next, create an {PlatformNameShort} access token: 
+.. Create an {PlatformNameShort} access token: 
 ... Navigate to https://AAP_GATEWAY_FQDN/#/users/<id>/tokens, and create a token using the following information:
 +
 . OAuth application: automation-dashboard-sso
@@ -110,7 +110,7 @@ aap_auth_provider_name=Ansible Automation Platform
 # aap_auth_provider_protocol - http or https
 aap_auth_provider_protocol=https
 # AAP version - 2.4, 2.5 or 2.6
-aap_auth_provider_aap_version=2.5
+aap_auth_provider_aap_version=2.6
 # aap_auth_provider_host - AAP IP or DNS name, with optional port
 aap_auth_provider_host=my-aap.example.com
 # aap_auth_provider_check_ssl - enforce TLS check or not.
