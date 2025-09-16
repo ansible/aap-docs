@@ -47,9 +47,9 @@ ifndef::controller-AG[]
 . Click btn:[Create authentication].
 . Enter a *Name* for this authentication configuration. 
 . Select *Azuread* from the *Authentication type* list. The *Authentication details* section automatically updates to show the fields relevant to the selected authentication type.
-
-include::snippets/snip-gw-authentication-auto-migrate.adoc[]
-
++
+//include::snippets/snip-gw-authentication-auto-migrate.adoc[]
++
 . Click btn:[Edit], copy and paste Microsoft's *Application (Client) ID* to the *OIDC Key* field.
 . If your {MSEntraID} is configured to provide user group information within a groups claim, ensure that the platform is configured with a *Groups Claim* name that matches your {MSEntraID} configuration. This allows the platform to correctly identify and associate groups for users logging in through {MSEntraID}.
 + 
@@ -64,6 +64,8 @@ By default, {MSEntraID} uses groups as the default group claim name. So, be sure
 . Following instructions for link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[registering your application with the Microsoft identity platform], supply the key (shown at one time only) to the client for authentication. 
 +
 . Copy and paste the secret key created for your {MSEntraID}/{Azure} AD application to the *OIDC Secret* field.
+. Optional: By default, the name attribute from {MSEntraID} is used as the username field within {PlatformNameShort}. 
+If you want to override that default value and use another attribute from {MSEntraID}, enter that attribute in the username field.
 +
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
@@ -73,37 +75,8 @@ include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 
 include::snippets/snip-gw-authentication-verification.adoc[]
 
-[role="_additional-resources"]
 .Next steps
 include::snippets/snip-gw-authentication-next-steps.adoc[]
 
-[role="_additional-resources"]
 .Additional resources
 * link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?]
-endif::[]
-
-ifdef::controller-AG[]
-. From the navigation panel, select menu:Settings[].
-. Select *Azure AD settings* from the list of *Authentication* options.
-+
-[NOTE]
-====
-The *Azure AD OAuth2 Callback URL* field is already pre-populated and non-editable. 
-Once the application is registered, Azure displays the Application ID and Object ID.
-====
-. Click btn:[Edit], copy and paste Azure's Application ID to the *Azure AD OAuth2 Key* field.
-+
-Following Azure AD's documentation for connecting your app to {Azure} Active Directory, supply the key (shown at one time only) to the client for authentication.
-+
-. Copy and paste the secret key created for your Azure AD application to the *Azure AD OAuth2 Secret* field of the Settings - Authentication screen.
-. For more information on completing the Azure AD OAuth2 Organization Map and Azure AD OAuth2 Team Map fields, see xref:proc-controller-organization-mapping[Organization mapping] and xref:proc-controller-team-mapping[Team mapping].
-. Click btn:[Save].
-
-.Verification
-To verify that the authentication is configured correctly, log out of {ControllerName} and the login screen displays the {Azure} logo to enable logging in with those credentials:
-
-image::ag-configure-auth-azure-logo.png[Azure AD logo]
-
-.Additional resources
-For application registering basics in Azure AD, see the link:https://learn.microsoft.com/en-us/entra/identity-platform/v2-overview[What is the Microsoft identity platform?] overview.
-endif::[]
