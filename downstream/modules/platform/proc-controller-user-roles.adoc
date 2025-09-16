@@ -1,21 +1,27 @@
 :_mod-docs-content-type: PROCEDURE
 [id="ref-controller-user-roles"]
 
-= Adding roles for a user
+= Assigning roles to a user
 
 You can grant users granular access to specific resources such as inventories, projects, or job templates by assigning users roles.
 
 You can view and manage roles that were assigned directly to a user by an administrator in the user's Roles tab.
 
 You can view roles that a user inherited from a team assignment in the *View indirectly assigned roles* link in the page banner. 
-You cannot directly manage an indirectly-assigned role. You can only manage indirectly-assigned roles by editing the team's role assignments, or by removing the user from the team [LINK]. 
+You cannot directly manage an indirectly-assigned role. You can only manage indirectly-assigned roles by link:{URLCentralAuth}/gw-managing-access#proc-controller-user-permissions[editing the team's role assignments], or by link:{URLCentralAuth}/gw-managing-access#proc-gw-team-remove-user[removing the user from the team]. 
 
 [NOTE]
 ====
-Users cannot be assigned to an organization by adding roles, nor can you assign users organization roles from this screen. Refer to the steps provided in link:{URLCentralAuth}/gw-managing-access#proc-controller-add-organization-user[Adding a user to an organization] for detailed instructions on assigning a user to an organization.
+Users cannot be assigned to an organization through role assignment, nor can you assign users organization roles from this screen. Refer to the steps provided in link:{URLCentralAuth}/gw-managing-access#proc-controller-add-organization-user[Adding a user to an organization] for detailed instructions on assigning a user to an organization.
 ====
 
-Roles are labeled with their associated {PlatformNameShort} component and function. These components align with the {PlatformNameShort} 
+Roles are labeled with their associated {PlatformNameShort} component and function. These components align with {PlatformNameShort} services and the side navigation structure in the user interface. Component labels can be understood as follows: 
+
+* *Automation Execution* refers to {ControllerName}
+* *Automation Decisions* refers to {EDAName}
+* *Automation Content* refers to {HubName}
+
+When assigning roles, ensure that you are selecting the desired resource in the correct component context, because resources like projects and credentials can be associated with both Automation Execution and Automation Decisions.
 
 .Procedure
 . From the navigation panel, select {MenuAMUsers}.
@@ -26,8 +32,13 @@ Roles are labeled with their associated {PlatformNameShort} component and functi
 include::snippets/snip-gw-roles-note-multiple-components.adoc[]
 +
 . Select a Resource type and click btn:[Next]. 
-. Select the resources that will receive new roles and click btn:[Next].
+. Select the resources that you want to give role-based access to and click btn:[Next].
 . Select the roles that will be applied to the resources and click btn:[Next].
-. Review the settings and click btn:[Finish].
 +
-The Add roles dialog displays indicating whether the role assignments were successfully applied. Click btn:[Close] to close the dialog.
+[TIP]
+
+====
+If you are selecting more than one role, consider link:{URLCentralAuth}/assembly-gw-roles#proc-gw-create-roles[creating a custom role] that includes all the permissions for this resource type so you can give your users the appropriate level of access.
+====
++
+. Review the settings and click btn:[Finish]. The Add roles dialog displays indicating whether the role assignments were successfully applied. Click btn:[Close] to close the dialog.
