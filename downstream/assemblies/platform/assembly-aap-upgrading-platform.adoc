@@ -12,20 +12,12 @@ ifdef::context[:parent-context: {context}]
 To upgrade your {PlatformName}, start by reviewing {LinkPlanningGuide} to ensure a successful upgrade.
 You can then download the desired version of the {PlatformNameShort} installer, configure the inventory file in the installation bundle to reflect your environment, and then run the installer.
 
-== Prerequisites
-
-* Upgrades to {PlatformNameShort} 2.5 include the link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{Gateway}]. Ensure you review the link:{URLPlanningGuide}/ref-network-ports-protocols_planning[2.5 Network ports and protocols] for architectural changes and {LinkTopologies} for information on opinionated deployment models. 
-
-* You have reviewed the link:{URLPlanningGuide}/ha-redis_planning#gw-centralized-redis_planning[centralized Redis] instance offered by {PlatformNameShort} for both standalone and clustered topologies.
-
-* Prior to upgrading your {PlatformName}, ensure you have reviewed {LinkPlanningGuide} for a successful upgrade. You can then download the desired version of the {PlatformNameShort} installer, configure the inventory file in the installation bundle to reflect your environment, and then run the installer.
-
-* Before upgrading your {PlatformName}, ensure you have upgraded to {ControllerName} 4.5 or later. 
-
-* When upgrading to {PlatformNameShort} {PlatformVers}, you must use RPM installer version 2.5-11 or later. If you use an older installer, the installation might fail. If you encounter a failed installation using an older version of the installer, rerun the installation with RPM installer version 2.5-11 or later.
+[IMPORTANT]
+====
+In {PlatformNameShort} {PlatformVers}, while the automation controller's API remains for backward compatibility, new installations must use the {Gateway} API for managing organizations, teams, and users. Using the legacy API will introduce a delay of up to 15 minutes before changes are synchronized to all components, including {EDAcontroller}.
+====
 
 include::platform/con-aap-upgrade-planning.adoc[leveloffset=+1]
-
 include::platform/proc-choosing-obtaining-installer.adoc[leveloffset=+1]
 include::platform/proc-choosing-obtaining-installer-no-internet.adoc[leveloffset=+2]
 include::platform/proc-editing-inventory-file-for-updates.adoc[leveloffset=+1]
@@ -39,4 +31,3 @@ include::platform/proc-upgrade-controller-hub-eda-unified-services.adoc[leveloff
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]
- 

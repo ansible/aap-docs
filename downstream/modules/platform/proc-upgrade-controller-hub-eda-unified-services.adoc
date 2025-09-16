@@ -3,17 +3,17 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="upgrade-controller-hub-eda-unified-ui-services_{context}"]
-= Using Migration path for 2.4 services with 2.5 services
+= Using Migration path for 2.4 services with 2.6 services
 
-If you installed {PlatformNameShort} 2.5 to use {EDAName} in a supported scenario, you can upgrade your {PlatformNameShort} 2.4 {ControllerName} and {HubName} to {PlatformNameShort} 2.5 by following the procedure in this section. 
+If you installed {PlatformNameShort} {PlatformVers} to use {EDAName} in a supported scenario, you can upgrade your {PlatformNameShort} 2.4 {ControllerName} and {HubName} to {PlatformNameShort} {PlatformVers} by following the procedure in this section. 
 
 .Prerequisites
 
-* An inventory from 2.4 for {ControllerName} and {HubName} and a 2.5 inventory for unified UI ({Gateway}) and {EDAName}. You must run upgrades on 2.4 services (using the inventory file to specify only {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} 2.5 first. When all the services are at the same version, run an upgrade (using a complete inventory file) on all the services to go to the latest version of {PlatformNameShort} 2.5.
+* An inventory from 2.4 for {ControllerName} and {HubName} and a 2.6 inventory for unified UI ({Gateway}) and {EDAName}. You must run upgrades on 2.4 services (using the inventory file to specify only {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} {PlatformVers} first. When all the services are at the same version, run an upgrade (using a complete inventory file) on all the services to go to the latest version of {PlatformNameShort} {PlatformVers}.
 
 [IMPORTANT]
 ====
-DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of {PlatformNameShort} 2.5 without first upgrading the individual services ({ControllerName} and {HubName}) to the initial version of {PlatformNameShort} 2.5.
+DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of {PlatformNameShort} {PlatformVers} without first upgrading the individual services ({ControllerName} and {HubName}) to the initial version of {PlatformNameShort} {PlatformVers}.
 ====
 
 * Ensure you have upgraded to the latest version of {PlatformNameShort} 2.4 before upgrading your {PlatformName}.
@@ -22,7 +22,7 @@ DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of
 
 . Merge 2.4 inventory data into the 2.5 inventory. 
 +
-The example below shows the inventory file for {ControllerName} and {HubName} for 2.4 and the inventory file for {EDAName} and the unified UI ({Gateway}) for 2.5, respectively, as the starting point, and what the merged inventory looks like. 
+The example below shows the inventory file for {ControllerName} and {HubName} for 2.4 and the inventory file for {EDAName} and the unified UI ({Gateway}) for 2.6, respectively, as the starting point, and what the merged inventory looks like. 
 +
 *Inventory files from 2.4*
 +
@@ -40,7 +40,7 @@ hub-2
 # Here we have the admin passwd, db credentials, etc.
 ----
 +
-*Inventory files from 2.5*
+*Inventory files from 2.6*
 +
 [source,]
 ----
@@ -82,10 +82,10 @@ gw-2
 
 . Run `setup.sh`
 +
-The installer upgrades {ControllerName} and {HubName} from 2.4 to {PlatformNameShort} 2.5.latest, {EDAName}, and the unified UI ({Gateway}) from the fresh install of 2.5 to the latest version of 2.5, and connects {ControllerName} and {HubName} properly with the unified UI ({Gateway}) node to initialize the unified experience. 
+The installer upgrades {ControllerName} and {HubName} from 2.4 to {PlatformNameShort} {PlatformVers}, latest {EDAName}, and the unified UI ({Gateway}) from the fresh install of 2.6 to the latest version of 2.6, and connects {ControllerName} and {HubName} properly with the unified UI ({Gateway}) node to initialize the unified experience. 
 
 .Verification
 
-* Verify that everything has upgraded to 2.5 and is working properly in one of two ways: 
+* Verify that everything has upgraded to 2.6 and is working properly in one of two ways: 
 ** Perform an SSH to {ControllerName} and {EDAName}.
-** In the unified UI, navigate to *Help > About* to verify the RPM versions are at 2.5.
+** In the unified UI, navigate to menu:Help[About] to verify the RPM versions are at 2.6.
