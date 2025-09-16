@@ -6,7 +6,7 @@
 
 = Integrating {AutomationDashboardName} with your {PlatformNameShort}
 
-Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} configuration to collect and visualise data and gain insights into your automation.
+Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} configuration in order to collect and visualise data and gain insights into your automation.
 
 .Procedure 
 
@@ -16,25 +16,25 @@ Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} 
 ====
 Port 8447 is enabled by default, but this is configurable.
 ====
-. Enter `admin` as the username and use `reporter_admin_password` as the password.
+. Enter `admin` as the username and use `dashboard_admin_password` as the password.
 . Your {PlatformNameShort} instances are added into `clusters.yml` using the following information:
 * Your {PlatformNameShort} URLs/ports for front-end access
-* A preconfigured {PlatformNameShort} 0Auth token for read access
+* A preconfigured {PlatformNameShort} 0Auth token for _read_ access
 +
 [NOTE]
 ====
 If you don’t have access to {PlatformNameShort}, consult your administrator.
 ====
 . Configure a personal access token. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/access_management_and_authentication/gw-token-based-authentication[Configuring access to external applications with token-based authentication].
-. After you have configured your access token, run the following command:
+. Once you have configured your access token, run the following command:
 +
 [source,bash]
 ----
-cp clusters.example.yml clusters.yml
-vi clusters.yml
+cp clusters.example.yaml clusters.yaml
+vi clusters.yaml
 ----
 
-. You can add one or more {PlatformNameShort} instances into the {AutomationDashboardName} configuration for pulling and combining data by using the following: 
+. You can add one or more {PlatformNameShort} instances (of the _same AAP version_) into the {AutomationDashboardName} configuration for pulling and combining data by using the following: 
 +
 [NOTE]
 ====
@@ -46,9 +46,9 @@ If you only have one {PlatformNameShort} instance, then remove the second entry.
 ---
 clusters:
   - protocol: https			<--- Normally https
-    address: aap1.example.com  <--- Can use IP or FQDN without http(s)://
+    address: my-aap.example.com  <--- Can use IP or FQDN without http(s)://
     port: 443				<--- Normally 443
-    access_token: sampleToken	<--- Your preconfigured {PlatformNameShort} read access token
+    access_token: sampleToken	<--- Your preconfigured Ansible Automation Platform read access token
     verify_ssl: false		<--- Can be used when using self signed certs
     sync_schedules:
       - name: Every 5 minutes sync
@@ -64,6 +64,7 @@ clusters:
       - name: Every 5 minutes sync
         rrule: DTSTART;TZID=Europe/Ljubljana:20250630T070000 FREQ=MINUTELY;INTERVAL=5
         enabled: true 
+
 ----
 
 . Run the following commands to load and activate your {AutomationDashboardName} configuration:
@@ -78,7 +79,7 @@ For reference, see the following example output:
 +
 [source,bash]
 ----
-podman exec automation-dashboard-web /venv/bin/python ./manage.py setclusters /clusters.yml
+podman exec automation-dashboard-web /venv/bin/python ./manage.py setclusters /clusters.yaml
 Check if table exists.
 Reading YML file.
 Adding cluster: address=my-aap.example.com
@@ -101,7 +102,7 @@ Successfully set up AAP clusters
 [source,bash]
 ----
 podman exec automation-dashboard-web /venv/bin/python ./manage.py syncdata --since=2025-04-01 --until=2025-06-01
-Successfully created Sync task for Cluster https://aap1.example.com:443.
+Successfully created Sync task for Cluster https://my-aap.example.com:443.
 ----
 +
 [NOTE]
@@ -113,7 +114,7 @@ You can then use `journalctl` to monitor progress:
 +
 [source,bash]
 ----
-sudo journalctl fn10
+sudo journalctl -fn10
 ----
 
 . Refresh your browser to view retrieved data within your {AutomationDashboardName}.
@@ -150,18 +151,18 @@ journalctl CONTAINER_NAME=container (where container equals one of postgresql au
 
 For example:
 journalctl CONTAINER_NAME=automation-dashboard-task
-May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-reporter.sh] Waiting for database migrations...
-May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-reporter.sh] Attempt 1
+May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-dashboard.sh] Waiting for database migrations...
+May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-dashboard.sh] Attempt 1
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,636 periodic 2 140568371550016 Starting sync task.
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,636 periodic 2 140568371550016 Retrieving clusters inform>
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,747 periodic 2 140568371550016 Retrieved 1 clusters.
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 periodic 2 140568371550016 Retrieving data from clust>
-May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking {PlatformNameShort} version at h>
-May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking if is {PlatformNameShort} 2.5 at>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking Ansible Automation Platform version at h>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking if is Ansible Automation Platform 2.5 at>
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Pinging api https://ec2-3>
 May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Executing GET request to >
 May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: ERROR 2025-05-22 13:02:13,820 connector 2 140568371550016 GET request failed with >
-May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Checking if is {PlatformNameShort} 2.4 at>
+May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Checking if is Ansible Automation Platform 2.4 at>
 May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Pinging api https://ec2-3>
 May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Executing GET request to >
 May 22 13:02:16 automation-dashboard automation-dashboard-task[1607]: ERROR 2025-05-22 13:02:16,892 connector 2 140568371550016 GET request failed with ...
@@ -172,6 +173,7 @@ You can check how the services are running by using `systemd`:
 [source,bash]
 ----
 systemctl status --user
+
 ● automation-dashboard
     State: running
     Units: 76 loaded (incl. loaded aliases)
@@ -196,12 +198,12 @@ systemctl status --user
            └─user.slice
              ├─libpod-84e46532e8ca31b0cadb037479289d030103aa01b7a1591e62b83b17f031e47d.scope
              │ └─container
-             │   ├─1619 /usr/bin/dumb-init -- /usr/bin/launch_reporter_task.sh
+             │   ├─1619 /usr/bin/dumb-init -- /usr/bin/launch_dashboard_task.sh
              │   └─1681 /venv/bin/python periodic.py
              ├─libpod-d060f3e3fb2b4c4c5c588149253beed83c78ccc9c9a8c1bf4c96157142a210dc.scope
              │ └─container
-             │   ├─1617 /usr/bin/dumb-init -- /usr/bin/launch_reporter_web.sh
-             │   ├─1646 /usr/bin/python3.9 /usr/local/bin/supervisord -c /etc/supervisord_reporter_web.conf
+             │   ├─1617 /usr/bin/dumb-init -- /usr/bin/launch_dashboard_web.sh
+             │   ├─1646 /usr/bin/python3.9 /usr/local/bin/supervisord -c /etc/supervisord_dashboard_web.conf
              │   ├─1877 /bin/bash /usr/local/bin/stop-supervisor
              │   ├─1878 "nginx: master process nginx -g daemon off;"
              │   ├─1879 /venv/bin/uwsgi /etc/tower/uwsgi.ini
@@ -224,7 +226,7 @@ systemctl status --user
              │   ├─1874 "postgres: autovacuum launcher "
              │   ├─1875 "postgres: stats collector "
              │   ├─1876 "postgres: logical replication launcher "
-             │   └─1889 "postgres: {PlatformNameShort}reporter {PlatformNameShort}reports 172.31.28.99(39338) idle"
+             │   └─1889 "postgres: Ansible Automation Platformreporter Ansible Automation Platformreports 172.31.28.99(39338) idle"
              └─podman-pause-b6c4e853.scope
                └─1359 catatonit -P
 ----
