@@ -54,19 +54,19 @@ ansible-galaxy collection install -r requirements.yml
 .. Create an OAuth2 application using the following steps : 
 ... *For Ansible 2.4*:
 +
-. Navigate  to https://AAP_GATEWAY_FQDN:/#/applications 
+* Navigate  to https://AAP_GATEWAY_FQDN:/#/applications 
 +
 ... *For Ansible 2.5 and 2.6*:
 +
-. Navigate to https://AAP_Controller_FQDN:/access/applications 
+* Navigate to https://AAP_Controller_FQDN:/access/applications 
 +
 ... Add the following information:
 +
-. *Name*: automation-dashboard-sso
-. *Authorization grant type*: authorization-code
-. *Organization*: Default
-. *Redirect URIs*: https://AUTOMATION_DASHBOARD_FQDN/auth-callback
-. *Client type*: Confidential
+* *Name*: automation-dashboard-sso
+* *Authorization grant type*: authorization-code
+* *Organization*: Default
+* *Redirect URIs*: https://AUTOMATION_DASHBOARD_FQDN/auth-callback
+* *Client type*: Confidential
 +
 [NOTE]
 The values for *Name*, *Organization*, and HTTPS port number for {PlatformNameShort} are configurable. The examples provided in this document assume use of port 443. 
@@ -89,10 +89,12 @@ vi inventory
 ----
 +
 [NOTE]
+====
 * This is an example tested inventory containing default values for {PlatformNameShort} 2.4 and 2.5. 
 * You must change the following values to use this inventory configuration in your environment:
 ** Change the RHEL 9 host occurrences from `host.example.com` to your FQDN host
 ** Change the phrase `TODO` to match your passwords within all `_admin_password` or  `_pg_password` values.
+====
 +
 [source,bash]
 ----
