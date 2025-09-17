@@ -3,9 +3,20 @@
 
 = Editing a project
 
+You can modify various aspects of a project after you create it. Depending on the changes you make, a rulebook activation might be impacted, requiring you to review and restart it.
+
 .Procedure
 
 . From the *Projects* list view, select the btn:[More Actions] icon *{MoreActionsIcon}* next to the desired project. The Edit page is displayed.
-. Enter the required changes and select btn:[Save project].
-//[J. Self]replace the following image, if possible
-//::eda-edit-project.png[Edit project]
+. Edit the desired fields. 
++
+[IMPORTANT]
+====
+When you update a project's *Source control URL*, *Source control branch/tag/commit*, or *Source control refspec*, {EDAName} automatically triggers a project resync. This process updates the rulebooks available within {EDAcontroller} and can significantly impact existing rulebook activations:
+
+* *Rulebook Content Updates*: Running activations continue to use old content when a rulebook's content changes. To apply the newer content, you must restart the affected rulebook activation. If the rulebook content you update is attached to an activation that uses event streams, you must re-attach the event stream to that activation after the updates are applied and then, restart the activation.
+* *New Rulebooks*: Any new rulebook added to the repository becomes available in the database after the sync.
+* *Deleted Rulebooks*: A removed rulebook is deleted from the database upon sync. Its associated activations, however, continue to run and can be restarted. Review and update any activations detached from their source rulebook.
+====
++
+. Select btn:[Save project].
