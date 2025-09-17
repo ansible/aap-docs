@@ -1,0 +1,22 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-manage-oauth2-provider"]
+
+= Manage `OAUTH2_PROVIDER` settings
+
+The `OAUTH2_PROVIDER` settings from {ControllerName} are managed by {Gateway} after upgrading from 2.4. to 2.6. 
+The default token expiration values might differ between {ControllerName} and {Gateway}.
+
+* The default access token expiration is updated from 1,000 years to 1 year. 
+This change increases credential security through more frequent token rotation.
+* {GatewayStart}'s default OAUTH2_PROVIDER settings are:
++
+----
+{
+  "ACCESS_TOKEN_EXPIRE_SECONDS": 31536000000,
+  "REFRESH_TOKEN_EXPIRE_SECONDS": 2628000,
+  "AUTHORIZATION_CODE_EXPIRE_SECONDS": 600
+}
+----
++
+If you previously set a token expiration shorter than one year, you must manually update the {Gateway} settings to match your required configuration.
