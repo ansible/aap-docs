@@ -2,5 +2,20 @@
 
 [id="upgrade-api-changes"]
 
-= API changes in 2.6
+= API changes in {PlatformNameShort} {PlatformVers}
 
+{PlatformNameShort} 2.5 and {PlatformVers} include changes to API endpoints with the addition of {Gateway}. Versions 2.5 and {PlatformVers} expose API access to individual services ({ControllerName}, {PrivateHubName}, {EDAName}) to maintain compatibility with existing REST API integrations. This access will be removed in a future release.
+
+These changes impact your organization if you have 2.4 API calls implemented directly with {ControllerName} or {PrivateHubName}, or if you are integrating directly with {ControllerName} or {PrivateHubName} hosts. You can use API endpoints exposed through the {Gateway} for all {PlatformNameShort} services starting with {PlatformNameShort} 2.5.  Moving integrations to API endpoints exposed through the {Gateway} that your integrations are not disrupted when direct service API access is removed in a future {PlatformNameShort} release.
+
+This section highlights the changed APIs between 2.4 and 2.5 or {PlatformVers}. For detailed API reference information, see the following sources:
+
+* For {Gateway} APIs, see the browsable API at `\https://<gateway server name>/api/gateway/v1`.
+* For {ControllerName} APIs, see the browsable API at `\https://<gateway server name>/api/controller/v2`.
+* For {HubName} APIs, see link:https://developers.redhat.com/api-catalog/api/automation-hub[Automation Hub API] in _API Catalog and Documentation_ to reference the 2.4 {HubName} API.
+* For {EDAName}, see the browsable API at `\https://<gateway server name>/api/eda/v1`.
+
+
+include::platform/ref-upgrade-api-general-changes.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-api-specific-changes.adoc[leveloffset=+1]
