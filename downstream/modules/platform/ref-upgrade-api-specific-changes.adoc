@@ -1,0 +1,118 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-api-specific-changes"]
+
+= Specific API changes
+
+[role="_abstract"]
+
+Specific API mappings for functionality that was centralized through the {Gateway} are listed in the following table.
+
+[cols="1,1,1,1"]
+|===
+| Component | 2.4 and earlier endpoints start with… | 2.5 and 2.6 API endpoints | Action needed and notes
+
+| {ControllerNameStart} | `/api/v2/o` | `/api/gateway/v1/tokens/` | Token authentication has moved to the {Gateway}. 
+
+The 2.4 API endpoint is deprecated; it still works in 2.6, but it will not work in a future release.
+
+| {ControllerNameStart} | `/api/v2/organizations` | `/api/gateway/v1/organizations/` | Moved to the {Gateway}. 
+
+The 2.4 API endpoint is deprecated; it still works in 2.6, but it will not work in a future release.
+
+| {ControllerNameStart} | `/api/v2/teams` | `/api/gateway/v1/teams/` | Moved to the {Gateway}. 
+
+The 2.4 API endpoint is deprecated; it still works in 2.6, but it will not work in a future release.
+
+| {ControllerNameStart} | `/api/v2/users` | `/api/gateway/v1/users/` | Moved to the {Gateway}. 
+
+The 2.4 API endpoint is deprecated; it still works in 2.6, but it will not work in a future release.
+
+| {ControllerNameStart} | `/api/v2/roles` | `/api/gateway/v1/role_definitions/` | Moved to the {Gateway}. This is a list of roles. In {PlatformNameShort} 2.6, this is a list of roles which can apply to all services, and includes custom roles. 
+
+The 2.4 API endpoint is only a listing. It still works in 2.6, but it will not work in a future release. 
+
+| {ControllerNameStart}
+a|
+* `/api/v2/roles/{id}/teams/`
+* `/api/gateway/v1/role_definitions/` 
+
+a|
+* `/api/gateway/v1/role_team_assignments/`
+* `/api/gateway/v1/role_user_assignments/` 
+
+| A POST request gives a user a role to a resource. This is how to give user permissions. 
+
+The 2.4 API endpoint is only a listing. It still works in 2.6, but it will not work in a future release. 
+
+| {ControllerNameStart}
+a|
+The following roles list:
+
+* `/api/v2/teams/{id}/roles/`
+* `/api/v2/users/{id}/roles/` 
+
+a|
+* `/api/gateway/v1/role_team_assignments/?team={id}`
+* `/api/gateway/v1/role_user_assignments/?user={id}` 
+
+| List user and team permissions, and give new permissions. 
+
+The 2.4 API endpoint is only a listing. It still works in 2.6, but it will not work in a future release. 
+
+| {ControllerNameStart}
+a|
+The following object roles list:
+
+`/api/v2/{model_name}/{id}/object_roles/`
+
+Example: 
+`/api/v2/credentials/42/` 
+
+a|
+`/api/gateway/v1/role_user_assignments/?content_type__api_slug={model_api_slug}&object_id={id}`
+
+Example: 
+`/api/gateway/v1/role_user_assignments/?content_type__api_slug=awx.credential&object_id=42` 
+
+| List the roles that apply to a resource. 
+
+| {ControllerNameStart}
+a|
+The following resource access list:
+
+`/api/v2/{model_name}/{id}/access_list/`
+
+Example: 
+`/api/v2/credentials/42/access_list/` 
+
+a|
+
+Replacement in 2.6:
+`/api/gateway/v1/role_user_access/{model_api_slug}/{id}/`
+
+Example: 
+`/api/gateway/v1/role_user_access/awx.credential/42/` 
+
+| List the users who have access to a resource.
+
+| {HubNameStart} | `/api/v3/login/keycloak` | `/api/gateway/social/complete/<UID>/` | Moved to the {Gateway}. 
+
+| {HubNameStart} | `/api/v3/auth/token` | `/api/gateway/v1/tokens/` | Token authentication used for pulling collections will migrate to the {Gateway} tokens. 
+
+| {EDAName} | N/A | `/api/gateway/v1/organizations/` | No action needed, as upgrades from 2.4 are not supported. 
+
+| {EDAName} | `/api/v1/teams` | `/api/gateway/v1/teams/` | No action needed, as upgrades from 2.4 are not supported. 
+
+| {EDAName} | `/api/v1/users` | `/api/gateway/v1/users/` | No action needed, as upgrades from 2.4 are not supported.
+
+| {EDAName} | N/A 
+a| 
+* `/api/gateway/v1/role_definitions/`
+* `/api/gateway/v1/role_team_assignments/`
+* `/api/gateway/v1/role_user_assignments/` 
+
+| New role capabilities included as part of the {Gateway} API.
+
+|===
+
