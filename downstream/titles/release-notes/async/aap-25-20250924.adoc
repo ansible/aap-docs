@@ -1,0 +1,151 @@
+[[aap-25-20250924]]
+
+= {PlatformNameShort} patch release September 24, 2025
+
+This release includes the following components and versions:
+
+[cols="1a,3a", options="header"]
+|===
+| Release date | Component versions
+
+| September 24, 2025| 
+* {ControllerNameStart} 4.6.20
+* {HubNameStart} 4.10.8
+* {EDAName} 1.1.13
+* Container-based installer {PlatformNameShort} (bundle) 2.5-19
+* Container-based installer {PlatformNameShort} (online) 2.5-19
+* Receptor 1.5.7
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-18
+* RPM-based installer {PlatformNameShort} (online) 2.5-18
+
+|===
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1758147230
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1758147817
+
+== General
+
+* The `ansible.controller` collection has been updated to 4.6.20. (AAP-53797)
+* The `ansible.eda` collection has been updated to 2.10.0. (AAP-53550)
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/CVE-2025-5302[CVE-2025-5302] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: Denial of Service (DOS) in JSONReader in run-llama and llama_index. (AAP-52177)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-6984[CVE-2025-6984] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: Langchain-community insecure XML parsing. (AAP-52808)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-48432[CVE-2025-48432] `automation-controller`: Django Path Injection Vulnerability. (AAP-51443)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-57833[CVE-2025-57833] `ansible-automation-platform-25/lightspeed-rhel8`: Django SQL injection in FilteredRelation column aliases. (AAP-52622)         
+
+* link:https://access.redhat.com/security/cve/CVE-2025-57833[CVE-2025-57833] `automation-controller`: Django SQL injection in FilteredRelation column aliases. (AAP-53036)
+
+* link:https://access.redhat.com/security/cve/CVE-2025-57833[CVE-2025-57833] `python3.11-django`: Django SQL injection in FilteredRelation column aliases. (AAP-53034)
+
+== {PlatformNameShort}
+
+=== Enhancements
+
+* `X-Forwarded-For` and `Real-Ip` headers are now included in the NGINX logs. (AAP-52562)
+
+=== Bug fixes
+
+* Fixed an issue where if the gRPC server could not connect to the database it would return a 403 HTTP status to envoy. This has been changed to return an error message of 503. (AAP-51931)
+
+* Fixed an issue with the help text for the setting `ALLOW_OAUTH2_FOR_EXTERNAL_USERS`. (AAP-51886)
+
+* Fixed an incorrectly formatted error message in the SAML authenticator when passing invalid security settings. The error will now properly show the invalid fields and will also indicate what valid field values are. (AAP-51705)
+
+* Fixed an issue where authentication mapping for teams did not work if `join_condition: and` was used with attributes. (AAP-51639)
+
+* Fixed an issue with authenticator maps not properly evaluating the attribute in conditions. (AAP-51638)
+
+* Fixed an issue where {Gateway} did not generate the necessary metadata for the UI to render *Settings > Platform Gateway* when the accessing user is an auditor rather than an administrator. (AAP-53279)
+
+* Fixed an issue where multi-select dialogs only showed a subset of users, and users were unable to scroll or advance to the next page. (AAP-52209)
+
+* Fixed an issue where the SAML based authenticators did not collect the group data even if the field had the attribute specified. (AAP-51503)
+
+* The *View Logs* link now matches the {ControllerName} API being used. (AAP-52674)
+
+* PostgreSQL directory creation now works when TLS is disabled. (AAP-52569)
+
+* Fixed a path issue for `custom_ca_cert` when checking PostgreSQL connection and version during preflight. (AAP-53213)
+
+* Fixed the restore and implemented migration functionality for the {ControllerName} resource secret key value. (AAP-53535)
+
+* Improved {Gateway} control plane authorization performance to reduce sporadic request errors. (AAP-53468)
+
+* Disabled IPv6 binding on PostgreSQL and Redis services when IPv6 is disabled on the host. (AAP-53546)
+
+== {OperatorPlatformNameShort}
+
+== Bug fixes
+
+* Fixed an issue where the deployment was failing with "dict object has no attribute version". (AAP-46528)
+
+* Fixed an issue where the Redis timeout configuration was overwritten by the {OperatorPlatformNameShort} on reconciliation. The timeout for Redis connections has been added to the configuration and hard-coded to 300 seconds. (AAP-53309)
+
+* The {HubName} web init container now uses resource limits when enabled. (AAP-52934)
+
+* Fixed a `pulp_ansible` compatibility issue that was preventing the `hub-api` pod from running migrations in the new container when upgrading to the latest 2.5 operator version. (AAP-49016)
+
+== {ControllerNameStart}
+
+=== Bug Fixes
+
+* Fixed an issue where the galaxy credentials could not be created and edited without the need to specify an organization. (AAP-52197)
+
+* Fixed an issue where the job template creation failed using `ansible.controller.job_template` when multiple inventories shared the same name across different organizations. (AAP-51311)
+
+* Fixed an issue that did not allow a user to save *Schedule for Workflow* job template when *Limit has Prompt on Launch* was enabled. (AAP-49794)
+
+* The export command now works through the {ControllerName} collection or with `awxkit` when the correct environment variable is provided. (AAP-49452)
+
+* Fixed an issue where there were double escaped quotes in `api/v2/jobs/{id}/stdout/?format=txt`. (AAP-49077)
+
+* Fixed an issue where the fact storage was not working when {ControllerName}'s time zone was not UTC. (AAP-45933)
+
+* Fixed a bug where exports did not work on deployments using the {Gateway}. The export module in the collection now honors the `CONTROLLER_OPTIONAL_API_URLPATTERN_PREFIX` environment variable. (AAP-39265)
+
+== {HubNameStart}
+
+=== Enhancements
+
+* Added the `GALAXY_API_SPEC_REQUIRE_AUTHENTICATION` setting to {HubName} (defaults to false). This setting restricts access to the `OpenAPI` specification to authenticated users only. This prevents exposing the `OpenAPI` spec and any unnecessary information. (AAP-53578)
+
+== Container-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where the `create_initial_data` command did not work during backup and restore onto different clusters for {EDAName}. (AAP-53382)
+
+* Fixed an issue where scheduled tasks failed in {PrivateHubName} when using quotes in the task name. (AAP-53307)
+
+* Uploading Ansible collections to {PrivateHubName} is no longer limited by the API pagination. (AAP-53526)
+
+
+== {EDAName}
+
+=== Bug Fixes
+
+* Fixed an issue with {EDAName} restores where database credentials were not updated for the event stream. (AAP-53529)
+
+== RPM-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where backup was failing when the deployment had more than one {EDAName} node without `eda_node_type` defined. (AAP-52892)
+
+* Fixed a typographical error in the {ControllerName} group name that led to restore failures. (AAP-52078)
+Fixed an issue where {Gateway} `uwsgi` processes were not configurable in the {PlatformNameShort} {PlatformVers} RPM installer. (AAP-50390)
+
+* Fixed an issue where `redis_mode=standalone` and the Redis group were defined at the same time. (AAP-53560)
+
+* Fixed an issue where the Redis node list could not be created on {EDAName} or {Gateway} nodes which were not part of the Redis group. (AAP-53528)
+
+* Removed the `pulpcore-manager` sudo requirement. (AAP-52288)
