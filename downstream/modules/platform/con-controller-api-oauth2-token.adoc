@@ -64,30 +64,6 @@ curl -k -X POST \
   https://<gateway server name>/api/controller/v2/job_templates/14/launch/
 ----
 
-*Python example*
-
-link:https://pypi.org/project/awxkit/[awxkit] is an open source tool that makes it easy to use HTTP requests to access the {ControllerName} API.
-You can have awxkit get a PAT on your behalf by using the awxkit login command.
-For more information, see link:https://docs.ansible.com/automation-controller/latest/html/controllercli/index.html[AWX Command Line Interface].
-
-If you need to write custom requests, you can write a Python script by using Python library requests, such as the following example:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-import requests
-oauth2_token_value = 'y1Q8ye4hPvT61aQq63Da6N1C25jiA'   # your token value from controller
-url = 'https://<gateway server name>/api/gateway/v1/users/
-payload = {}
-headers = {'Authorization': 'Bearer ' + oauth2_token_value,}
-
-# makes request to controller user endpoint
-response = requests.request('GET', url, headers=headers, data=payload,
-allow_redirects=False, verify=False)
-
-# prints json returned from controller with formatting
-print(json.dumps(response.json(), indent=4, sort_keys=True))
-----
-
 .Additional resources
 
 * link:{URLCentralAuth}/gw-token-based-authentication[Configuring access to external applications with token-based authentication]
