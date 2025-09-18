@@ -4,14 +4,12 @@
 
 = The MANAGE_ORGANIZATION_AUTH setting
 
-The `MANAGE_ORGANIZATION_AUTH` setting controls whether an organization administrator can create users and teams. This setting is now configured at {Gateway} level.
-
-* *New installations*: This setting can be toggled in the platform UI. 
-Changes only affect the {Gateway}, as UI operations are routed to {Gateway} endpoints.
-* *Upgraded installations*: The value of the setting is migrated from your existing {ControllerName} configuration to the {Gateway}. 
-After the migration, the values on {ControllerName} and the {Gateway} are not automatically kept in sync.
+The {ControllerName} setting previously called *Organization Admins Can Manage Users and Teams* in the UI (or `MANAGE_ORGANIZATION_AUTH` in the API) controls whether an organization administrator can create users and teams. 
+This setting now exists in both {Gateway} and {ControllerName} in {PlatformNameShort} {PlatformVers}. 
+During an upgrade the value from {ControllerName} is imported into the {Gateway} server. 
+If you decide to change the value of this setting ensure that you change it to the same values in both {Gateway} and {ControllerName}. 
 
 [IMPORTANT]
 ====
-For environments with automation running directly against {ControllerName}, maintain a consistent value for `MANAGE_ORGANIZATION_AUTH` across both {ControllerName} and the {Gateway} to avoid unexpected behavior.
+For environments with automation running directly against {ControllerName}, maintain a consistent value for `MANAGE_ORGANIZATION_AUTH` across both {ControllerName} and {Gateway} to avoid unexpected behavior.
 ====
