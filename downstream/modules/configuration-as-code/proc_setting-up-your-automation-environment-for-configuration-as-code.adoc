@@ -1,0 +1,286 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-09-18
+:_mod-docs-content-type: PROCEDURE
+
+[id="setting-up-your-automation-environment-for-configuration-as-code_{context}"]
+= Setting up your automation environment for Configuration-as-Code
+
+Configuration-as-Code is a way of working where you define and manage the configuration of the {PlatformNameShort} itself using the version-controlled configuration files (such as YAML, or JSON), instead of clicking through the web UI.
+
+As an Ansible content developer, you can use the Configuration-as-Code approach to apply settings on your {ControllerName} to get the following benefits:
+
+* Predictable job behavior
+* Easier and faster scaling to new clusters
+* Change history with diffs and rollback capability thanks to version control support
+* Faster recovery after outages or migrations
+* Reduced risk of errors because changes flow through CI/CD pipelines and pull requests, where peer reviews and automated testing are applied
+
+
+.Prerequisites
+
+* You have a Git account.
+* Your {Gateway} instance is accessible.
+* You built and registered your own {ExecEnvShort}. Alternatively, you have available the supported {ExecEnvShort} to run playbooks that use the `ansible.platform` collection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/creating_and_using_execution_environments/index[Creating and using execution environments].
+
+
+.Procedure
+
+. Create a new Git repository.
+
+
+. On your local machine, encrypt your password for {Gateway}:
++
+[literal,subs="+quotes"]
+----
+$ ansible-vault encrypt_string '_<gateway_password>_' --name 'aap_password'
+New Vault password: _<vault_password>_
+Confirm New Vault password: _<vault_password>_
+Encryption successful
+aap_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63633763653530343566363864333130656433613634333465363733326261336465333362623635
+          3061333439626238616332313663633431663962353735320a633732346232396165373931653039
+          64326462306162396366373565316631343033656230363038623237313036613166313331623533
+          3363636462646534330a616437646665393738386235306361653333313338656563346633396434
+          35346164656437326231326433323934643133353436323562373762616531326463
+----
++
+You encrypted the value of the `aap_password` variable, which you will use in the next step.
+
+
+. Create the `/my_ansible_project/vars/all.yml` file with variables for connecting to your {PlatformNameShort} and variables for creating Role-Based Access Control (RBAC) objects:
++
+[literal,source,yaml,subs="attributes+"]
+----
+---
+# {PlatformNameShort} related variables
+aap_hostname: "<GATEWAY>"
+aap_username: "<GATEWAY_USER>"
+aap_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63633763653530343566363864333130656433613634333465363733326261336465333362623635
+          3061333439626238616332313663633431663962353735320a633732346232396165373931653039
+          64326462306162396366373565316631343033656230363038623237313036613166313331623533
+          3363636462646534330a616437646665393738386235306361653333313338656563346633396434
+          35346164656437326231326433323934643133353436323562373762616531326463
+aap_validate_certs: false
+
+# Details for creating organization, team, and user
+org_name: "Demo-Organization"
+team_name: "Demo-Team"
+user_username: "Demo-User"
+user_email: "demo.user@example.com"
+user_password: "3ncrypt3d_P@$$word"
+
+# Role names as they exist in your {PlatformNameShort}
+role_for_team_in_org: "Organization Inventory Admin" # "Executor"
+role_for_user_in_org: "Organization Auditor"
+role_for_user_in_team: "Auditor" # if your platform supports team-scoped roles
+
+# Custom role definition details
+custom_role_name: "NetOps ReadOnly"
+custom_role_description: "Read-only access to network objects"
+----
+
+
+. Compose the `/my_ansible_project/RBAC_settings.yml` playbook, which creates RBAC objects and assigns roles to those objects:
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Create RBAC objects and assign roles to them
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ./vars/all.yml
+  tasks:
+    - name: Ensure new organization exists
+      ansible.platform.organization:
+        name: "{{ org_name }}"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+
+    - name: Ensure new team exists in organization
+      ansible.platform.team:
+        name: "{{ team_name }}"
+        organization: "{{ org_name }}"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+
+    - name: Ensure new user exists
+      ansible.platform.user:
+        username: "{{ user_username }}"
+        email: "{{ user_email }}"
+        password: "{{ user_password }}"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+
+    - name: Ensure new custom role exists
+      ansible.platform.role_definition:
+        name: "{{ custom_role_name }}"
+        description: "{{ custom_role_description }}"
+        content_type: awx.inventory
+        permissions:
+          - awx.view_inventory
+          - awx.change_inventory
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+
+    - name: Assign already existing role to team in organization
+      ansible.platform.role_team_assignment:
+        team: "{{ team_name }}"
+        assignment_objects:
+          - name: "{{ org_name }}"
+            type: "organizations"
+        role_definition: "{{ role_for_team_in_org }}"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+
+    - name: Assign already existing role to user in organization
+      ansible.platform.role_user_assignment:
+        user: "{{ user_username }}"
+        object_ids:
+          - "{{ org_name }}"
+        role_definition: "{{ role_for_user_in_org }}"
+        state: present
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: "{{ aap_validate_certs }}"
+....
++
+Many values in this playbook are provided in the form of variables, such as object names, their details, {PlatformNameShort} credentials. You can easily reuse the variables throughout files in your Ansible project, which will also simplify the creation and maintenance of the project and reduce the number of errors.
++
+Refer to the `all.yml` file to see the expanded values of those variables. For details about the module parameters, default values, and further examples how to use the modules, see the resources on {HubNameStart} for the link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/content/?showing=module[ansible.platform] collection.
+
+
+. Push the variables and the playbook to your Git repository so that the {ControllerName} can later read in the correct data.
++
+[subs="+quotes",subs="attributes+"]
+....
+git add .
+git commit -m "Provide variables and RBAC_settings.yml playbook resources for {PlatformNameShort} project"
+git push origin _<relevant_branch_name>_
+....
+
+
+. Using the {Gateway} UI, create a new project with the following values:
++
+* Name: Platform collection testing
+* Description: Automation resources to test the CaC capability of RBAC modules from the `ansible.platform` collection
+* Execution Environment: `ee-supported`
+* Organization: Default
+* Source Control Type: Git
+* Source Control URL: +++https://my_git_url/my_git_repository/my_ansible_project+++
++
+image::cac-create-project.png[Create project]
+
+
+. Create a credential for your Ansible Vault password of your encrypted `aap_password` variable:
++
+* Name: aap_password_vault
+* Description: Holds vault password for decrypting the value of the `aap_password` variable
+* Credential type: Vault
+* Vault Password: _<vault_password>_
++
+image::cac-create-vault-credential.png[Create Credential]
+
+
+. Create a job template with the following values:
++
+* Name: RBAC_settings
+* Description: Create organization, team, user, and custom role RBAC objects. Assign a pre-existing role to the created team and assign a pre-existing role to the created user.
+* Job type: Run
+* Inventory: Demo Inventory
+* Project: Platform collection testing
+* Playbook: `RBAC_settings.yml`
+* Execution Environment: `ee-supported`
+* Credentials: aap_password_vault | Vault
++
+image::cac-create-job-template.png[Create job template]
+
+
+. Launch the `RBAC_settings` job template. After the template job successfully finishes, the output should be similar to the following:
++
+[listing,options="nowrap"]
+....
+Vault password: 
+[WARNING]: Collection ansible.platform does not support Ansible version 2.15.13
+
+PLAY [Create organization] *****************************************************
+
+TASK [Ensure new organization exists] ******************************************
+changed: [localhost]
+
+PLAY [Create team] *************************************************************
+
+TASK [Ensure new team exists in organization] **********************************
+changed: [localhost]
+
+PLAY [Create user] *************************************************************
+
+TASK [Ensure new user exists] **************************************************
+changed: [localhost]
+
+PLAY [Create custom role] ******************************************************
+
+TASK [Ensure new custom role exists] *******************************************
+changed: [localhost]
+
+PLAY [Team gets role] **********************************************************
+
+TASK [Assign already existing role to team in organization] ********************
+changed: [localhost]
+
+PLAY [User gets role] **********************************************************
+
+TASK [Assign already existing role to user in organization] ********************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost: ok=6 changed=6 unreachable=0 failed=0 skipped=0 rescued=0 ignored=0
+....
++
+The output message shows that you ran the job template against 1 target (your localhost). At the same time, you created:
++
+* An organization.
+* A team that exists within the created organization. The team was assigned some pre-existing role.
+* A user that exists within the created organization. The user was assigned some pre-existing role.
+* A custom role.
+
+
+.Verification
+
+* In the navigation panel, check that you see your created organization:
++
+image::cac-organization-exists.png[Organization exists]
+
+
+* Check that you see your created team, which belongs to the organization and is assigned the correct pre-existing role:
++
+image::cac-team-exists.png[Team with assigned role exists]
+
+
+* Check that you see your created user, which belongs to the organization and is assigned the correct pre-existing role:
++
+image::cac-user-exists.png[User with assigned role exists]
+
+
+* Check that you see your created custom role, which was assigned the permissions as specified in your `RBAC_settings.yml` playbook:
++
+image::cac-custom-role-exists.png[Custom role with assigned permissions exists]
