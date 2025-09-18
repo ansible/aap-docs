@@ -8,28 +8,28 @@
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/groups/?name__contains=foo
+http://<gateway server name>/api/controller/v2/groups/?name__contains=foo
 ----
 +
 * To find an exact match, use the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/groups/?name=foo
+http://<gateway server name>/api/controller/v2/groups/?name=foo
 ----
 +
 * If a resource is of an integer type, you must add `\_\_int` to the end to cast your string input value to an integer, such as the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/arbitrary_resource/?x__int=5
+http://<gateway server name>/api/controller/v2/arbitrary_resource/?x__int=5
 ----
 +
 * You can query related resources with the following:
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/users/?first_name__icontains=kim
+http://<gateway server name>/api/gateway/v1/users/?first_name__icontains=kim
 ----
 +
 This returns all users with names that include the string "Kim" in them.
@@ -38,15 +38,15 @@ This returns all users with names that include the string "Kim" in them.
 +
 [literal, options="nowrap" subs="+attributes"]
 ----
-http://<controller server name>/api/v2/groups/?name__icontains=test&has_active_failures=false
+http://<gateway server name>/api/controller/v2/groups/?name__icontains=test&has_active_failures=false
 ----
 This finds all groups containing the name "test" that have no active failures.
-
-.Additional resources
-
-For more information about what types of operators are available, see link:https://docs.djangoproject.com/en/dev/ref/models/querysets/[QuerySet API reference].
-
++
 [NOTE]
 ====
 You can also watch the API as the UI is being used to see how it is filtering on various criteria.
 ====
+
+.Additional resources
+
+* link:https://docs.djangoproject.com/en/dev/ref/models/querysets/[QuerySet API reference]
