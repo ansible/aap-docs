@@ -31,9 +31,9 @@ $ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days
 . Click btn:[Create authentication].
 . Enter a *Name* for this SAML configuration. 
 . Select *SAML* from the *Authentication type* list. The *Authentication details* section automatically updates to show the fields relevant to the selected authentication type.
-
-include::snippets/snip-gw-authentication-auto-migrate.adoc[]
-
++
+//include::snippets/snip-gw-authentication-auto-migrate.adoc[]
++
 . Enter the application-defined unique identifier used as the audience of the SAML service provider configuration in the *SAML Service Provider Entity ID* field. This is usually the base URL of your service provider, but the actual value depends on the Entity ID expected by your IdP.
 . Include the certificate content in the *SAML Service Provider Public Certificate* field. This information is contained in the cert.pem you created as a prerequisite and must include the `—–BEGIN CERTIFICATE—–` and `—–END CERTIFICATE—–`.
 . Include the private key content in the *SAML Service Provider Private Key* field. This information is contained in the key.pem you created as a prerequisite and must include the `—–BEGIN PRIVATE KEY—–` and `—–END PRIVATE KEY—–`.
@@ -146,7 +146,7 @@ Make sure you include all relevant values so that everything gets mapped correct
 include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 +
 . Click btn:[Create Authentication Method].
-
++
 [IMPORTANT]
 ====
 You can configure an HTTPS redirect for SAML in operator-based deployments to simplify login for your users. For the steps to configure this setting, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#proc-operator-enable-https-redirect[Enabling single sign-on (SSO) for {Gateway} on {OCPShort}].
