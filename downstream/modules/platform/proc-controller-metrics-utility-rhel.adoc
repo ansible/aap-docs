@@ -2,13 +2,13 @@
 
 [id="controller-metrics-utility-rhel"]
 
-= Configuring metrics-utility on {RHEL} 
+= Configuring `metrics-utility` on {RHEL} 
 
 .Prerequisites:
 
 * An active {PlatformNameShort} subscription
 
-Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
+`metrics-utility` is included with {PlatformNameShort}, so you do not need a separate installation. 
 The following procedure gathers the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
 You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
 See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
@@ -78,11 +78,15 @@ Use the following verification steps to ensure correct configuration:
 
 . To confirm that your `cron` job entries have been saved correctly, run:
 +
-`crontab -l`
+----
+crontab -l
+----
 +
 . Inspect the `cron` log to verify that the `cron` daemon is executing the commands and that `metrics-utility` is producing output:
 +
-`cat /var/log/cron` 
+----
+cat /var/log/cron
+----
 +
 For reference, see the following example output:
 +
