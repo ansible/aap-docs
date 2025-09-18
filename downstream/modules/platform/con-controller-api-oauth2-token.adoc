@@ -36,7 +36,7 @@ Token authentication is best used for any programmatic use of the {ControllerNam
 
 [literal, options="nowrap" subs="+attributes"]
 ----
-curl -u user:password -k -X POST https://<gateway-server>/api/controller/v2/tokens/
+curl -u user:password -k -X POST https://<platform-host>/api/gateway/v1/tokens/
 ----
 
 This call returns JSON data with the following:
@@ -50,7 +50,7 @@ You can use the value of the `token` property to perform a `GET` request for an 
 curl -k -X GET \
   -H “Content-Type: application/json”
   -H “Authorization: Bearer <oauth2-token-value>” \
-  https://<gateway server name>/api/controller/v2/hosts/
+  https://<platform-host>/api/controller/v2/hosts/
 ----
 
 You can also run a job by making a `POST` to the job template that you want to start:
@@ -61,7 +61,7 @@ curl -k -X POST \
   -H "Authorization: Bearer <oauth2-token-value>" \
   -H "Content-Type: application/json" \
   --data '{"limit" : "ansible"}' \
-  https://<gateway server name>/api/controller/v2/job_templates/14/launch/
+  https://<platform-host>/api/controller/v2/job_templates/14/launch/
 ----
 
 .Additional resources
