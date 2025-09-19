@@ -1,8 +1,9 @@
+:_mod-docs-content-type: PROCEDURE
 [id="eda-activate-webhook"]
 
 = Activating webhook rulebooks
 
-In Openshift environments, you can allow webhooks to reach an activation-job-pod over a given port by creating a Route that exposes that rulebook activation's Kubernetes service.
+In Openshift environments, you can allow webhooks to reach an activation-job-pod over a given port by creating a route that exposes that rulebook activation's Kubernetes service.
 
 .Prerequisites
 
@@ -62,13 +63,15 @@ spec:
 +
 . When you create the Route, test it with a *Post to the Route URL*:
 +
+[NOTE]
+====
+You do not need the port as it is specified on the Route (targetPort).
+====
++
 -----
 curl -H "Content-Type: application/json" -X POST 
 test-sync-bug-dynatrace.apps.aap-dt.ocp4.testing.ansible.com -d 
 '{}'
 -----
-+
-[NOTE]
-====
-You do not need the port as it is specified on the Route (targetPort).
-====
+
+
