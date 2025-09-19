@@ -1,0 +1,85 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-saml-auth"]
+
+= Authentication type: SAML
+
+*General settings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+SOCIAL_AUTH_SAML_ENABLED_IDPS:
+  Keycloak: null
+  entity_id: 'https://idp.example.com/auth/realms/awx'
+  url: 'https://idp.example.com/auth/realms/awx/protocol/saml'
+  x509cert: MIICert...
+  attr_username: username
+  attr_email: email
+SOCIAL_AUTH_SAML_SP_ENTITY_ID: 'https://controller.example.com:8043'
+SOCIAL_AUTH_SAML_SP_PUBLIC_CERT: MIICertPublic...
+SOCIAL_AUTH_SAML_SP_PRIVATE_KEY: MIIKeyPrivate...
+---- a| ----
+"configuration": {
+  "IDP_URL": "https://idp.example.com/auth/realms/awx/protocol/saml",
+  "IDP_X509_CERT": "-----BEGIN CERTIFICATE-----\nMIICert...\n-----END CERTIFICATE-----",
+  "IDP_ENTITY_ID": "https://idp.example.com/auth/realms/awx",
+  "IDP_ATTR_EMAIL": "email",
+  "IDP_ATTR_USERNAME": "username",
+  "SP_ENTITY_ID": "https://controller.example.com:8043",
+  "SP_PUBLIC_CERT": "MIICertPublic...",
+  "SP_PRIVATE_KEY": "MIIKeyPrivate..."
+}
+----
+|====
+
+*Mappings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+SOCIAL_AUTH_SAML_ORGANIZATION_MAP:
+ "Default":
+    users: true
+---- a| ----
+{
+  "name": "Default - Users (users)",
+  "map_type": "organization",
+  "order": 1,
+  "authenticator": -1,
+  "triggers": {
+    "users": true
+  },
+  "organization": "Default",
+  "team": null,
+  "role": "Organization Member",
+  "revoke": true
+}
+----
+a| ----
+SOCIAL_AUTH_SAML_USER_FLAGS_BY_ATTR:
+ is_superuser_attr: "is_superuser"
+ is_superuser_value: "true"
+---- a| ----
+{
+  "name": "is_superuser - role",
+  "authenticator": -1,
+  "revoke": true,
+  "map_type": "is_superuser",
+  "team": null,
+  "organization": null,
+  "triggers": {
+    "attributes": {
+      "is_superuser": {
+        "has_or": [
+          "true"
+        ]
+      }
+    }
+  },
+  "order": 2
+}
+----
+|====
