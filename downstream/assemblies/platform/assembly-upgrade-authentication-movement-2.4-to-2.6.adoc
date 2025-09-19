@@ -1,0 +1,55 @@
+:_mod-docs-content-type: ASSEMBLY
+
+[id="upgrade-authentication-movement-2.4-to-2.6"]
+
+= Authentication movement
+
+During an upgrade from {PlatformNameShort} 2.4 to {PlatformVers}, only complete authentication provider configurations are migrated to the new {Gateway}.
+
+A configuration is considered complete when it meets the following criteria:
+
+* *LDAP*: You must specify a server URL.  
+* *GitHub and Microsoft Azure AD*: You must specify both a key and a secret.  
+* *OIDC*: You must define a key, a secret, and an OIDC endpoint.  
+* *RADIUS* and *TACACS+*: You must specify the host.
+
+Before proceeding with the upgrade, ensure that you complete the following steps:
+
+* *Create a local administrator account* and verify that you can log in to the environment using local authentication. 
+You can also use the default administrator account from the inventory file.
+* *Enable the local authenticator* in the target environment to ensure a fallback login method is available.
+* *Perform a full backup* of your existing environment.
++
+[IMPORTANT]
+====
+This is a critical step for data recovery in case any issues occur during the migration process.
+====
+
+*Post upgrade*
+
+* *Update the callback URLs* in your _Identity Provider_ (IdP) configurations after the movement. 
+This is necessary for OAuth and SSO providers to function correctly with the new {Gateway} architecture. 
+For more information, see link:{URLCentralAuth}/gw-configure-authentication#gw-update-callback-urls[Updating callback URLs for OAuth and SSO providers].
+* *Reestablish custom certificates for LDAPS* if your LDAP authentication uses custom certificates in the system's trust store. 
+This configuration is not automatically migrated and you must manually reestablish it.
+
+The movement of existing authentication configurations from a {PlatformName} 2.4 {ControllerName} to the new {PlatformVers} {Gateway} is automated. 
+The following tables show how settings and mappings from the old {ControllerName} schema are transformed to fit the new {Gateway} API schema.
+
+include::platform/ref-upgrade-oidc-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-ldap-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-saml-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-github-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-azure-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-radius-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-tacacs-auth.adoc[leveloffset=+1]
+
+include::platform/ref-upgrade-google-auth.adoc[leveloffset=+1]
+
+include::platform/con-upgrade-manage-org-setting.adoc[leveloffset=+1]

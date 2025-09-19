@@ -1,0 +1,87 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-github-auth"]
+
+= Authentication type: Github
+
+*General settings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+SOCIAL_AUTH_GITHUB_KEY: client-id
+SOCIAL_AUTH_GITHUB_SECRET: client-secret
+SOCIAL_AUTH_GITHUB_SCOPE:
+  - 'user:email'
+  - 'read:org'
+---- a| ----
+{
+  "configuration": {
+    "KEY": "client-id",
+    "SECRET": "client-secret",
+    "SCOPE": [
+      "user:email",
+      "read:org"
+    ]
+  }
+}
+----
+|====
+
+*Mappings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+SOCIAL_AUTH_GITHUB_ORGANIZATION_MAP:
+ "MyOrg":
+     users: true
+     admins:
+     - "admin-team"
+---- a| ----
+{
+  "name": "MyOrg - Admins admin-team",
+  "map_type": "organization",
+  "order": 1,
+  "authenticator": -1,
+  "triggers": {
+    "users": {
+      "has_or": [
+        "admin-team"
+      ]
+    }
+  },
+  "organization": "MyOrg",
+  "team": null,
+  "role": "Organization Admin",
+  "revoke": false
+}
+----
+a| ----
+SOCIAL_AUTH_GITHUB_TEAM_MAP:
+ "Developers":
+     organization: "MyOrg"
+     users:
+     - "dev-team"
+---- a| ----
+{
+  "name": "MyOrg - Developers dev-team",
+  "map_type": "team",
+  "order": 2,
+  "authenticator": -1,
+  "triggers": {
+    "users": {
+      "has_or": [
+        "dev-team"
+      ]
+    }
+  },
+  "organization": "MyOrg",
+  "team": "Developers",
+  "role": "Team Member",
+  "revoke": false
+}
+----
+|====

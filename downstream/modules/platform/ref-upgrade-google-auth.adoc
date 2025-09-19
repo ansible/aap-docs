@@ -1,0 +1,75 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-google-auth"]
+
+= Authentication type: Google OAuth2
+
+*General settings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} {PlatformVers}
+a| ----
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: "client-id"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: "client-secret"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE: ["profile", "email"]
+---- a| ----
+{
+  "configuration": {
+    "KEY": "client-id",
+    "SECRET": "client-secret",
+    "REDIRECT_STATE": true,
+    "SCOPE": [
+      "profile",
+      "email"
+    ]
+  }
+}
+----
+|====
+
+*Mappings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} {PlatformVers}
+a| ----
+SOCIAL_AUTH_GOOGLE_OAUTH2_ORGANIZATION_MAP:
+ "Google Org":
+     users: true
+---- a| ----
+{
+  "name": "Google Org - Users (users)",
+  "map_type": "organization",
+  "order": 1,
+  "authenticator": -1,
+  "triggers": {
+    "users": true
+  },
+  "organization": "Google Org",
+  "team": null,
+  "role": "Organization Member",
+  "revoke": false
+}
+----
+a| ----
+SOCIAL_AUTH_GOOGLE_OAUTH2_TEAM_MAP:
+ "Engineers":
+     organization: "Google Org"
+     users: true
+---- a| ----
+{
+  "name": "Google Org - Engineers (users)",
+  "map_type": "team",
+  "order": 2,
+  "authenticator": -1,
+  "triggers": {
+    "users": true
+  },
+  "organization": "Google Org",
+  "team": "Engineers",
+  "role": "Team Member",
+  "revoke": false
+}
+----
+|====

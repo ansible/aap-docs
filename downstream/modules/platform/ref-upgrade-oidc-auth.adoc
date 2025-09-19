@@ -1,0 +1,77 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-oidc-auth"]
+
+= Authentication type: OIDC
+
+*General settings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+SOCIAL_AUTH_OIDC_KEY: "client-id"
+SOCIAL_AUTH_OIDC_SECRET: “client-secret"
+SOCIAL_AUTH_OIDC_OIDC_ENDPOINT: "https://idp.example.com"
+SOCIAL_AUTH_OIDC_VERIFY_SSL: true
+---- a| 
+----
+"configuration": {
+  "OIDC_ENDPOINT": "https://idp.example.com",
+  "KEY": "client-id",
+  "SECRET": "client-secret",
+  "VERIFY_SSL": true
+}
+----
+|====
+
+*Mappings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+AUTH_LDAP_ORGANIZATION_MAP:
+ "LDAP Organization":
+     users: true
+---- a| 
+----
+
+  "name": "Default - Users (users)",
+  "map_type": "organization",
+  "order": 1,
+  "authenticator": -1,
+  "triggers": {
+    "users": true
+  },
+  "organization": "Default",
+  "team": null,
+  "role": "Organization Member",
+  "revoke": true
+}
+----
+a| ----
+SOCIAL_AUTH_SAML_USER_FLAGS_BY_ATTR:
+ is_superuser_attr: "is_superuser"
+ is_superuser_value: "true"
+---- a| ----
+{
+  "name": "is_superuser - role",
+  "authenticator": -1,
+  "revoke": true,
+  "map_type": "is_superuser",
+  "team": null,
+  "organization": null,
+  "triggers": {
+    "attributes": {
+      "is_superuser": {
+        "has_or": [
+          "true"
+        ]
+      }
+    }
+  },
+  "order": 2
+}
+----
+|====

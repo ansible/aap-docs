@@ -1,0 +1,97 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="upgrade-ldap-auth"]
+
+= Authentication type: LDAP
+
+*General settings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+AUTH_LDAP_SERVER_URI: "ldap://ldap.example.com:389"
+AUTH_LDAP_BIND_DN: "cn=admin,dc=example,dc=org"
+AUTH_LDAP_BIND_PASSWORD: "password"
+AUTH_LDAP_START_TLS: false
+AUTH_LDAP_USER_SEARCH: [
+  "ou=users,dc=example,dc=org", 
+  "SCOPE_SUBTREE", "(cn=%(user)s)"
+]
+AUTH_LDAP_USER_ATTR_MAP: {
+  "first_name": "givenName", 
+  "last_name": "sn", 
+  "email": "mail"
+}
+---- a| ----
+"configuration": {
+  "SERVER_URI": "ldap://ldap.example.com:389",
+  "BIND_DN": "cn=admin,dc=example,dc=org",
+  "BIND_PASSWORD": "password",
+  "START_TLS": false,
+  "USER_SEARCH": [
+    "ou=users,dc=example,dc=org",
+    "SCOPE_SUBTREE",
+   "(cn=%(user)s)"
+  ],
+  "USER_ATTR_MAP": {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+  }
+}
+----
+|====
+
+*Mappings*
+
+[cols="50%,50%",options="header"]
+|====
+| {ControllerNameStart} 2.4 | {GatewayStart} 2.6
+a| ----
+AUTH_LDAP_ORGANIZATION_MAP:
+ "LDAP Organization":
+     users: true
+     admins:
+     - "cn=awx_org_admins,ou=groups,dc=example,dc=org"
+---- a| ----
+{
+  "name": "LDAP Organization - Admins cn=awx_org_admins,ou=groups,dc=example,dc=org",
+  "map_type": "organization",
+  "order": 1,
+  "authenticator": -1,
+  "triggers": {
+    "groups": {
+      "has_or": [
+        "cn=awx_org_admins,ou=groups,dc=example,dc=org"
+      ]
+    }
+  },
+  "organization": "LDAP Organization",
+  "team": null,
+  "role": "Organization Admin",
+  "revoke": false
+}
+---- a| ----
+AUTH_LDAP_USER_FLAGS_BY_GROUP:
+  is_superuser:
+    - 'cn=awx_admins,ou=groups,dc=example,dc=org'
+---- a| ----
+{
+  "name": "is_superuser - role",
+  "authenticator": -1,
+  "revoke": true,
+  "map_type": "is_superuser",
+  "team": null,
+  "organization": null,
+  "triggers": {
+    "groups": {
+   "has_or": [
+        "cn=awx_admins,ou=groups,dc=example,dc=org"
+      ]
+    }
+  },
+  "order": 2
+}
+----
+|====
