@@ -5,6 +5,108 @@
 [id="new-features"]
 = New features and enhancements
 
+== General availability of {AAPchatbot}
+
+The {AAPchatbot} is now generally available on {PlatformNameShort} {PlatformVers} on {OCPShort}. It is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}.
+
+The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses large language models (LLMs) to generate quick, accurate, and personalized responses. These responses empower users to work more efficiently, thereby improving productivity and the overall quality of their work.
+
+To access and use the {AAPchatbot}, you need:
+* {PlatformNameShort} {:PlatformVers} on {OCPShort}
+* An LLM service that is hosted on either {RHELAI} or {OCPAI}
+
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#deploying-chatbot-operator[Deploying the Ansible Lightspeed intelligent assistant on {OCPShort}] in Installing on {OCPShort}.
+
+== General availability of Ansible self-service automation portal
+
+Ansible self-service automation portal is now generally available as part of the {PlatformNameShort} subscription. The new self-service automation portal empowers platform admins to provide a streamlined “point-and-click” Ansible automation experience to a broader set of users within the organization. Users who aren’t Ansible experts now have a dedicated self-service portal from which they can launch a range of automation jobs.
+* Installation options: Deploy self-service automation portal as a separate installation on {OCP} using a Helm chart. 
+* Syncs existing automation content: Extend the reach and impact of your automation job templates, while maintaining full control and compliance. 
+* Seamless Integration: Uses your existing {PlatformNameShort} configuration—same logins, same security controls, same automation logic.
+* Simplified Interface: A distinct, user-friendly web interface designed for business users, not automation experts.
+* Guided Workflows: Step-by-step forms that walk users through automation requests without technical complexity - automatically generated from your existing job templates.
+* Smart Forms: Real-time field validation, conditional and dynamic forms, and dropdown fields for {PlatformNameShort} artifacts, such as {PlatformNameShort} inventories.
+
+
+== {AutomationDashboardName}
+
+{AutomationDashboardName} is a utility that can be connected to one or more {PlatformNameShort} deployments to visualize automation usage data, determine timesavings, track ROI, and drive increased visibility into automation strategy, resource allocation, and prioritization of automation projects.
+* Deployed securely, on-premise: Simplified deployment as a self-contained, on-premise utility that runs on a dedicated RHEL 9 x86 and ARM host. 
+* Easy Integration: Integrates into {PlatformNameShort} 2.4, 2.5 and {PlatformVers} instances with OAuth2 token for read-only access to pull data. 
+* Automated data sync: Once configured, the dashboard automatically syncs and visualizes data from connected {PlatformNameShort} instances. 
+* Flexible Reporting: Dashboard allows to generate and share customized PDF reports and export raw CSV data for flexible ingestion into BI tools. 
+
+
+== Configuration as Code
+The link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[ansible.platform] collection now provides unified, platform-wide Role-Based Access Control (RBAC) management across {PlatformNameShort} components. New or enhanced modules include `Organization`, `Team`, `User`, `Role definitions`, `Role Assignments` (team/user). Additionally:
+
+* You can declare the RBAC state as code and apply idempotently across services.
+* Ansible collections now use a standard global environment variable prefix across components. {ControllerNameStart}, {HubNameStart}, and {EDAName} all use a new standard of “AAP_” instead of "COMPONENT_". For example, `aap_hostname`. See link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/docs/[the documentation] in {HubNameStart} for more information. 
+
+== Service accounts 
+* Service accounts, created in link:https://console.redhat.com/[console.redhat.com], can now be used to manage subscriptions in {PlatformNameShort}. Manifest files and basic authentication may still be used for this purpose as well.
+* Service accounts are now required in order to send data to automation analytics. 
+
+
+== {EDAName} (Automation decisions)
+{EDAName} includes several key enhancements in the {PlatformNameShort} {PlatformVers} release that improve performance, simplify operations, and expand the platform's capabilities across security, networking, and event processing.
+
+* *External secret management*: {EDAName} now supports external secret management systems, achieving parity with {ControllerNameStart}. This includes support for HashiCorp Vault, CyberArk, Microsoft Azure Key Vault, and AWS Secrets Manager.
+* *Editable project URLs*: You can now edit the source control URL for existing {EDAName} projects, providing greater flexibility to adapt to repository changes.
+* *Improved job auditing*: A new label is automatically added to jobs triggered by {EDAName}, along with support for custom labels. This allows for more efficient tracing and auditing of event-triggered automations.
+* *Kafka enhancements*: The Kafka source plugin now supports multiple topics and allows the use of regular expressions and wildcards. Additionally, it now supports GSSAPI for enhanced authentication.
+* *New event filter*: A new filter plugin, `event_splitter`, is available to handle and process nested events more effectively.
+* *Rulebook concurrency key*: Rulebooks now support a concurrency key, enabling you to group events by resource to ensure they are processed sequentially.
+
+
+== Installation changes
+
+=== Containerized installation
+Updated system requirements for containerized installation of {PlatformNameShort} include: 
+
+* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9.
+* {PostgresVers} 16 and 17 are now supported for customer provided (external) databases. 
++
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/aap-containerized-installation#system-requirements[System requirements] in _Containerized installation_.
+
+
+=== Operator installation
+Updated system requirements for {OperatorPlatformNameShort} on {OCP} include:
+The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9.
+PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
++
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information about the {OperatorPlatformNameShort} system requirements, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/tested_deployment_models/ocp-topologies[Operator topologies] in _Tested deployment models_. 
+
+
+=== RPM installation
+Updated system requirements for RPM installation of {PlatformNameShort} {PlatformVers} include:
+ 
+* {PlatformNameShort} RPM installer was deprecated in 2.5 and will be removed in {PlatformNameShort} 2.7. The RPM installer will be supported for RHEL 9 during the lifecycle of {PlatformNameShort} {PlatformVers} to support migrations to existing supported topologies. See the support matrix for more information on upgrade and migration paths.
+* {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 8 is no longer supported. 
+* {RHEL} 10 is not supported for RPM installations. See Support matrix for more information on supported upgrade and migration paths.
+* PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
++
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/platform-system-requirements[System requirements] in _RPM installation_.
+
+
+
+//Not sure if I should comment out/delete the rest of this documentation in this file.
+
 == Installation changes
 Starting with {PlatformNameShort} 2.5, three different on-premise deployment models are fully tested. In addition to the existing RPM-based installer and operator, support for the containerized installer is being added. 
 
