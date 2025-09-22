@@ -1,0 +1,43 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-use-of-EDA-for-security"]
+
+= Use of {EDAName} for security
+
+[role="_abstract"]
+{EDAName} is a powerful automation framework that enables organizations to respond to real-time events dynamically. 
+It listens for triggers from various sources, evaluates conditions, and executes automated responses using Ansible Playbooks. 
+
+In the context of security operations, {EDAName} enables rapid incident response, threat mitigation, and system hardening by automating reactions to security-related events.
+Event-driven automation is the process of responding automatically to changing conditions in an IT environment, enabling faster issue resolution and reducing routine, repetitive tasks. {EDAName} connects sources of events with corresponding actions using rules. 
+Its decision-making capabilities receive an “event” from a monitoring tool and trigger the required action. Ansible Rulebooks define the source of the event and, using “if-this-then-that” instructions, explains the action to take when the event is encountered. 
+Ansible Rulebooks map event conditions to an action, like running a playbook or directly executing a module.
+Through Ansible, this event-driven automation process is applied to security-related events for event-driven security. 
+An extensive set of monitoring tools is required to promptly identify and address any security risk. When these tools identify an issue or concern, an event-driven automation solution delivers log sources back to a Security Information and Event Management (SIEM) system for human intervention, triage, or resolution. Example automated event-driven threat responses include shutting ports, IPs, or devices.
+If your event source is watching network routers and discovers that a router is not responding, it recognizes this as an event. 
+{EDAName} receives this event and matches the event to the condition defined by the rule in the Rulebook, which in this case would be “if an event indicating ‘no response’ is encountered, then reset the router”. 
+{EDAName} triggers the instructions in the Rulebook and the router is reset, restoring it to normal function. 
+This can happen at any time without human intervention.
+
+{EDAName} can automate the following common security use cases: 
+
+* Enterprise firewalls
+* _Intrusion Detection and Prevention Systems_ (IDPS)
+* _Security Information and Event Management_ (SIEM) systems
+* _Privileged Access Management_ (PAM) tools
+* _Endpoint Protection Platform_ (EPP)
+* Threat detection and response
+* Automated incident response
+* _Zero Trust Network Access_ (ZTNA)
+* Compliance and hardening
+* Phishing mitigation
+
+The following is an example workflow scenario using {EDAName} for detection of and response to unauthorized SSH access:
+
+. *Event Source*: A security monitoring tool detects multiple failed SSH login attempts.
+. *Trigger*: The event is sent to {EDAName}.
+. *{EDAName} rulebook evaluation*: If the failed login count exceeds a threshold, execute an Ansible playbook.
+* Automated response actions: 
+* Block the source IP in the firewall.
+* Send a notification to security teams.
+* Collect logs for forensic analysis.
