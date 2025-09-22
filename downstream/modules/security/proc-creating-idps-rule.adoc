@@ -19,9 +19,7 @@ Currently, the `ids_rule` role only supports Snort IDPS.
 
 . Install the `ids_rule` role using the ansible-galaxy command:
 +
-----
-$ ansible-galaxy install ansible_security.ids_rule
-----
+`$ ansible-galaxy install ansible_security.ids_rule`
 
 . Create a new playbook file titled `add_snort_rule.yml`. Set the following parameters:
 +
@@ -48,7 +46,7 @@ $ ansible-galaxy install ansible_security.ids_rule
     ids_provider: snort
 ----
 
-. Add the following tasks and task-specific variables (e.g., rules, Snort rules file, and the state of the rule - present or absent) to the playbook:
+. Add the following tasks and task-specific variables, for example, rules, Snort rules file, and the state of the rule - present or absent, to the playbook:
 +
 ----
 - name: Add Snort rule
@@ -74,11 +72,9 @@ The `ids_rules_file` variable specifies a defined location for the `local.rules`
 
 . Run the playbook by executing the following command:
 +
-----
-$ ansible-navigator run add_snort_rule.ym --mode stdout
-----
+`$ ansible-navigator run add_snort_rule.ym --mode stdout`
 +
-Once you run the playbook, all of your tasks will be executed in addition to your newly created rules. Your playbook output will confirm your PLAY, TASK, RUNNING HANDLER, and PLAY RECAP.
+When the playbook runs, all of your tasks will be executed in addition to your newly created rules. Your playbook output confirms your PLAY, TASK, RUNNING HANDLER, and PLAY RECAP.
 
 
 .Verification
