@@ -9,15 +9,15 @@ Before you begin the upgrade process, review the following considerations to pla
 
 == {PlatformNameShort} requirements
 * Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
-* Review {LinkPlanningGuide} for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to 2.6.
-* Upgrade to {PlatformNameShort} installer version 2.6-11 or later. Do not upgrade to an earlier installer version.
+* Review link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade[Planning your upgrade] for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to 2.6. 
 * Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
 * Capture your inventory or instance group details before upgrading.
 * Upgrade to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading to {PlatformName} 2.6.
 +
 [IMPORTANT]
 ====
-When upgrading from {PlatformNameShort} 2.4 to 2.6, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
+* When upgrading from {PlatformNameShort} 2.4 to 2.6, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
+* If you upgraded from {PlatformNameShort} 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to 2.6 as that legacy authenticator functionality was removed. For information about migrating users, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_upgrade_and_migration/aap-post-upgrade#con-migrate-SAML-users_aap-post-upgrade[Migrating Single Sign-On (SSO) users] in _RPM Upgrade and Migration guide_ for 2.5. 
 ====
 
 * Review the {Gateway} requirements:
