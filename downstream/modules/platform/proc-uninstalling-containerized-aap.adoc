@@ -12,7 +12,15 @@ Uninstall your {ContainerBase} of {PlatformNameShort}.
 
 .Procedure
 
-. If you intend to reinstall {PlatformNameShort} and want to use the preserved databases, you must collect the existing secret keys by running the following command:
+. If you intend to reinstall {PlatformNameShort} and want to use the preserved databases, you must collect the existing secret keys:
+
+.. First, list the available secrets:
++
+----
+$ podman secret list
+----
+
+.. Next, collect the secret keys by running the following command:
 +
 ----
 $ podman secret inspect --showsecret <secret_key_variable> | jq -r .[].SecretData
