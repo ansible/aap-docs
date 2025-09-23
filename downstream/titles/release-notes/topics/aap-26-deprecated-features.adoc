@@ -1,0 +1,145 @@
+[[aap-2.6-deprecated-features]]
+= Deprecated features
+
+include::../snippets/deprecated-features.adoc[]
+
+The following table provides information about features that were deprecated in {PlatformNameShort} 2.5:
+
+[cols="20%,80%"]
+|===
+| Component | Feature
+
+|Access to service APIs for
+{ControllerName}, +
+{HubName}, +
+and {EDAName}
+|With the addition of {Gateway}, a number of service-specific API endpoints are deprecated because their functionality will be removed or superseded with other capabilities in a future release. 
+
+{PlatformNameShort} 2.5 and 2.6 expose API access to individual services ({ControllerName}, {PrivateHubName}, {EDAName}) to maintain compatibility with existing REST API integrations. This access will be removed in a future release.
+
+For detailed information, see link:https://docs.google.com/document/d/14AzkjXpzQlNY9HPmsrHuJ4YRsiHp2cjtFtdZaHUMQXw/edit?tab=t.j1bmvnq8zfsq[API changes] in _Planning your upgrade_.
+
+|Installer
+|The {PlatformNameShort} installer using (RHEL) RPMs was deprecated (announced) in 2.5 and will be removed in {PlatformNameShort} 2.7.  
+
+The RPM installer will be supported for RHEL 9 during the lifecycle of {PlatformNameShort} 2.6 to support migrations to existing supported topologies. Users are encouraged to migrate to the containerized topology on RHEL or to the {OCPShort} Operator installation method. See the support matrix for more information on upgrade and migration paths.
+
+|Ansible-core
+|Drop Python 3.10, and add Python 3.13 for the automation controller node/Execution Environment. +
+
+Drop Python 3.7, and add Python 3.13 for the target node, where Python is executed as a module.
+
+|Ansible-core
+a|
+[source, python]
+----
+uri module: 
+    - Using 'yes' or 'no' for 'follow_redirects' parameter is deprecated.
+yum_repository:
+    - deprecated parameters:
+        - 'keepcache'
+        - 'async'
+        - "deltarpm_metadata_percentage"
+        - "gpgcakey"
+        - "http_caching"
+        - "keepalive"
+        - "metadata_expire_filter"
+        - "mirrorlist_expire"
+        - "protect"
+        - "ssl_check_cert_permissions"
+        - "ui_repoid_vars"` 
+url lookup: 
+    - Using `yes` or `no` for `follow_redirects` parameter is deprecated.
+----
+
+|Execution environment
+|Removing `cisco.asa` from ee-supported as it is being deprecated
+
+Removing `ibm.qradar` from ee-supported as it is being deprecated
+
+|Certified Collections
+|An `ansible.platform` collection is available as the preferred collection to replace the service-specific `ansible.controller`, `ansible.hub`, and `ansible.eda` collections. These service-specific collections will be replaced by `ansible.platform` after 2.6.
+
+|{AnsibleCodeBot} code bot
+|The code bot (as described in the link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html-single/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/index#using-code-bot-for-suggestions_lightspeed-user-guide[{LightspeedFullName}] user guide) is being deprecated, and will be retired on December 31, 2025.
+
+|Ansible Content
+|Deprecation of the Notification Service for ServiceNow, which will not be supported on the ServiceNow Zurich and later releases. Support will end when the Yokohama release is end-of-life
+
+
+|====
+
+////
+== Deprecated API endpoints
+
+API endpoints that will be removed in a future release either because their functionality is being removed or superseded with other capabilities. For example, with the platform moving to a centralized authentication system in the {Gateway}, the existing authorization APIs in the {ControllerName} and {HubName} are being deprecated for future releases as all authentication operations should occur in the {Gateway}.
+
+[cols="20%,40%,40%"]
+|===
+| Component | Endpoint | Capability
+
+|{ControllerNameStart}
+|`*/api/o*`
+|Token authentication is moving to the {Gateway}.
+
+|{HubNameStart}
+|`*/api/login/keycloak*`
+|Moving to the {Gateway}.
+
+|{HubNameStart}
+|`*/api/v3/auth/token*`
+|Token authentication used for pulling collections will migrate to the {Gateway} tokens.
+
+|{ControllerNameStart}
+|`*/api/v2/organizations*`
+|Moving to the {Gateway}.
+
+|{ControllerNameStart}
+|`*/api/v2/teams*`
+|Moving to the {Gateway}.
+
+|{ControllerNameStart}
+|`*/api/v2/users*`
+|Moving to the {Gateway}.
+
+|{ControllerNameStart}
+|`*/api/v2/roles*`
+|Controller-specific role definitions are moving to `*/api/controller/v2/role_definitions*`.
+
+|{ControllerNameStart}
+a|
+The following roles lists:
+
+* `*/api/v2/teams/{id}/roles/*`
+* `*/api/v2/users/{id}/roles/*`
+|Controller-specific resource permissions are moving to `*/api/controller/v2/role_user_assignments*` and `*/api/controller/v2/role_team_assignments*`.
+
+|{ControllerNameStart}
+a|
+The following object roles lists:
+
+* `*/api/v2/credentials/{id}/object_roles/*`
+* `*/api/v2/instance_groups/{id}/object_roles/*`
+* `*/api/v2/inventories/{id}/object_roles/*`
+* `*/api/v2/job_templates/{id}/object_roles/*`
+* `*/api/v2/organizations/{id}/object_roles/*`
+* `*/api/v2/projects/{id}/object_roles/*`
+* `*/api/v2/teams/{id}/object_roles/*`
+* `*/api/v2/workflow_job_templates/{id}/object_roles/*`
+|Controller-specific resource permissions are moving to `*/api/controller/v2/role_user_assignments*` and `*/api/controller/v2/role_team_assignments*`.
+
+|{ControllerNameStart}
+a|
+The following resource access lists:
+
+* `*/api/v2/credentials/{id}/access_list/*`
+* `*/api/v2/instance_groups/{id}/access_list/*`
+* `*/api/v2/inventories/{id}/access_list/*`
+* `*/api/v2/job_templates/{id}/access_list/*`
+* `*/api/v2/organizations/{id}/access_list/*`
+* `*/api/v2/projects/{id}/access_list/*`
+* `*/api/v2/teams/{id}/access_list/*`
+* `*/api/v2/users/{id}/access_list/*`
+* `*/api/v2/workflow_job_templates/{id}/access_list/*`
+|No replacements yet.
+////
