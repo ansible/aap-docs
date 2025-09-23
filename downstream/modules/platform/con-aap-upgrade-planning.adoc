@@ -9,9 +9,8 @@ Before you begin the upgrade process, review the following considerations to pla
 
 == {PlatformNameShort} requirements
 * Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
-* Review link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade[Planning your upgrade] for a successful upgrade. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to 2.6. 
-* Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLControllerAdminGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
-* Capture your inventory or instance group details before upgrading.
+* Review link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade[Planning your upgrade] to understand the upgrade requirements and scenarios, and {LinkTopologies} for the RPM topologies and infrastructure. 
+* Ensure that you are on {PlatformNameShort} 2.4 or 2.5 before upgrading to 2.6. You can only upgrade from {PlatformNameShort} 2.4 or 2.5 to 2.6. 
 * Upgrade to the latest version of {PlatformNameShort} 2.4 or 2.5 before upgrading to {PlatformName} 2.6.
 +
 [IMPORTANT]
@@ -19,7 +18,8 @@ Before you begin the upgrade process, review the following considerations to pla
 * When upgrading from {PlatformNameShort} 2.4 to 2.6, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
 * If you upgraded from {PlatformNameShort} 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to 2.6 as that legacy authenticator functionality was removed. For information about migrating users, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/rpm_upgrade_and_migration/aap-post-upgrade#con-migrate-SAML-users_aap-post-upgrade[Migrating Single Sign-On (SSO) users] in _RPM Upgrade and Migration guide_ for 2.5. 
 ====
-
+* Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See xref:proc-backup-aap_aap-upgrading-platform[Backing up your {PlatformNameShort} instance] and {LinkOperatorBackup} for the specific topology of the environment.
+* Capture your inventory or instance group details before upgrading.
 * Review the {Gateway} requirements:
 ** {PlatformNameShort} 2.4 to 2.6 upgrades include the link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{Gateway}]. Ensure you review the 2.6 link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] for architectural changes.
 ** {GatewayStart} has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for 2.6, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
