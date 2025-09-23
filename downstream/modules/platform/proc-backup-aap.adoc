@@ -1,6 +1,6 @@
-:_mod-docs-content-type: CONCEPT
+:_mod-docs-content-type: PROCEDURE
 
-[id="con-backup-aap_{context}"]
+[id="proc-backup-aap_{context}"]
 
 = Backing up your {PlatformNameShort} instance
 
@@ -12,8 +12,8 @@ Back up an existing {PlatformNameShort} instance by running the `.setup.sh` scri
 . Run the `./setup.sh` script following the example below:
 +
 ----
-$ ./setup.sh -e ‘backup_dir=/ansible/mybackup’ -e 
-‘use_archive_compression=true’ ‘use_db_compression=true’ @credentials.yml -b
+$ ./setup.sh -e 'backup_dir=/ansible/mybackup' -e 
+'use_archive_compression=true' 'use_db_compression=true @credentials.yml -b
 ----
 Where:
 * `backup_dir`: Specifies a directory to save your backup to.
@@ -44,5 +44,6 @@ For example:
 *** `automationhub_use_db_compression=true`
 *** `automationedacontroller_use_db_compression=true`
 
+.Result
 After a successful backup, a backup file is created at `/ansible/mybackup/automation-platform-backup-<date/time>.tar.gz`.
 
