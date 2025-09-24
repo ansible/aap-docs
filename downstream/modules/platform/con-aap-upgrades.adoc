@@ -8,7 +8,7 @@ Currently, it is possible to perform {PlatformNameShort} upgrades using one of t
 
 [IMPORTANT]
 ====
-Upgrading from {EDAName} 2.4 is not supported. If you are using {EDAName} 2.4 in production, contact Red Hat before you upgrade.
+Upgrading from {EDAName} 2.4 is not supported. If you are upgrading from {PlatformNameShort} 2.4 to 2.6, you must first remove the {EDAName} 2.4 database and then upgrade your platform to 2.6. For information about the procedure, see xref:proc-removing-eda-db_aap-upgrading-platform[Removing {EDAName} 2.4 database]. 
 ====
 
 Before beginning your upgrade be sure to review the prerequisites and upgrade planning sections of this guide.
@@ -23,6 +23,8 @@ h|Supported upgrade path h| Steps to upgrade
 
 . xref:editing-inventory-file-for-updates_aap-upgrading-platform[Set up your inventory file] to match your installation environment. See {LinkTopologies} for a list of example inventory files.
 
+. xref:proc-removing-eda-db_aap-upgrading-platform[Remove {EDAName} 2.4 database]. 
+
 . xref:proc-running-setup-script-for-updates[Run the {PlatformVers} installation program] over your current {PlatformNameShort} instance.
 
 |{PlatformNameShort} 2.5 to {PlatformVers} |     
@@ -35,7 +37,7 @@ h|Supported upgrade path h| Steps to upgrade
 
 . xref:proc-running-setup-script-for-updates[Run the {PlatformVers} installation program] over your current {PlatformNameShort} instance.
 
-|xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerNameStart} and {HubName} 2.4 and {EDAName} 2.5 with unified UI upgrades] | Upgrade the 2.4 services (using inventory file to only specify {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} {PlatformVers}.
+|xref:upgrade-controller-hub-eda-unified-ui_aap-upgrading-platform[{ControllerNameStart} and {HubName} 2.4 and {EDAName} 2.6 with unified UI upgrades] | Upgrade the 2.4 services (using inventory file to only specify {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} {PlatformVers}.
 
 After all the services are at the same version, run a {PlatformVers} upgrade on all the services.
 |===
