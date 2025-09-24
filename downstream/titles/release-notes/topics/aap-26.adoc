@@ -11,7 +11,7 @@ The {AAPchatbot} is now generally available on {PlatformNameShort} {PlatformVers
 
 The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses large language models (LLMs) to generate quick, accurate, and personalized responses. These responses empower users to work more efficiently, thereby improving productivity and the overall quality of their work.
 
-To access and use the {AAPchatbot}, you need:
+To access and install {AAPchatbot}, you will need the following:
 * {PlatformNameShort} {:PlatformVers} on {OCPShort}
 * An LLM service that is hosted on either {RHELAI} or {OCPAI}
 
@@ -20,8 +20,8 @@ For more information, see link:https://docs.redhat.com/en/documentation/red_hat_
 == General availability of Ansible self-service automation portal
 
 Ansible self-service automation portal is now generally available as part of the {PlatformNameShort} subscription. The new self-service automation portal empowers platform admins to provide a streamlined “point-and-click” Ansible automation experience to a broader set of users within the organization. Users who aren’t Ansible experts now have a dedicated self-service portal from which they can launch a range of automation jobs.
-* Installation options: Deploy self-service automation portal as a separate installation on {OCP} using a Helm chart. A documented method to install self-service automation portal on {RHEL} 10 is planned for Technology Preview release.
-* Syncs existing automation content: Extend the reach and impact of your automation job templates, while maintaining full control and compliance. 
+* Installation: Deployment of self-service automation portal requires {OCP} using a Helm chart. A future deployment of self-service automation portal on {RHEL} 10 is planned for Technology Preview in a future asynchronous release of {PlatformNameShort} {PlatformVers}.
+* synchronoizes existing automation content: Extend the reach and impact of your automation job templates, while maintaining full control and compliance. 
 * Seamless Integration: Uses your existing {PlatformNameShort} configuration—same logins, same security controls, same automation logic.
 * Simplified Interface: A distinct, user-friendly web interface designed for business users, not automation experts.
 * Guided Workflows: Step-by-step forms that walk users through automation requests without technical complexity - automatically generated from your existing job templates.
@@ -30,12 +30,14 @@ Ansible self-service automation portal is now generally available as part of the
 
 == {AutomationDashboardName}
 
-{AutomationDashboardName} is a utility that can be connected to one or more {PlatformNameShort} deployments to visualize automation usage data, determine timesavings, track ROI, and drive increased visibility into automation strategy, resource allocation, and prioritization of automation projects.
-* Deployed securely, on-premise: Simplified deployment as a self-contained, on-premise utility that runs on a dedicated RHEL 9 x86 and ARM host. 
+{AutomationDashboardName}, a Technology Preview feature, is a utility you can connect to one or more {PlatformNameShort} deployments to visualize automation usage data, determine time savings, track ROI, and drive increased visibility into automation strategy, resource allocation, and prioritization of automation projects. Benefits include:
+* Installation: Deployment of {AutomationDashboardName} is via containerized installation only.
+* Secure on-premise deployment: Simplified deployment as a self-contained, on-premise utility that runs on a dedicated RHEL 9 x86 and ARM host. 
 * Easy Integration: Integrates into {PlatformNameShort} 2.4, 2.5 and {PlatformVers} instances with OAuth2 token for read-only access to pull data. 
 * Automated data sync: Once configured, the dashboard automatically syncs and visualizes data from connected {PlatformNameShort} instances. 
 * Flexible Reporting: Dashboard allows to generate and share customized PDF reports and export raw CSV data for flexible ingestion into BI tools. 
 
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_dashboard/index[Ansible Automation Dashboard]. 
 
 == Configuration as Code
 The link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[ansible.platform] collection now provides unified, platform-wide Role-Based Access Control (RBAC) management across {PlatformNameShort} components. New or enhanced modules include `Organization`, `Team`, `User`, `Role definitions`, `Role Assignments` (team/user). Additionally:
@@ -64,7 +66,7 @@ The link:https://console.redhat.com/ansible/automation-hub/repo/published/ansibl
 === Containerized installation
 Updated system requirements for containerized installation of {PlatformNameShort} include: 
 
-* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9.
+* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 10 system requirements are unchanged.
 * {PostgresVers} 16 and 17 are now supported for customer provided (external) databases. 
 +
 [NOTE]
@@ -77,8 +79,8 @@ For more information see link:https://docs.redhat.com/en/documentation/red_hat_a
 
 === Operator installation
 Updated system requirements for {OperatorPlatformNameShort} on {OCP} include:
-The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9.
-PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
+* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 10 system requirements are unchanged.
+* PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
 +
 [NOTE]
 ====
@@ -176,7 +178,7 @@ The following table outlines the supported migration paths for {PlatformNameShor
 |Source environment |Target environment
 
 |RPM-based {PlatformNameShort}
-|Container-based {PlatformNameShort} platform
+|Container-based {PlatformNameShort}
 
 |RPM-based {PlatformNameShort}
 |{OCPShort}
