@@ -1,0 +1,39 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="devspaces-create-devfile_{context}"]
+= Creating a devfile for an {AnsibleWorkspaceSing}
+
+To ensure your {AnsibleWorkspaceSing} launches with the correct {AnsibleDevSpaces} image,
+you must add a `devfile` to your git repository.
+A `devfile` is a YAML file that defines the development environment for a project in {DevSpacesFull}.
+
+.Procedure
+
+. In your Git repository for your {AnsibleWorkspaceSing}, create a new file named `devfile.yaml`.
+. Copy and paste the following sample code into the `devfile.yaml` file:
++
+----
+---
+# cspell: disable=devspaces
+schemaVersion: 2.2.2
+metadata:
+  name: ansible-devspaces-devfile
+components:
+  - name: tooling-container
+    container:
+      image: registry.redhat.io/ansible-automation-platform-tech-preview/ansible-devspaces-rhel9:latest
+      memoryRequest: 256M
+      memoryLimit: 6Gi
+      cpuRequest: 250m
+      cpuLimit: 2000m
+      args: ["tail", "-f", "/dev/null"]
+      env:
+        - name: "ANSIBLE_COLLECTIONS_PATH"
+          value: "~/.ansible/collections:/usr/share/ansible/collections"
+        - name: KUBEDOCK_ENABLED
+          value: "true"
+...
+
+----
+. Modify the image value to the name of your specific Ansible image.
+. Add the `devfile.yaml` file to your Git repository and push the changes to your source control manager (SCM).
