@@ -18,6 +18,12 @@ You must be on the latest version of 2.4 or 2.5 before you upgrade to {PlatformV
 |Upgrading from 2.5 to 2.6
 |Upgrading from 2.5 to 2.6 does not involve changes to the platform infrastructure requirements, architecture, or services. The improvements described in the 2.4 to 2.6 upgrade path are also present in the 2.5 to 2.6 upgrade path; however, the {Gateway} service is already in place in 2.5.
 
+If you upgraded from 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to 2.6 as that legacy authenticator functionality was removed.
+
+Any users that were created during the 2.4 to 2.5 upgrade that were not fully migrated will be removed from the system when upgrading to 2.6. The users that have previously merged their user records while on 2.5 will remain to function as is for 2.6.
+
+Any 2.4 Controller users that have not successfully logged into 2.5 since upgrading from 2.4, will be unable to log into platform-gateway after a 2.6 upgrade. The user will be backwards compatible for direct Automation Execution access but unable to access the full platform. Please ensure all users planning to leverage 2.6 have successfully logged into 2.5 prior to upgrading. 
+
 *Note:* Upgrades from the latest 2.5 version to 2.6 are supported with all deployment types: RPM, containerized, and {OCPShort} deployments.
 a|See the upgrade document for your deployment type:
 
@@ -25,7 +31,7 @@ a|See the upgrade document for your deployment type:
 * link:{URLUpgrade}[RPM]
 * link:{URLOperatorInstallation}/operator-upgrade_licensing-gw[{OCPShort}]
 
-.6|Upgrading from 2.4 to 2.6
+.5|Upgrading from 2.4 to 2.6
 |{PlatformNameShort} supports upgrading directly from the latest 2.4 version to 2.6. Directly upgrading to 2.6 is the recommended upgrade path from 2.4, as a number of improvements in 2.6 simplify and improve the upgrade experience.
 
 *Note:* You can upgrade directly from the latest 2.4 version to 2.6 with RPM and {OCPShort} deployments. However, upgrading {EDAName} 2.4 or from the 2.4 containerized deployment is not supported, as both features were Tech Preview in 2.4.
@@ -55,6 +61,8 @@ As part of the upgrade process:
 * Administrators in {ControllerName} 2.4 become {Gateway} administrators in 2.6.
 * Controller admins in 2.4 become {Gateway} admins in 2.6.
 
+The more organizations, teams, and users being migrated during an upgrade, the longer the upgrade takes. As an example, upgrading and migrating 4,000 users, 400 teams, and 40 organizations may take close to two hours.
+
 *Note:* Identity access management changes apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported.
 |See link:{URLPlanningUpgrade}/upgrade-data-movement[Data movement during upgrade] for more information.
 
@@ -62,10 +70,8 @@ As part of the upgrade process:
 |Some APIs are being deprecated in 2.6.
 |See link:{URLPlanningUpgrade}/upgrade-api-changes[API changes] for more information.
 
-|
-|link:{URLReleaseNotes}[What’s new around RBAC in 2.6]
-
-link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6]
+|Upgrading from 2.5 to 2.6 and upgrading from 2.4 to 2.6
+|All {PlatformNameShort} collections, which support the Configuration-as-Code (CaC) approach, now use a standard global environment variable name and module variable name across {PlatformNameShort} components. For more details, see link:{URLReleaseNotes}[What’s new around RBAC in 2.6] and link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6]
 
 |See the documentation for link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[`ansible.platform`] in {HubName} for more information.
 |====
