@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="devspaces-edit-content_{context}"]
+= Editing and debugging automation content in your {AnsibleWorkspaceSing}
+
+You can continue your work in a previously created workspace.
+Workspaces that have been inactive for a set period might be paused to free up resources.
+The duration of inactivity before timeout is configured in {DevSpacesShort} by your administrator. 
+A paused workspace automatically relaunches when you select it from the {DevSpacesShort} dashboard.
+
+Ansible lint indicates errors in your playbooks.
+
+
+.Procedure
+
+. To display your previously created workspaces, select *Workspaces* in your {DevSpacesShort} dashboard.
+. Select *Open* next to the workspace that you want to use.
+. Select the *Explorer* icon in the *Activity* bar to open the file explorer, and open the file you want to edit.
+. While you are editing, the Ansible extension provides suggestions. Select a suggestion from the dropdown list to include it in your playbook.
+. To view documentation for a keyword or a module, hover your mouse over it.
+. Open the terminal in {VSCode}: click the main menu icon in the *Activity* bar and select menu:Terminal[New Terminal].
+. Select the *Problems* tab in the terminal to view issues that `ansible-lint` has identified.
++
+In the following example, one error is selected in the *Problems* tab, and the corresponding line in the playbook is highlighted.
++
+image::devspaces-errors-playbook.png[Playbook and ansible-lint messages]
+. When you have resolved the problems in your playbook, a message is displayed in the *Problems* tab of the terminal.
