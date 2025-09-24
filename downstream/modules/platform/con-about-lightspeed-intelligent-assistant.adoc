@@ -13,68 +13,62 @@ The {AAPchatbot} interacts with users in their natural language prompts in Engli
 {AAPchatbot} requires the following configurations:
 
 * Installation of {PlatformNameShort} {PlatformVers} on {OCP}
-* Deployment of an LLM served by either a Red Hat AI platform or a third-party AI platform. To know the LLM providers that you can use, see xref:#LLMproviders[LLM providers]. 
+* Deployment of an LLM service that is hosted on either {RHELAI}, {OCPAI}, or Red Hat AI Inference Server. To know the LLM providers that you can use, see xref:#LLMproviders[LLM providers]. 
 
 [IMPORTANT]
 ====
 * Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
-* {AAPchatbot} is available as a Technology Preview feature only.
+* Ansible Lightspeed intelligent assistant integration with the Model Context Protocol (MCP) server is available as a Technology Preview release. This integration enhances the user experience by delivering relevant, dynamically sourced data results to your queries. 
 +
-Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+MCP is an open protocol that standardizes how applications provide context to LLMs. Using the protocol, an MCP server provides a standardized way for an LLM to increase context by requesting and receiving real-time information from external resources. The integration with an MCP server enables the {AAPchatbot} to offer an enhanced user experience by delivering relevant, dynamically sourced data results to your queries. You can configure a MCP server while xref:proc-create-chatbot-config-secret_{context}[creating a chatbot configuration secret].
 +
-For more information about the support scope of Red Hat Technology Preview features, see  link:https://access.redhat.com/support/offerings/techpreview[Technology Preview Features Support Scope].
+Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
 ====
 
-= {PlatformNameShort} {PlatformVers} requirements
+== {PlatformNameShort} requirements
 
 * You have installed {PlatformNameShort} {PlatformVers} on your {OCPShort} environment. 
 * You have administrator privileges for the {PlatformNameShort}.
 * You have provisioned an OpenShift cluster with Operator Lifecycle Management installed.
 
 [#LLMproviders]
-= Large Language Model (LLM) provider requirements
+== Large Language Model (LLM) provider requirements
 
 You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. 
 
 An LLM is a type of machine learning model that can interpret and generate human-like language. When an LLM is used with the {AAPchatbot}, the LLM can interpret questions accurately and provide helpful answers in a conversational manner.
 
-As part of the Technology Preview release, {AAPchatbot} can rely on the following Software as a Service (SaaS) LLM providers:
+{AAPchatbot} can rely on the following LLM providers:
 
 *Red Hat LLM providers*
 
-* {RHELAI}
+* *{RHELAI}*
 +
-{RHELAI} is OpenAI API-compatible and is configured in a similar manner to the OpenAI provider. You can configure {RHELAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/enterprise-linux-ai[{RHELAI}] product page.
-
-* {OCPAI}
+You can configure {RHELAI} as the LLM provider. As the {RHEL} is in a different environment than the Ansible Lightspeed deployment, the model deployment must allow access using a secure connection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_ai/1.5#creating_secure_endpoint[Optional: Allowing access to a model from a secure endpoint]. 
 +
-{OCPAI} is OpenAI API-compatible and is configured in a similar manner to the {OpenAI} provider. You can configure {OCPAI} as the LLM provider. For more information, see the link:https://www.redhat.com/en/products/ai/openshift-ai[{OCPAI}] product page.
+{AAPchatbot} supports vLLM Server. When self-hosting an LLM with {RHELAI}, you can use vLLM Server as the inference engine.
 
+* *{OCPAI}*
++
+You must deploy an LLM on the {OCPAI} single-model serving platform that uses the Virtual Large Language Model (vLLM) runtime. If the model deployment resides in a different OpenShift environment than the Ansible Lightspeed deployment, include a route to expose the model deployment outside the cluster. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.23#about-the-single-model-serving-platform_serving-large-models[About the single-model serving platform].
++
+{AAPchatbot} supports vLLM Server. When self-hosting an LLM with {OCPAI}, you can use vLLM Server as the inference engine.
++
 [NOTE]
 ====
 For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider. 
 ====
 
-*Third-party LLM providers*
-
-* {IBMwatsonxai}
+* *Red Hat AI Inference Server*
 +
-To use IBM watsonx with the {AAPchatbot}, you need an account with link:https://www.ibm.com/products/watsonx-ai[{IBMwatsonxai}].
-
-* {OpenAI}
+You can deploy an LLM using Red Hat AI Inference Server as your inference runtime. Red Hat AI Inference Server supports vLLM runtimes for efficient model serving and can be configured to work with Ansible Lightspeed intelligent assistant. For more information, see link:http://docs.redhat.com/en/documentation/red_hat_ai_inference_server/3.2/html/getting_started/rhaiis-getting-started-overview_getting-started[Red Hat AI Inference Server documentation].
 +
-To use {OpenAI} with the {AAPchatbot}, you need access the link:https://openai.com/api/[{OpenAI} API platform].
-
-* {AzureOpenAI}
+If the Red Hat AI Inference Server deployment is in a different environment than the Ansible Lightspeed deployment, ensure the model deployment allows access using a secure connection and configure appropriate network routing. 
 +
-To use Microsoft Azure with the {AAPchatbot}, you need access to link:https://azure.microsoft.com/en-us/products/ai-services/openai-service[{AzureOpenAI}]. 
-+
-[NOTE]
-====
-Many self-hosted or self-managed model servers claim API compatibility with {OpenAI}. It is possible to configure the {AAPchatbot} {OpenAI} provider to point to an API-compatible model server. If the model server is truly API-compatible, especially with respect to authentication, then it might work. These configurations have not been tested by Red Hat, and issues related to their use are outside the scope of Technology Preview support.
-====
+{AAPchatbot} supports vLLM Server when self-hosting an LLM with Red Hat AI Inference Server as the inference engine.
 
-= Process for configuring and using the {AAPchatbot}
+
+== Process for configuring and using the {AAPchatbot}
 Perform the following tasks to set up and use the {AAPchatbot} in your {PlatformNameShort} instance on the {OCPShort} environment:
 
 [%header,cols="35%,65%"]
@@ -87,10 +81,9 @@ a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for 
 
 Perform the following tasks:
 
-. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/installing_on_openshift_container_platform/index#proc-install-operator-chatbot[Install and configure the {PlatformNameShort} operator].
-. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/installing_on_openshift_container_platform/index#proc-create-chatbot-config-secret[Create a chatbot configuration secret]. 
-. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/installing_on_openshift_container_platform/index#proc-update-aap-operator-chatbot[Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret]. 
+. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#proc-create-chatbot-config-secret[Create a chatbot configuration secret]. 
+. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#proc-update-aap-operator-chatbot[Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret]. 
 
 | Access and use the {AAPchatbot}
-| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. For more details, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/installing_on_openshift_container_platform/index#con-using-chatbot[Using the {AAPchatbot}].
+| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. For more details, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#con-using-chatbot[Using the {AAPchatbot}].
 |====
