@@ -1,0 +1,42 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="updating-ee-image-locations-containerized"]
+
+= Updating {ExecEnvShort} image locations for container-based installations
+
+[role="_abstract"]
+If you installed {PrivateHubName} separately from containerized {PlatformNameShort}, you can update your {ExecEnvShort} image locations to point to your {PrivateHubName}.
+
+.Procedure
+
+. Go to the installation directory.
+. Edit your inventory file and include the following variables under the `[all:vars]` section:
++
+----
+# Automation hub registry
+registry_username=your-automation-hub-user
+registry_password=your-automation-hub-password
+registry_url=automationhub.example.org
+registry_tls_verify=false
+
+# Execution environment images
+ee_minimal_image=automationhub.example.org/ee-minimal-rhel9:latest
+ee_supported_image=automationhub.example.org/ee-supported-rhel9:latest
+----
++
+[NOTE]
+====
+For information on obtaining `registry_username` and `registry_password`, see link:{URLContainerizedInstall}/aap-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+====
+
+. Run the `install` playbook:
++
+----
+ansible-playbook -i inventory ansible.containerized_installer.install
+----
+
+.Verification
+
+. Log in to {PlatformNameShort} as a user with system administrator access.
+. Go to {MenuInfrastructureExecEnvironments}.
+. In the *Image* column, confirm that the {ExecEnvShort} image location has changed from the default value of `<registry url>/ansible-automation-platform-<version>/<image name>:<tag>` to `<automation hub url>/<image name>:<tag>`.
