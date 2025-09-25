@@ -1,0 +1,104 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-controller-scm-ssh-proxy-config"]
+
+= Configuring SCM Project Sync Using SSH To Work With a Proxy in {ControllerName}
+
+The follwing procedure describes how to use {ControllerName} Project Sync using the SSH protocol to work with a proxy server.
+
+.Procedure
+. Perform the following steps on the Ansible Controller nodes.
+If ansible-builder has not been installed yet, install it first.
++
+----
+# subscription-manager repos --enable ansible-automation-platform-{PlatformVers}-for-rhel-8-x86_64-rpms
+# dnf install ansible-builder
+----
+. Build a custom execution environment.
+
+.. First, create a work directory:
++
+----
+# su - awx
+$ mkdir -p builder/newee
+$ cd builder/newee
+----
+
+. Create an `execution-environment.yml` file with the following content:
++
+---
+version: 1
+
+
+build_arg_defaults:
+  EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8:latest'
+
+additional_build_steps:
+  prepend:
+    - RUN microdnf install -y nc
+----
+
+. Log in to registry.redhat.io.
++
+'$ podman login registry.redhat.io'
+
+. Run ansible-builder to start the building process.
++
+----
+$ cd /var/lib/awx/builder/newee/
+$ ansible-builder build -t my-env -v 3
+----
+. Add the custom {ExecEnvShort} you created.
+. On the navigation panel, select {MenuInfrastructureExecEnvironments}
+. Click btn:[Create {ExecEnvShort}].
+. In the *Image* field add localhost/my-env:latest.
+. Click btn:[Create {ExecEnvShort}].
+
+. Re-run the {PlatformNameshort} {Installer} with the following steps to replace the execution environment from the default to the customized environment which will be used as a Project syncs
++
+[NOTE]
+====
+Backup {PlatformNameShort} before running the {Installer}.
+====
++
+`# ./setup.sh -b`
+
+. Create an `[automationcontroller]`` file under the `group_vars` directory in the same location as the `setup.sh` file. The file contents are as follows:
++
+group_vars/automationcontroller
++
+`control_plane_execution_environment: localhost/my-env`
+
+. Run setup.sh
++
+`# ./setup.sh`
+
+. Create `ssh_config` under the directory. For example:
++
+----
+Host github.com
+Hostname ssh.github.com
+ProxyCommand nc --proxy-type http --proxy proxy.example.com:port %h %p
+User git
+----
+
+. Add the `ssh_config` file’s directory path in PATH$ to expose to isolated jobs so that the  container {ExecEnvShort} can read `ssh_config file`.
+
+. In the navigation panel, select {MenuSetJob}.
+. Click btn:[Edit].
+. If the `ssh_config` file has been created as `/var/lib/awx/.ssh/ssh_config`, add this to *Paths to expose to isolated jobs*
++
+[Note]
+====
+Ensure `ssh_config` is owned by awx user. (`#chown awx:awx /var/lib/awx/.ssh/ssh_config`)
+====
++
+----
+[
+"/var/lib/awx/.ssh:/etc/ssh:O"
+]
+----
+
+.Additional information
+
+link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/assembly-controller-execution-environments#ref-controller-build-exec-envs[Build an {ExecEnvShort}]
