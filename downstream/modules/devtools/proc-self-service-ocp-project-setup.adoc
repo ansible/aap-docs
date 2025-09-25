@@ -5,13 +5,23 @@
 [id="self-service-ocp-project-setup_{context}"]
 = Setting up an {OCPShort} project using `oc`
 
+You can run commands from your terminal to add a project to your cluster.
+
+.Prerequisites
+
+* You have the login details for your Openshift cluster.
+* You have installed the `oc` CLI tool.
+This is a command-line tool for interacting with and managing an OpenShift cluster from a terminal.
+
+.Procedure
+
 . In a terminal, log in to {OCPShort} using your credentials:
 +
 ----
 oc login <OpenShift_API_URL> -u <username>
 ----
 +
-For example:
+The following example shows the output for a successful login:
 +
 ----
 $ oc login https://api.<my_cluster>.com:6443 -u kubeadmin
@@ -30,12 +40,12 @@ Using project "default".
 . Create a new project. Use a unique project name.
 +
 ----
-$ oc new-project <self-service-tech-preview-project-name>
+$ oc new-project <self-service-project-name>
 ----
 +
-Lowercase alphanumeric characters (`a-z`, `0-9`) and the hyphen character (`-`) are permitted for project names.
-The underscore (`_`) character is not permitted.
-The maximum length for project names is 63 characters.
+** Lowercase alphanumeric characters (`a-z`, `0-9`) and the hyphen character (`-`) are permitted for project names.
+** The underscore (`_`) character is not permitted.
+** The maximum length for project names is 63 characters.
 +
 Example:
 +
@@ -47,6 +57,6 @@ Now using project "my-project" on server "https://openshift.example.com:6443".
 . Open your new project:
 +
 ----
-$ oc project <self-service-tech-preview-project-name>
+$ oc project <self-service-project-name>
 ----
 

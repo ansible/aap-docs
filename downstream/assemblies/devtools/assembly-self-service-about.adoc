@@ -16,17 +16,42 @@ endif::[]
 
 :context: self-service-about
 
-{SelfService} connects with {PlatformName} using an OAuth application for authentication.
-For the {SelfServiceShort} release, the following restrictions apply:
+{SelfServiceShortStart} makes enterprise automation accessible to users of varying roles and skill levels through a simplified web interface designed for business users, not automation experts.
+
+Instead of requiring users to understand Ansible playbooks or complex automation workflows,
+{SelfServiceShort}  provides a streamlined "point-and-click" experience. 
+
+{SelfServiceShortStart} uses your existing {PlatformNameShort} setup:
+it uses the same logins, same security controls, and the same automation logic.
+
+Job templates in {PlatformNameShort} are synced to {SelfServiceShort},
+where they appear as auto-generated self-service templates.
+Users can launch the auto-generated  self-service templates in {SelfServiceShort} to run the corresponding job templates in {PlatformNameShort}.
+
+When launching a job, users follow step-by-step guided forms in {SelfServiceShort}.
+These forms are identical to the forms for the equivalent job templates in {PlatformNameShort}.
+
+You can also import custom self-service templates in {SelfServiceShort}.
+These templates are pulled from a git repository, and their configuration file associates them with a job template in {PlatformNameShort}.
+The configuration file contains the forms for the template.
+
+You can associate more than one custom self-service template with one {PlatformNameShort} job template.
+You set the RBAC for the custom self-service templates in {SelfServiceShort}.
+Therefore you can set up different types of forms for users with different levels of automation experience.
+
+For example, for a job template that configures network settings,
+you could associate  a custom template with minimum scope for adjusting settings to a group with less automation experience,
+and use a more detailed custom template with deeper scope for configuration for automation experts.
+
+{SelfServiceShortStart} connects with {PlatformName} using an OAuth application for authentication.
+
+The following restrictions apply:
 
 * You can only use one {PlatformNameShort} instance.
 * You can only use one {PlatformNameShort} organization.
 
+include::devtools/ref-self-service-supported-platforms.adoc[leveloffset=+1]
+
 ifdef::parent-context-of-self-service-about[:context: {parent-context-of-self-service-about}]
 ifndef::parent-context-of-self-service-about[:!context:]
-
-== Supported platforms
-
-{SelfServiceShortStart} supports installation using a Helm chart on {OCPShort}, and {PlatformNameShort} version 2.5.
-
 
