@@ -2,12 +2,12 @@
 
 [id="proc-controller-scm-ssh-proxy-config"]
 
-= Configuring SCM Project Sync Using SSH To Work With a Proxy in {ControllerName}
+= Configuring SCM project sync using SSH to work with a proxy in {ControllerName}
 
-The follwing procedure describes how to use {ControllerName} Project Sync using the SSH protocol to work with a proxy server.
+The following procedure for RPM-based {PlatformNameShort} describes how to use {ControllerName} Project Sync using the SSH protocol to work with a proxy server.
 
 .Procedure
-. Perform the following steps on the Ansible Controller nodes.
+. Perform the following steps on the {ControllerName} nodes.
 If ansible-builder has not been installed yet, install it first.
 +
 ----
@@ -49,9 +49,9 @@ $ cd /var/lib/awx/builder/newee/
 $ ansible-builder build -t my-env -v 3
 ----
 . Add the custom {ExecEnvShort} you created.
-. On the navigation panel, select {MenuInfrastructureExecEnvironments}
+. On the navigation panel, select {MenuInfrastructureExecEnvironments}.
 . Click btn:[Create {ExecEnvShort}].
-. In the *Image* field add localhost/my-env:latest.
+. In the *Image* field add `localhost/my-env:latest`.
 . Click btn:[Create {ExecEnvShort}].
 
 . Re-run the {PlatformNameshort} {Installer} with the following steps to replace the execution environment from the default to the customized environment which will be used as a Project syncs
@@ -82,7 +82,7 @@ ProxyCommand nc --proxy-type http --proxy proxy.example.com:port %h %p
 User git
 ----
 
-. Add the `ssh_config` file’s directory path in PATH$ to expose to isolated jobs so that the  container {ExecEnvShort} can read `ssh_config file`.
+. Add the `ssh_config` file’s directory path in PATH to expose the isolated jobs so that the  container {ExecEnvShort} can read `ssh_config` file.
 
 . In the navigation panel, select {MenuSetJob}.
 . Click btn:[Edit].
