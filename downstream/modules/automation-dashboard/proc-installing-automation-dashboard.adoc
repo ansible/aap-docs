@@ -19,9 +19,9 @@ Do not attempt to install {AutomationDashboardName} on the same host(s) as {Plat
 ** Disk IOPS - 3000
 ** Handle up to 10,000 jobs/month and 47M summaries/month
 * Access to _baseos_ and _{PlatformNameShort}stream_ repo packages for the RHEL 9 host.
-* A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the $HOMEDIR of the user account.
+* A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the `$HOMEDIR` of the user account.
 * URL details for access to your {PlatformNameShort} instances.
-* An {PlatformNameShort} 0Auth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
+* An {PlatformNameShort} OAuth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
 * Access to download the installation bundle providing installation components for the {AutomationDashboardName}.
 * Open firewall access to allow for bi-directional communication between AAP instances and the {AutomationDashboardName}. 
 ** This includes HTTPS/443 (or your {PlatformNameShort} configured port) from the dashboard to the Ansible Automation Platform instance(s).
@@ -31,13 +31,13 @@ Do not attempt to install {AutomationDashboardName} on the same host(s) as {Plat
 
 .Procedure
 
-. Access the link: https://drive.google.com/drive/folders/1_neE8fWZ78oSsnSwoL6kfgbIIURsed1V[*.tar.gz*] installation source.
+. Download the latest installer tarball from access.redhat.com.  Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
 . Copy the installation source file to your RHEL 9 host.
-. Untar the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory, /home/<username>.
+. Untar the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory: `/home/<username>`.
 +
 [source,bash]
 ----
-tar -xzvf ansible-automation-dashboard-containerized-setup-bundle.tar.gz
+tar -xzvf ansible-automation-dashboard-containerized-setup-bundle-0.1-x86_64.tar.gz
 cd ansible-automation-dashboard-containerized-setup/
 ----
 
@@ -50,15 +50,15 @@ sudo dnf install ansible-core
 ansible-galaxy collection install -r requirements.yml
 ----
 
-. Create an application `client_id/client_secret` in your AAP instance:
+. Create an application `client_id/client_secret` in your {PlatformNameShort} instance:
 .. Create an OAuth2 application using the following steps : 
 ... *For Ansible 2.4*:
 +
-* Navigate  to https://AAP_GATEWAY_FQDN:/#/applications 
+* Navigate  to https://AAP_GATEWAY_FQDN/#/applications 
 +
 ... *For Ansible 2.5 and 2.6*:
 +
-* Navigate to https://AAP_Controller_FQDN:/access/applications 
+* Navigate to https://AAP_Controller_FQDN/access/applications 
 +
 ... Add the following information:
 +
@@ -72,14 +72,13 @@ ansible-galaxy collection install -r requirements.yml
 The values for *Name*, *Organization*, and HTTPS port number for {PlatformNameShort} are configurable. The examples provided in this document assume use of port 443. 
 +
 .. Save the `client_id` and `client_secret information` inputs into  the inventory file.
-.. Next, create an {PlatformNameShort} access token: 
+.. Create an {PlatformNameShort} access token: 
 ... Navigate to https://AAP_GATEWAY_FQDN/#/users/<id>/tokens, and create a token using the following information:
 +
-. OAuth application: automation-dashboard-sso
-. Scope: read
-. Store this access token value. The access token is used in `clusters.yaml`.
+* OAuth application: automation-dashboard-sso
+* Scope: read
+... Store this access token value. The access token is used in `clusters.yaml`.
 +
-
 . Copy the example inventory and modify it before running the installer.
 +
 [source,bash]
