@@ -1,0 +1,30 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-removing-eda-db_{context}"]
+
+= Removing {EDAName} 2.4 database
+
+{PlatformNameShort} 2.6 supports upgrades from {PlatformNameShort} 2.4 environments for all components, except for {EDAName}. Database migrations between {EDAName} 2.4 and {EDAName} 2.6 are not compatible.
+
+If you are upgrading from {PlatformNameShort} 2.4 to 2.6, you must first remove the {EDAName} 2.4 database. A new {EDAName} 2.6 database gets created automatically after the upgrade. After the upgrade is completed, a new {EDAName} 2.6 database is created. You can then reconnect {MenuAD} ({EDAcontroller}) to {MenuTopAE} ({ControllerName}) to run rulebook activations. 
+
+[NOTE]
+====
+When upgrading from {PlatformNameShort} 2.5 to 2.6, the Event-driven Ansible component will be updated automatically. You are not required to delete the existing Event-Driven Ansible 2.5 database before upgrading your platform to 2.6. 
+====
+
+.Procedure
+. Shut down the old {EDAName} 2.4 host.
+. Log in to your database host with a user that has superuser privileges.
++
+`# psql -h <hostname> -U <username>`
+. When prompted, enter your password.
+. Delete the existing {EDAName} 2.4 database by using the following command:
++
+`DROP DATABASE automationedacontroller`
+
+. When prompted, reenter your password. 
+
+.Next steps
+. xref:proc-running-setup-script-for-updates[Run the {PlatformNameShort} installer setup script].
+. After the upgrade is completed, reconnect {MenuAD} ({EDAcontroller}) to {MenuTopAE} ({ControllerName}) to run rulebook activations successfully. 
