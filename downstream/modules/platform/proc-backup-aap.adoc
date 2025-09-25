@@ -4,7 +4,7 @@
 
 = Backing up your {PlatformNameShort} instance
 
-Back up an existing {PlatformNameShort} instance by running the `.setup.sh` script with the `backup_dir` flag, which saves the content and configuration of your current environment. Use the compression flags `use_archive_compression` and `use_db_compression` to compress the backup artifacts before they are sent to the host running the backup operation. 
+Back up an existing {PlatformNameShort} instance by running the `.setup.sh` script with the `backup_dest` flag, which saves the content and configuration of your current environment. Use the compression flags `use_archive_compression` and `use_db_compression` to compress the backup artifacts before they are sent to the host running the backup operation. 
 
 .Procedure
 
@@ -12,11 +12,11 @@ Back up an existing {PlatformNameShort} instance by running the `.setup.sh` scri
 . Run the `./setup.sh` script following the example below:
 +
 ----
-$ ./setup.sh -e 'backup_dir=/ansible/mybackup' -e 
+$ ./setup.sh -e 'backup_dest=/ansible/mybackup' -e 
 'use_archive_compression=true' 'use_db_compression=true @credentials.yml -b
 ----
 Where:
-* `backup_dir`: Specifies a directory to save your backup to.
+* `backup_dest`: Specifies a directory to save your backup to.
 
 * `use_archive_compression=true` and `use_db_compression=true`: Compresses the backup artifacts before they are sent to the host running the backup operation.
 +
