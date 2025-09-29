@@ -3,11 +3,17 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-set-up-rbac_{context}"]
-= Setting up RBAC
+= Setting up RBAC for custom self-service templates
 
 RBAC is set up in the Helm chart with the `admin` user set as the RBAC administrator (`rbac_admin`). 
 
-This procedure describes how to create a role in {SelfServiceShort} that allows only a selected team to view and execute particular templates.
+This procedure describes how to create a role in {SelfServiceShort} that allows only a selected team to view and execute particular custom self-service templates.
+
+Custom self-service templates in {SelfServiceShort} are associated with job templates in {PlatformNameShort}.
+This association is set in the `steps.actions` section of the YAML file for the custom self-service template. 
+
+If you assign permissions to a particular team to launch a custom self-service template from {SelfServiceShort},
+then you must make sure that that team has permission to run the associated job templates in {PlatformNameShort}.
 
 .Prerequisites
 * As the admin user in  your {PlatformNameShort} instance, you have created a user, for example `example-user`.
@@ -22,7 +28,7 @@ link:{URLCentralAuth}/gw-managing-access#proc-gw-team-add-user[Adding users to a
 in the _{TitleCentralAuth}_ guide. 
 
 .Procedure
-. In a browser, log in to your {SelfServiceShort} instance as the {PlatformNameShort} `admin` user.
+. In a browser, log in to your {SelfServiceShort} instance as an {PlatformNameShort} user with `admin` privileges.
 . In the navigation panel, select menu:Administration[RBAC].
 . In the *RBAC* view, click *Create*.
 +

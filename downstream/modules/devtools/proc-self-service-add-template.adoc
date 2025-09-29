@@ -3,24 +3,43 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-add-template_{context}"]
-= Adding a template
+= Adding a template to {SelfServiceShort}
 
-This procedure describes how to add a tile to the *Templates* view of your {SelfServiceShort} instance.
+You can add a tile for a custom self-service template to the *Templates* view of your {SelfServiceShort} instance.
+The custom self-service template is defined in a git repository. 
 
-.Prerequisite
-You have created repositories in your SCM for the templates that you want to use.
+[NOTE]
+====
+Names for custom self-service templates must be unique. 
+Custom self-service templates must have a different name to auto-generated job templates and also to other custom self-service templates.
+====
+
+
+.Prerequisites
+
+* You have created repositories in your Git SCM for the templates that you want to use.
+* In the git repository for your custom templates, ensure that the `metadata.name` field is unique and does not match an existing auto-generated template or another custom self-service template.
+For example, append `*-custom` to the value of the `metadata.name` key.
+----
+metadata:
+  name: provision-database-custom
+----
+* You must be logged in to {SelfServiceShort} as an {PlatformNameShort} platform administrator.
 
 .Procedure
 . In a browser, navigate to your {SelfServiceShort} instance and sign in with your {PlatformNameShort} credentials.
 . Navigate to the *Templates* Page.
-. Click *Add template*.
-. Enter a valid Github URL for the template that you want to add.
-. Click *Analyze* to fetch the template.
+. Click btn:[Add template].
+. Enter a valid Git SCM URL for the template that you want to add.
+. Click btn:[Analyze] to fetch the template.
 . After the template has been fetched, review the list of what will be imported and added to the catalog.
-. Click *Import*.
+. Click btn:[Import].
 
 .Verification
 After the import is complete, return to the *Templates* page to view the newly created template.
 You can now launch your template.
 // A populated *Templates* page resembles the following:
 
+[role="_additional-resources"]
+.Next steps
+* You must configure RBAC for your imported custom templates, bearing in mind that a user who wants to launch a template that is associated with a job template in {PlatformNameShort} must have access to that job template.
