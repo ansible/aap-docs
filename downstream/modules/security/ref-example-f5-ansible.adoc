@@ -1,0 +1,21 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-example-f5-ansible"]
+
+= Example using F5 and {EDAName}
+
+Example code using F5 and {EDAName} is available on GitHub. 
+This code notes each instance of the watcher finding a match in its filter and then copies the source IP from that code into a CSV list. 
+The list is then sent as a variable within the webhook along with the message to execute the code.
+
+This high level workflow is described in the following diagram and code workflow example:
++
+image:f5-and-ansible.png[F5 and Ansible workflow]
+
+The workflow steps are:
+
+. The F5 BIG-IP pushes the monitoring logs to Elastic.
+. Elastic takes that data and stores it while using a watcher with its filters and criteria.
+. The Watcher detects an event that matches its criteria and sends the webhook with payload to {EDAName}.
+. {EDAName}'s rulebook triggers from the event which triggers a job template within {PlatformNameShort}, that sends the payload provided by Elastic.  
+. {PlatformNameShort}’s template executes a playbook to secure the F5 BIG-IP using the payload provided by {EDAName} (originally provided by Elastic).
