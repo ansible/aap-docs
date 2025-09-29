@@ -16,21 +16,28 @@ endif::[]
 
 :context: self-service-using-overview
 
-To populate {SelfServiceShort} with templates,
-you must create repositories in GitHub or Gitlab for collections that define the templates.
+You can launch templates from {SelfServiceShort} to execute job templates from your existing {PlatformNameShort} setup. 
 
-Currently, Red Hat provides validated content with examples to automate jobs for RHEL, Network, Windows, and Cloud using {SelfServiceShort}.
+* Auto-generated self-service templates are automatically synced from the job templates in {PlatformNameShort} to the {SelfServiceShort}. The forms for the auto-generated templates are identical to the forms for the job templates.
+* You can import custom self-service templates from a Git repository. A configuration file links each custom template to a specific job template in {PlatformNameShort} and contains the forms that users must complete.
 
-[NOTE]
-====
-The validated content examples provided have their own support statement and lifecycle definitions.
-Refer to the link:https://access.redhat.com/support/policy/updates/ansible-automation-platform#validated[Red Hat Ansible Automation Platform Life Cycle].
-====
+You can associate multiple custom self-service templates with a single {PlatformNameShort} job template.
+You can use role-based access control (RBAC) to assign different custom self-service templates for users with different levels of automation experience.
+For example, you can design a simplified template with a narrow scope for configuration for new users, and a more detailed template for automation experts.
 
-These collections are hosted in {HubName}.
-Your administrator must add the collections to {PrivateHubName} so that you can download them and create the repositories.
 
-You can then import templates into your {SelfServiceShort}, and launch them to run automation jobs.
+// Currently, Red Hat provides validated content with examples to automate jobs for RHEL, Network, Windows, and Cloud using {SelfServiceShort}.
+// 
+// [NOTE]
+// ====
+// The validated content examples provided have their own support statement and lifecycle definitions.
+// Refer to the link:https://access.redhat.com/support/policy/updates/ansible-automation-platform#validated[Red Hat Ansible Automation Platform Life Cycle].
+// ====
+// 
+// These collections are hosted in {HubName}.
+// Your administrator must add the collections to {PrivateHubName} so that you can download them and create the repositories.
+// 
+// You can then import templates into your {SelfServiceShort}, and launch them to run automation jobs.
 
 ifdef::parent-context-of-self-service-using-overview-adoc[:context: {parent-context-of-self-service-using-overview-adoc}]
 ifndef::parent-context-of-self-service-using-overview-adoc[:!context:]
