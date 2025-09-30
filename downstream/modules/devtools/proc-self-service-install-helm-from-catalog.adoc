@@ -4,7 +4,7 @@
 = Configuring the {SelfServiceShort} Helm chart from the OpenShift catalog
 
 .Prerequisites
-. You have created a project for {SelfServiceShort} in OpenShift.
+. You have created a project for {SelfServiceShort} in {OCPShort}.
 . You have created a plugin registry in your project.
 . You have set up secrets for {PlatformNameShort} authentication and SCM authentication.
 
@@ -12,10 +12,10 @@
 . In a browser, navigate to your OpenShift project for {SelfServiceShort} that you created earlier.
 . Select the *Developer* view.
 . Click the *Helm* option in the OpenShift sidebar.  
-. In the *Helm* page, click *Create* and select *Helm Release*. 
-. Search for `AAP` in the Helm Charts filter,
-and select the `AAP Technical Preview: Self-service automation` chart. 
-. In the modal dialog on the chart page, click *Create*.
+. In the *Helm* page, click btn:[Create] and select *Helm Release*. 
+. Search for `Portal` in the Helm Charts filter,
+and select the `Automation Portal` chart. 
+. In the modal dialog on the chart page, click btn:[Create].
 . Select the *YAML view* in the *Create Helm Release* page.
 . Locate the `clusterRouterBase` key in the YAML file and replace the placeholder value with the base URL of your OpenShift instance.
 +
@@ -31,5 +31,14 @@ for example `apps.example.com`:
 +
 To update the Helm chart to use a different organization,
 update the value for the `catalog.providers.rhaap.orgs` key from `Default` to your {PlatformNameShort} organization name. 
-. Click *Create* to launch the deployment.
++
+----
+  catalog:
+    providers:
+      rhaap:
+        production:
+        # Replace 'Default' with the name of the organization you created
+          orgs: '<your-org-name>'
+----
+. Click btn:[Create] to launch the deployment.
 

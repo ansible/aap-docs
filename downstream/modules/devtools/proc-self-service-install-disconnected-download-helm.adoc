@@ -1,0 +1,41 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-download-helm_{context}"]
+= Downloading the helm chart package
+
+. Add the OpenShift Helm charts repository:
++
+----
+$ helm repo add openshift-helm-charts https://charts.openshift.io/
+----
+. Update your Helm repositories to fetch the latest chart information:
++
+----
+$ helm repo update
+---- 
+. Pull the chart:
++
+----
+$ helm pull openshift-helm-charts/redhat-rhaap-self-service-preview --version x.y.z
+----
++
+This command downloads the chart as a `.tgz` file, for example redhat-rhaap-self-service-preview-1.0.1.tgz.
+. Unpack the chart:
++
+----
+$ tar -xvf redhat-rhaap-self-service-preview-x.y.z.tgz
+----
++
+This creates a directory with a name similar to `redhat-rhaap-self-service-preview-1.0.1/`.
+. Navigate to the unpacked chart directory (for example, `cd redhat-rhaap-self-service-preview-1.0.1`) and open the `values.yaml` file in a text editor.
+. Find all the `image:` entries in `values.yaml` and replace the original image references with the full path to the image in your disconnected registry.
++
+For example, replace `image: registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z` with  `image: <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z`
+. Repack the modified chart:
++
+----
+$ helm package redhat-rhaap-self-service-preview-x.y.z
+----
++
+This creates a new `.tgz` file with your changes (for example, `redhat-rhaap-self-service-preview-1.0.1.tgz`).
+
