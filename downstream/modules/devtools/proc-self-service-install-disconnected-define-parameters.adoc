@@ -1,0 +1,35 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-define-parameters_{context}"]
+= Defining Parameters and Navigate to Chart Location
+
+. On the machine within your disconnected environment, navigate to the directory where you placed the transferred Helm chart `.tgz` file.
++
+----
+cd /path/to/your/transferred/charts/
+----
++
+Example:
++
+----
+cd /opt/disconnected-assets/charts/
+----
+. If the namespace doesn't exist, create it:
++
+----
+oc new-project ${MY_NAMESPACE}
+----
+. Define your namespace and cluster router base as environment variables for easier use:
++
+----
+export MY_NAMESPACE="<your_namespace_name>"
+export MY_CLUSTER_ROUTER_BASE="<your_cluster_router_base>"
+----
++
+Example: 
++
+----
+export MY_NAMESPACE="rhdh-dev"
+export MY_CLUSTER_ROUTER_BASE="apps.yourcluster.example.com"
+----
+

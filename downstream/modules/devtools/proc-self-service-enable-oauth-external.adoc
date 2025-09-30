@@ -1,0 +1,29 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2025-05-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-enable-oauth-external_{context}"]
+= Enabling Oauth token creation for external users
+
+{SelfServiceShortStart} uses {PlatformNameShort} or authentication and as an OAuth provider.
+
+You must enable OAuth token creation in {PlatformNameShort} so that users can authenticate with the platform from {SelfServiceShort}.
+
+Note:
+Users who do not have permission to log in to {PlatformNameShort} cannot log in to Self-service portal, because {PlatformNameShort} provides the OAuth tokens. 
+Therefore, a user who is removed from an external IdP (for example LDAP, SAML, Azure) can no longer log into {PlatformNameShort} or {SelfServiceShort}. This prevents potential external token issues.
+For more information, refer to the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/access_management_and_authentication/gw-token-based-authentication#gw-manage-oauth2-external-users[Manage OAuth2 token creation for external users] section of {LinkCentralAuth}.                                                                                                                                                                                
+
+.Procedure
+
+. In a browser, log in to your {PlatformNameShort} instance as a user with admin privileges.
+. In the navigation pane, select {MenuSetGateway}.
+. Locate the *Allow external users to create OAuth2 tokens* setting. 
+. Enable *Allow external users to create OAuth2 tokens* if it is not already enabled:
+.. Click btn:[Edit platform gateway settings].
+.. Set *Allow external users to create OAuth2 tokens* to *Enabled*.
++
+image::self-service-enable-external-oauth.png[Allow external users to create OAuth2 tokens setting]
+.. Click btn:[Save platform gateway settings] to save your updates and return to the *Platform gateway settings* page.
+. In the *Platform gateway settings* page, verify that the *Allow external users to create OAuth2 tokens* setting is enabled.
+
