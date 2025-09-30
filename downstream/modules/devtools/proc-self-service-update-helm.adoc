@@ -1,0 +1,64 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-update-helm_{context}"]
+= Updating the {SelfServiceShort} version numbers for a Helm installation
+
+After you have updated your plug-in registry for your {SelfServiceShort} project on your {OCPShort} instance,
+you must update the Helm chart with the new versions of your plug-ins files.
+
+.Procedure
+
+. In a browser, log in to your {OCPShort} console.
+. Select your OpenShift project for {SelfServiceShort}.
+. Select *Helm* and select your Helm chart for {SelfServiceShort} from the list.
+. Select menu:Actions[Upgrade].
+. In the *Upgrade Helm Release* pane, select *YAML view*.
+. Modify the YAML code to update the versions of the `.tgz` and `.integrity` files to match the versions in the plug-in registry:
++
+----
+...
+global:
+...
+    plugins:
+      - disabled: false
+        integrity: <SHA512 value>
+        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        integrity: <SHA512 value>
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+      - disabled: false
+        integrity: <SHA512 value>
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-backstage-rhaap-backend: null
+
+----
+. Click btn:[Upgrade] to restart the pods.
+
+.Verification
+
+. In the {OCPShort} web console, select *Topology*.
+. Check that the {SelfServiceShort} instance is available.
+
+

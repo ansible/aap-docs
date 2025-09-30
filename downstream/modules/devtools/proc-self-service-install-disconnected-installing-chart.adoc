@@ -1,0 +1,22 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-installing-chart_{context}"]
+= Installing the Helm chart
+
+* Install the chart using the `helm install` command,
+referencing the local `.tgz` file by its name and using `--set` flags to provide necessary overrides.
++
+Add more `--set` flags for any other values that were in your original `values.yaml` file.
++
+----
+$ helm install redhat-rhaap-self-service-preview \
+  redhat-rhaap-self-service-preview-x.y.z.tgz \
+  --namespace ${MY_NAMESPACE} \
+  --set redhat-developer-hub.global.clusterRouterBase=${MY_CLUSTER_ROUTER_BASE} \
+  --set redhat-developer-hub.image.name=<disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z \
+----
+** `redhat-rhaap-self-service-preview`: the release name for your Helm deployment.
+** `redhat-rhaap-self-service-preview-x.y.z.tgz`: the local path/filename to your modified Helm chart .tgz file.
+** `--namespace ${MY_NAMESPACE}`: the OpenShift project (namespace) where the chart will be installed, using your defined variable.
+** `--set redhat-developer-hub.global.clusterRouterBase=${MY_CLUSTER_ROUTER_BASE}`: the cluster router base, using your defined variable.
+
