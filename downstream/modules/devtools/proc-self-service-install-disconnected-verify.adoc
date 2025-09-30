@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-verify_{context}"]
+
+= Verifying the disconnected installation
+
+. Check the Helm release status:
++
+----
+$ helm list -n ${MY_NAMESPACE}
+----
+. Monitor the pods in your namespace to ensure they are running:
++
+----
+$ oc get pods -n ${MY_NAMESPACE}
+----
+. Check for `ImagePullBackOff` or other errors in pod events:
++
+----
+$ oc describe pod <pod_name> -n ${MY_NAMESPACE}
+----
+. If the chart uses routes to expose services, verify that the routes are created and accessible:
++
+----
+$ oc get route -n ${MY_NAMESPACE}
+----
+
