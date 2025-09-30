@@ -4,17 +4,18 @@
 
 = Configuring SCM project sync using SSH to work with a proxy in {ControllerName}
 
-The following procedure for RPM-based {PlatformNameShort} describes how to use {ControllerName} Project Sync using the SSH protocol to work with a proxy server.
+The following procedure for RPM-based {PlatformNameShort} describes how to use {ControllerName} Project Sync by using the SSH protocol to work with a proxy server.
 
 .Procedure
 . Perform the following steps on the {ControllerName} nodes.
 If ansible-builder has not been installed yet, install it first.
 +
+[subs="+attributes"]
 ----
 # subscription-manager repos --enable ansible-automation-platform-{PlatformVers}-for-rhel-8-x86_64-rpms
 # dnf install ansible-builder
 ----
-. Build a custom execution environment.
+. Build a custom {ExecEnvShort}.
 
 .. First, create a work directory:
 +
@@ -29,7 +30,6 @@ $ cd builder/newee
 ----
 version: 1
 
-
 build_arg_defaults:
   EE_BASE_IMAGE: 'registry.redhat.io/ansible-automation-platform-24/ee-supported-rhel8:latest'
 
@@ -40,7 +40,9 @@ additional_build_steps:
 
 . Log in to registry.redhat.io.
 +
-'$ podman login registry.redhat.io'
+----
+$ podman login registry.redhat.io
+----
 
 . Run ansible-builder to start the building process.
 +
@@ -54,24 +56,28 @@ $ ansible-builder build -t my-env -v 3
 . In the *Image* field add `localhost/my-env:latest`.
 . Click btn:[Create {ExecEnvShort}].
 
-. Re-run the {PlatformNameshort} {Installer} with the following steps to replace the execution environment from the default to the customized environment which will be used as a Project syncs
+. Re-run the {PlatformNameshort} {Installer} with the following steps to replace the {ExecEnvShort} from the default to the customized environment which will be used as a Project syncs.
 +
 [NOTE]
 ====
 Backup {PlatformNameShort} before running the {Installer}.
 ====
 +
-`# ./setup.sh -b`
+----
+# ./setup.sh -b
+----
 
-. Create an `[automationcontroller]`` file under the `group_vars` directory in the same location as the `setup.sh` file. The file contents are as follows:
+. Create an `automationcontroller` file under the `group_vars` directory in the same location as the `setup.sh` file. The file contents are as follows:
 +
-group_vars/automationcontroller
-+
-`control_plane_execution_environment: localhost/my-env`
+----
+control_plane_execution_environment: localhost/my-env
+----
 
-. Run setup.sh
+. Run `setup.sh`
 +
-`# ./setup.sh`
+----
+# ./setup.sh
+----
 
 . Create `ssh_config` under the directory. For example:
 +
@@ -90,7 +96,7 @@ User git
 +
 [NOTE]
 ====
-Ensure `ssh_config` is owned by awx user. (`#chown awx:awx /var/lib/awx/.ssh/ssh_config`)
+Ensure `ssh_config` is owned by the AWX user. (`#chown awx:awx /var/lib/awx/.ssh/ssh_config`)
 ====
 +
 ----
