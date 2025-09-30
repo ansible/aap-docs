@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-The {AAPchatbot} is available on {PlatformNameShort} {PlatformVers} on {OCPShort} as a Technology Preview release. It is an intuitive chat interface embedded within the {PlatformNameShort}, using generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
+You can install and use {AAPchatbot} on {PlatformNameShort} {PlatformVers} on {OCPShort}.  {AAPchatbot} is an intuitive chat interface embedded within the {PlatformNameShort}, using generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}. 
 
 The {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work. 
 
@@ -17,11 +17,16 @@ The {AAPchatbot} interacts with users in their natural language prompts in Engli
 
 [IMPORTANT]
 ====
-* Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
-* Ansible Lightspeed intelligent assistant integration with the Model Context Protocol (MCP) server is available as a Technology Preview release. This integration enhances the user experience by delivering relevant, dynamically sourced data results to your queries. 
-+
-MCP is an open protocol that standardizes how applications provide context to LLMs. Using the protocol, an MCP server provides a standardized way for an LLM to increase context by requesting and receiving real-time information from external resources. The integration with an MCP server enables the {AAPchatbot} to offer an enhanced user experience by delivering relevant, dynamically sourced data results to your queries. You can configure a MCP server while xref:proc-create-chatbot-config-secret_{context}[creating a chatbot configuration secret].
-+
+Red Hat does not collect any telemetry data from your interactions with the {AAPchatbot}. 
+====
+
+== Integration with MCP server
+{AAPchatbot} integration with the Model Context Protocol (MCP) server is available as a Technology Preview release. This integration enhances the user experience by delivering relevant, dynamically sourced data results to your queries. 
+
+MCP is an open protocol that standardizes how applications provide context to LLMs. Using the protocol, an MCP server provides a standardized way for an LLM to increase context by requesting and receiving real-time information from external resources. The integration with an MCP server enables the {AAPchatbot} to offer an enhanced user experience by delivering relevant, dynamically sourced data results to your queries. You can configure a MCP server in the chatbot configuration secret. For more information, see xref:proc-create-chatbot-config-secret_{context}[Creating a chatbot configuration secret].
+
+[NOTE]
+====
 Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope].
 ====
 
@@ -38,9 +43,7 @@ You must have configured an LLM provider that you will use before deploying the 
 
 An LLM is a type of machine learning model that can interpret and generate human-like language. When an LLM is used with the {AAPchatbot}, the LLM can interpret questions accurately and provide helpful answers in a conversational manner.
 
-{AAPchatbot} can rely on the following LLM providers:
-
-*Red Hat LLM providers*
+{AAPchatbot} can rely on the following Red Hat LLM providers:
 
 * *{RHELAI}*
 +
@@ -81,9 +84,9 @@ a|An {PlatformNameShort} administrator who wants to deploy the {AAPchatbot} for 
 
 Perform the following tasks:
 
-. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#proc-create-chatbot-config-secret[Create a chatbot configuration secret]. 
-. link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#proc-update-aap-operator-chatbot[Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret]. 
+. xref:proc-create-chatbot-config-secret_deploying-chatbot-operator[Create a chatbot configuration secret]. 
+. xref:proc-update-aap-operator-chatbot_deploying-chatbot-operator[Update the YAML file of the {PlatformNameShort} to use the chatbot connection secret].
 
 | Access and use the {AAPchatbot}
-| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. For more details, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#con-using-chatbot[Using the {AAPchatbot}].
+| All Ansible users who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. For more details, see xref:con-using-chatbot_deploying-chatbot-operator[Using the {AAPchatbot}].
 |====
