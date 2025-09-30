@@ -26,7 +26,7 @@ $ cd builder/newee
 
 . Create an `execution-environment.yml` file with the following content:
 +
----
+----
 version: 1
 
 
@@ -82,13 +82,13 @@ ProxyCommand nc --proxy-type http --proxy proxy.example.com:port %h %p
 User git
 ----
 
-. Add the `ssh_config` file’s directory path in PATH to expose the isolated jobs so that the  container {ExecEnvShort} can read `ssh_config` file.
+. Add the `ssh_config` file's directory path in PATH to expose the isolated jobs so that the  container {ExecEnvShort} can read `ssh_config` file.
 
 . In the navigation panel, select {MenuSetJob}.
 . Click btn:[Edit].
 . If the `ssh_config` file has been created as `/var/lib/awx/.ssh/ssh_config`, add this to *Paths to expose to isolated jobs*
 +
-[Note]
+[NOTE]
 ====
 Ensure `ssh_config` is owned by awx user. (`#chown awx:awx /var/lib/awx/.ssh/ssh_config`)
 ====
@@ -99,6 +99,7 @@ Ensure `ssh_config` is owned by awx user. (`#chown awx:awx /var/lib/awx/.ssh/ssh
 ]
 ----
 
-.Additional information
+[role="_additional-resources"]
+.Additional resources
 
-link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/assembly-controller-execution-environments#ref-controller-build-exec-envs[Build an {ExecEnvShort}]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_execution/assembly-controller-execution-environments#ref-controller-build-exec-envs[Build an {ExecEnvShort}]
