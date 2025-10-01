@@ -1,7 +1,9 @@
+:_mod-docs-content-type: ASSEMBLY
 [id="eda-event-filter-plugins"]
 
 = Event filter plugins
 
+[role="_abstract"]
 Events sometimes have extra data that is unnecessary and might overwhelm the rule engine. 
 Use event filters to remove that extra data so you can focus on what matters to your rules. 
 Event filters might also change the format of the data so that the rule conditions can better match the data.
@@ -21,9 +23,6 @@ The default link:https://github.com/ansible/event-driven-ansible/tree/main/exten
 You can chain event filters one after the other, and the updated data is sent from one filter to the next.
 Event filters are defined in the rulebook after a source is defined.
 When the rulebook starts the source plugin it associates the correct filters and transforms the data before putting it into the queue.
-
-[Example]
-====
 
 ----
 sources:
