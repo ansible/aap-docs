@@ -17,12 +17,14 @@ This method helps ensure all default settings are applied correctly, reducing th
 
 
 ----
-apiVersion: aap.ansible.com/v1alpha1
+# Example of defining custom resource requirements for all components
+# This can be useful for clusters with a ResourceQuote in the AAP namespaceapiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatform
 metadata:
-  name: aap-custom-limits
+  name: aap
 spec:
 
+  # Platform
   api:
     replicas: 1
     resource_requirements:
@@ -50,6 +52,7 @@ spec:
         cpu: 500m
         memory: 800Mi
 
+  # Components
   controller:
     disabled: false
     uwsgi_processes: 2
@@ -59,7 +62,7 @@ spec:
         memory: 150Mi
       limits:
         cpu: 1000m
-        memory: 1500Mi
+        memory: 1200Mi
     web_resource_requirements:
       requests:
         cpu: 100m
@@ -162,9 +165,19 @@ spec:
           memory: 300Mi
   hub:
     disabled: false
+    ## uncomment if using file storage for Content pod
     storage_type: file
-    file_storage_storage_class: efs-sc
-    file_storage_size: 10Gi
+    file_storage_storage_class: nfs-local-rwx  # replace with the rwx storage class for your cluster
+    file_storage_size: 50Gi
+
+    ## uncomment if using S3 storage for Content pod
+    # storage_type: S3
+    # object_storage_s3_secret: example-galaxy-object-storage
+
+    ## uncomment if using Azure storage for Content pod
+    # storage_type: azure
+    # object_storage_azure_secret: azure-secret-name
+
     api:
       replicas: 1
       resource_requirements:
@@ -210,4 +223,13 @@ spec:
         limits:
           cpu: 300m
           memory: 400Mi
+
+
+  # lightspeed:
+  #   disabled: true
+
+# End state:
+# * Controller deployed and named: myaap-controller
+# * EDA deployed and named: myaap-eda
+# * Hub deployed and named: myaap-hub
 ----
