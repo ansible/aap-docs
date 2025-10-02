@@ -7,12 +7,19 @@
 
 = Installing the {OperatorPlatformNameShort} in a namespace
 
+[role="_abstract"]
+
 Use this procedure to subscribe a namespace to an operator.
 
 [IMPORTANT]
 ====
 You cannot deploy {PlatformNameShort} in the default namespace on your OpenShift Cluster. The `aap` namespace is recommended. You can use a custom namespace, but it should run only {PlatformNameShort}.
 ====
+
+.Prerequisites
+
+* Access to {OCP} using an account with operator installation permissions.
+* The {OCPShort} CLI [command]`oc` command is installed on your local system. Refer to link:{BaseURL}/openshift_container_platform/{OCPLatest}/html/cli_tools/openshift-cli-oc#installing-openshift-cli[Installing the OpenShift CLI] in the {OCP} product documentation for further information.
 
 .Procedure
 
@@ -76,8 +83,7 @@ aap-operator.v2.6.0-0.1728520175   Ansible Automation Platform   2.6.0+0.1728520
 +
 . Create an `AnsibleAutomationPlatform` object called `_example_` in the `ansible-automation-platform` namespace.
 +
-To change the {PlatformNameShort} and its components from  from `_example_`, edit the _name_ field in the `metadata:` section and replace example with the name you want to use:
-
+To change the {PlatformNameShort} and its components from `_example_`, edit the _name_ field in the `metadata:` section and replace example with the name you want to use:
 +
 -----
 oc apply -f - <<EOF
@@ -113,5 +119,7 @@ spec:
 EOF
 -----
 
-For further information about subscribing namespaces to operators, see link:{BaseURL}/openshift_container_platform/{OCPLatest}/html/operators/user-tasks#olm-installing-operator-from-operatorhub-using-cli_olm-installing-operators-in-namespace[Installing from OperatorHub using the CLI] in the {OCP} _Operators_ guide.
+[role="_additional-resources"]
+.Additional resources
 
+* link:{BaseURL}/openshift_container_platform/{OCPLatest}/html/operators/user-tasks#olm-installing-operator-from-operatorhub-using-cli_olm-installing-operators-in-namespace[Installing from OperatorHub using the CLI]
