@@ -59,20 +59,20 @@ $ sudo subscription-manager attach --pool=<pool_id>
 Do not use MCT4022 as a `pool_id` as it can cause subscription attachment to fail.
 ====
 
-* If you are unable to locate certain packages that came bundled with the {PlatformNameShort} installer, or if you are seeing a `_Repositories disabled by configuration_` message, try enabling the repository by using the command:
+ifndef::container-install[]
+* For legacy accounts not using SCA, if you are unable to locate certain packages that came bundled with the {PlatformNameShort} installer, or if you are seeing a `_Repositories disabled by configuration_` message, use the following steps to identify and enable the required repository:
+
+.. List available repositories:
 +
-{PlatformNameShort} {PlatformVers} for RHEL 9
+-----
+$ sudo subscription-manager repos --list | grep -i ansible-automation-platform
+-----
+
+.. Identify the repository name that matches your RHEL version, {PlatformNameShort} version, and architecture (for example, `ansible-automation-platform-{PlatformVers}-for-rhel-9-x86_64-rpms`).
+
+.. Enable the repository:
 +
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo subscription-manager repos --enable ansible-automation-platform-{PlatformVers}-for-rhel-9-x86_64-rpms
-----
-+
-ifdef::container-install[]
-{PlatformNameShort} {PlatformVers} for RHEL 10
-+
-[literal, options="nowrap" subs="+attributes"]
-----
-$ sudo subscription-manager repos --enable ansible-automation-platform-{PlatformVers}-for-rhel-10-x86_64-rpms
-----
+-----
+$ sudo subscription-manager repos --enable <repository_name>
+-----
 endif::container-install[]
