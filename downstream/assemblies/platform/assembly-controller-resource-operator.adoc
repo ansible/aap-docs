@@ -7,7 +7,30 @@ ifdef::context[:parent-context: {context}]
 [id="assembly-controller-resource-operator"]
 = {OperatorResource}
 
-include::platform/con-resource-operator-overview.adoc[leveloffset=+1]
+== {OperatorResourceShort} overview
+
+[role="_abstract"]
+
+{OperatorResourceShort} is a custom resource (CR) that you can deploy after you have created your {Gateway} deployment.
+
+With {OperatorResourceShort} you can define resources such as projects, job templates, and inventories in YAML files. 
+
+{ControllerName} then uses the YAML files to create these resources. 
+You can create the YAML through the *Form view* that prompts you for keys and values for your YAML code. 
+Alternatively, to work with YAML directly, you can select *YAML view*. 
+
+The {OperatorResourceShort} provides the following CRs:
+
+* AnsibleJob
+* JobTemplate
+* {ControllerNameStart} project
+* {ControllerNameStart} schedule
+* {ControllerNameStart} workflow
+* {ControllerNameStart} workflow template:
+* {ControllerNameStart} inventory
+* {ControllerNameStart} credential
+
+For more information on any of the above custom resources, see link:{URLControllerUserGuide}[{TitleControllerUserGuide}].
 
 include::platform/proc-use-controller-resource-operator.adoc[leveloffset=+1]
 
