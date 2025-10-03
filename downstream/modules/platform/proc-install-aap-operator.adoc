@@ -2,7 +2,43 @@
 
 [id="proc-install-aap-operator_{context}"]
 
+= Installing the {OperatorPlatformName} on {OCP}
+
+[role="_abstract"]
+
+When installing your {OperatorPlatformNameShort} you have a choice of a namespace-scoped operator or a cluster-scoped operator.
+This depends on the update channel you choose, stable-2.x or cluster-scoped-2.x.
+
+A namespace-scoped operator is confined to one namespace, offering tighter security. A cluster-scoped operator spans multiple namespaces, which grants broader permissions.
+
+If you are managing multiple {PlatformNameShort} instances with the same {OperatorPlatformNameShort} version, use the cluster-scoped operator, which uses a single operator to manage all {PlatformNameShort} custom resources in your cluster. 
+
+If you need multiple operator versions in the same cluster, you must use the namespace-scoped operator.
+The operator and the deployment share the same namespace.
+This can also be helpful when debugging because the operator logs pertain to custom resources in that namespace only.
+
+[NOTE]
+====
+For information about the {OperatorPlatformNameShort} system requirements and infrastructure topology see 
+link:{URLTopologies}/ocp-topologies[Operator topologies] in _{TitleTopologies}_.
+====
+
+For help with installing a namespace or cluster-scoped operator see the following procedure.
+
+[IMPORTANT]
+====
+You cannot deploy {PlatformNameShort} in the default namespace on your OpenShift Cluster. The `aap` namespace is recommended. You can use a custom namespace, but it should run only {PlatformNameShort}.
+====
+
+.Prerequisites
+* You have installed the {PlatformName} catalog in OperatorHub.
+* You have created a `StorageClass` object for your platform and a persistent volume claim (PVC) with `ReadWriteMany` access mode. See link:https://docs.openshift.com/container-platform/{OCPLatest}/storage/dynamic-provisioning.html[Dynamic provisioning] for details.
+* To run {OCP} clusters on Amazon Web Services (AWS) with `ReadWriteMany` access mode, you must add NFS or other storage.
+** For information about the AWS Elastic Block Store (EBS) or to use the `aws-ebs` storage class, see link:{BaseURL}/openshift_container_platform/4.10/html-single/storage/index#persistent-storage-aws[Persistent storage using AWS Elastic Block Store].
+** To use multi-attach `ReadWriteMany` access mode for AWS EBS, see link:https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html[Attaching a volume to multiple instances with Amazon EBS Multi-Attach].
+
 .Procedure
+
 . Log in to {OCP}.
 . Navigate to menu:Operators[OperatorHub].
 . Search for {PlatformNameShort} and click btn:[Install].
