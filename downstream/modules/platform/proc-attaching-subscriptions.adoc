@@ -7,11 +7,12 @@
 = Attaching your {PlatformName} subscription
 
 [role="_abstract"]
+
 You *must* have valid subscriptions on all nodes before installing {PlatformName}.
 
 [NOTE]
 ====
-Simple Content Access (SCA) is now the default subscription method for all Red Hat accounts. With SCA, you only need to register your systems to Red Hat Subscription Management (RHSM) or Satellite to access content. Traditional pool-based subscription attachment commands (such as `subscription-manager attach --pool` or `subscription-manager attach --auto`) are no longer required. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
+Simple Content Access (SCA) is now the default subscription method for all Red Hat accounts. With SCA, you must register your systems to Red Hat Subscription Management (RHSM) or Satellite to access content. Traditional pool-based subscription attachment commands (such as `subscription-manager attach --pool` or `subscription-manager attach --auto`) are no longer required. For more information, see link:https://access.redhat.com/articles/simple-content-access[Simple Content Access].
 ====
 
 .Procedure
@@ -23,10 +24,10 @@ $ sudo subscription-manager register --username <$INSERT_USERNAME_HERE> --passwo
 -----
 +
 With Simple Content Access (SCA), registration is the only step required to access {PlatformNameShort} content.
-
++
 [NOTE]
 ====
-For accounts still using legacy subscription pools, you might need to manually attach subscriptions using the commands shown in the troubleshooting section.
+For accounts still using legacy subscription pools, you might have to manually attach subscriptions using the commands shown in the troubleshooting section.
 ====
 
 .Verification
@@ -47,7 +48,7 @@ This command displays your system identity, name, organization name, and organiz
 
 .Troubleshooting
 
-* For legacy accounts not using SCA, you might need to manually attach subscriptions:
+* For legacy accounts not using SCA, you might have to manually attach subscriptions:
 +
 -----
 $ sudo subscription-manager list --available --all | grep "Ansible Automation Platform" -B 3 -A 6
