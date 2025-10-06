@@ -1,36 +1,35 @@
 :_mod-docs-content-type: PROCEDURE
 
-[id="change-ssl-installer_{context}"]
+[id="change-ssl-installer"]
 
-= Changing the SSL certificate and key using the installer
+= Changing SSL/TLS certificates and keys using the installation program
 
 [role="_abstract"]
-The following procedure describes how to change the SSL certificate and key in the inventory file.
+The following procedure describes how to change the SSL/TLS certificate and key in the inventory file.
 
 .Prerequisites
 
+* The certificates must be in PEM format.
 * If there is an intermediate certificate authority, you must append it to the server certificate.
-* Both {ControllerName} and {HubName} use NGINX so the server certificate must be in PEM format.
 * Use the correct order for the certificates: The server certificate comes first, followed by the intermediate certificate authority.
 
 For further information, see the link:http://nginx.org/en/docs/http/ngx_http_ssl_module.html#ssl_certificate[ssl certificate section of the NGINX documentation].
 
 .Procedure
 
-. Copy the new SSL certificates and keys to a path relative to the {PlatformNameShort} installer.
-. Add the absolute paths of the SSL certificates and keys to the inventory file. 
-Refer to the link:{URLInstallationGuide}/appendix-inventory-files-vars#controller-variables[{ControllerNameStart} variables], link:{URLInstallationGuide}/appendix-inventory-files-vars#hub-variables[{HubNameStart} variables], and link:{URLInstallationGuide}/appendix-inventory-files-vars#event-driven-ansible-variables[{EDAcontroller} variables] sections of {LinkInstallationGuide} for guidance on setting these variables.
-+
---
-** {ControllerNameStart}: `web_server_ssl_cert`, `web_server_ssl_key`, `custom_ca_cert`
-** {HubNameStart}: `automationhub_ssl_cert`, `automationhub_ssl_key`, `custom_ca_cert`
+. Copy the new SSL/TLS certificates and keys to a path relative to the {PlatformNameShort} installer.
+. Add the absolute paths of the SSL/TLS certificates and keys to the inventory file. 
+Refer to link:{URLInstallationGuide}/appendix-inventory-files-vars[Inventory file variables] for guidance on setting these variables.
+
 ** {EDAcontroller}: `automationedacontroller_ssl_cert`, `automationedacontroller_ssl_key`, `custom_ca_cert`
---
+** {GatewayStart}: `automationgateway_ssl_cert`, `automationgateway_ssl_key`, `custom_ca_cert`
+** {HubNameStart}: `automationhub_ssl_cert`, `automationhub_ssl_key`, `custom_ca_cert`
+** {ControllerNameStart}: `web_server_ssl_cert`, `web_server_ssl_key`, `custom_ca_cert`
 +
 [NOTE]
 ====
 The `custom_ca_cert` must be the root certificate authority that signed the intermediate certificate authority.
 This file is installed in `/etc/pki/ca-trust/source/anchors`.
 ====
-. Run the installation program.
 
+. Run the installation program.
