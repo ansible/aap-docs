@@ -8,30 +8,44 @@
 [role="_abstract"]
 You can use the {PlatformName} installer inventory file to specify your installation scenario.
 
-
 .Procedure
 
-. Navigate to the installer:
-.. [RPM installed package]
+*For an RPM installation*
+* [RPM installed package]
 +
 -----
 $ cd /opt/ansible-automation-platform/installer/
 -----
 +
-.. [bundled installer]
+* [bundled installer]
 +
 -----
 $ cd ansible-automation-platform-setup-bundle-<latest-version>
 -----
 +
-.. [online installer]
+* [online installer]
 +
 -----
 $ cd ansible-automation-platform-setup-<latest-version>
 -----
+ifdef::mesh-VM[]
+*For a containerized installation*
+* [Containerized installer]
 +
+----
+cd <path-to-source-file>/ansible-automation-platform-containerized-setup-<version_number>
+----
+
+* [Bundled containerized installer]
++
+----
+cd <path-to-source-file/ansible-automation-platform-containerized-setup-bundle-<version_number>-<arch_name>
+----
+endif::mesh-VM[]
 . Open the `inventory` file with a text editor.
-. Edit `inventory` file parameters to specify your installation scenario. 
+. Edit the `inventory` file parameters to specify your installation scenario. 
++
+For containerized installation, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/aap-containerized-installation#configuring-inventory-file[Configuring the inventory file]
 ifdef::mesh-VM[]
 For further information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-editing-installer-inventory-file_platform-install-scenario[Editing the {PlatformName} installer inventory file]
 endif::mesh-VM[]
