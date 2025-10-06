@@ -1,11 +1,11 @@
 :_mod-docs-content-type: PROCEDURE
 
-[id="renew-ssl-cert_{context}"]
+[id="renew-ssl-cert"]
 
-= Renewing the self-signed SSL certificate
+= Renewing the self-signed SSL/TLS certificates
 
 [role="_abstract"]
-The following steps regenerate a new SSL certificate for both {ControllerName} and {HubName}.
+The following steps regenerate new SSL/TLS certificates for all {PlatformNameShort} components.
 
 .Procedure
 . Add `aap_service_regen_cert=true` to the inventory file in the `[all:vars]` section:
@@ -14,20 +14,35 @@ The following steps regenerate a new SSL certificate for both {ControllerName} a
 [all:vars]
 aap_service_regen_cert=true
 ----
+
 . Run the installer.
 
 .Verification
 
-* Validate the CA file and `server.crt` file on {ControllerName}:
+* Validate the CA file and certificate file on {EDAcontroller}:
 +
 ----
-openssl verify -CAfile ansible-automation-platform-managed-ca-cert.crt /etc/tower/tower.cert
-openssl s_client -connect <AUTOMATION_HUB_URL>:443
+openssl verify -CAfile ansible-automation-platform-managed-ca-cert.crt /etc/ansible-automation-platform/eda/server.cert
+openssl s_client -connect <EDA_FQDN>:443
 ----
 
-* Validate the CA file and `server.crt` file on {HubName}:
+* Validate the CA file and certificate file on {Gateway}:
++
+----
+openssl verify -CAfile ansible-automation-platform-managed-ca-cert.crt /etc/ansible-automation-platform/gateway/gateway.cert
+openssl s_client -connect <GATEWAY_FQDN>:443
+----
+
+* Validate the CA file and certificate file on {HubName}:
 +
 ----
 openssl verify -CAfile ansible-automation-platform-managed-ca-cert.crt /etc/pulp/certs/pulp_webserver.crt
-openssl s_client -connect <AUTOMATION_CONTROLLER_URL>:443
+openssl s_client -connect <HUB_FQDN>:443
+----
+
+* Validate the CA file and certificate file on {ControllerName}:
++
+----
+openssl verify -CAfile ansible-automation-platform-managed-ca-cert.crt /etc/tower/tower.cert
+openssl s_client -connect <CONTROLLER_FQDN>:443
 ----
