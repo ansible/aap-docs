@@ -10,34 +10,36 @@ You can use the {PlatformName} installer inventory file to specify your installa
 
 .Procedure
 
-*For an RPM installation*
-* [RPM installed package]
-+
+== For an RPM installation
+
+*RPM installed package*
+
 -----
 $ cd /opt/ansible-automation-platform/installer/
 -----
-+
-* [bundled installer]
-+
+
+*Bundled installer*
+
 -----
 $ cd ansible-automation-platform-setup-bundle-<latest-version>
 -----
-+
-* [online installer]
-+
+
+*Online installer*
+
 -----
 $ cd ansible-automation-platform-setup-<latest-version>
 -----
 ifdef::mesh-VM[]
-*For a containerized installation*
-* [Containerized installer]
-+
+== For a containerized installation
+
+*Containerized installer*
+
 ----
 cd <path-to-source-file>/ansible-automation-platform-containerized-setup-<version_number>
 ----
 
-* [Bundled containerized installer]
-+
+*Bundled containerized installer*
+
 ----
 cd <path-to-source-file/ansible-automation-platform-containerized-setup-bundle-<version_number>-<arch_name>
 ----
@@ -46,14 +48,15 @@ endif::mesh-VM[]
 . Edit the `inventory` file parameters to specify your installation scenario. 
 +
 For containerized installation, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/aap-containerized-installation#configuring-inventory-file[Configuring the inventory file]
-ifdef::mesh-VM[]
-For further information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-editing-installer-inventory-file_platform-install-scenario[Editing the {PlatformName} installer inventory file]
-endif::mesh-VM[]
+//ifdef::mesh-VM[]
+//For further information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-editing-installer-inventory-file_platform-install-scenario[Editing the {PlatformName} installer inventory file]
+//endif::mesh-VM[]
 ifdef::aap-install[]
 You can use one of the supported xref:con-install-scenario-examples[Installation scenario examples] as the basis for your `inventory` file.
 
 [role="_additional-resources"]
 .Additional resources
+//This will need updating, but if RPOM install is deprrecated, where will the information
 * For a comprehensive list of pre-defined variables used in Ansible installation inventory files, see xref:appendix-inventory-files-vars[Inventory file variables].
 endif::aap-install[]
 
