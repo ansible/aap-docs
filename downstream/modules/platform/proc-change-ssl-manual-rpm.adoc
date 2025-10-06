@@ -1,0 +1,80 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="change-ssl-manual-rpm"]
+
+= Changing SSL/TLS certificates and keys manually
+
+[role="_abstract"]
+The following procedure describes how to change SSL/TLS certificates and keys manually for all {PlatformNameShort} components.
+
+.Procedure
+
+. Backup the current SSL/TLS certificate:
++
+----
+cp <CERT_PATH> <CERT_PATH>-$(date +%F)
+----
+
+. Backup the current key files:
++
+----
+cp <KEY_PATH> <KEY_PATH>-$(date +%F)
+----
+
+. Copy the new SSL/TLS certificate to the certificate path.
+. Copy the new key to the key path.
+. Restore the SELinux context:
++
+----
+restorecon -v <CERT_PATH> <KEY_PATH>
+----
+
+. Set appropriate permissions for the certificate and key files:
++
+----
+chown <OWNER>:<GROUP> <CERT_PATH> <KEY_PATH>
+chmod 0600 <CERT_PATH> <KEY_PATH>
+----
+
+. Test the NGINX configuration:
++
+----
+nginx -t
+----
+
+. Reload NGINX:
++
+----
+systemctl reload nginx.service
+----
+
+. Verify that new SSL/TLS certificate and key have been installed:
++
+----
+true | openssl s_client -showcerts -connect <COMPONENT_FQDN>:443
+----
++
+.SSL/TLS certificate and key file paths per service
+|===
+|Service |Certificate file path |Key file path |Owner:Group
+
+|{ControllerNameStart}
+|`/etc/tower/tower.cert`
+|`/etc/tower/tower.key`
+|`root:awx`
+
+|{HubNameStart}
+|`/etc/pulp/certs/pulp_webserver.crt`
+|`/etc/pulp/certs/pulp_webserver.key`
+|`root:pulp`
+
+|{EDAcontroller}
+|`/etc/ansible-automation-platform/eda/server.cert`
+|`/etc/ansible-automation-platform/eda/server.key`
+|`root:eda`
+
+|{GatewayStart}
+|`/etc/ansible-automation-platform/gateway/gateway.cert`
+|`/etc/ansible-automation-platform/gateway/gateway.key`
+|`root:gateway`
+|===
