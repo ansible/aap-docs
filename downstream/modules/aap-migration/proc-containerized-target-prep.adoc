@@ -41,25 +41,25 @@ Configure the inventory file to match the same topology as the source environmen
 .. Option 1: Extra variables in the inventory file
 +
 ----
-$ egrep 'pg_database_key' inventory
+$ egrep 'pg_database|_key' inventory
 controller_pg_database=<redacted>
 controller_secret_key=<redacted>
 gateway_pg_database=<redacted>
 gateway_secret_key=<redacted>
 hub_pg_database=<redacted>
 hub_secret_key=<redacted>
-_hub_database_fields=<redacted>
+__hub_database_fields=<redacted>
 ----
 +
 [NOTE]
 ====
-The `_hub_database_fields` value comes from the `hub_db_fields_encryption_key` value in your secret.
+The `__hub_database_fields` value comes from the `hub_db_fields_encryption_key` value in your secret.
 ====
 +
 .. Option 2: Additional variables file
 +
 ----
-$ ansible-playbook -i inventory ansible.containerized_installer.install -e @~/artifact/secrets.yml -e "_hub_database_fields='{{ hub_db_fields_encryption_key }}'"
+$ ansible-playbook -i inventory ansible.containerized_installer.install -e @~/artifact/secrets.yml -e "__hub_database_fields='{{ hub_db_fields_encryption_key }}'"
 ----
 
 . Install and configure the containerized target environment.
