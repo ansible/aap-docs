@@ -9,10 +9,12 @@ Perform a backup of your {ContainerBase} of {PlatformNameShort}.
 
 [NOTE]
 ====
-When backing up {PlatformNameShort}, use the installation program that matches your currently installed version of {PlatformNameShort}.
+* When backing up {PlatformNameShort}, use the installation program that matches your currently installed version of {PlatformNameShort}.
 
-Backup functionality only works with the PostgreSQL versions supported by your current {PlatformNameShort} version. 
+* Backup functionality only works with the PostgreSQL versions supported by your current {PlatformNameShort} version. 
 For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/aap-containerized-installation#system-requirements[System requirements].
+
+* Backup and restore for content stored in Azure Blob Storage or Amazon S3 must be handled through their respective vendor portals, as each vendor provides their own backup solutions.
 ====
 
 .Prerequisites
@@ -27,10 +29,10 @@ For more information, see link:https://docs.redhat.com/en/documentation/red_hat_
 .. For control of compression for filesystem related backup files:
 +
 ----
-# For global control of compression for filesystem related backup files 
+# Global control of compression for filesystem backup files
 use_archive_compression=true
 
-# For component-level control of compression for filesystem related backup files
+# Component-level control of compression for filesystem backup files
 #controller_use_archive_compression=true
 #eda_use_archive_compression=true
 #gateway_use_archive_compression=true 
@@ -44,10 +46,10 @@ use_archive_compression=true
 .. For control of compression for database related backup files:
 +
 ----
-# For global control of compression for database related backup files 
-use_db_compression=true  
+# Global control of compression for database backup files
+use_db_compression=true
 
-# For component-level control of compression for database related backup files
+# Component-level control of compression for database backup files
 #controller_use_db_compression=true
 #eda_use_db_compression=true
 #hub_use_db_compression=true
@@ -60,25 +62,20 @@ use_db_compression=true
 $ ansible-playbook -i <path_to_inventory> ansible.containerized_installer.backup
 ----
 +
-This backs up the important data deployed by the containerized installer such as:
+The backup process creates archives of the following data:
 +
 * PostgreSQL databases
 * Configuration files
 * Data files
 
-. By default, the backup directory is set to `./backups`. You can change this by using the `backup_dir` variable in your `inventory` file.
-
 .Next steps
 
-To customize the backup, use the following variables in your `inventory` file.
+To customize the backup process, you can use the following variables in your inventory file:
 
 * Change the backup destination directory from the default `./backups` by using the `backup_dir` variable.
-* Exclude paths that contain duplicated data, such as snapshot subdirectories, by using the `hub_data_path_exclude` variable. For instance, to exclude a .snapshots subdirectory, specify hub_data_path_exclude=['*/.snapshots/*'] in your inventory file.
-**  Alternatively, you can use the command-line interface with the `-e` flag to pass this variable at runtime:
+* Exclude paths that contain duplicated data, such as snapshot subdirectories, by using the `hub_data_path_exclude` variable. For example, to exclude a `.snapshots` subdirectory, specify `hub_data_path_exclude=['*/.snapshots/*']` in your inventory file.
+** Alternatively, you can use the command-line interface with the `-e` flag to pass this variable at runtime:
 +
 ----
 $ ansible-playbook -i inventory ansible.containerized_installer.backup -e hub_data_path_exclude="['*/.snapshots/*']"
 ----
-
-
-
