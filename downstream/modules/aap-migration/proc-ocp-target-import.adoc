@@ -13,7 +13,7 @@ This guide assumes you have the latest version of {PlatformNameShort} named 'aap
 
 .Procedure
 
-. Begin by scaling down the {PlatformNameShort} deployment using `idle_aap`.
+. Begin by scaling down the {PlatformNameShort} deployment by using `idle_aap`.
 +
 ----
 oc patch ansibleautomationplatform aap --type merge -p '{"spec":{"idle_aap":true}}'
@@ -22,14 +22,14 @@ oc patch ansibleautomationplatform aap --type merge -p '{"spec":{"idle_aap":true
 Wait for component pods to stop. Only the 6 Operator pods will remain running.
 +
 ----
-NAME                                                          READY   STATUS      RESTARTS   AGE
-pod/aap-controller-migration-4.6.13-5swc6                     0/1     Completed   0          160m
-pod/aap-gateway-operator-controller-manager-6b75c95458-4zrxv  2/2     Running     0          26h
-pod/ansible-lightspeed-operator-controller-manager-b674c55b8-qncjp 2/2     Running     0          45h
-pod/automation-controller-operator-controller-manager-6b79d48d4cchn 2/2     Running     0          45h
-pod/automation-hub-operator-controller-manager-5cd674c984-5njfj 2/2     Running     0          45h
-pod/eda-server-operator-controller-manager-645f4db5-d2flt     2/2     Running     0          45h
-pod/resource-operator-controller-manager-86b8f7bb54-cvz6d     2/2     Running     0          45h
+NAME                                                                  READY   STATUS      RESTARTS   AGE
+pod/aap-controller-migration-4.6.13-5swc6                             0/1     Completed   0          160m
+pod/aap-gateway-operator-controller-manager-6b75c95458-4zrxv          2/2     Running     0          26h
+pod/ansible-lightspeed-operator-controller-manager-b674c55b8-qncjp    2/2     Running     0          45h
+pod/automation-controller-operator-controller-manager-6b79d48d4cchn   2/2     Running     0          45h
+pod/automation-hub-operator-controller-manager-5cd674c984-5njfj       2/2     Running     0          45h
+pod/eda-server-operator-controller-manager-645f4db5-d2flt             2/2     Running     0          45h
+pod/resource-operator-controller-manager-86b8f7bb54-cvz6d             2/2     Running     0          45h
 ----
 
 . Scale down the {PlatformNameShort} Gateway Operator and {OperatorController}.
@@ -56,6 +56,7 @@ oc scale --replicas=1 statefulset.apps/aap-postgres-15
 `aap-temp-pvc.yaml`
 +
 ----
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -63,7 +64,7 @@ metadata:
   namespace: aap
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 200Gi
@@ -76,7 +77,7 @@ oc create -f aap-temp-pvc.yaml
 . Obtain the existing PostgreSQL image to use for temporary deployment.
 +
 ----
-echo $(oc get pod/aap-postgres-15-0 -o jsonpath="{.spec.containers[*].image}")
+echo $(oc get pod/aap-postgres-15-0 -o jsonpath="{.spec.containers[].image}")
 ----
 
 . Create a temporary PostgreSQL deployment with the mounted temporary PVC.
@@ -84,6 +85,7 @@ echo $(oc get pod/aap-postgres-15-0 -o jsonpath="{.spec.containers[*].image}")
 `aap-temp-postgres.yaml`
 +
 ----
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -154,35 +156,34 @@ oc cp artifact.tar.sha256 $AAP_TEMP_POSTGRES:/tmp/aap-temp-pvc/
 First, obtain PostgreSQL passwords for all three databases and the PostgreSQL admin password:
 +
 ----
-echo
-for secret in aap-controller-postgres-configuration aap-hub-postgres-configuration aap-gateway-postgres-configuration
+echo "" && for secret in aap-controller-postgres-configuration aap-hub-postgres-configuration aap-gateway-postgres-configuration
 do
-  echo $secret
-  echo "PASSWORD: `oc get secrets $secret -o jsonpath="{.data['password']}" | base64 -d`"
-  echo "USER: `oc get secrets $secret -o jsonpath="{.data['username']}" | base64 -d`"
-  echo "DATABASE: `oc get secrets $secret -o jsonpath="{.data['database']}" | base64 -d`"
-  echo
+echo $secret
+echo "PASSWORD: `oc get secrets $secret -o jsonpath="{.data['password']}" | base64 -d`"
+echo "USER: `oc get secrets $secret -o jsonpath="{.data['username']}" | base64 -d`"
+echo "DATABASE: `oc get secrets $secret -o jsonpath="{.data['database']}" | base64 -d`"
+echo ""
 done && echo "POSTGRES ADMIN PASSWORD: `oc get secrets aap-gateway-postgres-configuration -o jsonpath="{.data['postgres_admin_password']}" | base64 -d`"
 ----
 +
 Enter into the temporary PostgreSQL deployment and change directory to the mounted PVC containing the copied artifact:
 +
 ----
-oc exec -it deployment.apps/aap-temp-postgres /bin/bash
+oc exec -it deployment.apps/aap-temp-postgres -- /bin/bash
 ----
 +
 Inside the pod, change directory to `/tmp/aap-temp-pvc` and list its contents:
 +
 ----
-cd /tmp/aap-temp-pvc && ls -1
+cd /tmp/aap-temp-pvc && ls -l
 ----
 +
 Example output:
 +
 ----
 total 2240
--rw-r--r-- 1 1000900000 1000900000 2273280 Jun 13 17:41 artifact.tar
--rw-r--r-- 1 1000900000 1000900000      79 Jun 13 17:42 artifact.tar.sha256
+-rw-r--r--. 1 1000900000 1000900000 2273280 Jun 13 17:41 artifact.tar
+-rw-r--r--. 1 1000900000 1000900000      79 Jun 13 17:42 artifact.tar.sha256
 drwxrws---. 2 root       1000900000   16384 Jun 13 17:40 lost+found
 ----
 +
@@ -233,7 +234,7 @@ createdb -h aap-postgres-15 -U automationcontroller automationcontroller
 Revert temporary user permission:
 +
 ----
-postgres=# ALTER USER automationcontroller WITH NOCREATEDB;
+postgres=# ALTER USER automationcontroller NOCREATEDB;
 ----
 +
 Restore the {ControllerName} database:
@@ -264,7 +265,13 @@ exit
 +
 ----
 oc set data secret/aap-controller-secret-key secret_key="<unencoded controller_secret_key value from secrets.yml>"
+----
++
+----
 oc set data secret/aap-db-fields-encryption-secret secret_key="<unencoded gateway_secret_key value from secrets.yml>"
+----
++
+----
 oc set data secret/aap-hub-db-fields-encryption database_fields.symmetric.key="<unencoded hub_db_fields_encryption_key value from secrets.yml>"
 ----
 
@@ -294,7 +301,7 @@ deployment.apps/automation-controller-operator-controller-manager scaled
 ----
 +
 ----
-oc logs -f $(oc get pods --no-headers -o custom-columns="metadata.name" | grep aap-gateway-operator)
+oc logs -f $(oc get pods  --no-headers -o custom-columns=":metadata.name" | grep aap-gateway-operator)
 ----
 +
 Wait for reconciliation to stop.
@@ -303,15 +310,19 @@ Example output:
 +
 ----
 META: ending play
-{"level":"info", "ts":"2025-06-12T15:41:29Z","logger":"runner", "msg": "Ansible-runner exited successfully", "job": "5672263053238024330","name":"aap", "namespace": "aap"}
-PLAY RECAP ***********
-localhost                  : ok=45   changed=0    unreachable=0    failed=0    skipped=63    rescued=0    ignored=0  
+{"level":"info","ts":"2025-06-12T15:41:29Z","logger":"runner","msg":"Ansible-runner exited successfully","job":"5672263053238024330","name":"aap","namespace":"aap"}
+
+----- Ansible Task Status Event StdOut (aap.ansible.com/v1alpha1, Kind=AnsibleAutomationPlatform, aap/aap) -----
+
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=45   changed=0    unreachable=0    failed=0    skipped=63   rescued=0    ignored=0   
 ----
 
 . Scale {PlatformNameShort} back up using `idle_aap`.
 +
 ----
-oc patch ansibleautomationplatform aap --type merge -p '{"spec":{"idle_aap":false}}'
+oc patch ansibleautomationplatform aap --type=merge -p '{"spec":{"idle_aap":false}}'
 ----
 +
 Example output:
@@ -331,7 +342,7 @@ pod/aap-gateway-6c989b846c-47b91 2/2 Running 0 45s
 ----
 +
 ----
-for i in HTTPPort Route ServiceNode; do; oc exec -it deployment.apps/aap-gateway aap-gateway-manage shell -c 'from aap_gateway_api.models import '$i'; print('$i'.objects.all().delete())'; done
+for i in HTTPPort Route ServiceNode; do; oc exec -it deployment.apps/aap-gateway -- aap-gateway-manage shell -c 'from aap_gateway_api.models import '$i';print('$i'.objects.all().delete())'; done
 ----
 +
 Example output:
@@ -364,20 +375,21 @@ aap-controller-task-759b6d9759-r59q9
 Enter into the {ControllerName} pod:
 +
 ----
-oc exec -it $AAP_CONTROLLER_POD /bin/bash
+oc exec -it $AAP_CONTROLLER_POD -- /bin/bash
 awx-manage list_instances
 ----
 +
 Example output:
 +
 ----
-bash-4.4$
+bash-4.4$ 
 [controlplane capacity=642 policy=100%]
-aap-controller-task-759b6d9759-r59q9 capacity=642 node_type=control version=4.6.15 heartbeat="2025-06-12 21:39:48"
-node1.example.org capacity=0 node_type=hybrid version=4.6.13 heartbeat="2025-05-30 17:22:11"
+	aap-controller-task-759b6d9759-r59q9 capacity=642 node_type=control version=4.6.15 heartbeat="2025-06-12 21:39:48"
+	node1.example.org capacity=0 node_type=hybrid version=4.6.13 heartbeat="2025-05-30 17:22:11"
+
 [default capacity=0 policy=100%]
-node1.example.org capacity=0 node_type=hybrid version=4.6.13 heartbeat="2025-05-30 17:22:11"
-node2.example.org capacity=0 node_type=execution version ansible-runner-2.4.1 heartbeat="2025-05-30 17:22:08"
+	node1.example.org capacity=0 node_type=hybrid version=4.6.13 heartbeat="2025-05-30 17:22:11"
+	node2.example.org capacity=0 node_type=execution version=ansible-runner-2.4.1 heartbeat="2025-05-30 17:22:08"
 ----
 +
 Remove old nodes with `awx-manage`, leaving only `aap-controller-task`:
@@ -390,5 +402,5 @@ awx-manage deprovision_instance --host=node2.example.org
 . Run the `curl` command to repair {HubName} filesystem data.
 +
 ----
-curl -d '{"verify_checksums": true}' -X POST -k https://<aap_url>/api/galaxy/pulp/api/v3/repair/ -u <admin_user>:<restored_admin_password>
+curl -d '{\"verify_checksums\": true }' -X POST -k https://<aap url>/api/galaxy/pulp/api/v3/repair/ -u <admin_user>:<restored_admin_password>
 ----

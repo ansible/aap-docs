@@ -9,17 +9,11 @@ Perform the following post-import reconciliation steps to ensure your target env
 .Procedure
 . Deprovision the {Gateway} configuration.
 
-** SSH to the host serving a {Gateway} container as the same rootless user used in the source environment export, and run the following commands to remove the {Gateway} proxy configuration:
+** Deprovision {Gateway} configuration SSH to the host serving an `automation-gateway` container as the same rootless user from 4.2.6 and run the following to remove the {Gateway} proxy configuration:
 +
 ----
 $ podman exec -it automation-gateway bash
-----
-+
-----
 $ aap-gateway-manage migrate
-----
-+
-----
 $ aap-gateway-manage shell_plus
 >>> HTTPPort.objects.all().delete(); ServiceNode.objects.all().delete(); ServiceCluster.objects.all().delete()
 ----
@@ -79,8 +73,8 @@ $ awx-manage list_instances
 +
 ----
 [ungrouped capacity=0]
-[DISABLED] node1.example.org capacity=0 node_type=hybrid version=X.Y.Z heartbeat="..."
-[DISABLED] node2.example.org capacity=0 node_type=execution version ansible-runner-X.Y.Z heartbeat="..."
+	[DISABLED] node1.example.org capacity=0 node_type=hybrid version=X.Y.Z heartbeat="..."
+	[DISABLED] node2.example.org capacity=0 node_type=execution version=ansible-runner-X.Y.Z heartbeat="..."
 ----
 
 .. Remove those nodes with `awx-manage`, leaving only the `aap-controller-task` instance:
@@ -95,7 +89,7 @@ awx-manage deprovision_instance --host=node2.example.org
 ** Run the following command from any host that has direct access to the {HubName} address:
 +
 ----
-$ curl -d '{"verify_checksums": true}' -X POST -k https://<gateway_url>/api/galaxy/pulp/api/v3/repair/ -u <gateway_admin_user>:<gateway_admin_password>
+$ curl -d '{\"verify_checksums\": true }' -X POST -k https://<gateway url>/api/galaxy/pulp/api/v3/repair/ -u <gateway_admin_user>:<gateway_admin_password>
 ----
 
 . Reconcile instance groups configuration:
