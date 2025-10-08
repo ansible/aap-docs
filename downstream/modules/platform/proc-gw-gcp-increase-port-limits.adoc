@@ -1,0 +1,17 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="gw-gcp-increase-port-limits"]
+
+= Increasing the minimum ports
+
+To address this limitation, manually increase the *Minimum ports per VM instance* setting for the Cloud NAT gateway associated with the worker nodes.
+
+Use the Google Cloud Console to apply this workaround.
+
+.Procedure
+
+. Go to the link:https://console.cloud.google.com/net-services/nat/[Cloud NAT service].
+. Locate and select the NAT gateway configured for your OpenShift cluster's worker nodes.
+. Increase the default value of 64 for the *Minimum ports per VM instance* setting to a higher value to accommodate your anticipated traffic volume.
++
+Increasing this limit ensures enough available ports for external communication, reducing the likelihood of performance issues during high-volume authentication and external communication tasks.
