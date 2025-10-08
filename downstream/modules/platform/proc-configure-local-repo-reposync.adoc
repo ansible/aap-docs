@@ -11,12 +11,12 @@ With the `reposync` command you can to synchronize the BaseOS and AppStream repo
 * A {RHEL} host with an active internet connection.
 
 .Procedure
-. Attach the BaseOS and AppStream repositories using `subscription-manager`:
+. Attach the BaseOS and AppStream repositories using `subscription-manager`, replacing `<RHEL_VERSION>` with your RHEL version number:
 +
 ----
 $ sudo subscription-manager repos \
-    --enable rhel-9-baseos-rhui-rpms \
-    --enable rhel-9-appstream-rhui-rpms
+    --enable rhel-<RHEL_VERSION>-baseos-rhui-rpms \
+    --enable rhel-<RHEL_VERSION>-appstream-rhui-rpms
 ----
 
 . Install the `yum-utils` package:
@@ -60,28 +60,28 @@ $ sudo mkdir /opt/rhel-repos
 $ sudo tar xzvf ~/rhel-repos.tar.gz -C /opt
 ----
 
-. Create a Yum repository file at `/etc/yum.repos.d/rhel.repo` with the following content:
+. Create a Yum repository file at `/etc/yum.repos.d/rhel.repo` with the following content, replacing `<RHEL_VERSION>` with your RHEL version number:
 +
 ----
 [RHEL-BaseOS]
 name=Red Hat Enterprise Linux BaseOS
-baseurl=file:///opt/rhel-repos/rhel-9-baseos-rhui-rpms
+baseurl=file:///opt/rhel-repos/rhel-<RHEL_VERSION>-baseos-rhui-rpms
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 
 [RHEL-AppStream]
 name=Red Hat Enterprise Linux AppStream
-baseurl=file:///opt/rhel-repos/rhel-9-appstream-rhui-rpms
+baseurl=file:///opt/rhel-repos/rhel-<RHEL_VERSION>-appstream-rhui-rpms
 enabled=1
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 ----
 
-. Import the gpg key to allow the system to verify the packages:
+. Import the gpg key to allow the system to verify the packages, replacing `<RHEL_VERSION>` with your RHEL version number:
 +
 ----
-$ sudo rpm --import /opt/rhel-repos/rhel-9-baseos-rhui-rpms/RPM-GPG-KEY-redhat-release
+$ sudo rpm --import /opt/rhel-repos/rhel-<RHEL_VERSION>-baseos-rhui-rpms/RPM-GPG-KEY-redhat-release
 ----
 
 . Verify the repository configuration:
