@@ -1,15 +1,15 @@
 :_mod-docs-content-type: PROCEDURE
 [id="updating-containerized-ansible-automation-platform"]
 
-= Updating containerized {PlatformNameShort}
+= Upgrading containerized {PlatformNameShort}
 
 [role="_abstract"]
 Perform an upgrade of containerized {PlatformNameShort}. 
 
 .Prerequisites
 
-* You have reviewed the release notes for the associated patch release.
-* You have created a backup of your {PlatformNameShort} deployment.
+* You have reviewed the release notes for the associated patch release. For more information, see link:{URLReleaseNotes}[{PlatformNameShort} {TitleReleaseNotes}].
+* You have a backup of your {PlatformNameShort} deployment. For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up container-based {PlatformNameShort}].
 
 .Procedure
 
@@ -29,9 +29,3 @@ $ ansible-playbook -i inventory ansible.containerized_installer.install
 +
 * If your privilege escalation requires a password to be entered, append `-K` to the command. You will then be prompted for the `BECOME` password.
 * You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However it is important to note that this can significantly increase installation time, so it is recommended that you use it only as needed or requested by Red Hat support.
-. The update begins.
-
-[role="_additional-resources"]
-.Additional resources
-* link:{URLReleaseNotes}[{PlatformNameShort} {TitleReleaseNotes}]
-* link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up container-based {PlatformNameShort}]
