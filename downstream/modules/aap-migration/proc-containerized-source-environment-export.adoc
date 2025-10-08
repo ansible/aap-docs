@@ -11,7 +11,7 @@ From your source environment, export the data and configurations needed for migr
 You can verify your current PostgreSQL version by connecting to your database server and running the following command as the `postgres` user:
 +
 ----
-$ psql -c 'SELECT version();'
+$ podman exec -it postgresql bash -c 'psql -c "SELECT version();"'
 ----
 +
 [IMPORTANT]
@@ -32,7 +32,7 @@ $ ansible-playbook -i <path_to_inventory> ansible.containerized_installer.backup
 ** Access the {ControllerName} node and run:
 +
 ----
-$ podman exec -it automation-controller-task bash -c 'awx-manage print_settings | grep DATABASES'
+$ podman exec -it automation-controller-task bash -c 'awx-manage print_settings | grep '^DATABASES'
 ----
 +
 ** Access the {HubName} node and run:
@@ -142,7 +142,7 @@ If any `extra_settings` exist in your containerized installation inventory, copy
 # cd /tmp/backups/artifact/
 # [ -f sha256sum.txt ] && rm -f sha256sum.txt; find . -type f -name "*.pgc" -exec sha256sum {} \; >> sha256sum.txt
 # cat sha256sum.txt
-# cd /tmp/backups/
+# cd ..
 # tar cf artifact.tar artifact
 # sha256sum artifact.tar > artifact.tar.sha256
 # sha256sum --check artifact.tar.sha256
@@ -152,13 +152,13 @@ If any `extra_settings` exist in your containerized installation inventory, copy
 Example output of `tar tvf artifact.tar`:
 +
 ----
-drwxr-xr-x ansible/ansible        0 2025-05-08 16:48 artifact/
-drwxr-xr-x ansible/ansible        0 2025-05-08 16:33 artifact/controller/
--rw-r--r-- ansible/ansible   732615 2025-05-08 16:26 artifact/controller/controller.pgc
-drwxr-xr-x ansible/ansible        0 2025-05-08 16:33 artifact/controller/custom_configs/
-drwxr-xr-x ansible/ansible        0 2025-05-08 16:11 artifact/gateway/
--rw-r--r-- ansible/ansible   231155 2025-05-08 16:28 artifact/gateway/gateway.pgc
-drwxr-xr-x ansible/ansible        0 2025-05-08 16:26 artifact/hub/
+drwxr-xr-x ansible/ansible     0 2025-05-08 16:48 artifact/
+drwxr-xr-x ansible/ansible     0 2025-05-08 16:33 artifact/controller/
+-rw-r--r-- ansible/ansible 732615 2025-05-08 16:26 artifact/controller/controller.pgc
+drwxr-xr-x ansible/ansible      0 2025-05-08 16:33 artifact/controller/custom_configs/
+drwxr-xr-x ansible/ansible      0 2025-05-08 16:11 artifact/gateway/
+-rw-r--r-- ansible/ansible 231155 2025-05-08 16:28 artifact/gateway/gateway.pgc
+drwxr-xr-x ansible/ansible      0 2025-05-08 16:26 artifact/hub/
 -rw-r--r-- ansible/ansible 29252002 2025-05-08 16:26 artifact/hub/hub.pgc
 -rw-r--r-- ansible/ansible      614 2025-05-08 16:24 artifact/secrets.yml
 -rw-r--r-- ansible/ansible      338 2025-05-08 16:48 artifact/sha256sum.txt

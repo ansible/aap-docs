@@ -73,14 +73,15 @@ It also assumes that the artifact is located in the current user's home folder. 
 ----
 bash-4.4$ psql -h <pg_hostname> -U postgres
 postgres=# \l
-List of databases
-Name         |      Owner       | Encoding | Collate   |   Ctype    | Access privileges
---------------------+------------------+----------+-----------+------------+-------------------
-automationedacontroller | eda              | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
-automationhub      | automationhub    | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
-awx                | awx              | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
-gateway            | gateway          | UTF8     | en_US.UTF-8 | en_US.UTF-8 |
-(4 rows)
+          Name           |     Owner     | Encoding |   Collate   |    Ctype    | ICU Locale | Locale Provider |   Access privileg
+es
+-------------------------+---------------+----------+-------------+-------------+------------+-----------------+------------------
+-----
+ automationedacontroller | eda           | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            |
+ automationhub           | automationhub | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            |
+ awx                     | awx           | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            |
+ gateway                 | gateway       | UTF8     | en_US.UTF-8 | en_US.UTF-8 |            | libc            |
+...
 ----
 +
 .. For each component name, add the `CREATEDB` role to the `Owner`. For example:
@@ -131,7 +132,7 @@ $ systemctl --user start automation-hub-api automation-hub-content automation-hu
 .. Access the {EDAName} node and run:
 +
 ----
-$ systemctl --user start automation-eda-scheduler automation-eda-daphne automation-eda-web automation-eda-api automation-eda-worker-1 automation-eda-worker-2 automation-eda-activation-worker-1 automation-eda-activation-worker-2
+$ systemctl --user start automation-eda-scheduler automation-eda-daphne automation-eda-web automation-eda-api automation-eda-worker-1 automation-eda-worker-2  automation-eda-activation-worker-1 automation-eda-activation-worker-2
 ----
 +
 .. Access the {Gateway} node and run:
