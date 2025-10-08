@@ -239,19 +239,19 @@ postgres=# ALTER USER automationcontroller WITH NOCREATEDB;
 Restore the {ControllerName} database:
 +
 ----
-pg_restore --clean-if-exists --no-owner -h aap-postgres-15 -U automationcontroller -d automationcontroller controller/controller.pgc
+pg_restore --clean --create --no-owner -h aap-postgres-15 -U automationcontroller -d automationcontroller controller/controller.pgc
 ----
 +
 Restore the {HubName} database:
 +
 ----
-pg_restore --clean-if-exists --no-owner -h aap-postgres-15 -U automationhub -d automationhub hub/hub.pgc
+pg_restore --clean --create --no-owner -h aap-postgres-15 -U automationhub -d automationhub hub/hub.pgc
 ----
 +
 Restore the {Gateway} database:
 +
 ----
-pg_restore --clean-if-exists --no-owner -h aap-postgres-15 -U gateway -d gateway gateway/gateway.pgc
+pg_restore --clean --create --no-owner -h aap-postgres-15 -U gateway -d gateway gateway/gateway.pgc
 ----
 +
 Exit the pod:
