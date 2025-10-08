@@ -3,62 +3,57 @@
 [id="rhdh-update-helm_{context}"]
 = Updating the {SelfServiceShort} version numbers for a Helm installation
 
+[role="_abstract"]
 After you have updated your plug-in registry for your {SelfServiceShort} project on your {OCPShort} instance,
 you must update the Helm chart with the new versions of your plug-ins files.
 
+You can update the Helm chart from the command line using `helm` commands, or from the OpenShift web console.
+
+[NOTE]
+====
+For upgrades in air-gapped or disconnected environments, the standard procedure cannot be used directly.
+You must first mirror the necessary container images to your local registry and prepare the Helm chart for offline use.
+
+For detailed instructions on this process, see the 
+link:{URLSelfServiceInstall}/self-service-disconnected-install_aap-self-service-install[Installing the self-service automation portal in an air-gapped environment] section of _{LinkSelfServiceInstall}_.
+====
+
+
 .Procedure
 
-. In a browser, log in to your {OCPShort} console.
-. Select your OpenShift project for {SelfServiceShort}.
-. Select *Helm* and select your Helm chart for {SelfServiceShort} from the list.
-. Select menu:Actions[Upgrade].
-. In the *Upgrade Helm Release* pane, select *YAML view*.
-. Modify the YAML code to update the versions of the `.tgz` and `.integrity` files to match the versions in the plug-in registry:
+* *Update the Helm chart from the command line:*
+.. In a terminal, log in to your OpenShift instance.
+.. Run the following command to ensure your Helm repository is up to date:
 +
 ----
-...
-global:
-...
-    plugins:
-      - disabled: false
-        integrity: <SHA512 value>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-        pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
-      - disabled: false
-        integrity: <SHA512 value>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
-      - disabled: false
-        integrity: <SHA512 value>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-backstage-rhaap-backend-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-backstage-rhaap-backend: null
-
+$ helm repo update
 ----
-. Click btn:[Upgrade] to restart the pods.
+.. Find the latest version of the Helm chart:
++
+----
+$ helm search repo openshift-helm-charts/redhat-rhaap-portal
+----
+.. Upgrade the Helm release:
++
+----
+$ helm upgrade <release_name> openshift-helm-charts/redhat-rhaap-portal --version <chart_version>
+----
++
+Replace `<release_name>` with the name of your Helm release and `<chart_version>`
+with the new Helm chart version number you identified in the previous step.
+* *Update the Helm chart using the OpenShift web console:*
+.. In a browser, log in to your {OCPShort} web console.
+.. Switch to the *Developer* perspective.
+.. From the navigation menu, Select *Helm*.
+.. Find your existing {SelfServiceShort} deployment in the list of *Helm releases* and click its name.
+.. Select menu:Actions[Upgrade].
+.. In the *Upgrade* pane, select the version that you want to upgrade to from the *Chart Version* dropdown list.
+.. Review the YAML configuration to ensure your custom values are preserved.
+.. Click btn:[Upgrade] to begin the upgrade.
 
 .Verification
 
-. In the {OCPShort} web console, select *Topology*.
-. Check that the {SelfServiceShort} instance is available.
-
+After the upgrade completes, verify that the updated {SelfServiceShort} instance is running:
+. In the {OCPShort} web console, navigate to the *Topology* view for your project.
+. Check that the {SelfServiceShort} instance is available and that all associated pods are in a *Running* state.
 
