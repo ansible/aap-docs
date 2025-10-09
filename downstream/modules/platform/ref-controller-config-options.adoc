@@ -19,8 +19,7 @@ Valid keys are:
 The default entrypoint behavior handles signal propagation to subprocesses, as well as attempting to ensure at runtime that the container user has a proper environment with a valid writeable home directory, represented in `/etc/passwd`, with the `HOME` environment
 variable set to match. 
 The default entrypoint script can emit warnings to `stderr` in cases where it is unable to suitably adjust the user runtime environment. This behavior can be ignored or elevated to a fatal error; consult the source for the `entrypoint` target script for more details. 
-+
-The default value is `["/opt/builder/bin/entrypoint", "dumb-init"]`.
+
 ** *package_pip*: Package to install with pip for entrypoint support. 
 This package is installed in the final build image. 
 
