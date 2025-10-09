@@ -9,19 +9,3 @@ This section provides information about known issues in {PlatformNameShort} 2.6.
 +
 For more information, see link:https://access.redhat.com/articles/7132132[Ansible Lightspeed upgrade fails when upgrading Ansible Automation Platform 2.5 to 2.6].
 
-== {SelfServiceShortStart}
-
-* The following issues arise if you use the `sync.jobTemplates.labels` filter:
-+
---
-** Only the last label in the list of  {PlatformNameShort} Labels is used.
-** Labels with uppercase letters are ignored. 
---
-Use the following workarounds so that all {PlatformNameShort} Job Templates sync as expected, regardless of their {PlatformNameShort} Labels:
-** To filter correctly, use a single, lowercase {PlatformNameShort} Label.
-** Omit the labels filter from the Helm configuration (the default setting).
-All AAP Job Templates will sync as expected, regardless of their AAP Labels. 
-
-* When using the `allowNewAAPUserSignIn` auth resolver,
-a new user who has not yet been synced to self-service portal will not be mapped to the correct {PlatformNameShort} Organization if the organization's name contains a special character.
-This issue resolves itself automatically after the next {SelfServiceShort} synchronization.
