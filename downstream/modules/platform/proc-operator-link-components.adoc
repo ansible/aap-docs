@@ -5,7 +5,6 @@
 = Linking your components to the {Gateway}  
 
 [role="_abstract"]
-
 After installing the {OperatorPlatformNameShort} in your namespace you can set up your *{PlatformNameShort}* instance.
 Then link all the platform components to a single user interface. 
 
@@ -18,7 +17,7 @@ Then link all the platform components to a single user interface.
 
 . On the *{PlatformNameShort}* tile click btn:[Create instance].
 . From the *Create {PlatformNameShort}* page enter a name for your instance in the *Name* field.
-. Click btn:[YAML view] and paste the following:
+. Click btn:[YAML view] and replace the `spec` section with the following:
 +
 ----
 spec:
@@ -44,17 +43,28 @@ spec:
     file_storage_size: 10Gi
 
 ----
+. You must specify your desired value for the `<read-write-many-storage-class>` placeholder.
 . Click btn:[Create].
 
 .Verification
-* Go to your {OperatorPlatformNameShort} deployment and click btn:[All instances] to verify if all instances deployed correctly.
-+
-You should see the *{PlatformNameShort}* instance and the deployed *AutomationController*, *EDA*, and *AutomationHub* instances here.
-+
-Alternatively you can check by the command line, run: `oc get route` 
 
-* Verify that all the pods are running successfully, by performing the following steps:
+*Verify instance deployment (UI):*
+
+. Navigate to menu:Operators[Installed Operators].
+. Select your {OperatorPlatformNameShort} deployment.
+. Select the *All instances* tab. 
+. Verify that the *Ansible Automation Platform* instance, *Automation Controller*, *Event-Driven Ansible*, and *Automation Hub* instances are listed.
+
+*Verify pod status (UI):*
 
 . Navigate to menu:Workloads[Pods].
-. Switch to the project named as described in the namespace metadata in the *YAML* configuration view.
-. Verify that all pods display either a *Running* or *Completed* status, with no pods displaying an error status.
+. Switch to the project (namespace) where you deployed the instance.
+. Verify that all related pods display a *Running* or *Completed* status.
+ 
+*Verify Platform Route (CLI):*
+
+Run the following command to confirm the URL for accessing the {Gateway}:
+----
+oc get route
+----
+
