@@ -1,0 +1,48 @@
+// Module file name: ref-workloads-enterprise-topologies.adoc
+:_mod-docs-content-type: REFERENCE
+[id="reference-workloads-enterprise-topologies_{context}"]
+= Reference workloads for {EnterpriseTopologyPlural}
+
+[role="_abstract"]
+The following table provides reference data for typical workloads, performance metrics, and capacity planning for the tested {PlatformNameShort} {EnterpriseTopologyPlural}. 
+
+.Reference workloads for {EnterpriseTopologyPlural}
+[cols="3,6", options="header"]
+|===
+|Component / Feature |Metric
+
+|REST API 
+|16 requests per second (RPS)
+
+|REST API 50 percentile latency at 16 RPS
+|500 milliseconds
+
+|REST API 99 percentile latency at 16 RPS
+|1.5 seconds
+
+|Hosts in {ControllerName} inventory
+|10,000 hosts
+
+|Job start rate in {ControllerName}
+|80 jobs started per second
+
+|Concurrent jobs in {ControllerName}
+|40 with default forks (5 forks is default) +
+400 with forks=1
+
+|Callback receiver event rate
+|40,000 events per second at peak
+
+|Job History with 7 days retention
+|2kb event; 500 events per playbook run; 2000 jobs a day +
+Less than 60Gb (as specified as minimum required disk on Database node)
+
+|(Certified) Sync time
+|Less than 30 minutes
+
+|(Validated) Sync time
+|Less than 5 minutes
+
+|Processing events with skip audit events enabled (6 activations) with events incoming via Event Stream and execution strategy set to sequential (default) in the rulebook
+|3 actionable event/minute with minimal payload with job template action on local {ControllerName} where each job completes in 1 minute
+|===
