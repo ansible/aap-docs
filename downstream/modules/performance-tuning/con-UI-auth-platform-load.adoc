@@ -1,0 +1,26 @@
+// Module file name: con-UI-auth-platform-load.adoc
+:_mod-docs-content-type: CONCEPT
+[id="ui-authentication-and-load_{context}"]
+= UI authentication and platform load
+
+[role="_abstract"]
+Users can access the {PlatformNameShort} UI using enterprise authentication methods.
+UI clients apply load to the {Gateway} proxy and the gRPC authentication service, the web servers of all components, and the database, because most UI-driven API requests interact with the database.
+
+The login performance with enterprise authentication is dependent on the performance of the external authentication provider and the complexity of the mapping of the external authentication attributes to RBAC attributes in {PlatformNameShort}.
+After successful login, the browser uses session authentication for subsequent requests, which is generally a faster authentication method as some session data is cached.
+
+The {PlatformNameShort} UI receives live updates through WebSockets and periodically requests updates from all components to properly render options and update on-screen information.
+Users can configure the frequency of these periodically maintained update requests by adjusting the "Refresh Interval" setting in the UI's *User Preferences*.
+This action affects the load that an open browser tab with the {PlatformNameShort} UI generates on backend services.
+
+Through WebSockets in the user interface, the browser receives real-time job updates.
+The browser can subscribe to any job running on any {ControllerName} node, because events are broadcasted and accessible everywhere.
+However, live streaming updates to the job detail page may increase the load on the {ControllerName} service.
+To disable these updates, set `UI_LIVE_UPDATES_ENABLED` to false in the {ControllerName} configuration.
+
+[NOTE]
+====
+Disabling updates prevents the job detail page from automatically updating when events are received.
+In this case, you must manually refresh the page to access the most recent details.
+====
