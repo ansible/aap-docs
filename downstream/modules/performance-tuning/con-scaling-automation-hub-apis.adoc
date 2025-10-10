@@ -1,0 +1,44 @@
+// Module file name: con-scaling-automation-hub-apis.adoc
+:_mod-docs-content-type: CONCEPT
+[id="scaling-automation-hub-apis_{context}"]
+= Considerations for scaling the {HubName} APIs
+
+[role="_abstract"]
+Scaling {HubName} involves considerations for each of its service types:
+
+* API service: manages `HTTP` requests through the API
+* Pulp workers service: manages syncs and content uploads
+* Content service: manages content delivery after content has been processed and stored
+
+Separate `Gunicorn` deployments back these services and handle different types of requests.
+In {OCPShort}, these services must be scaled independently.
+In {VMBase} and {ContainerBase}, a standard {HubName} node hosts all services, and scaling is achieved by adding more nodes.
+
+== {HubNameStart} API service
+
+The {HubName} API service handles metadata-driven requests for the application, including UI interactions, searches, and remote repository configuration.
+Key performance indicators for the {HubName} API service include:
+
+* High API latency for requests under `/api/galaxy`
+* High CPU utilization on the API pods or nodes
+* {GatewayStart} returning `503` errors because the service is too busy to respond to health checks
+
+Consider the following strategies to scale the automaton {HubName} API service:
+
+* {OCPShort}: Horizontally scale the API pods by increasing the `hub.api.replicas` attribute on the `AnsibleAutomationPlatform` Custom Resource (CR).
+* {VMBase} or {ContainerBase}: Horizontally scale the API service by adding more {HubName} nodes, which simultaneously scales all other {HubName} services.
+
+== {HubNameStart} Pulp worker and content services
+
+The Pulp worker and content services manage all operations related to content syncs, uploads and downloads.
+Key performance indicators for the Pulp worker and content services include:
+
+* High Content sync rates: Frequent or large synchronization operations from external repositories demanding significant pulp-content worker processing.
+* High Content upload or download rates: Frequent pushing or pulling of {ExecEnvName} by {ControllerName}, {EDAName}, or large Collection uploads or downloads by automation clients.
+* Disk I/O bottlenecks: Performance issues related to read/write operations on the underlying content storage (`/var/lib/pulp`), often shown as high disk I/O wait times.
+* Pulp worker saturation: High CPU utilization or queuing within pulp processes, indicating an inability to keep up with content processing and serving.
+
+To scale your Pulp worker and content services, consider the following scaling strategies:
+
+* In {OCPShort}: Scale the deployment of these services by increasing the `hub.content.replicas` and `hub.worker.replicas` attributes on the `AnsibleAutomationPlatform` Custom Resource.
+* For {VMBase} or {ContainerBase}: Horizontally scale all services by adding more {HubName} nodes.

@@ -1,0 +1,44 @@
+// Module file name: con-scaling-gateway-proxy-authentication.adoc
+:_mod-docs-content-type: CONCEPT
+[id="scaling-gateway-proxy-and-authentication_{context}"]
+= Considerations for scaling the {Gateway} proxy and authentication service
+
+[role="_abstract"]
+Scaling the {Gateway} proxy and authentication service may be appropriate if the volume of requests to proxy or authenticate exceeds existing {Gateway} service capabilities.
+Horizontal scaling is preferred in this case, as vertical scaling does not automatically adjust all worker pool values for the gRPC, Envoy, Nginx, and WSGI services.
+
+[NOTE]
+====
+Additional {Gateway} service pods or instances can increase the necessary database connections for WSGI web service workers and gRPC authentication service workers.
+====
+
+If you observe a bottleneck in CPU utilization, then scaling the gRPC authentication service can improve throughput.
+However, if external authentication providers are the source of high latency, then horizontal scaling of the gRPC service has minimal benefits.
+You can determine the gRPC authentication latency for requests by observing the difference between the upstream service time and the total request latency.
+
+The most performant authentication methods are:
+
+* Token authentication
+* Session authentication
+* Basic authentication should not be used for high frequency automation against the API because password hashing is CPU-intensive, which introduces significant latency to requests.
+If basic authentication is used in combination with LDAP authentication, reaching out to the LDAP service can introduce significant latency, especially if the LDAP service has limited availability.
+For this reason, we recommend creating OAuth Tokens to perform automation against the API.
+
+Horizontally scaling the {Gateway} service pods also increases the number of health checks to each component’s API, because each Envoy tracks this separately.
+You can observe these in logs with the user agent `Envoy/HC`.
+Since health checks flow through the same services and queues as user-initiated requests, if overall request times slow due to overload, health checks can also timeout.
+When this occurs, Envoy stops forwarding requests to these service nodes until they pass their health check again.
+
+== Special considerations for scaling the {Gateway} proxy and authentication service on {OCPShort}
+
+It is particularly important that the service is horizontally scaled sufficiently in {OCPShort}, because if more than 100 requests are backlogged, then these requests are then dropped by uWSGI.
+This results in clients receiving a timeout for dropped requests.
+The following log text provides the corresponding error for this event:
+
+[source]
+----
+*** uWSGI listen queue of socket ":8000" (fd: 3) full !!! (101/100) ***
+----
+
+This error occurs due to a limitation of uWSGI tying its backlog length to the kernel parameter `somaxconn`.
+It is possible to raise this kernel parameter in {OCPShort}, but doing so requires allowing “unsafe sysctls”.
