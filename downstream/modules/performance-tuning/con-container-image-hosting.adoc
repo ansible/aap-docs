@@ -1,0 +1,13 @@
+// Module file name: con-container-image-hosting.adoc
+:_mod-docs-content-type: CONCEPT
+[id="container-image-hosting-and-performance_{context}"]
+= Container image hosting and performance
+
+[role="_abstract"]
+{PrivateHubNameStart} has the capability to host container images for {ExecEnvName} and decision environments.
+{EDAName} or {ControllerName} can pull these container images when running activations or jobs.
+The frequency at which these containers are pulled is determined by the frequency of job starts and the pull policy configured for the {ExecEnvName} and decision environments in {EDAName} or {ControllerName}.
+
+The performance of pushing and pulling container images from {HubName} depends on the disk performance of the underlying storage, because Pulp content workers store and fetch the layers of the container image from disk.
+The size of layers can impact the memory used by the pulp workers, because they serve entire layers at once.
+The frequency of container image pulls is determined by the pull policy on jobs and activations, the frequency of job or activation starts, and whether these jobs or activations starts occur on nodes or Container Groups where the image has not yet been pulled.
