@@ -1,0 +1,73 @@
+// Module file name: ref-api-request-flow-and-latency.adoc
+:_mod-docs-content-type: REFERENCE
+[id="api-request-flow-and-latency_{context}"]
+= API request flow and latency sources
+
+ifdef::context[:parent-context: {context}]
+
+[role="_abstract"]
+The {PlatformNameShort} API is provided by a distributed set of services. 
+Overall platform performance is affected by the path that each request takes through the platform and the multiple potential sources of latency and performance considerations at each layer. 
+The following table describes each layer in the API request flow through {PlatformNameShort}:
+
+.API Service architecture and performance considerations
+[cols="1,3,4", options="header"]
+|===
+|Layer
+|Description
+|Performance Consideration
+
+|Client Request
+|The request from the client.
+|The request from the client may have timeout parameters set. In the {VMBase} and containerized installer, a variable `client_request_timeout` is used to inform downstream component timeouts. This should be set to the same as any external load balancer’s timeout. The size of the request body and/or headers can also impact performance.
+
+|Ingress Point
+|The first point of entry into {PlatformNameShort}, typically an {OCPShort} Route or a customer-provided Load Balancer, directing traffic to an available {Gateway} pod/instance.
+|Performance is dependent on the configuration, capacity, and health of the load balancer or {OCPShort} Route. Any external load balancer's timeout must be greater than or equal to the `client_request_timeout` setting passed to the installer. This layer is responsible for distributing traffic if there are multiple {Gateway} nodes/pods.
+
+|Envoy Proxy
+|Located within the {Gateway} pod/instance, this proxy handles authorization, internal routing, and applies filters to the request. Authorization by the gRPC service is performed before the Envoy forwards the request to the destination service.
+|Introduces minimal latency, typically on the order of 10 milliseconds. Can handle hundreds of concurrent requests.
+
+|{GatewayStart} gRPC Authentication Service
+|A local gRPC service within the {Gateway} container responsible for authenticating each request. This service can interact with external authentication services (LDAP/SAML) and the database for validation. Authentication with the gRPC service can be disabled for individual URL routes, notably requests to the {Gateway} service itself are not authenticated by this gRPC service (for example, under `/api/gateway/v1/`). These requests are authenticated by the {Gateway} API service itself.
+|Potential source of latency. The service is multi-processed and multi-threaded, with capacity determined by `GRPC_SERVER_PROCESSES` and `GRPC_SERVER_MAX_THREADS_PER_PROCESS`. If all workers are busy, then requests queue, which adds to latency. In containerized or {VMBase}, its timeout is informed by the `client_request_timeout`. Slow database connections for session validation also negatively impact performance.
+
+|External Authentication Service (LDAP/SAML)
+|An optional external service invoked by the {Gateway} gRPC Authentication Service for validating user credentials.
+|Potential source of latency. When external authentication services (e.g., LDAP or SAML) are configured, they are invoked during the gRPC authentication stage. Slow response times from these external systems can significantly increase the total latency for each request processed. It is the user’s responsibility to provide a low-latency, reliable external authentication service.
+
+|API Service Nginx Proxy
+|After authentication, Envoy forwards the request to the component API node or Service in {OCPShort}. Nginx receives the request. Each distinct API service component has its own Nginx proxy that determines if the request is for a WSGI application, an ASGI-based WebSocket service, or static content.
+|Introduces minimal latency, typically on the order of 10 milliseconds. Can handle hundreds of concurrent requests.
+
+|WSGI Server (`uWSGI` / `Gunicorn`)
+|Handles standard API requests forwarded by Nginx. These servers process requests, validate JWT tokens, execute API operations, and frequently interact with the database.
+|Primary source of latency. API requests are handled by each component's web application served by a WSGI server (`uWSGI` for {ControllerName} and {Gateway} and `Gunicorn` for {HubName} and {EDAName}), and their timeout is also informed by the `client_request_timeout` in {VMBase} and {ContainerBase}. In {OCPShort}, the timeout on the {Gateway} Route is propagated to inform this same setting. The servers are configured with a maximum number of concurrent workers. If all workers are busy, the request is queued. Once a worker picks up a request, it validates the authentication and executes the API operation, which typically involves further database communication.
+
+|Database(s)
+|Almost every request requires interacting with the database to do activities such as validating sessions, storing data, and executing API operations.
+|Critical performance factor. Almost every request requires interacting with the database. The responsiveness of database connections remains a critical factor in API performance, impacting both the gRPC authentication service and the WSGI server processing. Responsiveness can be impacted by network latency between the database and components, as well as performance of the database itself.
+
+|Client Response
+|The final response returned to the client after the request has been processed and traversed back through the system components (Nginx proxy, Envoy, and the initial load balancer/Route).
+|The final response returned to the client after the request has been processed and traversed back through the system components (Nginx proxy, Envoy, and the initial load balancer/Route).
+|===
+
+== Sources of latency and scaling strategies
+
+The primary sources of latency across all layers are:
+
+* Queueing delays while awaiting an available worker from either the gRPC authentication service or the WSGI server
+* The authentication phase, particularly if external authentication systems exhibit slow response times
+* The actual processing time and associated database interactions within the Python WSGI application
+
+Scaling strategies include the following:
+
+* Using more performant authentication methods, such as Session or Token
+* Horizontally scaling {Gateway} and API service pods to increase worker availability and minimize queue times
+
+The following sections describe how to identify which of the {PlatformNameShort} services provide which APIs and provide considerations for scaling them.
+//Lizzi note to add this sentence: For more information on the performance of different authentication methods, see link:[Considerations for scaling the {Gateway} proxy and authentication service].
+
+ifndef::parent-context[:!context:]

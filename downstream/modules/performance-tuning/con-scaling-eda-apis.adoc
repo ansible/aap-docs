@@ -1,0 +1,57 @@
+// Module file name: con-scaling-eda-apis.adoc
+:_mod-docs-content-type: CONCEPT
+[id="scaling-event-driven-automation-apis_{context}"]
+= Considerations for scaling the {EDAName} APIs
+
+[role="_abstract"]
+Scaling {EDAName} involves considerations for each of its service types:
+
+* API and WebSocket service
+* EventStream service
+
+API requests routed to `/api/eda` and `/api/eda-event-stream` are handled by two separate `Gunicorn` deployments.
+In {OCPShort}, these services must be scaled independently.
+For {VMBase} and {ContainerBase}, you can scale these services together by increasing the number of hybrid nodes.
+
+== {EDAName} API and WebSocket service
+
+The {EDAName} API service handles `HTTP` requests to the application, including information about user roles in {EDAName}, creating projects, creating activations, and checking results.
+Key performance indicators for the API service include the following:
+
+* High API latency for requests under `/api/eda`
+* High CPU utilization on the API pods/nodes
+* {GatewayStart} returning `503` errors because the service is too busy to respond to health checks
+
+A WebSocket service is deployed alongside the API service to manage the output of the rulebook activations.
+Each activation maintains a persistent WebSocket connection to this service to communicate status and receive instructions.
+A large number of activations or a large amount of output from activations can overwhelm the WebSocket server, leading to failures.
+
+Consider the following strategies to scale the {EDAName} API and WebSocket service:
+
+* {OCPShort}: The WebSocket server (Daphne) runs within the `eda-api` pod.
+Horizontally scale the `eda-api` deployment to scale this service.
+[NOTE]
+====
+Ensure that you scale the `eda-api` deployment in proportion to the number of activations being run.
+====
+* {VMBase} or {ContainerBase}: Horizontally scale the WebSocket service alongside the API service by adding more hybrid nodes.
+This increases capacity for all {EDAName} components simultaneously.
+
+To identify whether your deployment experienced a bottleneck in the WebSocket service, check the activation logs for the following errors:
+
+[source]
+----
+ansible_rulebook.websocket - WARNING - websocket aborted by <class 'websockets.exceptions.InvalidMessage'>: did not receive a valid HTTP response
+ansible_rulebook.cli - ERROR - Terminating: did not receive a valid HTTP response
+----
+
+== {EDAName} EventStream service
+
+The Event Stream API, which handles POST requests to `/api/eda-event-stream`, is a separate `Gunicorn` service designed to ingest events from external sources.
+If this service's performance degrades, with high latency, low throughput, or availability issues, you must scale it.
+The {Gateway} returns `503` errors for this service when a pod is too busy to respond to health checks in time.
+
+Consider the following strategies to scale the {EDAName} EventStream service:
+
+* {OCPShort}: Horizontally scale up the dedicated `eda-event-stream` worker deployment, because it is managed separately from the main `eda-api deployment`.
+* {VMBase} or {ContainerBase}: Horizontally scale up this service by adding more hybrid nodes, which increases capacity for all {EDAName} components simultaneously.

@@ -1,0 +1,50 @@
+// Module file name: con-scaling-controller-api-service.adoc
+:_mod-docs-content-type: CONCEPT
+[id="scaling-controller-api-service_{context}"]
+= Considerations for scaling the {ControllerName} API service
+
+[role="_abstract"]
+The {ControllerName} API service handles HTTP requests to the application, including information about user roles in {ControllerName}, project creation, inventory creation or updates, job launches, and job result checks.
+
+== Key performance indicators
+
+Key performance indicators for the {ControllerName} API service include the following:
+
+* High API latency for requests under `/api/controller`
+* High CPU utilization on the API pods or nodes
+* {GatewayStart} returning `503` errors because the service is too busy to respond to health checks
+
+The {ControllerName} API service is located in web pods on {OperatorBase} and in control or hybrid nodes on {VMBase} or {ContainerBase}.
+
+== Scaling strategies by deployment type
+
+Consider the following strategies to scale the {ControllerName} API service:
+
+* {OCPShort}: Adjust the `web_replicas` attribute on the `AutomationController` CR.
+Scaling the `replicas` attribute scales task and web replicas.
+* {VMBase} and {ContainerBase}: Scale control or hybrid nodes, increasing the ability to control additional automation jobs.
+
+== Database connection and architecture considerations
+
+On {OCPShort}, each web replica consumes database connections for WSGI web service workers and various background services facilitating task communication and WebSockets.
+The number of database connections used by the WSGI web server on {VMBase} and {ContainerBase} scales with the machine's CPU count.
+Additionally, control and hybrid nodes manage the Dispatcher (tasking system) and the Callback Receiver (job event processing worker pool).
+These worker pools scale with CPU availability and necessitate database connections.
+
+Provisioning additional control nodes demands more database connections than solely scaling out the web deployment on {OCPShort}.
+This demand occurs because containerized and RPM control node scaling also expands the tasking system, which operates as a distinct deployment on {OCPShort}.
+This separation of services on {OCPShort} deployments is an important distinction that allows administrators to more finely tune the deployment and conserve limited resources, such as database connections.
+
+== Special considerations for scaling on {OCPShort}
+
+It is particularly important that the service is horizontally scaled sufficiently in {OCPShort}, because if more than 100 requests are backlogged, then these requests are then dropped by uWSGI.
+This results in clients receiving a timeout for dropped requests.
+The following log text provides the corresponding error for this event:
+
+[source]
+----
+*** uWSGI listen queue of socket ":8000" (fd: 3) full !!! (101/100) ***
+----
+
+This error occurs due to a limitation of uWSGI tying its backlog length to the kernel parameter `somaxconn`.
+It is possible to raise this kernel parameter in {OCPShort}, but doing so requires allowing “unsafe sysctls”.
