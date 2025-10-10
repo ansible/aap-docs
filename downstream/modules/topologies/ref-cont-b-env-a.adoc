@@ -47,25 +47,27 @@ include::snippets/cont-tested-system-config.adoc[]
 .Network ports and protocols
 [options="header"]
 |====
-| Port number | Protocol | Service | Source | Destination
-| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart}
-| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart}
-| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart}
-| 80/443 | TCP | HTTP/HTTPS | HAProxy load balancer | {GatewayStart}
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart}
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart}
-| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName}
-| 5432 | TCP | PostgreSQL | {EDAName} | External database
-| 5432 | TCP | PostgreSQL | {GatewayStart} | External database 
-| 5432 | TCP | PostgreSQL | {HubNameStart} | External database
-| 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database
-| 6379 | TCP | Redis | {EDAName} | Redis node
-| 6379 | TCP | Redis | {GatewayStart} | Redis node
-| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart}
-| 16379 | TCP | Redis | Redis node | Redis node
-| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node
-| 27199 | TCP | Receptor | Hop node | Execution node
-//| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
+| Port number | Protocol | Service | Source | Destination | Description
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart} | Pull container decision environments
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart} | Launch automation controller jobs
+| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | Pull collections and execution environment images
+| 80/443 | TCP | HTTP/HTTPS | HAProxy load balancer | {GatewayStart} | External load balancer access
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | {GatewayStart} to {ControllerName} communication
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | {GatewayStart} to {HubName} communication
+| 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | {GatewayStart} to {EDAName} communication
+| 5432 | TCP | PostgreSQL | {EDAName} | External database | {EDAName} database access
+| 5432 | TCP | PostgreSQL | {GatewayStart} | External database | {GatewayStart} database access
+| 5432 | TCP | PostgreSQL | {HubNameStart} | External database | {HubNameStart} database access
+| 5432 | TCP | PostgreSQL | {ControllerNameStart} | External database | {ControllerNameStart} database access
+| 6379 | TCP | Redis | {EDAName} | Redis node | Job launching and data storage for {EDAName}
+| 6379 | TCP | Redis | {GatewayStart} | Redis node | Data storage and retrieval for {Gateway} services
+| 16379 | TCP | Redis | Redis node | Redis node | Redis cluster bus communication
+| 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node | Configurable mesh nodes directly peered to controllers. Bidirectional communication for job distribution.
+| 27199 | TCP | Receptor | Hop node | Execution node | Mesh nodes peering through hop nodes. Bidirectional communication established in either direction.
+| 8083/8446 | TCP | HTTP/HTTPS | Internal services | {GatewayStart} | {GatewayStart} nginx ports. Configurable with the following inventory variables: `gateway_nginx_http_port`, `gateway_nginx_https_port`.
+| 8080/8443 | TCP | HTTP/HTTPS | Internal services | {ControllerNameStart} | {ControllerNameStart} nginx ports. Configurable with the following inventory variables: `controller_nginx_http_port`, `controller_nginx_https_port`.
+| 8081/8444 | TCP | HTTP/HTTPS | Internal services | {HubNameStart} | {HubNameStart} nginx ports. Configurable with the following inventory variables: `hub_nginx_http_port`, `hub_nginx_https_port`.
+| 8082/8445 | TCP | HTTP/HTTPS | Internal services | {EDAName} | {EDAName} nginx ports. Configurable with the following inventory variables: `eda_nginx_http_port`, `eda_nginx_https_port`.
 |====
 
 == Example inventory file
