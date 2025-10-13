@@ -28,7 +28,7 @@ The request is sent to the destination service depending on which route is in th
 
 Monitoring latency on the different routes through the Envoy proxy logs enables you to identify which service requires scaling.
 These routes are present in the proxy container of {Gateway} pods in {OCPShort} or in the proxy logs of the {Gateway} nodes in {VMBase} and {ContainerBase}.
-Periods of time where API request latency exceeds your target thresholds (for example, 50th percentile >500ms, 99th percentile >1500ms) can indicate the need to fire alerts or scale up related web services.
+Latency exceeding target API thresholds (for example, 99th percentile >1500ms) indicates a need to trigger alerts or scale web services.
 
 == High CPU utilization
 
@@ -41,7 +41,7 @@ The following indicators suggest high CPU utilization:
 
 == Error codes
 
-The following error codes within the proxy container of {Gateway} pods in {OCPShort} or the proxy logs of the {Gateway} nodes in {VMBase} and {ContainerBase} indicate a need to scale the service.
+Error codes in the {Gateway}'s proxy container (on {OCPShort}) or in the proxy logs (for VM-based and container-based installations) indicate the service must be scaled.
 They are often precipitated by the services being overloaded and unable to service requests in a timely manner, and are often preceded by periods of higher latency.
 
 * Upstream Authentication Failures: `502 UAEX` (Upstream Authentication Extension) responses in Envoy logs indicate issues during the authentication phase of a request. This suggests the authentication service is overloaded, timing out, or returning broken responses.

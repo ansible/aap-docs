@@ -19,7 +19,7 @@ The following table describes each layer in the API request flow through {Platfo
 
 |Client Request
 |The request from the client.
-|The request from the client may have timeout parameters set. In the {VMBase} and containerized installer, a variable `client_request_timeout` is used to inform downstream component timeouts. This should be set to the same as any external load balancer’s timeout. The size of the request body and/or headers can also impact performance.
+|The request from the client may have timeout parameters set. In the {VMBase} and containerized installer, a variable `client_request_timeout` is used to inform downstream component timeouts. This value must match the external load balancer's timeout. The size of the request body and/or headers can also impact performance.
 
 |Ingress Point
 |The first point of entry into {PlatformNameShort}, typically an {OCPShort} Route or a customer-provided Load Balancer, directing traffic to an available {Gateway} pod/instance.
@@ -43,9 +43,9 @@ The following table describes each layer in the API request flow through {Platfo
 
 |WSGI Server (`uWSGI` / `Gunicorn`)
 |Handles standard API requests forwarded by Nginx. These servers process requests, validate JWT tokens, execute API operations, and frequently interact with the database.
-|Primary source of latency. API requests are handled by each component's web application served by a WSGI server (`uWSGI` for {ControllerName} and {Gateway} and `Gunicorn` for {HubName} and {EDAName}), and their timeout is also informed by the `client_request_timeout` in {VMBase} and {ContainerBase}. In {OCPShort}, the timeout on the {Gateway} Route is propagated to inform this same setting. The servers are configured with a maximum number of concurrent workers. If all workers are busy, the request is queued. Once a worker picks up a request, it validates the authentication and executes the API operation, which typically involves further database communication.
+|Primary source of latency. API requests are handled by each component's web application served by a WSGI server (`uWSGI` for {ControllerName} and {Gateway} and `Gunicorn` for {HubName} and {EDAName}), and their timeout is also informed by the `client_request_timeout` in {VMBase} and {ContainerBase}. In {OCPShort}, the timeout on the {Gateway} Route is propagated to inform this same setting. The servers are configured with a maximum number of concurrent workers. If all workers are busy, the request is queued. After a worker picks up a request, it validates the authentication and executes the API operation, which typically involves further database communication.
 
-|Database(s)
+|Databases
 |Almost every request requires interacting with the database to do activities such as validating sessions, storing data, and executing API operations.
 |Critical performance factor. Almost every request requires interacting with the database. The responsiveness of database connections remains a critical factor in API performance, impacting both the gRPC authentication service and the WSGI server processing. Responsiveness can be impacted by network latency between the database and components, as well as performance of the database itself.
 

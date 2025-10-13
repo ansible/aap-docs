@@ -9,7 +9,7 @@ The following table provides information on scaling and management operations fo
 
 [NOTE]
 ====
-{OperatorBase} provide the most flexibility and customizability, which enables you to adapt the deployment as needs change.
+{OCP}-based deployments provide the most flexibility and customizability, which enables you to adapt the deployment as needs change.
 {OCPShort} also provides fine-grained observability through its built-in metrics capabilities and integrations, with log aggregation tools that capture all logs from all pods in the {PlatformNameShort} deployment.
 ====
 
@@ -32,7 +32,7 @@ The following table provides information on scaling and management operations fo
 |Requires updating the inventory file and re-running the entire installation. This restarts the platform, halting use.
 
 |Vertically scaling up or down
-|Increases or decreases requests and limits on individual deployment types. The operator will deploy a new pod with these resources and previous pods will scale down. For {ControllerName} task pods, usage of `termination_grace_period_seconds allows` the old replicas to scale down after jobs are drained from task pods.
+|Increases or decreases requests and limits on individual deployment types. The operator deploys a new pod with these resources, and previous pods scale down. For {ControllerName} task pods, usage of `termination_grace_period_seconds allows` the old replicas to scale down after jobs are drained from task pods.
 |Depending on your virtualization provider, the virtual machine may require shutdown to resize. Attaining the full benefit of vertical scaling requires re-running the installer, which restarts and halts use of the platform. Running the installer adapts any settings that were tuned based on the number of available cores and RAM.
 |Depending on your virtualization provider, the virtual machine may require shutdown to resize. Attaining the full benefit of vertical scaling requires re-running the installer, which restarts and halts use of the platform. Running the installer adapts any settings that were tuned based on the number of available cores and RAM.
 
