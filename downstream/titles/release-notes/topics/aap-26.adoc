@@ -210,83 +210,94 @@ The following table outlines the supported migration paths for {PlatformNameShor
 
 == Overview of upgrade improvements
 
-{PlatformNameShort} {PlatformVers} includes changes that significantly improve the upgrade experience when moving from {PlatformNameShort} 2.4 to {PlatformVers}. 
+Changes in {PlatformVers} improve the overall upgrade experience, as detailed in the following sections:
+
+* <<from-2.5,Upgrading from 2.5 to 2.6>> 
+* <<from-2.4,Upgrading from 2.4 to 2.6>> 
 
 [NOTE]
 ====
 You must be on the latest version of 2.4 or 2.5 before you upgrade to {PlatformVers}.
 ====
 
-[cols="1,1,1",options="header"]
-|===
-|Scenario |Changes |Additional information
+[[from-2.5]]
+Upgrading from 2.5 to 2.6::
 
-|Upgrading from 2.5 to {PlatformVers}
-|Upgrading from 2.5 to {PlatformVers} does not involve changes to the platform infrastructure requirements, architecture, or services. The improvements described in the 2.4 to {PlatformVers} upgrade path are also present in the 2.5 to {PlatformVers} upgrade path; however, the platform gateway service is already in place in 2.5.
+Upgrading from 2.5 to {PlatformVers} does not involve changes to the platform infrastructure requirements, architecture, or services. The improvements described in the 2.4 to {PlatformVers} upgrade path are also present in the 2.5 to {PlatformVers} upgrade path; however, the platform gateway service is already in place in 2.5.
++
+Additionally, note the following:
++
+* If you upgraded from 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to {PlatformVers} as that legacy authenticator functionality was removed.
 
-If you upgraded from 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to {PlatformVers} as that legacy authenticator functionality was removed.
+* When you upgrade to {PlatformVers}, the system removes any users that the 2.4 to 2.5 upgrade did not fully migrate. The users that have previously merged their user records while on 2.5 will remain to function as is for {PlatformVers}.
 
-Any users that were created during the 2.4 to 2.5 upgrade that were not fully migrated will be removed from the system when upgrading to {PlatformVers}. The users that have previously merged their user records while on 2.5 will remain to function as is for {PlatformVers}.
+* Upgrading to {PlatformVers} prevents 2.4 automation controller users who never successfully logged into 2.5 from logging into the platform-gateway. These users retain backwards compatibility for direct Automation Execution access but cannot access the full platform. Ensure all users planning to leverage {PlatformVers} have successfully logged into 2.5 prior to upgrading.
 
-Any 2.4 Controller users that have not successfully logged into 2.5 since upgrading from 2.4, will be unable to log into platform-gateway after a {PlatformVers} upgrade. The user will be backwards compatible for direct Automation Execution access but unable to access the full platform. Please ensure all users planning to leverage {PlatformVers} have successfully logged into 2.5 prior to upgrading.
+* Unified RBAC management across {PlatformNameShort} components: All {PlatformNameShort} collections, which support the Configuration-as-Code (CaC) approach, now use a standard global environment variable name and module variable name across {PlatformNameShort} components. For more details, see link:{URLReleaseNotes}[What’s new around RBAC in 2.6], link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6], and link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[`ansible.platform`] documentation in {HubName}.
 
-*NOTE:*
-Upgrades from the latest 2.5 version to {PlatformVers} are supported with all deployment types: RPM, containerized, and {OCPShort} deployments.
-a|See the upgrade document for your deployment type:
+--
+For more information about upgrading, see the upgrade document for your deployment type:
 
 * link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#container_based_deployments[Containerized]
 * link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#rpm_based_deployments[RPM]
 * link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#operator_based_deployments[{OCPShort}]
++
+[NOTE]
+====
+Upgrades from the latest 2.5 version to {PlatformVers} are supported with all deployment types: RPM, containerized, and {OCPShort} deployments.
+====
+--
 
-|Upgrading from 2.4 to {PlatformVers}
-|{PlatformNameShort} supports upgrading directly from the latest 2.4 version to {PlatformVers}. Directly upgrading to {PlatformVers} is the recommended upgrade path from 2.4, as a number of improvements in {PlatformVers} simplify and improve the upgrade experience.
+[[from-2.4]]
+Upgrading from 2.4 to 2.6::
 
-*NOTE:*
+Note the following when upgrading from 2.4 to {PlatformVers}:
+
+* **Upgrades from 2.4**: {PlatformNameShort} supports upgrading directly from the latest 2.4 version to {PlatformVers}. Directly upgrading to {PlatformVers} is the recommended upgrade path from 2.4, as a number of improvements in {PlatformVers} simplify and improve the upgrade experience.
++
+[NOTE]
+====
 You can upgrade directly from the latest 2.4 version to {PlatformVers} with RPM and {OCPShort} deployments. However, upgrading {EDAName} 2.4 or from the 2.4 containerized deployment is not supported, as both features were Tech Preview in 2.4. 
+====
++
+For more information, see the upgrade document for your deployment type. Either link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-rpm[RPM], or link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-openshift[{OCPShort}].
 
+* **Infrastructure changes**: {PlatformNameShort} RPM deployments require additional infrastructure compared with 2.4, due to the addition of the platform gateway service. Infrastructure needs vary depending on factors such as whether you implement a growth or an enterprise deployment. 
++
+For details about infrastructure and inventory file changes in various upgrade scenarios, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes[Infrastructure changes].
 
-a|See the upgrade document for your deployment type:
-
-* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-rpm[RPM]
-* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-openshift[{OCPShort}]
-
-|Upgrading from 2.4 to {PlatformVers}
-|{PlatformNameShort} RPM deployments require additional infrastructure compared with 2.4, due to the addition of the platform gateway service. Infrastructure needs vary depending on factors such as whether you implement a growth or an enterprise deployment. 
-
-*NOTE:*
-Additional infrastructure requirements apply only when upgrading RPM deployments.
-
-|See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes[Infrastructure changes] for details about infrastructure and inventory file changes in various upgrade scenarios.
-
-|Upgrading from 2.4 to {PlatformVers}
-|Enterprise authentication configuration and mappings (for example, SAML, LDAP, OIDC) move from automation controller 2.4 to platform gateway {PlatformVers} as part of the upgrade process. You do not need to manually reconfigure these authentication methods after you upgrade.
-
-*NOTE:*
+* **Authentication changes**: Enterprise authentication configuration and mappings (for example, SAML, LDAP, OIDC) move from automation controller 2.4 to platform gateway {PlatformVers} as part of the upgrade process. You do not need to manually reconfigure these authentication methods after you upgrade.
++
+See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/access_management_and_authentication/index[Access management and authentication] for information about authentication options in general.
++
+[NOTE]
+====
 Authentication upgrade improvements apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported. Additionally, upgrading {EDAName} 2.4 is not supported.
+====
 
-|See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/access_management_and_authentication/index[Access management and authentication] for information about authentication options in general.
-
-|Upgrading from 2.4 to {PlatformVers}
-
-a|All automation controller Identity Access Management (IAM) data moves from automation controller 2.4 to the platform gateway in {PlatformVers} as part of the upgrade process. With automation controller 2.4 as the default source of IAM data for the platform gateway in {PlatformVers}, users retain their memberships and are assigned appropriate platform-level roles in {PlatformVers}. 
-
+* **Identify access management changes**: All automation controller Identity Access Management (IAM) data moves from automation controller 2.4 to the platform gateway in {PlatformVers} as part of the upgrade process. With automation controller 2.4 as the default source of IAM data for the platform gateway in {PlatformVers}, users retain their memberships and are assigned appropriate platform-level roles in {PlatformVers}. 
++
+--
 As part of the upgrade process:
 
 * Users, teams, organizations, their memberships, and common roles in 2.4 move from automation controller 2.4 to the platform gateway in {PlatformVers}.
 * Administrators in automation controller 2.4 become platform gateway administrators in {PlatformVers}.
 * Controller admins in 2.4 become platform gateway admins in {PlatformVers}.
-
++
 The more organizations, teams, and users being migrated during an upgrade, the longer the upgrade takes. As an example, upgrading and migrating 4,000 users, 400 teams, and 40 organizations may take close to two hours.
++
+[NOTE]
+====
+Identity access management changes apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported.
+====
++
+See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-data-movement[Data movement during upgrade] for more information. 
+--
 
-*NOTE:*
-Identity access management changes apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported. 
+* **API changes**: Some APIs are being deprecated in {PlatformVers}. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/planning_your_upgrade/index#upgrade-api-changes[API changes] for more information.
 
-|See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-data-movement[Data movement during upgrade] for more information. 
+* **Unified RBAC management across {PlatformNameShort} components**: All {PlatformNameShort} collections, which support the Configuration-as-Code (CaC) approach, now use a standard global environment variable name and module variable name across {PlatformNameShort} components. For more details, see link:{URLReleaseNotes}[What’s new around RBAC in 2.6], link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6], and link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[`ansible.platform`] documentation in {HubName}.
 
-|Upgrading from 2.4 to {PlatformVers}
-|Some APIs are being deprecated in {PlatformVers}.
-|See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/planning_your_upgrade/index#upgrade-api-changes[API changes] for more information.
-|===
 
 == Platform UI
 
