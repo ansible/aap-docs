@@ -1,0 +1,22 @@
+// Module file name: con-horizontal-scaling-for-performance.adoc
+:_mod-docs-content-type: CONCEPT
+[id="horizontal-scaling-for-performance_{context}"]
+= Horizontal scaling for performance
+
+[role="_abstract"]
+Horizontal scaling involves increasing the number of replicas (pods or virtual machines) for a given service.
+Like vertical scaling, this approach is useful for high resource utilization or workload scaling.
+
+== Benefits of horizontal scaling
+
+* Improved availability: Distributes load across more instances to reduce the impact of a single slow or failing node.
+* Redundancy: Provides extra capacity, allowing individual service nodes to recover or cool-off without impacting overall availability.
+* Increased authentication capacity: Each {Gateway} pod includes its own authentication service, so scaling the {Gateway} directly increases the platform's authentication throughput.
+* Repeatable scaling procedure: After the instance size and configuration are verified for your environment, deploy identical instances to scale.
+
+== Drawbacks and other considerations for horizontal scaling
+
+* Database limitations: Scaling the application increases the maximum potential number of database connections from worker processes, and the overall memory, I/O, and CPU utilization of the PostgreSQL instance.
+As you scale past the tested deployment models, deploy your separate Postgres instances per component ({Gateway}, {EDAName}, {ControllerName}, {HubName}).
+* Health Check Overhead: In a mesh architecture, each Envoy proxy sends health checks to every other cluster member.
+Horizontal scaling increases this baseline traffic, adding to system overhead.
