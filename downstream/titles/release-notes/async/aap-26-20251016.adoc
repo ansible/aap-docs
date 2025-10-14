@@ -1,0 +1,57 @@
+[[aap-26-20251016]
+
+= {PlatformNameShort} patch release October 16, 2025
+
+This release includes the following components and versions: 
+
+[cols="1a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| October 16, 2025 |
+
+* Automation controller 4.7.2
+* Automation hub 4.11.0
+* Event-Driven Ansible 1.2.0
+* Container-based installer Ansible Automation Platform (bundle) 2.6-1
+* Container-based installer Ansible Automation Platform (online) 2.6-1
+* Receptor 1.5.7
+* RPM-based installer Ansible Automation Platform (bundle) 2.6-1
+* RPM-based installer Ansible Automation Platform (online) 2.6-1
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.6.0-0.1760139263
+
+* Cluster-scoped Bundle: aap-operator.v2.6.0-0.1760139657
+
+
+== {PlatformNameShort}
+
+
+=== Bug Fixes
+
+* Fixed an issue where the claims processing failed to migrate services during the post-migrate upgrade process.(AAP-55631)
+
+
+== {ControllerNameStart}
+
+=== Bug Fixes
+
+* Fixed an issue where the {PlatformNameShort} upgrade would be marked as failed if a single authenticator failed to migrate.(AAP-55629)
+
+
+== {HubNameStart}
+
+=== Bug Fixes
+
+* Fixed a global galaxy team role migration issue that could occur during the post-migrate upgrade process.(AAP-55304)
+
+* Fixed an issue caused by a constraint violation during migrations.(AAP-55309)
+
+* Fixed an issue from `aap-gateway-manage,` `migrate_service_data`, that states *Role definition content type must be null to assign globally*, which was due to permissions in hub that failed validation.(AAP-55639)
+
+
