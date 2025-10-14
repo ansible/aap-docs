@@ -1,0 +1,56 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="configuring-run-module"]
+
+= Configuring the `hashicorp.terraform.run` module
+
+[role="_abstract"]
+
+The `hashicorp.terraform.run` module lets you manage {TerraformEnterpriseShortName} or {TerraformCloudShortName} runs using create, apply, cancel, discard operations. You can trigger plans or apply operations on specified workspaces with customizable settings.
+
+.Prerequisites
+* Ensure that a valid link:https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens[{Terraform} API token] is properly configured to authenticate with the {TerraformEnterpriseShortName} or {TerraformCloudShortName} environment.
+
+* Verify that a valid organization and workspace are correctly set up in {TerraformEnterpriseShortName} or {TerraformCloudShortName}.
+
+.Procedure
+
+. Create a run module.
++
+.Example
++
+----
+- name: Create a destroy run with auto_apply
+  hashicorp.terraform.run:
+  workspace_id: ws-1234
+  run_message: "destroy vpc"
+  state: "present"
+  tf_token: <your token>
+  is_destroy: true
+  auto_apply: true
+  target_addrs:
+  	  - "aws_vpc.vpc1"
+	  - "aws_vpc.vpc2"
+  poll: true
+  poll_interval: 10
+  poll_timeout: 30
+----
+
+. Configure the following required parameters:
+
+* **`workspace_id or workspace + organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for `state: present`).
+
+* **`run_id`:** The unique identifier of the run to apply, cancel, or discard operations.
+
+* **`tf_token`:** The {Terraform} API authentication token. If this value is not set, the environment variable `TF_TOKEN` environment variables are used.
+
+. (Optional) Configure the built-in polling options that determine the wait period for {Terraform} operations to complete:
+
+* **`poll: true`:** (Default) Checks the run status every `poll_interval` seconds (default: 5) until completion or `poll_timeout` (default: 25s) is reached, returning the final status. 
+
+* **`poll: false`:** Returns immediately after initiating the run without waiting.
+
+. Set additional link:https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/content/module/run/[optional parameters] as needed.
+
+.Additional resources
+* link:terraform-aap/con-terraform-migration-examples[Migration examples for `hashicorp.terraform` modules]
