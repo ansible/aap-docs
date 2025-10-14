@@ -1,0 +1,13 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-activation-receives-events-no-actions"]
+
+= Actions not triggering despite receiving events
+
+[role="_abstract"]
+If your rulebook activation is *Running* and successfully receiving events, but no actions are being executed, the issue is likely within the logic of your rulebook.
+
+.Procedure
+
+. *Check rule conditions:* Review the rulebook YAML to confirm that the conditions (the when statements) are accurately written and precisely match the structure and values of the incoming event payload.
+. *Verify indentation and syntax:* Ensure all rulebook syntax and indentation are correct, as a simple error can prevent the rule engine from evaluating conditions.
+. *Validate actions:* Confirm that the specified action is a recognized and correctly configured action (for example, `run_job_template` with the proper arguments).

@@ -1,0 +1,13 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-activation-not-processing-event"]
+
+= Events are not being processed by rulebook activation
+
+[role="_abstract"]
+If your rulebook activation is running but not processing events, the most common cause is a mismatch between the expected event source and the source defined in the rulebook.
+
+.Procedure
+
+. *Check the rulebook source:* Review the source plugin defined in your rulebook YAML (for example, ansible.eda.webhook, ansible.eda.kafka).
+. *Verify event input:* Confirm that the events you are sending to {EDAcontroller} are compatible with the source plugin defined in the rulebook. If the rulebook expects a Kafka message, it cannot process a generic webhook event.
+. *Confirm activation mapping:* If you are using event streams, ensure the correct event stream is mapped to the rulebook during the activation setup. A mismatch here will result in the activation receiving no data.
