@@ -2,18 +2,22 @@
 
 = Ansible file and directory structure
 
-If you are creating a common set of roles to use across projects, these should be accessed through source control submodules, or a common location such as `/opt`. 
-Projects should not expect to import roles or content from other projects.
+To ensure reliable and consistent automation, follow these best practices for managing your content:
 
-For more information, see the link https://docs.ansible.com/ansible/latest/tips_tricks/ansible_tips_tricks.html[General tips] from the Ansible documentation. 
+* Package reusable content, such as roles, modules, and plugins into Ansible Collections.
+* Reference all necessary Collections for a project in the project's `requirements.yml` file. 
+These dependencies are automatically installed into the Execution Environment (EE) at runtime, but only if they are not already present in the EE image.
+* Do not import content from other projects or common file-system locations, such as `/opt`, at runtime. All content must be explicitly defined within the EE.
+* Working directory: The playbook directory is used as the current working directory at runtime. 
+However, always use the `playbook_dir` variable instead of relying on the current working directory path.
 
-[NOTE]
+[WARNING]
 ====
-* Avoid using the playbooks `vars_prompt` feature, as {ControllerName} does not interactively permit `vars_prompt` questions. 
-If you cannot avoid using `vars_prompt`, see the xref:controller-surveys-in-job-templates[Surveys in job templates] functionality.
+{ControllerNameStart} does not support interactive features.
 
-* Avoid using the playbooks `pause` feature without a timeout, as {ControllerName} does not permit canceling a pause interactively.
-If you cannot avoid using `pause`, you must set a timeout.
+* Avoid using the `vars_prompt` feature, as {ControllerName} does not permit interactive questions. 
+For user input, use link:{URLControllerUserGuide}/controller-job-templates#controller-surveys-in-job-templates[Surveys in job templates].
+* Avoid using the `pause` feature without a timeout. 
+{ControllerNameStart} does not permit canceling a pause interactively. 
+If `pause` is necessary, you must set a timeout.
 ====
-
-Jobs use the playbook directory as the current working directory, although jobs must be coded to use the `playbook_dir` variable rather than relying on this.
