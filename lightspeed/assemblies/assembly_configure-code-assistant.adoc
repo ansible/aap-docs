@@ -12,6 +12,17 @@ ifdef::context[:parent-context: {context}]
 [role="_abstract"]
 As a Red Hat customer portal administrator, you must configure {LightspeedShortName} cloud service to connect to your {ibmwatsonxcodeassistant} instance. 
 
+[NOTE]
+====
+The IBM Cloud service instance of {ibmwatsonxcodeassistant} is available in the following data centers:
+
+* Dallas (`us-south`)
+* Frankfurt (`eu-de`)
+* Sydney (`au-syd`) (Essentials plan only)
+
+Ansible Lightspeed cloud deployments are configured to connect exclusively to the US (Dallas) IBM data center. Attempts to connect from non-US data centers will result in connection failure. If you want to use a non-Dallas IBM data center, then you must set up Ansible Lightspeed in xref:overview-lightspeed-onpremise_configuring-lightspeed-onpremise[hybrid deployment model]. For more information about IBM's supported data centers, see the topic link:https://cloud.ibm.com/docs/watsonx-code-assistant[Setting up your watsonx Code Assistant for {LightspeedShortName} service] in _IBM watsonx Code Assistant_ documentation.
+====
+
 include::modules/proc_log-in-administrator-portal.adoc[leveloffset=+1]
 include::modules/proc_obtain-config-wca-and-model-id.adoc[leveloffset=+1]
 
