@@ -1,0 +1,41 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-change-llm-model_{context}"]
+
+= Changing your LLM model 
+
+[role="_abstract"]
+
+If you have already deployed {AAPchatbot} but want to change your LLM model, you can create a new chatbot configuration secret for the new LLM model. Alternatively, if you want to use the same chatbot configuration secret, you must delete and redeploy the {AAPchatbot}. 
+
+.Procedure
+
+* To create and use a new chatbot configuration secret:
+
+. xref:proc-create-chatbot-config-secret_deploying-chatbot-operator[Create a new chatbot configuration secret] with a different name for the new LLM model. 
+. xref:proc-update-aap-operator-chatbot_deploying-chatbot-operator[Update the YAML file of the {PlatformNameShort} operator] with the new chatbot configuration secret name. 
++
+The {PlatformNameShort} operator operator detects the new configuration and redeploys the {AAPchatbot}. 
+. Verify that the chat interface service is running successfully. See the verification steps mentioned in the topic xref:proc-update-aap-operator-chatbot_deploying-chatbot-operator[Updating the YAML file of the {PlatformNameShort} operator].
++
+[IMPORTANT]
+====
+Do not update the existing chatbot configuration secret with the new LLM model, as the reconciliation logic does not check the updates made to the secret. 
+====
+
+* To use the same chatbot secret by deleting and redeploying the {AAPchatbot}:
+. Disable the Ansible Lightspeed operator instance:
+.. Navigate to menu:Operators[Installed Operators].
+.. From the list of installed operators, select *{PlatformNameShort}*.
+.. Locate and select the {PlatformNameShort} custom resource.
+.. Select the *YAML* tab and under the `spec:` section for `lightspeed` category, specify `disabled:true`. 
+.. Click *Save*. 
+. Delete the Ansible Lightspeed operator instance:
+.. Navigate to menu:Operators[Installed Operators].
+.. From the list of installed operators, select *Ansible Lightspeed* and delete the operator.
+. Re-enable the {PlatformNameShort} instance:
+.. Navigate to menu:Operators[Installed Operators].
+.. From the list of installed operators, select *{PlatformNameShort}*.
+.. Locate and select the {PlatformNameShort} custom resource.
+.. Select the *YAML* tab and under the `spec:` section for `lightspeed` category, specify `disabled:false`. 
+.. Click *Save*. 
