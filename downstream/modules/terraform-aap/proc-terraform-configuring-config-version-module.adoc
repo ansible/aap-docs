@@ -15,7 +15,7 @@ To migrate to the `hashicorp.terraform` collection, you must configure the `hash
 
 .Procedure
 
-. Replicate your automation tasks from the `cloud.terraform`` modules.
+. Replicate your automation tasks from the `cloud.terraform` modules.
 +
 .Example
 +
@@ -32,13 +32,13 @@ To migrate to the `hashicorp.terraform` collection, you must configure the `hash
 ----
 
 . Configure the following required parameters:
-* **`workspace_id or workspace + organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for state: present).
+* **`workspace_id or workspace + organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for `state: present`).
 
 * **`configuration_files_path`:** The path where the required {Terraform} files will be uploaded to create a configuration version (for `state: present`). The module accepts two file types for `configuration_files_path`:
 +
-** **Directory:** Any folder containing {Terraform} files. The module auto-creates .tar.gz from all contents recursively.
+** **Directory:** Any folder containing {Terraform} files. The module auto-creates the .tar.gz file from all contents recursively.
 +
-** **.tar.gz Archive:** Pre-compressed gzip tarball. The module validates TAR format and GZIP compression.
+** **.tar.gz Archive:** Pre-compressed gzip tarball. The module validates TAR format and gzip compression.
 
 * **`configuration_version_id`:** The configuration version ID that will be archived (`state: archived`). This action deletes the associated uploaded .tar.gz file. Note the following:
 +
