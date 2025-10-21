@@ -1,0 +1,53 @@
+[id="async-24-20251022"]
+
+= {PlatformNameShort} patch release October 22, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+[cols="1a,3a", options="header"]
+
+|====
+
+| Release Date | Component versions
+
+| October 22, 2025 |
+
+* Automation controller 4.5.26
+* Automation hub 4.9.5
+* Event-Driven Ansible controller 1.0.7
+* Red Hat Ansible Lightspeed 2.4.250225
+* Ansible Automation Platform-collection installer (online): 2.4-13
+* Ansible Automation Platform-collection installer (bundle): 2.4-13.4
+* Receptor 1.6.0
+|
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1760618328
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1760618870
+
+== General
+
+* The `ansible.controller` collection has been updated to 4.5.26.(AAP-56033) 
+
+
+== Bug Fixes
+
+=== {PlatformNameShort}
+
+* Fixed an issue where query performance was not optimized on the jobs list page and loading user admin data during login, which could cause expensive queries.(AAP-54299)
+
+
+=== {ControllerNameStart}
+
+* Fixed an issue where the `awx.awx.license` appeared to succeed when given an invalid `pool / subscription`.(AAP-54649)
+
+* Fixed an issue where there were double escaped quotes in _api/v2/jobs/{id}/stdout/?format=txt_.(AAP-51845)
+
+
+=== Receptor
+
+* Fixed an issue where the previous version of receptor had stability issues on long-running jobs, with clusters under heavy load, and with network inconsistencies.(AAP-53742)
