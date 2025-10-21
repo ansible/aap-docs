@@ -1,0 +1,176 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="lightspeed-variables"]
+
+= Ansible Lightspeed variables
+
+[role="_abstract"]
+Inventory file variables for Ansible Lightspeed.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_admin_password`
+| Ansible Lightspeed administrator password. Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `"`, or `@`.
+| Required
+|
+
+| N/A
+| `lightspeed_admin_user`
+| Username used to identify and create the Ansible Lightspeed admin user.
+| Optional
+| `admin`
+
+| N/A
+| `lightspeed_chat_rate_throttle`
+| Chat rate throttle.
+| Optional
+| `10/minute`
+
+| N/A
+| `lightspeed_nginx_client_max_body_size`
+| Maximum allowed size for data sent to Ansible Lightspeed through NGINX.
+| Optional
+| `5m`
+
+| N/A
+| `lightspeed_nginx_disable_hsts`
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for Ansible Lightspeed. Set this variable to `true` to disable HSTS.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_nginx_disable_https`
+| Controls whether HTTPS is enabled or disabled for Ansible Lightspeed. Set this variable to `true` to disable HTTPS.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_nginx_hsts_max_age`
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for Ansible Lightspeed.
+| Optional
+| `63072000`
+
+| N/A
+| `lightspeed_nginx_http_port`
+| Port number that Ansible Lightspeed listens on for HTTP requests.
+| Optional
+| `8084`
+
+| N/A
+| `lightspeed_nginx_https_port` 
+| Port number that Ansible Lightspeed listens on for HTTPS requests.
+| Optional
+| `8447`
+
+| N/A
+| `lightspeed_nginx_https_protocols`
+| Protocols that Ansible Lightspeed will support when handling HTTPS traffic.
+| Optional
+| `[TLSv1.2, TLSv1.3]`
+
+| N/A
+| `lightspeed_nginx_user_headers`
+| Custom Nginx headers. List of additional NGINX headers to add to Ansible Lightspeed's NGINX configuration.
+| Optional
+| []
+
+| N/A
+| `lightspeed_nginx_read_timeout`
+| Sets the HTTP timeout for end-user requests. The minimum value is `10` seconds.
+| Optional
+| `3600`
+
+| N/A
+| `lightspeed_pg_cert_auth`
+| Controls whether client certificate authentication is enabled or disabled on the Ansible Lightspeed PostgreSQL database. Set this variable to `true` to enable client certificate authentication.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_pg_database`
+| Name of the PostgreSQL database used by Ansible Lightspeed.
+| Optional
+| `lightspeed`
+
+| N/A
+| `lightspeed_pg_host`
+| Hostname of the PostgreSQL database used by Ansible Lightspeed.
+| Required
+|
+
+| N/A
+| `lightspeed_pg_password`
+| Password for the Ansible Lightspeed PostgreSQL database user. Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_port`
+| Port number for the PostgreSQL database used by Ansible Lightspeed.
+| Optional
+| `5432`
+
+| N/A
+| `lightspeed_pg_sslmode`
+| Controls the SSL mode to use when {Gateway} connects to the PostgreSQL database. Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
+| Optional
+| `prefer`
+
+| N/A
+| `lightspeed_pg_tls_cert`
+| Path to the PostgreSQL SSL/TLS certificate file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_tls_key`
+| Path to the PostgreSQL SSL/TLS key file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_username`
+| Username for the Ansible Lightspeed PostgreSQL database user.
+| Optional
+| `lightspeed`
+
+| N/A
+| `lightspeed_secret_key`
+| Secret key value used by Ansible Lightspeed to sign and encrypt data.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_cert`
+| Path to the SSL/TLS certificate file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_key`
+| Path to the SSL/TLS key file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_remote`
+| Denote whether the Ansible Lightspeed provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_use_archive_compression`
+| Controls whether archive compression is enabled or disabled for Ansible Lightspeed. You can control this functionality globally by using `use_archive_compression`.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_use_db_compression`
+| Controls whether database compression is enabled or disabled for Ansible Lightspeed. You can control this functionality globally by using `use_db_compression`.
+| Optional
+| `false`
+
+|===

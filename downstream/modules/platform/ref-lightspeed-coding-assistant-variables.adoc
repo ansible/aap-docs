@@ -1,0 +1,86 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="lightspeed-coding-assistant-variables"]
+
+= Ansible Lightspeed coding assistant variables
+
+[role="_abstract"]
+Inventory file variables for Ansible Lightspeed coding assistant.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_wca_model_type`
+| {ibmwatsonxcodeassistant} model deployment mode, cloud (`wca`) or on-premise (`wca-onprem`).
+| Optional
+| `wca`
+
+| N/A
+| `lightspeed_wca_model_url`
+| URL of the {ibmwatsonxcodeassistant} model. For cloud deployment, the URL could be `\https://api.dataplatform.test.cloud.ibm.com`.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_model_api_key`
+| API key of the {ibmwatsonxcodeassistant} model that was generated during the model installation.
+| Required
+|
+
+| N/A
+| `lightspeed_wca_model_id`
+| ID of the {ibmwatsonxcodeassistant} model.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_model_verify_ssl`
+| Denotes whether or not to verify {ibmwatsonxcodeassistant}'s web certificates when making calls from Ansible Lightspeed to itself during installation. Set to `false` to disable web certificate verification.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_model_enable_anonymization`
+a| Controls whether the anonymization of Personally Identifiable Information (PII) is enabled. PII information includes passwords, IP addresses, email addresses, and other sensitive data. 
+
+When PII anonymization is enabled, users' personal information is modified to some generic values to protect their data and reduce the risk of data leaks. 
+
+You can turn off the anonymization by specifying the value as `false` if you want to retain all original information as entered by users and improve the quality of the answers. 
+
+If you set the value to `false` and the Ansible administrator is using Ansible Lightspeed in hybrid mode (where the model is in {ibmwatsonxcodeassistant} in IBM Cloud) then their users' PII is sent to IBM Cloud.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_model_username`
+| For on-premise deployment only. The username you use to connect to an IBM Cloud Pak for Data deployment.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_health_check`
+| Enables or disables {ibmwatsonxcodeassistant} health check.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_idp_url`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) URL. 
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_idp_login`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) username.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_idp_password`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) password.
+| Optional
+|
+
+|===
