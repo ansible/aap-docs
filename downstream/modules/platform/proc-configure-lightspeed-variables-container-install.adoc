@@ -1,0 +1,87 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-lightspeed-variables_{context}"]
+
+= Configuring {LightspeedShortName} variables in the inventory file
+
+[role="_abstract"]
+To deploy {LightspeedShortName}, add the required installation variables to your inventory file under the `[all: vars]` group. You will also need to add specific variables to enable the Ansible Lightspeed coding assistant, the {AAPchatbot}, and the MCP server integration.
+
+[source,yaml]
+----
+# This is the list of all {LightspeedShortName} variables to add to the inventory file.
+
+# This section is for {LightspeedShortName} deployment
+# -----------------------------------------------------
+lightspeed_admin_user: <set your own>
+lightspeed_admin_password: <set your own>
+lightspeed_admin_email: admin@example.com <set your own>
+lightspeed_conf_dir: '{{ aap_volumes_dir }}/lightspeed/etc'
+lightspeed_static_dir: '{{ aap_volumes_dir }}/lightspeed/static'
+lightspeed_firewall_zone: public
+lightspeed_tls_remote: false
+lightspeed_uwsgi_timeout: 3600
+
+# This section is for {LightspeedShortName} nginx configuration
+# -----------------------------------------------------
+lightspeed_nginx_disable_https: false
+lightspeed_nginx_disable_hsts: false
+lightspeed_nginx_hsts_max_age: 63072000
+lightspeed_nginx_http_port: 8084
+lightspeed_nginx_https_port: 8447
+lightspeed_nginx_https_protocols:
+  - TLSv1.2
+  - TLSv1.3
+lightspeed_nginx_client_max_body_size: 5m
+lightspeed_nginx_user_headers: []
+lightspeed_nginx_read_timeout: 3600
+
+# This section is to configure {LightspeedShortName} database
+# -----------------------------------------------------
+lightspeed_pg_username: lightspeed <set your own>
+lightspeed_pg_database: lightspeed <set your own>
+lightspeed_pg_port: 5432
+lightspeed_pg_sslmode: prefer
+lightspeed_pg_cert_auth: false
+
+# This section is to configure {LightspeedShortName} backup and restore
+# -----------------------------------------------------
+lightspeed_use_archive_compression: '{{ use_archive_compression | default(true) }}'
+lightspeed_use_db_compression: '{{ use_db_compression | default(false) }}'
+
+# This section is to configure {AAPchatbot}
+# ---------------------------------------------------------------------
+lightspeed_chatbot_model_url: <example?>
+lightspeed_chatbot_model_api_key: <example?>
+lightspeed_chatbot_model_id: : <example?>
+lightspeed_chatbot_http_port: 8085
+lightspeed_chat_rate_throttle: '10/minute'
+lightspeed_chatbot_chatbot_max_tokens: 4096
+lightspeed_chatbot_chatbot_tls_verify: true
+lightspeed_chatbot_default_provider: 'rhoai'
+
+# This section is to configure {AAPchatbot} with MCP server integration
+# ----------------------------------------------------------------------
+lightspeed_mcp_controller_enabled: false
+lightspeed_mcp_controller_port: 8004
+lightspeed_mcp_lightspeed_enabled: false
+lightspeed_mcp_lightspeed_port: 8005
+
+# This section is to configure Ansible Lightspeed coding assistant
+# ----------------------------------------------------------------------
+lightspeed_wca_model_type: 'wca'
+lightspeed_wca_model_url: 'https://api.dataplatform.cloud.ibm.com'
+lightspeed_wca_model_verify_ssl: true
+lightspeed_wca_model_enable_anonymization: true
+lightspeed_wca_health_check: true
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* Appendix: {LightspeedShortName} Inventory file variables (URL)
+
+[role="_additional-resources"]
+.Next steps
+
+* Installing containerized {PlatformNameShort} (URL)

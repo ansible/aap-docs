@@ -1,0 +1,38 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-vs-code-containerized-install_{context}"]
+
+= Configuring the Ansible VS Code extension
+
+[role="_abstract"]
+
+If you deployed the Ansible Lightspeed coding assistant, you must also configure the Ansible VS Code extension with the generated Ansible Lightspeed URL. This configuration enables the Ansible users in your organization to use the Ansible Lightspeed coding assistant to create Ansible content. 
+
+.Prerequisites
+
+* You have installed VS Code version 1.70.1 or later.
+* Your organization administrator has configured an {ibmwatsonxcodeassistant} model for your organization.
+
+.Procedure
+
+. Open the VS Code application.
+. From the Activity bar, click the *Extensions* icon image:extensions-icon-vscode.png[Extensions].
+. From the Installed Extensions list, select *Ansible*.
+. From the *Ansible* extension page, click the *Settings* icon and select *Extension Settings*. 
+. Select *Ansible Lightspeed* settings, and specify the following information:
+.. Ensure that the *Enable Ansible Lightspeed with watsonx Code Assistant inline suggestions* checkbox is selected.
+.. In the *URL for Ansible Lightspeed* field, verify that you have the following URL: `\https://<node.ansible.com>:8447`. 
+.. Select the *Enable Ansible Lightspeed with watsonx Code Assistant inline suggestions* checkbox.
+. Optional: If you want to use the custom model instead of the default model, in the *Model ID Override* field, enter the custom model ID. The *model-override* setting enables you to override the default model and use the custom model, after your organization administrator has created a custom model and has shared the model ID with you separately. 
++
+Your settings are automatically saved in VS Code. 
++
+[NOTE]
+====
+If your organization recently subscribed to the {PlatformName}, it might take a few hours for {LightspeedShortName} to detect the new subscription. In VS Code, use the *Refresh* button in the Ansible extension from the Activity bar to check again.
+====
+
+[role="_additional-resources"]
+.Next step
+
+* xref:ref-troubleshooting-vscode_troubleshooting-lightspeed[Using the Ansible Lightspeed coding assistant to develop Ansible content] (URL)
