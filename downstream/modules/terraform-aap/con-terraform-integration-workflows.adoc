@@ -1,0 +1,36 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="integration-workflows"]
+
+= Integration workflows
+
+[role="_abstract"]
+
+Depending on your existing setup, you can integrate these products from {PlatformNameShort} or from {Terraform}. Migration paths are provided for community users and for migrating from the `cloud.terraform` collection to `hashicorp.terraform`.
+
+== Ansible-initiated workflow
+
+Ansible automation hub collections allow {PlatformNameShort} users to leverage {Terraform}'s provisioning capabilities.
+
+**hashicorp.terraform collection**
+
+This collection provides API integration between {PlatformNameShort} and {Terraform}. This solution works natively with {PlatformNameShort} and reduces setup complexity because it doesn’t require a binary installation and it includes a default execution environment.
+
+If you are already using the `cloud.terraform` collection, we recommend migrating to the `hashicorp.terraform` collection to take advantage of the API capabilities.
+
+
+**cloud.terraform collection**
+
+This collection provides CLI integration between {PlatformNameShort} and {Terraform}. To use this collection, you must install a binary and create an execution environment.
+
+Although this collection is supported, we recommend using the `hashicorp.terraform` collection instead to take advantage of its API capabilities.
+
+== **{TerraformCommunityName} migration workflow:** 
+
+Community edition users can migrate to {TerraformEnterpriseShortName} or {TerraformCloudShortName}, and then integrate the {PlatformNameShort} capabilities.
+
+Although migration to the `cloud.terraform` collection is supported, we recommend using the `hashicorp.terraform` collection instead to take advantage of its API capabilities.
+
+== {Terraform}-initiated workflow
+
+For existing {Terraform} users, {Terraform} can directly call {PlatformNameShort} at the end of provisioning for a more seamless and secure workflow. This enables {Terraform} users to enhance their immutable infrastructure automation with {PlatformNameShort} Day 2 automation capabilities and manage infrastructure updates and lifecycle events.
