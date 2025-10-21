@@ -1,0 +1,185 @@
+[[aap-2.5-20251022]]
+
+
+= {PlatformNameShort} patch release October 22, 2025
+
+
+This release includes the following components and versions: 
+ 
+
+[cols="1a,3a", options="header"]
+
+
+|====
+
+| Release Date | Component versions
+
+| October 22, 2025 |
+
+* {ControllerNameStart} 4.6.21
+* {HubNameStart} 4.10.9
+* {EDAName} 1.1.13
+* Container-based installer {PlatformNameShort} (bundle) 2.5-20
+* Container-based installer {PlatformNameShort} (online) 2.5-20
+* Receptor 1.6.0
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-19
+* RPM-based installer {PlatformNameShort} (online) 2.5-19
+|
+|====
+
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1760635092
+
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1760635634
+
+
+== General
+
+The `ansible.controller` collection has been updated to 4.6.21.(AAP-56035)
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+link:https://access.redhat.com/security/cve/cve-2025-59682[CVE-2025-59682] `python-django`: Potential partial directory-traversal via `archive.extract()`.(AAP-54753)
+
+link:https://access.redhat.com/security/cve/cve-2025-59343[CVE-2025-59343] `automation-gateway`: `tar-fs` symlink validation bypass.(AAP-54393)
+
+link:https://access.redhat.com/security/cve/cve-2025-7647[CVE-2025-7647] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: insecure temporary file handling in `run-llama/llama_index`.(AAP-55890)
+
+link:https://access.redhat.com/security/cve/cve-2025-6985[CVE-2025-6985] `ansible-automation-platform-25/lightspeed-rhel8`: XXE vulnerability in `langchain-text-splitters`.(AAP-55257)
+
+link:https://access.redhat.com/security/cve/cve-2025-59682[CVE-2025-59682] `ansible-automation-platform-25/lightspeed-rhel8`: Potential partial directory-traversal via `archive.extract()`.(AAP-54720)
+
+link:https://access.redhat.com/security/cve/cve-2025-59681[CVE-2025-59681] `ansible-automation-platform-25/lightspeed-rhel8`: Potential SQL injection in `QuerySet.annotate()`, `alias()`, `aggregate()`, and `extra()` on MySQL and MariaDB1.(AAP-54661)
+
+
+== Deprecated
+
+== {PlatformNameShort}
+
+* Subscription credentials can no longer be viewed/edited from the system settings page.(AAP-55014)
+
+
+== New Features
+
+
+=== {PlatformNameShort}
+
+* Added a step in the subscription wizard that allows the user to configure automation analytics.(AAP-55094)
+
+* Added two new toggle options on the subscription wizard to allow for fetching subscriptions using basic authentication.(AAP-47865)
+
+
+== Enhancements
+
+
+=== {PlatformNameShort}
+
+* Azure AD authentication now searches more fields to find the username override field specified. If not found it will log a warning message indicating which fields are valid.(AAP-53789)
+
+
+=== {ControllerNameStart} 
+
+* Added support for *Red Hat* username and password for the subscription management API.(AAP-54976)
+
+=== Container-based {PlatformNameShort}
+
+* Implemented preflight ansible-core version validation.(AAP-54931)
+
+
+== Bug fixes
+
+=== {PlatformNameShort}
+
+* Fixed an issue where the UI triggered expensive queries on list endpoints that could be avoided. Query performance is now optimized on the Jobs list page and loading user administrative data during login.(AAP-54299)
+
+* Fixed an issue where the settings displayed *Red Hat* inconsistently in the API and UI.(AAP-54277)
+
+* Fixed an issue where {PlatformNameShort} 2.5 could not set/create a playbook when using branch override.(AAP-52566)
+
+* Fixed an issue where the {Gateway} did not use TLSv1.3 when communicating with other {PlatformNameShort} services.(AAP-49456)
+
+* Fixed an issue where empty strings displayed in the extra variables field on the *Jobs > Details* page.(AAP-49448)
+
+* Fixed an issue where the validation of prompt-on-launch credentials in a workflow job template did not handle updated credentials in the wizard.(AAP-40540)
+
+* Fixed an issue where the error handling in the authenticator form did not match other forms in the platform UI. API errors for specific fields are now correctly mapped to the form fields in the UI.(AAP-22928)
+
+* Fixed an issue where the platform auditors were not able to see automation execution and platform level settings.(AAP-53975)
+
+* Fixed an issue where some fields were missing the `autocomplete = new-password` setting.(AAP-53934)
+
+
+=== {OperatorPlatformNameShort}
+
+* Fixed an issue where the {LightspeedShortName} API failed during {PlatformNameShort} idle.(AAP-54175)
+
+* Fixed an issue that caused a failure to gather the job data from the controller API.(AAP-55635)
+
+* Fixed an issue where the user could not set an image without the respective version, causing the installation to enter an error loop.(AAP-55927)
+
+* Fixed an issue where backup and restore of an {PlatformNameShort} instance failed, restoring an upgraded {PlatformNameShort} environment from 2.4.(AAP-55649)
+
+
+=== {ControllerNameStart}
+
+* Fixed an issue where the platform auditor did not have access to automation controller settings.(AAP-55607)
+
+* Fixed an issue where the `system_administrator` role creation race condition which happened on new Openshift deployments resulted in the default instance group not being created.(AAP-54964)
+
+* Fixed an issue where Grafana notifications could not have an empty dashboard ID or panel ID.(AAP-54654)
+
+* Fixed an issue where the `awx.awx.license` appears to succeed when given an invalid `pool / subscription`.(AAP-54650)
+
+* Fixed an issue where the platform auditor was unable to view the controller settings.(AAP-53345)
+
+* Fixed an issue where there were missing instructions to set an environment variable in the CLI.(AAP-37812)
+
+* Fixed an issue for comments in extra vars sections where they were not persistent. All comments in YAML now persist on create and edit operations for a resource.(AAP-37071)
+
+* Fixed an issue where the controller metrics API was not accessible by the user with platform auditor role.(AAP-36492)
+
+* Fixed an issue where there was a duplicate value for subsystem_metrics_pipe_execute_seconds detected under _api/controller/v2/metrics/_ on {PlatformNameShort} 2.5.(AAP-55621)
+
+* Fixed and issue where the `ansible.platform` collection did not work with the default {PlatformName} credential type.(AAP-55685)
+
+* Fixed an issue where re-running the installer with a modified inventory hostname resulted in a traceback when the metrics were collected.(AAP-55638)
+
+
+=== {HubNameStart}
+
+* Fixed an issue where _/api/galaxy/_ui/v2/users/3/_ user detail displayed the data incorrectly.(AAP-54261)
+
+* Fixed an issue where an http 500 Error was returned when getting _/api/galaxy/_ui/v2/users/3/_.(AAP-55957)
+
+
+=== Container-based {PlatformNameShort}
+
+* Fixed an issue where `REDHAT_CANDLEPIN_VERIFY` CA permission was not set so that the controller could make requests to *subscription.rhsm.redhat.com*.(AAP-55181)
+
+* Fixed an issue where Ansible would fail to gather the system's UUID for Linux on Power.(AAP-54540)
+
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where setting `automationgateway_disable_https=false` resulted in install failure.(AAP-55475)
+
+* Fixed an issue where `RESOURCE_KEY SECRET_KEY` was not updated when restoring from a different environment.(AAP-54944)
+
+* Fixed an issue where {EDAName} DE credentials failed to populate on initial installation.(AAP-54520)
+
+* Fixed an issue where the automation gateway `envoy.log` did not receive logs after it was rotated.(AAP-54079)
+
+* Fixed an issue where `REDHAT_CANDLEPIN_VERIFY` CA permission was not set so that the controller could make requests to *subscription.rhsm.redhat.com*.(AAP-55184)
+
+
+== Receptor
+
+* Fixed issues where the previous version of receptor had stability issues on long-running jobs, with clusters under heavy load, and with network inconsistencies.(AAP-53742)
