@@ -1,56 +1,47 @@
-// Module included in the following assemblies:
-// assembly-using-builder.adoc
-
 :_mod-docs-content-type: PROCEDURE
 
 [id="updating-ee-image-locations"]
 
-= Updating {ExecEnvShort} image locations for RPM-based installations
+= Updating {ExecEnvShort} image locations
 
 [role="_abstract"]
-If you installed {PrivateHubName} separately from RPM-based {PlatformNameShort}, you can update your {ExecEnvShort} image locations to point to your {PrivateHubName}.
+Update your {ExecEnvShort} image locations to use images hosted on your {PrivateHubName}. You can use {ExecEnvShort}s from your private registry instead of the default registry.
 
 .Procedure
 
-. Go to the directory that contains `setup.sh`.
-. Create `./group_vars/automationcontroller` by running the following command:
+. Log in to {PlatformNameShort}.
+. Create a container registry credential for your {PrivateHubName}:
+.. From the navigation panel, select {MenuAECredentials}.
+.. Click btn:[Create credential].
+.. Enter your credential information:
 +
-----
-touch ./group_vars/automationcontroller
-----
+* *Name*: Enter a name, such as `Private Hub Registry`.
+* *Credential Type*: Select *Container Registry*.
+* *Authentication URL*: Enter the URL of your {PrivateHubName}, such as `\https://automationhub.example.org`.
+* *Username*: Enter your {PrivateHubName} username.
+* *Password* or *Token*: Enter your {PrivateHubName} password or authentication token.
+* *Verify SSL*: Clear this checkbox if your {PrivateHubName} uses self-signed certificates.
 +
-. Paste the following content into `./group_vars/automationcontroller`. Adjust the settings to fit your environment:
-+
-----
-# Automation hub registry
-registry_username: 'your-automation-hub-user'
-registry_password: 'your-automation-hub-password'
-registry_url: 'automationhub.example.org'
-registry_verify_ssl: False
+.. Click btn:[Create credential].
 
-## Execution environments
-control_plane_execution_environment: 'automationhub.example.org/ee-supported-rhel9:latest'
-
-global_job_execution_environments:
-  - name: "Default execution environment"
-    image: "automationhub.example.org/ee-supported-rhel9:latest"
-  - name: "Minimal execution environment"
-    image: "automationhub.example.org/ee-minimal-rhel9:latest"
-----
-+
-[NOTE]
-====
-For information on obtaining `registry_username` and `registry_password`, see link:{URLInstallationGuide}/index#proc-set-registry-username-password[Setting registry_username and registry_password].
-====
-
-. Run the `./setup.sh` script:
-+
-----
-$ ./setup.sh
-----
+. Update the default {ExecEnvShort}s to use images from your {PrivateHubName}:
+.. From the navigation panel, select {MenuInfrastructureExecEnvironments}.
+.. Locate the *Default {ExecEnvShort}* and click image:leftpencil.png[Edit,15,15] to edit it.
+.. In the *Image* field, update the image path to point to your {PrivateHubName}, such as `automationhub.example.org/ee-supported-rhel9:latest`.
+.. In the *Registry Credential* field, select the container registry credential that you created.
+.. Click btn:[Save {ExecEnvShort}].
+.. Locate the *Minimal {ExecEnvShort}* and click image:leftpencil.png[Edit,15,15] to edit it.
+.. In the *Image* field, update the image path to point to your {PrivateHubName}, such as `automationhub.example.org/ee-minimal-rhel9:latest`.
+.. In the *Registry Credential* field, select the container registry credential that you created.
+.. Click btn:[Save {ExecEnvShort}].
+.. Repeat these steps for any other {ExecEnvShort}s that you want to update to use images from your {PrivateHubName}.
 
 .Verification
 
-. Log in to {PlatformNameShort} as a user with system administrator access.
-. Go to {MenuInfrastructureExecEnvironments}.
-. In the *Image* column, confirm that the {ExecEnvShort} image location has changed from the default value of `<registry url>/ansible-automation-platform-<version>/<image name>:<tag>` to `<automation hub url>/<image name>:<tag>`.
+. From the navigation panel, select {MenuInfrastructureExecEnvironments}.
+. Verify that your {PrivateHubName} {ExecEnvShort}s appear in the list.
+. Optional: Create a test job template that uses one of the new {ExecEnvShort}s and run it to confirm that {ControllerName} can successfully pull and use the image from your {PrivateHubName}.
+
+.Additional resources
+
+* link:{URLControllerUserGuide}/assembly-controller-execution-environments[Execution environments]
