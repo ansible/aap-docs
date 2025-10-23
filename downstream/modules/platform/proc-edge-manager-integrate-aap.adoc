@@ -4,6 +4,8 @@
 
 = Integrating with {PlatformNameShort}
 
+[role="_abstract"]
+
 Integrate the {RedHatEdge} with your {PlatformNameShort} instance by modifying the `service-config.yaml` file to include authentication type, API URLs, OAuth client ID, and an optional OAuth token, followed by restarting the services.
 
 .Procedure
@@ -27,34 +29,33 @@ sudo vi /etc/flightctl/service-config.yaml
 [source,yaml]
 ----
 global:
-  baseDomain: <your-edge-manager-ip-or-domain> <1>
+  baseDomain: <your-edge-manager-ip-or-domain>
   auth:
-    type: aap <2>
-    insecureSkipTlsVerify: false <3>
+    type: aap
+    insecureSkipTlsVerify: false
     aap:
-      apiUrl: https://your-aap-instance.example.com <4>
-      externalApiUrl: https://your-aap-instance.example.com <5>
-      oAuthApplicationClientId: <client-id-from-oauth-app> <6>
-      oAuthToken: <your-oauth-token> <7>
+      apiUrl: https://your-aap-instance.example.com
+      externalApiUrl: https://your-aap-instance.example.com
+      oAuthApplicationClientId: <client-id-from-oauth-app>
+      oAuthToken: <your-oauth-token>
 ----
 +
-<1> The domain name or IP for the host, this is automatically set when the RPM is installed but you can override this. 
-It is the only field that is mandatory.
-<2> Set this to `aap` to enable {PlatformNameShort} authentication.
-<3> Set to `false`.
-Only set this to `true` to skip TLS certificate verification for the {PlatformNameShort} URLs. 
-For production environments, consider configuring a CA certificate (see the Self-signed certificates section).
-<4> The internal facing API URL for the running {PlatformNameShort} instance that makes requests against.
-You can configure this URL to be an internally accessible URL for the running {PlatformNameShort} instance. 
-For example, if there are separate internal or external ingresses.
-<5> The externally accessible URL of your running {PlatformNameShort} instance.
-<6> If you are using the automatic method, this field is not necessary. 
-This is the Client ID of the OAuth application configured in {PlatformNameShort} for the {RedHatEdge}. 
-If you do not have one yet, you can leave this empty and give an `oAuthToken` to allow the setup to create it.
-<7> If you are using the manual method, this field is not necessary. 
-This is an OAuth token with write permissions for the "Default" organization in your {PlatformNameShort} instance. 
-This is only needed if you want the setup process to automatically create the OAuth application. 
-Once created, this token is no longer necessary.
+// --- Explanations below (using definition list) ---
+
+baseDomain::
+  The domain name or IP for the host. This is the only mandatory field.
+type::
+  Set this to `aap` to enable {PlatformNameShort} authentication.
+insecureSkipTlsVerify::
+  Set to `false`. Only set this to `true` to skip TLS certificate verification for the {PlatformNameShort} URLs. For production environments, consider configuring a CA certificate (see the Self-signed certificates section).
+apiUrl::
+  The internal facing API URL for the running {PlatformNameShort} instance that makes requests against.
+externalApiUrl::
+  The externally accessible URL of your running {PlatformNameShort} instance.
+oAuthApplicationClientId::
+  This is the Client ID of the OAuth application configured in {PlatformNameShort} for the {RedHatEdge}. This is not necessary if you are using the automatic method.
+oAuthToken::
+  This is an OAuth token with write permissions for the "Default" organization. This is only needed if you want the setup process to automatically create the OAuth application. This is not necessary if you are using the manual method.
 
 +
 . Start the services:
