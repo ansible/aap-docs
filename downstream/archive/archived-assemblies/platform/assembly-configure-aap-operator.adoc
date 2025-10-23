@@ -1,0 +1,35 @@
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context: {context}]
+
+[id="configure-aap-operator_{context}"]
+
+:context: configure-aap-operator
+
+= Configuring the {OperatorPlatformName} on {OCP}
+
+The  {Gateway} for {PlatformNameShort} enables you to manage the following {PlatformNameShort} components to form a single user interface:
+
+* {ControllerNameStart}
+* {HubNameStart}
+* {EDAName}
+* {LightspeedShortName} (This feature is disabled by default, you must opt in to use it.)
+
+Before you can deploy the {Gateway} you must have {OperatorPlatformNameShort} installed in a namespace. 
+If you have not installed {OperatorPlatformNameShort} see xref:install-aap-operator_operator-platform-doc[Installing the {OperatorPlatformName} on {OCP}].
+
+[NOTE] 
+====
+{GatewayStart} is only available under {OperatorPlatformNameShort} version 2.5. Every component deployed under {OperatorPlatformNameShort} 2.5 defaults to version 2.5.
+====
+
+If you have the {OperatorPlatformNameShort} and some or all of the {PlatformNameShort} components installed see xref:operator-deploy-central-config_{context}[Deploying the platform gateway with existing {PlatformNameShort} components] for how to proceed. 
+
+include::platform/proc-operator-link-components.adoc[leveloffset=+1]
+include::platform/proc-operator-access-aap.adoc[leveloffset=+1]
+include::platform/proc-operator-deploy-central-config.adoc[leveloffset=+1]
+include::platform/proc-operator-external-db-gateway.adoc[leveloffset=+1]
+include::platform/proc-operator-aap-faq.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
