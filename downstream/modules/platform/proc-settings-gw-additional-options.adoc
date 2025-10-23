@@ -4,7 +4,7 @@
 
 = Configuring additional platform options
 
-//Content divided into multiple procedures to address issue AAP-30592
+[role="_abstract"]
 
 From the *{GatewayStart} settings* page, you can configure additional platform options.
 
@@ -26,7 +26,7 @@ As a result, expired tokens from the cache are never used.
 This setting defaults to 2 seconds. 
 If you have a large latency between {Gateway} and your services and observe 401 responses you must increase this setting to lower the number of 401 responses.
 * *Status endpoint backend timeout seconds*: Timeout (in seconds) for the status endpoint to wait when trying to connect to a backend.
-* *Status endpoint backend verify*: Specifies whether SSL certificates of the services are verified when calling individual nodes for statuses.
+* *Status endpoint backend verify*: Specifies whether SSL/TLS certificates of the services are verified when calling individual nodes for statuses.
 * *Resource client request timeout*: The timeout (in seconds) before the resource client will drop requests after forming connections.
 * *Request timeout*: Specifies, in seconds, the length of time before the proxy will report a timeout and generate a 504.
 * *Manage organization auth*: Controls whether any organization administrator has the privileges to create and manage users and teams. 
@@ -39,8 +39,8 @@ However, the values are not automatically synchronized between {Gateway} and {Co
 To prevent administrative issues, keep the `MANAGE_ORGANIZATION_AUTH` value consistent across both environments, especially if automation workflows run directly against {ControllerName}.
 ====
 +
-* *Stream idle timeout*: Timeout in seconds for idle streaming connections, for example, for the {PlatformNameShort} Lightspeed chatbot. Stream is closed if no data is transmitted within this period.
-* *Max stream duration*: Maximum total duration in seconds for streaming connections, for example, for the {PlatformNameShort} Lightspeed chatbot. Stream is closed after this time regardless of activity.
+* *Stream idle timeout*: Timeout in seconds for idle streaming connections, for example, for the {LightspeedShortName} chatbot. Stream is closed if no data is transmitted within this period.
+* *Max stream duration*: Maximum total duration in seconds for streaming connections, for example, for the {LightspeedShortName} chatbot. Stream is closed after this time regardless of activity.
 * *Aap deployment type*: The deployment type for this AAP instance.
 +
 . Click btn:[Save {Gateway} settings] to save the changes or proceed to configure the other platform options available.

@@ -4,10 +4,12 @@
 
 = Configuring SAML authentication
 
+[role="_abstract"]
+
 SAML allows the exchange of authentication and authorization data between an Identity Provider (IdP) and a Service Provider (SP). 
 {PlatformNameShort} is a SAML SP that you can configure to talk with one or more SAML IdPs to authenticate users. 
 
-Based on groups and attributes optionally provided by the SAML IdP, users can be placed into teams and organizations in {PlatformNameShort} based on the authenticator maps tied to this authenticator. This mapping ensures that when a user logs in through SAML, {PlatformNameShort} can correctly identify the user and assign the proper attributes like first name, last name, email, and group membership.
+Based on groups and attributes optionally provided by the SAML IdP, users can be placed into teams and organizations in {PlatformNameShort} based on the authenticator maps tied to this authenticator. This mapping ensures that when a user logs in through SAML, {PlatformNameShort} can correctly identify the user and assign the proper attributes such as given name, surname, email, and group membership.
 
 .Prerequisites
 
@@ -107,7 +109,7 @@ Values defined in this field override the dedicated fields provided in the UI. A
 }
 -----
 +
-This field is the equivalent to the `SOCIAL_AUTH_SAML_SP_EXTRA` in the API. For more information, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin’s SAML Python Toolkit] to learn about the valid service provider extra (SP_EXTRA) parameters.
+This field is the equivalent to the `SOCIAL_AUTH_SAML_SP_EXTRA` in the API. For more information, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin's SAML Python Toolkit] to learn about the valid service provider extra (SP_EXTRA) parameters.
 . Optional: Provide security settings in the *SAML Security Config* field. This field is the equivalent to the `SOCIAL_AUTH_SAML_SECURITY_CONFIG` field in the API. 
 +
 ----
@@ -128,7 +130,7 @@ This field is the equivalent to the `SOCIAL_AUTH_SAML_SP_EXTRA` in the API. For 
 ----
 For more information and additional options, see link:https://github.com/SAML-Toolkits/python-saml#settings[OneLogin's SAML Python Toolkit].
 +
-. Optional: In the *SAML IDP to extra_data attribute mapping* field, enter values to map  IDP attributes to extra_data attributes. These values will include additional user information beyond standard attributes like Email or Username to be mapped. For example:
+. Optional: In the *SAML IDP to extra_data attribute mapping* field, enter values to map  IDP attributes to extra_data attributes. These values will include additional user information beyond standard attributes such as Email or Username to be mapped. For example:
 +
 -----
 - Department

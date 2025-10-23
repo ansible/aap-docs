@@ -4,6 +4,8 @@
 
 = Revoke an access token
 
+[role="_abstract"]
+
 You can revoke an access token by deleting the token in the platform UI, or by using the `/o/revoke-token/` endpoint.
 
 Revoking an access token by this method is the same as deleting the token resource object, but it enables you to delete a token by providing its token value, and the associated `client_id` (and `client_secret` if the application is `confidential`). For example:
@@ -26,7 +28,7 @@ If you enable then disable it, any tokens created by external users in the meant
 This setting can be configured from the {MenuSetGateway} menu.
 ====
 
-Alternatively, to revoke OAuth2 tokens, you can use the `manage` utility, see xref:ref-controller-revoke-oauth2-token[Revoke oauth2 tokens].
+You can also revoke OAuth2 tokens by using the `manage` utility, see xref:ref-controller-revoke-oauth2-token[Revoke oauth2 tokens].
 
 On success, a response of `200 OK` is displayed. 
 Verify the deletion by checking whether the token is present in the `api/gateway/v1/tokens/` endpoint.
