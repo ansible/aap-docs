@@ -1,0 +1,48 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-central-auth-dependencies"]
+
+= Install the collections and dependencies for {Galaxy}
+
+.Prerequisites
+
+. A supported version of either the link:https://access.redhat.com/product-life-cycles[{RHEL}] or the link:https://docs.fedoraproject.org/en-US/releases/[Fedora] operating system
+
+. A supported version of https://access.redhat.com/support/policy/updates/ansible-automation-platform[{PlatformNameShort}]
+
+.Procedure
+
+. Install the collection for {Galaxy}:
++
+[listing]
+$ ansible-galaxy collection install middleware_automation.keycloak
+
+[NOTE]
+====
+This collection has two dependencies that you might also want to install depending on your network configuration. 
+
+`middleware_automation.redhat_csp_download` enables {PlatformNameShort} to connect to the Customer Portal to download {RHSSO} technology.
+
+`middleware_automation.wildfly` enables Keycloak to run on top of the Wildfly application server including Red Hat JBoss, the version of Wildfly officially supported by Red Hat.
+====
+
+. Depending on your configuration, you might also want to add some Python dependencies containing libraries used by {PlatformNameShort}: requires to use:
++
+[listing]
+# pip 3 install xml jmespath
+
+.Verification 
+
+. Run the command to display the collection list for {Galaxy}:
++
+[listing]
+# ansible-galaxy collection list
+
+[listing]
+# ansible-galaxy collection list
+#  /root/.ansible/collections/ansible_collections
+Collection                                Version
+----------------------------------------- -------
+middleware_automation.keycloak				1.0.1  
+middleware_automation.redhat_csp_download	1.2.1  
+middleware_automation.wildfly				1.0.2 
