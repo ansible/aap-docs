@@ -4,10 +4,12 @@
 
 = Understanding authenticator mapping
 
+[role="_abstract"]
+
 Authentication:: Validates a user's identity, typically through a username and password or a trust system.
 Authorization:: Determines what an authenticated user can do once they are authenticated. 
 
-In {PlatformNameShort}, authenticators manage authentication, validating users and returning details such as their username, first name, email, and group memberships (for example, LDAP groups). Authorization comes from the authenticator’s associated maps.
+In {PlatformNameShort}, authenticators manage authentication, validating users and returning details such as their username, given name, email, and group memberships (for example, LDAP groups). Authorization comes from the authenticator's associated maps.
 
 During the authentication process, after a user has authenticated, the authorization system starts with a default set of permissions in memory. Then sequentially, the authenticator maps are processed and adjust permissions based on their trigger conditions. When all the authenticator's maps are processed, the in-memory representation of the user's permissions are reconciled with their existing permissions. 
 
@@ -54,7 +56,7 @@ Superuser permission = *Skipped*
 Admin of teams = None
 -----
 
-To revoke superuser access, you can select the *Revoke* option on the *Superuser* map. That way, when the user does not meet the attribute criteria, the permissions update to False like in the following:
+To revoke superuser access, you can select the *Revoke* option on the *Superuser* map. That way, when the user does not meet the attribute criteria, the permissions update to False such as the following:
 
 [subs=+quotes]
 -----
@@ -63,7 +65,7 @@ Superuser permission = *False*
 Admin of teams = None
 -----
 
-The final *Team* map checks the user’s groups coming from the authenticator for admin access on the team “My Team”. If the user has the required group, the permissions update to the following:
+The final *Team* map checks the user's groups coming from the authenticator for admin access on the team “My Team”. If the user has the required group, the permissions update to the following:
 
 [subs=+quotes]
 -----
@@ -80,7 +82,7 @@ Access allowed = True
 Superuser permission = False
 Admin of teams = *Revoke admin of “My Team”*
 -----
-After processing all maps in the order defined, the final permissions reconcile, updating the user’s access based on the map rules.
+After processing all maps in the order defined, the final permissions reconcile, updating the user's access based on the map rules.
 
 In summary, authenticators validate users and delegate system authorization to the authenticator maps. Authenticator maps are executed in order creating an in-memory representation of the users' permissions which get reconciled with the actual permissions after all maps are executed.
 
