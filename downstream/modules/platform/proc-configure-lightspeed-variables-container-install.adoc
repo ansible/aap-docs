@@ -1,0 +1,53 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-lightspeed-variables_{context}"]
+
+= Configuring {LightspeedShortName} variables in the inventory file
+
+[role="_abstract"]
+To deploy {LightspeedShortName}, add the required installation variables to your inventory file under the `[all: vars]` group. You will also need to add specific variables to enable the Ansible Lightspeed coding assistant, the {AAPchatbot}, and the MCP server integration.
+
+[source,yaml]
+----
+# This is the list of all {LightspeedShortName} variables to add to the inventory file.
+
+# This section is for {LightspeedShortName} deployment
+# -----------------------------------------------------
+lightspeed_admin_user: <set your own>
+lightspeed_admin_password: <set your own>
+lightspeed_admin_email: <set your own>
+lightspeed_pg_host: <set your own>
+lightspeed_pg_password: <set your own>
+
+
+# This section is to configure {AAPchatbot}
+# ---------------------------------------------------------------------
+lightspeed_chatbot_model_url: <set your own>
+lightspeed_chatbot_model_api_key: <set your own>
+lightspeed_chatbot_model_id: : <set your own>
+
+
+# This section is to configure {AAPchatbot} with MCP server integration
+# ----------------------------------------------------------------------
+lightspeed_mcp_controller_enabled: false
+lightspeed_mcp_lightspeed_enabled: false
+
+
+# This section is to configure Ansible Lightspeed coding assistant
+# ----------------------------------------------------------------------
+lightspeed_wca_model_type: 'wca'
+lightspeed_wca_model_url: 'https://api.dataplatform.cloud.ibm.com'
+lightspeed_wca_model_verify_ssl: true
+lightspeed_wca_model_enable_anonymization: true
+lightspeed_wca_health_check: true
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:lightspeed-variables[Appendix: {LightspeedShortName} Inventory file variables]
+
+[role="_additional-resources"]
+.Next steps
+
+* xref:installing-containerized-aap[Installing containerized {PlatformNameShort}]
