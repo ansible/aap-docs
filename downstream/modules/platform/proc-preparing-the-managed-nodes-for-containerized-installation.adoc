@@ -5,13 +5,8 @@
 = Preparing the managed nodes for containerized installation
 
 [role="_abstract"]
-Managed nodes, also referred to as hosts, are the devices that {PlatformNameShort} is configured to manage.
-
-To ensure a consistent and secure setup of containerized {PlatformNameShort}, create a dedicated user on each host. {PlatformNameShort} connects as this user to run tasks on the host.
-
-Once configured, you can define the dedicated user for each host by adding `ansible_user=<username>` in your inventory file, for example: `aap.example.org ansible_user=aap`.
-
-Complete the following steps for each host:
+Managed nodes, also referred to as hosts, are the devices that {PlatformNameShort} manages. 
+To ensure a consistent and secure setup of containerized {PlatformNameShort}, create a dedicated user on each managed node. {PlatformNameShort} connects as this user to run tasks on the node.
 
 .Procedure
 
@@ -30,7 +25,7 @@ $ sudo passwd <username>
 +
 . Configure the user to run `sudo` commands.
 +
-For a secure and maintainable installation, it is a best practice to configure `sudo` privileges for the installation user in a dedicated file within the `/etc/sudoers.d/` directory.
+For a secure and maintainable installation, configure `sudo` privileges for the installation user in a dedicated file within the `/etc/sudoers.d/` directory.
 +
 .. Create a dedicated `sudoers` file for the user:
 +
