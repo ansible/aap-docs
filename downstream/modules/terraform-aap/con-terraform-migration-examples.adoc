@@ -13,7 +13,7 @@ These before and after examples help users understand how the modules can be con
 * **Before (`cloud.terraform.terraform`):**
 ----
 - name: Create a plan file using check mode
- cloud.terraform.terraform:
+  cloud.terraform.terraform:
    force_init: true
    project_path: "/usr/home/tf"
    plan_file: "/usr/home/tf/terraform.tfplan"
@@ -21,7 +21,7 @@ These before and after examples help users understand how the modules can be con
    check_mode: true
    check_destroy: true
    variables:
-       environment: prod
+     environment: prod
 ----
 
 * **After (`hashicorp.terraform.*`):**
@@ -30,7 +30,7 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Create configuration version with auto_queue_runs to false
- hashicorp.terraform.configuration_version:
+  hashicorp.terraform.configuration_version:
    workspace_id: ws-1234
    configuration_files_path: "usr/home/tf_files"
    auto_queue_runs: false
@@ -44,7 +44,7 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Create a plan only run with variables
- hashicorp.terraform.run:
+  hashicorp.terraform.run:
    workspace_id: ws-1234
    run_message: "plan-only vpc creation"
    poll: false
@@ -52,8 +52,8 @@ These before and after examples help users understand how the modules can be con
    tf_token: "{{ tfc_token }}"
    plan_only: true
    variables:
-       - key: "env"
-         value: "production"
+    - key: "env"
+      value: "production"
 ----
 
 == Example 2: Plan and apply
@@ -64,20 +64,20 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Plan and Apply Workflow - Step 1 - Generate Plan
- cloud.terraform.terraform:
+  cloud.terraform.terraform:
    force_init: true
    project_path: "/usr/home/tf"
    plan_file: "/usr/home/tf/workflow.tfplan"
    state: present
    check_mode: true
    variables:
-       environment: prod
+     environment: prod
 ----
 . Apply the plan:
 +
 ----
 - name: Plan and Apply Workflow - Step 2 - Apply Plan
- cloud.terraform.terraform:
+  cloud.terraform.terraform:
    project_path:  "/usr/home/tf"
    plan_file: "/usr/home/tf/workflow.tfplan"
    state: present
@@ -89,7 +89,7 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Create configuration version with auto_queue_runs to false
- hashicorp.terraform.configuration_version:
+  hashicorp.terraform.configuration_version:
    workspace_id: ws-1234
    configuration_files_path: "usr/home/tf_files"
    auto_queue_runs: false
@@ -105,7 +105,7 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Create a run with auto_apply
- hashicorp.terraform.run:
+  hashicorp.terraform.run:
    workspace_id: ws-1234
    run_message: "destroy vpc"
    state: "present"
@@ -122,22 +122,22 @@ These before and after examples help users understand how the modules can be con
 +
 ----
 - name: Create a save plan run
- hashicorp.terraform.run:
- workspace_id: ws-1234
- run_message: "save plan vpc creation"
- state: "present"
- tf_token: "{{ tfc_token }}"
- poll: true
- poll_interval: 10
- poll_timeout: 30
- save_plan: true
+  hashicorp.terraform.run:
+   workspace_id: ws-1234
+   run_message: "save plan vpc creation"
+   state: "present"
+   tf_token: "{{ tfc_token }}"
+   poll: true
+   poll_interval: 10
+   poll_timeout: 30
+   save_plan: true
 ----
 
 . Apply the plan. You get the `run_id` from the output of the run module task:
 +
 ----
 - name: Apply the save plan run
- hashicorp.terraform.run:
+  hashicorp.terraform.run:
    run_id: run-1234
    state: "applied"
    tf_token: "{{ tfc_token }}"

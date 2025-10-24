@@ -21,7 +21,7 @@ To migrate to the `hashicorp.terraform` collection, you must configure the `hash
 +
 ----
 - name: Create configuration version with auto_queue_runs to false
- hashicorp.terraform.configuration_version:
+  hashicorp.terraform.configuration_version:
    workspace_id: ws-1234
    configuration_files_path: "/usr/home/tf"
    auto_queue_runs: false
@@ -34,9 +34,9 @@ To migrate to the `hashicorp.terraform` collection, you must configure the `hash
 . Configure the following required parameters:
 * **`workspace_id or workspace + organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for `state: present`).
 
-* **`configuration_files_path`:** The path where the required {Terraform} files will be uploaded to create a configuration version (for `state: present`). The module accepts two file types for `configuration_files_path`:
+* **`configuration_files_path`:** The path where the required {TerraformEnterpriseShortName} or {TerraformCloudShortName} files will be uploaded to create a configuration version (for `state: present`). The module accepts two file types for `configuration_files_path`:
 +
-** **Directory:** Any folder containing {Terraform} files. The module auto-creates the .tar.gz file from all contents recursively.
+** **Directory:** Any folder containing {TerraformEnterpriseShortName} or {TerraformCloudShortName} files. The module auto-creates the .tar.gz file from all contents recursively.
 +
 ** **.tar.gz Archive:** Pre-compressed gzip tarball. The module validates TAR format and gzip compression.
 
@@ -44,9 +44,9 @@ To migrate to the `hashicorp.terraform` collection, you must configure the `hash
 +
 ** Only versions that were created using the API or CLI that are uploaded, have no active runs, and are not the current version for any workspace are archived.
 +
-** When the `configuration_version_id` is unspecified, {Terraform} picks the latest approved `configuration_version_id` in the workspace.
+** When the `configuration_version_id` is unspecified, {TerraformEnterpriseShortName} or {TerraformCloudShortName} picks the latest approved `configuration_version_id` in the workspace.
 
-* **auto_queue_runs:** Determines if {Terraform} automatically starts a run after the configuration upload (`true` by default) or requires manual initiation (`false`).
+* **auto_queue_runs:** Determines if {TerraformEnterpriseShortName} or {TerraformCloudShortName} automatically starts a run after the configuration upload (`true` by default) or requires manual initiation (`false`).
 
 . Set additional link:https://console.redhat.com/ansible/automation-hub/repo/published/hashicorp/terraform/content/module/configuration_version/[optional parameters] as needed.
 
