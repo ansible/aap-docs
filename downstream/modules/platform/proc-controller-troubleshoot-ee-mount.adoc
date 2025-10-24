@@ -4,6 +4,9 @@
 
 = Troubleshooting {ExecEnvShort} mount options
 
+[role="_abstract"]
+When exposing paths to isolated jobs that use {ExecEnvShort}s, SSH errors can occur if the ownership permissions are not set correctly on the mounted volumes.
+
 In some cases where the `/etc/ssh/*` files were added to the {ExecEnvShort} image due to customization of an {ExecEnvShort}, an SSH error can occur.
 
 For example, exposing the `/etc/ssh/ssh_config.d:/etc/ssh/ssh_config.d:O` path enables the container to be mounted, but the ownership permissions are not mapped correctly.
@@ -37,8 +40,8 @@ This informs Podman to run a command similar to the following example, where the
 podman run -v /ssh_config:/etc/ssh/ssh_config.d/:O ...
 ----
 
-To expose isolated paths in OpenShift or Kubernetes containers as HostPath, use the following configuration:
-
+. To expose isolated paths in OpenShift or Kubernetes containers as HostPath, use the following configuration:
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 [
@@ -50,9 +53,9 @@ To expose isolated paths in OpenShift or Kubernetes containers as HostPath, use 
 // Removing following image and added code block above:
 // image:settings-paths2expose-iso-jobs-mount-containers.png[Expose isolated jobs]
 
-Set *Expose host paths for Container Groups* to *On* to enable it.
-
+. Set *Expose host paths for Container Groups* to *On* to enable it.
++
 When the playbook runs, the resulting Pod specification is similar to the following example.
 Note the details of the `volumeMounts` and `volumes` sections.
-
++
 image:mount-containers-playbook-run-podspec.png[Pod specification]
