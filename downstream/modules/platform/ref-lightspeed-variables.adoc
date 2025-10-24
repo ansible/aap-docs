@@ -1,0 +1,347 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="lightspeed-variables"]
+
+= Ansible Lightspeed variables
+
+[role="_abstract"]
+
+Configure Ansible Lightspeed by setting inventory file variables during installation. Use this reference to determine which variables to set for your deployment requirements.
+
+== Ansible Lightspeed variables
+
+Inventory file variables for Ansible Lightspeed.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_admin_password`
+| Ansible Lightspeed administrator password. Use of special characters for this variable is limited. The password can include any printable ASCII character except `/`, `"`, or `@`.
+| Required
+|
+
+| N/A
+| `lightspeed_admin_user`
+| Username used to identify and create the Ansible Lightspeed admin user.
+| Optional
+| `admin`
+
+| N/A
+| `lightspeed_chat_rate_throttle`
+| Chat rate throttle.
+| Optional
+| `10/minute`
+
+| N/A
+| `lightspeed_nginx_client_max_body_size`
+| Maximum allowed size for data sent to Ansible Lightspeed through NGINX.
+| Optional
+| `5m`
+
+| N/A
+| `lightspeed_nginx_disable_hsts`
+| Controls whether HTTP Strict Transport Security (HSTS) is enabled or disabled for Ansible Lightspeed. Set this variable to `true` to disable HSTS.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_nginx_disable_https`
+| Controls whether HTTPS is enabled or disabled for Ansible Lightspeed. Set this variable to `true` to disable HTTPS.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_nginx_hsts_max_age`
+| Maximum duration (in seconds) that HTTP Strict Transport Security (HSTS) is enforced for Ansible Lightspeed.
+| Optional
+| `63072000`
+
+| N/A
+| `lightspeed_nginx_http_port`
+| Port number that Ansible Lightspeed listens on for HTTP requests.
+| Optional
+| `8084`
+
+| N/A
+| `lightspeed_nginx_https_port` 
+| Port number that Ansible Lightspeed listens on for HTTPS requests.
+| Optional
+| `8447`
+
+| N/A
+| `lightspeed_nginx_https_protocols`
+| Protocols that Ansible Lightspeed will support when handling HTTPS traffic.
+| Optional
+| `[TLSv1.2, TLSv1.3]`
+
+| N/A
+| `lightspeed_nginx_user_headers`
+| Custom Nginx headers. List of additional NGINX headers to add to Ansible Lightspeed's NGINX configuration.
+| Optional
+| []
+
+| N/A
+| `lightspeed_nginx_read_timeout`
+| Sets the HTTP timeout for end-user requests. The minimum value is `10` seconds.
+| Optional
+| `3600`
+
+| N/A
+| `lightspeed_pg_cert_auth`
+| Controls whether client certificate authentication is enabled or disabled on the Ansible Lightspeed PostgreSQL database. Set this variable to `true` to enable client certificate authentication.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_pg_database`
+| Name of the PostgreSQL database used by Ansible Lightspeed.
+| Optional
+| `lightspeed`
+
+| N/A
+| `lightspeed_pg_host`
+| Hostname of the PostgreSQL database used by Ansible Lightspeed.
+| Required
+|
+
+| N/A
+| `lightspeed_pg_password`
+| Password for the Ansible Lightspeed PostgreSQL database user. Use of special characters for this variable is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_port`
+| Port number for the PostgreSQL database used by Ansible Lightspeed.
+| Optional
+| `5432`
+
+| N/A
+| `lightspeed_pg_sslmode`
+| Controls the SSL mode to use when {Gateway} connects to the PostgreSQL database. Valid options include `verify-full`, `verify-ca`, `require`, `prefer`, `allow`, `disable`.
+| Optional
+| `prefer`
+
+| N/A
+| `lightspeed_pg_tls_cert`
+| Path to the PostgreSQL SSL/TLS certificate file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_tls_key`
+| Path to the PostgreSQL SSL/TLS key file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_pg_username`
+| Username for the Ansible Lightspeed PostgreSQL database user.
+| Optional
+| `lightspeed`
+
+| N/A
+| `lightspeed_secret_key`
+| Secret key value used by Ansible Lightspeed to sign and encrypt data.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_cert`
+| Path to the SSL/TLS certificate file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_key`
+| Path to the SSL/TLS key file for Ansible Lightspeed.
+| Optional
+|
+
+| N/A
+| `lightspeed_tls_remote`
+| Denote whether the Ansible Lightspeed provided certificate files are local to the installation program (`false`) or on the remote component server (`true`).
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_use_archive_compression`
+| Controls whether archive compression is enabled or disabled for Ansible Lightspeed. You can control this functionality globally by using `use_archive_compression`.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_use_db_compression`
+| Controls whether database compression is enabled or disabled for Ansible Lightspeed. You can control this functionality globally by using `use_db_compression`.
+| Optional
+| `false`
+
+|===
+
+== Ansible Lightspeed coding assistant variables
+
+Inventory file variables for Ansible Lightspeed coding assistant.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_wca_model_type`
+| {ibmwatsonxcodeassistant} model deployment mode, cloud (`wca`) or on-premise (`wca-onprem`).
+| Optional
+| `wca`
+
+| N/A
+| `lightspeed_wca_model_url`
+| URL of the {ibmwatsonxcodeassistant} model. For cloud deployment, the URL could be `\https://api.dataplatform.test.cloud.ibm.com`.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_model_api_key`
+| API key of the {ibmwatsonxcodeassistant} model that was generated during the model installation.
+| Required
+|
+
+| N/A
+| `lightspeed_wca_model_id`
+| ID of the {ibmwatsonxcodeassistant} model.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_model_verify_ssl`
+| Denotes whether or not to verify {ibmwatsonxcodeassistant}'s web certificates when making calls from Ansible Lightspeed to itself during installation. Set to `false` to disable web certificate verification.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_model_enable_anonymization`
+a| Controls whether the anonymization of Personally Identifiable Information (PII) is enabled. PII information includes passwords, IP addresses, email addresses, and other sensitive data. 
+
+When PII anonymization is enabled, users' personal information is modified to some generic values to protect their data and reduce the risk of data leaks. 
+
+You can turn off the anonymization by specifying the value as `false` if you want to retain all original information as entered by users and improve the quality of the answers. 
+
+If you set the value to `false` and the Ansible administrator is using Ansible Lightspeed in hybrid mode (where the model is in {ibmwatsonxcodeassistant} in IBM Cloud) then their users' PII is sent to IBM Cloud.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_model_username`
+| For on-premise deployment only. The username you use to connect to an IBM Cloud Pak for Data deployment.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_health_check`
+| Enables or disables {ibmwatsonxcodeassistant} health check.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_wca_idp_url`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) URL. 
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_idp_login`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) username.
+| Optional
+|
+
+| N/A
+| `lightspeed_wca_idp_password`
+| For cloud deployment only. The {ibmwatsonxcodeassistant} Identity Provider (IdP) password.
+| Optional
+|
+
+|===
+
+== Ansible Lightspeed intelligent assistant variables
+
+Inventory file variables for Ansible Lightspeed intelligent assistant.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_chatbot_model_url`
+| The inference API base URL on your LLM setup. For example, `\https://your_inference_api/v1`.
+| Optional
+|
+
+| N/A
+| `lightspeed_chatbot_model_verify_ssl`
+| Controls whether SSL/TLS certificate verification is enabled or disabled when making HTTPS requests.
+| Optional
+| `true`
+
+| N/A
+| `lightspeed_chatbot_default_provider`
+a| The provider type of your LLM setup by using one of the following values: 
+
+* {RHELAI}: `rhelai`
+* {OCPAI}: `rhoai`
+
+| Optional
+| `rhoai`
+
+| N/A
+| `lightspeed_chatbot_http_port`
+| Port number that Ansible Lightspeed intelligent assistant listens on for HTTP requests.
+| Optional
+| `8085`
+
+| N/A
+| `lightspeed_chatbot_model_id`
+| The ID of the LLM model that is configured on your LLM setup.
+| Optional
+|
+
+| N/A
+| `lightspeed_chatbot_model_api_key`
+| The API token or the API key of your LLM setup. This token is sent along with the authorization header when an inference API is called.
+| Optional
+|
+
+|===
+
+== Ansible Lightspeed intelligent assistant integration with MCP server variables
+
+Inventory file variables for Ansible Lightspeed intelligent assistant integration with MCP server.
+
+[cols="25%,25%,30%,10%,10%",options="header"]
+|===
+| RPM variable name | Container variable name | Description | Required or optional | Default
+
+| N/A
+| `lightspeed_mcp_controller_enabled`
+| Controls whether the Ansible Lightspeed MCP controller is enabled or disabled.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_mcp_controller_port`
+| Lightspeed MCP controller port.
+| Optional
+| `8004`
+
+| N/A
+| `lightspeed_mcp_lightspeed_enabled`
+| Lightspeed MCP lightspeed enabled.
+| Optional
+| `false`
+
+| N/A
+| `lightspeed_mcp_lightspeed_port`
+| Lightspeed MCP lightspeed port.
+| Optional
+| `8005`
+
+|===
