@@ -17,20 +17,21 @@ Choose the installation program you need based on your {RHEL} environment intern
 .. For offline or bundled installations: *{PlatformNameShort} {PlatformVers} Containerized Setup Bundle*
 
 . Copy the installation program `.tar.gz` file and the optional manifest `.zip` file onto your {RHEL} host.
-.. You can use the `scp` command to securely copy the files. The basic syntax for `scp` is:
++
+Use the `scp` command to securely copy the files. The basic syntax for `scp` is:
 +
 ----
 scp [options] <path_to_source_file> <path_to_destination>
 ----
 +
-Use the following `scp` command to copy the installation program `.tar.gz` file to an AWS EC2 instance with a private key (replace the placeholder `<>` values with your actual information):
+For example, use the following `scp` command to copy the installation program `.tar.gz` file to an AWS EC2 instance with a private key (replace the placeholder `<>` values with your actual information):
 +
 ----
 scp -i <path_to_private_key> ansible-automation-platform-containerized-setup-<version_number>.tar.gz ec2-user@<remote_host_ip_or_hostname>:<path_to_destination>
 ----
 +
-. Decide where you want the installation program to reside on the file system. This is referred to as your installation directory.
-.. Installation related files are created under this location and require at least 15 GB for the initial installation.
+. Decide where you want the installation program to reside on the file system. This is your installation directory.
+.. The installation creates installation-related files under this location and requires at least 15 GB for the initial installation.
 
 . Unpack the installation program `.tar.gz` file into your installation directory, and go to the unpacked directory. 
 +
