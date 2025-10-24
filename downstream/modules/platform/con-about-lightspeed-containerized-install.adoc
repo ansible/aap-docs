@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-You can deploy and use {LightspeedShortName} when you perform a new {ContainerBase} of {PlatformNameShort} {PlatformVers}. 
+You can deploy and use {LightspeedShortName} when you perform a new {ContainerBase} of {PlatformNameShort} {PlatformVers}, or upgrade from containerized {PlatformNameShort} 2.5 to {PlatformVers}. 
 
 {LightspeedShortName} includes two main components that enhance your automation experience with generative artificial intelligence (AI):
 
@@ -15,25 +15,12 @@ You can deploy and use {LightspeedShortName} when you perform a new {ContainerBa
 
 [IMPORTANT]
 ====
-You can only install {LightspeedShortName} with a new {ContainerBase} of {PlatformNameShort}. It is not possible to install it when migrating or upgrading an existing {ContainerBase}.
+Red Hat does not collect any telemetry data from your interactions with {LightspeedShortName}. 
 ====
-
-== Ansible Lightspeed intelligent assistant
-
-Ansible Lightspeed intelligent assistant is an intuitive chat interface embedded within the Ansible Automation Platform, and uses generative artificial intelligence (AI) to answer questions about the platform.
-
-The Ansible Lightspeed intelligent assistant interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work.
-
-To use the Ansible Lightspeed intelligent assistant, you need:
-
-* A valid subscription to Ansible Automation Platform.
-* Deployment of an LLM service that is hosted on one of these platforms: Red Hat Enterprise Linux AI, Red Hat OpenShift AI, or Red Hat AI Inference Server.
-
-See Prerequisites (URL) for the complete list of requirements before starting the installation.
 
 == {AAPchatbot}
 
-{AAPchatbot} is an intuitive chat interface embedded within the {PlatformNameShort}, and uses generative artificial intelligence (AI) to answer questions about the platform.
+{AAPchatbot} is an intuitive chat interface embedded in the {PlatformNameShort}, and uses generative artificial intelligence (AI) to answer questions about the platform.
 
 The {AAPchatbot} interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work.
 
@@ -42,9 +29,7 @@ To use the {AAPchatbot}, you need:
 * A valid subscription to {PlatformNameShort}.
 * Deployment of an LLM service that is hosted on one of these platforms: {RHELAI}, {OCPAI}, or Red Hat AI Inference Server.
 
-See Prerequisites (URL) for the complete list of requirements before starting the installation.
-
-*Integration with the MCP server*
+== Integration with MCP server
 
 {AAPchatbot} integration with the Model Context Protocol (MCP) server is available as a Technology Preview release. MCP is an open protocol that enables applications to give real-time context to LLMs.
 
@@ -52,7 +37,7 @@ This integration enables the {AAPchatbot} to request and receive the latest info
 
 [NOTE]
 ====
-Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see Technology Preview Features Support Scope.
+Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see link:https://access.redhat.com/support/offerings/techpreview/[Technology Preview Features Support Scope]
 ====
 
 == Ansible Lightspeed coding assistant
@@ -70,17 +55,15 @@ To use the Ansible Lightspeed coding assistant, you need:
 * A valid subscription to {PlatformName}.
 * A valid subscription to {ibmwatsonxcodeassistant}.
 
-See Prerequisites (URL) for the complete list of requirements before starting the installation.
+== Deployment models
 
-* *Deployment models*
-+
 The Ansible Lightspeed coding assistant supports two deployment models. No telemetry data is collected in either configuration.
 
-** *On-premise deployment*
+* *On-premise deployment*
 +
 Both {LightspeedShortName} and the {ibmwatsonxcodeassistant} model (IBM Cloud Pak for Data) are on-premise deployments.
 
-** *Hybrid deployment*
+* *Hybrid deployment*
 +
 {LightspeedShortName} is an on-premise deployment, while {ibmwatsonxcodeassistant} model is a cloud deployment.
 +
@@ -90,13 +73,12 @@ A hybrid deployment model provides the following benefits:
 *** Integrated authentication by using the {PlatformNameShort} for user authentication and removing the need for a separate Red Hat cloud login.
 *** Regional choice for organizations to deploy {LightspeedShortName} in their preferred geographical region.
 
-== Prerequisites
+== {PlatformNameShort} requirements
 
-* General requirements:
+* Licensing requirements:
 
 ** A valid {PlatformNameShort} subscription.
 ** Administrator privileges for the {PlatformNameShort}.
-** Compliance with System requirements(URL) for {ContainerBase} of the {PlatformNameShort}.
 
 * Additional requirements for Ansible Lightspeed coding assistant:
 
@@ -107,22 +89,22 @@ A hybrid deployment model provides the following benefits:
 * Additional requirements for {AAPchatbot}:
 
 ** Deployment of an LLM service that is hosted on one of these platforms: {RHELAI}, {OCPAI}, or Red Hat AI Inference Server.
-+
-*Large Language Model (LLM) provider requirements*
-+
+
+== Large Language Model (LLM) provider requirements
+
 You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. An LLM is a type of machine learning model that can interpret and generate human-like language. When an LLM is used with the {AAPchatbot}, the LLM can interpret questions accurately and provide helpful answers in a conversational manner.
-+
+
 {AAPchatbot} can rely on the following Red Hat LLM providers:
 
-*** *{RHELAI}*
+* *{RHELAI}*
 +
-You can configure {RHELAI} as the LLM provider. As the {RHEL} is in a different environment than the {LightspeedShortName} deployment, the model deployment must allow access using a secure connection. For more information, see Optional: Allowing access to a model from a secure endpoint. (URL)
+You can configure {RHELAI} as the LLM provider. As the {RHEL} is in a different environment than the {LightspeedShortName} deployment, the model deployment must allow access using a secure connection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_ai/1.5#creating_secure_endpoint[Optional: Allowing access to a model from a secure endpoint]. 
 +
 {AAPchatbot} supports a virtual large language model (vLLM) Server. When self-hosting an LLM with {RHELAI}, you can use vLLM Server as the inference engine.
 
-*** *{OCPAI}*
+* *{OCPAI}*
 +
-You must deploy an LLM on the {OCPAI} single-model serving platform that uses the Virtual Large Language Model (vLLM) runtime. If the model deployment resides in a different OpenShift environment than the {LightspeedShortName} deployment, include a route to expose the model deployment outside the cluster. For more information, see About the single-model serving platform.
+You must deploy an LLM on the {OCPAI} single-model serving platform that uses the Virtual Large Language Model (vLLM) runtime. If the model deployment resides in a different OpenShift environment than the {LightspeedShortName} deployment, include a route to expose the model deployment outside the cluster. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.23#about-the-single-model-serving-platform_serving-large-models[About the single-model serving platform].
 +
 {AAPchatbot} supports vLLM Server. When self-hosting an LLM with {OCPAI}, you can use vLLM Server as the inference engine.
 +
@@ -131,9 +113,9 @@ You must deploy an LLM on the {OCPAI} single-model serving platform that uses th
 For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider.
 ====
 
-*** *Red Hat AI Inference Server*
+* *Red Hat AI Inference Server*
 +
-You can deploy an LLM using Red Hat AI Inference Server as your inference runtime. Red Hat AI Inference Server supports vLLM runtimes for efficient model serving and can be configured to work with {AAPchatbot}. For more information, see Red Hat AI Inference Server documentation.
+You can deploy an LLM using Red Hat AI Inference Server as your inference runtime. Red Hat AI Inference Server supports vLLM runtimes for efficient model serving and can be configured to work with {AAPchatbot}. For more information, see link:http://docs.redhat.com/en/documentation/red_hat_ai_inference_server/3.2/html/getting_started/rhaiis-getting-started-overview_getting-started[Red Hat AI Inference Server documentation].
 +
 If the Red Hat AI Inference Server deployment is in a different environment than the {LightsDpeedShortName} deployment, ensure the model deployment allows access using a secure connection and configure appropriate network routing.
 +
@@ -152,20 +134,19 @@ a|An {PlatformNameShort} administrator who wants to deploy {LightspeedShortName}
 Perform the following tasks:
 
 * Configure {LightspeedShortName} variables in the inventory file.
-* Install containerized {PlatformNameShort}.
-* To install the Ansible Lightspeed coding assistant, configure the Ansible VS Code extension.
+* Install or upgrade to containerized {PlatformNameShort} {PlatformVers}.
+* If you want to install the Ansible Lightspeed coding assistant, configure the Ansible VS Code extension.
 
 |Access and use the {AAPchatbot}
-|All Ansible users within the organization who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. See the topic Using the {AAPchatbot}.
+|All Ansible users within the organization who want to use the intelligent assistant to get answers to their questions about the {PlatformNameShort}. See the topic xref:con-using-chatbot_deploying-lightspeed-containerized-install[Using the {AAPchatbot}].
 
 |Access and use the Ansible Lightspeed coding assistant
-a|All Ansible users within the organization who want to use the coding assistant to create Ansible content:
+a|All Ansible users within the organization who want to use the coding assistant to link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/developing-ansible-content_lightspeed-user-guide[develop Ansible content]:
 
-* Single-task or multitask recommendations
-* Playbooks with their explanations
-* Roles with their explanations
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/developing-ansible-content_lightspeed-user-guide#con-task-recommendations_developing-ansible-content[Single task or multitask recommendations]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/developing-ansible-content_lightspeed-user-guide#playbook-generation_developing-ansible-content[Create playbooks and view playbook explanations]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/developing-ansible-content_lightspeed-user-guide#role-creation_developing-ansible-content[Create roles and view role explanations]
 
-See Developing Ansible content (URL) in the {LightspeedShortName} user guide.
 |===
 
 
