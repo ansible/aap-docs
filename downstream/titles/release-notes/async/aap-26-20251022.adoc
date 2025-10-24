@@ -1,0 +1,228 @@
+[[aap-26-20251022]]
+
+= {PlatformNameShort} patch release October 22, 2025
+
+This release includes the following components and versions: 
+
+[cols="1a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| October 22, 2025 |
+
+* {ControllerName} 4.7.4
+* {HubNameStart} 4.11.2
+* {EDAName} 1.2.1
+* Container-based installer {PlatformNameShort} (bundle) 2.6-2
+* Container-based installer {PlatformNameShort} (online) 2.6-2
+* Receptor 1.6.0
+* RPM-based installer {PlatformNameShort} (bundle) 2.6-2
+* RPM-based installer {PlatformNameShort} (online) 2.6-2
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.6.0-0.1761281301
+
+* Cluster-scoped Bundle: aap-operator.v2.6.0-0.1761281346
+
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+link:https://access.redhat.com/security/cve/cve-2025-59682[CVE-2025-59682] `python-django`: Potential partial directory-traversal via archive.extract().(AAP-54755)
+
+link:https://access.redhat.com/security/cve/cve-2025-9908[CVE-2025-9908] `event-driven-ansible`: Sensitive internal headers disclosure in Ansible Automation Platform Event-Driven Ansible event streams.(AAP-53582)
+
+link:https://access.redhat.com/security/cve/cve-2025-9907[CVE-2025-9907] `event-driven-ansible`: Event stream test mode exposes sensitive headers in Ansible Automation Platform Event-Driven Ansible.(AAP-53580)
+
+link:https://access.redhat.com/security/cve/cve-2025-59343[CVE-2025-59343] `automation-platform-ui`: tar-fs symlink validation bypass.(AAP-54392)
+
+link:https://access.redhat.com/security/cve/cve-2025-58754[CVE-2025-58754] `automation-platform-ui`: Axios DoS via lack of data size check.(AAP-53718)
+
+
+== {PlatformNameShort}
+
+=== Features
+
+* Added a step in the subscription wizard that allows the user to configure automation analytics.(AAP-55094)
+
+* Added two new toggle options on the subscription wizard to allow for fetching subscriptions using basic authentication.(AAP-47865)
+
+
+=== Bug Fixes
+
+* Fixed an issue where the `ansible-builder` and `ansible-navigator` did not use execution environment images from ansible-automation-platform-26 namespace by default.(AAP-54934)
+
+* Fixed an issue where the settings did not display *Red Hat* consistently in the API and UI.(AAP-54276)
+
+* Fixed an issue where the decision environment dropdown was broken. Replaced the dropdown type for decision environments in the rulebook activation form so that when there are no decision environments available, the dropdown displays No results found instead of an empty dropdown.(AAP-53844)
+
+* Fixed an issue where creating resources with `cookie/xcrf` token failed. Aligned dependency versions between Konflux build and component repository.(AAP-53561)
+
+* Fixed an issue where the component label for the Platform Auditor role did not display all components.(AAP-53551)
+
+* Fixed an issue where empty strings were displayed in the extra variables field on the *Jobs > Details* page.(AAP-49448)
+
+* Fixed an issue where the *Load More* in authentication mapping role dropdown did not work.(AAP-54049)
+HubName
+* Fixed an issue where the user was unable to create {EDAName} or {HubName} roles when creating a custom role and selecting the *Automation Decisions* project or credential types because the UI displayed only the {ControllerName} permissions.(AAP-54756)
+ControllerName
+* Fixed an issue where the PatternFly 6 Upgrade broke the {PlatformNameShort} topology layout and fullscreen mode.(AAP-51106)
+
+* Fixed an issue where some fields were missing `autocomplete = new-password` setting.(AAP-55783)
+
+* Fixed an issue where the user was unable to select the default execution environment in the automation settings page.(AAP-39321)
+
+* Fixed an issue where the LDAP Group Type parameters failed to save user preferences when the language was initially set to `es_ES`, resulting in a wrong version displayed on the user interface due to an uninitialized translation object.(AAP-56356)
+
+* Fixed an issue that prevented SAML and AzureAD authentication when local user accounts share the same email address.(AAP-56518)
+
+
+=== Deprecated
+
+* Subscription credentials can no longer be viewed/edited from the system settings page.(AAP-55014)
+
+
+
+== {OperatorPlatformNameShort}
+
+
+=== Bug Fixes
+
+* Fixed an issue where Ansible Lightspeed API version did not work during {PlatformNameShort} idle.(AAP-54174)
+
+* Fixed an issue that caused a failure to gather the job data from the controller API.(AAP-55632)
+
+* Fixed a bug where the user could set an image without the respective version, causing the installation to enter an error loop.(AAP-55642)
+
+* Fixed an issue where the backup and restore {PlatformNameShort} instance failed, from cluster A to cluster B, when restoring an upgraded AAP environment from 2.4.(AAP-55648)
+
+
+
+== {LightspeedShortName}
+
+=== Features
+
+You can now deploy and use {LightspeedShortName} on a new containerized installation of {PlatformNameShort} 2.6. {LightspeedShortName} includes two main components that enhance your automation experience with generative artificial intelligence (AI):
+
+{LightspeedShortName} intelligent assistant, which is an AI-powered, intuitive chat interface embedded within the {PlatformNameShort}. The {LightspeedShortName} intelligent assistant interacts with users in their natural language prompts in English, and uses Large Language Models (LLMs) to generate quick, accurate, and personalized responses. These responses empower Ansible users to work more efficiently, thereby improving productivity and the overall quality of their work.
+
+To use the {LightspeedShortName} intelligent assistant, you need: 
+
+* A valid subscription to {PlatformNameShort}.
+
+* Deployment of an LLM service that is hosted on one of these platforms: Red Hat Enterprise Linux AI, Red Hat OpenShift AI, or Red Hat AI Inference Server. 
+
+The integration of {LightspeedShortName} intelligent assistant with the Model Context Protocol (MCP) server is now available as a Technology Preview release. This integration enhances the user experience by delivering relevant, dynamically sourced data results to your queries. 
+
+[NOTE]
+====
+Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see Technology Preview Features Support Scope.
+====
+
+{LightspeedShortName} coding assistant, which is a generative AI service that works with {ibmwatsonxcodeassistant} to help developers create and maintain Ansible content more efficiently. It can generate code recommendations for:
+
+* Single-task or multi-task recommendations
+
+* Playbooks with explanations
+
+* Roles with explanations
+
+{LightspeedShortName} integration with {ibmwatsonxcodeassistant} produces more accurate, reliable, and workflow-integrated automation code. It also shortens the onboarding time for new Ansible developers and improves team productivity.  
+
+To use the {LightspeedShortName} coding assistant, you need:
+
+* A valid subscription to {PlatformName}.
+
+* A valid subscription to {ibmwatsonxcodeassistant}.
+
+For more information, see Deploying {LightspeedShortName} on containerized {PlatformNameShort} in the containerized install user guide. <hyperlink to chapter in containerized install guide>. 
+
+=== Enhancements
+
+* Added `postgres_extra_settings` to {PlatformNameShort} operators to apply PostgreSQL configuration file level changes to managed postgres.(AAP-55053)
+
+
+
+== {ControllerNameStart}
+
+=== Enhancements
+
+* Added support for Red Hat username and password for the subscription management API.(AAP-54975)
+
+=== Bug Fixes
+
+* Fixes the `system_administrator` role creation race condition which most commonly happened on new Openshift deployments resulting in the default instance group not being created.(AAP-54963)
+
+* Fixed an issue where the Controller container file was missing the metrics utility in version 2.6.(AAP-54948)
+
+* Fixed an issue where the `awx.awx.license` appeared to succeed when given an invalid _pool/subscription_.(AAP-54768)
+
+* Fixed an issue where the `ansible.platform` collection did not work with the default {PlatformName} credential type.(AAP-41000)
+
+* Fixed an issue where there was a duplicate value (`subsystem_metrics_pipe_execute_seconds`) detected under _api/controller/v2/metrics/_ on {PlatformNameShort} 2.5.(AAP-55621)
+
+* Fixed an issue where the platform auditor did not have access to controller settings.(AAP-55607)
+
+
+
+== {HubNameStart}
+
+
+=== Enhancements
+
+* Fixed an *HTTP 500* error when getting _/api/galaxy/_ui/v2/users/3/_.(AAP-54260)
+
+=== Bug Fixes
+
+* Fixed an HTTP 500 error when getting /api/galaxy/_ui/v2/users/3/.(AAP-54260)
+
+
+
+== Container-based {PlatformNameShort}
+
+=== Enhancements
+
+* Implemented preflight ansible-core version validation.(AAP-54932)
+
+=== Bug Fixes
+
+* Fixed an issue where `REDHAT_CANDLEPIN_VERIFY` was not being used for the correct CA permissions so that the controller could not make requests to *subscription.rhsm.redhat.com*.(AAP-55180)
+
+
+
+== RPM-based {PlatformNameShort}
+
+
+=== Bug Fixes
+
+* Fixed an issue where setting `automationgateway_disable_https=false` resulted in install failure.(AAP-55466)
+
+* Fixed an issue where `RESOURCE_KEY SECRET_KEY` was not updated when restoring from a different environment.(AAP-54942)
+
+* Fixed an issue where Event-Driven Ansible DE credentials failed to populate on initial installation.(AAP-54519)
+
+Fixed an issue where the `envoy.log` for automation gateway did not receive logs after it was rotated.(AAP-51779)
+
+Fixed an issue where `REDHAT_CANDLEPIN_VERIFY` was not being used for the correct CA permissions so that the controller could not make requests to *subscription.rhsm.redhat.com*.(AAP-55183)
+
+
+
+== {EDAName}
+
+=== Features
+
+* Changes in the deployment and nginx configuration now allow for gunicorn and daphne to bind to :: as well, essentially allowing for seamlessly binding to IPv4 and IPv6 (dual-stack) addresses, while also enabling the operator to run in single-stack IPv6 or IPv4 scenarios.(AAP-56192)
+
+
+
+== Receptor
+
+=== Bug Fixes
+
+Fixed an issue where there was stability issue on long-running jobs, clusters under heavy load, and network flakiness.(AAP-53742)
