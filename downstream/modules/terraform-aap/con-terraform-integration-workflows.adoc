@@ -1,0 +1,33 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="integration-workflows"]
+
+= Integration workflows
+
+[role="_abstract"]
+
+Depending on your existing setup, you can integrate these products from {PlatformNameShort} or from {Terraform}. Migration paths are provided for community users and for migrating from the `cloud.terraform` collection to `hashicorp.terraform`.
+
+== Ansible-initiated workflow
+
+Ansible automation hub collections allow {PlatformNameShort} users to leverage the {TerraformEnterpriseShortName} or {TerraformCloudShortName} provisioning capabilities.
+
+**hashicorp.terraform collection**
+
+This collection provides API integration between {PlatformNameShort} and {TerraformEnterpriseShortName} or {TerraformCloudShortName}. This solution works natively with {PlatformNameShort} and reduces setup complexity because it doesn’t require a binary installation and it includes a default execution environment.
+
+**cloud.terraform collection**
+
+This collection provides CLI integration between {PlatformNameShort} and {TerraformEnterpriseShortName} or {TerraformCloudShortName}. To use this collection, you must install a binary and create an execution environment.
+
+Although this collection is supported, we recommend using the `hashicorp.terraform` collection instead to take advantage of its API capabilities.
+
+== Migration workflows 
+
+Community edition users can migrate to {TerraformEnterpriseShortName} or {TerraformCloudShortName}, and then integrate the {PlatformNameShort} capabilities using the `cloud.terraform` (CLI) collection. However, we recommend using the `hashicorp.terraform` (API) collection instead.
+
+If you are already using the `cloud.terraform` collection, you can migrate to `hashicorp.terraform`.
+
+== {Terraform}-initiated workflow
+
+For existing {TerraformEnterpriseShortName} or {TerraformCloudShortName} users, {Terraform} can directly call {PlatformNameShort} at the end of provisioning for a more seamless and secure workflow. This enables {TerraformEnterpriseShortName} or {TerraformCloudShortName} users to enhance their immutable infrastructure automation with {PlatformNameShort} Day 2 automation capabilities and manage infrastructure updates and lifecycle events.
