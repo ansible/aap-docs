@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-The `hashicorp.terraform.run` module lets you manage {TerraformEnterpriseShortName} or {TerraformCloudShortName} runs using create, apply, cancel, discard operations. You can trigger plans or apply operations on specified workspaces with customizable settings.
+The `hashicorp.terraform.run` module lets you manage {TerraformEnterpriseShortName} or {TerraformCloudShortName} runs using create, apply, cancel, and discard operations. You can trigger plans or apply operations on specified workspaces with customizable settings.
 
 .Prerequisites
 * Ensure that a valid link:https://developer.hashicorp.com/terraform/cloud-docs/users-teams-organizations/api-tokens[{Terraform} API token] is properly configured to authenticate with your {TerraformEnterpriseShortName} or {TerraformCloudShortName} environment.
@@ -38,15 +38,15 @@ The `hashicorp.terraform.run` module lets you manage {TerraformEnterpriseShortNa
 
 . Configure the following required parameters:
 
-* **`workspace_id or workspace + organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for `state: present`).
+* **`workspace_id` or `workspace` + `organization`:** The workspace ID or the workspace name and organization where the configuration version will be created and the file will be uploaded (for `state: present`).
 
 * **`run_id`:** The unique identifier of the run to apply, cancel, or discard operations.
 
-* **`tf_token`:** The {Terraform} API authentication token. If this value is not set, the environment variable `TF_TOKEN` environment variables are used.
+* **`tf_token`:** The {Terraform} API authentication token. If this value is not set, the `TF_TOKEN` environment variable is used.
 
 . (Optional) Configure the built-in polling options that determine the wait period for {TerraformEnterpriseShortName} or {TerraformCloudShortName} operations to complete:
 
-* **`poll: true`:** (Default) Checks the run status every `poll_interval` seconds (default: 5) until completion or `poll_timeout` (default: 25s) is reached, returning the final status.
+* **`poll: true`:** (Default) Checks the run status every `poll_interval` seconds (default: 5s) until completion or `poll_timeout` (default: 25s) is reached, returning the final status.
 
 * **`poll: false`:** Returns immediately after initiating the run without waiting.
 
