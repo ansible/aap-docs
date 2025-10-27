@@ -4,7 +4,9 @@
 
 = Customizing the pod specification
 
+[role="_abstract"]
 {PlatformNameShort} provides a simple default pod specification, however, you can provide a custom YAML or JSON document that overrides the default pod specification. 
+
 This field uses any custom fields such as `ImagePullSecrets`, that can be "serialized" as valid pod JSON or YAML. 
 A full list of options can be found in the link:https://docs.openshift.com/online/pro/architecture/core_concepts/pods_and_services.html[Pods and Services] section of the OpenShift documentation.
 
@@ -18,11 +20,7 @@ A full list of options can be found in the link:https://docs.openshift.com/onlin
 image::ag-instance-group-customize-cg-pod.png[Customize pod specification]
 +
 . Click btn:[Create container group].
-
-//You can give additional customizations, if needed. Click btn:[Expand] to view the entire customization window:
-
-//image::ag-instance-group-customize-cg-pod-expanded.png[Customize pod expanded]
-
++
 [NOTE]
 ====
 The image when a job launches is determined by which {ExecEnvShort} is associated with the job. 
@@ -32,11 +30,11 @@ If you prefer not to give the service account permission to manage secrets, you 
 For more information, see the link:https://access.redhat.com/RegistryAuthentication#allowing-pods-to-reference-images-from-other-secured-registries-8[Allowing Pods to Reference Images from Other Secured Registries] section of the _Red Hat Container Registry Authentication_ article.
 ====
 
-Once you have created the container group successfully, the *Details* tab of the newly created container group remains, which enables you to review and edit your container group information. 
+. When you have created the container group successfully, the *Details* tab of the newly created container group remains, which enables you to review and edit your container group information. 
 This is the same menu that is opened if you click the image:leftpencil.png[Edit,15,15] icon from the *Instance Groups* list view. 
-
++
 You can also edit *Instances* and review *Jobs* associated with this instance group.
-
++
 image::ag-instance-group-successfully-created.png[Instance group successfully created]
-
++
 Container groups and instance groups are labeled accordingly.
