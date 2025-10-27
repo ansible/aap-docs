@@ -1,0 +1,34 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-example-replace-sources-attach-event-streams"]
+
+= Replacing sources and attaching event streams to activations
+
+You can create a new rulebook activation, select a project and rulebook for it, and crucially, update its event source to subscribe to a desired event stream (in this case, *Repo Event Stream* that you created earlier).
+
+
+.Procedure
+
+. From the {PlatformNameShort} navigation panel, select {MenuADRulebookActivations}.
+. Click btn:[Create rulebook activation] to create a rulebook for events on an application repository for Linux servers.
+. In the *Name* field, enter `Repo Events - RHEL`.
+. For your *Organization*, select *Default* from the list.
+. From the *Project* list, select *GitOps EventStream*.
+. Select *gitops-rhel.yml* for your *Rulebook*.
+. In the *Event streams* field, click the gear icon to select which event stream the rulebook needs to subscribe to. The Event streams window is displayed.
+. Replace an ansible.eda.webhook or compatible custom source with the desired event stream. This modifies the activation only, while leaving your filters intact.
+. Select *Repo Event Stream* from the list of event streams that you created.
+. Click *Save* to save your event stream.
+. Next to the *Credential* field, click the *Search* icon to access {ControllerName} and connect with job templates and workflows. The *Select credential* message is displayed.
+. Select the *AAP* credential and click *Confirm*.
+. Select the *Decision Environment* from the list.
+. Click *Create rulebook activation*. The activation status is displayed (if successful, the *Running* status displays).
+. Repeat the following steps to create an additional rulebook activation using the same process as your first activation: 
+.. In the *Event streams* field, click the gear icon to select which event stream the rulebook needs to subscribe to.
+.. Select the *Repo Event Stream* from the list of event streams that you created.
+.. Click *Save* to save your event stream.
+.. Click *Create rulebook activation* to save the configuration and start the rulebook. 
+
+.Results
+Now, there are two rulebook activations running and you can commit some code to one of your repositories. An event has been received and routed to your rulebooks.
+
+
