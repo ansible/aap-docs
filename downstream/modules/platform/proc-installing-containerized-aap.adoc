@@ -5,17 +5,15 @@
 = Installing containerized {PlatformNameShort}
 
 [role="_abstract"]
-After you prepare the {RHEL} host, download {PlatformNameShort}, and configure the inventory file, run the `install` playbook to install containerized {PlatformNameShort}.
+Run the `install` playbook to install containerized {PlatformNameShort} after preparing the {RHEL} host, downloading the installation program, and configuring the inventory file.
 
 .Prerequisites
 
-You have done the following:
-
-* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
-* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Prepared the managed nodes]
-* link:{URLContainerizedInstall}/aap-containerized-installation#downloading-ansible-automation-platform[Downloaded {PlatformNameShort}]
-* link:{URLContainerizedInstall}/aap-containerized-installation#configuring-inventory-file[Configured the inventory file]
-* Logged in to the {RHEL} host as your non-root user
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#preparing-the-rhel-host-for-containerized-installation[prepared the {RHEL} host]
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[prepared the managed nodes]
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#downloading-ansible-automation-platform[downloaded {PlatformNameShort}]
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#configuring-inventory-file[configured the inventory file]
+* You are logged in to the {RHEL} host as your non-root user
 
 .Procedure
 
@@ -46,8 +44,8 @@ ansible-playbook -i inventory -e @vault.yml --ask-vault-pass -K -v  ansible.cont
 
 ** `-i <inventory_file_name>` - The inventory file to use for the installation.
 ** `-e @<vault_file_name> --ask-vault-pass` - (Optional) If you are using a vault to store sensitive variables, add this to the installation command.
-** `-K` - (Optional) If your privilege escalation requires you to enter a password, add this to the installation command. You are then prompted for the BECOME password.
-** `-v` - (Optional) You can use increasing verbosity, up to 4 v’s (`-vvvv`) to see the details of the installation process. However, it is important to note that this can significantly increase installation time, so use it only as needed or requested by Red Hat support.
+** `-K` - (Optional) If your privilege escalation (becoming root) requires you to enter a password, add this to the installation command. You are then prompted for the BECOME password.
+** `-v` - (Optional) You can use increasing verbosity, up to 4 (`-vvvv`) to see installation process details. This can significantly increase installation time. Use it only as needed or when requested by Red Hat support.
 
 .Verification
 
