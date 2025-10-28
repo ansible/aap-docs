@@ -9,18 +9,16 @@ Use the following steps to perform a disconnected installation of containerized 
 
 .Prerequisites
 
-You have done the following:
-
-* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-rhel-host-for-containerized-installation[Prepared the {RHEL} host]
-* link:{URLContainerizedInstall}/aap-containerized-disconnected-installation#obtaining-and-configuring-rpm-dependencies[Obtained and configured the RPM source dependencies]. The installation program uses your host system's `dnf` package manager to resolve these dependencies.
-* link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Prepared the managed nodes]
-* Downloaded the containerized {PlatformNameShort} setup bundle from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page].
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#preparing-the-rhel-host-for-containerized-installation[prepared the {RHEL} host]
+* You have link:{URLContainerizedInstall}/aap-containerized-disconnected-installation#obtaining-and-configuring-rpm-dependencies[obtained and configured the RPM source dependencies]. The installation program uses your host system's `dnf` package manager to resolve these dependencies.
+* You have link:{URLContainerizedInstall}/preparing-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[prepared the managed nodes]
+* You have downloaded the containerized {PlatformNameShort} setup bundle from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page].
 
 .Procedure
 
 . Log in to the {RHEL} host as your non-root user.
-. Update the inventory file by following the steps in link:{URLContainerizedInstall}/aap-containerized-installation#configuring-inventory-file[Configuring the inventory file].
-. Ensure the following variables are included in your inventory file under the `[all:vars]` group:
+. Update the inventory file by following the steps in link:{URLContainerizedInstall}/preparing-containerized-installation#configuring-inventory-file[Configuring the inventory file].
+. Ensure you include the following variables in your inventory file under the `[all:vars]` group:
 +
 ----
 bundle_install=true
@@ -28,4 +26,4 @@ bundle_install=true
 bundle_dir='{{ lookup("ansible.builtin.env", "PWD") }}/bundle'
 ----
 
-. Follow the steps in link:{URLContainerizedInstall}/aap-containerized-installation#installing-containerized-aap[Installing containerized {PlatformNameShort}] to install containerized {PlatformNameShort} and verify your installation.
+. Follow the steps in link:{URLContainerizedInstall}/preparing-containerized-installation#installing-containerized-aap[Installing containerized {PlatformNameShort}] to install containerized {PlatformNameShort} and verify your installation.

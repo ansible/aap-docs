@@ -67,10 +67,9 @@ You selected this USER-ID:
 Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
 ----
 +
-If this fails, your environment does not have the necessary prerequisite packages installed for GPG. Install the necessary packages to proceed.  
-+
-. A dialog box will appear and ask you for a passphrase. This is optional but recommended.
-. The keys are then generated, and produce output similar to the following:
+** If this fails, your environment does not have the necessary prerequisite packages installed for GPG. Install the necessary packages to proceed.  
+** A dialog box will appear and ask you for a passphrase. This is optional but recommended.
+** The keys are then generated, and produce output similar to the following:
 +
 ----
 We need to generate a lot of random bytes. It is a good idea to perform
@@ -87,8 +86,8 @@ uid                      Joe Bloggs <jbloggs@example.com>
 sub   rsa3072 2024-10-25 [E] [expires: 2026-10-25]
 ----
 +
-Note the expiry date that you can set based on company standards and needs.
-+
+** Note the expiry date that you can set based on company standards and needs.
+
 . You can view all of your GPG keys by running the following command:
 +
 ----
@@ -106,8 +105,9 @@ gpg --export -a --output collection-signing-key.pub <email_address_used_to_gener
 ----
 gpg -a --export-secret-keys <email_address_used_to_generate_key> > collection-signing-key.priv
 ----
-+
-. If a passphrase is detected, you will be prompted to enter the passphrase.
+
+** Enter the passphrase if prompted.
+
 . To view the private key file contents, run the following command:
 +
 ----
@@ -129,7 +129,7 @@ j920hRy/3wJGRDBMFa4mlQg=
 -----END PGP PRIVATE KEY BLOCK-----
 ----
 +
-. Repeat steps 1 to 9 to create a key pair for container signing. 
+. Repeat steps 1 to 7 to create a key pair for container signing. 
 . Add the following variables to the inventory file and run the installation to create the signing services:
 +
 [source,yaml]
