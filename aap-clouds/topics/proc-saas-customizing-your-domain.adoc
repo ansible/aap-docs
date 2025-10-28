@@ -19,6 +19,7 @@ This procedure outlines the necessary planning activities to ensure a successful
 . Identify the domain or subdomain that you intend to use.
 . Create the TLS certificate. 
 .. To ensure the validity of a TLS certificate for a custom domain, you must confirm that the certificate is generated for the platform record and all mesh-ingress records are included in the Subject Alternative Name (SAN) parameter. Alternatively, you can opt to generate a wildcard certificate to cover the subdomains of your primary custom domain.
+.. Bundle the certificate, private key, and any optional intermediary certificates into a zip.
 +
 [IMPORTANT]
 ====
@@ -26,19 +27,20 @@ TLS Certificate requirements for custom domains:
 
 * Initial setup: When providing a new certificate, it must have an expiration date of at least one year or longer. This is a requirement for our certificate management process.
 * Renewal: You are responsible for monitoring your certificate's expiration. To ensure uninterrupted service, you must begin the support process to renew it at least 14 days before it expires.
+* The private key cannot have a passphrase or be password protected.
 ====
 +
 . Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment and supply the following information:
 * Company Name
 * Deployment information (for example, `cus-xxxx`)
-* Custom domain (for example, `_exampledomain_.com`)
-
+* Custom domain (for example, `exampledomain.com`)
+* Provide the zip file containing the certificates, or request a presigned URL for secure upload.
 . Allow the SRE team to apply the configuration to your deployment, verify the functionality, and collaborate with you on follow-up steps via the support ticket.
 . After your configuration is complete, apply the custom domain to your deployment.
 +
 [NOTE]
 ====
-Your original mesh-ingresses will not be available; new ones using the custom domain are created instead. 
+New mesh-ingresses using the custom domain replace the original ones. 
 ====
 +
 . Reconfigure your execution nodes if you configured them previously with the old domain.
