@@ -3,6 +3,7 @@
 
 = Building a custom decision environment for {EDAName}
 
+[role="_abstract"]
 Decision Environments are {ExecEnvShort}s tailored towards running Ansible Rulebooks.
 
 Similar to {ExecEnvShort}s that run Ansible playbooks for {ControllerName}, decision environments are designed to run rulebooks for {EDAcontroller}.
@@ -25,13 +26,13 @@ You can create a custom decision environment for {EDAName} that provides a custo
 
 .Procedure
 
-* Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
+. Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
 This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-25/de-minimal-rhel9/650a5672a370728c710acaab[{PlatformNameShort} minimal decision environment].  
-
-.Example
-
++
 The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the ansible.eda collection:
------
++
+
+----
 version: 3
 
 images:
@@ -47,10 +48,12 @@ dependencies:
 
 options:
   package_manager_path: /usr/bin/microdnf
------
+----
 
-Additionally, if you need other Python packages or RPMs, you can add the following to a single definition file:
------
+. Optional: If you need other Python packages or RPMs, add the following to a single definition file:
++
+
+----
 version: 3
 
 images:
@@ -71,4 +74,4 @@ dependencies:
 
 options:
   package_manager_path: /usr/bin/microdnf
------
+----
