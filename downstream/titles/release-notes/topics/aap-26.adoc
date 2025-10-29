@@ -1,0 +1,310 @@
+:_mod-docs-content-type: REFERENCE
+
+// For each release of AAP, make a copy of this file and rename it to aap-rn-xx.adoc where xx is the release number; for example, 24 for the 2.4 release.
+// Save the renamed copy of this file to the release-notes/topics directory topic files for the release notes reside.
+//Only include release note types that have updates for a given release. For example, if there are no Technology previews for the release, remove that section from this file.
+
+[id="new-features"]
+= New features and enhancements
+
+== General availability of {AAPchatbot}
+
+The {AAPchatbot} is now generally available on {PlatformNameShort} {PlatformVers} on {OCPShort}. It is an intuitive chat interface embedded within the {PlatformNameShort}, utilizing generative artificial intelligence (AI) to answer questions about the {PlatformNameShort}.
+
+The chat experience in the {AAPchatbot} interacts with users in their natural language prompts in English, and uses large language models (LLMs) to generate quick, accurate, and personalized responses. These responses empower users to work more efficiently, thereby improving productivity and the overall quality of their work.
+
+To access and install {AAPchatbot}, you will need the following:
+
+* {PlatformNameShort} {PlatformVers} on {OCPShort}
+* An LLM service that is hosted on either {RHELAI} or {OCPAI}
+
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/installing_on_openshift_container_platform/index#deploying-chatbot-operator[Deploying the Ansible Lightspeed intelligent assistant on {OCPShort}] in Installing on {OCPShort}.
+
+== General availability of Ansible self-service automation portal
+
+Ansible self-service automation portal is now generally available as part of the {PlatformNameShort} subscription. The new self-service automation portal empowers platform admins to provide a streamlined “point-and-click” Ansible automation experience to a broader set of users within the organization. Users who are not Ansible experts now have a dedicated self-service portal from which they can launch a range of automation jobs.
+
+* Installation: Deployment of self-service automation portal requires {OCP} using a Helm chart. A future deployment of self-service automation portal on {RHEL} 10 is planned for Technology Preview in a future asynchronous release of {PlatformNameShort} {PlatformVers}.
+
+* Synchronizes existing automation content: Extend the reach and impact of your automation job templates, while maintaining full control and compliance. 
+
+* Seamless Integration: Uses your existing {PlatformNameShort} configuration—same logins, same security controls, same automation logic.
+
+* Simplified Interface: A distinct, user-friendly web interface designed for business users, not automation experts.
+
+* Guided Workflows: Step-by-step forms that walk users through automation requests without technical complexity - automatically generated from your existing job templates.
+
+* Smart Forms: Real-time field validation, conditional and dynamic forms, and dropdown fields for {PlatformNameShort} artifacts, such as {PlatformNameShort} inventories.
+
+
+== General availability of Ansible {AutomationDashboardName}
+
+{AutomationDashboardName} is now generally available as part of the {PlatformNameShort} subscription. {AutomationDashboardName} is a utility you can connect to one or more {PlatformNameShort} deployments to visualize automation usage data, determine time savings, track ROI, and drive increased visibility into automation strategy, resource allocation, and prioritization of automation projects. Benefits include:
+
+* Installation: Deployment of {AutomationDashboardName} is via containerized installation only.
+* Secure on-premise deployment: Simplified deployment as a self-contained, on-premise utility that runs on a dedicated RHEL 9 x86 and ARM host. 
+* Easy Integration: Integrates into {PlatformNameShort} 2.4, 2.5 and {PlatformVers} instances with OAuth2 token for read-only access to pull data. 
+* Automated data sync: Once configured, the dashboard automatically syncs and visualizes data from connected {PlatformNameShort} instances. 
+* Flexible Reporting: Dashboard allows to generate and share customized PDF reports and export raw CSV data for flexible ingestion into BI tools. 
+
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_dashboard/index[Ansible automation dashboard]. 
+
+== Configuration as Code
+The link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[ansible.platform] collection now provides unified, platform-wide Role-Based Access Control (RBAC) management across {PlatformNameShort} components. New or enhanced modules include `Organization`, `Team`, `User`, `Role definitions`, `Role Assignments` (team/user). Additionally:
+
+* You can declare the RBAC state as code and apply idempotently across services.
+* Ansible collections now use a standard global environment variable prefix across components. {ControllerNameStart}, {HubNameStart}, and {EDAName} all use a new standard of “AAP_” instead of "COMPONENT_". For example, `aap_hostname`. See link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/docs/[the documentation] in {HubNameStart} for more information. 
+
+== Service accounts 
+* Service accounts, created in link:https://console.redhat.com/[console.redhat.com], can now be used to manage subscriptions in {PlatformNameShort}. Manifest files and basic authentication may still be used for this purpose as well.
+* Service accounts are now required in order to send data to automation analytics. 
+
+
+== {EDAName} (Automation decisions)
+{EDAName} includes several key enhancements in the {PlatformNameShort} {PlatformVers} release that improve performance, simplify operations, and expand the platform's capabilities across security, networking, and event processing.
+
+* *External secret management*: {EDAName} now supports external secret management systems, achieving parity with {ControllerNameStart}. This includes support for HashiCorp Vault, CyberArk, Microsoft Azure Key Vault, and AWS Secrets Manager.
+* *Editable project URLs*: You can now edit the source control URL for existing {EDAName} projects, providing greater flexibility to adapt to repository changes.
+* *Improved job auditing*: A new label is automatically added to jobs triggered by {EDAName}, along with support for custom labels. This allows for more efficient tracing and auditing of event-triggered automations.
+* *Kafka enhancements*: The Kafka source plugin now supports multiple topics and allows the use of regular expressions and wildcards. Additionally, it now supports GSSAPI for enhanced authentication.
+* *New event filter*: A new filter plugin, `event_splitter`, is available to handle and process nested events more effectively.
+* *Rulebook concurrency key*: Rulebooks now support a concurrency key, enabling you to group events by resource to ensure they are processed sequentially.
+
+
+== Installation updates
+
+=== Containerized installation
+Updated system requirements for containerized installation of {PlatformNameShort} include: 
+
+* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 10 system requirements are unchanged.
+* {PostgresVers}, 16, and 17 are now supported for customer provided (external) databases. 
++
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information see link:{URLContainerizedInstall}/preparing-containerized-installation#system-requirements[System requirements] in _{TitleContainerizedInstall}_.
+
+
+=== Operator installation
+Updated system requirements for {OperatorPlatformNameShort} on {OCP} include:
+
+* The {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 10 system requirements are unchanged.
+* PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
+
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information about the {OperatorPlatformNameShort} system requirements, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/tested_deployment_models/ocp-topologies[Operator topologies] in _Tested deployment models_. 
+
+
+=== RPM installation
+Updated system requirements for RPM installation of {PlatformNameShort} {PlatformVers} include:
+ 
+* {PlatformNameShort} RPM installer was deprecated in 2.5 and will be removed in {PlatformNameShort} 2.7. The RPM installer will be supported for RHEL 9 during the lifecycle of {PlatformNameShort} {PlatformVers} to support migrations to existing supported topologies. See the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix[support matrix] for more information on upgrade and migration paths.
+* {RHEL} 9.2 operating system requirement was updated to 9.4 or later minor versions of {RHEL} 9. {RHEL} 8 is no longer supported. 
+* {RHEL} 10 is not supported for RPM installations. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix[support matrix] for more information on supported upgrade and migration paths.
+* PostgreSQL 16 and 17 are now supported for customer-provided (external) databases. 
++
+[NOTE]
+====
+External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with PostgreSQL 15.
+====
+
+For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/platform-system-requirements[System requirements] in _RPM installation_.
+
+
+== Upgrade paths
+
+The following table outlines the supported upgrade paths for {PlatformNameShort} {PlatformVers}.
+
+[NOTE]
+====
+The RPM-based upgrade paths are deprecated and will be removed in {PlatformNameShort} 2.7.
+====
+
+[cols="1,2a"]
+|===
+|Starting Deployment |Upgrade Deployment
+
+|2.4 RPM single automation controller node
+|2.6 RPM growth
+
+|2.4 RPM single node automation controller and automation hub
+|2.6 RPM growth
+
+|2.4 RPM multi node automation controller
+|2.6 RPM enterprise
+
+|2.4 RPM multi node automation controller and automation hub
+|2.6 RPM enterprise
+
+|2.5 RPM growth
+|2.6 RPM growth
+
+|2.5 RPM enterprise
+|2.6 RPM enterprise
+
+|2.5 Container growth
+|2.6 Container growth
+
+|2.5 Container enterprise
+|2.6 Container enterprise
+
+|2.4 Operator single automation controller node
+|2.6 Operator growth
+
+|2.4 Operator single node automation controller and automation hub
+|2.6 Operator growth
+
+|2.4 Operator multi node automation controller
+|2.6 Operator enterprise
+
+|2.4 Operator multi node automation controller and automation hub
+|2.6 Operator enterprise
+
+|2.5 Operator growth
+|2.6 Operator growth
+
+|2.5 Operator enterprise
+|2.6 Operator enterprise
+|===
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/planning_your_upgrade/upgrade-support-matrix[Support matrix for upgrade scenarios]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/planning_your_upgrade/upgrade-infrastructure-changes[Infrastructure changes by deployment type]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/rpm_upgrade/index[RPM upgrade]
+* link:{URLContainerizedInstall}/maintaining-containerized-aap#updating-containerized-ansible-automation-platform[Updating containerized Ansible Automation Platform]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#operator-upgrade_licensing-gw[Upgrading Red Hat Ansible Automation Platform Operator on Red Hat OpenShift Container Platform]
+
+== Migration paths
+
+The following table outlines the supported migration paths for {PlatformNameShort} {PlatformVers}. Migration involves transitioning between deployment types, such as from an RPM to a containerized installation. This process is exclusively supported between identical versions (for example, 2.6 to 2.6).
+
+[cols="1,2a"]
+|===
+|Source environment |Target environment
+
+|RPM-based {PlatformNameShort}
+|Container-based {PlatformNameShort}
+
+|RPM-based {PlatformNameShort}
+|{OCPShort}
+
+|RPM-based {PlatformNameShort}
+|Managed {PlatformNameShort}
+
+|Container-based {PlatformNameShort}
+|{OCPShort}
+
+|Container-based {PlatformNameShort}
+|Managed {PlatformNameShort}
+|===
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/ansible_automation_platform_migration/index[Ansible Automation Platform migration]
+
+
+== Overview of upgrade improvements
+
+Changes in {PlatformVers} improve the overall upgrade experience, as detailed in the following sections:
+
+* <<from-2.5,Upgrading from 2.5 to 2.6>> 
+* <<from-2.4,Upgrading from 2.4 to 2.6>> 
+
+[NOTE]
+====
+You must be on the latest version of 2.4 or 2.5 before you upgrade to {PlatformVers}.
+====
+
+[[from-2.5]]
+Upgrading from 2.5 to 2.6::
+
+Upgrading from 2.5 to {PlatformVers} does not involve changes to the platform infrastructure requirements, architecture, or services. The improvements described in the 2.4 to {PlatformVers} upgrade path are also present in the 2.5 to {PlatformVers} upgrade path; however, the platform gateway service is already in place in 2.5.
++
+Additionally, note the following:
++
+* If you upgraded from 2.4 to 2.5, you must migrate your authentication methods and users before upgrading to {PlatformVers} as that legacy authenticator functionality was removed.
+
+* When you upgrade to {PlatformVers}, the system removes any users that the 2.4 to 2.5 upgrade did not fully migrate. The users that have previously merged their user records while on 2.5 will remain to function as is for {PlatformVers}.
+
+* Upgrading to {PlatformVers} prevents 2.4 automation controller users who never successfully logged into 2.5 from logging into the platform-gateway. These users retain backwards compatibility for direct Automation Execution access but cannot access the full platform. Ensure all users planning to leverage {PlatformVers} have successfully logged into 2.5 prior to upgrading.
+
+* Unified RBAC management across {PlatformNameShort} components: All {PlatformNameShort} collections, which support the Configuration-as-Code (CaC) approach, now use a standard global environment variable name and module variable name across {PlatformNameShort} components. For more details, see link:{URLReleaseNotes}[What’s new around RBAC in 2.6], link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6], and link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[`ansible.platform`] documentation in {HubName}.
+
+--
+For more information about upgrading, see the upgrade document for your deployment type:
+
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#container_based_deployments[Containerized]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#rpm_based_deployments[RPM]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes#operator_based_deployments[{OCPShort}]
++
+[NOTE]
+====
+Upgrades from the latest 2.5 version to {PlatformVers} are supported with all deployment types: RPM, containerized, and {OCPShort} deployments.
+====
+--
+
+[[from-2.4]]
+Upgrading from 2.4 to 2.6::
+
+Note the following when upgrading from 2.4 to {PlatformVers}:
+
+* **Upgrades from 2.4**: {PlatformNameShort} supports upgrading directly from the latest 2.4 version to {PlatformVers}. Directly upgrading to {PlatformVers} is the recommended upgrade path from 2.4, as a number of improvements in {PlatformVers} simplify and improve the upgrade experience.
++
+[NOTE]
+====
+You can upgrade directly from the latest 2.4 version to {PlatformVers} with RPM and {OCPShort} deployments. However, upgrading {EDAName} 2.4 or from the 2.4 containerized deployment is not supported, as both features were Tech Preview in 2.4. 
+====
++
+For more information, see the upgrade document for your deployment type. Either link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-rpm[RPM], or link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix#upgrade-scenarios-openshift[{OCPShort}].
+
+* **Infrastructure changes**: {PlatformNameShort} RPM deployments require additional infrastructure compared with 2.4, due to the addition of the platform gateway service. Infrastructure needs vary depending on factors such as whether you implement a growth or an enterprise deployment. 
++
+For details about infrastructure and inventory file changes in various upgrade scenarios, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes[Infrastructure changes].
+
+* **Authentication changes**: Enterprise authentication configuration and mappings (for example, SAML, LDAP, OIDC) move from automation controller 2.4 to platform gateway {PlatformVers} as part of the upgrade process. You do not need to manually reconfigure these authentication methods after you upgrade.
++
+See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/access_management_and_authentication/index[Access management and authentication] for information about authentication options in general.
++
+[NOTE]
+====
+Authentication upgrade improvements apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported. Additionally, upgrading {EDAName} 2.4 is not supported.
+====
+
+* **Identify access management changes**: All automation controller Identity Access Management (IAM) data moves from automation controller 2.4 to the platform gateway in {PlatformVers} as part of the upgrade process. With automation controller 2.4 as the default source of IAM data for the platform gateway in {PlatformVers}, users retain their memberships and are assigned appropriate platform-level roles in {PlatformVers}. 
++
+--
+As part of the upgrade process:
+
+* Users, teams, organizations, their memberships, and common roles in 2.4 move from automation controller 2.4 to the platform gateway in {PlatformVers}.
+* Administrators in automation controller 2.4 become platform gateway administrators in {PlatformVers}.
+* Controller admins in 2.4 become platform gateway admins in {PlatformVers}.
++
+The more organizations, teams, and users being migrated during an upgrade, the longer the upgrade takes. As an example, upgrading and migrating 4,000 users, 400 teams, and 40 organizations may take close to two hours.
++
+[NOTE]
+====
+Identity access management changes apply to RPM and {OCPShort} deployments. Upgrades from the 2.4 containerized deployment Tech Preview release are not supported.
+====
++
+See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-data-movement[Data movement during upgrade] for more information. 
+--
+
+* **API changes**: Some APIs are being deprecated in {PlatformVers}. See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/planning_your_upgrade/index#upgrade-api-changes[API changes] for more information.
+
+* **Unified RBAC management across {PlatformNameShort} components**: All {PlatformNameShort} collections, which support the Configuration-as-Code (CaC) approach, now use a standard global environment variable name and module variable name across {PlatformNameShort} components. For more details, see link:{URLReleaseNotes}[What’s new around RBAC in 2.6], link:{URLReleaseNotes}[What’s changed around RBAC for users moving from 2.5 to 2.6], and link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/[`ansible.platform`] documentation in {HubName}.
+
+
+== Platform UI
+
+{PlatformNameShort} {PlatformVers} was delivered with the goal to simplify the UI, improve the relationship between user interface elements, and maintain the association between users, organizations, teams, and roles.
+
+Within the Platform UI, the role based access controls (RBAC) have been centralized to give administrators control of users across the entire platform. The centralized RBAC has introduced additional APIs and expanded the scope of those APIs to allow the assignment of roles across any of the platform resources. The details of these changes are reflected within the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/planning_your_upgrade/index#upgrade-api-changes[API changes]. 
+
+The UI has also been updated to the latest version of Patternfly, which brings significant updates and refinements aiming to enhance user experience, performance, and developer efficiency.

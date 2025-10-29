@@ -1,0 +1,68 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-2.6-deprecated-features]]
+= Deprecated features
+
+include::../snippets/deprecated-features.adoc[]
+
+The following table provides information about features that were deprecated in {PlatformNameShort} 2.5:
+
+[cols="20%,80%"]
+|====
+| Component | Feature
+
+|Access to service APIs for
+{ControllerName}, +
+{HubName}, +
+and {EDAName}
+|With the addition of {Gateway}, a number of service-specific API endpoints are deprecated because their functionality will be removed or superseded with other capabilities in a future release. 
+
+{PlatformNameShort} 2.5 and {PlatformVers} expose API access to individual services ({ControllerName}, {PrivateHubName}, {EDAName}) to maintain compatibility with existing REST API integrations. This access will be removed in a future release.
+
+For detailed information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-api-changes[API changes] in _Planning your upgrade_.
+
+|Installer
+|The {PlatformNameShort} installer using {RHEL} RPMs was deprecated (announced) in 2.5 and will be removed in {PlatformNameShort} 2.7.  
+
+The RPM installer will be supported for {RHEL} 9 during the lifecycle of {PlatformNameShort} {PlatformVers} to support migrations to existing supported topologies. Users are encouraged to migrate to the containerized topology on {RHEL} or to the {OCPShort} Operator installation method. See the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-support-matrix[support matrix] for more information on upgrade and migration paths.
+
+|Ansible-core
+a|
+[source, python]
+----
+uri module: 
+    - Using 'yes' or 'no' for 'follow_redirects' parameter is deprecated.
+yum_repository:
+    - deprecated parameters:
+        - 'keepcache'
+        - 'async'
+        - "deltarpm_metadata_percentage"
+        - "gpgcakey"
+        - "http_caching"
+        - "keepalive"
+        - "metadata_expire_filter"
+        - "mirrorlist_expire"
+        - "protect"
+        - "ssl_check_cert_permissions"
+        - "ui_repoid_vars"` 
+url lookup: 
+    - Using `yes` or `no` for `follow_redirects` parameter is deprecated.
+----
+
+|Execution environment
+|Removing `cisco.asa` from ee-supported as it is being deprecated
+
+Removing `ibm.qradar` from ee-supported as it is being deprecated
+
+|Certified Collections
+|An `ansible.platform` collection is available as the preferred collection to replace the service-specific `ansible.controller`, `ansible.hub`, and `ansible.eda` collections. These service-specific collections will be replaced by `ansible.platform` after {PlatformVers}.
+
+|{AnsibleCodeBot} code bot
+|The code bot (as described in the link:https://docs.redhat.com/en/documentation/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant/2.x_latest/html-single/red_hat_ansible_lightspeed_with_ibm_watsonx_code_assistant_user_guide/index#using-code-bot-for-suggestions_lightspeed-user-guide[{LightspeedFullName}] user guide) is being deprecated, and will be retired on December 31, 2025.
+
+|Ansible Content
+|Deprecation of the Notification Service for ServiceNow, which will not be supported on the ServiceNow Zurich and later releases. Support will end when the Yokohama release is end-of-life.
+
+
+|====
+
