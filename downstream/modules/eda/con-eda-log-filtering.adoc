@@ -11,7 +11,7 @@
 |===
 | Identifier | Abbreviation | Purpose | Location
 
-h| X-REQUEST-ID | `rid` | Tracks HTTP requests from the Platform Gateway through the entire {EDAName} request lifecycle. Use this to correlate UI actions or API calls with backend processing. | Included in the HTTP response headers and {EDAName} log entries.
+h| X-REQUEST-ID | `rid` | Tracks HTTP requests from the {Gateway} through the entire {EDAName} request lifecycle. Use this to correlate UI actions or API calls with backend processing. | Included in the HTTP response headers and {EDAName} log entries.
 
 h| Log Tracking ID | `tid` | Tracks the *activation lifecycle* from creation through completion, persisting across restarts and multiple log files. | Included in all activation-related log entries. It can be obtained from the activation *History* tab in the UI.
 
@@ -26,4 +26,4 @@ Not all processes originate from a user or external client. When an {EDAName} or
 
 The enhanced log format places these identifiers at the start of the message, making them easy to filter:
 
-`[rid: <UUID>] [tid: <UUID>] [aiid: <ID>] aap_eda.tasks.orchestrator Processing request...``
+`[rid: <UUID>] [tid: <UUID>] [aiid: <ID>] aap_eda.tasks.orchestrator Processing request...`
