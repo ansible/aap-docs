@@ -2,9 +2,9 @@
 
 [id="controller-api-using-pagination"]
 
-When you receive the result for a collection, something similar to the following appears:
+[role="_abstract"]
+When you receive the result for a collection, something similar to the following is displayed:
 
-[literal, options="nowrap" subs="+attributes"]
 ----
 {'count': 25, 'next': 'http://testserver/api/controller/v2/some_resource?page=2', 'previous': None, 'results': [ ... ] }
 ----
@@ -17,7 +17,6 @@ When you receive the result for a collection, something similar to the following
 However, you can change this limit by setting the value in `/etc/tower/conf.d/<some file>.py` to something higher. For example, `MAX_PAGE_SIZE=1000`.
 . Use the page query string parameter to retrieve a particular page of results:
 +
-[literal, options="nowrap" subs="+attributes"]
 ----
 http://<gateway server name>/api/controller/v2/model_verbose_name?page_size=100&page=2
 ----

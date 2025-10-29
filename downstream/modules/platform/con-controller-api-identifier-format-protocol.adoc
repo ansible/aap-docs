@@ -20,8 +20,9 @@ Additionally, resource `Foo` has a many-to-one field (a foreign key) relating to
 `Bar` can have named URL because it satisfies the preceding first rule. 
 `Foo` can also have named URL, even though it breaks the first rule, the extra field breaking rule number one is the `fk` field, which is many-to-one-related to `Bar` and `Bar` can have named URL.
 
-For resources satisfying the rule number one, their human-readable unique identifiers are combinations of foreign key fields, delimited by `+`. 
+For resources satisfying rule number one, their human-readable unique identifiers are combinations of foreign key fields, delimited by `+`. 
 In specific, resource `Bar` in the preceding example has slug format `<name>+<choice>`. 
+
 Note that the field order matters in slug format and the `name` field always comes first if present, followed by the remaining fields arranged in lexicographic order of field name. 
 For example, if `Bar` also has an `a_choice` field satisfying rule one and the unique key becomes (`name`, `choice`, `a_choice`), its slug format becomes `<name>+<a_choice>+<choice>`.
 

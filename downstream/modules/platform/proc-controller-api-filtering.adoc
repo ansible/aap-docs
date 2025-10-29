@@ -3,52 +3,46 @@
 [id="controller-api-filtering-in-api"]
 
 [role="_abstract"]
-Learn how to use query parameters within the REST API URL to filter resources based on criteria like exact matches, partial string containment (`__contains`), integer casting (`__int1`), and multiple fields simultaneously.
+Learn how to use query parameters within the REST API URL to filter resources based on criteria such as exact matches, partial string containment (`__contains`), integer casting (`_int`), and many fields simultaneously.
+//Note that the (`-int) statement should be (`__int)` with two underscores. But due to a rendering bug in AsciiDoc, it is shown here with a single underscore.
 
 .Procedure
 
 * To find groups that contain the name "foo", use the following:
 +
-[literal, options="nowrap" subs="+attributes"]
 ----
 http://<gateway server name>/api/controller/v2/groups/?name__contains=foo
 ----
-+
+
 * To find an exact match, use the following:
-+[role="_abstract"]
-[literal, options="nowrap" subs="+attributes"]
++
 ----
 http://<gateway server name>/api/controller/v2/groups/?name=foo
 ----
 +
 * If a resource is of an integer type, you must add `\_\_int` to the end to cast your string input value to an integer, such as the following:
 +
-[literal, options="nowrap" subs="+attributes"]
 ----
 http://<gateway server name>/api/controller/v2/arbitrary_resource/?x__int=5
 ----
-+
+
 * You can query related resources with the following:
 +
-[literal, options="nowrap" subs="+attributes"]
 ----
 http://<gateway server name>/api/gateway/v1/users/?first_name__icontains=kim
 ----
 +
-This returns all users with names that include the string "Kim" in them.
-+
+This returns all users with names that include the string "kim" in them.
+
 * You can also filter against many fields at once:
 +
-[literal, options="nowrap" subs="+attributes"]
 ----
 http://<gateway server name>/api/controller/v2/groups/?name__icontains=test&has_active_failures=false
 ----
++
 This finds all groups containing the name "test" that have no active failures.
 +
-[NOTE]
-====
 You can also watch the API as the UI is being used to see how it is filtering on various criteria.
-====
 
 .Additional resources
 
