@@ -3,17 +3,17 @@
 = Operator {GrowthTopology}
 
 [role="_abstract"]
-include::snippets/growth-topologies.adoc[]
+The Operator-based {GrowthTopology} is designed for organizations getting started with {PlatformNameShort} on {OCP} and provides a smaller footprint deployment without redundancy. Included are the tested infrastructure topology, system requirements, network port configurations, and an example custom resource file for installation.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The following diagram shows the Red{nbsp}Hat tested infrastructure topology for this deployment model:
 
 .Infrastructure topology diagram
 image::ocp-a-env-a.png[Operator {GrowthTopology} diagram]
 
 [IMPORTANT]
 ====
-While Redis and PostgreSQL can be installed as part of the operator-based installation process, this diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
+While Redis and PostgreSQL can be installed as part of the {OperatorBase} process, this diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
 ====
 
 A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS.
@@ -57,8 +57,8 @@ Red{nbsp}Hat has tested the following configurations to install and run {Platfor
 | Red Hat OpenShift  
 a| 
 * Version: 4.14
-* num_of_control_nodes: 1
-* num_of_worker_nodes: 1 
+* `num_of_control_nodes`: 1
+* `num_of_worker_nodes`: 1 
 |
 | Ansible-core | Ansible-core version {CoreUseVers} or later |
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
