@@ -18,3 +18,12 @@ h| Log Tracking ID | `tid` | Tracks the *activation lifecycle* from creation thr
 h| Activation Instance ID | `aiid` | Identifies the logs specific to a single execution instance of a rulebook activation, allowing you to view `ansible-rulebook` output for that run. | Included in activation logs.
 
 |===
+
+[NOTE]
+====
+Not all processes originate from a user or external client. When an Event-Driven Ansible orchestrator internally triggers a process (for example, a monitor request), the rid UUID is generated internally to track that process lifecycle and will not be present in the Gateway logs.
+====
+
+The enhanced log format places these identifiers at the start of the message, making them easy to filter:
+
+`[rid: <UUID>] [tid: <UUID>] [aiid: <ID>] aap_eda.tasks.orchestrator Processing request...``
