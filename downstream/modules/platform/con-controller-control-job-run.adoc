@@ -4,6 +4,13 @@
 
 = Control where a job runs
 
+[role="_abstract"]
+You can control where jobs run by using instance groups.
+By default, when you launch a job, {ControllerName} selects an instance group that has available capacity to run the job.
+This default behavior can be overridden by associating instance groups with job templates, inventories, or organizations.
+
+When a job is launched, {ControllerName} checks for any instance groups associated with the job template, inventory, or organization (by way of project) in that order.
+
 If you associate instance groups with a job template, inventory, or organization, a job run from that job template is not eligible for the default behavior. 
 This means that if all of the instances inside of the instance groups associated with these three resources are out of capacity, the job remains in the pending state until capacity becomes available.
 

@@ -4,6 +4,9 @@
 
 = Extra variables
 
+[role="_abstract"]
+You can pass extra variables to a job template in {ControllerName} in several ways, including through surveys and the API.
+
 When you pass survey variables, they are passed as extra variables (`extra_vars`) within {ControllerName}.
 However, passing extra variables to a job template (as you would do with a survey) can override other variables being passed from the inventory and project.
 
@@ -20,7 +23,7 @@ For more information about unsafe variables, see link:https://docs.ansible.com/a
 * `ask_variables_on_launch` is set to *True*.
 ====
 
-.Example
+*Example*
 You have a defined variable for an inventory for `debug = true`.
 It is possible that this variable, `debug = true`, can be overridden in a job template survey.
 
@@ -52,7 +55,7 @@ satellites:
 
 The following table notes the behavior (hierarchy) of variable precedence in {ControllerName} as it compares to variable precedence in Ansible.
 
-.{ControllerNameStart} Variable Precedence Hierarchy (last listed wins)
+*{ControllerNameStart} Variable Precedence Hierarchy (last listed wins)*
 
 //image::ug-Variable_Precedence_Hierarchy.png[Variable precedence]
 
