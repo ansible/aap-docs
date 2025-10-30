@@ -2,9 +2,13 @@
 
 [id="controller-git-refspec"]
 
-= Git Refspec
+= Git refspec
 
-The *Source control refspec* field specifies which extra references the update should download from the remote. 
+[role="_abstract"]
+The *Source control refspec* field specifies the extra references the update should download from the remote. 
+A refspec maps references from the remote repository to references in the local repository. 
+If this field is left blank, only the default references are fetched (for example, branches under `refs/heads/`).
+
 Examples include the following:
 
 * `refs/*:refs/remotes/origin/*`: This fetches all references, including remotes of the remote
@@ -21,10 +25,10 @@ This means that you can use a project's branches, tags and commit hashes, as the
 The value specified in the *Source control refspec* field affects which *Source control branch* fields can be used as overrides. 
 Project updates (of any type) perform an extra `git fetch` command to pull that refspec from the remote.
 
-.Example
+*Example*
 You can set up a project that enables branch override with the first or second refspec example.
 Use this in a job template that prompts for the *Source control branch*.
-A client can then launch the job template when a new pull request is created, providing the branch `pull/N/head` and the job template can run against the provided GitHub pull request reference.
+A client can then start the job template when a new pull request is created, providing the branch `pull/N/head` and the job template can run against the provided GitHub pull request reference.
 
 .Additional resources
-For more information, see the link:https://docs.ansible.com/ansible/latest/modules/git_module.html[Ansible git module].
+link:https://docs.ansible.com/ansible/latest/modules/git_module.html[Ansible git module].
