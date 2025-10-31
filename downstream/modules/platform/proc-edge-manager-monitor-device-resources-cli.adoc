@@ -4,7 +4,10 @@
 
 = Monitoring device resources on the CLI
 
-Monitor the resources of your device through the CLI, providing you with the tools and commands to track performance and troubleshoot issues.
+[role="_abstract"]
+
+Monitor the resource use of your {RedHatEdge} devices on the CLI by configuring detailed monitors and threshold-based alert rules. 
+This enables automatic status reporting, helping you keep stability and troubleshoot performance issues.
 
 .Procedure
 
@@ -22,20 +25,27 @@ spec:
 [...]
   resources:
   - monitorType: Disk
-    samplingInterval: 5s <1> 
-    path: /application_data <2>
+    samplingInterval: 5s 
+    path: /application_data 
     alertRules:
-    - severity: Warning <3>
+    - severity: Warning
       duration: 30m
       percentage: 75
       description: Disk space for application data is >75% full for over 30m.
-    - severity: Critical <4>
+    - severity: Critical
       duration: 10m
       percentage: 90
       description: Disk space for application data is >90% full over 10m.
 [...]
 ----
-<1> Samples usage every 5 seconds.
-<2> Checks disk usage on the file system that is associated with the `/applications_data` path. 
-<3> Initiates a warning if the average usage exceeds 75% for more than 30 minutes.
-<4> Initiates a critical alert if the average usage exceeds 90% for over 10 minutes.
++
+// --- Explanations using Definition List ---
+
+samplingInterval::
+  Samples usage every 5 seconds.
+path::
+  Checks disk usage on the file system that is associated with the `/applications_data` path.
+alertRules[severity: Warning]::
+  Initiates a warning if the average usage exceeds 75% for more than 30 minutes.
+alertRules[severity: Critical]::
+  Initiates a critical alert if the average usage exceeds 90% for over 10 minutes.

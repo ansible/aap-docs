@@ -4,6 +4,8 @@
 
 = Building images for VMware vSphere
 
+[role="_abstract"]
+
 When building operating system images and disk images for VMware vSphere, you can follow the generic image building process with the following changes:
 
 * Using late binding by injecting the enrollment certificate or the agent configuration through `cloud-init` when provisioning the virtual device.
@@ -53,4 +55,5 @@ sudo podman run --rm -it --privileged --pull=newer \
     ${OCI_IMAGE_REPO}:${OCI_IMAGE_TAG}
 ----
 
+.Next steps
 When the `bootc-image-builder` completes, you can find the disk image under `${PWD}/output/vmdk/disk.vmdk`.
