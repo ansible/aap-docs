@@ -4,9 +4,10 @@
 
 = Deploying applications to a device using the CLI
 
-Deploy an application package to a device from an OCI registry by using the CLI.
+[role="_abstract"]
 
-Complete the following steps:
+Deploy application packages securely from an OCI registry onto a target device by using the {RedHatEdge} CLI. 
+Specifying the container image reference in the device manifest automatically triggers the transactional deployment through the device agent.
 
 .Procedure
 
@@ -21,17 +22,25 @@ metadata:
 spec:
 [...]
   applications:
-  - name: wordpress <1>
-    image: quay.io/rhem-demos/wordpress-app:latest <2>
-    envVars: <3>
+  - name: wordpress
+    image: quay.io/rhem-demos/wordpress-app:latest
+    envVars:
       WORDPRESS_DB_HOST: <database_host>
       WORDPRESS_DB_USER: <user_name>
       WORDPRESS_DB_PASSWORD: <password>
 [...]
 ----
-<1> A user-defined name for the application that is used when the web console and the CLI list applications.
-<2> A reference to an application package in an OCI registry.
-<3> Optional. A list of key-value pairs that are passed to the deployment tool as environment variables or command line flags.
++
+// --- Explanations using Definition List ---
+
+name::
+  A user-defined name for the application that is used when the web console and the CLI list applications.
+
+image::
+  A reference to an application package in an OCI registry.
+
+envVars::
+  Optional. A list of key-value pairs that are passed to the deployment tool as environment variables or command line flags.
 +
 [NOTE]
 ====

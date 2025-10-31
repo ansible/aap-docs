@@ -4,6 +4,8 @@
 
 = Building the QCoW2 disk image
 
+[role="_abstract"]
+
 {OCPV} can download disk images from an OCI registry but it expects a container disk image instead of an OCI artifact. 
 
 Complete the following steps to build, sign, and upload the QCoW2 disk image:
@@ -16,14 +18,22 @@ Complete the following steps to build, sign, and upload the QCoW2 disk image:
 [source,bash]
 ----
 FROM registry.access.redhat.com/ubi9/ubi:latest AS builder
-ADD --chown=107:107 output/qcow2/disk.qcow2 /disk/ <1>
-RUN chmod 0440 /disk/* <2>
+ADD --chown=107:107 output/qcow2/disk.qcow2 /disk/
+RUN chmod 0440 /disk/*
 FROM scratch
-COPY --from=builder /disk/* /disk/ <3>
+COPY --from=builder /disk/* /disk/
 ----
-<1> Adds the QCoW2 disk image to a builder container to set the required `107` file ownership, which is the QEMU user.
-<2> Sets the required `0440` file permissions. 
-<3> Copies the file to a scratch image.
++
+// --- Explanations using Definition List ---
+
+ADD --chown=107:107 output/qcow2/disk.qcow2 /disk/::
+  Adds the QCoW2 disk image to a builder container to set the required `107` file ownership, which is the QEMU user.
+
+RUN chmod 0440 /disk/*::
+  Sets the required `0440` file permissions.
+
+COPY --from=builder /disk/* /disk/::
+  Copies the file to a scratch image.
 
 . Build, sign, and publish your disk image by running the following command:
 +

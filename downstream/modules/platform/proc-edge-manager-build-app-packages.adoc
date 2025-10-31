@@ -4,6 +4,8 @@
 
 = Building an application package image
 
+[role="_abstract"]
+
 The {RedHatEdge} can download application packages from an Open Container Initiative (OCI) compatible registry. 
 You can build an OCI container image that includes your application package in the `podman-compose` format and push the image to your OCI registry.
 
@@ -21,12 +23,18 @@ You can build an OCI container image that includes your application package in t
 +
 [source,bash]
 ----
-FROM scratch <1>
+FROM scratch
 COPY podman-compose.yaml /podman-compose.yaml
-LABEL appType="compose" <2>
+LABEL appType="compose"
 ----
-<1> Embed the compose file in a `scratch` container.
-<2> Add the `appType=compose` label.
++
+// --- Explanations using Definition List ---
+
+FROM scratch::
+  Embeds the compose file in a `scratch` container.
+
+LABEL appType="compose"::
+  Adds the `appType=compose` label.
 
 . Build and push the container image to your OCI registry:
 

@@ -4,6 +4,8 @@
 
 = Building the operating system image with _bootc_
 
+[role="_abstract"]
+
 Build the operating system image with the `bootc` that contains the {RedHatEdge} agent. 
 You can optionally include the following items in your operating system image:
 
@@ -19,16 +21,26 @@ Complete the following steps:
 . Create a `Containerfile` file with the following content to build a RHEL 9-based operating system image that includes the {RedHatEdge} agent and configuration:
 
 +
+. Build instructions for the bootc image:
++
 [source,bash]
 ----
-FROM registry.redhat.io/rhel9/rhel-bootc:<required_os_version> <1>
+FROM registry.redhat.io/rhel9/rhel-bootc:<required_os_version> 
 RUN dnf --enablerepo ansible-automation-platform-2.5-for-rhel-9-x86_64-rpms -y install flightctl-agent-0.7.2-1.el9fc  && \
     dnf -y clean all && \
     systemctl enable flightctl-agent.service && \
-    systemctl mask bootc-fetch-apply-updates.timer  <2>
+    systemctl mask bootc-fetch-apply-updates.timer
 ----
-<1> The base image that is referenced in `FROM` is a bootable container (`bootc`) image that already has a Linux kernel, which allows you to reuse existing standard container build tools and workflows.
-<2> Disables the default automatic updates. The updates are managed by the {RedHatEdge}.
++
+// --- Explanations using Definition List ---
+
+<required_os_version>::
+  The base image referenced in `FROM` is a bootable container (`bootc`) image that already has a Linux kernel. 
+  You can reuse existing standard container build tools and workflows.
+
+systemctl mask bootc-fetch-apply-updates.timer::
+  This part of the `RUN` command disables the default automatic updates. 
+  The updates are managed by the {RedHatEdge}.
 
 +
 [IMPORTANT]
