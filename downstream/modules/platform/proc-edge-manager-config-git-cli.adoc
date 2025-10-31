@@ -4,13 +4,14 @@
 
 = Managing the device configuration from a Git repository on the CLI 
 
-Create and apply a device configuration in a Git repository.
+[role="_abstract"]
 
-Complete the following steps:
+Integrate your device configuration files with standard Git workflows by defining a Repository resource using the CLI. 
+This enables the {RedHatEdge} to automatically synchronize configuration file updates from the repository onto the device's file system.
 
 .Procedure
 
-. Create a file, for example `site-settings-repo.yaml`, that contains the following definition for a `Repository` resource, named `site-settings`:
+. Create a file, for example `site-settings-repo.yaml`, that has the following definition for a `Repository` resource, named `site-settings`:
 
 +
 [source,yaml]
@@ -60,14 +61,20 @@ metadata:
   name: <device_name>
 spec:
 [...]
-  config: <1>
+  config:
   - name: example-site
     configType: GitConfigProviderSpec
     gitRef:
       repository: site-settings
       targetRevision: production
-      path: /etc/example-site <2>
+      path: /etc/example-site
 [...]
 ----
-<1> The example configuration takes all the files from the `example-site` directory from the `production` branch of the `site-settings` repository and places the files in the root directory (`/`).
-<2> Ensure that the target path is writeable by creating your directory structure. The root directory (`/`) is not writeable in `bootc` systems.
++
+// --- Explanations using Definition List ---
+
+config::
+  The example configuration takes all the files from the `example-site` directory from the `production` branch of the `site-settings` repository and places the files in the root directory (`/`).
+
+gitRef:path::
+  Ensure that the target path is writeable by creating your directory structure. The root directory (`/`) is not writeable in `bootc` systems.
