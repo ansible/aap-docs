@@ -4,6 +4,9 @@
 
 = Source tree copy behavior
 
+[role="_abstract"]
+When {ControllerName} runs a job, it creates a private copy of the project's source tree for that job run.
+
 Every job run has its own private data directory. 
 This directory contains a copy of the project source tree for the given `scm_branch` that the job is running. 
 Jobs are free to make changes to the project folder and make use of those changes while it is still running. 
@@ -13,4 +16,4 @@ If you check the *Clean* option, modified files are removed in {ControllerName}'
 This is done through use of the force parameter in its corresponding Ansible modules pertaining to git or Subversion.
 
 .Additional resources
-For more information, see the link:https://docs.ansible.com/ansible/latest/modules/git_module.html#parameters[Parameters] section of the Ansible documentation.
+link:https://docs.ansible.com/ansible/latest/modules/git_module.html#parameters[Parameters]

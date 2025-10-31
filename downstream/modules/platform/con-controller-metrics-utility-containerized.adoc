@@ -4,6 +4,9 @@
 
 = Configuring `metrics-utility` on a manual containerized installation of {PlatformNameShort}
 
+[role="_abstract"]
+The `metrics-utility` tool generates performance metrics and reports for {PlatformNameShort} installations.
+
 `metrics-utility` is included in the {OCPShort} image beginning with version 4.12, 4.512, and 4.6. 
 If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
 
@@ -15,10 +18,12 @@ Use the following steps to configure `metrics-utility` on a manual containerized
 . Make scripts executable.
 . Configure cron jobs.
 
-.Prerequisites
-* An active {PlatformNameShort} subscription
+[NOTE]
+====
+You must have an active {PlatformNameShort} subscription
+====
 
-.Minimum resource requirements
+*Minimum resource requirements*
 
 Using the metrics-utility tool on a containerized installation of {PlatformNameShort} requires the following resources:
 
@@ -28,6 +33,9 @@ Using the metrics-utility tool on a containerized installation of {PlatformNameS
 ** Minimum: 256 MB RAM (supports up to ~10,000 job host summaries)
 ** Recommended: 512 MB RAM (standard deployments)
 ** Large-scale: 1 GB RAM (supports up to ~100,000 job host summaries)
++
 [NOTE]
+====
 Memory requirements scale with the number of hosts and jobs being processed.
 * Execution time: Report generation typically completes within 10-30 seconds, depending on data volume
+====
