@@ -6,6 +6,8 @@
 
 [role="_abstract"]
 
+You must configure the provider to allow {Terraform} to reference and manage a subset of {PlatformNameShort} resources.
+
 The provider configuration belongs in the root module of a Terraform configuration. Child modules receive their provider configurations from the root module.
 
 .Prerequisites
@@ -20,7 +22,7 @@ The provider configuration belongs in the root module of a Terraform configurati
 +
 **Example**
 +
-````
+----
 # This example creates an inventory named `My new inventory`
 # and adds a host `tf_host` and a group `tf_group` to it,
 # and then launches a job based on the "Demo Job Template" 
@@ -77,7 +79,7 @@ data "aap_job_template" "demo_job_template" {
   organization_name = "Default"
 }
 
-# In order for passing the inventory id to the job template execution, the Inventory on the job template needs to be set to "prompt on launch"
+  # In order for passing the inventory id to the job template execution, the Inventory on the job template needs to be set to "prompt on launch"
 resource "aap_job" "my_job" {
   inventory_id    = aap_inventory.my_inventory.id
   job_template_id = aap_job_template.demo_job_template.id
@@ -88,7 +90,7 @@ resource "aap_job" "my_job" {
     aap_group.my_group
   ]
 }
-````
+----
 
 . Add the configuration arguments for terraform-provider-aap, as shown in the previous example. Optional schema includes:
 
@@ -106,7 +108,7 @@ resource "aap_job" "my_job" {
 
 . (Optional) You can also use an `alias` meta-argument that is defined by Terraform and is available for all provider blocks. `alias` lets you use the same provider with different configurations for different resources. For more information, see alias, in the Terraform documentation.
 
-.Additional Resources
+.Additional resources
 
 * link:{URLControllerUserGuide}/controller-inventories#proc-controller-inv-source-terraform[Terraform State]
 
