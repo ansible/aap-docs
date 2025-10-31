@@ -4,6 +4,10 @@
 
 = Creating a job template
 
+[role="_abstract"]
+A job template is a definition and set of parameters for running an Ansible job. 
+Use job templates to launch jobs.  
+
 .Procedure
 
 . From the navigation panel, select {MenuAETemplates}.
@@ -16,7 +20,7 @@ If a field has the *Prompt on launch* checkbox selected, launching the job promp
 
 Most prompted values override any values set in the job template.
 
-Exceptions are noted in the following table.
+Note the exceptions in the following table.
 ====
 +
 [cols="33%,33%,33%",options="header"]
@@ -141,6 +145,7 @@ If you want to be able to specify `extra_vars` on a schedule, you must select *P
 |===
 +
 . You can set the following options for launching this template, if necessary:
+
 * *Privilege escalation*: If checked, you enable this playbook to run as an administrator.
 This is the equal of passing the `--become` option to the `ansible-playbook` command.
 * *Provisioning callback*: If checked, you enable a host to call back to {ControllerName} through the REST API and start a job from this job template.
@@ -166,15 +171,16 @@ See xref:ref-controller-credential-types[Credential types] to create one.
 * *Prevent instance group fallback*: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job.
 If clear, all available instances in the execution pool are used based on the hierarchy described in xref:controller-control-job-run[Control where a job runs].
 . Click btn:[Create job template], when you have completed configuring the details of the job template.
-
++
 Creating the template does not exit the job template page but advances to the Job Template *Details* tab.
++
 After saving the template, you can click btn:[Launch template] to start the job.
 You can also click btn:[Edit] to add or change the attributes of the template, such as permissions, notifications, view completed jobs, and add a survey (if the job type is not a scan).
 You must first save the template before launching, otherwise, btn:[Launch template] remains disabled.
 
 //image::ug-job-template-details.png[Job template details]
 
-*Verification*
+.Verification
 
 . From the navigation panel, select {MenuAETemplates}.
-. Verify that the newly created template appears on the *Templates* page.
+. Verify that the newly created template is displayed on the *Templates* page.
