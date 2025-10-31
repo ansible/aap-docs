@@ -18,7 +18,7 @@ The provider configuration belongs in the root module of a Terraform configurati
 
 .Procedure
 
-. Create an inventory resource file. Include a provider block. The name given in the block header is the local name of the provider to configure. This provider should already be included in a required_providers block. For more information see the `aap` provider documentation reference pages.
+. Create an inventory resource file. Include a `provider` block. The name given in the block header is the link:https://developer.hashicorp.com/terraform/language/providers/requirements#local-names[local name] of the provider to configure. This provider should already be included in a link:https://registry.terraform.io/providers/ansible/aap/latest/docs[`required_providers` block].
 +
 **Example**
 +
@@ -92,11 +92,11 @@ resource "aap_job" "my_job" {
 }
 ----
 
-. Add the configuration arguments for terraform-provider-aap, as shown in the previous example. Optional schema includes:
+. Add the configuration arguments, as shown in the previous example. Optional schema includes:
 
-* **`host`:** (String) AAP Server URL. Can also be configured using the AAP_HOSTNAME environment variable.
+* **`host`:** (String) AAP server URL. Can also be configured using the AAP_HOSTNAME environment variable.
 
-* **`insecure_skip_verify`:** (Boolean) If true, configures the provider to skip TLS certificate verification. Can also be configured by setting the AAP_INSECURE_SKIP_VERIFY environment variable.
+* **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the AAP_INSECURE_SKIP_VERIFY environment variable.
 
 * **`password`:** (String, Case Sensitive) Password to use for basic authentication. Can also be configured by setting the AAP_PASSWORD environment variable.
 
@@ -111,15 +111,6 @@ resource "aap_job" "my_job" {
 .Additional resources
 
 * link:{URLControllerUserGuide}/controller-inventories#proc-controller-inv-source-terraform[Terraform State]
-
-
-
-
-
-
-
-
-.Additional resources
 
 * link:https://developer.hashicorp.com/terraform/language/meta-arguments/module-providers[The Module providers Meta-Argument]
 * link:https://developer.hashicorp.com/terraform/language/modules/develop/providers[Module Development: Providers Within Modules]
