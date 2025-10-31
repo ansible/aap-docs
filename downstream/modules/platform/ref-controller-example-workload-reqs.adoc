@@ -4,13 +4,16 @@
 
 = Example workload requirements
 
+[role="_abstract"]
+This section provides an example of how to calculate workload requirements for {ControllerName} based on a hypothetical workload.
+
 For this example capacity planning exercise, use the following workload requirements: 
 
 *Execution capacity*
 
-* To run the 10 concurrent jobs requires at least 60 units of execution capacity. 
+* To run 10 concurrent jobs requires at least 60 units of execution capacity. 
 
-** You calculate this by using the following equation: (10 jobs * 5 forks) + (10 jobs * 1 base task impact of a job) = 60 execution capacity
+** Calculate this by using the following equation: (10 jobs * 5 forks) + (10 jobs * 1 base task impact of a job) = 60 execution capacity
 
 *Control capacity*
 
@@ -24,4 +27,6 @@ For this example capacity planning exercise, use the following workload requirem
 
 *Determining quantity of execution and control nodes needed*
 
-To determine how many execution and control nodes you need, reference the experimental results in the following table that shows the observed event processing rate of a single control node with 5 execution nodes of equal size (API Capacity column). The default “forks” setting of job templates is 5, so using this default, the maximum number of jobs a control node can dispatch to execution nodes makes 5 execution nodes of equal CPU/RAM use 100% of their capacity, arriving to the previously mentioned 1:5 ratio of control to execution capacity.
+To find how many execution and control nodes you need, reference the experimental results in the following table that shows the observed event processing rate of a single control node with 5 execution nodes of equal size (API Capacity column). 
+The default “forks” setting of job templates is 5. 
+Using this default, the maximum number of jobs a control node can dispatch to execution nodes makes 5 execution nodes of equal CPU and RAM use 100% of their capacity, arriving to the 1:5 ratio of control to execution capacity mentioned before.
