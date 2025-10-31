@@ -1,0 +1,18 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-using-log-filtering"]
+
+= Using log filtering for troubleshooting 
+
+[role="_abstract"]
+Learn to utilize unique tracking identifiers to efficiently search and filter all system logs. This process pinpoints the exact timeline and cause of failure for a specific rulebook activation or API request.
+
+.Procedure
+. *Collect identifiers:* 
+.. When an issue occurs, retrieve the *Log Tracking ID* (`tid`) from the failed activation instance's logs in the UI *History tab*. 
+.. If the issue was triggered by a user action (like restarting an activation), obtain the *X-REQUEST-ID* (`rid`) from the HTTP response headers.
+. *Search system logs:* 
+.. Use the collected UUID to search through your backend logs (worker, scheduler, API, and the like.). This filters out irrelevant noise, allowing you to focus on the full timeline of the specific request or activation across all services.
+. *Correlate timeline:* 
+.. Use the common `tid` to follow the activation's progress (or failure) across different log files and services.
+. *Use support tools:* 
+.. If necessary, use `sosreport` or `mustgather` tools, which automatically collect all relevant {EDAName} logs from `/var/log/ansible-automation-platform/eda/`.
