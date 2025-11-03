@@ -30,6 +30,15 @@ export METRICS_UTILITY_REPORT_END_USER_COUNTRY="US"
 ** This is a deduplicated list of managed nodes automated by {ControllerName}.
 * `indirectly_managed_nodes`
 ** This is a deduplicated list of indirect managed nodes automated by {ControllerName}.
+* `infrastructure_summary`
+** This additional tab summarizes the infrastructure taxonomy for indirect nodes in three levels: 
+. Infrastructure
+. Device category
+. Device type
+[NOTE]
+====
+Taxonomy mapping is dependent on the facts column in the raw data.
+====
 * `inventory_scope`
 ** This is a deduplicated list of managed nodes present across all inventories of {ControllerName}.
 * `usage_by_organizations`
@@ -44,11 +53,9 @@ export METRICS_UTILITY_REPORT_END_USER_COUNTRY="US"
 ** This generates a sheet per organization, listing managed nodes for every organization with the same content as the managed_nodes sheet.
 * `data_collection_status`
 ** This generates a sheet with the status of every data collection done by the `gather` command for the date range the report is built for. 
-
-To outline the quality of data collected it also lists: 
-
-*** unusual gaps between collections (based on collection_start_timestamp)
-*** gaps in collected intervals (based on since vs until)
+** To outline the quality of data collected, `data_collection_status` also lists: 
+*** Unusual gaps between collections (based on collection_start_timestamp)
+*** Gaps in collected intervals (based on since vs until)
 +
 ----
 # Example with all optional sheets

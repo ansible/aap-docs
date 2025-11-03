@@ -1,0 +1,73 @@
+//module included in assembly-metrics-utility
+
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configuring-cron-jobs"]
+
+= Configuring `cron` jobs
+
+Configure `cron` to schedule the `metrics-utility` commands to run automatically by using the following procedure:
+
+.Procedure
+. Open the `cron` file for editing:
++
+----
+crontab -e
+----
++
+. Add the following lines to the end of the `crontab` file to add `cron` schedule entries:
++
+----
+0 */1 * * * /home/my-user/cron-gather
+0 4 2 * * /home/my-user/cron-report
+----
++
+These examples configure the `gather` command to run every hour at 00 minutes and the `build_report` command to run on the second day of each month at 4:00 AM.
+. Adjust the cron syntax as needed to fit your desired schedule. For example: 
+.. `0 */1 * * *`: Runs at minute 0 of every hour.
+.. `0 4 2 * *`: Runs at 04:00 on day-of-month 2.
+. Save and close the file.
+
+.Verification
+
+Use the following verification steps to ensure correct configuration:
+
+. To confirm that your `cron` job entries have been saved correctly, run:
++
+----
+crontab -l
+----
++
+If your `cron` job entries have been saved correctly, you will see the two lines you added for `cron-gather` and `cron-report`.
+
+. Inspect the `cron` log to check if the `cron` daemon is executing the commands and if `metrics-utility` is producing output:
++
+----
+cat /var/log/cron
+----
++
+For reference, see the following example output:
++
+----
+# Example Output:
+
+Aug 20 09:55:01 aap CROND[72746]: (aap) CMD (/home/aap/Documents/scripts/cron-gather)
+Aug 20 09:55:03 aap CROND[72744]: (aap) CMDOUT (2025-08-20 08:55:03,581 INFO     [-] awx.main.analytics /tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-20-083506+0000-2025-08-20-084503+0000-0.tar.gz)
+Aug 20 09:55:03 aap CROND[72744]: (aap) CMDOUT (/tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-20-083506+0000-2025-08-20-084503+0000-0.tar.gz)
+Aug 20 09:55:03 aap CROND[72744]: (aap) CMDOUT (2025-08-20 08:55:03,581 INFO     [-] awx.main.analytics /tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-20-083506+0000-2025-08-20-084503+0000-1.tar.gz)
+Aug 20 09:55:03 aap CROND[72744]: (aap) CMDOUT (/tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-20-083506+0000-2025-08-20-084503+0000-1.tar.gz)
+Aug 20 09:55:03 aap CROND[72744]: (aap) CMDEND (/home/aap/Documents/scripts/cron-gather)
+Aug 20 10:00:02 aap CROND[77629]: (aap) CMD (/home/aap/Documents/scripts/cron-report)
+Aug 20 10:00:02 aap CROND[77623]: (aap) CMDOUT (Generating metrics report inside the container...)
+Aug 20 10:00:04 aap CROND[77623]: (aap) CMDOUT (2025-08-20 09:00:04,639 INFO     [-] awx.main.analytics No billing data for month 2025-07)
+Aug 20 10:00:04 aap CROND[77623]: (aap) CMDOUT (No billing data for month 2025-07)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDOUT (Copying generated reports from container to host: /tmp/ansible_metrics_reports)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDOUT (Reports successfully moved to: /tmp/ansible_metrics_reports)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDOUT (Files in destination:)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDOUT (total 0)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDOUT (drwxr-xr-x. 3 aap aap 18 Aug 20 09:43 data)
+Aug 20 10:00:05 aap CROND[77623]: (aap) CMDEND (/home/aap/Documents/scripts/cron-report)
+----
++
+. Locate generated reports:
+* The generated report has a default name format of `CCSP-<YEAR>-<MONTH>.xlsx` (for example, `CCSP-2024-07.xlsx`). The report is deposited in the `METRICS_UTILITY_SHIP_PATH` with the prefixed path you specified in Step 2 (for example, `/home/my-user/aap/controller/data/metrics_utility/data`).

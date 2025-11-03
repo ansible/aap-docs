@@ -2,13 +2,13 @@
 
 [id="controller-metrics-utility-rhel"]
 
-= Configuring metrics-utility on {RHEL} 
+= Configuring `metrics-utility` on {RHEL} 
 
 .Prerequisites:
 
 * An active {PlatformNameShort} subscription
 
-Metrics-utility is included with {PlatformNameShort}, so you do not need a separate installation. 
+`metrics-utility` is included with {PlatformNameShort}, so you do not need a separate installation. 
 The following procedure gathers the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
 You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
 See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
@@ -71,15 +71,24 @@ metrics-utility build_report
 `0 4 2 * * /home/my-user/cron-report`
 
 . Save and close the file.
-. To verify that you saved your changes, run:
-+
-`crontab -l`
 
-. To ensure that data is being collected, run: 
+.Verification 
+
+Use the following verification steps to ensure correct configuration:
+
+. To confirm that your `cron` job entries have been saved correctly, run:
 +
-`cat /var/log/cron` 
+----
+crontab -l
+----
 +
-The following is a typical output. Note that time and date might vary depending on how your configure the run schedule:
+. Inspect the `cron` log to verify that the `cron` daemon is executing the commands and that `metrics-utility` is producing output:
++
+----
+cat /var/log/cron
+----
++
+For reference, see the following example output:
 +
 [source, ]
 ----
@@ -95,3 +104,6 @@ May  8 09:46:26 ip-10-0-6-23 crontab[51659]: (root) END EDIT (root)
 +
 
 The generated report will have the default name `CCSP-<YEAR>-<MONTH>.xlsx` and is saved in the ship path that you specified in step 1a.
+
+[NOTE]
+Time and date might vary depending on how your configure the run schedule.
