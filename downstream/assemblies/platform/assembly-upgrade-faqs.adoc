@@ -4,6 +4,10 @@
 
 = FAQs related to upgrading
 
+[role="_abstract"]
+
+Find concise answers to frequently asked questions about upgrading your system to quickly troubleshoot common issues and plan your migration effectively.
+
 What are the supported installation topologies and operating systems for {PlatformNameShort} 2.6?::
 Red Hat has adopted a more definitive approach to installation topologies, categorizing them as "growth" or  "enterprise" for production-ready setups:
 
@@ -11,6 +15,20 @@ Red Hat has adopted a more definitive approach to installation topologies, categ
 * Enterprise topology: is intended for organizations that require {PlatformNameShort} to be deployed with redundancy or higher compute for large volumes of automation. 
 
 For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/tested_deployment_models/index[Tested deployment models].
+
+Why did my authentication settings that were present in {ControllerName} 2.4 not get imported?::
+If an authentication method is missing in {PlatformNameShort} {PlatformVers}, review the setup_log for migration warnings. 
+These warnings indicate the reason authentication settings were not successfully created during the upgrade to version {PlatformVers}.
+
+Why did my upgrade from {PlatformNameShort} 2.4 to {PlatformVers} fail or encounter an error during the SAML authenticator migration?::
+A SAML authenticator migration fails if the configuration has an encrypted private key. 
+While {ControllerName} in {PlatformNameShort} 2.4 allowed input of an encrypted private key without error, {PlatformNameShort} {PlatformVers} does not support this feature for authenticators and prevents the migration of any SAML configuration containing one.
+
+To prevent migration failure and service disruption for SSO users, you must:
+
+* *Before upgrading*: Replace the encrypted private key with an unencrypted one in the SAML authenticator settings on your {PlatformNameShort} 2.4 environment.
+* *If the upgrade already failed*: {GatewayStart} did not migrate the authenticator. 
+A local administrator must manually re-create the SAML authenticator in the new {PlatformNameShort} {PlatformVers} environment to restore SSO functionality.
 
 Which {RHEL} versions are supported for RPM and containerized installations?::
 RPM installations will continue to be supported exclusively on {RHEL} 9. 
@@ -34,7 +52,6 @@ Will migrations be fully supported in {PlatformNameShort} 2.6?::
 Yes, migrations are fully supported, enabling customers to transition from RPM installations to containerized or {OCPShort} environments, or to the managed offering. 
 Customers must be on the latest version of {PlatformNameShort} for their current installation prior to migrating. 
 The installer will manage new components introduced in version 2.5 for direct 2.4 to 2.6 upgrades.
-
 
 When upgrading from 2.4 to 2.6 (applies only to RPM or {OCPShort}), what is different about the upgrade process compared with the 2.4 to 2.5 process?::
 See the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/planning_your_upgrade/index#con-upgrade-improvements-overview[Overview of upgrade improvements] section.
