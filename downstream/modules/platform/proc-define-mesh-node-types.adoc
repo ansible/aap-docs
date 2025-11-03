@@ -18,6 +18,11 @@ The control nodes run in the cluster connect and submit work to the execution no
 
 These execution nodes are registered in {ControllerName} as type `execution` instances, meaning they are only used to run jobs, not dispatch work or handle web requests as control nodes do.
 
+[IMPORTANT]
+====
+When creating an execution node, make sure the system timezone on the execution node matches settings.TIME_ZONE (default is 'UTC') on {ControllerName}. Fact caching relies on comparing modified times of artifact files, and these modified times are not timezone-aware. Therefore, it is critical that the timezones of the execution nodes match {ControllerName}'s timezone setting.
+====
+
 *Hop nodes* can be added to sit between the control plane of {ControllerName} and standalone execution nodes.
 These hop nodes are not part of the Kubernetes cluster and are registered in {ControllerName} as an instance of type `hop`, meaning they only handle inbound and outbound traffic for otherwise unreachable nodes in different or more strict networks.
 
