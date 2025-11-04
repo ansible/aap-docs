@@ -46,17 +46,20 @@ https://<gateway server name>/api/gateway/v1/login/ -k -D - -o /dev/null
 
 . Access and test the APIs that need authentication, for example `/api/controller/v2/settings/all/`:
 +
+[NOTE]
+====
+All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
+For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
+====
++
 ----
 $ curl -X GET -H 'Cookie: <cookieID>;' https://<gateway server name>/api/controller/v2/settings/all/ -k
 ----
 
-All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
-For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
-
 .Verification 
 
 The following shows a typical response:
-+
+
 ----
 Server: nginx
 Date: <current date>
@@ -79,10 +82,10 @@ Set-Cookie: csrftoken=<csrftoken>; Path=/; SameSite=Lax
 Set-Cookie: awx_sessionid=<your session id>; expires=<date>; HttpOnly; Max-Age=1800; Path=/; SameSite=Lax
 Strict-Transport-Security: max-age=15768000
 ----
-+
+
 When a user is successfully authenticated with this method, the server responds with a header called `X-API-Session-Cookie-Name`, indicating the configured name of the session cookie. 
 The default value is `awx_session_id` which you can see later in the `Set-Cookie` headers.
-+
+
 [NOTE]
 ====
 You can change the session expiration time by specifying it in the `SESSION_COOKIE_AGE` parameter. 
