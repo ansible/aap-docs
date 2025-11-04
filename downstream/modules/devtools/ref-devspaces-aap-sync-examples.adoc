@@ -1,0 +1,256 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-devspaces-aap-sync-examples_{context}"]
+= {PlatformNameShort} synchronization configuration examples
+
+[role="_abstract"]
+These configuration examples provide complete, tested YAML blocks for common synchronization scenarios, such as minimal setup or filtered synchronization. 
+Use the examples to quickly implement and validate settings in your Helm values file.
+
+== Minimal configuration
+
+Synchronizes all Organizations, Users, Teams, and Job Templates using the using the default 60-minute frequency and 15-minute timeout.
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      '{{- include "catalog.providers.env" . }}':
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+----
+
+== Filter by survey status
+
+Synchronize identity data, but filter Job Templates to include only those that have {PlatformNameShort} Surveys *enabled*.  
+
+To sync Job Templates without {PlatformNameShort} Surveys, set `surveyEnabled:` to `false`.
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            surveyEnabled: true
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+----
+
+== Filter by labels
+
+Synchronize Job Templates that match *ANY* of the specified {PlatformNameShort} Labels: `portal`, `self-service`, or `production`. 
+The configuration uses *OR* logic for labels.
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            labels:
+              - portal
+              - self-service
+              - production
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+----
+
+== Combine filters for production
+
+Combine survey status and label filters:
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      production:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            surveyEnabled: true
+            labels:
+              - portal
+              - self-service
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+----
+
+This configuration syncs:
+
+* All Users, Teams, and Organizations from "Default" organization
+* Job Templates that belong to "Default" organization AND have {PlatformNameShort} Surveys enabled *AND* have {PlatformNameShort} Labels "portal" *OR* "self-service"
+
+
+== Custom sync frequencies
+
+Fast synchronization (development):
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { minutes: 5 }
+              timeout: { seconds: 30 }
+          jobTemplates:
+            enabled: true
+            schedule:
+              frequency: { minutes: 5 }
+              timeout: { seconds: 30 }
+----
+
+Standard synchronization:
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+----
+
+Slow synchronization:
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { hours: 4 }
+              timeout: { minutes: 30 }
+          jobTemplates:
+            enabled: true
+            schedule:
+              frequency: { hours: 4 }
+              timeout: { minutes: 30 }
+----
+
+== Disable sync frequencies
+
+Sync identity data less frequently than Job Templates:
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      production:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { hours: 4 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            schedule:
+              frequency: { minutes: 30 }
+              timeout: { minutes: 10 }
+----
+
+== Disable Job Template sync
+
+Set `enabled: false` to temporarily disable Job Template synchronization while maintaining identity sync.
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      development:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: false
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 15 }
+----
+
+== Production configuration example
+
+Complete production configuration with filters:
+
+[source,yaml]
+----
+catalog:
+  providers:
+    rhaap:
+      production:
+        orgs: Default
+        sync:
+          orgsUsersTeams:
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+          jobTemplates:
+            enabled: true
+            surveyEnabled: true
+            labels:
+              - production
+              - self-service
+            schedule:
+              frequency: { hours: 1 }
+              timeout: { minutes: 15 }
+----

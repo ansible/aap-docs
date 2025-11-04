@@ -1,0 +1,25 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-devspaces-aap-sync-overview_{context}"]
+= Understanding {PlatformNameShort} synchronization
+
+[role="_abstract"]
+The synchronization feature imports Organizations, Users, Teams, and Job Templates from {PlatformNameShort} into the {SelfService}. 
+This process makes the {PlatformNameShort} entities securely discoverable and accessible to portal users.
+
+== Overview
+
+{SelfServiceShortStart} synchronizes two types of data from {PlatformNameShort}:
+
+* Organizations, Users, and Teams: Identity and organizational structure data
+* Job Templates: Executable automation templates
+
+Both synchronizations run on a scheduled basis and can be manually triggered by {PlatformNameShort} Administrators in the portal UI.
+
+== How it works
+
+. The {SelfService} connects to your {PlatformNameShort} instance using configured credentials.
+. The {SelfService} fetches data based on the configured {PlatformNameShort} Organization and filter criteria.
+. The {SelfService} converts {PlatformNameShort} entities into portal entities and displays them in the UI.
+. Synchronization runs on a configurable schedule (for example, every 60 minutes).
+. Users access and launch resources based on their existing {PlatformNameShort} permissions.
