@@ -5,14 +5,23 @@
 = Configuring {LightspeedShortName} variables in the inventory file
 
 [role="_abstract"]
-To deploy {LightspeedShortName}, add the required installation variables to your inventory file under the `[all: vars]` group. You will also need to add specific variables to enable the Ansible Lightspeed coding assistant, the {AAPchatbot}, and the MCP server integration.
+To deploy {LightspeedShortName}, add the required installation variables to your inventory file under the `[all: vars]` group. You will also need to add specific variables to enable the Ansible Lightspeed coding assistant, the {AAPchatbot}, and the MCP server integration. Refer to the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/appendix-inventory-files-vars#lightspeed-variables[Appendix: {LightspeedShortName} variables] for information about required and optional variables.
 
-[source,yaml]
+[source]
 ----
-# This is the list of all {LightspeedShortName} variables to add to the inventory file.
+# This is the list of inventory file variables required to deploy Red Hat Ansible Lightspeed on a containerized installation.
 
-# This section is for {LightspeedShortName} deployment
-# -----------------------------------------------------
+# Consult the docs if you are unsure what to add.
+# For information about required and optional variables, refer to the Appendix: Red Hat Ansible Lightspeed variables
+# https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/appendix-inventory-files-vars#lightspeed-variables
+
+# This section is for your Red Hat Ansible Lightspeed host
+# ---------------------------------------------------------
+[ansiblelightspeed]
+aap.example.com
+
+# This section is for Red Hat Ansible Lightspeed deployment
+# ----------------------------------------------------------
 lightspeed_admin_user: <set your own>
 lightspeed_admin_password: <set your own>
 lightspeed_admin_email: <set your own>
@@ -20,21 +29,21 @@ lightspeed_pg_host: <set your own>
 lightspeed_pg_password: <set your own>
 
 
-# This section is to configure {AAPchatbot}
-# ---------------------------------------------------------------------
+# This section is to configure Ansible Lightspeed intelligent assistant
+# ----------------------------------------------------------------------
 lightspeed_chatbot_model_url: <set your own>
 lightspeed_chatbot_model_api_key: <set your own>
 lightspeed_chatbot_model_id: : <set your own>
 
 
-# This section is to configure {AAPchatbot} with MCP server integration
-# ----------------------------------------------------------------------
+# This section is to configure Ansible Lightspeed intelligent assistant with MCP server integration
+# --------------------------------------------------------------------------------------------------
 lightspeed_mcp_controller_enabled: false
 lightspeed_mcp_lightspeed_enabled: false
 
 
 # This section is to configure Ansible Lightspeed coding assistant
-# ----------------------------------------------------------------------
+# -----------------------------------------------------------------
 lightspeed_wca_model_type: 'wca'
 lightspeed_wca_model_url: 'https://api.dataplatform.cloud.ibm.com'
 lightspeed_wca_model_verify_ssl: true
