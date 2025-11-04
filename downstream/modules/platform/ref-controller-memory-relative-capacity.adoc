@@ -4,6 +4,10 @@
 
 = Memory relative capacity
 
+[role="_abstract"]
+The memory relative capacity option allows you to set the maximum number of concurrent tasks (forks) that can run on a controller based on the amount of memory available on the system. 
+This setting is useful for systems where memory is a limiting factor for running Ansible jobs.
+
 `mem_capacity` is calculated relative to the amount of memory needed per fork. 
 Taking into account the overhead for internal components, this is about 100MB per fork. 
 When considering the amount of memory available to Ansible jobs, the capacity algorithm reserves 2GB of memory to account for the presence of other services. 
