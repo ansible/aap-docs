@@ -13,12 +13,17 @@ The provider configuration belongs in the root module of a Terraform configurati
 .Prerequisites
 
 * You have installed and configured link:https://developer.hashicorp.com/terraform/enterprise[Terraform Enterprise or HCP Terraform].
-* You have installed the latest version of link:https://registry.terraform.io/providers/ansible/aap/latest[`terraform-provider-aap`] from the Terraform registry.
+* You have installed the latest release version of `terraform-provider-aap` from the link:https://registry.terraform.io/providers/ansible/aap/latest[Terraform registry].
++
+[NOTE]
+====
+By default, the Terraform registry displays the latest version which might be an pre-release version (for example, 1.4.0-devpreview). Use the dropdown list to select a release version, which does not include a dash (for example, 1.4.0). Only release versions are supported.
+====
 * You have created a username and password.
 
 .Procedure
 
-. Create an inventory resource file. Include a `provider` block. The name given in the block header is the link:https://developer.hashicorp.com/terraform/language/providers/requirements#local-names[local name] of the provider to configure. This provider should already be included in a link:https://registry.terraform.io/providers/ansible/aap/latest/docs[`required_providers` block].
+. Create a Terraform configuration (`.tf`) file. Include a `provider` block. The name given in the block header is the link:https://developer.hashicorp.com/terraform/language/providers/requirements#local-names[local name] of the provider to configure. This provider should already be included in a link:https://registry.terraform.io/providers/ansible/aap/latest/docs[`required_providers` block].
 +
 **Example**
 +
@@ -92,9 +97,9 @@ resource "aap_job" "my_job" {
 }
 ----
 
-. Add the configuration arguments, as shown in the previous example. Optional schema includes:
+. Add the configuration arguments, as shown in the previous example. You must configure the host and credentials. A full list of supported schema is available on the link:https://registry.terraform.io/providers/ansible/aap/latest/docs[Terraform registry] for your `aap` provider release version.
 
-* **`host`:** (String) AAP server URL. Can also be configured using the AAP_HOSTNAME environment variable.
+* **`host`:** (String) AAP server URL. Can also be configured using the AAP_HOST environment variable.
 
 * **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the AAP_INSECURE_SKIP_VERIFY environment variable.
 
