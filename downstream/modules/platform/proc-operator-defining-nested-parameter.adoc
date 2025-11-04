@@ -9,6 +9,13 @@
 To define a parameter, such as the `resource_requirements` for Automation Controller, you add the configuration to the parent {PlatformNameShort} CR YAML. 
 This ensures that the {PlatformNameShort} CR is the single source of truth for your deployment.
 
+[NOTE]
+====
+The `image` and `image_version`, as well as the `{component}_image` and `{component}_image_version` parameters are intended for development or hotfix purposes only.
+
+*Do not use these in production environments.* These settings bypass standard version management and can lead to configuration drift, inconsistent deployments, and difficulty troubleshooting issues.
+====
+
 .Procedure
 
 . Log in to {OCPShort}.
