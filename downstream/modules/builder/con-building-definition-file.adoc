@@ -18,25 +18,25 @@ The following is an example of a version 3 definition file. Each definition file
 ----
 version: 3
 
-build_arg_defaults: <1>
+build_arg_defaults:
   ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
 
-dependencies: <2>
+dependencies:
   galaxy: requirements.yml
   python:
     - six
     - psutil
   system: bindep.txt
 
-images: <3>
+images:
   base_image:
     name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel9:latest
 
 # Custom package manager path for the RHEL based images
-options: <4>
+options:
   package_manager_path: /usr/bin/microdnf
 
-additional_build_steps: <5>
+additional_build_steps:
   prepend_base:
     - RUN echo This is a prepend base command!
 
@@ -57,12 +57,12 @@ additional_build_steps: <5>
     - RUN ls -la /etc
 ----
 
-. Lists default values for build arguments.
-.  Specifies the location of various requirements files.
-. Specifies the base image to be used. Red Hat support is only provided for the redhat.registry.io base image.
-. Specifies options that can affect builder runtime functionality.
-. Commands for additional custom build steps.
+* `build_arg_defaults`: Lists default values for build arguments.
+* `dependencies`:  Specifies the location of various requirements files.
+* `images`: Specifies the base image to be used. Red Hat support is only provided for the redhat.registry.io base image.
+* `options`: Specifies options that can affect builder runtime functionality.
+* `additional_build_steps`: Commands for additional custom build steps.
 
 .Additional resources
-* xref:con-definition-file-breakdown[Breakdown of definition file content]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/creating_and_using_execution_environments/index#con-definition-file-breakdown[Breakdown of definition file content]
 * link:https://ansible.readthedocs.io/projects/builder/en/latest/porting_guides/porting_guide/[Ansible Builder Porting Guide]
