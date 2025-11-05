@@ -4,28 +4,21 @@
 = Validating the target environment
 
 [role="_abstract"]
-After completing the migration, validate your target environment to ensure all components are functional and operating as expected.
+After completing the migration, validate that all components in your target environment function correctly.
 
 .Procedure
-. Verify all migrated components are functional.
-+
-To ensure that all components have been successfully migrated, verify that each component is operational and accessible:
-+
-.. {GatewayStart}: Access the {PlatformNameShort} URL at `\https://<gateway_hostname>/` and verify that the dashboard loads correctly. Check that the {Gateway} service is running and properly connected to {ControllerName}.
-.. {ControllerNameStart}: Under *Automation Execution*, check that projects, inventories, and job templates are present and properly configured.
+. Verify all migrated components function correctly.
+.. {GatewayStart}: Access the {PlatformNameShort} URL at `\https://<gateway_hostname>/` and verify that the dashboard loads correctly. Check that the {Gateway} service is running and connected to {ControllerName}.
+.. {ControllerNameStart}: Under *Automation Execution*, check that projects, inventories, and job templates are present and configured.
 .. {HubNameStart}: Under *Automation Content*, verify that collections, namespaces, and their contents are visible.
 .. {EDAName} (if applicable): Under *Automation Execution Decisions*, verify that rule audits, rulebook activations, and projects are accessible.
-+
-For each component, check the logs to ensure there are no startup errors or warnings:
+.. For each component, check the logs to ensure there are no startup errors or warnings:
 +
 ----
 podman logs <container_name>
 ----
 
 . Test workflows and automation processes.
-+
-After you have confirmed that all components are functional, test critical automation workflows to ensure they operate correctly in the containerized environment:
-+
 .. Run job templates: Run several key job templates, including those with dependencies on various credential types.
 .. Test workflow templates: Run workflow templates to ensure that workflow nodes run in the correct order and that the workflow completes successfully.
 .. Verify execution environments: Ensure that jobs run in the appropriate execution environments and can access required dependencies.
@@ -33,9 +26,6 @@ After you have confirmed that all components are functional, test critical autom
 .. Validate job scheduling: Test scheduled jobs to ensure they run at the expected times.
 
 . Validate user access and permissions.
-+
-Confirm that user accounts, teams, and roles were correctly migrated:
-+
 .. User authentication: Test login functionality with various user accounts to ensure authentication works correctly.
 .. Role-based access controls: Verify that users have appropriate permissions for organizations, projects, inventories, and job templates.
 .. Team memberships: Confirm that team memberships and team-based permissions are intact.
@@ -43,16 +33,13 @@ Confirm that user accounts, teams, and roles were correctly migrated:
 .. SSO integration (if applicable): Verify that Single Sign-On authentication is working correctly.
 
 . Confirm content synchronization and availability.
-+
-Ensure that all content sources are properly configured and accessible:
-+
-** Collection synchronization: Check that you can synchronize collections from a remote.
-** Collection Upload: Check that you can upload collections.
-** Collection repositories: Verify that collections are available in {HubName} and can be used in execution environments.
-** Project synchronization: Check that projects can sync content from source control repositories.
-** External content sources: Test synchronization from {HubName} and {Galaxy} (if configured).
-** Execution environment availability: Confirm that all required execution environments are available and can be accessed by the execution nodes.
-** Content dependencies: Verify that content dependencies are correctly resolved when running jobs.
+.. Collection synchronization: Check that you can synchronize collections from a remote.
+.. Collection Upload: Check that you can upload collections.
+.. Collection repositories: Verify that {HubName} makes collections available and that execution environments can use them.
+.. Project synchronization: Check that projects can sync content from source control repositories.
+.. External content sources: Test synchronization from {HubName} and {Galaxy} (if configured).
+.. Execution environment availability: Confirm that all required execution environments exist and that execution nodes can access them.
+.. Content dependencies: Verify that the system correctly resolves content dependencies when running jobs.
 
 [role="_additional-resources"]
 .Additional resources
