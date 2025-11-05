@@ -1,0 +1,23 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="eda-http-headers"]
+
+= HTTP headers
+
+[role="_abstract"]
+In the context of {EDAName} and event streams, HTTP headers play a significant role because they carry the necessary context and security information about the incoming event from a third-party source (for example, GitHub, a monitoring tool, or a proprietary webhook). They include the following capabilities: 
+
+Authentication and non-repudiation::
+This is the most critical use. Headers often contain tokens, API keys, or security signatures (like an HMAC in an `X-Hub-Signature` header) that {EDAName} uses to _verify the sender's identity_ and ensure the event payload has not been tampered with. This supports non-repudiation—proof that the event came from a legitimate source.
+Event filtering and routing::
+Headers can contain identifying details like a source application ID, a tenant name, or an environment flag (`X-Environment: production`). Rulebooks can then _filter and route_ the event payload based on these headers, ensuring the event only triggers the correct automation for the corresponding environment or application.
+Debugging and Logging::
+Headers provide crucial data points (`Date`, `User-Agent`, `X-Request-ID`) for tracing the event's path, helping system administrators and SREs _debug_ issues related to delayed or failed event processing.
+
+Headers are essential for all HTTP communication, serving several distinct purposes:
+
+* *Context and metadata:* Describe the data being sent (for example, `Content-Type: application/json, Content-Length: 1024`).
+* *Client/Server Capabilities:* Inform the receiving party of the sender's capabilities or preferences (for example, `Accept-Language: en-US`).
+* *Authentication/Authorization:* Carry security credentials (for example, `Authorization: Bearer <token>`).
+* *Caching:* Controls how content should be cached by clients and proxies (for example, `Cache-Control: max-age=3600`).
+* *Routing and Tracking:* They facilitate network routing and transaction tracking, often via custom headers (for example, `X-Request-ID`).
