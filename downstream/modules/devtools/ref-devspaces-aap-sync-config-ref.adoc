@@ -1,0 +1,99 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-devspaces-aap-sync-config-ref_{context}"]
+= {PlatformNameShort} synchronization configuration reference
+
+[role="_abstract"]
+Definitions for all required and optional configuration parameters for the {PlatformNameShort} synchronization feature, including data types, filter options, and label normalization logic. 
+Use this information to configure synchronization settings in the Helm values file.
+
+== Required synchronization settings
+
+These parameters *must* be included in the `catalog.providers.rhaap` section of your Helm values file to enable identity synchronization.
+
+[cols="1,1,1,1,4", options="header"]
+|===
+| Option | Type | Requirement | Default | Description
+
+| `orgs`
+| `string`
+| *Must* be provided
+| -
+| The {PlatformNameShort} Organization to synchronize from. The configuration supports only one {PlatformNameShort} Organization.
+
+| `sync.orgsUsersTeams.schedule.frequency`
+| `object`
+| *Must* be provided
+| -
+| Defines how often the identity data (Organizations, Users, and Teams) synchronization runs (for example, `{ minutes: 60 }`).
+
+| `sync.orgsUsersTeams.schedule.timeout`
+| `object`
+| *Must* be provided
+| -
+| The maximum duration for identity synchronization before a timeout error occurs (for example, `{ minutes: 15 }`).
+|===
+
+== Optional Job Template synchronization settings
+
+These parameters apply specifically to Job Template synchronization. If synchronization is enabled, the schedule and timeout settings *must* be provided.
+
+[cols="1,1,1,1,4", options="header"]
+|===
+| Option | Type | Requirement | Default | Description
+
+| `sync.jobTemplates.enabled`
+| `boolean`
+| *Must* be provided
+| `true`
+| Set to `true` to enable Job Template synchronization, or `false` to disable it.
+
+| `sync.jobTemplates.surveyEnabled`
+| `boolean`
+| Optional
+| -
+| Filters Job Templates based on whether an {PlatformNameShort} Survey is enabled. See the *Filter Options* section for details.
+
+| `sync.jobTemplates.labels`
+| `array`
+| Optional
+| `[]`
+| Filters Job Templates based on specific {PlatformNameShort} Labels. See the *Filter Options* section for details.
+
+| `sync.jobTemplates.schedule.frequency`
+| `object`
+| *Must* be provided if template sync is enabled
+| -
+| Defines how often the Job Template synchronization runs (for example, `{ minutes: 60 }`).
+
+| `sync.jobTemplates.schedule.timeout`
+| `object`
+| *Must* be provided if template sync is enabled
+| -
+| The maximum duration for Job Template synchronization before a timeout error occurs (for example, `{ minutes: 15 }`).
+|===
+
+== Filter Options
+
+The following filter options apply only to Job Template synchronization.
+
+The `surveyEnabled` filter accepts one of the following values:
+
+* Omitted: Sync *all* Job Templates, regardless of their {PlatformNameShort} Survey status.
+* `true`: Sync *only* Job Templates that have {PlatformNameShort} Surveys enabled.
+* `false`: Sync *only* Job Templates that do *not* have {PlatformNameShort} Surveys enabled.
+
+The `labels` filter accepts an array of strings:
+
+* `[]` (empty array) or omitted: Sync *all* Job Templates, regardless of associated {PlatformNameShort} Labels.
+* ["label1", "label2"]: Sync *only* Job Templates that have *any* of the specified {PlatformNameShort} Labels (*OR* logic). 
+* Label matching is case-insensitive.
+
+== {PlatformNameShort} label normalization
+
+Before filtering is applied, {PlatformNameShort} Labels are normalized by applying the following transformations in order:
+
+* Convert the label to lowercase (for example, "CaC" becomes "cac")
+* Replace invalid characters
+* Collapse multiple hyphens into a single hyphen (for example, "app--dev" becomes "app-dev")
+* Remove leading and trailing hyphens (for example, "--tag--" becomes "tag")
