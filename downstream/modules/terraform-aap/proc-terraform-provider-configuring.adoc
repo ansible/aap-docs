@@ -1,0 +1,121 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="terraform-provider-configuring"]
+
+= Configuring the provider
+
+[role="_abstract"]
+
+You must configure the provider to allow {Terraform} to reference and manage a subset of {PlatformNameShort} resources.
+
+The provider configuration belongs in the root module of a Terraform configuration. Child modules receive their provider configurations from the root module.
+
+.Prerequisites
+
+* You have installed and configured link:https://developer.hashicorp.com/terraform/enterprise[Terraform Enterprise or HCP Terraform].
+* You have installed the latest release version of `terraform-provider-aap` from the link:https://registry.terraform.io/providers/ansible/aap/latest[Terraform registry].
++
+[NOTE]
+====
+The default latest version on the Terraform registry might be a pre-release version (such as 1.2.3-beta). Select a supported release version, which uses a 1.2.3 format without dashes.
+====
+* You have created a username and password.
+
+.Procedure
+
+. Create a Terraform configuration (`.tf`) file. Include a `provider` block. The name given in the block header is the link:https://developer.hashicorp.com/terraform/language/providers/requirements#local-names[local name] of the provider to configure. This provider should already be included in a link:https://registry.terraform.io/providers/ansible/aap/latest/docs[`required_providers` block].
++
+**Example**
++
+----
+# This example creates an inventory named `My new inventory`
+# and adds a host `tf_host` and a group `tf_group` to it,
+# and then launches a job based on the "Demo Job Template" 
+# in the "Default" organization using the inventory created.
+#
+terraform {
+  required_providers {
+    aap = {
+      source = "ansible/aap"
+    }
+  }
+}
+
+provider "aap" {
+  host     = "https://AAP_HOST"
+  username = "ansible"
+  password = "test123!"
+}
+
+resource "aap_inventory" "my_inventory" {
+  name         = "My new inventory"
+  description  = "A new inventory for testing"
+  organization = 1
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+}
+
+resource "aap_group" "my_group" {
+  inventory_id = aap_inventory.my_inventory.id
+  name         = "tf_group"
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+}
+
+resource "aap_host" "my_host" {
+  inventory_id = aap_inventory.my_inventory.id
+  name         = "tf_host"
+  variables = jsonencode(
+    {
+      "foo" : "bar"
+    }
+  )
+  groups = [aap_group.my_group.id]
+}
+
+data "aap_job_template" "demo_job_template" {
+  name              = "Demo Job Template"
+  organization_name = "Default"
+}
+
+  # In order for passing the inventory id to the job template execution, the Inventory on the job template needs to be set to "prompt on launch"
+resource "aap_job" "my_job" {
+  inventory_id    = aap_inventory.my_inventory.id
+  job_template_id = aap_job_template.demo_job_template.id
+
+  # This resource creation needs to wait for the host and group to be created in the inventory
+  depends_on = [
+    aap_host.my_host,
+    aap_group.my_group
+  ]
+}
+----
+
+. Add the configuration arguments, as shown in the previous example. You must configure the host and credentials. A full list of supported schema is available on the link:https://registry.terraform.io/providers/ansible/aap/latest/docs[Terraform registry] for your `aap` provider release version.
+
+* **`host`:** (String) AAP server URL. Can also be configured using the AAP_HOST environment variable.
+
+* **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the AAP_INSECURE_SKIP_VERIFY environment variable.
+
+* **`password`:** (String, Case Sensitive) Password to use for basic authentication. Can also be configured by setting the AAP_PASSWORD environment variable.
+
+* **`timeout`:** (Number) Timeout specifies a time limit for requests made to the AAP server. Defaults to 5 if not provided. A timeout of zero means no timeout. Can also be configured by setting the AAP_TIMEOUT environment variable.
+
+* **`username`:** (String) Username to use for basic authentication. Ignored if the token is set. Can also be configured by setting the AAP_USERNAME environment variable.
+
+. (Optional) You can use link:https://developer.hashicorp.com/terraform/language/expressions[expressions] in the values of these configuration arguments, but can only reference values that are known before the configuration is applied.
+
+. (Optional) You can also use an link:https://developer.hashicorp.com/terraform/language/providers/configuration#alias-multiple-provider-configurations[`alias` meta-argument] that is defined by Terraform and is available for all provider blocks. `alias` lets you use the same provider with different configurations for different resources.
+
+.Additional resources
+
+* link:{URLControllerUserGuide}/controller-inventories#proc-controller-inv-source-terraform[Terraform State]
+
+* link:https://developer.hashicorp.com/terraform/language/meta-arguments/module-providers[The Module providers Meta-Argument]
+* link:https://developer.hashicorp.com/terraform/language/modules/develop/providers[Module Development: Providers Within Modules]
