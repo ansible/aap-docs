@@ -1,0 +1,58 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-26-20251105]]
+
+= {PlatformNameShort} patch release November 5, 2025
+
+This release includes the following components and versions: 
+
+[cols="1a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| November 5, 2025 |
+
+* {ControllerNameStart} 4.7.4
+* {HubNameStart} 4.11.2
+* {EDAName} 1.2.1
+* Container-based installer {PlatformNameShort} (bundle) 2.6-2
+* Container-based installer {PlatformNameShort} (online) 2.6-2
+* Receptor 1.6.0
+* RPM-based installer {PlatformNameShort} (bundle) 2.6-2
+* RPM-based installer {PlatformNameShort} (online) 2.6-2
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.6.0-0.1761384532
+
+* Cluster-scoped Bundle: aap-operator.v2.6.0-0.1761384578
+
+
+
+== {LightspeedShortName}
+
+
+=== Bug Fixes
+
+* A typo in the `containerfile` caused the *nginx* configuration file to be copied to a non-existent directory in operator-based installations, leading to the Lightspeed API service being unavailable due to incorrect port configuration. With this release, the typo has been fixed, ensuring the Lightspeed API service now listens on the correct port in operator-based installations, improving API endpoint accessibility.(AAP-56712)
+
+
+== Technical note
+
+=== {LightspeedShortName}
+
+RFC 2818 is now enforced between the lightspeed service and the identity provider (gateway) during the OAuth2 authorisation.
+
+
+== Container-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue with the chatbot response about the latest Ansible Automation Platform version.(AAP-57385)
+
+
+
+
