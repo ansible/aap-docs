@@ -1,0 +1,64 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-devsapces-aap-sync-troubleshooting_{context}"]
+
+= Troubleshooting {PlatformNameShort} synchronization
+
+[role="_abstract"]
+Review common issues, symptoms, and solutions if synchronization does not function as expected.
+
+
+== No Job Templates appearing in portal
+
+**Issue:** Expected Job Templates are missing from the portal interface.
+
+**Solutions:**
+
+* Verify the `surveyEnabled` setting in your Helm values file matches the status of your Job Templates.
+* Confirm the `labels` filter includes the correct, approved {PlatformNameShort} Label names.
+* Try temporarily removing filters to confirm if the Job Templates appear without restrictions.
+* Verify the {PlatformNameShort} Organization name spelling is exact (it is case-sensitive).
+* Check {PlatformNameShort} connectivity and the configured token permissions.
+
+== No Users or Teams appearing in portal
+
+**Issue:** Expected users or teams are missing from the portal interface.
+
+**Solutions:**
+
+* Check {PlatformNameShort} connectivity and the configured token permissions.
+* Verify the {PlatformNameShort} Organization name matches exactly.
+* Review the configured synchronization schedule and check system logs.
+* Ensure users have the proper organization or team memberships within {PlatformNameShort}.
+
+== Slow synchronization
+
+**Issue:** Synchronization takes too long to complete or times out.
+
+**Symptoms:**
+
+* Timeouts during synchronization.
+* Timeout errors appear in the logs.
+
+**Solutions:**
+
+* Increase the `timeout` value in the synchronization schedule.
+* Reduce the synchronization `frequency` (sync less often).
+* Add more specific filters to the Job Templates configuration to reduce the overall count of entities processed.
+* For large organizations, increase the `timeout` specifically for the identity sync (`orgsUsersTeams`).
+
+== Wrong {PlatformNameShort} organization
+
+**Issue:** The portal displays unexpected Job Templates, users, or teams.
+
+**Symptoms:**
+
+* Expected Job Templates do not appear.
+* Incorrect templates appear.
+* Users or teams are missing, or the wrong ones are present.
+
+**Solutions:**
+
+* Verify the {PlatformNameShort} Organization name spelling is exact (it is case-sensitive).
+* Check the organization names in {PlatformNameShort} itself.
+* Ensure the configured organization exists in {PlatformNameShort}.
