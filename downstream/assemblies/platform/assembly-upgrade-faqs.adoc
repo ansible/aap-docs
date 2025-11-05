@@ -41,7 +41,7 @@ New service components are not explicitly required between versions 2.5 and 2.6.
 
 Can I upgrade from 2.4 to 2.6 or must I upgrade to 2.5 first?::
 Yes you can upgrade directly to 2.6. 
-However note that there may be new system requirements you must update before upgrading. 
+However note that there might be new system requirements you must update before upgrading. 
 
 How will managed cloud customers be upgraded to {PlatformNameShort} 2.6?::
 All managed cloud customers on {Azure} and {AWS} will be upgraded to 2.6. 
@@ -49,9 +49,9 @@ Two upgrade window options will be available following the platform upgrade: non
 Communications will be ongoing from mid-July until late September.
 
 Will migrations be fully supported in {PlatformNameShort} 2.6?::
-Yes, migrations are fully supported, enabling customers to transition from RPM installations to containerized or {OCPShort} environments, or to the managed offering. 
-Customers must be on the latest version of {PlatformNameShort} for their current installation prior to migrating. 
-The installer will manage new components introduced in version 2.5 for direct 2.4 to 2.6 upgrades.
+Yes, migrations are fully supported, enabling customers to move from RPM installations to containerized or {OCPShort} environments, or to the managed offering. 
+Customers must be on the latest version of {PlatformNameShort} for their current installation before migrating. 
+The installation program manages new components introduced in version 2.5 for direct 2.4 to 2.6 upgrades.
 
 When upgrading from 2.4 to 2.6 (applies only to RPM or {OCPShort}), what is different about the upgrade process compared with the 2.4 to 2.5 process?::
 See the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/planning_your_upgrade/index#con-upgrade-improvements-overview[Overview of upgrade improvements] section.
@@ -63,12 +63,12 @@ Will my existing 2.4 or 2.5 OAuth Applications/Tokens, Credentials/Customer Cred
 For upgrades from {PlatformNameShort}  2.4 or 2.5 to {PlatformNameShort}  2.6, some manual configuration is required:
 * OAuth applications:
 ** {ControllerNameStart}: You can view and edit existing {ControllerName} applications, but you cannot create new ones. They still function, but they might be removed in a future release. You should plan to migrate to platform OAuth applications.
-** {PlatformNameShort}: Platform OAuth applications provide an updated interface and are the standard for future use. You will transition to these applications.
+** {PlatformNameShort}: Platform OAuth applications provide an updated interface and are the standard for future use. You will move to these applications.
 * Tokens:
 ** {ControllerNameStart}: {ControllerNameStart} personal access tokens (PATs) are deprecated. You will move to platform gateway PATs.
-** {PlatformNameShort}: Platform tokens provide an updated interface and are the standard for future use. You will transition to these tokens.
+** {PlatformNameShort}: Platform tokens provide an updated interface and are the standard for future use. You will move to these tokens.
 * Authenticator configurations:
-** {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6: The migration of all authenticator configurations from the {ControllerName} to the {Gateway} is automated. This includes third-party authentication configurations and sensitive data like SAML private keys or OAuth secret keys. If you use custom LDAP certificates, you must manually migrate them.
+** {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6: The migration of all authenticator configurations from the {ControllerName} to the {Gateway} is automated. This includes third-party authentication configurations and sensitive data such as SAML private keys or OAuth secret keys. If you use custom LDAP certificates, you must manually migrate them.
 ** {PlatformNameShort} 2.5 to {PlatformNameShort} 2.6: Authenticator configurations are not automatically migrated. 
 LDAP settings configured in {PlatformNameShort} 2.5 remain as they were after upgrading to 2.6.
 
