@@ -1,0 +1,38 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="gw-download-openAPI"]
+
+= Downloading the {Gateway} OpenAPI specification
+
+[role="_abstract"]
+You can download the OpenAPI specification by using the `curl` command from the schema endpoint.
+
+.Prerequisites
+
+Token authentication is the recommended method for programmatic API use.
+
+. Create a Personal Access Token (PAT): From the navigation panel, select menu:{MenuAM}[Users], select your user, go to the *Tokens* tab, and click btn:[Create token].
+. Copy the generated token value. 
+Use this value as the `<OAUTH2_TOKEN_VALUE>` in the following commands.
+
+.Procedure
+
+* Retrieve the OpenAPI specification from the schema endpoint located at `https://$AAP_INSTANCE/api/gateway/v1/docs/schema/`, using one of the following methods:
+** Get the YAML specification (Default format): To download the specification as a YAML file, run the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+curl -o "gateway_openapi_spec.yaml" "https://$AAP_INSTANCE/api/gateway/v1/docs/schema/"
+----
++
+** Get the JSON specification (Optional format): To explicitly request the specification in JSON format, append `?format=json` to the URL path and run the following command:
++
+[literal, options="nowrap" subs="+attributes"]
+----
+curl -o "gateway_openapi_spec.json" "https://$AAP_INSTANCE/api/gateway/v1/docs/schema/?format=json"
+----
++
+[IMPORTANT]
+====
+Replace `$AAP_INSTANCE` with your {PlatformNameShort} hostname in the commands.
+====
