@@ -51,7 +51,8 @@ In an enterprise deployment, the components run on different nodes. Run the comm
 ====
 
 . Import database dumps to the containerized environment.
-.. If you are using an {PlatformNameShort} managed database, you must create a temporary container to run the `psql` and `pg_restore` commands. Run this command from the database node.
+.. If you are using an {PlatformNameShort} managed database, you must create a temporary container to run the `psql` and `pg_restore` commands.
+Run this command from the database node:
 +
 ----
 $ podman run -it --rm --name postgresql_restore_temp --network host --volume ~/aap/tls/extracted:/etc/pki/ca-trust/extracted:z --volume ~/aap/postgresql/server.crt:/var/lib/pgsql/server.crt:ro,z --volume ~/aap/postgresql/server.key:/var/lib/pgsql/server.key:ro,z --volume ~/artifact:/var/lib/pgsql/backups:ro,z registry.redhat.io/rhel8/postgresql-15:latest bash
@@ -66,7 +67,8 @@ The command assumes the image `registry.redhat.io/rhel8/postgresql-15:latest` is
 It also assumes that the artifact is located in the current user's home folder. If the artifact is located elsewhere, change the `~/artifact` with the required path.
 ====
 +
-.. If you are using a customer-provided (external) database, you can run the `psql` and `pg_restore` commands from any node that has these commands installed and that has to access the database. Reach out to your database administrator if you are unsure.
+.. If you are using a customer-provided (external) database, you can run the `psql` and `pg_restore` commands from any node that has these commands installed and that has access to the database.
+Reach out to your database administrator if you are unsure.
 +
 .. From inside the container, access the database and ensure the users have the `CREATEDB` role.
 +
@@ -110,6 +112,12 @@ postgres=# \q
 Replace `awx` with each user containing the role.
 
 . Start the containerized services, except the database.
++
+[NOTE]
+====
+In an enterprise deployment, the components run on different nodes. Run the commands on each component node.
+====
++
 .. In all nodes, if Performance Co-Pilot is configured, run the following command:
 +
 ----
@@ -146,8 +154,4 @@ $ systemctl --user start automation-gateway automation-gateway-proxy
 ----
 $ systemctl --user start redis-unix redis-tcp
 ----
-+
-[NOTE]
-====
-In an enterprise deployment, the components run on different nodes. Run the commands on each component node.
-====
+
