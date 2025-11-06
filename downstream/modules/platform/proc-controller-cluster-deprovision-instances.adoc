@@ -4,25 +4,26 @@
 
 = Deprovisioning instances
 
+[role="_abstract"]
+Use the following procedure to deprovision an instance from a {ControllerName} cluster.
+
 Re-running the setup playbook does not automatically deprovision instances since clusters do not currently distinguish between an instance that was taken offline intentionally or due to failure. 
 Instead, shut down all services on the {ControllerName} instance and then run the deprovisioning tool from any other instance.
 
 .Procedure
 
 . Shut down the instance or stop the service with the command: `automation-controller-service stop`.
-. Run the following deprovision command from another instance to remove it from the {ControllerName} cluster:
+. Run the following deprovision command from another instance to remove it from the {ControllerName} cluster.
 +
-[literal, options="nowrap" subs="+attributes"]
-----
-$ awx-manage deprovision_instance --hostname=<name used in inventory file>
-----
-
+`$ awx-manage deprovision_instance --hostname=<name used in inventory file>`
++
 The following is an example deprovision command:
++
+`$ awx-manage deprovision_instance --hostname=hostB`
 
-[literal, options="nowrap" subs="+attributes"]
-----
-$ awx-manage deprovision_instance --hostname=hostB
-----
-
+. Restart the services on the remaining instances with the command: 
++
+`automation-controller-service start`.
++
 Deprovisioning instance groups in {ControllerName} does not automatically deprovision or remove instance groups.
 For more information, see the link:{URLControllerUserGuide}/controller-instance-and-container-groups#controller-deprovision-instance-group[Deprovisioning instance groups] section in _{ControllerUG}_.

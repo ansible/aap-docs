@@ -4,11 +4,12 @@
 
 = Automate signing
 
+[role="_abstract"]
 In environments with highly-trusted _Continuous Integration_ (CI) environments such as OpenShift or Jenkins, it is possible to automate the signing process. 
 
 For example, you can store your GPG private key in a CI platform of choice as a secret, and import that into GnuPG in the CI environment. You can then run through the signing workflow within the normal CI environment.
 
-When signing a project using GPG, the environment variable `ANSIBLE_SIGN_GPG_PASSPHRASE` can be set to the passphrase of the signing key. This can be injected and masked or secured in a CI pipeline.
+When signing a project by using GPG, the environment variable `ANSIBLE_SIGN_GPG_PASSPHRASE` can be set to the passphrase of the signing key. This can be injected and masked or secured in a CI pipeline.
 
 Depending on the scenario, `ansible-sign` returns with a different exit-code, during both signing and verification. 
 This can also be useful in the context of CI and automation, as a CI environment can act differently based on the failure. 
