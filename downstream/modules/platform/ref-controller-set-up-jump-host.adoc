@@ -4,5 +4,13 @@
 
 = Configuring {ControllerName} to use jump hosts connecting to managed nodes
 
+[role="_abstract"]
+A jump host (also known as a bastion host) is an intermediary server through which connections to managed nodes are routed.
+ 
+This setup enhances security by isolating the managed nodes from direct access
+from the {ControllerName} server.
+To configure {ControllerName} to use a jump host when connecting to managed nodes, you need to modify the SSH configuration used by Ansible.
+This involves editing the SSH configuration file to specify the jump host details.
+
 Credentials supplied by {ControllerName} do not flow to the jump host through ProxyCommand. 
 They are only used for the end-node when the tunneled connection is set up.

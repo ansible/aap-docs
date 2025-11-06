@@ -4,6 +4,7 @@
 
 = Internal Cluster Routing
 
+[role="_abstract"]
 {ControllerNameStart} cluster hosts communicate across the network within the cluster. In the inventory file for the traditional VM installer, you can indicate multiple routes to the cluster nodes that are used in different ways:
 
 *Example*:
@@ -15,5 +16,5 @@ controller1 ansible_user=ec2-user ansible_host=10.10.12.11 node_type=hybrid rout
 ----
 
 * `controller1` is the inventory hostname for the {ControllerName} host. The inventory hostname is what is shown as the instance hostname in the application. This can be useful when preparing for disaster recovery scenarios where you want to use the backup/restore method to restore the cluster to a new set of hosts that have different IP addresses. In this case you can have entries in `/etc/hosts` that map these inventory hostnames to IP addresses, and you can use internal IP addresses to mitigate any DNS issues when it comes to resolving public DNS names.
-* `ansible_host=10.10.12.11` indicates how the installer reaches the host, which in this case is an internal IP address. This is not used outside of the installer.
-* `routable_hostname=somehost.somecompany.org` indicates the hostname that is resolvable for the peers that connect to this node on the receptor mesh. Since it may cross multiple networks, we are using a hostname that will map to an IP address resolvable for the receptor peers.
+* `ansible_host=10.10.12.11` indicates how the {Installer} reaches the host, which in this case is an internal IP address. This is not used outside of the {Installer}.
+* `routable_hostname=somehost.somecompany.org` indicates the hostname that is resolvable for the peers that connect to this node on the receptor mesh. Since it can cross multiple networks, we are using a hostname that will map to an IP address resolvable for the receptor peers.

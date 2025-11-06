@@ -4,8 +4,10 @@
 
 = Dependencies
 
+[role="_abstract"]
 Specifies dependencies to install into the final image, including `ansible-core`, `ansible-runner`, Python packages, system packages, and
 collections. 
+
 {Builder} automatically installs dependencies for any Ansible collections you install.
 
 In general, you can use standard syntax to constrain package versions.
@@ -53,7 +55,7 @@ For more information about the requirements file format, see the link:https://do
 | *python* | The Python installation requirements. 
 
 This can be a filename, or a list of requirements. 
-{Builder} combines all the Python requirements files from all collections into a single file using the `requirements-parser` library. 
+{Builder} combines all the Python requirements files from all collections into a single file by using the `requirements-parser` library. 
 
 This library supports complex syntax, including references to other files. 
 If many collections require the same _package name_, {Builder} combines them into a single entry and combines the constraints.
@@ -75,7 +77,7 @@ For system packages, use the `bindep` format to specify cross-platform requireme
 Collections must specify necessary requirements for `[platform:rpm]`. 
 {Builder} combines system package entries from multiple collections into a single file. 
 Only requirements with no profiles (runtime requirements) are installed to the image. 
-Entries from many collections which are duplicates of each other can be consolidated in the combined file.
+Entries from many collections that are duplicates of each other can be consolidated in the combined file.
 |====
 
 The following example uses filenames that contain the various dependencies:
