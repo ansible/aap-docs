@@ -7,9 +7,9 @@
 Update necessary configurations after migrating to Managed {PlatformNameShort}.
 
 .Procedure
-. Log in to the Managed {PlatformNameShort} instance by using the local administrator account to confirm that data was properly imported.
-. You might need to perform the following actions based on the configuration of the source deployment:
-.. Reconfigure SSO authenticators and mappings to reflect the new URLs.
+. Log in to the Managed {PlatformNameShort} instance by using the local administrator account to confirm that data was imported.
+. Perform the following actions based on the configuration of the source deployment:
+.. Reconfigure Single Sign-On (SSO) authenticators and mappings to reflect the new URLs.
 .. Update {PrivateHubName} content to reflect the new URLs.
 ... Run the following command to update the {HubName} repositories: 
 +
@@ -19,4 +19,4 @@ curl -d '{\"verify_checksums\": true }' -X POST -k https://<platform url>/api/ga
 ... Perform a sync on any repositories configured in {HubName}.
 ... Push any custom execution environments from the source {HubName} to the target {HubName}.
 .. Reconfigure {AutomationMesh}.
-. Following migration, you can request standard SRE tasks through support tickets for the SRE team to perform such as configuration of custom certificates, a custom domain, or connectivity through private endpoints.
+. After migration, you can request standard Site Reliability Engineering (SRE) tasks through support tickets, such as configuration of custom certificates, a custom domain, or connectivity through private endpoints.
