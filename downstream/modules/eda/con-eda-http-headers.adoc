@@ -9,10 +9,7 @@ In the context of {EDAName} and event streams, HTTP headers play a significant r
 
 Authentication and non-repudiation::
 This is the most critical use. Headers often contain tokens, API keys, or security signatures (like an HMAC in an `X-Hub-Signature` header) that {EDAName} uses to _verify the sender's identity_ and ensure the event payload has not been tampered with. This supports non-repudiation—proof that the event came from a legitimate source.
-//[Hiding this for now]Event filtering and routing::
-//Headers often contain identifying details like a source application ID or an environment flag(`X-Environment: production`). 
-//+
-//You can optionally use this header data in your rulebooks when defining a condition. If all data required by your rule conditions is already present in the event payload, you can leave headers empty. However, if a specific header key is needed for filtering, you must include it in the Headers field during event stream configuration.
+
 Debugging and Logging::
 Headers provide crucial data points (`Date`, `User-Agent`, `X-Request-ID`) for tracing the event's path, helping system administrators and SREs _debug_ issues related to delayed or failed event processing.
 
