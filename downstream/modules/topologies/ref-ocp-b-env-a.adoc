@@ -3,27 +3,27 @@
 = Operator {EnterpriseTopology}
 
 [role="_abstract"]
-include::snippets/enterprise-topologies.adoc[]
-
-The {SaaSonAWSShort} is an example of an OpenShift Operator based enterprise topology.
+The Operator-based {EnterpriseTopology} provides redundancy and higher compute for large volumes of automation on {OCP}. 
+The {SaaSonAWSShort} is an example of an OpenShift Operator based enterprise topology. 
+Included are the tested infrastructure topology, system requirements, network port configurations, and an example custom resource file for installation.
 
 == Infrastructure topology
 
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The Red{nbsp}Hat tested infrastructure topology for this deployment model:
 
 .Infrastructure topology diagram
 image::ocp-b-env-a.png[Operator {EnterpriseTopology} diagram]
 
 [IMPORTANT]
 ====
-While Redis and PostgreSQL can be installed as part of the operator-based installation process, this diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
+While Redis and PostgreSQL can be installed as part of the operator-based installation process, the topology diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
 ====
 
-The following infrastructure topology describes an OpenShift Cluster with 3 primary nodes and 2 worker nodes.
+This infrastructure topology describes an OpenShift Cluster with 3 primary nodes and 2 worker nodes.
 
-Each OpenShift Worker node has been tested with the following component requirements: 16 GB RAM, 4 CPUs, 128 GB local disk, and 3000 IOPS.  
+Red Hat tests each OpenShift Worker node with these requirements: 16 GB RAM, 4 CPUs, 128 GB local disk, and 3000 IOPS.  
 
-.Infrastructure topology
+.Infrastructure topology components
 [options="header"]
 |====
 | Count | Component 
@@ -48,7 +48,7 @@ Each OpenShift Worker node has been tested with the following component requirem
 
 == Tested system configurations
 
-Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested these configurations to install and run {PlatformName}:
 
 .Tested system configurations
 [options="header"]
@@ -90,24 +90,44 @@ a|
 
 == Example custom resource file 
 
-For example CR files for this topology, see the link:https://github.com/ansible/test-topologies/blob/aap-2.5/ocp-b.env-a/README.md[ocp-b.env-a] directory in the `test-topologies` GitHub repository.
+For example CR files, see the link:https://github.com/ansible/test-topologies/blob/aap-2.5/ocp-b.env-a/README.md[ocp-b.env-a] directory in the `test-topologies` GitHub repository.
 
 == Nonfunctional requirements
 
-{PlatformNameShort}'s performance characteristics and capacity are impacted by its resource allocation and configuration. With OpenShift, each {PlatformNameShort} component is deployed as a pod. You can specify resource requests and limits for each pod. 
+{PlatformNameShort}'s performance characteristics and capacity depend on its resource allocation and configuration. 
+With OpenShift, each {PlatformNameShort} component deploys as a pod. You can specify resource requests and limits for each pod. 
 
-Use the {PlatformNameShort} custom resource to configure resource allocation for OpenShift installations. Each configurable item has default settings. These settings are the exact configuration used within the context of this reference deployment architecture and presumes that the environment is being deployed and managed by an Enterprise IT organization for production purposes.
+Use the {PlatformNameShort} custom resource to configure resource allocation for OpenShift installations. 
+Each configurable item has default settings. 
+These settings are the exact configuration used in this reference deployment architecture. 
+This configuration assumes deployment and management by an Enterprise IT organization for production purposes.
 
-By default, each component's deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU provided that the OpenShift worker node itself is not under node pressure.
+By default, each component's deployments use minimum resource requests but no resource limits. 
+OpenShift only schedules pods with available resource requests. However, pods can consume unlimited RAM or CPU as long as the OpenShift worker node is not under node pressure.
 
-In the Operator {EnterpriseTopology}, {PlatformNameShort} is deployed on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster with 2 t3.xlarge worker nodes spread across 2 AZs within a single AWS Region. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the ROSA HCP cluster. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying HCP worker node that runs the pod. It does not have access to the CPU or memory resources of the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run.
+In the Operator {EnterpriseTopology}, {PlatformNameShort} runs on a Red Hat OpenShift on AWS (ROSA) Hosted Control Plane (HCP) cluster. 
+The cluster has 2 t3.xlarge worker nodes spread across 2 AWS availability zones within a single region. 
+This is not a shared environment so {PlatformNameShort} pods have full access to all compute resources of the ROSA HCP cluster. 
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator {EnterpriseTopology}, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift. Externally provided Redis, PostgreSQL, and object storage for {HubName} are specified. This provides the {PlatformNameShort} deployment with additional scalability and reliability features, including specialized backup, restore, and replication services and scalable storage.
+The capacity calculation for {ControllerName} task pods comes from the underlying HCP worker node running the pod. 
+It does not have access to the CPU or memory resources of the entire node. 
+This capacity calculation influences how many concurrent jobs {ControllerName} can run.
+
+OpenShift manages storage distinctly from VMs. 
+This impacts how {HubName} stores its artifacts. 
+In the Operator {EnterpriseTopology}, {HubName} uses S3 storage. 
+{HubName} requires `ReadWriteMany` type storage, which is not a default storage type in OpenShift. 
+
+This topology specifies externally provided Redis, PostgreSQL, and object storage for {HubName}. 
+This provides additional scalability and reliability features for the {PlatformNameShort} deployment. 
+These features include specialized backup, restore, and replication services, as well as scalable storage.
 
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. 
+These ports must be open and available for {PlatformName} to work. 
+Ensure that these ports are available and are not blocked by a firewall.
 
 .Network ports and protocols
 [options="header"]

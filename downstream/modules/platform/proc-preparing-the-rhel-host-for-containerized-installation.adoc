@@ -11,8 +11,8 @@ Containerized {PlatformNameShort} runs the component services as Podman based co
 
 . Log in to the {RHEL} host as your non-root user.
 +
-. Ensure the hostname associated with your host is set as a fully qualified domain name (FQDN).
-.. To check the hostname associated with your host, run the following command:
+. Ensure that the hostname of your host uses a fully qualified domain name (FQDN).
+.. To check the hostname of your host, run the following command:
 +
 ----
 hostname -f
@@ -59,7 +59,7 @@ repo id                                                    repo name
 rhel-10-for-x86_64-appstream-rpms                          Red Hat Enterprise Linux 10 for x86_64 - AppStream (RPMs)
 rhel-10-for-x86_64-baseos-rpms                             Red Hat Enterprise Linux 10 for x86_64 - BaseOS (RPMs)
 ----
-** For disconnected installations follow the steps in link:{URLContainerizedInstall}/aap-containerized-disconnected-installation#obtaining-and-configuring-rpm-dependencies[Obtaining and configuring RPM source dependencies] to access these repositories.
+** For disconnected installations, follow the steps in link:{URLContainerizedInstall}/aap-containerized-disconnected-installation#obtaining-and-configuring-rpm-dependencies[Obtaining and configuring RPM source dependencies] to access these repositories.
 
 . Ensure the host can resolve host names and IP addresses using DNS. This is essential to ensure services can talk to one another.
 
@@ -69,17 +69,17 @@ rhel-10-for-x86_64-baseos-rpms                             Red Hat Enterprise Li
 $ sudo dnf install -y ansible-core
 ----
 +
-. Optional: You can install additional utilities that can be useful for troubleshooting purposes, for example `wget`, `git-core`, `rsync`, and `vim`:
+. Optional: Install additional utilities that are useful for troubleshooting purposes, for example `wget`, `git-core`, `rsync`, and `vim`:
 +
 ----
 $ sudo dnf install -y wget git-core rsync vim
 ----
 
-. Optional: To have the installation program automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link:{URLCentralAuth}/assembly-gateway-licensing#assembly-aap-obtain-manifest-files[Obtaining a manifest file].
+. Optional: To have the installation program automatically pick up and apply your {PlatformNameShort} subscription manifest license, follow the steps in link:{URLContainerizedInstall}/assembly-gateway-licensing#assembly-aap-obtain-manifest-files[Obtaining a manifest file].
 
 [role="_additional-resources"]
 .Additional resources
-* link:{URLCentralAuth}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching your {PlatformName} Subscription]
+* link:{URLContainerizedInstall}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching your {PlatformName} Subscription]
 * link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-an-unbound-dns-server_networking-infrastructure-services[Setting up an unbound DNS server]
 * link:{BaseURL}/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services[Setting up and configuring a BIND DNS server]
 * link:https://docs.ansible.com/ansible/latest/[Ansible Core Documentation]

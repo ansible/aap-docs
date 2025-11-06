@@ -4,6 +4,9 @@
 
 = Capacity settings for instance group and container group 
 
+[role="_abstract"]
+When using container groups or instance groups to run automation jobs, you can configure capacity settings to limit the number of concurrent jobs and forks that can be used.
+
 Use the `max_concurrent_jobs` and `max_forks` settings available on instance groups to limit how many jobs and forks can be consumed across an instance group or container group.
 
 * To calculate the `max_concurrent_jobs` you need on a container group consider the `pod_spec` setting for that container group. In the `pod_spec`, you can see the resource requests and limits for the automation job pod. Use the following equation to calculate the maximum concurrent jobs that you need: 

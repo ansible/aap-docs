@@ -1,5 +1,5 @@
 :_mod-docs-content-type: REFERENCE
-[id="troubleshooting-containerized-ansible-automation-platform-installation_{context}"]
+[id="troubleshooting-containerized-ansible-automation-platform-installation"]
 
 = Troubleshooting containerized {PlatformNameShort} installation
 
@@ -8,7 +8,7 @@ Use this information to troubleshoot your containerized installation of {Platfor
 
 *The installation takes a long time, or has errors, what should I check?*
 
-. Ensure your system meets the minimum requirements as outlined in link:{URLContainerizedInstall}/aap-containerized-installation#system-requirements[System requirements]. Factors such as improper storage choices and high latency when distributing across many hosts will all have an impact on installation time.
+. Ensure your system meets the minimum requirements as outlined in link:{URLContainerizedInstall}/preparing-containerized-installation#system-requirements[System requirements]. Factors such as improper storage choices and high latency when distributing across many hosts will all have an impact on installation time.
 
 . Review the installation log file which is located by default at `./aap_install.log`. You can change the log file location within the `ansible.cfg` file in the installation directory.
 
@@ -38,7 +38,7 @@ TASK [ansible.containerized_installer.automationcontroller : Create the receptor
 fatal: [ec2-13-48-25-168.eu-north-1.compute.amazonaws.com]: FAILED! => {"changed": false, "msg": "Can't create container receptor", "stderr": "Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1\n", "stderr_lines": ["Error: creating container storage: creating an ID-mapped copy of layer \"98955f43cc908bd50ff43585fec2c7dd9445eaf05eecd1e3144f93ffc00ed4ba\": error during chown: storage-chown-by-maps: lchown usr/local/lib/python3.9/site-packages/azure/mgmt/network/v2019_11_01/operations/__pycache__/_available_service_aliases_operations.cpython-39.pyc: no space left on device: exit status 1"], "stdout": "", "stdout_lines": []}
 ----
 
-If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. To resolve this issue you must make more space available. For more information about the system requirements, see link:{URLContainerizedInstall}/aap-containerized-installation#system-requirements[System requirements].
+If you are installing a `/home` filesystem into a default {AWS} marketplace RHEL instance, it might be too small since `/home` is part of the root `/` filesystem. To resolve this issue you must make more space available. For more information about the system requirements, see link:{URLContainerizedInstall}/preparing-containerized-installation#system-requirements[System requirements].
 
 *"Install container tools" task fails due to unavailable packages*
 

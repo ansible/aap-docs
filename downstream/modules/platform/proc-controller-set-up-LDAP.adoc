@@ -4,6 +4,8 @@
 
 = Configuring LDAP authentication
 
+[role="_abstract"]
+
 As a platform administrator, you can configure LDAP as the source for account authentication information for {PlatformNameShort} users. 
 
 [NOTE]
@@ -28,7 +30,6 @@ Instead you can use a deny rule to prevent access to the system by users.
 If you configured authentication in {PlatformNameShort} 2.5, those settings remain as currently configured after upgrading to 2.6. 
 If you used a custom certificate in 2.5 for LDAP you need to migrate that as well.
 
-
 .Procedure
 
 . From the navigation panel, select {MenuAMAuthentication}.
@@ -42,7 +43,7 @@ If you used a custom certificate in 2.5 for LDAP you need to migrate that as wel
 . In the *LDAP Bind DN text* field, enter the Distinguished Name (DN) to specify the user that the {PlatformNameShort} uses to connect to the LDAP server as shown in the following example:
 +
 ----
-CN=josie,CN=users,DC=website,DC=com
+cn=josie,cn=users,dc=website,dc=com
 ----
 +
 . In the *LDAP Bind Password* text field, enter the password to use for the binding user.
@@ -88,10 +89,7 @@ If this setting has a value it will be used instead of the *LDAP User Search* se
 include::snippets/snip-gw-authentication-additional-auth-fields.adoc[]
 +
 . Enter any *LDAP Connection Options* to set for the LDAP connection. 
-// Temporarily commenting out the following statement for [AAP-50041]:
-//LDAP referrals are disabled by default (to prevent certain LDAP queries from hanging with Active Directory). 
-LDAP referrals are not disabled by default. 
-Disable this setting to prevent login flow timeouts and ensure successful user logins.
+By default, LDAP referrals are disabled to prevent certain LDAP queries from hanging with Active Directory. 
 Option names should be strings as shown in the following example:
 +
 ----
@@ -122,7 +120,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 +
 ----
 {
-"first_name": "givenName",
+"first_name": "givenname",
 "last_name": "sn",
 "email": "mail"
 }
@@ -131,7 +129,7 @@ To determine the parameters that a specific *LDAP Group Type* requires, refer to
 +
 ----
 [
-"OU=Users,DC=website,DC=com",
+"ou=users,dc=website,dc=com",
 "SCOPE_SUBTREE",
 "(cn=%(user)s)"
 ]

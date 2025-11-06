@@ -3,7 +3,8 @@
 [id="containerized-source-environment-export"]
 = Exporting the source environment
 
-From your source environment, export the data and configurations needed for migration.
+[role="_abstract"]
+Export databases, secrets, and custom configurations from your source containerized {PlatformNameShort} deployment to create the migration artifact.
 
 .Procedure
 . Verify the PostgreSQL database version is PostgreSQL version 15.
@@ -58,7 +59,8 @@ Adjust the filesystem size or mount an external filesystem as needed before perf
 +
 [NOTE]
 ====
-This procedure assumes that all target files will be sent to the `/tmp` filesystem. You might want to adjust the commands to match your environment's needs.
+These commands send all target files to the `/tmp` filesystem. 
+Adjust the commands to match your environment's needs.
 ====
 
 . Stage the manually created artifact on the {Gateway} node.
@@ -169,4 +171,4 @@ drwxr-xr-x ansible/ansible      0 2025-05-08 16:26 artifact/hub/
 [role="_additional-resources"]
 .Additional resources
 
-* link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up containerized {PlatformNameShort}]
+* link:{URLContainerizedInstall}/maintaining-containerized-aap#backing-up-containerized-ansible-automation-platform[Backing up containerized {PlatformNameShort}]

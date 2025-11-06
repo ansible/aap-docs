@@ -1,3 +1,5 @@
+:_mod-docs-content-type: REFERENCE
+
 [[aap-2.6-known-issues]]
 
 = Known issues
@@ -9,3 +11,10 @@ This section provides information about known issues in {PlatformNameShort} 2.6.
 +
 For more information, see link:https://access.redhat.com/articles/7132132[Ansible Lightspeed upgrade fails when upgrading Ansible Automation Platform 2.5 to 2.6].
 
+* {ControllerNameStart} in {PlatformNameShort} 2.4 allowed customers to enter an encrypted private key in SAML configuration without raising an error. 
+If request signing was not enabled in the authenticator and the SAML IdP, then the {PlatformNameShort} administrator would not know that encrypted keys were not supported.
+Encrypted keys not supported in {PlatformNameShort} {PlatformVers} authenticators. The platform alerts users that encrypted keys are not supported.
+However, when upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, customers must replace encrypted private keys with unencrypted private keys in their SAML authenticators to prevent migration errors for the authenticator to {Gateway}.
+If you skip this step, the authenticator is not migrated as part of the upgrade. 
+The SAML authenticator must then be recreated manually by a local administrator to re-enable authentication. 
+This might delay SSO users from logging back into the platform after the upgrade.

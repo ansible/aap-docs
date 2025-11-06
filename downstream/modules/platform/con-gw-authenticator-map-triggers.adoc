@@ -4,6 +4,8 @@
 
 = Authenticator map triggers
 
+[role="_abstract"]
+
 Each map has a trigger that defines when the map should be evaluated as true. Trigger types include the following:
 
 Always:: The trigger should always be fired.
@@ -39,15 +41,15 @@ When defining an attribute trigger, the authentication mapping expands to includ
 If you want to experiment with multiple attribute maps you can do that through the API but the UI form will remove multi-attribute maps if the authenticator is saved through the UI. When adding multiple attributes to a map, the *Operation* will also apply to the attributes.
 ====
 +
-* *Attribute:* The name of the attribute coming from the source system this trigger will be evaluated against. For example, if you wanted the trigger to fire based on the user's last name and the last name field in the source system was called `users_last_name` you would enter the value ‘users_last_name’ in this field.
+* *Attribute:* The name of the attribute coming from the source system this trigger will be evaluated against. For example, if you wanted the trigger to fire based on the user's surname and the last name field in the source system was called `users_last_name` you would enter the value "users_last_name" in this field.
 * *Comparison:* Tells the trigger how to evaluate the value of the users. *Attribute* in the source system compared to the *Value* specified on the trigger. Available options are: *contains*, *matches*, *ends with*, *in*, or *equals*. Below is a breakdown of each *Comparison* type:
 +
-** *contains*: The specified character sequence in *Value* is contained within the attributes value returned from the source. For example, given an attribute value of ‘John’ from the source the contains *Comparison* would set the trigger to _True_ if the trigger *Value* was set to ‘Jo’ and _False_ if the trigger *Value* was ‘Joy’.
-** *matches*: The *Value* on the trigger is treated as a python regular expression and does an link:https://docs.python.org/3/library/re.html#re.match[Regular expression match (re.match)] (with case ignore on) between the specified *Value* and the value returned from the source system. For example, if the trigger's *Value* was ‘Jo’ the trigger would return _True_ if the value from the source was ‘John‘ or ‘Joanne‘ or any other value which matched the regular expression ‘Jo’. The trigger would return _False_ if the sources value for the attribute was ‘Dan’ because ‘Dan’ does not match the regular expression ‘Jo’. 
-** *ends with*: The trigger will see if the value provided by the source ends with the specified *Value* of the trigger. For example, if the source provided a value of ‘John’ the trigger would be _True_ if its *Value* was set to ‘n’ or ‘on’. The trigger would be _False_ if its *Value* was set to ‘z’ because the value ‘John’ coming from the source does not end with the value ’z’ specified by the trigger.
-** *equal*: The trigger will see if the value provided by the source is equal to (in its entirety) the specified *Value* of the trigger. For example, if the source returned the value ‘John’, the trigger would be _True_ if its *Value* was set to ‘John’. Any value other than ‘John’ returned from the source would set this trigger to _False_.
-** *in*: The *in* condition checks if the value matches one of several values. When *in* is specified as the *Comparison*, the *Value* field can be a comma-separated list. For example, if a trigger had a *Value* of ‘John,Donna’ the trigger would be _True_ if the attribute coming from the source had either the value ‘John’ or ‘Donna’. Otherwise, the trigger would be _False_.
-** *Value*: The value that a users attribute will be matched against based on the *Comparison* field. See examples in the *Comparison* definition in this section. 
+** *contains*: The specified character sequence in *Value* is contained within the attributes value returned from the source. For example, given an attribute value of "John" from the source the contains *Comparison* would set the trigger to _True_ if the trigger *Value* was set to "Jo" and _False_ if the trigger *Value* was "Joy".
+** *matches*: The *Value* on the trigger is treated as a python regular expression and does an link:https://docs.python.org/3/library/re.html#re.match[Regular expression match (re.match)] (with case ignore on) between the specified *Value* and the value returned from the source system. For example, if the trigger's *Value* was "Jo" the trigger would return _True_ if the value from the source was "John" or "Joanne" or any other value which matched the regular expression "Jo". The trigger would return _False_ if the sources value for the attribute was "Dan" because "Dan" does not match the regular expression "Jo". 
+** *ends with*: The trigger will see if the value provided by the source ends with the specified *Value* of the trigger. For example, if the source provided a value of "John" the trigger would be _True_ if its *Value* was set to "n" or "on". The trigger would be _False_ if its *Value* was set to "z" because the value "John" coming from the source does not end with the value "z" specified by the trigger.
+** *equal*: The trigger will see if the value provided by the source is equal to (in its entirety) the specified *Value* of the trigger. For example, if the source returned the value "John", the trigger would be _True_ if its *Value* was set to "John". Any value other than "John" returned from the source would set this trigger to _False_.
+** *in*: The *in* condition checks if the value matches one of several values. When *in* is specified as the *Comparison*, the *Value* field can be a comma-separated list. For example, if a trigger had a *Value* of "John,Donna" the trigger would be _True_ if the attribute coming from the source had either the value "John" or "Donna". Otherwise, the trigger would be _False_.
+** *Value*: The value that a users attribute will be matched against based on the *Comparison* field. See examples in the *Comparison* definition. 
 +
 [NOTE]
 ====

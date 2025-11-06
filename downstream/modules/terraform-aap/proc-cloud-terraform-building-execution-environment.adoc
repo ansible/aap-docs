@@ -1,0 +1,36 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="cloud-terraform-building-execution-environment"]
+
+= Building an {ExecEnvShort} in {PlatformNameShort}
+
+You must build an {ExecEnvShort} using the automation controller so that {PlatformNameShort} can provide the credentials necessary for using its automation features.
+
+.Prerequisites
+
+* You need a pre-existing {ExecEnvShort} with the latest version of `cloud.terraform` collection before you can create it using an automation controller. You cannot use the default {ExecEnvShort} provided by {PlatformNameShort} because the default environment does not include the `terraform` CLI binary.
++
+[NOTE]
+====
+If you have migrated from {TerraformCommunityName}, you can continue to use your existing {ExecEnvShort} and update it to the latest version of `cloud.terraform`.
+====
++
+* Install the `terraform` CLI binary in your pre-existing {ExecEnvShort}. See **Additional resources** below for a link to the binary.
+
+.Procedure
+
+. From the navigation panel, select **{MenuInfrastructureExecEnvironments}**.
+. Click btn:[Create {ExecEnvShort}].
++
+image::ee-create-new.png[Create a new {ExecEnvShort} page]
++
+. For **Name**, enter a name for your {PlatformNameShort} {ExecEnvShort}.
+. For **Image**, enter the repository link to the image for your pre-existing {ExecEnvShort}.
+. Click btn:[Create {ExecEnvShort}]. Your newly added {ExecEnvShort} is ready to be used in a job template.
+
+.Additional resources
+
+* link:https://developer.hashicorp.com/terraform/install[`terraform` CLI binary]
+* link:https://catalog.redhat.com/search?gs&q=execution%20environments&searchType=containers[Red Hat ecosystem catalog]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_execution/assembly-controller-execution-environments#proc-controller-use-an-exec-envi[Execution environments]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html-single/creating_and_using_execution_environments/index[Creating and using {ExecEnvShort}s]

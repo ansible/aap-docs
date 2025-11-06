@@ -4,12 +4,8 @@
 
 = Mounting the directory in the execution node to the {ExecEnvShort} container
 
-This procedure describes how to configure paths exposed to isolated jobs, allowing volumes to be mounted from execution or hybrid nodes to job containers.
-
-// Deleted since no longer supported
-//With {PlatformNameShort} 2.1.2, only `O` and `z` options were available.
-//Since {PlatformNameShort} 2.2, further options such as `rw` are available.
-//This is useful when using NFS storage.
+[role="_abstract"]
+Learn how to configure paths exposed to isolated jobs, allowing volumes to be mounted from execution or hybrid nodes to job containers.
 
 .Procedure
 
@@ -20,8 +16,7 @@ This procedure describes how to configure paths exposed to isolated jobs, allowi
 ** The supported format is `HOST-DIR[:CONTAINER-DIR[:OPTIONS]`.
 The allowed paths are `z`, `O`, `ro`, and `rw`.
 +
-.Example
-
+*Example*
 ----
 [
   "/var/lib/awx/.ssh:/root/.ssh:O"
@@ -50,10 +45,10 @@ semanage fcontext -a -t container_file_t "/foo(/.*)?"
 ----
 restorecon -vvFR /foo
 ----
-
++
 The `awx` user must be permitted to read or write in this directory at least.
 Set the permissions as `777` at this time.
 
+[role="_additional-resources"]
 .Additional resources
-
-For more information about mount volumes, see the link:https://docs.podman.io/en/stable/markdown/podman-run.1.html#volume-v-source-volume-host-dir-container-dir-options[--volume option of the podman-run(1)] section of the Podman documentation.
+* link:https://docs.podman.io/en/stable/markdown/podman-run.1.html#volume-v-source-volume-host-dir-container-dir-options[--volume option of the podman-run(1)]

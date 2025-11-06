@@ -4,12 +4,14 @@
 = Preparing and assessing the target environment
 
 [role="_abstract"]
-To prepare your target environment, perform the following steps.
+Transfer the migration artifact, install containerized {PlatformNameShort}, and configure the inventory file to match your source environment topology and database settings.
 
 .Procedure
 
 . Validate the file system home folder size and make sure it has enough space to transfer the artifact.
-. Transfer the artifact to the nodes where you will be working by using `scp` or any preferred file transfer method. It is recommended that you work from the {Gateway} node as it will have access to most systems. However, if you have access or file system space limitations due to the PostgreSQL dumps, then work from the database node.
+. Transfer the artifact to the nodes where you will be working by using `scp` or any preferred file transfer method.
+It is recommended that you work from the {Gateway} node as it has access to most systems. 
+However, if you have access or file system space limitations due to the PostgreSQL dumps, work from the database node instead.
 . Download the latest version of containerized {PlatformNameShort} from the link:{PlatformDownloadUrl}[{PlatformNameShort} download page]. 
 . Validate the artifact checksum.
 . Extract the artifact on the home folder for the user running the containers.
@@ -34,9 +36,15 @@ $ cd artifact
 $ sha256sum-check sha256sum.txt
 ----
 
-. Generate inventory file for containerized deployment.
+. Generate an inventory file for your containerized deployment.
 +
-Configure the inventory file to match the same topology as the source environment. Configure the component database names and the `secret_key` values seen on the `secrets.yml` file from the artifact. You can do this by either setting the extra variables in the inventory file or by using the `secrets.yml` file as an additional variables file when running the installation program.
+Configure the inventory file to match the same topology as the source environment.
+Configure the component database names and the `secret_key` values from the artifact's `secrets.yml` file.
++
+You can do this in two ways:
++
+* Set the extra variables in the inventory file.
+* Use the `secrets.yml` file as an additional variables file when running the installation program.
 +
 .. Option 1: Extra variables in the inventory file
 +
@@ -70,8 +78,8 @@ $ ansible-playbook -i inventory ansible.containerized_installer.install -e @~/ar
 $ ansible-playbook -i <path_to_inventory> ansible.containerized_installer.backup
 ----
 
-. Ensure the fresh installation is functional.
+. Verify the fresh installation functions correctly.
 
 [role="_additional-resources"]
 .Additional resources
-* link:{URLContainerizedInstall}/aap-containerized-installation#backing-up-containerized-ansible-automation-platform[Backing up containerized {PlatformNameShort}]
+* link:{URLContainerizedInstall}/maintaining-containerized-aap#backing-up-containerized-ansible-automation-platform[Backing up containerized {PlatformNameShort}]

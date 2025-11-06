@@ -3,22 +3,23 @@
 = Operator {GrowthTopology}
 
 [role="_abstract"]
-include::snippets/growth-topologies.adoc[]
+The Operator-based {GrowthTopology} provides a smaller footprint deployment without redundancy for organizations getting started with {PlatformNameShort} on {OCP}. 
+Included are the tested infrastructure topology, system requirements, network port configurations, and an example custom resource file for installation.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The Red{nbsp}Hat tested infrastructure topology for this deployment model:
 
 .Infrastructure topology diagram
 image::ocp-a-env-a.png[Operator {GrowthTopology} diagram]
 
 [IMPORTANT]
 ====
-While Redis and PostgreSQL can be installed as part of the operator-based installation process, this diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
+While Redis and PostgreSQL can be installed as part of the {OperatorBase} process, the topology diagram represents a Red Hat supported topology where both Redis and PostgreSQL are external to {PlatformNameShort}.
 ====
 
-A Single Node OpenShift (SNO) cluster has been tested with the following requirements: 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS.
+Red Hat tests a Single Node OpenShift (SNO) cluster with these requirements: 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS.
 
-.Infrastructure topology
+.Infrastructure topology components
 [options="header"]
 |====
 | Count | Component 
@@ -41,13 +42,14 @@ A Single Node OpenShift (SNO) cluster has been tested with the following require
 
 [NOTE]
 ====
-You can deploy multiple isolated instances of {PlatformNameShort} into the same {OCP} cluster by using a namespace-scoped deployment model.
+You can deploy multiple isolated instances of {PlatformNameShort} into the same {OCP} cluster. To do this, use a namespace-scoped deployment model (isolated within a namespace).
+
 This approach allows you to use the same cluster for several deployments.
 ====
 
 == Tested system configurations
 
-Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested these configurations to install and run {PlatformName}:
 
 .Tested system configurations
 [options="header"]
@@ -56,9 +58,9 @@ Red{nbsp}Hat has tested the following configurations to install and run {Platfor
 | Subscription | Valid {PlatformName} subscription |
 | Red Hat OpenShift  
 a| 
-* Version: 4.14
-* num_of_control_nodes: 1
-* num_of_worker_nodes: 1 
+* `Version`: 4.14
+* `num_of_control_nodes`: 1
+* `num_of_worker_nodes`: 1 
 |
 | Ansible-core | Ansible-core version {CoreUseVers} or later |
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
@@ -68,12 +70,12 @@ a|
 * For customer provided (external) databases: {PostgresVers}, 16, or 17.
 a| 
 * External (customer supported) databases require ICU support.
-* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with {PostgresVers}.
+* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality depends on utilities provided with {PostgresVers}.
 |====
 
 == Example custom resource file 
 
-Use the following example custom resource (CR) to add your {PlatformNameShort} instance to your project:
+Use this example custom resource (CR) to add your {PlatformNameShort} instance to your project:
 
 ----
 apiVersion: aap.ansible.com/v1alpha1
@@ -90,19 +92,28 @@ spec:
 
 == Nonfunctional requirements
 
-{PlatformNameShort}'s performance characteristics and capacity are impacted by its resource allocation and configuration. With OpenShift, each {PlatformNameShort} component is deployed as a pod. You can specify resource requests and limits for each pod. 
+{PlatformNameShort}'s performance characteristics and capacity depend on its resource allocation and configuration. 
+With OpenShift, each {PlatformNameShort} component deploys as a pod. 
+You can specify resource requests and limits for each pod. 
 
 Use the {PlatformNameShort} Custom Resource (CR) to configure resource allocation for OpenShift installations. Each configurable item has default settings. These settings are the minimum requirements for an installation, but might not meet your production workload needs. 
 
-By default, each component's deployments are set for minimum resource requests but no resource limits. OpenShift only schedules the pods with available resource requests, but the pods are allowed to consume unlimited RAM or CPU provided that the OpenShift worker node itself is not under node pressure.
+By default, each component's deployments use minimum resource requests but no resource limits. 
+OpenShift only schedules pods with available resource requests, but the pods can consume unlimited RAM or CPU as long as the OpenShift worker node itself is not under node pressure.
 
-In the Operator {GrowthTopology}, {PlatformNameShort} is deployed on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB Local disk, and 3000 IOPS. This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. In this scenario, the capacity calculation for the {ControllerName} task pods is derived from the underlying {OCPShort} node that runs the pod. It does not have access to the entire node. This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
+In the Operator {GrowthTopology}, {PlatformNameShort} runs on a Single Node OpenShift (SNO) with 32 GB RAM, 16 CPUs, 128 GB local disk, and 3000 IOPS. 
+This is not a shared environment, so {PlatformNameShort} pods have full access to all of the compute resources of the OpenShift SNO. 
+In this scenario, the capacity calculation for {ControllerName} task pods comes from the underlying {OCPShort} node that runs the pod. 
+It does not have access to the entire node. 
+This capacity calculation influences how many concurrent jobs {ControllerName} can run. 
 
-OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator {GrowthTopology}, we use S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift.
+OpenShift manages storage distinctly from VMs. This impacts how {HubName} stores its artifacts. In the Operator {GrowthTopology}, the topology uses S3 storage because {HubName} requires a `ReadWriteMany` type storage, which is not a default storage type in OpenShift.
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. 
+These ports must be open and available for {PlatformName} to work. 
+Ensure that these ports are available and are not blocked by a firewall.
 
 .Network ports and protocols
 [options="header"]

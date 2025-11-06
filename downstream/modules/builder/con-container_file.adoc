@@ -1,8 +1,12 @@
+:_mod-docs-content-type: CONCEPT
+
 [id="con-container_file"]
 
 = Containerfile
 
+[role="_abstract"]
 After you have created your definition file, {Builder} reads and validates it, creates a `Containerfile` and container build context, and optionally passes these to Podman to build your {ExecEnvNameSing} image. 
+
 The container build occurs in several distinct stages: `base` , `galaxy`, `builder`, and `final`. The image build steps (along with any corresponding custom `prepend_` and `append_` steps defined in `additional_build_steps`) are:
 
 . During the `base` build stage, the specified base image is (optionally) customized with components required by other build stages, including Python, `pip`, `ansible-core`, and `ansible-runner`. 

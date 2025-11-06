@@ -4,6 +4,9 @@
 
 = Example YAML file to build an image
 
+[role="_abstract"]
+This example shows how to create a simple `execution-environment.yml` file to build a custom {ExecEnvShort} image by using the `ansible-builder build` command.
+
 The `ansible-builder build` command takes an {ExecEnvShort} definition as an input. 
 It outputs the build context necessary for building an {ExecEnvShort} image, and then builds that image. 
 The image can be re-built with the build context elsewhere, and produces the same result. 
@@ -26,7 +29,7 @@ The content of `requirements.yml`:
 ----
 ---
 collections:
-  - name: awx.awx
+  - name: kubernetes.core
 ----
 
 To build an {ExecEnvShort} using the preceding files and run the following command:
@@ -35,7 +38,7 @@ To build an {ExecEnvShort} using the preceding files and run the following comma
 ----
 ansible-builder build
 ...
-STEP 7: COMMIT my-awx-ee
+STEP 7: COMMIT my-custom-ee
 --> 09c930f5f6a
 09c930f5f6ac329b7ddb321b144a029dbbfcc83bdfc77103968b7f6cdfc7bea2
 Complete! The build context can be found at: context
@@ -46,4 +49,4 @@ This can be rebuilt at a different time or location with the tools of your choic
 
 .Additional resources
 
-For additional information about the `ansible-builder build` command, see Ansible's link:https://ansible.readthedocs.io/projects/builder/en/latest/usage/#cli-usage[CLI Usage] documentation.
+link:https://ansible.readthedocs.io/projects/builder/en/latest/usage/#cli-usage[CLI Usage]

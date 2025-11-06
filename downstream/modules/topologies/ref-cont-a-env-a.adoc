@@ -3,24 +3,25 @@
 = Container {GrowthTopology}
 
 [role="_abstract"]
-include::snippets/growth-topologies.adoc[]
+The container-based {GrowthTopology} provides a smaller footprint deployment without redundancy for organizations getting started with {PlatformNameShort}. 
+Included are the tested infrastructure topology, system requirements, network port configurations, and an example inventory file for installation.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The Red{nbsp}Hat tested infrastructure topology for this deployment model:
 
 .Infrastructure topology diagram
 image::cont-a-env-a.png[Container {GrowthTopology} diagram]
 
-A single VM has been tested with the following component requirements: 
+Red Hat tests a single VM with these requirements: 
 
 include::snippets/cont-tested-vm-config.adoc[]
 
 [NOTE]
 ====
-If performing a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+If performing a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then 32 GB RAM is recommended. With this configuration, the install time will increase. Seeding the collections can take 45 or more minutes.
 ====
 
-.Infrastructure topology
+.Infrastructure topology components
 [options="header"]
 |====
 | Purpose | Example group names
@@ -35,22 +36,24 @@ a|
 
 == Tested system configurations
 
-Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested these configurations to install and run {PlatformName}:
 
 include::snippets/cont-tested-system-config.adoc[]
 
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. 
+These ports must be open and available for {PlatformName} to work. 
+Ensure that these ports are available and are not blocked by a firewall.
 
 .Network ports and protocols
 [options="header"]
 |====
 | Port number | Protocol | Service | Source | Destination | Description
 | 80/443 | TCP | HTTP/HTTPS | {EDAName} | {HubNameStart} | Pull container decision environments
-| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart} | Launch automation controller jobs
-| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | Pull collections and execution environment images
+| 80/443 | TCP | HTTP/HTTPS | {EDAName} | {ControllerNameStart} | Launch {ControllerName} jobs
+| 80/443 | TCP | HTTP/HTTPS | {ControllerNameStart} | {HubNameStart} | Pull collections and {ExecEnvShort} images
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | {GatewayStart} to {ControllerName} communication
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | {GatewayStart} to {HubName} communication
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | {GatewayStart} to {EDAName} communication
@@ -60,16 +63,16 @@ include::snippets/cont-tested-system-config.adoc[]
 | 5432 | TCP | PostgreSQL | {ControllerNameStart} | Database | {ControllerNameStart} database access
 | 6379 | TCP | Redis | {EDAName} | Redis container | Job launching and data storage for {EDAName}
 | 6379 | TCP | Redis | {GatewayStart} | Redis container | Data storage and retrieval for {Gateway} services
-| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart} | Internal gateway nginx communication
-| 27199 | TCP | Receptor | {ControllerNameStart} | Execution container | Configurable mesh nodes directly peered to controllers. Bidirectional communication for job distribution.
-| 8083/8446 | TCP | HTTP/HTTPS | Internal services | {GatewayStart} | {GatewayStart} nginx ports. Configurable with the following inventory variables: `gateway_nginx_http_port`, `gateway_nginx_https_port`.
-| 8080/8443 | TCP | HTTP/HTTPS | Internal services | {ControllerNameStart} | {ControllerNameStart} nginx ports. Configurable with the following inventory variables: `controller_nginx_http_port`, `controller_nginx_https_port`.
-| 8081/8444 | TCP | HTTP/HTTPS | Internal services | {HubNameStart} | {HubNameStart} nginx ports. Configurable with the following inventory variables: `hub_nginx_http_port`, `hub_nginx_https_port`.
-| 8082/8445 | TCP | HTTP/HTTPS | Internal services | {EDAName} | {EDAName} nginx ports. Configurable with the following inventory variables: `eda_nginx_http_port`, `eda_nginx_https_port`.
+| 8443 | TCP | HTTPS | {GatewayStart} | {GatewayStart} | Internal gateway NGINX communication
+| 27199 | TCP | Receptor | {ControllerNameStart} | Execution container | Mesh nodes connect directly to controllers. Allows two-way communication for job distribution.
+| 8083/8446 | TCP | HTTP/HTTPS | Internal services | {GatewayStart} | {GatewayStart} NGINX ports. You can configure these ports with the following inventory variables: `gateway_nginx_http_port`, `gateway_nginx_https_port`.
+| 8080/8443 | TCP | HTTP/HTTPS | Internal services | {ControllerNameStart} | {ControllerNameStart} NGINX ports. You can configure these ports with the following inventory variables: `controller_nginx_http_port`, `controller_nginx_https_port`.
+| 8081/8444 | TCP | HTTP/HTTPS | Internal services | {HubNameStart} | {HubNameStart} NGINX ports. You can configure these ports with the following inventory variables: `hub_nginx_http_port`, `hub_nginx_https_port`.
+| 8082/8445 | TCP | HTTP/HTTPS | Internal services | {EDAName} | {EDAName} NGINX ports. You can configure these ports with the following inventory variables: `eda_nginx_http_port`, `eda_nginx_https_port`.
 |====
 
 == Example inventory file
-Use the example inventory file to perform an installation for this topology: 
+Use the example inventory file to perform an installation: 
 
 include::snippets/inventory-cont-a-env-a.adoc[]
 

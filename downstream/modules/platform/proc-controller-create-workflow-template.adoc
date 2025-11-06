@@ -6,6 +6,7 @@
 
 :context: create-worklow-job-templates
 
+[role="_abstract"]
 To create a new workflow job template, complete the following steps:
 
 [IMPORTANT]
@@ -85,21 +86,17 @@ For more information about extra variables, see xref:controller-extra-variables[
 * Check *Enable webhook* to turn on the ability to interface with a predefined SCM system web service that is used to launch a workflow job template.
 GitHub and GitLab are the supported SCM systems.
 ** If you enable webhooks, other fields display, prompting for additional information:
+
 *** *Webhook service*: Select which service to listen for webhooks from.
 *** *Webhook URL*: Automatically populated with the URL for the webhook service to POST requests to.
-//*** *Webhook credential*: Optionally, provide a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service.
-//For more information, see TBD[Credential Types] to create one.
 *** *Webhook key*: Generated shared secret to be used by the webhook service to sign payloads sent to {ControllerName}.
 You must configure this in the settings on the webhook service so that webhooks from this service are accepted in {ControllerName}.
 For additional information about setting up webhooks, see xref:controller-work-with-webhooks[Working with Webhooks].
-+
-//** When you click btn:[Create workflow job template], the workflow visualizer automatically opens.
-//*** *Webhook URL*: Automatically populated with the URL for the webhook service to POST requests to.
 * Check *Enable concurrent jobs* to allow simultaneous runs of this workflow.
 For more information, see xref:controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
-+
-. When you have completed configuring the workflow template, click btn:[Create workflow job template].
 
+. When you have completed configuring the workflow template, click btn:[Create workflow job template].
++
 Saving the template exits the workflow template page and the workflow visualizer opens where you can build a workflow.
 For more information, see the xref:controller-workflow-visualizer[Workflow visualizer] section.
 Otherwise, select one of these methods:

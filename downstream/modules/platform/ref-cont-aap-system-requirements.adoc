@@ -9,22 +9,22 @@ Use this information when planning your installation of containerized {PlatformN
 
 == Prerequisites
 
-* Ensure a dedicated non-root user is configured on the {RHEL} host. 
+* Configure a dedicated non-root user on the {RHEL} host. 
 ** This user requires `sudo` or other Ansible supported privilege escalation (`sudo` is recommended) to perform administrative tasks during the installation. 
 ** This user is responsible for the installation of containerized {PlatformNameShort}.
 ** This user is also the service account for the containers running {PlatformNameShort}.
 
-* For managed nodes, ensure a dedicated user is configured on each node. {PlatformNameShort} connects as this user to run tasks on the node. For more information about configuring a dedicated user on each node, see link:{URLContainerizedInstall}/aap-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Preparing the managed nodes for containerized installation].
+* For managed nodes, configure a dedicated user on each node. {PlatformNameShort} connects as this user to run tasks on the node. For more information about configuring a dedicated user on each node, see link:{URLContainerizedInstall}/preparing-containerized-installation#preparing-the-managed-nodes-for-containerized-installation[Preparing the managed nodes for containerized installation].
 
-* For remote host installations, ensure SSH public key authentication is configured for the non-root user. For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
+* For remote host installations, configure SSH public key authentication for the non-root user. For guidelines on setting up SSH public key authentication for the non-root user, see link:https://access.redhat.com/solutions/4110681[How to configure SSH public key authentication for passwordless login].
 
-* Ensure internet access is available from the {RHEL} host if you are using the default online installation method.
+* Ensure the {RHEL} host has internet access if you are using the default online installation method.
 
-* Ensure the appropriate network ports are open if a firewall is in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
+* Open the appropriate network ports if you have a firewall in place. For more information about the ports to open, see link:{URLTopologies}/container-topologies[Container topologies] in _{TitleTopologies}_.
 
 [IMPORTANT]
 ====
-Storing container images on an NFS share is not supported by Podman. To use an NFS share for the user home directory, set up the Podman storage backend path outside of the NFS share. 
+Podman does not support storing container images on an NFS share. To use an NFS share for the user home directory, set up the Podman storage backend path outside of the NFS share. 
 For more information, see link:https://www.redhat.com/en/blog/rootless-podman-nfs[Rootless Podman and NFS].
 ====
 
@@ -40,23 +40,23 @@ include::snippets/cont-tested-vm-config.adoc[]
 
 [NOTE]
 ====
-If performing a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then 32 GB RAM is recommended. Note that with this configuration the install time is going to increase and can take 45 or more minutes alone to complete seeding the collections.
+If you perform a bundled installation of the {GrowthTopology} with `hub_seed_collections=true`, then use 32 GB RAM. With this configuration, the install time will increase and can take 45 or more minutes to complete seeding the collections.
 ====
 
 == Database requirements
 
 {PlatformNameShort} can work with two varieties of database:
 
-. Database installed with {PlatformNameShort} - This database consists of a PostgreSQL installation done as part of an {PlatformNameShort} installation using PostgreSQL packages provided by Red Hat.
-. Customer provided or configured database - This is an external database that is provided by the customer, whether on bare metal, virtual machine, container, or cloud hosted service.
+. Database installed with {PlatformNameShort} - This database consists of a PostgreSQL installation done as part of an {PlatformNameShort} installation using PostgreSQL packages that Red Hat provides.
+. Customer provided or configured database - This is an external database that the customer provides, whether on bare metal, virtual machine, container, or cloud hosted service.
 
-{PlatformNameShort} requires customer provided (external) database to have International Components for Unicode (ICU) support.  
+{PlatformNameShort} requires a customer provided (external) database to have International Components for Unicode (ICU) support.
 
 [role="_additional-resources"]
 .Additional resources
 
 * link:https://access.redhat.com/articles/4010491[{PlatformName} Database Scope of Coverage]
 
-* link:{URLContainerizedInstall}/aap-containerized-installation#setting-up-a-customer-provided-external-database[Setting up a customer provided (external) database]
+* link:{URLContainerizedInstall}/advanced-configuration-containerized#setting-up-a-customer-provided-external-database[Setting up a customer provided (external) database]
 
 * link:https://www.postgresql.org/docs/current/collation.html[Collation Support]
