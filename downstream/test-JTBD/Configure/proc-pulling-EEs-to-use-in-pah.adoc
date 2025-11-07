@@ -1,0 +1,42 @@
+:_mod-docs-content-type: PROCEDURE
+[id="obtain-images"]
+= Pulling {ExecEnvShort}s for use in {HubName}
+
+[role="_abstract"]
+Before you can push {ExecEnvShort}s to your {PrivateHubName}, you must first pull them from an existing registry and tag them for use. The following example details how to pull an {ExecEnvShort} from the Red Hat Ecosystem Catalog (registry.redhat.io).
+
+.Prerequisites
+
+* You have permissions to pull {ExecEnvName} from registry.redhat.io.
+
+.Procedure
+
+. Log in to Podman by using your registry.redhat.io credentials:
++
+-----
+$ podman login registry.redhat.io
+-----
++
+. Enter your username and password.
+. Pull an {ExecEnvShort}:
++
+[subs="+quotes"]
+-----
+$ podman pull registry.redhat.io/__<ee_name>__:__<tag>__
+-----
+
+.Verification
+
+To verify that the {ExecEnvShort} you recently pulled is contained in the list, take these steps:
+
+. List the images in local storage:
++
+-----
+$ podman images
+-----
++
+. Check the {ExecEnvShort} name, and verify that the tag is correct.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://redhat-connect.gitbook.io/catalog-help/[Red Hat Ecosystem Catalog Help] 

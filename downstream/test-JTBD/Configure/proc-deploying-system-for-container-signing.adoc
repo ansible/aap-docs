@@ -1,0 +1,69 @@
+:_mod-docs-content-type: PROCEDURE
+[id="deploying-your-system-for-container-signing"]
+
+= Deploying your system for container signing
+
+[role="_abstract"]
+To deploy your system so that it is ready for container signing, first ensure that you have 
+link:{URLContainerizedInstall}/advanced-configuration-containerized#enabling-automation-hub-collection-and-container-signing[enabled automation content collection and container signing].
+Then you can create a signing script, or
+link:{URLHubManagingContent}/managing-containers-hub#adding-an-execution-environment[add and sign an {ExecEnvShort}] manually.
+
+Note that installer looks for the script and key on the same server where installer is located.
+
+
+.Procedure
+. From a terminal, create a signing script, and pass the script path as an installer parameter.
++
+*Example*:
++
+-----
+#!/usr/bin/env bash
+
+# pulp_container SigningService will pass the next 4 variables to the script.
+MANIFEST_PATH=$1
+FINGERPRINT="$PULP_SIGNING_KEY_FINGERPRINT"
+IMAGE_REFERENCE="$REFERENCE"
+SIGNATURE_PATH="$SIG_PATH"
+
+# Create container signature using skopeo
+skopeo standalone-sign \
+  $MANIFEST_PATH \
+  $IMAGE_REFERENCE \
+  $FINGERPRINT \
+  --output $SIGNATURE_PATH
+
+# Optionally pass the passphrase to the key if password protected.
+# --passphrase-file /path/to/key_password.txt
+
+# Check the exit status
+STATUS=$?
+if [ $STATUS -eq 0 ]; then
+  echo {\"signature_path\": \"$SIGNATURE_PATH\"}
+else
+  exit $STATUS
+fi
+-----
++
+. Review the {PlatformNameShort} installer inventory file for options for container signing that begin with `automationhub_*`.
++
+-----
+[all:vars]
+.
+.
+.
+
+automationhub_create_default_container_signing_service = True
+automationhub_container_signing_service_key = /absolute/path/to/key/to/sign
+automationhub_container_signing_service_script = /absolute/path/to/script/that/signs
+-----
++
+
+. Once installation is complete, log in to {PlatformNameShort} and navigate to {MenuACAdminSignatureKeys}.
+
+. Ensure that you have a key titled *container-default*, or *container*-_anyname_.
+
+[NOTE]
+====
+The `container-default` service is created by the {PlatformNameShort} installer.
+====

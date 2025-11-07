@@ -1,0 +1,48 @@
+
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-sync-image-adoc_{context}"]
+= Syncing images from a container repository
+
+[role="_abstract"]
+You can pull {ExecEnvName} from the {HubName} remote registry to sync an image to your local machine.
+To sync an {ExecEnvNameSing} from a remote registry, you must first configure a remote registry.
+
+.Prerequisites
+
+You must have permission to view and pull from a private container repository.
+
+.Procedure
+
+. From the navigation panel, select {MenuACExecEnvironments}.
+
+. Add https://registry.redhat.io to the registry.
+
+. Add any required credentials to authenticate.
++
+[NOTE]
+====
+Some remote registries are aggressive with rate limiting.
+Set a rate limit under *Advanced Options*.
+====
++
+. From the navigation panel, select {MenuACExecEnvironments}.
+
+. Click btn:[Create execution environment] in the page header.
+
+. Select the registry you want to pull from.
+The *Name* field displays the name of the {ExecEnvName} displayed on your local registry.
++
+[NOTE]
+====
+The *Upstream name* field is the name of the image on the remote server.
+For example, if the upstream name is set to "alpine" and the *Name* field is "local/alpine", the alpine image is downloaded from the remote and renamed to "local/alpine".
+====
++
+. Set a list of tags to include or exclude.
+Syncing {ExecEnvName} with a large number of tags is time consuming and uses a lot of disk space.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://access.redhat.com/RegistryAuthentication[Red Hat Container Registry Authentication]
+* link:http://docs.podman.io/en/latest/index.html[What is Podman?]

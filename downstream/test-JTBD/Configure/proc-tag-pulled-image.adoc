@@ -1,0 +1,34 @@
+:_mod-docs-content-type: PROCEDURE
+[id="tag-pulled-images"]
+
+
+= Tagging {ExecEnvShort}s for use in {HubName}
+
+
+[role="_abstract"]
+After you pull {ExecEnvShort}s from a registry, tag them for use in your {PrivateHubName} remote registry.
+
+.Prerequisites
+
+* You have pulled an {ExecEnvShort} from an external registry.
+* You have the FQDN or IP address of the {HubName} instance.
+
+.Procedure
+
+* Tag a local {ExecEnvShort} with the {HubName} container repository:
++
+[subs="+quotes"]
+-----
+$ podman tag registry.redhat.io/__<ee_name>__:__<tag>__ __<automation_hub_hostname>__/__<ee_name>__
+-----
+
+
+.Verification
+
+. List the images in local storage:
++
+-----
+$ podman images
+-----
++
+. Verify that the {ExecEnvShort} you recently tagged with your {HubName} information is contained in the list.

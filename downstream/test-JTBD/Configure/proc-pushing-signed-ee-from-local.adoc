@@ -1,0 +1,57 @@
+:_mod-docs-content-type: PROCEDURE
+[id="pushing-container-images-from-your-local"]
+
+= Pushing container images from your local environment
+
+[role="_abstract"]
+Use the following procedure to sign an {ExecEnvNameSing} on a local system and push the signed {ExecEnvShort} to the {HubName} registry.
+
+.Procedure
+. From a terminal, log in to Podman, or any container client currently in use:
++
+----
+> podman pull <container-name>
+----
++
+. After the {ExecEnvShort} is pulled, add tags (for example: latest, rc, beta, or version numbers, such as 1.0; 2.3, and so on):
++
+----
+> podman tag <container-name> <server-address>/<container-name>:<tag name>
+----
++
+. Sign the {ExecEnvShort} after changes have been made, and push it back up to the {HubName} registry:
++
+----
+> podman push <server-address>/<container-name>:<tag name> --tls-verify=false --sign-by <reference to the gpg key on your local>
+----
++
+If the {ExecEnvShort} is not signed, it can only be pushed with any current signature embedded. Alternatively, you can use the following script to push the {ExecEnvShort} without signing it:
++
+----
+> podman push <server-address>/<container-name>:<tag name> --tls-verify=false
+----
++
+. Once the {ExecEnvShort} has been pushed, navigate to {MenuACExecEnvironments}.
+
+. To display the new {ExecEnvShort}, click the *Refresh* icon.
+
+. Click the name of the image to view your pushed image.
+
+.Troubleshooting
+
+The details page for each {ExecEnvShort} indicates whether it has been signed. If the details page indicates that an image is *Unsigned*, you can sign the {ExecEnvShort} from {HubName} using the following steps:
+
+. Click the {ExecEnvShort} name to navigate to the details page.
+
+. Click the btn:[More Actions] icon *{MoreActionsIcon}*.
+Three options are available:
+* *Sign {ExecEnvShort}*
+* *Use in Controller*
+* *Delete {ExecEnvShort}*
+
+
+. Click *Sign {ExecEnvShort}* from the drop-down menu.
+
+.Verification
+The signing service signs the {ExecEnvShort}.
+After the {ExecEnvShort} is signed, the status changes to "signed".
