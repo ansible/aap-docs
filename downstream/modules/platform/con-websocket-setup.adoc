@@ -2,21 +2,22 @@
 
 [id="con-websocket-setup"]
 
-= Websocket configuration for {ControllerName}
+= WebSocket configuration for {ControllerName}
 
-You can configure {ControllerName} to align the websocket configuration with your nginx or load balancer configuration.
+[role="_abstract"]
+You can configure {ControllerName} to align the WebSocket configuration with your nginx or load balancer configuration.
 
-{ControllerNameStart} nodes are interconnected through websockets to distribute all websocket-emitted messages throughout your system. 
-This configuration setup enables any browser client websocket to subscribe to any job that might be running on any {ControllerName} node. 
-Websocket clients are not routed to specific {ControllerName} nodes. 
-Instead, any {ControllerName} node can handle any websocket request and each {ControllerName} node must know about all websocket messages destined for all clients.
+{ControllerNameStart} nodes are interconnected through WebSockets to distribute all WebSocket-emitted messages throughout your system. 
+This configuration setup enables any browser client WebsSocket to subscribe to any job that might be running on any {ControllerName} node. 
+WebSocket clients are not routed to specific {ControllerName} nodes. 
+Instead, any {ControllerName} node can handle any WebSocket request and each {ControllerName} node must know about all WebSocket messages destined for all clients.
 
-You can configure websockets at `/etc/tower/conf.d/websocket_config.py` in all of your {ControllerName} nodes and the changes become effective after the service restarts.
+You can configure WebSockets at `/etc/tower/conf.d/websocket_config.py` in all of your {ControllerName} nodes and the changes become effective after the service restarts.
 
 {ControllerNameStart} automatically handles discovery of other {ControllerName} nodes through the Instance record in the database.
 
 [IMPORTANT]
 ====
-Your {ControllerName} nodes are designed to broadcast websocket traffic across a private, trusted subnet (and not the open Internet). 
-Therefore, if you turn off HTTPS for websocket broadcasting, the websocket traffic, composed mostly of Ansible Playbook stdout, is sent unencrypted between {ControllerName} nodes.
+Your {ControllerName} nodes are designed to broadcast WebSocket traffic across a private, trusted subnet (and not the open Internet). 
+Therefore, if you turn off HTTPS for WebSocket broadcasting, the WebSocket traffic, composed mostly of Ansible Playbook stdout, is sent unencrypted between {ControllerName} nodes.
 ====
