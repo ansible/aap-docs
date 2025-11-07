@@ -1,20 +1,23 @@
 :_mod-docs-content-type: ASSEMBLY
 
-
-
 ifdef::context[:parent-context: {context}]
-
-
 
 [id="assembly-deprovisioning-mesh"]
 = Deprovisioning individual nodes or groups
 
 :context: deprovisioning
 
-
 [role="_abstract"]
-You can deprovision {AutomationMesh} nodes and instance groups using the {PlatformNameShort} installer. 
-The procedures in this section describe how to deprovision specific nodes or entire groups, with example inventory files for each procedure.
+You can deprovision {AutomationMesh} nodes and instance groups by using the {PlatformNameShort} installer. 
+Learn how to deprovision specific nodes or entire groups, with example inventory files.
+
+// Michelle: This admonition is in place until AAPRFE-2186 is resolved.
+[IMPORTANT]
+====
+Containerized {PlatformNameShort} deployments do not support the `node_state=deprovision` parameter. 
+For containerized deployments, use the `awx-manage` command to deprovision nodes and groups. 
+For more information, see link:{URLAutomationMesh}/assembly-deprovisioning-mesh#proc-deprovision-isolated-nodes[Deprovisioning isolated nodes] and link:{URLAutomationMesh}/assembly-deprovisioning-mesh#proc-deprovision-isolated-groups[Deprovisioning isolated instance groups].
+====
 
 include::platform/proc-deprovisioning-mesh-nodes.adoc[leveloffset=+1]
 
