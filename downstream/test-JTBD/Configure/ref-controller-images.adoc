@@ -1,0 +1,25 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-controller-images"]
+
+= images
+
+[role="_abstract"]
+This section describes the structure and valid keys for defining container images used by {ExecEnvShort}.
+The `images` section is a dictionary that defines one or more container images to be used by {ExecEnvShort}.
+Each key in the `images` dictionary represents a unique image name, and the value is another dictionary that defines the properties of that image.
+ 
+At a minimum you must specify a source, image, and tag for the base image. 
+The base image provides the operating system and can also provide some packages. 
+Use the standard `host/namespace/container:tag` syntax to specify images.
+You can use Podman or Docker shortcut syntax instead, but the full definition is more reliable and portable.
+
+Valid keys for this section are:
+
+[cols="15%,40%"]
+|====
+| *base_image* | A dictionary defining the parent image for the {ExecEnvShort}.
+
+A `name` key must be supplied with the container image to use. 
+Use the `signature_original_name` key if the image is mirrored within your repository, but signed with the original image's signature key.
+|====
