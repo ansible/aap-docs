@@ -4,7 +4,8 @@
 
 = Report types
 
-This section provides additional configurations for data gathering and report building based on a report type. Apply the environment variables to each report type based on your {PlatformNameShort} installation. 
+[role="_abstract"]
+Additional configurations for data gathering and report building based on a report type. Apply the environment variables to each report type based on your {PlatformNameShort} installation. 
 
 ////
 == CCSPv2
@@ -19,7 +20,7 @@ The primary use of this report is for partners under the link:https://connect.re
 
 Set the report type using `METRICS_UTILITY_REPORT_TYPE=CCSPv2`.
 
-=== Optional collectors for `gather` command
+== Optional collectors for `gather` command
 
 You can use the following optional collectors for the `gather` command:
 
@@ -37,7 +38,7 @@ You can use the following optional collectors for the `gather` command:
 export METRICS_UTILITY_OPTIONAL_COLLECTORS="main_host,main_jobevent,main_indirectmanagednodeaudit"
 ----
 
-=== Optional sheets for `build_report` command
+== Optional sheets for `build_report` command
 
 You can use the following optional sheets for the `build_report` command:
 
@@ -90,7 +91,7 @@ To outline the quality of data collected it also lists:
 export METRICS_UTILITY_OPTIONAL_CCSP_REPORT_SHEETS='ccsp_summary,jobs,managed_nodes,indirectly_managed_nodes,inventory_scope,usage_by_organizations,usage_by_collections,usage_by_roles,usage_by_modules,data_collection_status'
 ----
 
-=== Filtering reports by organization
+== Filtering reports by organization
 To filter your report so that only certain organizations are present, use this environment variable with a semicolon separated list of organization names.
 
 `export METRICS_UTILITY_ORGANIZATION_FILTER="ACME;Organization 1"`
@@ -101,7 +102,7 @@ This renders only the data from these organizations in the built report. This fi
 * `usage_by_roles`
 * `usage_by_modules`
 
-=== Selecting a date range for your CCSPv2 report
+== Selecting a date range for your CCSPv2 report
 
 The default behavior of the CCSPv2 report is to build a report for the previous month. The following examples describe how to override this default behavior to select a specific date range for your report:  
 +
@@ -109,13 +110,13 @@ The default behavior of the CCSPv2 report is to build a report for the previous 
 # Build report for a specific month
 metrics-utility build_report --month=2025-03 
 
-# Build report for a specific date range, icluding the prvided days
+# Build report for a specific date range, including the provided days
 metrics-utility build_report --since=2025-03-01 --until=2025-03-31
 
 # Build report for a last 6 months from a current date
 metrics-utility build_report --since=6months
 
-# Build report for a last 6 months from a current date overriding an exisitng report
+# Build report for a last 6 months from a current date overriding an existing report
 metrics-utility build_report --since=6months --force
 ----
 ////
