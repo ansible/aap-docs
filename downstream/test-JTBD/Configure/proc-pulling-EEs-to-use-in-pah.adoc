@@ -1,0 +1,79 @@
+:_mod-docs-content-type: PROCEDURE
+[id="pulling-ees-to-use-in-pah"]
+= Pulling {ExecEnvShort}s for use in {HubName}
+
+
+[role="_abstract"]
+Before you can push {ExecEnvShort}s to your {PrivateHubName}, you must first pull them from an existing registry and tag them for use. The following example details how to pull an {ExecEnvShort} from the Red Hat Ecosystem Catalog (registry.redhat.io).
+
+You must follow a specific workflow to populate your {PrivateHubName} remote registry:
+
+* Pull {ExecEnvName} from the Red Hat Ecosystem Catalog (registry.redhat.io)
+* Tag them
+* Push them to your {PrivateHubName} remote registry
+
+[IMPORTANT]
+====
+As of *April 1st, 2025*, `quay.io` is adding three additional endpoints. As a result, customers must adjust the allow/block lists within their firewall systems lists to include the following endpoints:
+
+* `cdn04.quay.io`
+* `cdn05.quay.io`
+* `cdn06.quay.io`
+
+To avoid problems pulling container images, customers must allow outbound TCP connections (ports 80 and 443) to the following hostnames:
+
+* `cdn.quay.io`
+* `cdn01.quay.io`
+* `cdn02.quay.io`
+* `cdn03.quay.io`
+* `cdn04.quay.io`
+* `cdn05.quay.io`
+* `cdn06.quay.io`
+
+This change should be made to any firewall configuration that specifically enables outbound connections to `registry.redhat.io` or `registry.access.redhat.com`.
+
+Use the hostnames instead of IP addresses when configuring firewall rules.
+
+After making this change, you can continue to pull images from `registry.redhat.io` or `registry.access.redhat.com`. You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
+
+For more information, see link:https://access.redhat.com/articles/7084334[Firewall changes for container image pulls 2024/2025].
+
+Ensure that the link:{URLPlanningGuide}/ref-network-ports-protocols_planning[Network ports and protocols] listed in _Table 6.4. Execution Environments (EE)_ are available to avoid problems pulling container images.
+
+====
+
+.Prerequisites
+
+* You have permissions to pull {ExecEnvName} from registry.redhat.io.
+
+.Procedure
+
+. Log in to Podman by using your registry.redhat.io credentials:
++
+-----
+$ podman login registry.redhat.io
+-----
++
+. Enter your username and password.
+. Pull an {ExecEnvShort}:
++
+[subs="+quotes"]
+-----
+$ podman pull registry.redhat.io/__<ee_name>__:__<tag>__
+-----
+
+.Verification
+
+To verify that the {ExecEnvShort} you recently pulled is contained in the list, take these steps:
+
+. List the images in local storage:
++
+-----
+$ podman images
+-----
++
+. Check the {ExecEnvShort} name, and verify that the tag is correct.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://redhat-connect.gitbook.io/catalog-help/[Red Hat Ecosystem Catalog Help] 

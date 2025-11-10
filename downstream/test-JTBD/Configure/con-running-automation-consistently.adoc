@@ -1,0 +1,37 @@
+:_mod-docs-content-type: CONCEPT
+ifdef::context[:parent-context: {context}]
+
+[id="running-automation-consistently"]
+= Running automation consistently with portable runtime environments
+
+[role="_abstract"]
+Consistently run automation with portable runtime environments 
+Ansible Automation Platform uses container images, called execution environments, to provide a consistent, portable, and reproducible runtime environment for automation.
+
+With automation execution environments, a distributed architecture separates the control plane from the execution plane. Keeping automation execution independent of the control plane results in faster development cycles and improves scalability, reliability, and portability across environments. Ansible Automation Platform also includes access to Ansible content tools, making it easy to build and manage automation execution environments.
+
+Automation execution environments provide the following benefits:
+
+* They ensure that automation runs consistently across multiple platforms and make it possible to incorporate system-level dependencies and collection-based content.
+* They give Red Hat Ansible Automation Platform administrators the ability to provide and manage automation environments to meet the needs of different teams.
+* Automation execution environments enable automation teams to define, build, and update their automation environments themselves. System administrators can provide execution environments, but each organization administrator can also provide their own.
+* They allow automation to be easily scaled and shared between teams by providing a standard way of building and distributing the automation environment.
+
+Related topics:
+* Assigning an execution environment to your automation
+* Build customized runtime environments with Ansible builder
+* Build an execution environment in a disconnected environment
+
+== Execution environment contents 
+An execution environment is a container image that includes:
+
+* Ansible core – the engine that runs automation
+* Ansible collections (modules, roles, and plugins)
+* Python packages
+* Python libraries and system dependencies required by modules/collections
+* Any other dependencies required by your automation 
+
+Related topics:
+
+* Use a default execution environment
+* Build a customized runtime environment with Ansible builder

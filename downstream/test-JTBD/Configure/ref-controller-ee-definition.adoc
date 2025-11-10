@@ -1,0 +1,43 @@
+
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-controller-ee-definition"]
+
+= Execution environment definition example
+
+[role="_abstract"]
+You must create a definition file to build an image for an {ExecEnvShort}. 
+The file is in YAML format.
+
+You must specify the version of {Builder} in the definition file. 
+The default version is 1.
+
+The following definition file is using {Builder} version 3:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+version: 3
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: '--pre'
+dependencies:
+  galaxy: requirements.yml
+  python:
+    - six
+    - psutil
+  system: bindep.txt
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-24/ee-minimal-rhel8:latest
+additional_build_files:
+    - src: files/ansible.cfg
+      dest: configs
+additional_build_steps:
+  prepend_galaxy:
+    - ADD _build/configs/ansible.cfg /home/runner/.ansible.cfg
+  prepend_final: |
+    RUN whoami
+    RUN cat /etc/os-release
+  append_final:
+    - RUN echo This is a post-install command!
+    - RUN ls -la /etc
+----

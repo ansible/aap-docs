@@ -1,0 +1,41 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="con-definition-file-breakdown"]
+
+= Breakdown of definition file content
+
+[role="_abstract"]
+You must provide a definition file to build {ExecEnvName} with {Builder}, because it specifies the content that is included in the {ExecEnvNameSing} container image.
+
+The following sections break down the different parts of a definition file.
+
+== Build arguments
+
+[role="_abstract"]
+The `build_arg_defaults` section of the definition file is a dictionary whose keys can provide default values for arguments to {Builder}. 
+
+The following table lists values that can be used in `build_arg_defaults`:
+
+[cols="a,a"]
+|===
+| Value | Description
+
+| `ANSIBLE_GALAXY_CLI_COLLECTION_OPTS` | Enables the user to pass arbitrary arguments to the ansible-galaxy CLI during the collection installation phase. 
+
+For example, the `–pre` flag to enable the installation of pre-release collections, or `-c` to disable verification of the server's SSL certificate.
+
+| `ANSIBLE_GALAXY_CLI_ROLE_OPTS` | Enables the user to pass any flags, such as `–no-deps`, to the role installation.
+
+|===
+
+[NOTE]
+====
+It is generally easier (especially in a pipeline context) to customize the base image into a custom base image using podman first, and then call `ansible-builder` on this custom image.
+====
+
+The values given inside `build_arg_defaults` will be hard-coded into the `Containerfile`, so these values will persist if `podman build` is called manually.
+
+[NOTE]
+====
+If the same variable is specified in the CLI `--build-arg` flag, the CLI value takes higher precedence.
+====

@@ -1,0 +1,86 @@
+:_mod-docs-content-type: PROCEDURE
+[id="configuring-the-client-to-verify-signatures"]
+
+= Configuring the client to verify signatures
+
+[role="_abstract"]
+To ensure an {ExecEnvShort} pulled from the remote registry is properly signed, you must first configure the {ExecEnvShort} with the proper public key in a policy file. 
+
+.Prerequisites
+
+* The client must have sudo privileges configured to verify signatures.
+
+.Procedure
+
+. Open your terminal and use the following command: 
++
+----
+>  sudo <name of editor> /etc/containers/policy.json
+----
++
+The file that is displayed is similar to this:
++
+----
+{
+  "default": [{"type": "reject"}],
+  "transports": {
+  	"docker": {
+    	"quay.io": [{"type": "insecureAcceptAnything"}],
+    	"docker.io": [{"type": "insecureAcceptAnything"}],
+    	"<server-address>": [
+      	{
+          	    "type": "signedBy",
+          	    "keyType": "GPGKeys",
+          	    "keyPath": "/tmp/containersig.txt"
+      	}]
+  	}
+  }
+}
+----
++
+This file shows that neither `quay.io`, or `docker.io` will perform the verification, because the type is `insecureAcceptAnything` which overrides the default type of `reject`. However, `_<server-address>_` will perform the verification, because the parameter `type` is set to `"signedBy"`.
++
+[NOTE]
+====
+The only `keyType` currently supported is GPG keys.
+====
++
+. Under the `_<server-address>_` entry, modify the `keyPath` <1> to include the
+name of your key file.
++
+----
+{
+    	"default": [{"type": "reject"}],
+    	"transports": {
+        	"docker": {
+          	  "quay.io": [{"type": "insecureAcceptAnything"}],
+          	  "docker.io": [{"type": "insecureAcceptAnything"}],
+          	  "<server-address>": [{
+                	"type": "signedBy",
+                	"keyType": "GPGKeys",
+                	"keyPath": "/tmp/<key file name>",
+                	"signedIdentity": {
+                  	  "type": "matchExact"
+                    }
+            	  }]
+            }
+    	}
+}
+----
++
+. Save and close the file.
+
+.Verification
+
+* Pull the file using Podman, or your client of choice:
+
+----
+> podman pull <server-address>/<container-name>:<tag name> --tls-verify=false
+----
+
+This response verifies the {ExecEnvShort} has been signed with no errors. If the {ExecEnvShort} is not signed, the command fails.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#signedby[Documentation for containers-policy.json] 

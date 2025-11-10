@@ -1,0 +1,55 @@
+:_mod-docs-content-type: PROCEDURE
+
+ifdef::context[:parent-context: {context}]
+
+[id="populate-container-registry"]
+= Populating your {PrivateHubName} container registry
+
+
+:context: populate-container-registry
+
+
+[role="_abstract"]
+By default, {PrivateHubName} does not include {ExecEnvName}.
+To populate your container registry, you must push an {ExecEnvShort} to it.
+
+Before the new {ExecEnvShort} image can be used for automation jobs, it must be uploaded to the {PrivateHubName}.  
+
+.Procedure
+
+. First, verify that the {ExecEnvShort} image can be seen in the local podman cache:
++
+----
+$ podman images --format "table {{.ID}} {{.Repository}} {{.Tag}}"
+IMAGE ID	    REPOSITORY					              TAG
+b38e3299a65e	private-hub.example.com/custom-ee     	  latest
+8e38be53b486	private-hub.example.com/ee-minimal-rhel8  latest
+----
+
+. Then log in to the {PrivateHubName}'s container registry and push the image to make it available for use with job templates and workflows:
++
+----
+$ podman login private-hub.example.com -u admin
+Password:
+Login Succeeded!
+$ podman push private-hub.example.com/custom-ee:latest
+----
+
+Use the following workflow to populate your private automation hub remote registry:
+
+. link:{URLHubManagingContent}/managing-containers-hub#obtain-images[Pull {ExecEnvShort}s for use in {HubName}]
+. link:{URLHubManagingContent}/managing-containers-hub#tag-pulled-images[Tag {ExecEnvShort} for use in {HubName}]
+. link:{URLHubManagingContent}/managing-containers-hub#push-containers[Push an {ExecEnvShort} to {PrivateHubName}]
+. link:{URLHubManagingContent}/managing-containers-hub#setting-up-container-repository[Set up your container repository]
+. link:{URLHubManagingContent}/managing-containers-hub#proc-doing-one-procedure_assembly-keyword[Add a README to your container repository]
+. link:{URLHubManagingContent}/managing-containers-hub#providing-access-to-containers[Provide access to your {ExecEnvName}s]
+. link:{URLHubManagingContent}/managing-containers-hub#proc-tag-image[Tag container images]
+. link:{URLHubManagingContent}/managing-containers-hub#proc-create-credential[Create a credential]
+. link:{URLHubManagingContent}/managing-containers-hub#pulling-images-container-repository[Pulling images from a container repository]
+. link:{URLHubManagingContent}/managing-containers-hub#pulling-image[Pull an image]
+. link:{URLHubManagingContent}/managing-containers-hub#proc-sync-image-adoc_pulling-images-container-repository[Sync images from a container repository]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://access.redhat.com/articles/RegistryAuthentication[Red Hat Container Registry Authentication]
