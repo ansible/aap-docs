@@ -13,12 +13,13 @@ The playbook directory is automatically mounted in the {ExecEnvNameSing} and {Na
 If the `ansible.cfg` file is in another directory, set the `ANSIBLE_CONFIG` variable, and specify the directory as a custom volume mount. (See {Navigator} settings for `execution-environment-volume-mounts`)
 
 Where should the `ansible.cfg` file go when not using an {ExecEnvNameSing}?::
-Ansible looks for the `ansible.cfg` in the typical locations when not using an {ExecEnvNameSing}. See link:https://docs.ansible.com/ansible/latest/reference_appendices/config.html[Ansible configuration settings] for details.
+Ansible looks for the `ansible.cfg` in the typical locations when not using an {ExecEnvNameSing}. 
+See link:{URLNavigatorGuide}/assembly-review-config-navigator_installing-devtools[Reviewing your Ansible configuration with automation content navigator].
 
 Where should Ansible collections be placed when using an {ExecEnvNameSing}?:: The easiest place to have Ansible collections is in the project directory, in a playbook adjacent collections directory (for example, `ansible-galaxy collections install ansible.utils -p ./collections`).
 The playbook directory is automatically mounted in the {ExecEnvNameSing} and {Navigator} finds the collections there. Another option is to build the collections into an {ExecEnvNameSing} using {Builder}. This helps content creators author playbooks that are production ready, since {ControllerName} supports playbook adjacent collection directories. If the collections are in another directory, set the `ANSIBLE_COLLECTIONS_PATHS` variable and configure a custom volume mount for the directory. (See link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_content_navigator/index#ref-navigator-general-settings_settings-navigator[Automation content navigator general settings] for `execution-environment-volume-mounts`).
 
-Where should Ansible collections be placed when not using an {ExecEnvNameSing}?:: When not using an {ExecEnvNameSing}, Ansible looks in the default locations for collections. See the link:https://docs.ansible.com/ansible/latest/collections_guide/index.html[Using Ansible collections] guide.
+Where should Ansible collections be placed when not using an {ExecEnvNameSing}?:: When not using an {ExecEnvNameSing}, Ansible looks in the default locations for collections. See the link:{URLDevelopAutomationContent}/devtools-create-roles-collection_installing-devtools[Creating a collection for distributing roles] guide.
 
 Why does the playbook hang when `vars_prompt` or `pause/prompt` is used?:: By default, {Navigator} runs the playbook in the same manner that {ControllerName} runs the playbook. This helps content creators author playbooks that are production ready. If you cannot avoid the use of `vars_prompt` or `pause\prompt`, disabling `playbook-artifact` creation causes {Navigator} to run the playbook in a manner that is compatible with `ansible-playbook` and allows for user interaction.
 
