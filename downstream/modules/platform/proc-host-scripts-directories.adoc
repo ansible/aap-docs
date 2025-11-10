@@ -4,6 +4,8 @@
 
 = Preparing host directories and scripts
 
+
+[role="_abstract"]
 To prepare host directories and scripts, create two shell scripts on your host machine to execute `metrics-utility` commands inside your running container.
 
 .Procedure
@@ -13,7 +15,7 @@ To prepare host directories and scripts, create two shell scripts on your host m
 metrics_utility_enabled=true
 ----
 +
-This setting instructs the installer to create and configure a dedicated `automation-controller-metrics-utility` container as part of your {PlatformNameShort} deployment. Be sure to place this line under the `[all:vars]` header in your inventory file, alongside your other global variables. Re-run the installer script to activate the container if your {PlatformNameShort} deployment has already been configured.
+This setting instructs the {Installer} to create and configure a dedicated `automation-controller-metrics-utility` container as part of your {PlatformNameShort} deployment. Be sure to place this line under the `[all:vars]` header in your inventory file, alongside your other global variables. Re-run the {Installer} script to activate the container if your {PlatformNameShort} deployment has already been configured.
 . Run the following command to create the host report destination directory:
 +
 ----
@@ -21,7 +23,7 @@ mkdir -p /home/my-user/aap/controller/data/
 ----
 +
 This directory on your host machine stores the final generated reports.
-. Create a file named `/home/my-user/cron-gather` (replace `/home/my-user/` with your desired path) and add the following content to create the `cron-gather` script:
+. Create a file named `/home/my-user/cron-gather` (replace `/home/my-user/` with your required path) and add the following content to create the `cron-gather` script:
 +
 ----
 #!/bin/sh
@@ -39,7 +41,7 @@ podman exec \
 ----
 +
 This script runs `metrics-utility` to gather billing data from your {PlatformNameShort} instance and store it temporarily inside the container.
-. Create a file named `/home/my-user/cron-report` (replace `/home/my-user/` with your desired path) and add the following content to create the `cron-report` script:
+. Create a file named `/home/my-user/cron-report` (replace `/home/my-user/` with your required path) and add the following content to create the `cron-report` script:
 +
 ----
 #!/bin/sh
