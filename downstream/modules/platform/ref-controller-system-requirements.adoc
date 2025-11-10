@@ -44,7 +44,6 @@ Hop nodes serve to route traffic from one part of the {AutomationMesh} to anothe
 To avoid possible resource conflicts, Ansible recommends 1 GB of memory per 10 forks and 2 GB reservation for {ControllerName}.
 See link:{URLControllerUserGuide}/controller-jobs#controller-capacity-determination[{ControllerNameStart} capacity determination and job impact]. 
 If `forks` is set to 400, 42 GB of memory is recommended.
-* {ControllerNameStart} hosts check if `umask` is set to 0022. If not, the setup fails. Set `umask=0022` to avoid this error.
 * A larger number of hosts can be addressed, but if the fork number is less than the total host count, more passes across the hosts are required. You can avoid these RAM limitations by using any of the following approaches:
 ** Use rolling updates.
 ** Use the provisioning callback system built into {ControllerName}, where each system requesting configuration enters a queue and is processed as quickly as possible.
