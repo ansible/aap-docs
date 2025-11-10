@@ -4,6 +4,7 @@
 
 = Using collections with {HubName}
 
+[role="_abstract"]
 Before {ControllerName} can use {HubName} as the default source for collections content, you must create an API token in the {HubName} UI. 
 You then specify this token in {ControllerName}. 
 
@@ -42,7 +43,7 @@ This enables you to associate each organization with the credential, or reposito
 +
 //image:projects-organizations-add-ah-credential.png[Credential association]
 +
-.Example
+*Example*
 +
 You have two repositories:
 
@@ -65,14 +66,15 @@ For {HubName}, which uses a signed certificate, use the toggle to disable it ins
 +
 . Create a project, where the source repository specifies the necessary collections in a requirements file located in the
 `collections/requirements.yml` file.
-For information about the syntax to use, see link:https://docs.ansible.com/ansible/latest/user_guide/collections_using.html#install-multiple-collections-with-a-requirements-file[Using Ansible collections] in the Ansible documentation.
+//Commenting out as no downstream alternative [AAP-57435]
+//For information about the syntax to use, see link:https://docs.ansible.com/ansible/latest/user_guide/collections_using.html#install-multiple-collections-with-a-requirements-file[Using Ansible collections] in the Ansible documentation.
 +
 //image:projects-add-ah-source-repo.png[Project source repository]
 
 . In the *Projects* list view, click the sync image:sync.png[Update,15,15] icon to update this project. 
 {ControllerNameStart} fetches the Galaxy collections from the `collections/requirements.yml` file and reports it as changed. 
 The collections are installed for any job template using this project.
-
++
 [NOTE]
 ====
 If updates are required from Galaxy or Collections, a sync is performed that downloads the required roles, consuming that much more space in
@@ -80,9 +82,9 @@ your /tmp file.
 In cases where you have a large project (around 10 GB), disk space on `/tmp` may be an issue.
 ====
 
-.Additional resources
+//Commenting out as no downstream alternative [AAP-57435]
+//.Additional resources
 
-For more information about collections, see link:https://docs.ansible.com/ansible/latest/user_guide/collections_using.html[Using Ansible Collections]. 
+//* link:https://docs.ansible.com/ansible/latest/user_guide/collections_using.html[Using Ansible Collections]. 
 
-For more information about how Red Hat publishes one of these official collections, which can be used to automate your
-install directly, see the link:https://github.com/ansible/awx/blob/devel/awx_collection/README.md[AWX Ansible Collection] documentation. 
+//For more information about how Red Hat publishes one of these official collections, which can be used to automate your install directly, see the link:https://github.com/ansible/awx/blob/devel/awx_collection/README.md[AWX Ansible Collection] documentation. 

@@ -4,9 +4,11 @@
 
 = Gather facts from network devices
 
+[role="_abstract"]
 The `gather_facts` keyword supports gathering network device facts in standardized key/value pairs. 
 You can feed these network facts into further tasks to manage the network device.
-You can also use the `gather_network_resources` parameter with the network `*_facts` modules (such as `arista.eos.eos_facts`) to return a subset of the device configuration, as shown below.
+
+You can also use the `gather_network_resources` parameter with the network `*_facts` modules (such as `arista.eos.eos_facts`) to return a subset of the device configuration, as the following example shows:
 
 ----
 - hosts: arista
@@ -57,5 +59,5 @@ The playbook returns the following interface facts:
 ====
 `gather_network_resources` renders configuration data as facts for all supported resources (`interfaces/bgp/ospf/etc``), whereas `gather_subset` is primarily used to fetch operational data.
 ====
-
-You can store these facts and use them directly in another task, such as with the link:https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_interfaces_module.html#ansible-collections-arista-eos-eos-interfaces-module[`eos_interfaces`] resource module.
+//Commenting out as no downstream alternative [AAP-57435]
+//You can store these facts and use them directly in another task, such as with the link:https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_interfaces_module.html#ansible-collections-arista-eos-eos-interfaces-module[`eos_interfaces`] resource module.
