@@ -1,20 +1,26 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="troubleshoot-upgrade-issues"]
-= Issue - When upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, connections to the {ControllerName} API fail if the {ControllerName} is behind a load balancer
+= Issue - {ControllerName} API connection fails after upgrade with load balancer
 
-When upgrading {PlatformNameShort} 2.4 to {PlatformVers}, the upgrade is completed; however, connections to the {Gateway} URL fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: 
+[role="_abstract"]
+When upgrading from {PlatformNameShort} 2.4 to {PlatformVers}, the upgrade completes successfully. 
+However, connections to the {Gateway} URL fail if you are using {ControllerName} behind a load balancer. 
+
+You see this error message in the logs: 
 
 `Error connecting to Controller API`
 
-To resolve this issue, perform the following tasks for all controller hosts:
+.Procedure
 
-. For each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file.
+. To resolve this issue, perform the following tasks for all controller hosts:
+
+.. For each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file.
 +
-For example, if you configured the {Gateway} URL as `https://www.example.com`, you must add that URL in the *settings.py* file too as shown below:
+For example, if you configured the {Gateway} URL as `\https://www.example.com`, you must add that URL in the *settings.py* file too as shown:
 +
 ----
 CSRF_TRUSTED_ORIGINS = ['https://appX.example.com:8443','https://www.example.com']
 ----
 
-. Restart each controller host by using the `automation-controller-service restart` command so that the URL changes are implemented. For the procedure, see link:{URLControllerAdminGuide}/controller-start-stop-controller[Start, stop, and restart {ControllerName}] in _{TitleControllerAdminGuide}_. 
+.. Restart each controller host by using the `automation-controller-service restart` command so that the URL changes are implemented. For the procedure, see link:{URLControllerAdminGuide}/controller-start-stop-controller[Start, stop, and restart {ControllerName}] in _{TitleControllerAdminGuide}_. 

@@ -1,7 +1,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="troubleshoot-job-timeout"]
-= Issue - Jobs are failing with “Timeout (12s) waiting for privilege escalation prompt” error message
+= Issue - Jobs failing with timeout waiting for privilege escalation prompt
 
 [role="_abstract"]
 This error can happen when the timeout value is too small, causing the job to stop before completion. The default timeout value for connection plugins is `10`. 
@@ -13,11 +13,15 @@ To resolve the issue, increase the timeout value by completing one of the follow
 The following changes will affect all of the jobs in {ControllerName}. To use a timeout value for a specific project, add an `ansible.cfg` file in the root of the project directory and add the `timeout` parameter value to that `ansible.cfg` file.
 ====
 
-*Add ANSIBLE_TIMEOUT as an environment variable in the {ControllerName} UI*
+.Procedure
 
-. Go to {ControllerName}.
-. From the navigation panel, select menu:Settings[Jobs settings].
-. Under *Extra Environment Variables* add the following:
+* Increase the timeout value by using one of the following methods:
+
+** *Add ANSIBLE_TIMEOUT as an environment variable in the {ControllerName} UI:*
++
+... Go to {ControllerName}.
+... From the navigation panel, select menu:Settings[Jobs settings].
+... Under *Extra Environment Variables* add the following:
 +
 ----
 { 
@@ -26,10 +30,9 @@ The following changes will affect all of the jobs in {ControllerName}. To use a 
 ----
 +
 
-
-*Add a timeout value in the [defaults] section of the ansible.cfg file by using the CLI*
-
-* Edit the `/etc/ansible/ansible.cfg` file and add the following:
+** *Add a timeout value in the [defaults] section of the ansible.cfg file:*
++
+... Edit the `/etc/ansible/ansible.cfg` file and add the following:
 +
 ----
 [defaults]
@@ -37,14 +40,13 @@ timeout = 60
 ----
 +
 
-
-*Running ad hoc commands with a timeout*
-
-* To run an ad hoc playbook in the command line, add the `--timeout` flag to the `ansible-playbook` command, for example:
+** *Run ad hoc commands with a timeout:*
++
+... To run an ad hoc playbook in the command line, add the `--timeout` flag to the `ansible-playbook` command, for example:
 +
 [subs="+quotes"]
 ----
-# ansible-playbook --timeout=60 _<your_playbook.yml>_
+# ansible-playbook --timeout=60 <your_playbook.yml>
 ----
 +
 
