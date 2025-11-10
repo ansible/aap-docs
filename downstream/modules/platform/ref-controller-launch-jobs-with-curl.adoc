@@ -2,11 +2,11 @@
 
 [id="ref-controller-launch-jobs-with-curl"]
 
-= Launching Jobs with curl
+= Launching jobs with curl
 
-Launching jobs with the {ControllerName} API is simple. 
-
-The following are some easy to follow examples using the `curl` tool.
+[role="_abstract"]
+Use the `curl` command line tool to launch {ControllerName} jobs programmatically through the REST API. 
+This method provides a direct way to integrate job execution into external scripts, ensuring immediate control.
 
 Assuming that your Job Template ID is '1', your controller IP is 192.168.42.100, and that `admin` and `awxsecret` are valid login credentials, you can create a new job this way:
 
@@ -32,5 +32,5 @@ curl -f -k -H 'Content-Type: application/json' -XPOST \
 [NOTE]
 ====
 The `extra_vars` parameter must be a string which contains JSON, not just a JSON dictionary. 
-Use caution when escaping the quotes, etc.
+Use caution when escaping the quotes.
 ====
