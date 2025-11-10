@@ -6,7 +6,8 @@
 
 = Configuring `cron` jobs
 
-Configure `cron` to schedule the `metrics-utility` commands to run automatically by using the following procedure:
+[role="_abstract"]
+You can configure `cron` jobs to run the `metrics-utility` commands `gather` and `build_report` on a scheduled basis. This procedure describes how to set up `cron` jobs to run these commands automatically at specified intervals.
 
 .Procedure
 . Open the `cron` file for editing:
@@ -23,7 +24,7 @@ crontab -e
 ----
 +
 These examples configure the `gather` command to run every hour at 00 minutes and the `build_report` command to run on the second day of each month at 4:00 AM.
-. Adjust the cron syntax as needed to fit your desired schedule. For example: 
+. Adjust the cron syntax as needed to fit your required schedule. For example: 
 .. `0 */1 * * *`: Runs at minute 0 of every hour.
 .. `0 4 2 * *`: Runs at 04:00 on day-of-month 2.
 . Save and close the file.
