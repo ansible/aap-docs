@@ -19,7 +19,13 @@ The provider configuration belongs in the root module of a Terraform configurati
 ====
 The default latest version on the Terraform registry might be a pre-release version (such as 1.2.3-beta). Select a supported release version, which uses a 1.2.3 format without dashes.
 ====
-* You have created a username and password.
+* You have created a username and password or an API token for {PlatformNameShort}. Environment variables are also supported.
+
++
+[NOTE]
+====
+Token authentication is recommended because users can manage tokens for specific integrations (such as {Terraform}), limit token access, and have full control over token lifecycle.
+====
 
 .Procedure
 
@@ -43,8 +49,7 @@ terraform {
 
 provider "aap" {
   host     = "https://AAP_HOST"
-  username = "ansible"
-  password = "test123!"
+  token = "my-aap-token" # Also supports AAP_TOKEN environment variable
 }
 
 resource "aap_inventory" "my_inventory" {
@@ -99,23 +104,27 @@ resource "aap_job" "my_job" {
 
 . Add the configuration arguments, as shown in the previous example. You must configure the host and credentials. A full list of supported schema is available on the link:https://registry.terraform.io/providers/ansible/aap/latest/docs[Terraform registry] for your `aap` provider release version.
 
-* **`host`:** (String) AAP server URL. Can also be configured using the AAP_HOST environment variable.
+* **`host`:** (String) AAP server URL. Can also be configured using the `AAP_HOST` environment variable.
 
-* **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the AAP_INSECURE_SKIP_VERIFY environment variable.
+* **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the `AAP_INSECURE_SKIP_VERIFY` environment variable.
 
-* **`password`:** (String, Case Sensitive) Password to use for basic authentication. Can also be configured by setting the AAP_PASSWORD environment variable.
+* **`password`:** (String, Case Sensitive) Password to use for basic authentication. Ignored if the token is set. Can also be configured by setting the `AAP_PASSWORD` environment variable.
 
-* **`timeout`:** (Number) Timeout specifies a time limit for requests made to the AAP server. Defaults to 5 if not provided. A timeout of zero means no timeout. Can also be configured by setting the AAP_TIMEOUT environment variable.
+* **`timeout`:** (Number) Timeout specifies a time limit for requests made to the AAP server. Defaults to 5 if not provided. A timeout of zero means no timeout. Can also be configured by setting the `AAP_TIMEOUT` environment variable.
 
-* **`username`:** (String) Username to use for basic authentication. Ignored if the token is set. Can also be configured by setting the AAP_USERNAME environment variable.
+* **`token`:** (String, Case Sensitive): Token to use for token authentication. Can also be configured by setting the `AAP_TOKEN` environment variable.
+
+* **`username`:** (String) Username to use for basic authentication. Ignored if the token is set. Can also be configured by setting the `AAP_USERNAME` environment variable.
 
 . (Optional) You can use link:https://developer.hashicorp.com/terraform/language/expressions[expressions] in the values of these configuration arguments, but can only reference values that are known before the configuration is applied.
 
 . (Optional) You can also use an link:https://developer.hashicorp.com/terraform/language/providers/configuration#alias-multiple-provider-configurations[`alias` meta-argument] that is defined by Terraform and is available for all provider blocks. `alias` lets you use the same provider with different configurations for different resources.
 
+[role="_additional-resources"]
 .Additional resources
 
 * link:{URLControllerUserGuide}/controller-inventories#proc-controller-inv-source-terraform[Terraform State]
-
+* link:{URLCentralAuth}/gw-token-based-authentication#proc-controller-apps-create-tokens[Adding tokens (2.5 and later)]
+* link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.4/html/automation_controller_user_guide/assembly-controller-users#proc-controller-user-tokens[Creating tokens for a user (2.4)]
 * link:https://developer.hashicorp.com/terraform/language/meta-arguments/module-providers[The Module providers Meta-Argument]
 * link:https://developer.hashicorp.com/terraform/language/modules/develop/providers[Module Development: Providers Within Modules]
