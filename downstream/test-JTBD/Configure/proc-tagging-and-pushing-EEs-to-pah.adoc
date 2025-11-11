@@ -1,49 +1,34 @@
-:_newdoc-version: 2.15.1
-:_template-generated: 2024-02-05
 :_mod-docs-content-type: PROCEDURE
+[id="tag-pulled-images"]
 
-[id="uploading-the-custom-execution-environment-to-the-private-hub_{context}"]
-= Uploading the custom {ExecEnvShort} to the private hub
+
+= Tagging {ExecEnvShort}s for use in {HubName}
+
 
 [role="_abstract"]
+After you pull {ExecEnvShort}s from a registry, tag them for use in your {PrivateHubName} remote registry.
 
-Before the new {ExecEnvShort} image can be used for automation jobs, it must be uploaded to the {PrivateHubName}.  
+.Prerequisites
+
+* You have pulled an {ExecEnvShort} from an external registry.
+* You have the FQDN or IP address of the {HubName} instance.
 
 .Procedure
 
-. First, verify that the {ExecEnvShort} image can be seen in the local podman cache:
+* Tag a local {ExecEnvShort} with the {HubName} container repository:
 +
-----
-$ podman images --format "table {{.ID}} {{.Repository}} {{.Tag}}"
-IMAGE ID	    REPOSITORY					              TAG
-b38e3299a65e	private-hub.example.com/custom-ee     	  latest
-8e38be53b486	private-hub.example.com/ee-minimal-rhel8  latest
-----
+[subs="+quotes"]
+-----
+$ podman tag registry.redhat.io/__<ee_name>__:__<tag>__ __<automation_hub_hostname>__/__<ee_name>__
+-----
 
-. Then log in to the {PrivateHubName}'s container registry and push the image to make it available for use with job templates and workflows:
+
+.Verification
+
+. List the images in local storage:
 +
-----
-$ podman login private-hub.example.com -u admin
-Password:
-Login Succeeded!
-$ podman push private-hub.example.com/custom-ee:latest
-----
-
-Use the following workflow to populate your private automation hub remote registry:
-
-. link:{URLHubManagingContent}/managing-containers-hub#obtain-images[Pull {ExecEnvShort}s for use in {HubName}]
-. link:{URLHubManagingContent}/managing-containers-hub#tag-pulled-images[Tag {ExecEnvShort} for use in {HubName}]
-. link:{URLHubManagingContent}/managing-containers-hub#push-containers[Push an {ExecEnvShort} to {PrivateHubName}]
-. link:{URLHubManagingContent}/managing-containers-hub#setting-up-container-repository[Set up your container repository]
-. link:{URLHubManagingContent}/managing-containers-hub#proc-doing-one-procedure_assembly-keyword[Add a README to your container repository]
-. link:{URLHubManagingContent}/managing-containers-hub#providing-access-to-containers[Provide access to your {ExecEnvName}s]
-. link:{URLHubManagingContent}/managing-containers-hub#proc-tag-image[Tag container images]
-. link:{URLHubManagingContent}/managing-containers-hub#proc-create-credential[Create a credential]
-. link:{URLHubManagingContent}/managing-containers-hub#pulling-images-container-repository[Pulling images from a container repository]
-. link:{URLHubManagingContent}/managing-containers-hub#pulling-image[Pull an image]
-. link:{URLHubManagingContent}/managing-containers-hub#proc-sync-image-adoc_pulling-images-container-repository[Sync images from a container repository]
-
-[role="_additional-resources"]
-.Additional resources
-
-* link:https://access.redhat.com/articles/RegistryAuthentication[Red Hat Container Registry Authentication]
+-----
+$ podman images
+-----
++
+. Verify that the {ExecEnvShort} you recently tagged with your {HubName} information is contained in the list.
