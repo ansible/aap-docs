@@ -3,6 +3,7 @@
 [id="multi-task-recs_{context}"]
 = Creating multitask recommendations
 
+[role="_abstract"]
 You can request multitask code recommendations by entering a sequence of natural language task prompts in Ansible VS Code extension. In a YAML file, start your prompt with a pound symbol (#), and separate each prompt by using the ampersand symbol (&). 
 
 *Example of a multitask prompt*
@@ -46,7 +47,10 @@ While entering a multitask prompt, the Ansible VS Code extension might display a
 * Use an existing YAML file: 
 ... On the bottom right of the screen, click the existing language mode, and in the language mode settings, select *Ansible*. 
 +
-NOTE: If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Language Mode[Ansible].
+[NOTE]
+====
+If you do not see the language mode section in your VS Code editor, from the Command Palette, select menu:Configure Language Mode[Ansible].
+====
 +
 . Verify that you see an entry for *Lightspeed* on the status bar at the lower right of VS Code.
 +
@@ -92,7 +96,10 @@ For better readability, split your multitask inline prompts over multiple lines.
 +
 The Ansible Lightspeed service is engaged, and it starts generating code recommendations for multiple tasks. 
 +
-IMPORTANT: Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you are using a multitask prompt, the Ansible Lightspeed service takes a bit longer (number of tasks times 5 seconds) to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the Ansible Lightspeed service does not process your request.
+[IMPORTANT]
+====
+Ansible Lightspeed service takes around 5 seconds per task to populate the code recommendations. If you are using a multitask prompt, the Ansible Lightspeed service takes a bit longer (number of tasks times 5 seconds) to populate the results. Do not move your cursor or press any key while the code recommendation is being generated. If you change the cursor location or press any key, Ansible VS Code extension cancels the request and the Ansible Lightspeed service does not process your request.
+====
 +
 When the Ansible Lightspeed service is engaged, a *Lightspeed* processing status indicator is displayed in the lower right of the screen to denote that your code recommendation is being generated.
 +
@@ -111,7 +118,10 @@ image:lightspeed-multitask-requests.png[Lightspeed single task in progress]
 * To accept a code recommendation, press *Tab*.
 * To reject a code recommendation, press *Esc*. 
 +
-NOTE: If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. 
+[NOTE]
+====
+If you reject a recommendation, you can modify the prompt and review the generated code recommendations once again to match your task intent. 
+====
 
 . On the *ANSIBLE: LIGHTSPEED TRAINING MATCHES* tab, view the content source matching results. 
 +
