@@ -1,0 +1,45 @@
+// Module file name: proc-enable-configure-metrics-utility-inventory-file.adoc
+:_mod-docs-content-type: PROCEDURE
+[id="proc-enable-configure-metrics-utility-inventory-file_{context}"]
+= Enabling and configuring `metrics-utility` in the inventory file
+
+[role="_abstract"]
+Modify your {PlatformNameShort} inventory file to enable and configure `metrics-utility`.
+
+.Procedure
+. Modify your inventory file to enable `metrics-utility` container deployment by adding the following line under the `[automationcontroller]` section:
++
+-----
+metrics_utility_enabled=true
+-----
++
+This setting instructs the installation program to create and configure a dedicated `automation-controller-metrics-utility` container as part of your {PlatformNameShort} deployment. 
+Place this line under the `[automationcontroller]` header in your inventory file, alongside your other global variables. 
+If your {PlatformNameShort} deployment has already been configured, re-run the installation script to activate the container.
+. Configure the reporting parameters by adding the `metrics_utility_extra_settings` variable. 
+This variable controls where reports are saved, what they contain, and other metadata.
++
+-----
+metrics_utility_extra_settings=[
+{"setting": "METRICS_UTILITY_SHIP_TARGET", "value": "directory"},
+{"setting": "METRICS_UTILITY_SHIP_PATH", "value": "~/aap/controller/data/metrics/"},
+{"setting": "METRICS_UTILITY_REPORT_TYPE", "value": "CCSPv2"},
+{"setting": "METRICS_UTILITY_PRICE_PER_NODE", "value": "100"},
+{"setting": "METRICS_UTILITY_REPORT_COMPANY_NAME", "value": "My Company Inc"},
+{"setting": "METRICS_UTILITY_REPORT_EMAIL", "value": "admin@mycompany.com"},
+{"setting": "METRICS_UTILITY_REPORT_SKU", "value": "MCT3752MO"}]
+-----
++
+. Optional: Override the default data gathering schedule by adding the following variables with your `systemd timer` expressions:
+
+[NOTE]
+====
+`systemd timer` expressions differ from `cron` expressions.
+====
+
+-----
+# Gathers data every 30 minutes
+metrics_utility_cronjob_gather_schedule=*:0/30
+# Generates the report at midnight on the 2nd of the month
+metrics_utility_cronjob_report_schedule=*-*-02 00:00:00
+-----

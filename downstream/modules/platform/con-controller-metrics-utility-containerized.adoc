@@ -10,13 +10,13 @@ The `metrics-utility` tool generates performance metrics and reports for {Platfo
 `metrics-utility` is included in the {OCPShort} image beginning with version 4.12, 4.512, and 4.6. 
 If your system does not have `metrics-utility` installed, update your OpenShift image to the latest version. 
 
-Complete the following steps to configure the run schedule for `metrics-utility` on {OCPShort} using the {PlatformNameShort} operator:
+Use the following steps to configure `metrics-utility` on a manual containerized installation {PlatformNameShort}:
 
-Use the following steps to configure `metrics-utility` on a manual containerized installation of {PlatformNameShort}:
-
-. Prepare host directories and scripts.
-. Make scripts executable.
-. Configure cron jobs.
+. Enable and configure `metrics-utility` in the inventory file.
+. Apply your `metrics-utility` configuration.
+. Verify `systemctl` timer.
+. Verify data collection.
+. Locate generated reports. 
 
 [NOTE]
 ====
@@ -25,10 +25,10 @@ You must have an active {PlatformNameShort} subscription
 
 *Minimum resource requirements*
 
-Using the metrics-utility tool on a containerized installation of {PlatformNameShort} requires the following resources:
+Using the `metrics-utility` tool on a containerized installation of {PlatformNameShort} requires the following resources:
 
 * CPU: 1 dedicated CPU core 
-** 100% of 1 core is used during execution
+** 100% of 1 core used during execution
 * Memory:
 ** Minimum: 256 MB RAM (supports up to ~10,000 job host summaries)
 ** Recommended: 512 MB RAM (standard deployments)
@@ -36,6 +36,6 @@ Using the metrics-utility tool on a containerized installation of {PlatformNameS
 +
 [NOTE]
 ====
-Memory requirements scale with the number of hosts and jobs being processed.
-* Execution time: Report generation typically completes within 10-30 seconds, depending on data volume
+Memory requirements scale with the number of hosts and jobs processed.
 ====
+* Execution time: Report generation typically completes within 10-30 seconds, depending on data volume
