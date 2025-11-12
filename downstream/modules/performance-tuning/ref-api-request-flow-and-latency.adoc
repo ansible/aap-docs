@@ -19,11 +19,11 @@ The following table describes each layer in the API request flow through {Platfo
 
 |Client Request
 |The request from the client.
-|The request from the client may have timeout parameters set. In the {VMBase} and containerized installer, a variable `client_request_timeout` is used to inform downstream component timeouts. This value must match the external load balancer's timeout. The size of the request body and/or headers can also impact performance.
+|The request from the client might have timeout parameters set. In the {VMBase} and containerized installation program, a variable `client_request_timeout` is used to inform downstream component timeouts. This value must match the timeout of the external load balancer. The size of the request body and headers can also impact performance.
 
 |Ingress Point
 |The first point of entry into {PlatformNameShort}, typically an {OCPShort} Route or a customer-provided Load Balancer, directing traffic to an available {Gateway} pod/instance.
-|Performance is dependent on the configuration, capacity, and health of the load balancer or {OCPShort} Route. Any external load balancer's timeout must be greater than or equal to the `client_request_timeout` setting passed to the installer. This layer is responsible for distributing traffic if there are multiple {Gateway} nodes/pods.
+|Performance is dependent on the configuration, capacity, and health of the load balancer or {OCPShort} Route. Any timeout for the external load balancer must be greater than or equal to the `client_request_timeout` setting passed to the installation program. This layer is responsible for distributing traffic if there are multiple {Gateway} nodes/pods.
 
 |Envoy Proxy
 |Located within the {Gateway} pod/instance, this proxy handles authorization, internal routing, and applies filters to the request. Authorization by the gRPC service is performed before the Envoy forwards the request to the destination service.
@@ -35,14 +35,14 @@ The following table describes each layer in the API request flow through {Platfo
 
 |External Authentication Service (LDAP/SAML)
 |An optional external service invoked by the {Gateway} gRPC Authentication Service for validating user credentials.
-|Potential source of latency. When external authentication services (e.g., LDAP or SAML) are configured, they are invoked during the gRPC authentication stage. Slow response times from these external systems can significantly increase the total latency for each request processed. It is the user’s responsibility to provide a low-latency, reliable external authentication service.
+|Potential source of latency. When external authentication services (e.g., LDAP or SAML) are configured, they are invoked during the gRPC authentication stage. Slow response times from these external systems can significantly increase the total latency for each request processed. It is the user's responsibility to provide a low-latency, reliable external authentication service.
 
 |API Service Nginx Proxy
 |After authentication, Envoy forwards the request to the component API node or Service in {OCPShort}. Nginx receives the request. Each distinct API service component has its own Nginx proxy that determines if the request is for a WSGI application, an ASGI-based WebSocket service, or static content.
 |Introduces minimal latency, typically on the order of 10 milliseconds. Can handle hundreds of concurrent requests.
 
 |WSGI Server (`uWSGI` / `Gunicorn`)
-|Handles standard API requests forwarded by Nginx. These servers process requests, validate JWT tokens, execute API operations, and frequently interact with the database.
+|Handles standard API requests forwarded by Nginx. These servers process requests, validate JWT tokens, run API operations, and frequently interact with the database.
 |Primary source of latency. API requests are handled by each component's web application served by a WSGI server (`uWSGI` for {ControllerName} and {Gateway} and `Gunicorn` for {HubName} and {EDAName}), and their timeout is also informed by the `client_request_timeout` in {VMBase} and {ContainerBase}. In {OCPShort}, the timeout on the {Gateway} Route is propagated to inform this same setting. The servers are configured with a maximum number of concurrent workers. If all workers are busy, the request is queued. After a worker picks up a request, it validates the authentication and executes the API operation, which typically involves further database communication.
 
 |Databases
@@ -68,6 +68,6 @@ Scaling strategies include the following:
 * Horizontally scaling {Gateway} and API service pods to increase worker availability and minimize queue times
 
 The following sections describe how to identify which of the {PlatformNameShort} services provide which APIs and provide considerations for scaling them.
-//Lizzi note to add this sentence: For more information on the performance of different authentication methods, see link:[Considerations for scaling the {Gateway} proxy and authentication service].
+For more information on the performance of different authentication methods, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/performance_tuning_for_ansible_automation_platform/api_service_performance#scaling-gateway-proxy-and-authentication_aap-api-performance[Considerations for scaling the {Gateway} proxy and authentication service].
 
 ifndef::parent-context[:!context:]

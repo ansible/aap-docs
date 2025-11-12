@@ -5,13 +5,14 @@
 
 [role="_abstract"]
 Users define the source of automation content within the {ControllerName} projects, such as Ansible Playbooks.
-The primary workload for these projects is synchronization, which is managed by project update jobs in the API.
+The primary workload for these projects is synchronization.
+Project update jobs in the API manage synchronization.
 These jobs are also known as source control updates in the UI.
 
-These project update jobs run exclusively on the control plane and in task pods within the {OCPShort}.
+These project update jobs run only on the control plane and in task pods within the {OCPShort}.
 Their role is to update the {ControllerName} with the latest automation content from its defined source, such as a Git repository.
 
-Updating projects is not performance-sensitive, as long as they store only playbooks and Ansible-related text files.
-However, issues may arise when projects become excessively large.
-It is recommended to not store large volumes of binary data within a project.
-If jobs require access to additional data, it is recommended to retrieve this data from object storage or file storage within the playbook's scope.
+Updating projects is not performance-sensitive, provided that they store only playbooks and Ansible-related text files.
+However, issues might arise when projects become excessively large.
+Do not store large volumes of binary data within a project.
+If jobs require access to additional data, retrieve this data from object storage or file storage within the playbook's scope.
