@@ -6,7 +6,7 @@
 [role="_abstract"]
 If you are running `metrics-utility` on a new installation, you do not need to take any additional actions to apply your configuration.
 
-If you are applying your `metrics-utility` configuration to an existing deployment, you must re-run the Ansible Automation Platform installer script.
+If you are applying your `metrics-utility` configuration to an existing deployment, you must re-run the {PlatformNameShort} installer script.
 Re-running the script reads the updated inventory file, deploys the `automation-controller-metrics-utility` container, and creates the `systemd` user services and timers necessary to automate data collection and reporting.
 Use the following verification steps to ensure your `metrics-utility` configuration has been applied and is running correctly:
 
@@ -15,7 +15,7 @@ Use the following verification steps to ensure your `metrics-utility` configurat
 * Locate generated reports.
 
 .Verification
-. Run the following command to verify that your `systemctl timer` job entries have been saved correctly:
+. Run the following command to verify that your `systemctl timer` job entries were saved correctly:
 +
 -----
 systemctl --user list-timers --no-pager | grep metrics-utility
