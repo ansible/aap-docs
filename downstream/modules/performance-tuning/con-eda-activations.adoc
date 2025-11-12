@@ -14,7 +14,7 @@ The activation's resource usage is affected by the event arrival rate and the co
 When events match rules, they trigger actions, which launch jobs in {ControllerName}.
 Event auditing stores audit events in the database and is enabled by default.
 
-Each event is sent from the activation to the websocket server to be serialized and written to the database.
+Each event is sent from the activation to the WebSocket server to be serialized and written to the database.
 This process stresses the server and can cause performance issues.
 Selecting *Skip audit events* in the UI for a given activation eliminates this workload.
 When *Skip audit events* is selected, rules are still fired, but the fire count in the API and UI is updated at a periodic interval (default 300 seconds) rather than immediately.
