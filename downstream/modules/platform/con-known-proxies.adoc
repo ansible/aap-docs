@@ -7,11 +7,12 @@
 [role="_abstract"]
 
 When {ControllerName} is configured with `REMOTE_HOST_HEADERS = ['HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR', 'REMOTE_HOST']`, it assumes that the value of `X-Forwarded-For` has originated from the load balancer sitting in front of {ControllerName}.
-If {ControllerName} is reachable without use of the load balancer, or if the proxy does not validate the header, it is possible to falsify the value of `X-Forwarded-For` to fake the originating IP addresses.
+
+If {ControllerName} is reachable without use of the load balancer, or if the proxy does not validate the header, the value of `X-Forwarded-For` can be falsified to fake the originating IP addresses.
 
 Using `HTTP_X_FORWARDED_FOR` in the `REMOTE_HOST_HEADERS` setting poses a vulnerability.
 
-To avoid this, you can configure a list of the allowed known proxies.
+To avoid this, you can configure a list of known proxies that are allowed.
 
 * From the navigation panel, select {MenuSetSystem}.
 * Enter a list of proxy IP addresses from which the service should trust custom remote header values in the *Proxy IP Allowed List* field.
