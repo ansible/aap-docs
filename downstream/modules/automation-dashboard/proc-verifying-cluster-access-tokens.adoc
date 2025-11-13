@@ -1,0 +1,187 @@
+// Module included in the following assemblies:
+// assembly-view-key-metrics.adoc
+:context: verifying-tokens
+:mod-docs-content-type: PROCEDURE
+[id="verifying-cluster-access-tokens_{context}"]
+
+= Verifying cluster access tokens
+
+[role="_abstract"]
+After you configure and load your cluster data, verify the stored access tokens for debugging purposes.
+
+== Procedure
+
+. Use the `getclusters` management command with the `--decrypt` option to display the stored `access_token` and `refresh_token` in plain text.
+. Run the following command inside the `automation-dashboard-web` container:
++
+[source,bash]
+----
+podman exec -it automation-dashboard-web /venv/bin/python ./manage.py getclusters --decrypt
+----
++
+. Review the output to confirm that the stored tokens are correct and up-to-date.
+
+*Example*
+[source,bash]
+----
+clusters:
+  - protocol: https
+    address: my-aap.example.com
+    port: 443
+    access_token: sampleToken
+    refresh_token: myRefreshToken 
+    client_id: myClientID
+    client_secret: myClientSecret
+    verify_ssl: false
+    sync_schedules:
+      - name: Every 5 minutes sync
+        rrule: DTSTART;TZID=Europe/Ljubljana:20250630T070000 FREQ=MINUTELY;INTERVAL=5
+        enabled: true
+----
+[NOTE]
+====
+The `--decrypt` flag is required to display the encrypted `access_token` and `refresh_token` in plain text for debugging.
+Do not use this command on unsecured systems.
+====
+
+Output produced by `./manage.py getclusters --decrypt` can be written to a file `clusters.yaml` and used as input for `./manage.py setclusters clusters.yaml`.
+
+== Verification
+If you encounter error messages during installation, consult the following table:
+[cols="1,2,2a"]
+|===
+|Issue |Possible Cause |Solution
+|401 error
+|This is an unauthorized access message indicating authentication errors such as incorrect credentials or tokens.
+|Verify that your access token is correct in `clusters.yaml`
+|401 error
+|A temporary 401 error is expected behavior when the token expires, followed immediately by an attempt to refresh.
+|If the automatic token refresh fails (for example, due to invalid `client_secret` or `refresh_token`), use the `getclusters` `--decrypt` command to manually verify that the credentials stored in the database match those in your source `clusters.yaml` file.
+If they do not match, re-run the `setclusters` command with the correct configuration.
+The refresh token can be used only once.
+If you need to execute `setclusters` because of invalid access token, create new access and refresh tokens, and use them in your source `clusters.yaml`.
+|404 error
+|This is a “not found” message indicating that something isn’t configured correctly or pointing to the correct endpoint.
+|Verify that your {PlatformNameShort} instance URLs used in `clusters.yaml` are correct.
+|===
+
+A successful installation should be running the following three container services:
+
+[source,bash]
+----
+podman ps --all --format "{{.Names}}"
+
+postgresql
+automation-dashboard-task
+automation-dashboard-web
+----
+
+You can check your container logs by running the following:
+
+[source,bash]
+----
+journalctl CONTAINER_NAME=container (where container equals one of postgresql automation-dashboard-task or automation-dashboard-web)
+
+For example:
+journalctl CONTAINER_NAME=automation-dashboard-task
+May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-dashboard.sh] Waiting for database migrations...
+May 22 13:02:07 automation-dashboard automation-dashboard-task[1607]: [wait-for-migrations-dashboard.sh] Attempt 1
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,636 periodic 2 140568371550016 Starting sync task.
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,636 periodic 2 140568371550016 Retrieving clusters inform>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,747 periodic 2 140568371550016 Retrieved 1 clusters.
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 periodic 2 140568371550016 Retrieving data from clust>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking Ansible Automation Platform version at h>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Checking if is Ansible Automation Platform 2.5 at>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Pinging api https://ec2-3>
+May 22 13:02:10 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:10,761 connector 2 140568371550016 Executing GET request to >
+May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: ERROR 2025-05-22 13:02:13,820 connector 2 140568371550016 GET request failed with >
+May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Checking if is Ansible Automation Platform 2.4 at>
+May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Pinging api https://ec2-3>
+May 22 13:02:13 automation-dashboard automation-dashboard-task[1607]: INFO 2025-05-22 13:02:13,821 connector 2 140568371550016 Executing GET request to >
+May 22 13:02:16 automation-dashboard automation-dashboard-task[1607]: ERROR 2025-05-22 13:02:16,892 connector 2 140568371550016 GET request failed with ...
+----
+
+The following log snippet shows a successful token refresh:
+
+[NOTE]
+====
+This log snippet ommits timestamps and hostname for brevity.
+====
+
+*Example*
+[source,bash]
+----
+journalctl CONTAINER_NAME=automation-dashboard-task
+INFO Checking if is AAP 2.5 ... 2.6 at https://app.example.com:443
+INFO Pinging api https://app.example.com:443/api/gateway/v1/ping/
+INFO Detected AAP version AAP 2.6 at https://app.example.com:443
+INFO Executing GET request to https://app.example.com:443/api/controller/v2/organizations/?page_size=100&page=1
+ERROR GET request failed with status 401
+INFO Token refresh POST request succedded with status 201
+ERROR GET after reauth response.status_code=200
+INFO Executing GET request to https://app.example.com:443/api/controller/v2/job_templates/?page_size=200&page=1
+Executing GET request to https://app.example.com:443/api/controller/v2/jobs/?page_size=100&page=1&order_by=finished&finished__gt=2025-10-23T13:01:09.768681Z
+----
+
+Check how the services are running by using `systemd`:
+
+[source,bash]
+----
+systemctl status --user
+
+● automation-dashboard
+    State: running
+    Units: 76 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Thu 2025-05-22 13:02:07 UTC; 22min ago
+  systemd: 252-51.el9
+   CGroup: /user.slice/user-1000.slice/user@1000.service
+           ├─app.slice
+           │ ├─automation-dashboard-task.service
+           │ │ └─1607 /usr/bin/conmon --api-version 1 -c 84e46532e8ca31b0cadb037479289d030103aa01b7a1591e62b83b17f031e47d -u 84e46532e8ca31b0cadb037479>
+           │ ├─automation-dashboard-web.service
+           │ │ └─1608 /usr/bin/conmon --api-version 1 -c d060f3e3fb2b4c4c5c588149253beed83c78ccc9c9a8c1bf4c96157142a210dc -u d060f3e3fb2b4c4c5c58814925>
+           │ ├─dbus-broker.service
+           │ │ ├─1621 /usr/bin/dbus-broker-launch --scope user
+           │ │ └─1624 dbus-broker --log 4 --controller 9 --machine-id 612db98503014199bfd8c788c8d3da58 --max-bytes 100000000000000 --max-fds 2500000000>
+           │ └─postgresql.service
+           │   └─1614 /usr/bin/conmon --api-version 1 -c eec61745cb6fc3a89a4f7475d7ef63b5899699157d943c2f16a3243311927bef -u eec61745cb6fc3a89a4f7475d7>
+           ├─init.scope
+           │ ├─1093 /usr/lib/systemd/systemd --user
+           │ └─1128 "(sd-pam)"
+           └─user.slice
+             ├─libpod-84e46532e8ca31b0cadb037479289d030103aa01b7a1591e62b83b17f031e47d.scope
+             │ └─container
+             │   ├─1619 /usr/bin/dumb-init -- /usr/bin/launch_dashboard_task.sh
+             │   └─1681 /venv/bin/python periodic.py
+             ├─libpod-d060f3e3fb2b4c4c5c588149253beed83c78ccc9c9a8c1bf4c96157142a210dc.scope
+             │ └─container
+             │   ├─1617 /usr/bin/dumb-init -- /usr/bin/launch_dashboard_web.sh
+             │   ├─1646 /usr/bin/python3.9 /usr/local/bin/supervisord -c /etc/supervisord_dashboard_web.conf
+             │   ├─1877 /bin/bash /usr/local/bin/stop-supervisor
+             │   ├─1878 "nginx: master process nginx -g daemon off;"
+             │   ├─1879 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             │   ├─1880 "nginx: worker process"
+             │   ├─1881 "nginx: worker process"
+             │   ├─1882 "nginx: worker process"
+             │   ├─1883 "nginx: worker process"
+             │   ├─1884 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             │   ├─1885 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             │   ├─1886 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             │   ├─1887 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             │   └─1888 /venv/bin/uwsgi /etc/tower/uwsgi.ini
+             ├─libpod-eec61745cb6fc3a89a4f7475d7ef63b5899699157d943c2f16a3243311927bef.scope
+             │ └─container
+             │   ├─1623 postgres
+             │   ├─1869 "postgres: logger "
+             │   ├─1871 "postgres: checkpointer "
+             │   ├─1872 "postgres: background writer "
+             │   ├─1873 "postgres: walwriter "
+             │   ├─1874 "postgres: autovacuum launcher "
+             │   ├─1875 "postgres: stats collector "
+             │   ├─1876 "postgres: logical replication launcher "
+             │   └─1889 "postgres: aapdashboard aapdashboard 172.31.28.99(39338) idle"
+             └─podman-pause-b6c4e853.scope
+               └─1359 catatonit -P
+----
