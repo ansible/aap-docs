@@ -2,14 +2,14 @@
 
 [id="change-ssl-hub-ocp_{context}"]
 
-= Changing the SSL certificate and key for {HubName} on {OCPShort}
+= Changing the SSL/TLS certificate and key for {HubName} on {OCPShort}
 
 [role="_abstract"]
-The following procedure describes how to change the SSL certificate and key for {HubName} running on {OCPShort}.
+The following procedure describes how to change the SSL/TLS certificate and key for {HubName} running on {OCPShort}.
 
 .Procedure
 
-. Copy the signed SSL certificate and key to a secure location.
+. Copy the signed SSL/TLS certificate and key to a secure location.
 . Create a TLS secret within OpenShift:
 +
 ----
@@ -33,7 +33,7 @@ The name of the TLS secret is arbitrary.
 In this example, it is timestamped with the date that the secret is created, to differentiate it from other TLS secrets applied to the {HubName} instance.
 ====
 . Wait a few minutes for the changes to be applied.
-. Verify that new SSL certificate and key have been installed:
+. Verify that new SSL/TLS certificate and key have been installed:
 +
 ----
 true | openssl s_client -showcerts -connect ${CONTROLLER_FQDN}:443

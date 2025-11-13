@@ -5,7 +5,9 @@
 = Loading order of settings
 
 [role="_abstract"]
-The {Gateway} utilizes the Dynaconf library for managing its application settings. Dynaconf follows a layered configuration approach, where settings are loaded from multiple sources in a defined order, with later sources overriding earlier ones. {PlatformNameShort} loads settings in the following sequence: 
+The {Gateway} uses the Dynaconf library for managing its application settings. Dynaconf follows a layered configuration approach, where settings are loaded from multiple sources in a defined order, with later sources overriding earlier ones. 
+
+{PlatformNameShort} loads settings in the following sequence: 
 
 . *Application settings.py:* This file is in the application itself and defines the loading order and location of additional settings files. 
 . *Application default settings:* The platform loads default settings from a defaults.py file, which is part of the application itself. This file includes general configurations for both the API Server and the gRPC server.
