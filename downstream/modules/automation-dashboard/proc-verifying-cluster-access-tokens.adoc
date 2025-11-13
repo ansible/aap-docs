@@ -20,9 +20,8 @@ podman exec -it automation-dashboard-web /venv/bin/python ./manage.py getcluster
 ----
 +
 . Review the output to confirm that the stored tokens are correct and up-to-date.
-
-*Example output:*
-
++
+.Example
 [source,bash]
 ----
 clusters:
@@ -39,7 +38,7 @@ clusters:
         rrule: DTSTART;TZID=Europe/Ljubljana:20250630T070000 FREQ=MINUTELY;INTERVAL=5
         enabled: true
 ----
-
++
 [NOTE]
 ====
 The `--decrypt` flag is required to display the encrypted `access_token` and `refresh_token` in plain text for debugging.
@@ -107,9 +106,10 @@ The following log snippet shows a successful token refresh:
 
 [NOTE]
 ====
-This lop snippet ommits timestamps and hostname for brevity.
+This log snippet ommits timestamps and hostname for brevity.
 ====
 
+.Example
 [source,bash]
 ----
 journalctl CONTAINER_NAME=automation-dashboard-task
@@ -124,7 +124,7 @@ INFO Executing GET request to https://app.example.com:443/api/controller/v2/job_
 Executing GET request to https://app.example.com:443/api/controller/v2/jobs/?page_size=100&page=1&order_by=finished&finished__gt=2025-10-23T13:01:09.768681Z
 ----
 
-You can check how the services are running by using `systemd`:
+Check how the services are running by using `systemd`:
 
 [source,bash]
 ----
