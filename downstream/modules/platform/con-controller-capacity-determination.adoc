@@ -4,6 +4,7 @@
 
 = {ControllerNameStart} capacity determination and job impact
 
+[role="_abstract"]
 The {ControllerName} capacity system determines how many jobs can run on an instance given the amount of resources available to the instance and the size of the jobs that are running (referred to as Impact). 
 The algorithm used to determine this is based on the following two things:
 
@@ -17,12 +18,12 @@ This means that impact to one instance can affect the overall capacity of other 
 Instance groups, not instances themselves, can be assigned to be used by jobs at various levels. 
 For more information, see link:{URLControllerAdminGuide}/controller-clustering[Clustering] in _{ControllerAG}_.
 
-When the Task Manager prepares its graph to determine which group a job runs on, it commits the capacity of an instance group to a job that is not ready to start yet.
+When the Task Manager prepares its graph to decide the group a job runs on, it commits the capacity of an instance group to a job that is not ready to start yet.
 
 In smaller configurations, if only one instance is available for a job to run, the Task Manager enables that job to run on the instance even if it pushes the instance over capacity. 
 This guarantees that jobs do not get stuck as a result of an under-provisioned system.
 
 .Additional resources
 
-* For information about container groups, see link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-settings-control-execution-nodes[Capacity settings for instance group and container group] in _{ControllerAG}_.
-* For information about sliced jobs and their impact to capacity, see xref:controller-job-slice-execution-behavior[Job slice execution behavior].
+* link:{URLControllerAdminGuide}/assembly-controller-improving-performance#ref-controller-settings-control-execution-nodes[Capacity settings for instance group and container group]
+* xref:controller-job-slice-execution-behavior[Job slice execution behavior]

@@ -5,7 +5,7 @@
 = Adding a GPG key to {ControllerName}
 
 [role="_abstract"]
-You can add a GPG public key to {ControllerName} to enable content signing and validation for your projects.
+You can add a GPG public key to {ControllerName} and enable content signing and validation for your projects.
 
 To use the GPG key for content signing and validation in {ControllerName}, add it by running the following command in the CLI:
 
@@ -28,9 +28,8 @@ $ gpg --export --armour <key fingerprint> > my_public_key.asc
 You can select this credential in `projects <ug_projects_add>`, and content verification automatically takes place on future project
 synchronizations.
 //image:project-create-with-gpg-creds.png[image]
-
++
 [NOTE]
-
 ====
 Use the project cache SCM timeout to control how often you want {ControllerName} to re-validate the signed content.
 When a project is configured to update on launch (of any job template configured to use that project), you can enable the cache timeout setting, which sets it to update after `N` seconds have passed since the last update.
