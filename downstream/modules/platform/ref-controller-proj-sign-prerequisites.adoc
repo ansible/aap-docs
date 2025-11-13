@@ -5,10 +5,9 @@
 = Prerequisites
 
 [role="_abstract"]
-This section describes the prerequisites for signing content in {ControllerName} projects.
-To sign content in {ControllerName} projects, ensure that you have the following prerequisites:
+Prepare your {RHEL} systems by enabling the correct repositories and subscriptions needed to install components for project signing. 
+This step helps ensure that your environment is properly configured for content verification.
 
-.Prerequisites
 * RHEL nodes must properly be subscribed to:
 ** RHEL subscription with *baseos* and *appstream* repositories must be enabled.
 ** Your {PlatformName} subscription and the proper channel must be enabled:
@@ -32,5 +31,5 @@ gpg --list-secret-keys
 +
 If this command produces no output, or one line of output that states, `trustdb was created`, then you do not have a secret key in your
 default keyring. 
-In this case, refer to link:https://www.redhat.com/sysadmin/creating-gpg-keypairs[How to create GPG keypairs] to learn how to create a new keypair before proceeding. 
+In this case, see link:https://www.redhat.com/sysadmin/creating-gpg-keypairs[How to create GPG keypairs] to learn how to create a new keypair before proceeding. 
 If it produces any other output, you have a valid secret key and are ready to use `ansible-sign`.

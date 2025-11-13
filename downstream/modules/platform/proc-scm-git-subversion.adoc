@@ -4,8 +4,10 @@
 
 = SCM Types - Configuring playbooks to use Git and Subversion
 
-Configure your projects to synchronize Ansible playbooks from Source Code Management (SCM) systems such as Git and Subversion. 
-Integrating with SCM is a best practice for managing playbooks, as it provides version control, collaboration features, and a centralized repository for your automation code. 
+[role="_abstract"]
+Configure {ControllerName} projects to synchronize Ansible playbooks directly from Git and Subversion. 
+Integrating with Source Control Management supports collaboration and helps ensure you always deploy the latest automation code.
+
 By following these steps, you can ensure your environment always uses the latest version of your playbooks directly from your chosen SCM.
 
 .Procedure
@@ -30,7 +32,7 @@ For more information, see xref:controller-job-branch-overriding[Job branch overr
 * *Clean* - Removes any local modifications before performing an update.
 * *Delete* - Deletes the local repository in its entirety before  performing an update. 
 Depending on the size of the repository this can significantly increase the amount of time required to complete an update.
-* *Track submodules* - Tracks the latest commit. There is more information in the tooltip image:question_circle.png[Tooltip,15,15].
+* *Track submodules* - Tracks the latest commit. There is more information in the tooltip image:question_circle.png[tooltip,15,15].
 * *Update revision on launch* - Updates the revision of the project to the current revision in the remote source control, and caching the roles directory from xref:ref-projects-galaxy-support[Ansible Galaxy support] or xref:ref-projects-collections-support[Collections support]. 
 {ControllerNameStart} ensures that the local revision matches and that the roles and collections are up-to-date with the last update.
 In addition, to avoid job overflows if jobs are spawned faster than the project can synchronize, selecting this enables you to configure a Cache Timeout to cache previous project synchronizations for a given number of seconds.
