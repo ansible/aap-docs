@@ -7,7 +7,7 @@ After launching jobs in {ControllerName}, the jobs stay in a pending state and d
 
 There are a few reasons jobs can become stuck in a pending state. For more information about troubleshooting this issue, see link:{URLControllerAdminGuide}/controller-troubleshooting#controller-playbook-pending[Playbook stays in pending] in _{TitleControllerAdminGuide}_
 
-*Cancel all pending jobs*
+.Procedure
 
 . Run the following commands to list all of the pending jobs:
 +
@@ -20,26 +20,18 @@ There are a few reasons jobs can become stuck in a pending state. For more infor
 ----
 +
 
+. Cancel the pending jobs by using one of the following methods:
 
-. Run the following command to cancel all of the pending jobs:
+* To cancel all pending jobs, run the following command:
 +
 ----
 >>> UnifiedJob.objects.filter(status='pending').update(status='canceled')
 ----
 +
 
-
-*Cancel a single job by using a job id*
-
-* To cancel a specific job, run the following commands, replacing `_<job_id>_` with the job id to cancel:
+* To cancel a single job, run the following command, replacing `<job_id>` with the job ID to cancel:
 +
 [subs="+quotes"]
 ----
-# awx-manage shell_plus
+>>> UnifiedJob.objects.filter(id=<job_id>).update(status='canceled')
 ----
-+
-----
->>> UnifiedJob.objects.filter(id=_<job_id>_).update(status='canceled')
-----
-+
-
