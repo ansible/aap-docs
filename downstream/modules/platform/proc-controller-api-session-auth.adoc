@@ -4,10 +4,13 @@
 
 = Using session authentication
 
+[role="_abstract"]
 You can use session authentication when logging in directly to the {ControllerName}'s API or UI to manually create resources, such as inventories, projects, and job templates and start jobs in the browser. 
+
 With this method, you can remain logged in for a prolonged period of time, not just for that HTTP request. 
 For example, when browsing the API or UI in a browser such as Chrome or Mozilla Firefox. 
 When a user logs in, a session cookie is created, this means that they can remain logged in when navigating to different pages within {ControllerName}. 
+
 The following image represents the communication that occurs between the client and server in a session:
 
 image::session-auth-architecture.png[Session authentication architecture]
@@ -43,20 +46,21 @@ https://<gateway server name>/api/gateway/v1/login/ -k -D - -o /dev/null
 ----
 
 . Access and test the APIs that need authentication, for example `/api/controller/v2/settings/all/`:
-
-[literal, options="nowrap" subs="+attributes"]
++
+[NOTE]
+====
+All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
+For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
+====
++
 ----
 $ curl -X GET -H 'Cookie: <cookieID>;' https://<gateway server name>/api/controller/v2/settings/all/ -k
 ----
-
-All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
-For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
 
 .Verification 
 
 The following shows a typical response:
 
-[literal, options="nowrap" subs="+attributes"]
 ----
 Server: nginx
 Date: <current date>
