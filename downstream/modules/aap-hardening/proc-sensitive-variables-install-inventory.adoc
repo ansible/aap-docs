@@ -7,11 +7,8 @@
 
 = Securing sensitive variables with ansible vault
 
-The installation inventory file for {PlatformNameShort} contains a number of sensitive variables, such as default administrative and database passwords. 
-By default, these are stored in plain text. 
-By securing sensitive values with Ansible Vault, both RPM-based and containerized {PlatformNameShort} installations benefit from improved security, password hygiene, and maintainability. 
-
-To create an Ansible vault file, use the following procedure: 
+[role="_abstract"]
+By securing sensitive values in the installation inventory file with Ansible Vault, both RPM-based and containerized {PlatformNameShort} installations benefit from improved security, password hygiene, and maintainability. 
 
 .Procedure
 
@@ -30,9 +27,9 @@ Passwords with special characters must be in double quotes.
 ====
 . Store the vault password securely, in accordance with your organizations security policy, for example, using a password manager or vault service.
 . Add your sensitive variables to the vault and ensure they are not also defined in the inventory file.
-
++
 To edit your vault file use:
-
++
 `ansible-vault edit <file>`
 
 

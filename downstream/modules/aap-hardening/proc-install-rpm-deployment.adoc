@@ -4,6 +4,10 @@
 
 = Using an external vault file with an RPM-based {PlatformNameShort} deployment
 
+[role="_abstract"]
+
+When installing {PlatformNameShort} using RPM packages, you can use an external Ansible vault file to securely provide sensitive variables, such as passwords, during the installation process.
+
 For RPM-based installations, you can provide the Ansible vault at runtime when executing the setup script.
 
 Add the following sensitive variables to the vault file:
@@ -30,7 +34,7 @@ To use the vault during installation, use the following procedure:
 . Ensure the vault file, for example, `vault.yml`, contains all required sensitive variables.
 . Run the installation using the following command: 
 +
-`./setup.sh -e @vault.yml –ask-vault-pass`
-
-Using this procedure ensures that the installer reads encrypted variables from the vault and prompts for the vault password.
+`./setup.sh -e @vault.yml -ask-vault-pass`
++
+Using this procedure ensures that the {Installer} reads encrypted variables from the vault and prompts for the vault password.
 
