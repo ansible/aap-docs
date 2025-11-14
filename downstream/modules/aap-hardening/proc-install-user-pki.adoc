@@ -22,7 +22,7 @@ Use the following inventory variables to configure the infrastructure components
 
 If set, this will install a custom CA certificate to the system truststore.
 
-| `web_server_ssl_cert` | `controller_tls_cert` | The file name of the {ControllerName} PKI certificate located in the installer directory.
+| `web_server_ssl_cert` | `controller_tls_cert` | The file name of the {ControllerName} PKI certificate located in the {Installer} directory.
 
 | `web_server_ssl_key` | `controller_tls_key` | The file name of the {ControllerName} PKI key located in the installation program directory.
 
@@ -30,9 +30,9 @@ If set, this will install a custom CA certificate to the system truststore.
 
 | `automationhub_ssl_key` | `hub_tls_key` | The file name of the {PrivateHubName} PKI key located in the installation program directory.
 
-| `postgres_ssl_cert` | `postgresql_tls_cert` | The file name of the database server PKI certificate located in the installation program directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
+| `postgres_ssl_cert` | `postgresql_tls_cert` | The file name of the database server PKI certificate located in the installation program directory. This variable is only needed for the {Installer} managed database server, not if a third-party database is used.
 
-| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installation program directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
+| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installation program directory. This variable is only needed for the {Installer}-managed database server, not if a third-party database is used.
 
 | `automationedacontroller_ssl_cert` | `eda_tls_cert` | The file name of the {EDAcontroller} PKI certificate located in the installation program directory.
 
@@ -45,7 +45,7 @@ When multiple {Gateway}s are deployed with a load balancer, `gateway_tls_cert` a
 To prevent hostname mismatches, the certificate's _Common Name_ (CN) must match the DNS FQDN used by the load balancer. 
 //This also applies when deploying multiple {PrivateHubName} and the `automationhub_ssl_cert` and `automationhub_ssl_key` variables. 
 If your organizational policies require unique certificates for each service, each certificate requires a _Subject Alt Name_ (SAN) that matches the DNS FQDN used for the load-balanced service. 
-To install unique certificates and keys on each {Gateway}, the certificate and key variables in the installation inventory file must be defined as per-host variables instead of in the `[all:vars]` section. 
+To install unique certificates and keys on each {Gateway}, the certificate and key variables in the installation inventory file must be defined as host variables instead of in the `[all:vars]` section. 
 For example:
 
 ----
