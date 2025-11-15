@@ -6,61 +6,6 @@
 [role="_abstract"]
 This section provides information about errors when configuring the {LightspeedShortName} on-premise deployment and their workarounds.
 
-== Cannot log in to the Ansible Lightspeed portal
-After you configure a {LightspeedShortName} on-premise deployment and try to log in to the Ansible Lightspeed portal, the log-in attempt fails. The following scenarios are possible:
-
-* The log-in attempt fails with the following error message:
-+
-`Error: invalid_request`
-+
-`Mismatching redirect URL`
-+
-This error indicates an incorrect configuration of the login redirect URI. The redirect URI parameter must contain the URL of the {LightspeedShortName} instance along with `/complete/aap/` suffix. The following is an example of the login redirect URI:
-+
-`https://lightspeed-on-prem-web-service.com/complete/aap/`
-
-* The log-in attempt fails with the following error message:
-+
-`Error: invalid_request`
-+
-`Invalid client_id parameter value`
-+
-This error indicates that the authorization connection secret contains an incorrect *client ID* value. To resolve this error, ensure that you have not accidentally added any whitespace characters (extra line, space, and so on) to the `auth_api_key` parameter in the authorization connection secret. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
-* The log-in attempt fails with the following error message:
-+
-`ERROR: Your credentials aren't allowed`
-+
-`You currently do not have access to.`
-+
-This error indicates that the authorization connection secret contains an incorrect *client secret* value. To resolve this error, ensure that you have not accidentally added any whitespace characters (extra line, space, and so on) to the `auth_api_secret` parameter in the authorization connection secret. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
-* The log-in attempt fails with the following error message:
-+
-`Not Found`
-+
-`The requested resource could not be found.`
-+
-This error indicates that an incorrect *API URL* value was used to create an authorization connection secret. To resolve this error, ensure that the `auth_api_url` parameter contains the prefix `https://` and suffix `/api/`. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
-* The log-in attempt fails with the following error message:
-+
-`Server Not Found`
-+
-This error indicates that the *API URL* value in the authorization connection secret does not contain the suffix `/api/`. To resolve this error, ensure that the `auth_api_url` parameter contains the suffix `/api/`. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
-* The log-in attempt fails with the following error message:
-+
-`Server Error (500)`
-+
-This error message indicates the service has internal errors or that the authorization connection secret contains incorrect *API URL* value. To resolve this error, ensure that the `auth_api_url` parameter contains the prefix `https://` and not `http://`. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
-* The log-in attempt fails with the following error message:
-+
-`Bad Request (400)`
-+
-To resolve this error, check the `auth_allowed_hosts` parameter in the authorization secret. For test diagnosis, use the asterisk (*) sign. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
-
 == Cannot log out of the Ansible Lightspeed portal
 
 After you log out from the Ansible Lightspeed portal, you are redirected to the automation controller API page instead of Ansible Lightspeed.
@@ -143,16 +88,16 @@ To reenable the SSL protection, perform the following tasks:
 . Locate and select the {PlatformNameShort} custom resource, and then click the required app.
 . Select the *YAML* tab. The editor switches to a YAML editor view.
 . Scroll and find the spec: section, and add the following parameter under the `spec:` section:
-+
+
 ----
 extra_settings:
     - setting: ANSIBLE_AI_MODEL_MESH_API_VERIFY_SSL
       value: false
 ----
+
 . Click *Save*. 
-. Restart the automation controller pods to apply the revised YAML. 
-+
-Perform the following steps: 
+. Restart the automation controller pods to apply the revised YAML: 
+
 .. From the {OCP}, select menu:Workloads[Pods].
 .. Locate and select the Ansible Lightspeed pod that you updated.
 .. Click the *Edit* icon beside the pod and select *Delete Pod*. 
