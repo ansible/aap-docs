@@ -11,8 +11,8 @@ Ad hoc::
 
 _Ad hoc_ refers to using Ansible to perform a quick command, using /usr/bin/ansible, rather than the orchestration language, which is `/usr/bin/ansible-playbook`. 
 An example of an ad hoc command might be rebooting 50 machines in your infrastructure. 
-Anything you can do ad hoc can be accomplished by writing a Playbook. 
-Playbooks can also glue lots of other operations together.
+Anything you can do ad hoc can be accomplished by writing a playbook. 
+Playbooks can also glue many other operations together.
 
 Automation mesh::
 Describes a network comprising of nodes. 
@@ -52,7 +52,7 @@ management system.
 
 Distributed Job::
 A job that consists of a job template, an inventory, and slice size.
-When executed, a distributed job slices each inventory into a number of "slice size" chunks, which are then used to run smaller job slices.
+When executed, a distributed job slices each inventory into several "slice size" chunks, which are then used to run smaller job slices.
 
 External Credential Type::
 A managed credential type used for authenticating with a secret management system.
@@ -68,7 +68,7 @@ For the convenience of users who are switching from other configuration manageme
 Forks::
 Ansible and {ControllerName} communicate with remote nodes in parallel. 
 The level of parallelism can be set in several ways during the creation or editing of a Job Template, by passing `--forks`, or by editing the default in a configuration file. 
-The default is a very conservative five forks, though if you have a lot of RAM, you can set this to a higher value, such as 50, for increased parallelism.
+The default is a very conservative five forks, though if you have a high quantity of RAM, you can set this to a higher value, such as 50, for increased parallelism.
 
 Group::
 A set of hosts in Ansible that can be addressed as a set, of which many can exist within a single Inventory.
@@ -78,7 +78,7 @@ The `group_vars/` files are files that are stored in a directory with an invento
 This is a convenient place to put variables that are provided to a given group, especially complex data structures, so that these variables do not have to be embedded in the inventory file or playbook.
 
 Handlers::
-Handlers are like regular tasks in an Ansible playbook (see *Tasks*), but are only run if the Task contains a "notify" directive and also indicates that it changed something. 
+Handlers are like regular tasks in an Ansible Playbook (see *Tasks*), but are only run if the Task contains a "notify" directive and also indicates that it changed something. 
 For example, if a configuration file is changed then the task referencing the configuration file templating operation might notify a service restart handler. 
 This means services can be bounced only if they need to be restarted. 
 Handlers can be used for things other than service restarts, but service restarts are the most common use.
@@ -108,17 +108,17 @@ Inventory Source::
 Information about a cloud or other script to be merged into the current inventory group, resulting in the automatic population of Groups, Hosts, and variables about those groups and hosts.
 
 Job::
-One of many background tasks launched by {ControllerName}, this is usually the instantiation of a Job Template, such as the launch of an Ansible playbook. 
+One of many background tasks launched by {ControllerName}, this is usually the instantiation of a Job Template, such as the launch of an Ansible Playbook. 
 Other types of jobs include inventory imports, project synchronizations from source control, or administrative cleanup actions.
 
 Job Detail::
-The history of running a particular job, including its output and success/failure status.
+The history of running a particular job, including its output and success or failure status.
 
 Job Slice::
 See *Distributed Job*.
 
 Job Template::
-The combination of an Ansible playbook and the set of parameters required to launch it. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-job-templates[Job templates].
+The combination of an Ansible Playbook and the set of parameters required to launch it. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/using_automation_execution/controller-job-templates[Job templates].
 
 JSON::
 JSON is a text-based format for representing structured data based on JavaScript object syntax. 
@@ -126,7 +126,8 @@ Ansible and {Controllername} use JSON for return data from remote modules.
 This enables modules to be written in any language, not just Python.
 
 Metadata::
-Information for locating a secret in the external system once authenticated.  The user provides this information when linking an
+Information for locating a secret in the external system once authenticated.  
+The user provides this information when linking an
 external credential to a target credential field.
 
 Node::
@@ -145,7 +146,7 @@ The execution node is where the job runs, and the controller node interfaces bet
 |====
 
 Notification Template::
-An instance of a notification type (Email, Slack, Webhook, etc.) with a name, description, and a defined configuration.
+An instance of a notification type (Email, Slack, or Webhook) with a name, description, and a defined configuration.
 
 Notification::
 A Notification, such as Email, Slack or a Webhook, has a name, description and configuration defined in a Notification template.
@@ -174,7 +175,7 @@ A playbook is a list of plays.
 There can be one or many plays in a playbook.
 
 Playbook::
-An Ansible playbook. For more information, see link:{URLPlaybooksGettingStarted}/index[Getting started with playbooks].
+An Ansible Playbook. For more information, see link:{URLPlaybooksGettingStarted}/index[Getting started with playbooks].
 
 Policy::
 Policies dictate how instance groups behave and how jobs are executed.
@@ -184,7 +185,7 @@ A logical collection of Ansible playbooks, represented in {ControllerName}.
 
 Roles::
 Roles are units of organization in Ansible and {ControllerName}. 
-Assigning a role to a group of hosts (or a set of groups, or host patterns, etc.) implies that they implement a specific behavior. 
+Assigning a role to a group of hosts (or a set of groups, or host patterns) implies that they implement a specific behavior. 
 A role can include applying variable values, tasks, and  handlers, or a combination of these things. 
 Because of the file structure associated with a role, roles become redistributable units that enable you to share behavior among playbooks, or with other users.
 
@@ -227,7 +228,7 @@ Webhooks enable communication and information sharing between applications.
 They are used to respond to commits pushed to SCMs and launch job templates or workflow templates.
 
 Workflow Job Template::
-A set consisting of any combination of job templates, project syncs, and inventory syncs, linked together in order to execute them as a
+A set consisting of any combination of job templates, project syncs, and inventory syncs, linked together to run them as a
 single unit.
 
 YAML::
