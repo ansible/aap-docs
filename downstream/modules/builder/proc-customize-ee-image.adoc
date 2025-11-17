@@ -5,9 +5,9 @@
 = Customizing an existing {ExecEnvName} image
 
 [role="_abstract"]
-You can customize existing default {ExecEnvName} provided by {ControllerNameStart} by adding content specific to your needs. {ControllerNameStart} includes the following default {ExecEnvName}.
+You can customize existing {ControllerNameStart} provided default {ExecEnvName} by adding content specific to your needs. {ControllerNameStart} includes the following default {ExecEnvName}.
 
-* `Minimal` -  `ansible-automation-platform-25` Includes the latest Ansible-core 2.16 release along with Ansible Runner, but does not include collections or other content.  Ansible-automation-platform-24 Includes the Ansible-core 2.15 release along with {Runner}, but does not include collections or other content.
+* `Minimal` -  `ansible-automation-platform-25` Includes the latest Ansible-core 2.16 release along with Ansible Runner, but does not include collections or other content. Ansible-automation-platform-24 Includes the Ansible-core 2.15 release along with {Runner}, but does not include collections or other content.
 +
 While supported {ExecEnvShort}s cover many automation prerequisites, minimal execution-environments are the recommended basis for your own custom images, to keep full control over dependencies and their versions.
 * `EE Supported` - Minimal, plus all Red Hat-supported collections and dependencies
@@ -36,7 +36,7 @@ collections:
 
 .. For more information about definition files and their content, see the xref:con-definition-file-breakdown[Breakdown of definition file content] section.
 . In the {ExecEnvShort} definition file, specify the original `ee-minimal` container's URL and tag in the `EE_BASE_IMAGE` field. 
-In doing so, your final `execution-environment.yml` file appears similar to the following:
+In doing so, your final `execution-environment.yml` file looks similar to the following:
 +
 ----
 version: 3
@@ -70,7 +70,7 @@ If you do not use `-t` with `build`, an image called `ansible-execution-env` is 
 +
 * Use the `podman images` command to confirm that your new container image is in that list:
 +
-The following shows the output of a 'podman images' command with the image `new-ee`.
+The following shows the output of a `podman images` command with the image `new-ee`.
 +
 ----
 REPOSITORY          TAG     IMAGE ID      CREATED        SIZE
