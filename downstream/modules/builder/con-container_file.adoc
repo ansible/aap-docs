@@ -10,7 +10,7 @@ After you have created your definition file, {Builder} reads and validates it, c
 The container build occurs in several distinct stages: `base` , `galaxy`, `builder`, and `final`. The image build steps (along with any corresponding custom `prepend_` and `append_` steps defined in `additional_build_steps`) are:
 
 . During the `base` build stage, the specified base image is (optionally) customized with components required by other build stages, including Python, `pip`, `ansible-core`, and `ansible-runner`. 
-The resulting image is then validated to ensure that the required components are available (as they may have already been present in the base image).
+The resulting image is then validated to ensure that the required components are available (as they can have already been present in the base image).
 Ephemeral copies of the resulting customized `base` image are used as the base for all other build stages.
 . During the `galaxy` build stage, collections specified by the definition file are downloaded and stored for later installation during the `final` build stage. 
 Python and system dependencies declared by the collections, if any, are also collected for later analysis.
