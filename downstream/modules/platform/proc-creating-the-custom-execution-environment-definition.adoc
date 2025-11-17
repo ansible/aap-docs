@@ -82,7 +82,7 @@ server_list = private_hub
 url = /https://private-hub.example.com/api/galaxy/
 ----
 +
-. Create a `pip.conf` file under the `files/` subdirectory which points to the internal PyPI mirror (a web server or something like Nexus):
+. Create a `pip.conf` file under the `files/` subdirectory which points to the internal PyPI mirror (a web server or something similar to Nexus):
 +
 ----
 $ cat files/pip.conf
@@ -115,7 +115,7 @@ gpgkey = file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
 gpgcheck = 1
 ----
 +
-. Add the CA certificate used to sign the {PrivateHubName} web server certificate. If the {PrivateHubName} uses self-signed certificates provided by the installer:
+. Add the CA certificate used to sign the {PrivateHubName} web server certificate. If the {PrivateHubName} uses self-signed certificates provided by the {Installer}
 +
 .. Copy the file `/etc/pulp/certs/pulp_webserver.crt` from your {PrivateHubName} and name it `hub-ca.crt`.
 .. Add the `hub-ca.crt` file to the `files/` subdirectory.
