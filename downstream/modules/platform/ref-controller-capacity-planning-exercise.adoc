@@ -16,26 +16,3 @@ For this example, the cluster must support the following capacity:
 * Average event size is 1 Mb
 
 The virtual machines have 4 CPU and 16 GB RAM, and disks that have 3000 IOPS.
-
-include::ref-controller-example-workload-reqs.adoc[leveloffset=+1]
-
-[cols="26%,15%,12%,12%,12%,12%,12%",options="header",]
-|===
-| Node | API capacity | Default execution capacity | Default control capacity | Mean event processing rate at 100% capacity usage | Mean events
-processing rate at 50% capacity usage | Mean event processing rate at 40% capacity usage
-| 4 CPU at 2.5Ghz, 16 GB RAM control node, a maximum of 3000 IOPS disk | about 10 requests per second | n/a | 137 jobs | 1100 per second | 1400 per second | 1630 per second
-| 4 CPU at 2.5Ghz, 16 GB RAM execution node, a maximum of 3000 IOPS disk | n/a | 137 | n/a | n/a | n/a | n/a
-| 4 CPU at 2.5Ghz, 16 GB RAM database node, a maximum of 3000 IOPS disk | n/a | n/a | n/a | n/a | n/a | n/a
-|===
-
-Because controlling jobs competes with job event processing on the control node, over-provisioning control capacity can reduce processing times. When processing times are high, you can experience a delay between when the job runs and when you can view the output in the API or UI.
-
-For this example, for a workload on 300 managed hosts, executing 1000 tasks per hour per host, 10 concurrent jobs with forks set to 5 on playbooks, and an average event size 1 Mb, use the following procedure:
-
-* Deploy 1 execution node, 1 control node, 1 database node of 4 CPU at 2.5Ghz, 16 GB RAM, and disks that have about 3000 IOPS.
-* Keep the default fork setting of 5 on job templates.
-* Use the capacity change feature in the instance view of the UI on the control node to reduce the capacity down to 16, the lowest value, to reserve more of the control node's capacity for processing events.
-
-For more information about workloads with high levels of API interaction, see link:https://www.ansible.com/blog/scaling-automation-controller-for-api-driven-workloads[Scaling Automation Controller for API Driven Workloads]. 
-For more information about managing capacity with instances, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_automation_execution/index#assembly-controller-instances[Managing capacity with Instances].
-For more information about operator-based deployments, see link:{URLOCPPerformanceGuide}/index[{PlatformName} considerations for operator environments].
