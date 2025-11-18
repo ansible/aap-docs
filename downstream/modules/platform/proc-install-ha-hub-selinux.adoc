@@ -4,7 +4,9 @@
 
 = Enabling a high availability (HA) deployment of {HubName} on SELinux
 
-You can configure the inventory file to enable high availability deployment of {HubName} on SELinux. You must create two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, and then assign the appropriate SELinux contexts to each.
+[role="_abstract"]
+You can configure the inventory file to enable high availability deployment of {HubName} on SELinux. 
+You must create two mount points for `/var/lib/pulp` and `/var/lib/pulp/pulpcore_static`, and then assign the appropriate SELinux contexts to each mount point.
 
 [NOTE]
 ====
@@ -58,12 +60,12 @@ $ setup.sh -- -b --become-user root
 ----
 . After the installation is complete, unmount the `/var/lib/pulp/` mount point.
 
-[role="_additional-resources"]
 .Next steps
-1. xref:proc-apply-selinux-context[Apply the appropriate SELinux context].
-2. xref:proc-configure-pulpcore-service[Configure the pulpcore.serivce].
+. xref:proc-apply-selinux-context[Apply the appropriate SELinux context].
+. xref:proc-configure-pulpcore-service[Configure the pulpcore.serivce].
 
 [role="_additional-resources"]
-.Additional Resources
-* See the link:https://docs.pulpproject.org/en/2.16/user-guide/scaling.html#selinux-requirements[SELinux Requirements on the Pulp Project documentation] for a list of SELinux contexts.
-* See the link:https://docs.pulpproject.org/pulpcore/installation/hardware-requirements.html#filesystem-layout[Filesystem Layout] for a full description of Pulp folders.
+.Additional resources
+
+* link:https://docs.pulpproject.org/en/2.16/user-guide/scaling.html#selinux-requirements[SELinux Requirements on the Pulp Project documentation]
+* link:https://docs.pulpproject.org/pulpcore/installation/hardware-requirements.html#filesystem-layout[Filesystem Layout]
