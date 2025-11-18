@@ -4,7 +4,9 @@
 
 = Setting up the inventory file
 
-Before upgrading your {PlatformName} installation, edit the `inventory` file so that it matches your desired configuration. You can keep the same parameters from your existing {PlatformNameShort} deployment or you can modify the parameters to match any changes to your environment.
+[role="_abstract"]
+Before upgrading your {PlatformName} installation, edit the `inventory` file so that it matches your required configuration. 
+You can keep the same parameters from your existing {PlatformNameShort} deployment or you can update the parameters to match any changes to your environment.
 
 .Procedure
 
@@ -23,8 +25,10 @@ $ cd ansible-automation-platform-setup-<version_number>
 ----
 +
 . Update the `inventory` file to match your desired configuration. You can use the same inventory file from an existing {PlatformNameShort} installation if there are no changes to the environment.
-
++
 [NOTE]
 ====
-Provide a reachable IP address or fully qualified domain name (FQDN) for all hosts to ensure that users can synchronize and install content from {HubNameMain} from a different node. Do not use localhost. If localhost is used, the upgrade will be stopped as part of preflight checks.
+Use a reachable IP address or fully qualified domain name (FQDN) for all hosts. 
+This ensures that users can synchronize and install content from {HubNameMain} on a different node.
+Do not use localhost. If you use localhost, the upgrade stops as part of preflight checks.
 ====
