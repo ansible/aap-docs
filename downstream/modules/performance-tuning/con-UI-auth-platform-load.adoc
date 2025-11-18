@@ -5,23 +5,17 @@
 
 [role="_abstract"]
 Users can access the {PlatformNameShort} UI by using enterprise authentication methods.
-UI clients apply load to the {Gateway} proxy and the gRPC authentication service, the web servers of all components, and the database.
-This occurs because most UI-driven API requests interact with the database.
+UI clients apply load to the {Gateway} proxy and the gRPC authentication service, the web servers of all components, and the database, because most UI-driven API requests interact with the database.
 
-Login performance with enterprise authentication depends on two factors: the performance of the external authentication provider, and the complexity of mapping external attributes to RBAC attributes in {PlatformNameShort}.
-After a successful login, the browser uses session authentication for subsequent requests.
-This method is generally faster because some session data is cached.
+The login performance with enterprise authentication is dependent on the performance of the external authentication provider and the complexity of the mapping of the external authentication attributes to RBAC attributes in {PlatformNameShort}.
+After successful login, the browser uses session authentication for subsequent requests, which is generally a faster authentication method as some session data is cached.
 
-The {PlatformNameShort} UI receives live updates through WebSockets and periodically requests updates from all components.
-This is necessary to properly render options and update on-screen information.
-
-Users can configure the frequency of these periodic update requests.
-This is done by adjusting the "Refresh Interval" setting in the UI User Preferences tab.
+The {PlatformNameShort} UI receives live updates through WebSockets and periodically requests updates from all components to properly render options and update on-screen information.
+Users can configure the frequency of these periodically maintained update requests by adjusting the "Refresh Interval" setting in the UI *User Preferences* tab.
 This action affects the load that an open browser tab with the {PlatformNameShort} UI generates on backend services.
 
 Through WebSockets in the user interface, the browser receives real-time job updates.
 The browser can subscribe to any job running on any {ControllerName} node, because events are accessible everywhere.
-
 However, live streaming updates to the job detail page might increase the load on the {ControllerName} service.
 To disable these updates, set `UI_LIVE_UPDATES_ENABLED` to false in the {ControllerName} configuration.
 

@@ -8,24 +8,9 @@ Enterprise topologies provide a pattern for scalability and resilience.
 Organizations typically evolve the tested deployment models into custom deployments, tailoring service configurations and scaling to their specific workflows and performance needs within {PlatformName}.
 
 An organization's unique use of {PlatformNameShort} determines which components require scaling, moving from a generic {EnterpriseTopology} to a workload-tuned deployment.
-
-Workloads such as infrequent {HubName} use or API-heavy integrations necessitate different scaling priorities.
-This includes components such as the API service or execution plane.
-
-Motivations for customizing the documented enterprise deployment models include the following:
-
-* Achieving high availability
-* Enabling independent scaling of components, such as {ControllerName} API compared to execution capacity
-* Supporting workload growth or specific SLAs
-
+For example, infrequent {HubName} use, numerous small jobs across distributed regions, or API-heavy integrations necessitate different scaling priorities for each component, such as the API service or execution plane.
+Motivations for customizing the documented enterprise deployment models include achieving high availability, enabling independent scaling of components, such as {ControllerName} API compared to execution capacity, to match actual demand, and supporting workload growth or specific SLAs.
 This requires custom resource allocation and performance tuning based on identified needs, rather than adherence to a general pattern.
-
-Before customizing and scaling, you must identify specific bottlenecks within your {PlatformNameShort} environment, such as:
-
-* API response
-* Job processing
-* Database performance
-* {EDAName} event handling.
-
+Before customizing and scaling, you must identify specific bottlenecks within your {PlatformNameShort} environment (for example, in API response, job processing, database performance, or {EDAName} event handling).
 Use platform monitoring tools and analytics to identify bottlenecks.
 After bottlenecks are identified, you can approach scaling each component vertically or horizontally.

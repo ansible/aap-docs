@@ -9,18 +9,17 @@ You can access this API by using various clients, including cURL, Python, {Platf
 
 You can use the API to automate the following tasks:
 
-* Launching jobs
-* Updating inventories
-* Checking automation status
-* Pushing events into an Event Stream for {EDAName}
-* Automating the upload or publication of collections in {HubName}
-* Managing {ExecEnvName} in the {HubName} container registry using a Podman client that connects to {HubName} over its registry API
+* launching jobs
+* updating inventories
+* checking automation status
+* pushing events into an Event Stream for {EDAName}
+* automating the upload or publication of collections in {HubName}
+* managing {ExecEnvName} in the {HubName} container registry using a Podman client that connects to {HubName} over its registry API
 
 API clients apply load to the {Gateway} proxy, the gRPC service for authentication, the web server of the targeted component, and the database, because most API client queries interact with the database.
 
 To access the API, you can use the following common authentication methods: Basic authentication (using a username and password) and Token authentication (your chosen authentication method).
-Token authentication is recommended for better performance.
-
+We recommend Token authentication for better performance.
 Use the {Gateway} to create tokens and link them to an OAuth application or your account.
 The {Gateway}'s gRPC service authenticates each request and directs it to the appropriate application server based on the specified route.
 For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/automation_execution_api_overview/controller-api-auth-methods[Authenticating in the API].

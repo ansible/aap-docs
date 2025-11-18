@@ -6,19 +6,9 @@
 [role="_abstract"]
 {PrivateHubNameStart} has the capability to host container images for {ExecEnvName} and decision environments.
 {EDAName} or {ControllerName} can pull these container images when running activations or jobs.
-How often {EDAname} or {ControllerName} pull these containers is determined by the following:
-
-* The frequency of job starts
-* The pull policy configured for the {ExecEnvName} and decision environments
+The frequency of job starts and the pull policy configured for the {ExecEnvName} and decision environments in {EDAName} or {ControllerName} determine how often they pull these containers.
 
 The performance of pushing and pulling container images from {HubName} depends on the disk performance of the underlying storage.
 This is because Pulp content workers store and fetch the layers of the container image from disk.
-
-The size of layers can impact the memory used by the Pulp content workers.
-This is because they serve entire layers in a single operation.
-
-The frequency of container image pulls is determined by the following factors:
-
-* The pull policy on jobs and activations
-* The frequency of job or activation starts
-* The node or Container Group's existing image status
+The size of layers can impact the memory used by the pulp workers, because they serve entire layers in a single operation.
+The pull policy on jobs and activations, the frequency of job or activation starts, and the node or Container Group's existing image status determine the frequency of container image pulls.
