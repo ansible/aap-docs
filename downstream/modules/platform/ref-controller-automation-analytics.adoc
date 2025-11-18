@@ -2,6 +2,7 @@
 
 = {Analytics}
 
+[role="_abstract"]
 When you imported your license for the first time, you were automatically opted in for the collection of data that powers {Analytics}, a cloud service that is part of the {PlatformNameShort} subscription.
 
 [IMPORTANT]
@@ -14,16 +15,28 @@ No credential secrets, personal data, automation variables, or task output is ga
 
 For more information, see xref:ref-controller-data-collection-details[Details of data collection].
 
-To enable or disable this feature, use the following steps:
+To set up {Analytics}, you must first create a service account for the purposes of authentication. 
 
-. From the navigation panels, select {MenuAEAdminSettings}.
-. Select *Miscellaneous System settings* from the list of *System* options. 
-. Toggle the *Gather data for {Analytics}* switch and enter your Red Hat customer credentials.
+== Creating and configuring {PlatformNameShort} to use a service account for {Analytics}
+
+.Prerequisites
+
+* A service account created with the Analytics Administrator viewer role in console.redhat.com.
+For more information see, link:https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[Creating a service account].
+
+.Procedure
+
+. From the navigation panel, select {MenuAEAdminSettings}.
+. Select *Miscellaneous System settings* from the list of *System* options.
+. Click btn:[Edit].
+. Toggle the *Gather data for {Analytics}* switch so that it is on.
+. In the field labeled *Red Hat Client ID for Analytics*, enter the client ID you received when you created your service account.
+. In the field labeled *Red Hat Client Secret for Analytics*, enter the client secret you received when you created your service account.
 . Click btn:[Save].
 
-image:configure-controller-system-misc-analytics.png[Miscellaneous System Settings]
+// [screenshot has become out of date with the release of service account authentication for analytics, see AAP-58597 for more -hherbly] image:configure-controller-system-misc-analytics.png[Miscellaneous System Settings]
 
-You can view the location to which the collection of insights data is uploaded in the *{Analytics} upload URL* field on the *Details* page.
+You can view the location where insights data is uploaded in the *{Analytics} upload URL* field on the *Details* page.
 
 image:misc-system-details-analytics-url.png[Insights location]
 
@@ -58,19 +71,3 @@ On the clouds navigation panel, select menu:Organization Statistics[] to view in
 * xref:ref-controller-use-by-organization[Use by organization]
 * xref:ref-controller-jobs-run-by-organization[Job runs by organization]
 * xref:ref-controller-organization-status[Organization status]
-
-== Creating and configuring {PlatformNameShort} to use a service account for {Analytics}
-
-.Prerequisites
-
-* A service account created with the Analytics Administrator viewer role in console.redhat.com.
-For more information see, link:https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[Creating a service account].
-
-.Procedure
-
-. From the navigation panels, select {MenuAEAdminSettings}.
-. Select *Miscellaneous System settings* from the list of *System* options.
-. Click btn:[Edit].
-. In the field labeled *Red Hat customer username*, enter the client ID you received when you created your service account.
-. In the field labeled *Red Hat customer password*, enter the client secret you received when you created your service account.
-. Click btn:[Save].
