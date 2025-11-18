@@ -1,0 +1,17 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="about-tf-actions-and-aap"]
+
+= About {Terraform} Actions and {PlatformNameShort}
+
+[role="_abstract"]
+
+The {Terraform} (TF) Actions adds an imperative `action` block to the HCL language, letting you execute steps after infrastructure is provisioned without leaving the declarative {Terraform} workflow. This keeps the entire infrastructure and configuration process visible in your {Terraform} configuration.
+
+TF Actions can be used to trigger Ansible automation for configuration management, such as sending an event and payload to {PlatformNameShort} to configure newly provisioned virtual machines.
+
+There are two actions implemented with the {Terraform} provider for {PlatformNameShort}:
+
+* **Launch a job directly:** Runs the job as a direct, immediate execution request to {PlatformNameShort}. You must explicitly define which specific {PlatformNameShort} job template the TF Action should call.
+
+* **Use Event-Driven Ansible (EDA):** Sends an event to {PlatformNameShort}, which then uses rulebooks to intelligently decide which playbook to run based on the event's payload. This allows for more dynamic, scalable and reactive automation.

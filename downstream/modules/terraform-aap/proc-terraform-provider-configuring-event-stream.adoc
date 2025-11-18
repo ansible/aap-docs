@@ -1,0 +1,54 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="terraform-provider-configuring-event-stream"]
+
+= Configuring an EDA event stream
+
+[role="_abstract"]
+
+To use TF Actions with EDA, you must first configure the event stream in {PlatformNameShort}. TF actions will post events to this stream.
+
+.Prerequisites
+
+* You have configured the AAP {Terraform} provider to authenticate with {PlatformNameShort}.
+
+* You have configured the AWS {Terraform} provider to link:https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication-and-configuration[authenticate with Amazon Web Services].
++
+[NOTE]
+The example below uses Amazon Web Services (AWS) and requires an AWS account that might incur charges. You can adapt the pattern to use a different cloud provider.
+
+You have an {PlatformNameShort} inventory named **EDA Actions Demo Inventory** in the **Default** organization.
+
+You have job templates configured with:
+
+* Inventory set to **EDA Actions Demo Inventory**.
+* A machine credential (private key) matching a public key available in a local file.
+
+.Procedure
+
+. Log in to the {PlatformNameShort} user interface.
+. Navigate to **{MenuADEventStreams}**.
+. Click **Create event stream**.
+. On the **Create event stream** page, edit the fields:
++
+* **Name:** A descriptive, unique name for your event stream (such as `Terraform provider_Events`).
+* **Organization:** Select the organization this event stream will belong to (usually `Default` or your specific organization).
+* **Event stream type:** Select the type that matches how you want to receive events. **Basic Event Stream** (username/password) is supported with this integration.
+* **Credential:** Select a credential that you have pre-created for authentication with this event stream.
+* **Headers:** (Optional) Enter comma-separated HTTP header keys that you want to include in the event payload that gets forwarded to the rulebook. Leave this empty to include all headers.
+* **Forward events to rulebook activation:** This option is typically enabled by default. Disabling it is useful for testing and diagnosing your connection and incoming data without inadvertently triggering any automation.
+
+. Click **Create event stream**. Then navigate to **{MenuADEventStreams}** to verify the event stream was created and see the number of events received so far. 
++
+You can also click on the specific stream to see its detailed configuration, including the organization, event stream type, associated credential, and event forwarding settings.
+
+. Set up a link:{URLEDAUserGuide}/eda-rulebook-activations#eda-set-up-rulebook-activation[rule book activation]. Make sure to:
+
+.. Add the event stream to the rulebook.
+.. (Recommended) Select the **Rulebook activation enabled?** option to automatically start the activation after creation.
+.. Activate the rulebook.
+
+. Click **{MenuADRulebookActivations}** to verify that the rulebook is active and check its status.
+
+
+
