@@ -1,0 +1,74 @@
+[id="async-24-20251119"]
+
+= {PlatformNameShort} patch release November 19, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+[cols="1a,3a", options="header"]
+
+|====
+
+| Release Date | Component versions
+
+| November 19, 2025 |
+
+* {ControllerNameStart} 4.5.27
+* {HubNameStart} 4.9.5
+* {EDAcontroller} 1.0.8
+* Receptor 1.6.2
+* {LightspeedShortName} 2.4.250225
+* {PlatformNameShort}-collection installer (online): 2.4-14
+* {PlatformNameShort}-collection installer (bundle): 2.4-14
+|
+|====
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+CSV versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1763136910
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1763137360
+
+== General
+
+* RHEL minimum version is updated to 8.10 and 9.4.(AAP-56387)
+
+* *nginx* has been updated to 1.24.(AAP-53990)
+
+* With this update, {PlatformNameShort} 2.4 uses Python 3.11. Before this update, {PlatformNameShort} 2.4 used Python 3.9, which reaches end of life on RHEL 8 in November 2025.(AAP-53469)
+
+[IMPORTANT]
+==== 
+All users must download the latest version of the installer. Attempting to install or upgrade {PlatformNameShort} 2.4 with a previous version of the installer will fail.
+====
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-59530[CVE-2025-59530] `receptor`: `quic-go` crash due to premature `HANDSHAKE_DONE` frame.
+
+
+== New Features
+
+=== Automation controller
+
+* Added two new toggle options on the subscription wizard to allow for fetching subscriptions using basic authentication.(AAP-56060)
+
+* Added a step in the subscription wizard that allows the user to configure automation analytics.(AAP-56061)
+
+
+== Enhancements
+
+=== Automation controller
+
+* Added support for Red Hat _username_ and _password_ for the subscription management API.(AAP-56887)
+
+* Fixed an issue where some edge cases caused JSON to fail to parse a line from the worker stream with the error: *Expecting value: line 1 column 1 (char 0) Line with invalid JSON data: b*. Updated the pinned version for `receptorctl` in automation controller to address this issue.(AAP-53523)
+
+
+=== RPM-based {PlatformNameShort}
+
+* Fixed an issue where the controller was unable to make requests to `subscription.rhsm.redhat.com`. Set `REDHAT_CANDLEPIN_VERIFY` to correct CA pem.(AAP-57020)
