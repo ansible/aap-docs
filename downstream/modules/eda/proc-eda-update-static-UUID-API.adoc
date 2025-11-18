@@ -1,0 +1,72 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-update-static-UUID-API"]
+
+= Updating an event stream with a static UUID (API Method)
+
+[role="_abstract"]
+If you prefer to use a static, custom UUID, you must use the API to update your event stream. The API endpoint for creation is `POST /api/eda/v1/event-streams/`.
+
+.Prerequisites
+* {PlatformNameShort}-next
+
+.Procedure
+
+. Log in to {PlatformNameShort}.
+. From the navigation panel, select *Overview*.
+. In the URL, replace *Overview* with the API endpoint, `api/eda/v1/` (for example, `https://<platformURL>.com/api/eda/v1/`). 
+The `Api V1 Root` page displays a list of EDA resource URLs.
++
+[example]
+----
+{
+    "config": "http://<aap.platform>.com/api/eda/v1/config/",
+    "status": "http://<aap.platform>/api/eda/v1/status/",
+    "openapi-json": "http://<aap.platform>/api/eda/v1/openapi.json",
+    "openapi-yaml": "http://<aap.platform>/api/eda/v1/openapi.yaml",
+    "openapi-docs": "http://<aap.platform>/api/eda/v1/docs/",
+    "openapi-redoc": "http://<aap.platform>/api/eda/v1/redoc/",
+    "session-login": "http://<aap.platform>/api/eda/v1/auth/session/login/",
+    "session-logout": "http://<aap.platform>/api/eda/v1/auth/session/logout/",
+    "token-refresh": "http://<aap.platform>/api/eda/v1/auth/token/refresh/",
+    "current-user": "http://<aap.platform>/api/eda/v1/users/me/",
+    "project-list": "http://<aap.platform>/api/eda/v1/projects/",
+    "rulebook-list": "http://<aap.platform>/api/eda/v1/rulebooks/",
+    "activation-list": "http://<aap.platform>/api/eda/v1/activations/",
+    "activationinstance-list": "http://<aap.platform>/api/eda/v1/activation-instances/",
+    "auditrule-list": "http://<aap.platform>/api/eda/v1/audit-rules/",
+    "user-list": "http://<aap.platform>/api/eda/v1/users/",
+    "controller-token-list": "http://<aap.platform>/api/eda/v1/users/me/awx-tokens/",
+    "credentialtype-list": "http://<aap.platform>/api/eda/v1/credential-types/",
+    "edacredential-list": "http://<aap.platform>/api/eda/v1/eda-credentials/",
+    "credentialinputsource-list": "http://<aap.platform>/api/eda/v1/credential-input-sources/",
+    "decisionenvironment-list": "http://<aap.platform>/api/eda/v1/decision-environments/",
+    "organization-list": "http://<aap.platform>/api/eda/v1/organizations/",
+    "team-list": "http://<aap.platform>/api/eda/v1/teams/",
+    "eventstream-list": "http://<aap.platform>/api/eda/v1/event-streams/"
+----
+
+. At the end of the list, click the `”eventstream-list”` URL. This takes you to the *Event Stream List* page.
+. Locate and copy the `“id”` of the event stream UUID that you want to update. This can be found at the end of the event 
++
+[example]
+----
+},
+"id": *1*,
+"owner": "admin",
+"url": "https://<platformURL>/eda-event-streams/api/eda/v1/external_event_stream/bab8dddd-51cc-424f-87a4-0ed8ebe0a755/post/",
+"created_at": "2025-11-18T16:30:45.622363Z",
+"modified_at": "2025-11-18T16:30:45.622374Z",
+"test_content_type": "",
+"test_content": "",
+"test_error_message": "",
+"test_headers": "",
+"events_received": 0,
+"last_event_received_at": null
+----
++
+. Paste the id at the end of the URL (for example,  https://<platformURL>.com/api/eda/v1/_<id#>_) and press *Enter*. The *Event Stream Instance* page is displayed, including the new “uuid” value. 
+. In the form at the end of the *Event Stream Instance* page, update the value of the `“uuid”` field to a unique static string of your choice.
+. Click *Patch*.
+
+.Verification
+*Check the UUID of your updated or newly created event stream to confirm that the UUID has been updated.
