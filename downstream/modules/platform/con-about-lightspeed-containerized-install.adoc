@@ -94,32 +94,44 @@ A hybrid deployment model provides the following benefits:
 
 You must have configured an LLM provider that you will use before deploying the {AAPchatbot}. An LLM is a type of machine learning model that can interpret and generate human-like language. When an LLM is used with the {AAPchatbot}, the LLM can interpret questions accurately and provide helpful answers in a conversational manner.
 
-{AAPchatbot} can rely on the following Red Hat LLM providers:
+{AAPchatbot} can rely on the following LLM providers:
 
-* *{RHELAI}*
-+
-You can configure {RHELAI} as the LLM provider. As the {RHEL} is in a different environment than the {LightspeedShortName} deployment, the model deployment must allow access using a secure connection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_ai/1.5#creating_secure_endpoint[Optional: Allowing access to a model from a secure endpoint]. 
-+
-{AAPchatbot} supports a virtual large language model (vLLM) Server. When self-hosting an LLM with {RHELAI}, you can use vLLM Server as the inference engine.
+* *Red Hat LLM providers:*
 
-* *{OCPAI}*
+** *{RHELAI}*
 +
-You must deploy an LLM on the {OCPAI} single-model serving platform that uses the Virtual Large Language Model (vLLM) runtime. If the model deployment resides in a different OpenShift environment than the {LightspeedShortName} deployment, include a route to expose the model deployment outside the cluster. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.23#about-the-single-model-serving-platform_serving-large-models[About the single-model serving platform].
+You can configure {RHELAI} as the LLM provider. As the {RHEL} is in a different environment than the Ansible Lightspeed deployment, the model deployment must allow access using a secure connection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux_ai/1.5#creating_secure_endpoint[Optional: Allowing access to a model from a secure endpoint]. 
++
+{AAPchatbot} supports vLLM Server. When self-hosting an LLM with {RHELAI}, you can use vLLM Server as the inference engine.
+
+** *{OCPAI}*
++
+You must deploy an LLM on the {OCPAI} single-model serving platform that uses the Virtual Large Language Model (vLLM) runtime. If the model deployment resides in a different OpenShift environment than the Ansible Lightspeed deployment, include a route to expose the model deployment outside the cluster. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.23#about-the-single-model-serving-platform_serving-large-models[About the single-model serving platform].
 +
 {AAPchatbot} supports vLLM Server. When self-hosting an LLM with {OCPAI}, you can use vLLM Server as the inference engine.
 +
 [NOTE]
 ====
-For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider.
+For configurations with {RHELAI} or {OCPAI}, you must host your own LLM provider instead of using a SaaS LLM provider. 
 ====
 
-* *Red Hat AI Inference Server*
+** *Red Hat AI Inference Server*
 +
-You can deploy an LLM using Red Hat AI Inference Server as your inference runtime. Red Hat AI Inference Server supports vLLM runtimes for efficient model serving and can be configured to work with {AAPchatbot}. For more information, see link:http://docs.redhat.com/en/documentation/red_hat_ai_inference_server/3.2/html/getting_started/rhaiis-getting-started-overview_getting-started[Red Hat AI Inference Server documentation].
+You can deploy an LLM using Red Hat AI Inference Server as your inference runtime. Red Hat AI Inference Server supports vLLM runtimes for efficient model serving and can be configured to work with Ansible Lightspeed intelligent assistant. For more information, see link:http://docs.redhat.com/en/documentation/red_hat_ai_inference_server/3.2/html/getting_started/rhaiis-getting-started-overview_getting-started[Red Hat AI Inference Server documentation].
 +
-If the Red Hat AI Inference Server deployment is in a different environment than the {LightspeedShortName} deployment, ensure the model deployment allows access using a secure connection and configure appropriate network routing.
+If the Red Hat AI Inference Server deployment is in a different environment than the Ansible Lightspeed deployment, ensure the model deployment allows access using a secure connection and configure appropriate network routing. 
 +
 {AAPchatbot} supports vLLM Server when self-hosting an LLM with Red Hat AI Inference Server as the inference engine.
+
+* *Third-party LLM providers:*
+
+** *{OpenAI}*
++
+To use {OpenAI} with the {AAPchatbot}, you need access to the link:https://openai.com/api/[{OpenAI} API platform].
+
+** *{AzureOpenAI}*
++
+To use {Azure} with the {AAPchatbot}, you need access to link:https://azure.microsoft.com/en-us/products/ai-foundry/models/openai/[{AzureOpenAI}] product page. 
 
 == Process to deploy {LightspeedShortName} on a {ContainerBase}
 
@@ -136,6 +148,7 @@ Perform the following tasks:
 . xref:proc-configure-lightspeed-variables_deploying-lightspeed-containerized-install[Configure the {LightspeedShortName} variables in the inventory file].
 . xref:installing-containerized-aap[Install] or xref:updating-containerized-ansible-automation-platform[upgrade] to containerized {PlatformNameShort} {PlatformVers}.
 . If you want to install the Ansible Lightspeed coding assistant, xref:proc-configure-vs-code-containerized-install_deploying-lightspeed-containerized-install[configure the Ansible VS Code extension].
+. Optional: xref:proc-change-llm-model-containerized-install_deploying-lightspeed-containerized-install[Change your LLM model] if you want to use a different LLM provider after deploying {LightspeedShortName}. 
 
 |Access and use the {AAPchatbot}
 |All Ansible users within the organization who want to xref:con-using-chatbot_deploying-lightspeed-containerized-install[use the {AAPchatbot}] to get answers to their questions about the {PlatformNameShort}.
