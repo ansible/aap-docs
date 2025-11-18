@@ -49,7 +49,7 @@ terraform {
 
 provider "aap" {
   host     = "https://AAP_HOST"
-  token = "my-aap-token" # Also supports AAP_TOKEN environment variable
+  token = "my-aap-token" # Do not record credentials directly in the Terraform configuration. Provide your token using the AAP_TOKEN environment variable.
 }
 
 resource "aap_inventory" "my_inventory" {
@@ -108,11 +108,11 @@ resource "aap_job" "my_job" {
 
 * **`insecure_skip_verify`:** (Boolean) If `true`, configures the provider to skip TLS certificate verification. Can also be configured by setting the `AAP_INSECURE_SKIP_VERIFY` environment variable.
 
-* **`password`:** (String, Case Sensitive) Password to use for basic authentication. Ignored if the token is set. Can also be configured by setting the `AAP_PASSWORD` environment variable.
+* **`password`:** (String, Case Sensitive) Password to use for basic authentication. Ignored if the token is set. Note that hardcoded credentials are not recommended for security reasons. It is a best practice to use the `AAP_PASSWORD` environment variable instead.
 
 * **`timeout`:** (Number) Timeout specifies a time limit for requests made to the AAP server. Defaults to 5 if not provided. A timeout of zero means no timeout. Can also be configured by setting the `AAP_TIMEOUT` environment variable.
 
-* **`token`:** (String, Case Sensitive): Token to use for token authentication. Can also be configured by setting the `AAP_TOKEN` environment variable.
+* **`token`:** (String, Case Sensitive): Token to use for token authentication. Note that hardcoded credentials are not recommended for security reasons. It is a best practice to use the `AAP_TOKEN` environment variable instead.
 
 * **`username`:** (String) Username to use for basic authentication. Ignored if the token is set. Can also be configured by setting the `AAP_USERNAME` environment variable.
 
