@@ -1,0 +1,60 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="example-rulebook"]
+
+= Example rulebook
+
+[role="_abstract"]
+
+The following rulebook example shows how to use TF actions and EDA to listen for events on a webhook.
+
+----
+- name: Listen for events on a webhook
+  hosts: all
+
+  ## Define our source for events
+
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5000
+      filters:
+        - ansible.eda.insert_hosts_to_meta:
+            host_path: payload.limit
+
+  ## Define the conditions we are looking for
+
+  rules:
+    - name: Dispatch TF Job Template Action
+      condition: event.payload.template_type == "job"
+      throttle:
+        once_after: 1 minute
+        group_by_attributes:
+          - event.payload.job_template_name
+          - event.payload.limit
+          - event.payload.organization_name
+      actions:
+        - debug:
+            msg: "Executing Job Template {{ event.payload.job_template_name }}"
+        - run_job_template:
+            name: "{{ event.payload.job_template_name }}"
+            organization: "{{ event.payload.organization_name }}"
+        - debug:
+            msg: "Executed Job Template {{ event.payload.job_template_name }}"
+    - name: Dispatch TF Workflow Job Template Action
+      condition: event.payload.template_type == "workflow"
+      throttle:
+        once_after: 1 minute
+        group_by_attributes:
+          - event.payload.workflow_template_name
+          - event.payload.limit
+          - event.payload.organization_name
+      actions:
+        - debug:
+            msg: "Executing Workflow Template {{ event.payload.workflow_template_name }}"
+        - run_workflow_template:
+            name: "{{ event.payload.workflow_template_name }}"
+            organization: "{{ event.payload.organization_name }}"
+        - debug:
+            msg: "Executed Workflow Job Template {{ event.payload.workflow_template_name }}"
+----
