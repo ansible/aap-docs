@@ -10,9 +10,12 @@ Project update jobs in the API manage synchronization.
 These jobs are also known as source control updates in the UI.
 
 These project update jobs run only on the control plane and in task pods within the {OCPShort}.
-Their role is to update the {ControllerName} with the latest automation content from its defined source, such as a Git repository.
+Their role is to update the {ControllerName} with the latest automation content.
+This content comes from its defined source, such as a Git repository.
 
 Updating projects is not performance-sensitive, provided that they store only playbooks and Ansible-related text files.
 However, issues might arise when projects become excessively large.
+
 Do not store large volumes of binary data within a project.
-If jobs require access to additional data, retrieve this data from object storage or file storage within the playbook's scope.
+If jobs require access to additional data, they should retrieve it from object storage or file storage.
+This retrieval must be done within the playbook's scope.

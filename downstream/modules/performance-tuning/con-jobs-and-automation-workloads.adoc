@@ -4,7 +4,7 @@
 = Jobs and automation workloads
 
 [role="_abstract"]
-Jobs are the primary workload for {ControllerName} and are run on the execution plane.
+Jobs are the primary workload for {ControllerName} and run on the execution plane.
 They include the following job types:
 
 * Standard jobs
@@ -18,7 +18,11 @@ Jobs are initiated by a control node, which then streams, processes, and stores 
 
 A performance sensitive part of this is the processing of the playbook output.
 The output is captured and serialized into job events by the {ControllerName}.
-A single Ansible task running against a host typically produces multiple job events (for example: task start, host-specific details, and task completion).
+A single Ansible task running against a host typically produces multiple job events, for example:
+
+* Task start
+* Host-specific details
+* Task completion
 
 Event volume varies significantly with the playbook's configured verbosity level.
 For example, a simple debug task that prints `Hello World` on one host might produce 6 job events at verbosity 1, increasing to 34 job events at verbosity 3.
@@ -45,6 +49,8 @@ System jobs involve internal maintenance tasks, such as clean up of old job even
 The execution frequency of system jobs is managed by schedules.
 System jobs run on the control plane, because they run management commands that interact with the database.
 These workloads involve key platform activities.
-Reducing the frequency of system jobs or increasing the number of days of data for jobs to retain can degrade database performance.
-In general, we recommend retaining as few days of data as possible and leveraging the external logging features for long term audit data storage.
-Storing more data in the database can make expensive queries that scan large tables more costly for the database.
+
+Reducing the frequency of system jobs or increasing the number of days of data to retain can degrade database performance.
+It is generally recommended to retain as few days of data as possible.
+Use external logging features for long-term audit data storage.
+Storing more data in the database can make queries that scan large tables more costly.
