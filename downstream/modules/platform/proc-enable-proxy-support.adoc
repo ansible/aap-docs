@@ -5,6 +5,9 @@
 = Enabling proxy support through a load balancer
 
 //FYI - In 2.5 EA, the System menu is specific to controller so do not change to AAP.
+[role="_abstract"]
+A proxy server acts as an intermediary for requests from clients seeking resources from other servers. There are two types of proxy servers: forward proxies and reverse proxies.
+
 A forward proxy deals with client traffic, regulating and securing it.
 To provide proxy server support, {ControllerName} handles proxied requests (such as ALB, NLB , HAProxy, Squid, Nginx and tinyproxy in front of {ControllerName}) using the *REMOTE_HOST_HEADERS* list variable in the {ControllerName} settings. By default, *REMOTE_HOST_HEADERS* is set to `["REMOTE_ADDR", "REMOTE_HOST"]`.
 
@@ -24,5 +27,5 @@ To enable proxy server support, edit the *REMOTE_HOST_HEADERS* field in the sett
 ]
 ----
 . Click btn:[Save] to save your settings.
-
-{ControllerNameStart} determines the remote host’s IP address by searching through the list of headers in *Remote Host Headers* until the first IP address is located.
++
+{ControllerNameStart} determines the remote host's IP address by searching through the list of headers in *Remote Host Headers* until the first IP address is located.

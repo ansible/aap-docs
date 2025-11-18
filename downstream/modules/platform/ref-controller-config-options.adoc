@@ -4,6 +4,7 @@
 
 = options
 
+[role="_abstract"]
 A dictionary of keywords or options that can affect the runtime functionality {Builder}.
 
 Valid keys for this section are:
@@ -16,9 +17,9 @@ Valid keys are:
 
 ** *cmd*: Literal value for the `CMD` Containerfile directive. The default value is `["bash"]`.
 ** *entrypoint*: Literal value for the `ENTRYPOINT` Containerfile directive. 
-The default entrypoint behavior handles signal propagation to subprocesses, as well as attempting to ensure at runtime that the container user has a proper environment with a valid writeable home directory, represented in `/etc/passwd`, with the `HOME` environment
+The default entrypoint behavior handles signal propagation to subprocesses, and attempting to ensure at runtime that the container user has a proper environment with a valid writeable home directory, represented in `/etc/passwd`, with the `HOME` environment
 variable set to match. 
-The default entrypoint script can emit warnings to `stderr` in cases where it is unable to suitably adjust the user runtime environment. This behavior can be ignored or elevated to a fatal error; consult the source for the `entrypoint` target script for more details. 
+The default entrypoint script can emit warnings to `stderr` in cases where it is unable to suitably adjust the user runtime environment. This behavior can be ignored or elevated to an unrecoverable error; consult the source for the `entrypoint` target script for more details. 
 
 ** *package_pip*: Package to install with pip for entrypoint support. 
 This package is installed in the final build image. 
@@ -43,9 +44,9 @@ The default value is `/runner`.
 * *user*: This sets the username or UID to use as the default user for the final container image. 
 +
 The default value is `1000`.
-
-.Example options:
-
++
+*Example*
++
 [literal, options="nowrap" subs="+attributes"]
 ----
 options:

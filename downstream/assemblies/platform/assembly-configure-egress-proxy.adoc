@@ -4,15 +4,18 @@
 
 = Configuring Ansible Automation Platform to use egress proxy
 
+[role="_abstract"]
 You can deploy {PlatformNameShort} so that egress from the platform for various purposes functions properly through proxy servers. 
+
 Egress proxy allows clients to make indirect (through a proxy server) requests to network services. 
+
 The client first connects to the proxy server and requests some resource, for example, email, located on another server. 
 The proxy server then connects to the specified server and retrieves the resource from it.
 
 
 == Overview
 The egress proxy should be configured on the system and component level of {PlatformNameShort}, for all the RPM and containerized installation methods. 
-For containerized installers, the system proxy configuration for podman on the nodes solves most of the problems with access through the proxy. 
+For containerized installers, the system proxy configuration for Podman on the nodes solves most of the problems with access through the proxy. 
 For RPM installation, both system and component configurations are needed. 
 
 include::platform/ref_proxy-backends.adoc[leveloffset=+2]

@@ -1,17 +1,23 @@
 // Module file name: con-collection-sync.adoc
 :_mod-docs-content-type: CONCEPT
 [id="collection-synchronization_{context}"]
-= Collection synchronization 
+= Collection synchronization
 
 [role="_abstract"]
 {PrivateHubNameStart} can synchronize collections from remote `ansible-galaxy` repositories, such as `galaxy.ansible.com` or {HubName} on `console.redhat.com`.
 
-Pulp content worker and the database are used to sync repositories.
+Pulp content workers and the database synchronize the repositories.
 The {ControllerName} can download these collections during project updates, or use them to build {ExecEnvName}.
-Collections are also available for any other client using the `ansible-galaxy` CLI to download and use.
+Collections are also available for any other client by using the `ansible-galaxy` CLI to download and use.
 
-The performance of syncing collections is relative to the number of collections listed in the `requirements.yml`, the number of versions synced, and the number of versions retained.
-Specifically, synchronization uses memory in proportion to the number of collections and versions synchronized.
+The performance of collection synchronization is impacted by the following:
+
+* The number of collections listed in the `requirements.yml`
+* The number of versions synced
+* The number of versions retained
+
+Synchronization uses memory in direct proportion to the number of collections and versions synchronized.
 Using a targeted `requirements.yml` with specific versions can limit this impact.
+
 Hosting collections uses storage space.
 Manage the storage space that collections use by specifying the retained number of versions on the repository.

@@ -1,0 +1,66 @@
+// Module file name: proc-applying-your-metrics-utility-config.adoc
+:_mod-docs-content-type: PROCEDURE
+[id="proc-applying-your-metrics-utility-config_{context}"]
+= Applying your `metrics-utility` configuration
+
+[role="_abstract"]
+If you are running `metrics-utility` on a new installation, you do not need to take any additional actions to apply your configuration.
+
+If you are applying your `metrics-utility` configuration to an existing deployment, you must re-run the {PlatformNameShort} installer script.
+Re-running the script reads the updated inventory file, deploys the `automation-controller-metrics-utility` container, and creates the `systemd` user services and timers necessary to automate data collection and reporting.
+Use the following verification steps to ensure your `metrics-utility` configuration has been applied and is running correctly:
+
+* Verify your `systemctl` timer.
+* Verify data collection.
+* Locate generated reports.
+
+.Verification
+. Run the following command to verify that your `systemctl timer` job entries were saved correctly:
++
+-----
+systemctl --user list-timers --no-pager | grep metrics-utility
+-----
++
+*Example output:*
++
+-----
+Wed 2025-08-13 10:45:00 IST 8min left Wed 2025-08-13 10:30:04 IST 6min ago   metrics-utility-build-report.timer metrics-utility-build-report.service
+Wed 2025-08-13 10:45:00 IST 8min left Wed 2025-08-13 10:30:04 IST 6min ago   metrics-utility-gather.timer   	metrics-utility-gather.service
+-----
++
+. Use the following command to verify data collection by inspecting the output logs of the services you are running:
++
+-----
+systemctl --user status metrics-utility-gather.service
+-----
++
+*Example output:*
++
+-----
+metrics-utility-gather.service - Podman metrics-utility-gather.service
+ 	Loaded: loaded (/home/aap/.config/systemd/user/metrics-utility-gather.service; disabled; preset: disabled)
+ 	Active: inactive (dead) since Wed 2025-08-13 10:00:06 IST; 5min ago
+   Duration: 2.008s
+TriggeredBy: ● metrics-utility-gather.timer
+   	Docs: man:podman-generate-systemd(1)
+	Process: 1472847 ExecStart=/usr/bin/podman start metrics-utility-gather (code=exited, status=0/SUCCESS)
+	Process: 1472927 ExecStop=/usr/bin/podman stop -t 10 metrics-utility-gather (code=exited, status=0/SUCCESS)
+	Process: 1472937 ExecStopPost=/usr/bin/podman stop -t 10 metrics-utility-gather (code=exited, status=0/SUCCESS)
+   Main PID: 1472874 (code=exited, status=0/SUCCESS)
+    	CPU: 197ms
+
+Aug 13 10:00:04 aap.example.org podman[1472847]: metrics-utility-gather
+Aug 13 10:00:04 aap.example.org systemd[993]: Started Podman metrics-utility-gather.service.
+Aug 13 10:00:05 aap.example.org metrics-utility-gather[1472874]: 2025-08-13 09:00:05,806 INFO 	[-] awx.main.analytics /tmp/3292ca44-3314-4f>
+Aug 13 10:00:05 aap.example.org metrics-utility-gather[1472874]: /tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-13-083505+0000-2025-08-13-0>
+Aug 13 10:00:05 aap.example.org metrics-utility-gather[1472874]: 2025-08-13 09:00:05,808 INFO 	[-] awx.main.analytics /tmp/3292ca44-3314-4f>
+Aug 13 10:00:05 aap.example.org metrics-utility-gather[1472874]: /tmp/3292ca44-3314-4f0b-b3f6-ba4a1e47a2b1-2025-08-13-083505+0000-2025-08-13-0>
+Aug 13 10:00:06 aap.example.org podman[1472912]: 2025-08-13 10:00:06.169271763 +0100 IST m=+0.019922418 container died 5dc8d5674f1d1745258530f>
+Aug 13 10:00:06 aap.example.org podman[1472912]: 2025-08-13 10:00:06.187584135 +0100 IST m=+0.038234790 container cleanup 5dc8d5674f1d17452585>
+Aug 13 10:00:06 aap.example.org podman[1472927]: metrics-utility-gather
+Aug 13 10:00:06 aap.example.org podman[1472937]: metrics-utility-gather
+-----
++
+. Locate the generated reports. Reports are saved in the directory you specified in the `METRICS_UTILITY_SHIP_PATH` setting.
+* Path: Using the example provided in this document, the report path would be `/aap/controller/data/metrics/`.
+* Filename: The report name follows the format `CCSP-<YEAR>-<MONTH>.xlsx`. For example, a report generated for August, 2025 would be named `CCSP-2025-08.xlsx`.

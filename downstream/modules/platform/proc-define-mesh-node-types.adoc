@@ -11,6 +11,7 @@ ifdef::operator-mesh[]
 
 endif::operator-mesh[]
 
+[role="_abstract"]
 To expand job capacity, create a standalone *execution node* that can be added to run alongside a deployment of {ControllerName}.
 These execution nodes are not part of the {ControllerName} Kubernetes cluster.
 
@@ -20,7 +21,7 @@ These execution nodes are registered in {ControllerName} as type `execution` ins
 
 [IMPORTANT]
 ====
-When creating an execution node, make sure the system timezone on the execution node matches `settings.TIME_ZONE` (default is 'UTC') on {ControllerName}. Fact caching relies on comparing modified times of artifact files, and these modified times are not timezone-aware. Therefore, it is critical that the timezones of the execution nodes match {ControllerName}'s timezone setting.
+When creating an execution node, make sure the system time zone on the execution node matches `settings.TIME_ZONE` (default is 'UTC') on {ControllerName}. Fact caching relies on comparing modified times of artifact files, and these modified times are not time zone-aware. Therefore, it is critical that the timezones of the execution nodes match {ControllerName}'s time zone setting.
 ====
 
 *Hop nodes* can be added to sit between the control plane of {ControllerName} and standalone execution nodes.
@@ -109,10 +110,10 @@ inventory.yml
 group_vars/all.yml
 requirements.yml
 ----
-
++
 . Extract the downloaded `tar.gz` Install Bundle from the location where you downloaded it.
 To ensure that these files are in the correct location on the remote machine, the install bundle includes the `install_receptor.yml` playbook.
-
++
 . Before running the `ansible-playbook` command, edit the following fields in the `inventory.yml` file:
 +
 ----
@@ -123,7 +124,7 @@ all:
           ansible_user: <username> # user provided
           ansible_ssh_private_key_file: ~/.ssh/<id_rsa>
 ----
-
++
 * Ensure `ansible_host` is set to the IP address or DNS of the node.
 * Set `ansible_user` to the username running the installation.
 * Set `ansible_ssh_private_key_file` to contain the filename of the private key used to connect to the instance.
@@ -137,10 +138,10 @@ For more information, see link:https://github.com/ansible/receptor-collection/bl
 ----
 +
 This instructs the `install-receptor.yml` playbook to use the proxy command to connect through the local DNS node to the private node.
-
++
 . When the attributes are configured, click btn:[Save].
 The *Details* page of the created instance opens.
-
++
 . Save the file to continue.
 . The system that is going to run the install bundle to setup the remote node and run `ansible-playbook` requires the `ansible.receptor` collection to be installed:
 +
@@ -164,9 +165,9 @@ Run the following command to open port 27199 for receptor communication (Make su
 ----
 sudo firewall-cmd --permanent --zone=public --add-port=27199/tcp
 ----
-
++
 . Run the following playbook on the machine where you want to update your automation mesh:
-
++
 ----
 ansible-playbook -i inventory.yml install_receptor.yml
 ----
@@ -184,9 +185,9 @@ sudo dnf install -y openssl
 ====
 +
 After this playbook runs, your automation mesh is configured.
-
++
 image::instances_list_view2.png[Instances list view]
-
++
 [NOTE]
 ====
 It might be the case that some servers do not listen on the receptor port (the default is 27199)
@@ -213,12 +214,11 @@ This means that nothing connects to Controller A as Controller A is creating the
 
 The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so once the connection is created, the receptor can communicate in both directions. 
 ====
-
++
 ifdef::operator-mesh[]
 To remove an instance from the mesh, see link:{URLOperatorMesh}/assembly-automation-mesh-operator-aap#ref-removing-instances[Removing instances].
 endif::operator-mesh[]
-
++
 ifdef::controller-UG[]
 To remove an instance from the mesh, see link:{URLControllerUserGuide}/assembly-controller-instances#ref-removing-instances[Removing instances].
 endif::controller-UG[]
-r

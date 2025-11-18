@@ -9,17 +9,17 @@
 
 [role="_abstract"]
 
-The installation inventory file defines the architecture of the {PlatformNameShort} infrastructure and provides a number of variables that can be used to modify the initial configuration of the infrastructure components. 
-For more information on the installer inventory, see link:{URLPlanningGuide}/about_the_installer_inventory_file[About the installer inventory file].
+The installation inventory file defines the architecture of the {PlatformNameShort} infrastructure and provides several variables that can be used to modify the initial configuration of the infrastructure components. 
+For more information on the {Installer} inventory, see link:{URLPlanningGuide}/about_the_installer_inventory_file[About the installer inventory file].
 
-The following table lists a number of security-relevant variables and their recommended values for an RPM-based deployment.
+The following table lists several security-relevant variables and their recommended values for an RPM-based deployment.
 
 .Security-relevant inventory variables
 [cols="33%,33%,33%",options="header"]
 |===
 | *RPM deployment variable* | *Recommended Value* | *Details*
 
-| `postgres_use_ssl` | true | The installation program configures the installer-managed Postgres database to accept SSL-based connections when this variable is set.
+| `postgres_use_ssl` | true | The installation program configures the {Installer}-managed Postgres database to accept SSL/TLS-based connections when this variable is set.
 
 The default for this variable is false which means SSL/TLS is not used for PostgreSQL connections. 
 
@@ -31,24 +31,24 @@ By default, when each service connects to the database, it tries an encrypted co
 Setting this variable to `verify-full` enforces an mTLS negotiation between the service and the database. 
 The `postgres_use_ssl` variable must also be set to `true` for this pg_sslmode to be effective.
 
-*NOTE*: If a third-party database is used instead of the installer-managed database, the third-party database must be set up independently to accept mTLS connections.
+*NOTE*: If a third-party database is used instead of the {Installer}-managed database, the third-party database must be set up independently to accept mTLS connections.
 
 | `nginx_disable_hsts` `automation_gateway_disable_hsts` `automationhub_disable_hsts` `automationcontroller_disable_hsts` | false | If set to `true`, these variables disable HTTPS _strict transport Security_ (HSTS) connections to each of the component web services. 
 
-The default is `false`. If these variables are absent from the installer inventory it is effectively equivalent to defining the variables as `false`.
+The default is `false`. If these variables are absent from the {Installer} inventory it is effectively equivalent to defining the variables as `false`.
 |===
 
-The following table lists a number of security-relevant variables and their recommended values for a container-based deployment.
+The following table lists several security-relevant variables and their recommended values for a container-based deployment.
 
 .Security-relevant containerized inventory variables
 [cols="33%,33%,33%",options="header"]
 |===
 | *Container deployment variable* | *Recommended Value* | *Details*
-| `postgresql_disable_tls` | false | If set to `true`, this variable disables TLS connections to the installer-managed PostgreSQL database. 
+| `postgresql_disable_tls` | false | If set to `true`, this variable disables TLS connections to the {Installer}-managed PostgreSQL database. 
 
 The default is `false` 
 
-If this variable is absent from the installer inventory, it is effectively equivalent to defining the variable as `false`.
+If this variable is absent from the {Installer} inventory, it is effectively equivalent to defining the variable as `false`.
 
 | `controller_pg_sslmode` `gateway_pg_sslmode` `hub_pg_sslmode` `eda_pg_sslmode` | verify-full a| These variables control mutual TLS (mTLS) authentication to the database. 
 
@@ -56,25 +56,25 @@ By default, when each service connects to the database, it tries an encrypted co
 
 [NOTE]
 ====
-If a third-party database is used instead of the installer-managed database, the third-party database must be set up independently to accept mTLS connections.
+If a third-party database is used instead of the {Installer}-managed database, the third-party database must be set up independently to accept mTLS connections.
 ====
 
 | `controller_nginx_disable_https` `gateway_nginx_disable_https` `hub_nginx_disable_https` `da_nginx_disable_https` | `false` | If set to `true`, these variables disable HTTPS connections to each of the component web services. 
 
 The default is `false`.
 
-If these variables are absent from the installer inventory, it is effectively equivalent to defining the variables as `false`.
+If these variables are absent from the {Installer} inventory, it is effectively equivalent to defining the variables as `false`.
 
 | `controller_nginx_disable_hsts` `gateway_nginx_disable_hsts` `hub_nginx_disable_hsts` `eda_nginx_disable_hsts` | `false` | If set to 'true', these variables disable HTTPS Strict Transport Security (HSTS) connections to each of the component web services. 
 
 The default is `false`. 
 
-If these variables are absent from the installer inventory it is effectively equivalent to defining the variables as `false`.
+If these variables are absent from the {Installer} inventory it is effectively equivalent to defining the variables as `false`.
 |===
 
 
-In an enterprise architecture where a load balancer is used in front of multiple {Gateway}s, SSL client connections can be terminated at the load balancer or passed through to the individual AAP servers. 
-If SSL is being terminated at the load balancer, this guide recommends that the traffic gets re-encrypted from the load balancer to the individual {PlatformNameShort} servers. 
+In an enterprise architecture where a load balancer is used in front of multiple {Gateway}s, SSL/TLS client connections can be terminated at the load balancer or passed through to the individual AAP servers. 
+If SSL/TLS is being terminated at the load balancer, this guide recommends that the traffic gets re-encrypted from the load balancer to the individual {PlatformNameShort} servers. 
 This ensures that end-to-end encryption is in use. 
 In this scenario, the `*_disable_https` variables listed are set to the default value of `false`.
 

@@ -8,7 +8,8 @@ Scaling adds resources to handle increased load.
 This is primarily achieved through horizontal scaling (adding more pods or instances) or vertical scaling (adding CPU or memory resources to pods or instances).
 Proper scaling ensures high availability and maintains performance under load.
 
-Consider scaling your services when you observe one or more of the following key performance indicators, which suggest a component is reaching its capacity and cannot efficiently handle the current request load:
+Scale your services when key performance indicators suggest a component is reaching capacity.
+These indicators show the component cannot efficiently handle the current request load and include the following:
 
 * High API latency
 * High CPU utilization
@@ -26,13 +27,16 @@ The request is sent to the destination service depending on which route is in th
 * {EDAName} Event Streams: `/eda-event-streams/api/eda/v1/external_event_stream/`
 * {HubName}: `/api/galaxy`
 
-Monitoring latency on the different routes through the Envoy proxy logs enables you to identify which service requires scaling.
-These routes are present in the proxy container of {Gateway} pods in {OCPShort} or in the proxy logs of the {Gateway} nodes in {VMBase} and {ContainerBase}.
-Latency exceeding target API thresholds (for example, 99th percentile >1500ms) indicates a need to trigger alerts or scale web services.
+Monitoring latency on the different routes through the Envoy proxy logs helps you identify which service requires scaling.
+These routes are present in the proxy container of {Gateway} pods in {OCPShort}.
+For {VMBase} and {ContainerBase} installations, check the proxy logs of the {Gateway} nodes.
+Exceeding target API thresholds (for example, 99th percentile >1500ms) indicates a need to trigger alerts.
+You might also need to scale web services.
 
 == High CPU utilization
 
-When a service's API pod shows consistently high CPU usage, it may be unable to process incoming requests in a timely manner, leading to a backlog of requests.
+When a service's API pod shows consistently high CPU usage, it might be unable to process incoming requests promptly.
+This can lead to a backlog of requests.
 The following indicators suggest high CPU utilization:
 
 * High total request time from the Envoy proxy logs with the processing time from the service's WSGI logs
@@ -41,10 +45,14 @@ The following indicators suggest high CPU utilization:
 
 == Error codes
 
-Error codes in the {Gateway}'s proxy container (on {OCPShort}) or in the proxy logs (for VM-based and container-based installations) indicate the service must be scaled.
+Error codes indicate the service must be scaled.
+Find these codes in the {Gateway}'s proxy container (on {OCPShort}) or in the proxy logs (for VM-based and container-based installations).
 They are often precipitated by the services being overloaded and unable to service requests in a timely manner, and are often preceded by periods of higher latency.
 
-* Upstream Authentication Failures: `502 UAEX` (Upstream Authentication Extension) responses in Envoy logs indicate issues during the authentication phase of a request. This suggests the authentication service is overloaded, timing out, or returning broken responses.
-* Upstream Service Unhealthy: `503 UH` (Upstream Service Unhealthy) responses for a specific service mean that Envoy has marked one or more of that service's pods as unhealthy and is not sending traffic to it. This occurs when an upstream pod fails its health checks. Because health checks share the same request queue as client traffic, an overloaded pod that cannot respond to the health check in time will be temporarily removed from the load balancing pool.
-* Upstream Connection Failure: `503 UF` (Upstream Connection Failure) for a specific service’s requests indicates Envoy attempted to contact an upstream pod, but the connection failed. This can occur if the upstream service is overwhelmed and cannot accept new connections.
+* Upstream Authentication Failures: `502 UAEX` (Upstream Authentication Extension) indicates issues during the authentication phase of a request.
+This suggests the authentication service is overloaded, timing out, or returning broken responses.
+* Upstream Service Unhealthy: A `503 UH` (Upstream Service Unhealthy) response means Envoy has marked one or more service pods as unhealthy.
+Traffic is not being sent to that unhealthy pod.
+* Upstream Connection Failure: `503 UF` (Upstream Connection Failure) response indicates a connection failure.
+Envoy attempted to contact an upstream pod, but the connection failed.
 For more information about Envoy Response Flags (the letter codes that follow the `HTTP` response code), see link:https://www.envoyproxy.io/docs/envoy/latest/configuration/observability/access_log/usage[Access logging].

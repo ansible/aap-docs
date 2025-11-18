@@ -11,7 +11,7 @@ Growth topologies are suited to proof-of-concept deployments, small-scale enviro
 
 Growth topologies include single points of failure, such as a single {Gateway} , and other critical components, such as the control plane, execution plane, and web services.
 These components often share resources on the same node, resulting in resource contention under increasing load.
-As workloads grow, specific services, such as job processing or API responsiveness, can become bottlenecks due to co-location or single node capacity limits.
+As workloads grow, specific services, such as job processing or API responsiveness, can become bottlenecks due to colocation or single node capacity limits.
 Consequently, {GrowthTopologyPlural} generally do not offer robust, high-availability capabilities.
 For {VMBase} and containerized deployments of {PlatformNameShort}, you can marginally increase possible workloads by vertically scaling the virtual machines or physical hosts within the growth deployment.
 However, vertical scaling capabilities within a {GrowthTopology} are limited.
@@ -19,7 +19,7 @@ However, vertical scaling capabilities within a {GrowthTopology} are limited.
 == Use cases for migrating to an {EnterpriseTopology}
 
 To scale beyond the limitations within {GrowthTopologyPlural}, you can migrate to an {EnterpriseTopology}.
-Migrating to an {EnterpriseTopology} may be relevant in the following use cases:
+Migrating to an {EnterpriseTopology} might be relevant in the following use cases:
 
 * Vertically scaling a {GrowthTopology} becomes impractical due to cost or availability.
 * The {GrowthTopology} cannot satisfy high availability and disaster recovery requirements.
@@ -29,7 +29,7 @@ Migrating to an {EnterpriseTopology} may be relevant in the following use cases:
 
 == Recommended {EnterpriseTopology}
 
-To maximize flexibility, resilience, and and scalability, migrate to the {OCPShort}-based {EnterpriseTopology}.
+To maximize flexibility, resilience, and scalability, migrate to the {OCPShort}-based {EnterpriseTopology}.
 This migration includes integration with an externally managed, enterprise-grade PostgreSQL database.
 {OperatorBase} offers greater flexibility to scale individual services and adapt the deployment to specific requirements.
 They also enhance the ability to scale the deployment up and down with reduced downtime and customize workload placement with labels, taints, tolerations, and topology constraints.
