@@ -20,15 +20,12 @@ For more information, see the link:{BaseURL}/red_hat_ansible_automation_platform
 
 .Prerequisites
 
-* If you plan to upload a subscription manifest, you must first obtain one. 
-For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#proc-controller-obtaining-subscriptions-manifest[Obtaining a subscriptions manifest].
-* If you plan to find your subscription with credentials, you must create a service account with the Analytics Administrator viewer role in console.redhat.com.
-For more information see, link:https://docs.redhat.com/en/documentation/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[Creating a service account].
+* You have obtained a subscription manifest. For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/automation_controller_user_guide/index#proc-controller-obtaining-subscriptions-manifest[Obtaining a subscriptions manifest].
 
 .Procedure
 
 . Launch {ControllerName} for the first time. 
-The subscription wizard screen displays.
+The *Subscription Management*  screen displays.
 +
 image::controller-gs-subscription-management.png[Subscription Management]
 +
@@ -43,7 +40,7 @@ If the *Browse* option in the *Subscription manifest* option is disabled, clear 
 +
 The subscription metadata is then retrieved from the RHSM/Satellite API, or from the manifest provided. 
 If many subscription counts were applied in a single installation, {ControllerName} combines the counts but uses the earliest expiration date as the expiry (at which point you must refresh your subscription).
-.. If you are using your Red Hat service account credentials to activate your subscription, enter your client ID and client secret in the fields labeled *Red Hat Client ID for Analytics* and *Red Hat Client Secret for Analytics* on the license page. 
+.. If you are using your Red Hat customer credentials, enter your username and password on the license page. 
 Use your Satellite username or password if your {ControllerName} cluster nodes are registered to Satellite with Subscription Manager. 
 After you enter your credentials, click btn:[Get Subscriptions].
 +
