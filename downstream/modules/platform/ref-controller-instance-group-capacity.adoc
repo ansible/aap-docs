@@ -31,7 +31,7 @@ If 2 jobs are running with 20 forks each, then a third job with a `task_impact` 
 
 For container groups, using the `max_forks` value is useful given that all jobs are submitted using the same `pod_spec` with the same resource requests, irrespective of the "forks" value of the job. 
 The default `pod_spec` sets requests and not limits, so the pods can "burst" above their requested value without being throttled or reaped. 
-By setting the `max_forks value`, you can help prevent a scenario where too many jobs with large forks values get scheduled concurrently and cause the OpenShift nodes to be oversubscribed with multiple pods using more resources than their requested value.
+By setting the `max_forks value`, you can help prevent a scenario where too many jobs with large forks values get scheduled concurrently and cause the OpenShift nodes to be oversubscribed with multiple pods by using more resources than their requested value.
 
 To set the maximum values for the concurrent jobs and forks in an instance group, see 
 link:{URLControllerUserGuide}/controller-instance-groups#controller-create-instance-group[Creating an instance group].
