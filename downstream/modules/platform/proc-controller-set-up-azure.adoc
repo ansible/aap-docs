@@ -20,7 +20,7 @@ To set up enterprise authentication for {MSEntraID}, formerly known as {Azure} A
 . *Register {PlatformNameShort}* in {MSEntraID} by following the link:https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app[Quickstart: Register an application with the Microsoft identity platform]. This process provides you with an Application (client) ID and Application secret.
 . *Add the redirect URL in {MSEntraID}*. After completing the configuration wizard for {MSEntraID} authentication in your platform, copy the URL displayed in the *Azure AD OAuth2 Callback URL* field. Then, go to your registered enterprise application in Azure and add this URL as a *Redirect URL* (also referred to as a *Callback URL* in {PlatformNameShort}) as described in link:https://learn.microsoft.com/en-us/entra/identity-platform/how-to-add-redirect-uri[How to add a redirect URI to your application]. This step is required for the login flow to work correctly.
 
-The attributes provided by {MSEntraID} are not set in the {PlatformNameShort} configuration for this authentication type. Instead, the link:https://github.com/python-social-auth/social-core/blob/master/social_core/backends/azuread.py#L85-L98[social_core azuread backend] provides the translation of claims provided by {MSEntraID}. The user attributes that allow {PlatformNameShort} to correctly identify the user and assign the proper attributes like first name, last name, email, and username include the following: 
+The attributes provided by {MSEntraID} are not set in the {PlatformNameShort} configuration for this authentication type. Instead, the link:https://github.com/python-social-auth/social-core/blob/master/social_core/backends/azuread.py#L85-L98[social_core azuread backend] provides the translation of claims provided by {MSEntraID}. The user attributes that allow {PlatformNameShort} to correctly identify the user and assign the proper attributes such as given name, surname, email, and username include the following: 
 
 [cols="2*",options="header"]
 |===
@@ -75,6 +75,7 @@ include::snippets/snip-gw-authentication-common-checkboxes.adoc[]
 +
 . Click btn:[Create Authentication Method].
 
+.Verification
 include::snippets/snip-gw-authentication-verification.adoc[]
 
 .Next steps
