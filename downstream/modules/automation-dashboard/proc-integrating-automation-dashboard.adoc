@@ -7,24 +7,25 @@
 = Integrating {AutomationDashboardName} with your {PlatformNameShort}
 
 [role="_abstract"]
-Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} configuration in order to collect and visualise data and gain insights into your automation.
+Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} configuration to collect and visualise data and gain insights into your automation.
 
 .Procedure 
 
-. Verify that {AutomationDashboardName} is running on https port 8447 on your RHEL host. This verification will require your {PlatformNameShort} login details.
+. Verify that {AutomationDashboardName} is running on https port 8447 on your Red Hat Enterprise Linux host.
 +
 [NOTE]
 ====
-Port 8447 is enabled by default, but this is configurable.
+* This verification requires your {PlatformNameShort} login details.
+* Port 8447 is enabled by default, but this is configurable.
 ====
-. Your {PlatformNameShort} instances are added into `clusters.yml` using the following information:
+. Add your {PlatformNameShort} instances into `clusters.yaml` using the following information:
 * Your {PlatformNameShort} URLs/ports for front-end access
 * A preconfigured {PlatformNameShort} OAuth access token and refresh for _read_ access
 * OAuth2 client credentials
 +
 [NOTE]
 ====
-If you don’t have access to {PlatformNameShort}, consult your administrator.
+If you do not have access to {PlatformNameShort}, consult your administrator.
 ====
 . Configure a personal access token. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/access_management_and_authentication/gw-token-based-authentication[Configuring access to external applications with token-based authentication].
 . Once you have configured your access token, run the following command:
@@ -75,7 +76,7 @@ clusters:
 [NOTE]
 ====
 The `access_token`, `refresh_token`, and `client_secret` are stored in the {AutomationDashboardName} database. 
-All three values are encrypted for security.
+These values are encrypted for security.
 ====
 
 . Run the following commands to load and activate your {AutomationDashboardName} configuration:
@@ -91,7 +92,7 @@ podman exec automation-dashboard-web /venv/bin/python ./manage.py setclusters /c
 [NOTE]
 ====
 {AutomationDashboardName} uses `refresh_token`, `client_id`, and `client_secret` to automatically obtain a new `access_token` and `refresh_token` when the current token expires.
-The utility uses the ping endpoint to detect the {PlatformNameShort} version and determine the correct token refresh endpoint.
+The utility uses the ping endpoint to detect the {PlatformNameShort} version and find the correct token refresh endpoint.
 ====
 *Example*
 +
@@ -128,7 +129,7 @@ Successfully created Sync task for Cluster https://my-aap.example.com:443.
 ====
 Consider using a short date interval to reduce test time. The format is YYYY-MM-DD.
 ====
-You can then use `journalctl` to monitor progress:
+You can then use `journalctl` to check progress:
 +
 [source,bash]
 ----
