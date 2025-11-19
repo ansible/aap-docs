@@ -16,7 +16,7 @@ Playbooks can also glue many other operations together.
 
 Automation mesh::
 Describes a network comprising of nodes. 
-Communication between nodes is established at the transport layer by protocols such as TCP, UDP or Unix sockets. 
+Communication between nodes is established at the transport layer by protocols such as TCP, UDP or UNIX sockets. 
 
 See also, *Node*.
 
@@ -59,11 +59,11 @@ A managed credential type used for authenticating with a secret management syste
 
 Facts::
 Facts are things that are discovered about remote nodes. 
-While they can be used in playbooks and templates just like variables, facts are things that are inferred, rather than set. 
+While they can be used in playbooks and templates as with variables, facts are things that are inferred, rather than set. 
 Facts are automatically discovered when running plays by executing the internal setup module on the remote nodes. 
 You never have to call the setup module explicitly: it just runs. 
 It can be disabled to save time if it is not required. 
-For the convenience of users who are switching from other configuration management systems, the fact module also pulls in facts from the `ohai` and `facter` tools if they are installed, which are fact libraries from Chef and Puppet, respectively.
+For the convenience of users who are switching from other configuration management systems, the fact module also pulls in facts from the `ohai` and `facter` tools if they are installed, which are fact libraries from Chef and Puppet.
 
 Forks::
 Ansible and {ControllerName} communicate with remote nodes in parallel. 
@@ -78,13 +78,13 @@ The `group_vars/` files are files that are stored in a directory with an invento
 This is a convenient place to put variables that are provided to a given group, especially complex data structures, so that these variables do not have to be embedded in the inventory file or playbook.
 
 Handlers::
-Handlers are like regular tasks in an Ansible Playbook (see *Tasks*), but are only run if the Task contains a "notify" directive and also indicates that it changed something. 
+Handlers are similar to regular tasks in an Ansible Playbook (see *Tasks*), but are only run if the Task contains a "notify" directive and also indicates that it changed something. 
 For example, if a configuration file is changed then the task referencing the configuration file templating operation might notify a service restart handler. 
 This means services can be bounced only if they need to be restarted. 
 Handlers can be used for things other than service restarts, but service restarts are the most common use.
 
 Host::
-A system managed by {ControllerName}, which may include a physical, virtual, or cloud-based server, or other device (typically an operating system instance). 
+A system managed by {ControllerName}, which can include a physical, virtual, or cloud-based server, or other device (typically an operating system instance). 
 Hosts are contained in an Inventory. 
 Sometimes referred to as a "node".
 
@@ -141,7 +141,7 @@ The execution node is where the job runs, and the controller node interfaces bet
 |====
 | Node Type | Description
 | Control | Nodes that run persistent services, and delegate jobs to hybrid and execution nodes.
-| Hybrid | Nodes that run persistent services and execute jobs.
+| Hybrid | Nodes that run persistent services and run jobs.
 | Hop | Used for relaying across the mesh only.
 | Execution | Nodes that run jobs delivered from control nodes (jobs submitted from the user's Ansible automation)
 |====
