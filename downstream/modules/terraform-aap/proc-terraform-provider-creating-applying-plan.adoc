@@ -1,0 +1,41 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="terraform-provider-creating-applying-plan"]
+
+= Creating and applying the plan
+
+[role="_abstract"]
+
+After you configure your {Terraform} plan to include EDA events, you create and apply the plan to trigger the events.
+
+.Procedure
+
+. Run `terraform init` to initialize your working directory.
+. Use `terraform plan` to commit to create the plan. The following example also saves the plan to a file named `tfplan.out`, but you can specify any name for the plan. Saving the plan is a best practice for automation because the saved plan is strictly enforced.
++
+----
+terraform plan -out=tfplan.out
+----
+
+. Review the plan output.
+. Apply the saved plan.
++
+----
+terraform apply tfplan.out
+----
++
+This creates and sends an event to the specified EDA event stream. As each resource is created, TF actions are invoked and the corresponding {PlatformNameShort} playbooks are executed sequentially.
+
+
+.Verification
+
+. Verify that the runs are updated in the {Terraform} user interface. Drill down on a resource to see that the action was invoked and a post event was executed.
+. From the {PlatformNameShort} user interface, verify that the event is successfully received by EDA and triggers the appropriate rulebook activation:
+.. Check the **Event Streams** dashboard to see the TF Actions events were received.
+.. Check the **Jobs** dashboard to see the jobs running sequentially and with a **Success** status.
+.. Check the **Inventory** dashboard to see the updates. For example, if you created new servers, check the **Hosts** tab for the {Terraform} provisioned inventory.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://developer.hashicorp.com/terraform/cli/run[{Terraform} workflow for provisioning infrastructure]
