@@ -1,0 +1,230 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-26-20251119]]
+
+= {PlatformNameShort} patch release November 19, 2025
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| November 19, 2025 |
+
+* {ControllerNameStart} 4.7.5
+* {HubNameStart} 4.11.3
+* {EDAName} 1.2.2
+* Container-based installer {PlatformNameShort} (bundle) 2.6-3
+* Container-based installer {PlatformNameShort} (online) 2.6-3
+* Receptor 1.6.2
+* RPM-based installer {PlatformNameShort} (bundle) 2.6-3
+* RPM-based installer {PlatformNameShort} (online) 2.6-3
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace: aap-operator.v2.6.0-0.1763137334
+
+* Cluster: aap-operator.v2.6.0-0.1763137355
+
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-9909[CVE-2025-9909] `automation-gateway`: improper path validation in gateway allows credential exfiltration.(AAP-53584)
+
+* link:https://access.redhat.com/security/cve/cve-2025-59530[CVE-2025-59530] `receptor`: `quic-go` crash due to premature `HANDSHAKE_DONE` frame.(AAP-55973)
+
+
+== {PlatformNameShort}
+
+=== Features
+
+* Allows for {EDAName} to add CA Certificates in gateway which can then be used by *Envoy* to do certificate based authorization for mTLS `EventStreams`.(AAP-56770)
+
+
+=== Enhancements
+
+* {LightspeedShortName} section has been removed from the left navigation bar.(AAP-53006)
+
+* Added fallback-authenticator feature, which allows users to configure `fallback_authentication` for running custom logic in the event local authentication fails.
+
+** Set all existing local authenticators and those created on initial install to fallback to controller credentials.
+
+** The ability to clear the preset if the user does not want to fallback to controller authorization anymore.(AAP-56919)
+
+* {AAPchatbot} has expanded its support for third-party Large Language Model (LLM) providers, and now includes {OpenAI} and Microsoft Azure. Third-party LLM support is available for both {OCPShort} operator installation and containerized installation.
+
+** For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html/installing_on_openshift_container_platform/deploying-chatbot-operator[Deploying the {AAPchatbot} on {OCP}] and link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/containerized_installation/deploying-lightspeed-containerized-install[Deploying the {AAPchatbot} on containerized installation].(ANSTRAT-1673)
+
+
+
+=== Bug Fixes
+
+* Fixed a significant performance regression in response time for GET requests to _/role_definitions/_ and related endpoints.(AAP-56868)
+
+* Fixed an issue where users who existed in {PlatformNameShort} 2.5 with controller legacy authentication, but never logged were unable to attempt authentication with controller in {PlatformNameShort} 2.6, and were left in an unusable state.(AAP-56388)
+
+* Fixed issue in which superuser status would sync from {Gateway} to other components if set to `True`, but not if set to `False`, where administrator privileges were not removed from the other components in all cases.(AAP-56296)
+
+* Fixed an issue where platform auditors were not able to view all platform level settings.(AAP-55608)
+
+* Fixed an issues where the *Team* input field on the authentication mapping form was not hidden when an organization role was selected.(AAP-55602)
+
+* Fixed an issue where the workflow visualizer CSS was displaying the incorrect height.(AAP-55164)
+
+* Fixed an issue using the and condition with multiple attributes. Previously the authentication map would skip the missing attributes, now, the map will be applied only if all attributes are present and the condition(s) are met.(AAP-53612)
+
+* Fixed an issue where the `LOGIN_REDIRECT_OVERRIDE` did not allow for a bypass URL. A login page has been added at _/login_ to bypass the `LOGIN_REDIRECT_OVERRIDE` setting when it is misconfigured.(AAP-53471)
+
+* Fixed the Subscription Usage chart where it did not always display at full height.(AAP-52218)
+
+* Fixed an issue that was preventing users from viewing complete survey question choices that contained a colon.(AAP-50290)
+
+* Fixed an issue where a warning message was not available when a user tried to restart an activation in the *workers offline* status.(AAP-24009)
+
+* Fixed an issue where filtering platform resources by special characters did not work as expected.(AAP-52360)
+
+* Fixed an issue where, applying a domains filter on the Jobs tab and navigating to the *Projects* section, then selecting a project with multiple templates, caused the system to display only the job template that was filtered by the domain, hiding other templates and showing a misleading message.(AAP-48031)
+
+* Fixed an issue where there was no limit filtering to the jobs page.(AAP-45218)
+
+* Fixed a form validation issue on the *Login redirect override* field in {Gateway} settings.(AAP-40517)
+
+* Fixed an execution environment deletion warning.(AAP-55135)
+
+
+== {LightspeedShortName}
+
+=== Features
+
+* Added support for 3rd party model providers OpenAI.(AAP-58291)
+
+* Added support for 3rd party model providers Azure.(AAP-58290)
+
+=== Enhancements
+
+* Upgraded Lightspeed Core Stack to 0.3.0.(AAP-55681)
+
+* Added ALIA support `lightspeed-stack` 0.3.0 and `llama-stack` 0.2.22.(AAP-58136)
+
+* Upgraded {AAPchatbot} to `Lightspeed-core` 0.3.0.(AAP-56629)
+
+* Added ALIA support for Azure provider.(AAP-56511)
+
+* Added ALIA support for OpenAI provider.(AAP-56509)
+
+* Made changes required to support `llama-stack` 0.2.22.(AAP-58361)
+
+=== Bug Fixes
+
+* Fixes an issue where the {LightspeedShortName} assistant returned raw `tool_call` JSON instead of natural language answers due to improper processing in {PlatformNameShort} 2.6 with granite-3.3-8b. This compromised user experience by exposing internal details.(AAP-57513)
+
+* Fixed an issue where the user would be scrolled to the bottom of the chat history if they clicked *thumbs up/thumbs down* on a previous message.(AAP-58438)
+
+* Fixed an issue where during the upgrade of `chatbot-api`, the new one is stuck in pending state waiting until PVC is removed.(AAP-57376) 
+
+
+=== Known Issues
+
+* If you are using an IBM Granite 3.3 AI model series in your {AAPchatbot} deployment, there may be a delay of ~1 minute in receiving a chat response. As a workaround, restart the chat session.(AAP-58186)
+
+
+
+== {ControllerNameStart}
+
+=== Features
+
+* Receptor collection version updated to 2.0.6, which is compatible with ansible-core 2.19.(AAP-42617)
+
+=== Bug Fixes
+
+* Fixed an issue where the migrating team mappers which did not include a users field is now supported.(AAP-56395)
+
+* Fixed the following migration error for the migration `0200_template_name_constraint.py`. when there was a job template or project with duplicate name in the same organization.(AAP-56222)
+
+.Error Message
+[source,yaml]
+----
+django.db.utils.ProgrammingError: column main_unifiedjobtemplate.org_unique does not exist
+----
+
+* Fixed an issue where some edge cases caused JSON to fail to parse a line from the worker stream with the error: *Expecting value: line 1 column 1 (char 0) Line with invalid JSON data: b*. Updated the pinned version for `receptorctl` in automation controller to address this issue. This effects Tower 4.7.(AAP-58412)
+
+* Fixed an issue where some edge cases caused JSON to fail to parse a line from the worker stream with the error: *Expecting value: line 1 column 1 (char 0) Line with invalid JSON data: b*. Updated the pinned version for `receptorctl` in automation controller to address this issue. This effects Tower 4.6.(AAP-58415)
+
+* Fixed an issue where there was not a meaningful error message whenever the streaming of logs was aborted. Update `ansble-runner` to 2.4.2 to address this issue.(AAP-58390)
+
+* Fixes an issue where jobs failed on `fapolicyd` enabled systems where python3.9 was not installed by default. Updates `automation-controller-fapolicyd` from python3.9 to python3.11 to address this issue.(AAP-55790)
+
+
+== {HubNameStart}
+
+=== Bug Fixes
+
+* Fixed an upgrade error, `AttributeError` or `ValueError`, *content type mismatch* in the migration that happens when upgrading if any role is assigned to a group globally before the migration.(AAP-58299)
+
+
+== Container-based {PlatformNameShort}
+
+=== Enhancements
+
+* Added ALIA support lightspeed-stack 0.3.0 and llama-stack 0.2.22.(AAP-58295)
+
+* Added ALIA support for Azure provider.(AAP-58206)
+
+* Added ALIA support for OpenAI provider.(AAP-58197) 
+
+=== Bug Fixes
+
+* Fixed a compatibility issue with PostgreSQL 17 when using an external database and admin credentials.(AAP-57431)
+
+* Fixed an issue with the chatbot response about the latest Ansible Automation Platform version.(AAP-57385)
+
+* Fixed an issue with the monitoring image on Ansible Lightspeed nodes when using the bundle deployment.(AAP-57167) 
+
+
+== RPM-based {PlatformNameShort}
+
+=== Enhancements
+
+Event-Driven Ansible event-stream mTLS configuration added to installer.(AAP-46070)
+
+=== Bug Fixes
+
+* Fixed an issue where the installer failed during the execution environment image upload when there was no automation hub node in inventory.(AAP-56892)
+
+* Fixed an issue with extra log content. {Gateway} logs in _/var/log/ansible-automation-platform/gateway_ have been refactored, there is now more separation of the logs for various components:
+** _control-plane-supervisor.log_ <- Messages from `supervisorctl` about the control-plane (new)
+** _control-plane.log_ <- Django logs for the control-plane (new, extracted from gateway.log)
+** _gateway.log_ <- Django logs for gateway (existing, had items removed)
+** _uwsgi.log_ <- UWSGI logs for the {Gateeway} (new, extracted from gateeay.log)
+** _envoy.log_ <- The proxy log (existing, unchanged).(AAP-30549)
+
+
+== {EDAName}
+
+=== Features
+
+* Enhancement to support mTLS event streams.(AAP-57375)
+* Added the ca_certificates module and the enable_mtls attribute to route objects.(AAP-48345)
+* Added a credential type for mTLS event stream.(AAP-46054)
+
+=== Enhancements
+
+* {EDAName} event-stream mTLS configuration added to the installer,(AAP-57434)
+
+
+== Receptor
+
+=== Features
+
+* Addresses edge cases that could cause JSON failure to parse a line from the worker stream. It also raises the versions of go dependencies and other minor functionality changes.(AAP-57253)
+
+
+
