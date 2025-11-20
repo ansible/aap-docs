@@ -5,40 +5,48 @@
 = {ControllerNameStart} system requirements
 
 [role="_abstract"]
-{ControllerNameStart} is a distributed system, where different software components can be co-located or deployed across multiple compute nodes.
-In the {Installer}, four node types are provided as abstractions to help you design the topology appropriate for your use case: control, hybrid, execution, and hop nodes.
+{ControllerNameStart} is a distributed system, where different software components can be co-located or deployed across many compute nodes.
+The {Installer} provides four node types as abstractions to help you design the topology appropriate for your use case: control, hybrid, execution, and hop nodes.
 
 Use the following recommendations for node sizing:
 
-*Execution nodes* 
+.Recommended Resource Sizing for {ControllerNameStart} Node Types
+[cols="1,1,1,1,3", options="header"]
+|===
+|Node Type
+|RAM (Minimum)
+|vCPU (Minimum)
+|Disk IOPS (Minimum)
+|Storage and Notes
 
-Execution nodes run automation. Increase memory and CPU to increase capacity for running more forks.
+|**Execution Node**
+|16 GB
+|4 vCPU
+|3000
+|Runs automation. Increase RAM/CPU to increase capacity for concurrent job *forks*. Performance depends heavily on the number of jobs run simultaneously.
 
-[NOTE]
-====
-* The RAM and CPU resources stated are minimum recommendations to handle the job load for a node to run an average number of jobs simultaneously.
+|**Control Node**
+|16 GB
+|4 vCPU
+|3000
+|Processes events and runs cluster jobs (e.g., project updates).
+* **Storage:** 80GB minimum, with at least 20GB available under `/var/lib/awx`.
+* **Storage Requirement:** Volume must be rated for a minimum baseline of 3000 IOPS.
 
-* Recommended RAM and CPU node sizes are not supplied.
-The required RAM or CPU depends directly on the number of jobs you are running in that environment.
+|**Hybrid Node**
+|16 GB
+|4 vCPU
+|3000
+|A combination of Control and Execution node functions. Storage requirements generally match the Control Node.
 
-* For capacity based on forks in your configuration, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/using_automation_execution/index#controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
+|**Hop Node**
+|16 GB
+|4 vCPU
+|3000
+|Routes traffic within the {AutomationMesh} (e.g., bastion host). RAM can affect throughput, but CPU activity is typically low. Network latency is a more important factor than RAM or CPU.
+|===
 
-For further information about required RAM and CPU levels, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/configuring_automation_execution/assembly-controller-improving-performance[Performance tuning for automation controller].
-====
-
-*Control nodes*
-
-Control nodes process events and run cluster jobs including project updates and cleanup jobs. Increasing CPU and memory can help with job event processing.
-
-//Control nodes have the following storage requirements:
-
-* 40GB minimum with at least 20GB available under /var/lib/awx
-* Storage volume must be rated for a minimum baseline of 3000 IOPS
-* Projects are stored on control and hybrid nodes, and for the duration of jobs, are also stored on execution nodes. If the cluster has many large projects, consider doubling the GB in /var/lib/awx/projects, to avoid disk space errors.
-
-*Hop nodes*
-
-Hop nodes serve to route traffic from one part of the {AutomationMesh} to another (for example, a hop node could be a bastion host into another network). RAM can affect throughput, CPU activity is low. Network bandwidth and latency are generally a more important factor than either RAM or CPU.
+// Rest of the supporting content follows the table:
 
 * Actual RAM requirements vary based on how many hosts {ControllerName} manages simultaneously (which is controlled by the `forks` parameter in the job template or the system `ansible.cfg` file).
 To avoid possible resource conflicts, Ansible recommends 1 GB of memory per 10 forks and 2 GB reservation for {ControllerName}.
@@ -47,10 +55,4 @@ If `forks` is set to 400, 42 GB of memory is recommended.
 * A larger number of hosts can be addressed, but if the fork number is less than the total host count, more passes across the hosts are required. You can avoid these RAM limitations by using any of the following approaches:
 ** Use rolling updates.
 ** Use the provisioning callback system built into {ControllerName}, where each system requesting configuration enters a queue and is processed as quickly as possible.
-** In cases where {ControllerName} is producing or deploying images such as AMIs.
-
-[role="_additional-resources"]
-.Additional resources
-
-* link:{URLCentralAuth}/assembly-gateway-licensing#proc-attaching-subscriptions[Attaching your {PlatformName} subscription].
-* link:https://access.redhat.com/[Red Hat Customer Portal].
+** In cases where {ControllerName} is producing or deploying images.
