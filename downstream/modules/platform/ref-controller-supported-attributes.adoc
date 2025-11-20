@@ -8,7 +8,8 @@ The following are the supported job attributes:
 * `allow_simultaneous` - (boolean) Indicates if multiple jobs can run simultaneously from the job template associated with this job.
 * `controller_node` - (string) The instance that manages the isolated {ExecEnvShort}.
 * `created` - (datetime) The timestamp when this job was created.
-* `custom_virtualenv` - (string) The custom virtual environment used to run the job.
+//[Ian] Removed for AAP-57986
+//`custom_virtualenv` - (string) The custom virtual environment used to run the job.
 * `description` - (string) An optional description of the job.
 * `diff_mode` - (boolean) If enabled, textual changes made to any templated files on the host are shown in the standard output.
 * `elapsed` - (decimal) The elapsed time in seconds that the job has run.
@@ -89,8 +90,8 @@ Note that some conditions, such as unreachable hosts can still prevent handlers 
 *** `created_by`
 **** `id` - (int) The database ID of the user that launched the operation.
 **** `username` - (string) The username that launched the operation.
-**** `first_name` - (string) The first name.
-**** `last_name` - (string) The last name.
+**** `first_name` - (string) The given name.
+**** `last_name` - (string) The surname.
 *** `labels`
 **** `count` - (int) The number of labels.
 **** `results` - The list of dictionaries representing labels. 
