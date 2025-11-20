@@ -1,0 +1,14 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="gw-user-creation-many-auth"]
+
+= User creation with many authenticators in {PlatformNameShort} {PlatformVers}
+
+In {PlatformNameShort} {PlatformVers}, user account management is unique to each configured authenticator. 
+When a user authenticates through many external sources, such as LDAP and SAML, the platform creates a separate user record for each authenticator.
+
+This behavior results in the following:
+
+* Distinct records: Each external authenticator creates its own user record.
+* Unique names: The system requires a unique username for every user entry.
+* Username collision: If a user's login causes a username collision (the name already exists from a different authenticator), the system appends a hash or other identifying characters to the subsequent user account's username to maintain uniqueness.
