@@ -1,0 +1,25 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="gw-revoke-admin-role"]
+
+= Revoking partial administrator role in {PlatformNameShort} {PlatformVers}
+
+When the System Administrator (`is_superuser`) role is revoked through authentication mappings for any authentication method in {PlatformNameShort} {PlatformVers}, the revocation does not fully cascade.
+
+The user loses the {Gateway} *System Administrator* role but keeps the following component administrator roles:
+
+* *Automation Execution Administrator* ({ControllerNameStart})
+* *Automation Decision Administrator* ({EDAName})
+* *Automation Content Administrator* ({HubName})
+
+This issue occurs only when external authentication providers trigger the token revocation. 
+Manual revocation initiated by a user within the {Gateway} UI works correctly.
+This behavior is updated in {PlatformNameShort} 2.6 to ensure the System Administrator value is honored across all components regardless of how it is revoked.
+
+To fully remove all administrative privileges after a mapped authentication revocation, a local administrator must perform the following manual steps:
+
+.Procedure
+. Log in to {Gateway} with a System Administrator account.
+. From the navigation panel, select {MenuControllerUsers} and click the required user.
+. In the *Roles* tab, remove the following retained roles: *Automation Execution Administrator*, *Automation Decision Administrator*, and *Automation Content Administrator*.
+
