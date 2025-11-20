@@ -1,0 +1,36 @@
+:_mod-docs-content-type: CONCEPT
+
+// Module included in the following assemblies:
+// assembly-HA-redis.adoc
+
+[id="con-redis-overview"]
+
+= Overview of the Redis cache and queueing system
+
+[role="_abstract"]
+Redis is an open source, in-memory, NoSQL key/value store used primarily as an application cache and lightweight message broker, which stores event queues, session data, and tokens to deliver improved performance, reliability, and data security.
+
+
+{Gateway} and {EDAName} use Centralized Redis.
+{ControllerNameStart} and {HubName} have their own instances of Redis.
+
+This cache and queue system stores data in memory, rather than on a disk or solid-state drive (SSD), which helps deliver speed, reliability, and performance.
+Secure communication with the cache and queue system through Transport Layer Security (TLS) encryption and authentication protects your data.
+
+.Data types cached by Centralized Redis
+[options="header"]
+|====
+|Component
+|Data types cached
+
+|{GatewayStart}
+|Settings, Session Information, JSON Web Tokens
+
+|{EDAName} server
+|Event queues
+|====
+
+[NOTE]
+====
+The data in Redis from the {Gateway} and {EDAName} are partitioned. Neither service can access the other service's data.
+====

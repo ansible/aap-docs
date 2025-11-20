@@ -1,0 +1,17 @@
+:_mod-docs-content-type: CONCEPT
+
+// Module included in the following assemblies:
+// assembly-network-ports-protocols.adoc
+
+[id="con-receptor-mesh-overview"]
+
+= Overview of Receptor and Mesh communication
+
+[role="_abstract"]
+{AutomationMesh} uses the Receptor network protocol to enable highly available and resilient communication between nodes, including {ControllerName} and execution nodes. This communication is always **bidirectional** once a connection is established.
+
+The Mesh relies on **peering**, which means that nodes establish direct connections specified in the installation inventory.
+
+The execution nodes support this communication through port 27199 (the configurable `receptor_listener_port`). In RPM installations, the peering setup is established through the installation inventory.
+
+For more information on use of peers in inventory scripts, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.5/html-single/automation_mesh_for_vm_environments/index#defining-node-types[Defining automation mesh node types].
