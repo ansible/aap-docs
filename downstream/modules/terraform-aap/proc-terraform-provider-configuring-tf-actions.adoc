@@ -9,10 +9,10 @@
 To connect the event stream to {Terraform} actions, you configure the main TF file (`*.tf`) in {Terraform}.
 
 .Procedure
-. Add a lifecycle block to call the EDA event stream to your `*.tf` file. The `after_create` action will trigger the `action.aap_eda_eventstream_post.create`.
+. Add a lifecycle block to call the {EDAName} event stream to your `*.tf` file. The `after_create` action will trigger the `action.aap_eda_eventstream_post.create`.
 +
 **Example**
-
++
 The following example shows a `lifecycle` block added to the provisioning of an AWS EC2 server. After the new server is provisioned, the action runs.
 +
 ----
@@ -123,9 +123,9 @@ action "aap_eda_eventstream_post" "event_post" {
 ----
 . (Required) Configure the following parameters:
 +
-* **`event_stream_config`:** (Attributes) Details for the EDA Event Stream. You must include:
-** **`username`:** (String) Username to use when performing the POST to the Event Stream URL
-** **`password`:** (String) Password to use when performing the POST to the Event Stream URL
+* **`event_stream_config`:** (Attributes) Details for the {EDAName} event stream. You must include:
+** **`username`:** (String) Username to use when performing the POST to the event stream URL
+** **`password`:** (String) Password to use when performing the POST to the event stream URL
 ** **`url`:** (String) URL to receive the event POST
 
 * **`limit`:** (String) {PlatformNameShort} limit for job execution
