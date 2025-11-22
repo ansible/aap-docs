@@ -12,23 +12,26 @@ Clustered Redis, shared between the {Gateway} and {EDAName}, is the default conf
 
 [NOTE]
 ====
-6 VMs are required for a Redis high availability (HA) compatible deployment. In RPM deployments, Redis can be colocated on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database. In containerized deployments, Redis can be colocated on any {PlatformNameShort} component VMs of your choice except for execution nodes or the PostgreSQL database. See {LinkTopologies} for the opinionated deployment options available. 
+A Redis high availability (HA) compatible deployment require 6 VMs. 
+In RPM deployments, Redis can be colocated on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database.
+In containerized deployments, Redis can be colocated on any {PlatformNameShort} component VMs of your choice except for execution nodes or the PostgreSQL database.
+See {LinkTopologies} for the opinionated deployment options available. 
 ====
 
-A cluster contains three primary nodes and each primary node contains a replica node.
+A cluster has three primary nodes and each primary node has a replica node.
 
 If a primary instance becomes unavailable due to failures, the other primary nodes will initiate a failover state to promote a replica node to a primary node.
 
-image::gw-clustered-redis.png[Single-node Redis deployment]
+image::gw-clustered-redis.png[Clustered Redis deployment]
 
 The benefits of deploying clustered Redis over standalone Redis include the following:
 
-* Data is automatically split across multiple nodes.
+* Data is automatically split across many nodes.
 * Data can be dynamically adjusted.
-* Automatic failover of the primary nodes is initiated during system failures.
+* Automatic failover of the primary nodes initiates during system failures.
 
-Therefore, if you need data scalability and automatic failover, deploy {PlatformNameShort} with a clustered Redis. For more information about scalability with Redis, refer to link:https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/[Scale with Redis Cluster] in the Redis product documentation.
+For more information about scalability with Redis, see link:https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/[Scale with Redis Cluster] in the Redis product documentation.
 
-For information on deploying {PlatformNameShort} with clustered Redis, refer to the {LinkInstallationGuide}, {LinkContainerizedInstall}, and {LinkOperatorInstallation} guides.
+For more information about deploying {PlatformNameShort} with clustered Redis, see the {LinkInstallationGuide}, {LinkContainerizedInstall}, and {LinkOperatorInstallation} guides.
 
 include::../aap-common/external-site-disclaimer.adoc[]
