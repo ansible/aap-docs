@@ -7,13 +7,14 @@
 {RHDH} offers Role-based Access Control (RBAC) functionality.
 RBAC can then be applied to the Ansible plug-ins content. 
 
-Assign the following roles:
+.Procedure
+* Assign the following roles:
 
-* Members of the `admin:superUsers` group can select templates in the *Create* tab of the Ansible plug-ins to create playbook and collection projects.
-* Members of the `admin:users` group can view templates in the *Create* tab of the Ansible plug-ins.
-
+** Members of the `admin:superUsers` group can select templates in the *Create* tab of the Ansible plug-ins to create playbook and collection projects.
+** Members of the `admin:users` group can view templates in the *Create* tab of the Ansible plug-ins.
++
 The following example adds RBAC to {RHDH}.
-
++
 ----
 data:
   app-config-rhdh.yaml: |
@@ -28,8 +29,7 @@ data:
           superUsers:
             - name: user:default/<user-admin-idb>
 ----
-
-
++
 For more information about permission policies and managing RBAC, refer to the
 link:{BaseURL}/red_hat_developer_hub/{RHDHVers}/html-single/authorization_in_red_hat_developer_hub/index[_Authorization in {RHDH}_]
 guide for Red Hat Developer Hub.
