@@ -4,7 +4,10 @@
 
 = Guidelines for hosts and groups
 
-.Databases
+[role="_abstract"]
+Follow these configuration guidelines to properly set up databases, {HubName}, {ControllerName}, {EDAcontroller}, and {Gateway} hosts for reliable {PlatformNameShort} installations.
+
+*Databases*
 * When using an external database, ensure the `[database]` sections of your inventory file are properly set up.
 * To improve performance, do not colocate the database and the {ControllerName} on the same server.
 
@@ -13,7 +16,7 @@
 When using an external database with {PlatformNameShort}, you must create and maintain that database. Ensure that you clear your external database when uninstalling the {PlatformNameShort}.
 ====
 
-.{HubNameStart}
+*{HubNameStart}*
 * If there is an `[automationhub]` group, you must include the variables `automationhub_pg_host` and `automationhub_pg_port`.
 * Add {HubNameMain} information in the `[automationhub]` group.
 * Do not install {HubNameMain} and {ControllerName} on the same node.
@@ -23,7 +26,7 @@ The FQDN must not contain the `_` symbol, as it will not be processed correctly 
 +
 Do not use `localhost`.
 
-.{PrivateHubNameStart}
+*{PrivateHubNameStart}*
 * Do not install {PrivateHubName} and {ControllerName} on the same node.
 * You can use the same PostgreSQL (database) instance, but they must use a different (database) name.
 * If you install {PrivateHubName} from an internal address, and have a certificate which only encompasses the external address, it can result in an installation you cannot use as a container registry without certificate issues.
@@ -35,17 +38,17 @@ You must separate the installation of {ControllerName} and {HubNameMain} because
 If you use one value in `[database]` and both {ControllerName} and {HubNameMain} define it, they would use the same database.
 ====
 
-.{ControllerNameStart}
+*{ControllerNameStart}*
 * {ControllerNameStart} does not configure replication or failover for the database that it uses.
 * {ControllerNameStart} works with any replication that you have.
 
-.{EDAcontroller}
+*{EDAcontroller}*
 * {EDAcontroller} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
 
-.{GatewayStart}
+*{GatewayStart}*
 * The {Gateway} is the service that handles authentication and authorization for {PlatformNameShort}. It provides a single entry into the platform and serves the platform’s user interface.
 
-.Clustered installations
+*Clustered installations*
 * When upgrading an existing cluster, you can also reconfigure your cluster to omit existing instances or instance groups. 
 Omitting the instance or the instance group from the inventory file is not enough to remove them from the cluster. 
 In addition to omitting instances or instance groups from the inventory file, you must also deprovision instances or instance groups before starting the upgrade. For more information, see xref:ref-deprovisioning[Deprovisioning nodes or groups]. 
