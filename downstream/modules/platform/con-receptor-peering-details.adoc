@@ -1,0 +1,34 @@
+:_mod-docs-content-type: CONCEPT
+
+// Module included in the following assemblies:
+// assembly-network-ports-protocols.adoc
+
+[id="con-receptor-peering-details"]
+
+= Receptor peering implementation details
+
+[role="_abstract"]
+In an RPM installation, the installation program creates a **strong peering** between control plane nodes by using a **least privileged approach**, opening the TCP listener only on nodes where it is required. All Receptor connections are bidirectional.
+
+[NOTE]
+====
+If `receptor_listener_port` is defined, the machine also requires an available open port on which to establish inbound TCP connections, for example, 27199.
+====
+
+The following example shows a peering setup for three controller nodes:
+
+* Controller node A --> Controller node B
+* Controller node A --> Controller node C
+* Controller node B --> Controller node C
+
+This setup means that nothing connects to Controller A, as Controller A creates the connections to the other nodes. Consequently, commands like `ss -ntlp | grep 27199` might not return anything on Controller A.
+
+You can **force the listener** on all nodes by setting:
+[source,bash]
+----
+receptor_listener=True
+----
+[NOTE]
+====
+If you force the listener, a connection from Controller B to Controller A is likely to be rejected because that connection already exists.
+====
