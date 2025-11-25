@@ -5,7 +5,7 @@
 = Rules for declaring variables in inventory files
 
 [role="_abstract"]
-When declaring variables in Ansible inventory files by using INI format, be aware of the following rules regarding variable types and values.
+When declaring variables in Ansible inventory files by using `ini` format, be aware of the following rules regarding variable types and values.
 
 The values of string variables are declared in quotes. 
 For example:
@@ -17,7 +17,7 @@ pg_username='awx'
 pg_password='<password>'
 ----
 
-When declared in a `:vars` section, INI values are interpreted as strings. 
+When declared in a `:vars` section, `ini` values are interpreted as strings. 
 For example, `var=FALSE` creates a string equal to `FALSE`. 
 Unlike host lines, `:vars` sections accept only a single entry per line, so everything after the `=` must be the value for the entry.
 Host lines accept multiple `key=value` parameters per line. 
@@ -25,8 +25,8 @@ Therefore they need a way to indicate that a space is part of a value rather tha
 Values that contain whitespace can be quoted (single or double). 
 For more information, see link:https://docs.python.org/3/library/shlex.html#parsing-rules[Python shlex parsing rules].
 
-If a variable value set in an INI inventory must be a certain type (for example, a string or a boolean value), always specify the type with a filter in your task. 
-Do not rely on types set in INI inventories when consuming variables.
+If a variable value set in an `ini` inventory must be a certain type (for example, a string or a boolean value), always specify the type with a filter in your task. 
+Do not rely on types set in `ini` inventories when consuming variables.
 
 [NOTE]
 ====
