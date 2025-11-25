@@ -39,22 +39,25 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: external-postgres-configuration
-  namespace: <target_namespace> <1>
+  namespace: <target_namespace>
 stringData:
-  host: "<external_ip_or_url_resolvable_by_the_cluster>" <2>
-  port: "<external_port>" <3>
+  host: "<external_ip_or_url_resolvable_by_the_cluster>"
+  port: "<external_port>"
   database: "<desired_database_name>"
   username: "<username_to_connect_as>"
-  password: "<password_to_connect_with>" <4>
-  sslmode: "prefer" <5>
+  password: "<password_to_connect_with>"
+  sslmode: "prefer"
   type: "unmanaged"
 type: Opaque
 ----
-.. Namespace to create the secret in. This should be the same namespace you want to deploy to.
-.. The resolvable hostname for your database node.
-.. External port defaults to `5432`.
-.. Value for variable `password` should not contain single or double quotes (', ") or backslashes (\) to avoid any issues during deployment, backup or restoration.
-.. The variable `sslmode` is valid for `external` databases only. The allowed values are: `*prefer*`, `*disable*`, `*allow*`, `*require*`, `*verify-ca*`, and `*verify-full*`.
++
+When configuring the secret:
++
+* `namespace`: Specify the namespace to create the secret in. This should be the same namespace you want to deploy to.
+* `host`: Specify the resolvable hostname for your database node.
+* `port`: Specify the external port. The default is `5432`.
+* `password`: Ensure the password does not contain single or double quotes (', ") or backslashes (\) to avoid any issues during deployment, backup or restoration.
+* `sslmode`: This variable is valid for external databases only. The allowed values are: `prefer`, `disable`, `allow`, `require`, `verify-ca`, and `verify-full`.
 . Apply `external-postgres-configuration-secret.yml` to your cluster using the `oc create` command.
 +
 ----
