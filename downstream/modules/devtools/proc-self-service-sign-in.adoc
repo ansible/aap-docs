@@ -22,3 +22,27 @@ image::rhaap-sign-in-page.png[{PlatformNameShort} sign-in page]
 . Enter your {PlatformNameShort} credentials and click *Log in*. 
 . The {SelfServiceShort} web console opens.
 
+.Troubleshooting
+If your are using custom SSL certificates and when attempting to log in to {SelfServiceShort}, it displays the error:
+
+`Login failed; caused by Error: Failed to send POST request: fetch failed`
+
+You must disable SSL validation in the Helm chart configuration.
+
+. In the {SelfServiceShort} Helm chart, locate the `checkSSL` parameter and set its value to `false`:
++
+----
+ upstream:
+    backstage:
+      appConfig:
+        ansible:
+          creatorService:
+            baseUrl: 127.0.0.1
+            port: '8000'
+          rhaap:
+            baseUrl: '${AAP_HOST_URL}'
+            checkSSL: false <-- Update this to false
+            token: '${AAP_TOKEN}'
+
+----
+. Apply the updated configuration by upgrading the {SelfServiceShort} Helm chart to allow users to log in.
