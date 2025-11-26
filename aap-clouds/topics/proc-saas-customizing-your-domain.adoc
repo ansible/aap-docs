@@ -25,9 +25,12 @@ This procedure outlines the necessary planning activities to ensure a successful
 ====
 TLS Certificate requirements for custom domains:
 
-* Initial setup: When providing a new certificate, it must have an expiration date of at least one year or longer. This is a requirement for our certificate management process.
-* Renewal: You are responsible for monitoring your certificate's expiration. To ensure uninterrupted service, you must begin the support process to renew it at least 14 days before it expires.
-* The private key cannot have a passphrase or be password protected.
+* *Private Key:* The private key must be unencrypted and cannot have a passphrase or be password protected.
+* *Expiration:* Initial certificates must be valid for at least one year.
+* *Renewal:* You must initiate a support ticket to renew the certificate at least 14 days before the expiration date. When renewing you must use one of the following formats for the certificate's Subject Alternative Names (SANs):
+** *Explicit SANs:* List the required subdomains: `platform`, `mesh-ingress-0`, and `mesh-ingress-1`.
+** *Wildcard certificate:* Use a wildcard to cover all subdomains (for example, `*.exampledomain.com`).
+
 ====
 +
 . Open a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true[support ticket] with Red Hat requesting a custom URL configuration to your deployment and supply the following information:

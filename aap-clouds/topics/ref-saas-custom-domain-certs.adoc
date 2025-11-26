@@ -1,0 +1,50 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-custom-domain-certs"]
+
+= Custom domain and certificates
+
+[role="_abstract"]
+You can augment the default `ansible.redhat.com` URL with your own domain (for example, `aap.company.com`).
+
+*Certificate Requirements*
+You must provide the TLS certificate and ensure it meets these criteria:
+
+* *Validity:* Minimum 1 year expiration.
+* *Private Key:* Must be unencrypted (cannot have a passphrase).
+* *Renewal:* You must initiate a renewal support ticket at least 14 days before expiration.
+
+*Subject Alternative Name (SAN) Requirements*
+The certificate must be valid for the following records. You must use a wildcard (for example, `*.aap.company.com`) or explicitly list these three SANs:
+
+* `platform.<your-domain>` (Main URL)
+* `mesh-ingress-0.<your-domain>`
+* `mesh-ingress-1.<your-domain>`
+
+*Configuration Workflow*
+
+. *Generate Certificate:* Ensure the certificate meets the SAN and private key requirements.
+. *Submit Support Case:* Attach the Certificate and private key (using the secure upload link provided by support).
+. *SRE Configuration:* Red Hat SRE configures the custom domain and updates the CSRF allowlists.
+. *Update DNS:* Red Hat provides a target CNAME. 
+You must update your DNS to point <your-domain> to the Red Hat CNAME.
+
+[NOTE]
+====
+If the domain is internal-only, ensure it is resolvable by all users and execution nodes.
+====
+
+*Custom domain request template*
+----
+Subject: 
+Custom Domain Configuration for [Instance ID]
+
+Body:
+We wish to configure the custom domain: aap.example.com
+
+Certificate details:
+* Type: <Wildcard / SANs>
+* Expiration: <Date > 1 year>
+* Certificate File
+* Private Key File: No Passphrase
+----
