@@ -1,0 +1,86 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-aap-token-field_{context}"]
+
+= `AAPTokenField`
+
+[role="_abstract"]
+The `AAPTokenField` is a secure authentication field used in backstage scaffolder templates. It automatically fetches and stores an {PlatformNameShort} OAuth2 token, which is then available for all rhaap:* actions, enabling seamless authentication
+
+*AAPTokenField Properties*
+The following table details the field's properties for use in a template's properties section.
+
+[cols="2,2,6"]
+|===
+|Property |Type |Description
+
+|`title`
+|string
+|The label displayed in the UI (for example, "AAP Token"). Defaults to "AAP Token".
+
+|`description`
+|string
+|A short help text displayed below the input field.
+
+|`ui:field`
+|string
+|Must be set to `AAPTokenField`. This setting instructs Backstage to render a custom react component instead of a default input field.
+
+|`ui:backstage.review.show`
+|boolean
+|If `true`, this field appears in the *Review* step before scaffolding executes. The default value is `true`.
+|===
+
+*Authentication flow and token management*
+All `rhaap:*` actions require an OAuth2 token for authenticating with {PlatformNameShort}. The field manages the token through the following process:
+
+* Token Source: The token is automatically obtained from the {PlatformNameShort} OAuth2 authentication provider.
+* Storage: The token is stored securely in Backstage secrets or fetched through the `@ansible/backstage-plugin-auth-backend-module-rhaap-provider`.
+* Usage: The token is passed to each action using the `token` input parameter.
+
+When the RHAAP auth provider is used, the token is injected automatically and can be referenced in the workflow steps as shown:
+----
+  - id: create-project
+    action: rhaap:create-project
+    input:
+      token: ${{ parameters.AAP_TOKEN }}
+      # ... other inputs
+----
+
+*Example*
+The following example shows how to declare and reference the AAPTokenField within a backstage template. 
+Note that `ui:widget: hidden` and ui:backstage: review: show: false` are used to ensure the token is not exposed in the UI.
+----
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: my-AAP-template
+  title: Example AAP Template
+spec:
+  parameters:
+    - title: Authentication
+      properties:
+        token:
+          title: AAP Authentication Token
+          type: string
+          description: Oauth2 token
+          ui:field: AAPTokenField
+          ui:widget: hidden
+          ui:backstage:
+            review:
+              show: false
+  steps:
+    - id: launch-job
+      name: Launch AAP Job Template
+      action: rhaap:launch-job-template
+      input:
+        token: ${{ parameters.token }}
+        ...
+----
+
+*Error and validation handling*
+All `rhaap:*` actions include built-in validation and user-friendly error reporting:
+
+* Validation: If the token is missing or invalid, the action throws the error: "`Authorization token not provided`."
+* Error Messages: Actions catch API client errors, extracting and surfacing meaningful messages without exposing stack traces.
+* Workflow Safety: If a step fails due to authentication, subsequent steps are automatically skipped, ensuring a safe and predictable workflow.

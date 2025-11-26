@@ -1,0 +1,126 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-all-backstage-actions-example_{context}"]
+
+= Example with all backstage actions present
+
+[role="_abstract"]
+The following example displays how you can use multiple actions together:
+
+----
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ansible-complete-setup
+  title: Complete Ansible Setup
+  description: Creates an Ansible project, execution environment, job template, and launches it
+spec:
+  owner: platform-team
+  type: service
+  
+  parameters:
+    - title: Project Information
+      required:
+        - projectName
+        - repoUrl
+      properties:
+        projectName:
+          title: Project Name
+          type: string
+          description: Name of the Ansible project
+        repoUrl:
+          title: Repository URL
+          type: string
+          description: Git repository URL containing Ansible content
+        
+    - title: AAP Configuration
+      required:
+        - organization
+        - jobInventory
+        - credentials
+      properties:
+        organization:
+          title: Organization
+          type: string
+          description: AAP Organization name
+          default: 1-org
+          ui:field: hidden  # To hide this field in the UI
+        jobInventory:
+          title: Inventory name
+          type: string
+          description: AAP Inventory name
+          resource: inventories
+          ui:field: AAPResourcePicker
+          default: my-inventory 
+        credentials:
+          title: Credentials
+          description: Select SCM credential for Private repositories
+          resource: credentials
+          ui:field: AAPResourcePicker
+          default: my-machine-credential
+  steps:
+    # Step 1: Create AAP Project
+    - id: create-project
+      name: Create AAP Project
+      action: rhaap:create-project
+      input:
+        token: ${{ parameters.AAP_TOKEN }}
+        deleteIfExist: true
+        values:
+          projectName: ${{ parameters.projectName }}
+          organization: ${{ parameters.organization }}
+          scmUrl: ${{ parameters.repoUrl }}
+          scmBranch: main
+          scmUpdateOnLaunch: true
+    
+    # Step 2: Create Execution Environment
+    - id: create-ee
+      name: Create Execution Environment
+      action: rhaap:create-execution-environment
+      input:
+        token: ${{ parameters.AAP_TOKEN }}
+        values:
+          environmentName: ${{ parameters.projectName }}-ee
+          organization: ${{ parameters.organization }}
+          image: quay.io/ansible/creator-ee:latest
+          pull: missing
+    
+    # Step 3: Create Job Template
+    - id: create-template
+      name: Create Job Template
+      action: rhaap:create-job-template
+      input:
+        token: ${{ parameters.AAP_TOKEN }}
+        values:
+          templateName: ${{ parameters.projectName }}-deploy
+          templateDescription: Deployment job template
+          project: ${{ steps['create-project'].output.project }}
+          organization: ${{ parameters.organization }}
+          jobInventory: ${{ parameters.jobInventory }}
+          playbook: site.yml
+          executionEnvironment: ${{ steps['create-ee'].output.executionEnvironment }}
+    
+    # Step 4: Launch the Job
+    - id: launch-job
+      name: Launch Job
+      action: rhaap:launch-job-template
+      input:
+        token: ${{ parameters.AAP_TOKEN }}
+        values:
+          template: ${{ parameters.projectName }}-deploy
+          inventory: ${{ parameters.jobInventory }}
+          credentials: ${{ parameters.credentials }}
+          jobType: run
+          extraVariables:
+            created_by: backstage
+            timestamp: ${{ '' | now }}
+  
+  output:
+    links:
+      - title: AAP Project
+        url: ${{ steps['create-project'].output.project.url }}
+      - title: Job Template
+        url: ${{ steps['create-template'].output.template.url }}
+      - title: Job Execution
+        url: ${{ steps['launch-job'].output.data.url }}
+----
