@@ -1,0 +1,42 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-saas-config-ingress-privatelink"]
+
+= 1. Configuring {PlatformNameShort} control plane ingress (VPC to control plane)
+
+[role="_abstract"]
+
+This configuration allows your internal users and automation to access the {PlatformNameShort} UI and API over PrivateLink.
+
+.Procedure 
+
+. To request Ingress PrivateLink submit a link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true&product=Red%20Hat%20Ansible%20Automation%20Platform%20On%20Clouds&version=AWS%20-%20Managed%20Service&seSessionId=db3c1163-09b0-4076-b27f-0ce89eb2b9e7[Customer support] case to Red Hat using the *Ingress AWS PrivateLink request template* steo 2. 
+. You must include your:
+* *AWS  Account ID*.
+* *Region*.
+* *Deployment URL*.
+* After Red Hat provides you with a VPC Endpoint Service Name, you must create a VPC Endpoint in your AWS account that points to the provided service name.
++
+*Ingress {AWSPrivateLink} request template*
+----
+Subject: 
+Request for Ingress PrivateLink Connection: <Your Company Name> - <Deployment ID>
+
+Body: 
+Hello Red Hat Support,
+
+We would like to enable Ingress PrivateLink connectivity for our AAP on AWS instance. This will allow our internal users and automation tools to access the AAP Control Plane (UI/API) securely from our VPC without traversing the public internet.
+
+Deployment details:
+AAP Deployment Name/ID: <for example., ans-123456>
+AAP Deployment URL: <for example, https://ans-123456.ansible.redhat.com>
+Our Network Information:
+Our AWS Account ID: <Your 12-digit AWS Account ID>
+Target Region: <for example, us-east-1>
+
+Action required:
+Please create the Endpoint Service configuration on the Control Plane side and provide us with the VPC Endpoint Service Name so we can create the interface endpoint in our VPC.
+
+Thank you. 
+----
+

@@ -1,0 +1,35 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-saas-config-egress-privatelink"]
+
+= 2. Configuring Control Plane Egress (control plane to customer VPCs)
+
+[role="_abstract"]
+
+This configuration allows the {PlatformNameShort} control plane to connect to your private resources, such as internal Git or {PrivateHubName}.
+
+.Procedure
+
+. To initiate control plane egress, you must submit a *separate* link:https://access.redhat.com/support/cases/#/case/new/get-support?caseCreate=true&product=Red%20Hat%20Ansible%20Automation%20Platform%20On%20Clouds&version=AWS%20-%20Managed%20Service&seSessionId=db3c1163-09b0-4076-b27f-0ce89eb2b9e7[Customer support] case using the *Egress PrivateLink request template*, after which Red Hat requests approval to connect to your VPC Endpoint Service.
+. Your Internal Network or IT Team must configure the Internal DNS.
+. To ensure users route through the secure PrivateLink connection, you must request a Split-Horizon DNS configuration. 
+. You must copy the *Egress PrivateLink request template*, fill in your specific VPC Endpoint DNS Name (found in your AWS Console), and submit it to your internal IT or Network ticketing system.  
++
+*Egress PrivateLink request template*
+----
+Subject: 
+Egress PrivateLink Configuration for <Instance ID>
+
+Body:
+We need to enable Egress PrivateLink connectivity to allow the AAP control plane to access our internal private resources (for example, private automation hub, Git and so on).
+
+Configuration details:
+Our AWS Account ID: <Your 12-digit AWS Account ID>
+Our Endpoint Service Name: <for example, com.amazonaws.vpce.us-east-1.vpce-svc-xxxxxxxx>
+Service Regions/AZs: <for example., us-east-1 / us-east-1a, us-east-1b>
+
+Action required:
+Please confirm when Red Hat has initiated the connection request so we can approve it in our AWS Console.
+
+Thank you. 
+----
