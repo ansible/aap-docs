@@ -1,0 +1,122 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2025-11-27
+:_mod-docs-content-type: PROCEDURE
+
+[id="implementing-automation-content-for-ephemeral-mcp-agents_{context}"]
+= Implementing automation content for ephemeral MCP agents
+
+[role="_abstract"]
+You can create an Ansible playbook leveraging the Execution Environment (EE) setup so that ephemeral MCP servers are provisioned during Ansible Automation Platform (AAP) controller job creation. This way you can safely use AI as an operational assistant, which can take assigned actions in your enterprise platform. 
+
+
+.Prerequisites
+
+* You must securely store all access credentials necessary for MCP plugin use exclusively within AAP credential store.
+
+* The Execution Environment (EE) image must be configured to include the necessary MCP server component, which is typically accomplished by selecting a collection with specialized roles during the EE build process.
+
+
+.Procedure
+
+. Define MCP support in your EE:
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+The example code above Specifies the required MCP server in the EE definition files (YAML files), so that the necessary dependencies are pulled into the file.
+
+
+. Install MCP server components:
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+During the EE build process the MCP server software is installed into the EE.
++
+For embedded servers, include the MCP server binaries or libraries explicitly on the EE image path.
++
+For remote servers, define remote connection details in a manifest file within the EE.
+
+
+. Write custom Ansible content:
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+The playbook syntax for invoking MCP plugins is intuitive and aligns with existing Ansible module patterns.
++
+[IMPORTANT]
+====
+Your playbook might use inventory variables, such as setting the connection plugin to `ansible_connection: ansible.mcp.mcp`, along with required timeout values like `ansible_connect_timeout: 30` and `ansible_command_timeout: 30`.
+====
+
+
+. Create and configure credentials in AAP:
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+The example code shows how to set up the required credential structures in the AAP credential store. This includes defining fields (for example, `gh_pat`) and the injector configuration needed to pass the secret as an environment variable (for example, `MCP_BEARER_TOKEN: “{{ gh_pat }}”`).
+
+
+. Launch the job in the AAP controller GUI:
++
+[source,yaml,subs="+quotes"]
+....
+---
+Select the correct Execution Environment.
+
+Select the playbook.
+
+Attach the required credentials.
+....
++
+You configured and launched the controller job template.
+
+
+.Verification
+
+. Confirm that the MCP agents were provisioned only at run time.
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+The agent services start during task execution and terminate gracefully upon completion. The ephemeral creation and destruction occur through the controller job creation process.
+
+
+. Verify credential wiping:
++
+[source,yaml,subs="+quotes"]
+....
+---
+SOME CODE
+....
++
+The credentials were injected into the execution environment only at run time, scoped specifically to the job execution, and were wiped immediately upon job completion.
+
+
+.Troubleshooting
+
+To manage the health of the MCP servers, the AAP environment emphasizes governance and auditability, allowing you to trace workflow success and failures.
+
+All MCP plugin invocations and credential usage events are logged and auditable through AAP audit trail systems, including the job ID, user, and timestamp, along with Ansible eventstream data. This tracking supports governance requirements for enterprise compliance.
+
+The system ensures that secrets are never hardcoded into playbooks or visible in execution logs; they are  masked automatically. This robust auditing assists in identifying security issues or operational problems during task execution.
+
+A successful operation relies on the strict, controlled lifecycle of the MCP agents. This ensures that upon job failure or completion, there are no residual data, services, or security artifacts remaining.
+
