@@ -20,31 +20,3 @@ The certificate must be valid for the following records. You must use a wildcard
 * `platform.<your-domain>` (Main URL)
 * `mesh-ingress-0.<your-domain>`
 * `mesh-ingress-1.<your-domain>`
-
-*Configuration Workflow*
-
-. *Generate Certificate:* Ensure the certificate meets the SAN and private key requirements.
-. *Submit Support Case:* Attach the Certificate and private key (using the secure upload link provided by support).
-. *SRE Configuration:* Red Hat SRE configures the custom domain and updates the CSRF allowlists.
-. *Update DNS:* Red Hat provides a target CNAME. 
-You must update your DNS to point <your-domain> to the Red Hat CNAME.
-
-[NOTE]
-====
-If the domain is internal-only, ensure it is resolvable by all users and execution nodes.
-====
-
-*Custom domain request template*
-----
-Subject: 
-Custom Domain Configuration for [Instance ID]
-
-Body:
-We wish to configure the custom domain: aap.example.com
-
-Certificate details:
-* Type: <Wildcard / SANs>
-* Expiration: <Date > 1 year>
-* Certificate File
-* Private Key File: No Passphrase
-----
