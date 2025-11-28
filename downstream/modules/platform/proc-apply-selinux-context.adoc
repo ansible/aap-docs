@@ -5,9 +5,7 @@
 = Applying the SELinux context
 
 [role="_abstract"]
-Apply the correct SELinux context to the Pulp directories to ensure proper file access permissions and security policy compliance.
-
-After you have configured the inventory file, you must now apply the context to enable the high availability (HA) deployment of {HubName} on SELinux.
+Apply the necessary SELinux context to the Pulp directories by modifying the /etc/fstab file. This procedure is critical for ensuring proper file access permissions and security policy compliance, which are essential for enabling the high availability (HA) deployment of {HubName} on SELinux.
 
 .Procedure 
 
@@ -26,7 +24,7 @@ $ umount /var/lib/pulp/pulpcore_static
 ----
 $ umount /var/lib/pulp/
 ----
-. Open `/etc/fstab` using a text editor, then replace the existing value for `/var/lib/pulp` with the following:
+. Open `/etc/fstab` file using a text editor, then replace the existing value for `/var/lib/pulp` with the following:
 +
 ----
 srv_rhel8:/data /var/lib/pulp nfs defaults,_netdev,nosharecache,context="system_u:object_r:pulpcore_var_lib_t:s0" 0 0
