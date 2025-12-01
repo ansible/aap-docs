@@ -67,10 +67,10 @@ Ensure that these ports are available and are not blocked by a firewall.
 | 16379 | TCP | Redis | Redis node | Redis node | Redis cluster bus communication
 | 27199 | TCP | Receptor | {ControllerNameStart} | Hop node and execution node | Mesh nodes connect directly to controllers. Allows two-way communication for job distribution.
 | 27199 | TCP | Receptor | Hop node | Execution node | Mesh nodes connect through hop nodes. Allows two-way communication in either direction.
-| 8083/8446 | TCP | HTTP/HTTPS | Internal services | {GatewayStart} | {GatewayStart} NGINX ports. You can configure these ports with the following inventory variables: `gateway_nginx_http_port`, `gateway_nginx_https_port`.
-| 8080/8443 | TCP | HTTP/HTTPS | Internal services | {ControllerNameStart} | {ControllerNameStart} NGINX ports. You can configure these ports with the following inventory variables: `controller_nginx_http_port`, `controller_nginx_https_port`.
-| 8081/8444 | TCP | HTTP/HTTPS | Internal services | {HubNameStart} | {HubNameStart} NGINX ports. You can configure these ports with the following inventory variables: `hub_nginx_http_port`, `hub_nginx_https_port`.
-| 8082/8445 | TCP | HTTP/HTTPS | Internal services | {EDAName} | {EDAName} NGINX ports. You can configure these ports with the following inventory variables: `eda_nginx_http_port`, `eda_nginx_https_port`.
+| 8080/8443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart} | {ControllerNameStart} NGINX ports. You can configure these ports with the following inventory variables: `controller_nginx_http_port`, `controller_nginx_https_port`.
+| 8081/8444 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart} | {HubNameStart} NGINX ports. You can configure these ports with the following inventory variables: `hub_nginx_http_port`, `hub_nginx_https_port`.
+| 8082/8445 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName} | {EDAName} NGINX ports. You can configure these ports with the following inventory variables: `eda_nginx_http_port`, `eda_nginx_https_port`.
+| 8083/8446 | TCP | HTTP/HTTPS | {GatewayStart} | {GatewayStart} | {GatewayStart} NGINX ports. You can configure these ports with the following inventory variables: `gateway_nginx_http_port`, `gateway_nginx_https_port`.
 |====
 
 == Example inventory file
