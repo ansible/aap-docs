@@ -1,0 +1,136 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-create-job-template_{context}"]
+
+= `rhaap:create-job-template`
+
+[role="_abstract"]
+Create a job template in {PlatformNameShort} that defines a reusable configuration for running Ansible playbooks.
+
+*Input parameters*
+
+[cols="2,2,1,5"]
+|===
+|Parameter |Type |Required |Description
+
+|`token`
+|string
+|Yes
+|OAuth2 token for {PlatformNameShort} authentication.
+
+|`deleteIfExist`
+|boolean
+|No
+|If `true`, the action deletes the job template if it already exists.
+
+|`values`
+|object
+|Yes
+|The job template configuration object.
+|===
+
+*“values” Object Structure*
+
+[cols="2,2,1,5"]
+|===
+|Field |Type |Required |Description
+
+|`templateName`
+|string
+|Yes
+|Name of the job template.
+
+|`templateDescription`
+|string
+|No
+|Description of the job template.
+
+|`project`
+|object
+|Yes
+|Project object with required `id` (number) and optional `name` (string).
+
+|`organization`
+|object
+|No
+|Organization object with `id` (number, required) and `name` (string, optional).
+
+|`jobInventory`
+|object
+|Yes
+|Inventory object with required `id` (number) and optional `name` (string).
+
+|`playbook`
+|string
+|Yes
+|Path to the playbook file to execute.
+
+|`templateDescription`
+|string
+|No
+|Description of the job template.
+
+|`scmType`
+|string
+|No
+|Source control type (for example, `Github` or `Gitlab`).
+
+|`executionEnvironment`
+|object
+|No
+|Execution environment object with required `id` (number) and optional `name` (string).
+
+|`extraVariables`
+|object
+|No
+|Extra variables to pass to the playbook (key-value pairs).
+|===
+
+*Output parameters*
+
+[cols="3,2,5"]
+|===
+|Parameter |Type |Description
+
+|`template`
+|object
+|Created job template details.
+
+|`template.id`
+|number
+|Job template ID.
+
+|`template.name`
+|string
+|Job template name.
+
+|`template.description`
+|string
+|Job template description.
+
+|`template.url`
+|string
+|{PlatformNameShort} (AAP) URL for the job template.
+|===
+
+*Example*
+----
+steps:
+  - id: create-job-template
+    name: Create Job Template
+    action: rhaap:create-job-template
+    input:
+      token: ${{ parameters.AAP_TOKEN }}
+      deleteIfExist: true
+      values:
+        templateName: Deploy Application
+        templateDescription: Deploys the application to production
+        project: ${{ steps['create-aap-project'].output.project }}
+        organization: ${{ parameters.organization }}
+        jobInventory: ${{ parameters.jobInventory }}
+        playbook: deploy.yml
+        executionEnvironment: ${{ steps['create-ee'].output.executionEnvironment }}
+        extraVariables:
+          app_version: 1.0.0
+          environment: production
+----
