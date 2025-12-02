@@ -1,0 +1,71 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-network-ports-protocols-firewalls"]
+
+= Network ports and protocols firewalls
+
+[role="_abstract"]
+The following tables provide information about configuring firewalls for {PlatformName} components.
+
+
+**{InsightsName}**
+[options="header"]
+|===
+|URL |Required for
+|link:https://api.access.redhat.com[https://api.access.redhat.com:443] |General account services, subscriptions
+|link:https://cert-api.access.redhat.com[https://cert-api.access.redhat.com:443] |Insights data upload
+|link:https://cert.console.redhat.com[https://cert.console.redhat.com:443] |Inventory upload and Cloud Connector connection
+|link:https://{Console}[https://console.redhat.com:443] |Access to Insights dashboard
+|===
+
+**Automation Hub**
+[options="header"]
+|===
+|URL |Required for
+|link:https://console.redhat.com[https://console.redhat.com:443] |General account services, subscriptions
+|link:https://catalog.redhat.com[https://catalog.redhat.com:443] |Indexing execution environments
+|link:https://sso.redhat.com[https://sso.redhat.com:443] |TCP
+|\https://automation-hub-prd.s3.amazonaws.com, \https://automation-hub-prd.s3.us-east-2.amazonaws.com| Firewall access
+|link:https://galaxy.ansible.com[https://galaxy.ansible.com:443] |Ansible Community curated Ansible content
+|\https://ansible-galaxy-ng.s3.dualstack.us-east-1.amazonaws.com | Dual Stack IPv6 endpoint for Community curated Ansible content repository
+|link:https://registry.redhat.io[https://registry.redhat.io:443] |Access to container images provided by Red Hat and partners
+|link:https://cert.console.redhat.com[https://cert.console.redhat.com:443] |Red Hat and partner curated Ansible Collections
+|===
+
+**Execution Environments (EE)**
+[options="header"]
+|===
+|URL |Required for
+|link:https://registry.redhat.io[https://registry.redhat.io:443] |Access to container images provided by Red Hat and partners
+|`cdn.quay.io:443` | Access to container images provided by Red Hat and partners
+|`cdn01.quay.io:443` | Access to container images provided by Red Hat and partners
+|`cdn02.quay.io:443` | Access to container images provided by Red Hat and partners
+|`cdn03.quay.io:443` | Access to container images provided by Red Hat and partners
+|===
+
+[IMPORTANT]
+====
+As of *April 1st, 2025*, `quay.io` is adding three additional endpoints. As a result, customers must adjust allow/block lists within their firewall systems lists to include the following endpoints:
+
+* `cdn04.quay.io`
+* `cdn05.quay.io`
+* `cdn06.quay.io`
+
+To avoid problems pulling container images, customers must allow outbound TCP connections (ports 80 and 443) to the following hostnames:
+
+* `cdn.quay.io`
+* `cdn01.quay.io`
+* `cdn02.quay.io`
+* `cdn03.quay.io`
+* `cdn04.quay.io`
+* `cdn05.quay.io`
+* `cdn06.quay.io`
+
+This change should be made to any firewall configuration that specifically enables outbound connections to `registry.redhat.io` or `registry.access.redhat.com`.
+
+Use the hostnames instead of IP addresses when configuring firewall rules.
+
+After making this change, you can continue to pull images from `registry.redhat.io` or `registry.access.redhat.com`. You do not require a `quay.io` login, or need to interact with the `quay.io` registry directly in any way to continue pulling Red Hat container images.
+
+For more information, see link:https://access.redhat.com/articles/7084334[Firewall changes for container image pulls 2024/2025].
+====
