@@ -1,0 +1,107 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-create-ee_{context}"]
+
+= `rhaap:create-execution-environment`
+
+[role="_abstract"]
+Create an execution environment in {PlatformNameShort} that defines the container image used to run Ansible jobs.
+
+*Input parameters* 
+
+[cols="2,2,1,5"]
+|===
+|Parameter |Type |Required |Description
+
+|`token`
+|string
+|Yes
+|OAuth2 token for {PlatformNameShort} authentication.
+
+|`deleteIfExist`
+|boolean
+|No
+|If `true`, the action deletes the execution environment if it already exists.
+
+|`values`
+|object
+|Yes
+|The execution environment configuration object.
+|===
+
+*“values” Object Structure*
+
+[cols="2,2,1,5"]
+|===
+|Field |Type |Required |Description
+
+|`environmentName`
+|string
+|Yes
+|Name of the execution environment.
+
+|`environmentDescription`
+|string
+|No
+|Description of the execution environment.
+
+|`organization`
+|object
+|Yes
+|Organization object with required `id` (number) and optional `name` (string).
+
+|`image`
+|string
+|Yes
+|Full image location, including registry, image name, and tag (for example, `quay.io/ansible/creator-ee:latest`).
+
+|`pull`
+|string
+|No
+|Image pull policy: `always`, `missing`, or `never`. Default is `missing`.
+|===
+
+*Output parameters*
+
+[cols="3,2,5"]
+|===
+|Parameter |Type |Description
+
+|`executionEnvironment`
+|object
+|Created execution environment details.
+
+|`executionEnvironment.id`
+|number
+|Execution environment ID.
+
+|`executionEnvironment.name`
+|string
+|Execution environment name.
+
+|`executionEnvironment.description`
+|string
+|Execution environment description.
+
+|`executionEnvironment.url`
+|string
+|{PlatformNameShort} (AAP) URL for the execution environment.
+|===
+
+*Example*
+
+----
+steps:
+  - id: create-ee
+    name: Create Execution Environment
+    action: rhaap:create-execution-environment
+    input:
+      token: ${{ parameters.AAP_TOKEN }}
+      deleteIfExist: false
+      values:
+        environmentName: Custom EE
+        environmentDescription: Execution environment with custom collections
+        organization: ${{ parameters.organization }}
+        image: quay.io/ansible/creator-ee:v0.16.0
+        pull: missing
+----

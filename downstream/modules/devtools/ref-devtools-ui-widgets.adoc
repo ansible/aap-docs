@@ -1,0 +1,79 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-ui-widgets_{context}"]
+
+=  Standard UI widgets
+
+[role="_abstract"]
+Standard UI widgets provide enhanced components for user forms to capture various types of input. 
+
+== Textarea widget
+
+The `textarea` widget renders a multi-line text input field for capturing long-form user input such as descriptions or configuration content. 
+----
+properties:
+  description:
+    type: string
+    title: Description
+    ui:widget: textarea
+    ui:options:
+      rows: 5
+      placeholder: "Enter description..."
+
+----
+
+== Select widget
+The `select` widget displays a dropdown menu that enables users to choose a single value from a predefined list of options.
+----
+properties:
+  environment:
+    type: string
+    title: Environment
+    enum: ['dev', 'staging', 'prod']
+    ui:widget: select
+    default: 'dev'
+----
+
+== Checkboxes widgets
+The `checkboxes` widget renders a group of checkboxes, enabling the selection of multiple options from a list. 
+The original plural "Checkboxes Widgets" is corrected to the singular form for style consistency.
+----
+properties:
+  features:
+    type: array
+    title: Base Images
+    items:
+      type: string
+      enum: ['baseImage1', 'baseImage2', 'baseImage3']
+    ui:widget: checkboxes
+    uniqueItems: true
+----
+
+== Hidden widget
+The `hidden` widget holds a fixed or prefilled value that is not visible to the user but is included in the submitted data. Use this widget for passing non-user-editable data, such as authentication tokens.
+----
+kind: Template
+metadata:
+  name: my-AAP-template
+  title: Example AAP Template
+spec:
+  parameters:
+    - title: Authentication
+      properties:
+        token:
+          title: AAP Authentication Token
+          type: string
+          description: Oauth2 token
+          ui:field: AAPTokenField
+          ui:widget: hidden
+          ui:backstage:
+            review:
+              show: false
+  steps:
+    - id: launch-job
+      name: Launch AAP Job Template
+      action: rhaap:launch-job-templat
+      input:
+        token: ${{ parameters.token }}
+      ...
+----
