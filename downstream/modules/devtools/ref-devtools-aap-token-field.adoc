@@ -5,9 +5,10 @@
 = `AAPTokenField`
 
 [role="_abstract"]
-The `AAPTokenField` is a secure authentication field used in backstage scaffolder templates. It automatically fetches and stores an {PlatformNameShort} OAuth2 token, which is then available for all rhaap:* actions, enabling seamless authentication
+The `AAPTokenField` is a secure authentication field used in backstage scaffolder templates. It automatically fetches and stores an {PlatformNameShort} OAuth2 token, which is then available for all rhaap:* actions, enabling seamless authentication.
 
 *AAPTokenField Properties*
+
 The following table details the field's properties for use in a template's properties section.
 
 [cols="2,2,6"]
@@ -32,6 +33,7 @@ The following table details the field's properties for use in a template's prope
 |===
 
 *Authentication flow and token management*
+
 All `rhaap:*` actions require an OAuth2 token for authenticating with {PlatformNameShort}. The field manages the token through the following process:
 
 * Token Source: The token is automatically obtained from the {PlatformNameShort} OAuth2 authentication provider.
@@ -48,8 +50,9 @@ When the RHAAP auth provider is used, the token is injected automatically and ca
 ----
 
 *Example*
+
 The following example shows how to declare and reference the AAPTokenField within a backstage template. 
-Note that `ui:widget: hidden` and ui:backstage: review: show: false` are used to ensure the token is not exposed in the UI.
+Note that `ui:widget: hidden` and `ui:backstage: review: show: false` are used to ensure the token is not exposed in the UI.
 ----
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
@@ -79,6 +82,7 @@ spec:
 ----
 
 *Error and validation handling*
+
 All `rhaap:*` actions include built-in validation and user-friendly error reporting:
 
 * Validation: If the token is missing or invalid, the action throws the error: "`Authorization token not provided`."
