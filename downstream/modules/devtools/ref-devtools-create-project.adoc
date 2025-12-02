@@ -1,0 +1,115 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-create-project_{context}"]
+
+= `rhaap:create-project`
+
+[role="_abstract"]
+Create an {PlatformNameShort} project that links to a source control repository containing Ansible content.
+
+*Input parameters*
+
+[cols="2,2,1,5"]
+|===
+|Parameter |Type |Required |Description
+
+|`token`
+|string
+|Yes
+|OAuth2 token for {PlatformNameShort} authentication.
+
+|`deleteIfExist`
+|boolean
+|No
+|If `true`, the action deletes the project if it already exists before creating a new one.
+
+|`values`
+|object
+|Yes
+|The project configuration object. See the "values" Object Structure table.
+|===
+
+*“values” Object Structure*
+[cols="2,2,1,5"]
+|===
+|Field |Type |Required |Description
+
+|`projectName`
+|string
+|Yes
+|Name of the project.
+
+|`projectDescription`
+|string
+|No
+|Description of the project.
+
+|`organization`
+|object
+|Yes
+|Organization object with `id` (number, required) and `name` (string, optional).
+
+|`credentials`
+|object
+|No
+|Credential object with `id` (number, required), `name` (string, optional), and `kind` (string, optional).
+
+|`scmUrl`
+|string
+|Yes
+|Source control URL (for example, GitHub/GitLab repository URL).
+
+|`scmBranch`
+|string
+|No
+|Source control branch, tag, or commit.
+
+|`scmUpdateOnLaunch`
+|boolean
+|No
+|If `true`, updates the project revision before each job run.
+|===
+
+*Output parameters*
+[cols="2,2,6"]
+|===
+|Parameter |Type |Description
+
+|`project`
+|object
+|Created project details.
+
+|`project.id`
+|number
+|Project ID in Ansible Automation Platform (AAP).
+
+|`project.name`
+|string
+|Project name.
+
+|`project.description`
+|string
+|Project description.
+
+|`project.url`
+|string
+|{PlatformNameShort} URL for the project.
+|===
+
+*Example*
+----
+steps:
+  - id: create-aap-project
+    name: Create AAP Project
+    action: rhaap:create-project
+    input:
+      token: ${{ parameters.AAP_TOKEN }}
+      deleteIfExist: true
+      values:
+        projectName: ${{ parameters.projectName }}
+        organization: ${{ parameters.organization }}
+        scmUrl: https://github.com/my-org/ansible-playbooks
+        scmBranch: main
+        scmUpdateOnLaunch: true
+        credentials: GitHub Token
+----
