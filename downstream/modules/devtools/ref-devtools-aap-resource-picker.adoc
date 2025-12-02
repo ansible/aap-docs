@@ -1,0 +1,67 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-aap-resource-picker_{context}"]
+
+= `AAPResourcePicker`
+
+[role="_abstract"]
+The `AAPResourcePicker` is a dynamic field for backstage scaffolder templates. It fetches and displays a list of {PlatformNameShort} resources (such as inventories, organizations, or credentials) directly from the {PlatformNameShort} API, allowing users to select a resource for their automation workflow.
+
+*AAPResourcePicker Properties*
+
+The following table details the essential properties for configuring the resource picker in a template's `properties` section.
+
+[cols="3,2,5"]
+|===
+|Property |Type |Description
+
+|`title`
+|string
+|The label displayed in the UI (for example, "Inventory").
+
+|`description`
+|string
+|A short help text shown below the field.
+
+|`ui:field`
+|string
+|Must be set to `AAPResourcePicker`.
+
+|`resource`
+|string
+|The specific {PlatformNameShort} (AAP) resource type to fetch and display (for example, `inventories`, `credentials`, or `organizations`).
+
+|`idKey`
+|string
+|The property name used to retrieve the resource ID (default: "`id`").
+
+|`nameKey`
+|string
+|The property name used to display the resource name in the list (default: "`name`").
+
+|`type`
+|string
+|Set to "`array`" for a multi-select field; omit this property for a single-select field.
+|===
+
+*Example*
+
+The following example demonstrates how to use the `AAPResourcePicker` to create a single-select field for choosing an *Inventory*.
+----
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: my-AAP-template
+  title: Example AAP Template
+spec:
+  parameters:
+    - title: Authentication
+      properties:
+        jobInventory:
+          title: Inventory
+          description: Select inventory
+          resource: inventories
+          ui:field: AAPResourcePicker
+          default: DemoInventory
+----
+
