@@ -15,7 +15,7 @@ To do this, you must modify the base ConfigMap for the {RHDH} deployment.
 . In the editing pane, add a `containers` block in the `spec.deployment.patch.spec.template.spec` block:
 +
 ----
-apiVersion: rhdh.redhat.com/v1alpha3
+apiVersion: rhdh.redhat.com/v1alpha4
 kind: Backstage
 metadata:
   name: developer-hub
@@ -29,7 +29,7 @@ spec:
               - command:
                   - adt
                   - server
-                image: registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+                image: registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel8:latest
                 imagePullPolicy: always
                 ports:
                   - containerPort: 8000
