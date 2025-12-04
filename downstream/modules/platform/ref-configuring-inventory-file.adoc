@@ -4,9 +4,19 @@
 = Configuring the inventory file
 
 [role="_abstract"]
-You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the information needed to customize the installation. For example, host details, certificate details, and various component-specific settings. 
+You can control the installation of {PlatformNameShort} with inventory files. Inventory files define the host details, certificate details, and component-specific settings needed to customize the installation.
 
-Example inventory files are available in this document that you can copy and change to quickly get started.
+Example inventory files are available in this document that you can copy and change to get started.
+
+[IMPORTANT]
+====
+The inventory file requirements differ based on your installation type:
+
+* *Online installation*: Requires the `registry_username` and `registry_password` variables to authenticate and pull container images from Red Hat registries during installation.
+* *Disconnected (bundled) installation*: Does not require `registry_username` or `registry_password` because all container images are pre-packaged in the bundle. Instead, requires the `bundle_install=true` and `bundle_dir` variables.
+
+The following inventory file examples are for online installations. For disconnected installation inventory requirements, see link:{URLContainerizedInstall}/aap-containerized-disconnected-installation#perform-disconnected-installation[Performing a disconnected installation].
+====
 
 Additionally, {GrowthTopology} and {EnterpriseTopology} inventory files are available in the following locations:
 
