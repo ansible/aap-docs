@@ -1,12 +1,12 @@
 :_mod-docs-content-type: PROCEDURE
 [id="con-offline-token-active_{context}"]
 
-= Keeping your offline token active
+= Refreshing the offline token
 
 [role="_abstract"]
-Offline tokens expire after 30 days of inactivity. You can keep your offline token from expiring by keeping it active. 
+Offline tokens expire after 30 days of inactivity. You can keep your offline token from expiring by refreshing it periodically. 
 
-Keeping an offline token active is useful when an application performs an action on behalf of the user; for example, this allows the application to perform a routine data backup when the user is offline.
+Refreshing the offline token to keep it active is useful when an application performs an action on behalf of the user. For example, this allows the application to perform a routine data backup when the user is offline.
 
 [NOTE]
 ====
@@ -15,7 +15,7 @@ If your offline token expires, you must xref:proc-create-api-token_cloud-sync[ob
 
 .Procedure
 
-* Run the following command to prevent your token from expiring:
+* Run the following command to refresh the offline token:
 +
 ----
 curl https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token -d grant_type=refresh_token -d client_id="cloud-services" -d refresh_token="{{ user_token }}" --fail --silent --show-error --output /dev/null
