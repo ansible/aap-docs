@@ -131,18 +131,20 @@ endif::container-install[]
 | Optional 
 | `true`
 
-| `registry_password` 
-| `registry_password` 
-| Password credential for access to the registry source defined in `registry_url`. 
+| `registry_password`
+| `registry_password`
+| Password credential for access to the registry source defined in `registry_url`.
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
-endif::aap-install[] 
+endif::aap-install[]
 // This content is used in Containerized installation
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/preparing-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+
+Not required for disconnected (bundled) installations where `bundle_install=true`.
 endif::container-install[]
-| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| RPM = Required if you need a password to access `registry_url`. Container = Required for online installations if `registry_auth=true`. Not required for disconnected installations.
 | 
 
 | `registry_url` 
@@ -151,18 +153,20 @@ endif::container-install[]
 | Optional 
 | `registry.redhat.io`
 
-| `registry_username` 
-| `registry_username` 
-| Username credential for access to the registry source defined in `registry_url`. 
+| `registry_username`
+| `registry_username`
+| Username credential for access to the registry source defined in `registry_url`.
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
-endif::aap-install[] 
+endif::aap-install[]
 // This content is used in Containerized installation
 ifdef::container-install[]
 For more information, see link:{URLContainerizedInstall}/preparing-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+
+Not required for disconnected (bundled) installations where `bundle_install=true`.
 endif::container-install[]
-| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| RPM = Required if you need a password to access `registry_url`. Container = Required for online installations if `registry_auth=true`. Not required for disconnected installations.
 | 
 
 | `registry_verify_ssl` 
@@ -259,10 +263,10 @@ Set to `false` to prevent pulling newer container images during installation.
 | Optional
 | `true`
 
-| 
-| `registry_auth` 
-| Set whether or not to use registry authentication. When this variable is set to true, `registry_username` and `registry_password` are required. 
-| Optional 
+|
+| `registry_auth`
+| Controls whether to use registry authentication. When set to `true`, `registry_username` and `registry_password` are required. Not applicable for disconnected (bundled) installations.
+| Optional
 | `true`
 
 | 
