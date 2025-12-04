@@ -6,12 +6,12 @@ ifdef::context[:parent-context-of-rhdh-install-ocp-helm: {context}]
 
 :context: rhdh-install-ocp
 [role="_abstract"]
-The following procedures describe how to install Ansible plug-ins in {RHDH} instances on {OCP} using a Helm chart.
+The following procedures describe how to install Ansible plug-ins in Red Hat Developer Hub instances on Red Hat OpenShift Container Platform using a Helm chart.
 
 The workflow is as follows:
 
-. Download the Ansible plug-ins files.
-. Create a plug-in registry in your OpenShift cluster to host the Ansible plug-ins.
+. Choose a plug-in delivery method: OCI container delivery (recommended) or HTTP plug-in registry.
+. Complete the preparation steps for your chosen delivery method.
 . Add the plug-ins to the Helm chart.
 . Create a custom ConfigMap.
 . Add your custom ConfigMap to your Helm chart.
@@ -19,17 +19,16 @@ The workflow is as follows:
 +
 [NOTE]
 ====
-You can save changes to your Helm and ConfigMap after each update to your configuration.
-You do not have to make all the changes to these files in a single session.
+You can save changes to your Helm chart and ConfigMap after each update to your configuration. You do not have to make all the changes to these files in a single session.
 ====
 
 include::devtools/con-rhdh-install-ocp-prereqs.adoc[leveloffset=+1]
 
 include::devtools/con-rhdh-recommended-preconfig.adoc[leveloffset=+1]
 
-include::devtools/proc-rhdh-download-plugins.adoc[leveloffset=+1]
+include::assembly_choose-a-plug-in-delivery-method.adoc[leveloffset=+1]
 
-include::devtools/proc-rhdh-create-plugin-registry.adoc[leveloffset=+1]
+//include::devtools/proc_prepare-to-pull-ansible-plug-ins-from-the-redhat-container-registry.adoc[leveloffset=+1]
 
 
 // Required config

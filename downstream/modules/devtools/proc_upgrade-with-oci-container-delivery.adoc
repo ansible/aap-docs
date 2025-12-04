@@ -1,0 +1,40 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-16
+:_mod-docs-content-type: PROCEDURE
+
+[id="upgrade-with-oci-container-delivery_{context}"]
+= Upgrade with OCI container delivery
+
+[role="_abstract"]
+
+To upgrade the Ansible plug-ins when using OCI delivery, update the version tag in the package URL for each plug-in entry.
+
+
+
+.Procedure
+
+. Log in to your OpenShift Container Platform instance.
+. In the OpenShift Developer UI, navigate to **Helm** -> **developer-hub** -> **Actions** -> **Upgrade** -> **Yaml view**.
+. In the `global.dynamic.plugins` list, update the version tag at the end of each `package` URL:
++
+----
+plugins:
+  - disabled: false
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
+    pluginConfig:
+      ...
+  - disabled: false
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
+    pluginConfig:
+      ...
+----
+
+. Click **Upgrade**.
++
+The Red Hat Developer Hub pods restart and pull the new plug-in version.
+
+
+.Verification
+
+. In the OpenShift UI, click **Topology**.
+. Verify that the Red Hat Developer Hub instance is available.
