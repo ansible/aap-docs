@@ -23,6 +23,10 @@ Name:: Insert the name.
 Description:: This field is optional.
 Organization:: Select an organization to associate with the decision environment.
 Image:: This is the full image location, including the container registry, image name, and version tag.
+Pull:: This optional field defines when the Event-Driven Ansible controller attempts to download (pull) the specified container image from the registry before running an automation rulebook. This setting is crucial for ensuring security, consistency, and efficient use of system resources by controlling when the local image cache is updated or reused.
+* *Always pull container before running* - checks the registry for a new version of the image before every use, even if a local copy exists. This ensures that the freshest content is always used, which is critical for security patches, content updates, and staging environments.
+* *Only pull the image if not present before running* - checks the local cache of {EDAcontroller} first. If the image is found locally, it is used immediately. A pull from the registry only happens if the image is not found locally. This optimizes performance by avoiding unnecessary downloads and is best for production environments where the content image is stable and faster startup is required.
+* *Never pull container before running* - never attempts to pull the image from the registry. It only uses an image that has been previously pulled and is present in the local cache. This option guarantees consistency by preventing unintended content changes. It requires the image to be manually pulled to {EDAcontroller} beforehand. If the image isn't present, the activation fails.
 Credential:: This field is optional. This is the credential needed to use the decision environment image.
 . Select btn:[Create decision environment].
 
