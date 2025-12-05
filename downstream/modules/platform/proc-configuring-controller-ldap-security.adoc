@@ -42,6 +42,8 @@ You can verify the expected certificate by running:
 oc get deployments -l 'app.kubernetes.io/component=aap-gateway'
 ----
 +
+Followed by:
++
 ----
 oc exec -it deployment.apps/<gateway-deployment-name-from-above> -- openssl x509 -in /etc/pki/tls/certs/ca-bundle.crt -noout -text
 ----
