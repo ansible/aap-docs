@@ -80,8 +80,7 @@ Options:
 //+
 //image::instances_create_details.png[Create Instance details]
 ifdef::operator-mesh[]
-. To verify peering configuration and the direction of traffic, you can use the topology view
-to view a graphical representation of your updated topology.
+. To verify peering configuration and the direction of traffic, you can use the topology view to view a graphical representation of your updated topology.
 This can help to determine where your firewall rules might need to be updated.
 For more information, see link:{URLControllerUserGuide}/assembly-controller-topology-viewer[Topology view].
 endif::operator-mesh[]
@@ -128,8 +127,8 @@ all:
 * Ensure `ansible_host` is set to the IP address or DNS of the node.
 * Set `ansible_user` to the username running the installation.
 * Set `ansible_ssh_private_key_file` to contain the filename of the private key used to connect to the instance.
-* The content of the `inventory.yml` file serves as a template and contains variables for roles that are applied during the installation and configuration of a receptor node in a mesh topology.
-You can modify some of the other fields, or replace the file in its entirety for advanced scenarios.
+* The content of the `inventory.yml` file serves as a template and has variables for roles that are applied during the installation and configuration of a receptor node in a mesh topology.
+You can change some of the other fields, or replace the file in its entirety for advanced scenarios.
 For more information, see link:https://github.com/ansible/receptor-collection/blob/main/README.md[Role Variables].
 . For a node that uses a private DNS, add the following line to `inventory.yml`:
 +
@@ -196,29 +195,31 @@ Suppose you have a Control plane with nodes A, B, and C
 
 The following is a peering set up for three controller nodes:
 
-Controller node A --> Controller node B
+Controller node A -> Controller node B
 
-Controller node A --> Controller node C
+Controller node A -> Controller node C
 
-Controller node B --> Controller node C
+Controller node B -> Controller node C
 
 You can force the listener by setting
 
 `receptor_listener=True`
 
-However, a connection Controller B --> A is likely to be rejected as that connection already exists.
+However, a connection Controller B -> A is likely to be rejected as that connection already exists.
 
 This means that nothing connects to Controller A as Controller A is creating the connections to the other nodes, and the following command does not return anything on Controller A:
 
 `[root@controller1 ~]# ss -ntlp | grep 27199 [root@controller1 ~]#`
 
-The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so once the connection is created, the receptor can communicate in both directions. 
+The RPM installer creates a strongly connected peering between the control plane nodes with a least privileged approach and opens the tcp listener only on those nodes where it is required. All the receptor connections are bidirectional, so when the connection is created, the receptor can communicate in both directions. 
 ====
 +
+ifdef::controller-UG[]
+To remove an instance from the mesh, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/using_automation_execution/assembly-controller-instances#ref-removing-instances[Removing instances].
+endif::controller-UG[]
+
 ifdef::operator-mesh[]
++
 To remove an instance from the mesh, see link:{URLOperatorMesh}/assembly-automation-mesh-operator-aap#ref-removing-instances[Removing instances].
 endif::operator-mesh[]
-+
-ifdef::controller-UG[]
-To remove an instance from the mesh, see link:{URLControllerUserGuide}/assembly-controller-instances#ref-removing-instances[Removing instances].
-endif::controller-UG[]
+
