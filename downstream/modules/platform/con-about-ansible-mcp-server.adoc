@@ -1,0 +1,162 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-about-ansible-mcp-server_{context}"]
+
+= Overview
+
+[role="_abstract"]
+
+Model Context Protocol (MCP) is an open standard that enables AI models to use external AI tools and services via a unified interface. Using the Ansible MCP server, you can connect your {PlatformNameShort} with your preferred external AI tool (such as Claude, Cursor, or ChatGPT). The AI tools can access key information about your {PlatformNameShort} environment and perform tasks. Ansible users can query information, execute workflows, and perform automation tasks using natural language prompts directly within their preferred AI tool.
+
+[NOTE]
+====
+Technology Preview features are not supported with Red Hat production service level agreements (SLAs) and might not be functionally complete. Red Hat does not recommend using them in production. These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process. For more information about the support scope of Red Hat Technology Preview features, see Technology Preview Features Support Scope.
+====
+
+== Benefits
+
+The following are the benefits of the Ansible MCP server:
+
+*For external AI tools*:
+
+* Provides a standardized interface for securely querying infrastructure data and executing automation workflows within the {PlatformNameShort}.
+* Enables agentic workflows to interact with the {PlatformNameShort}.
+
+*For Ansible users*: Provides the ability to use the chatbot interface of their preferred external AI tool to get information about their {PlatformNameShort} environment, and run automation jobs directly through that tool.
+
+*For developers*:
+* Reduces the time and complexity of developing or integrating the {PlatformNameShort} with AI applications or agents.
+* Simplifies AI integration, enabling existing automation through {PlatformNameShort} to be exposed to AI tools without writing custom API code or middleware.
+
+== Workflow
+
+The standalone Ansible MCP server functions as a secure intermediary layer between your external AI clients and the {PlatformNameShort}. This design ensures that the AI agent never interacts directly with the underlying infrastructure unless appropriate permissions (read-write access) are granted to the Ansible MCP server.
+
+The following describes the workflow:
+
+. AI Client (The requester): The user initiates a request through their external AI agent (for example, Cursor or Claude) using natural-language prompts.
+. The AI Model (The translator): The AI agent receives the request, interprets the intent, and maps it to the appropriate exposed Ansible toolset. It then sends a structured toolset call with the necessary parameters.
+. MCP Server (The gatekeeper): Upon receiving the call, the MCP server validates the request. It uses the user's API token to authenticate with the {ControllerName}.
+. Ansible Controller (The executor): The {ControllerName} accepts the validated command from the MCP server and triggers the appropriate automation job.
+. Response Loop: The automation result is returned to the MCP server, standardized into a format the AI agent can process, and displayed to the user via the AI client.
+
+[IMPORTANT]
+====
+Both the MCP server and the {PlatformNameShort} UI access the {PlatformNameShort} API. However, because the AI tool processes the API output before displaying it in its chat interface, you might observe different results when comparing the output from the AI tool with the {PlatformNameShort} UI.
+====
+
+== Ansible MCP server toolsets
+
+The Ansible MCP server provides a preconfigured suite of toolsets that effectively act as a bridge between your preferred AI agent and the {PlatformNameShort}. Once configured, these toolsets enable your AI agent to perform specific, authorized actions without requiring you to leave the chat interface.
+
+The Ansible MCP server turn your AI agent from a passive assistant into an active operator that can interact with your {PlatformNameShort} infrastructure and execute workflows or automate tasks based on the permissions you define.
+
+The following toolsets are available in this Technology Preview release:
+
+[cols="1,2,4", options="header"]
+|===
+|Toolset
+|Description
+|Usage examples
+
+|Job management
+|Tools to list available job templates, launch automation jobs, and monitor their real-time status.
+|**Operators** can:
+* Launch job templates and workflows to execute automation tasks for their projects and services.
+* View job output and logs to troubleshoot failed automation tasks and understand what went wrong.
+* Relaunch failed jobs to recover from temporary failures and complete necessary automation tasks.
+
+|Inventory management
+|Tools to query your inventory for host details, check group membership, and verify system facts.
+|**Operators** can:
+* View and browse inventories across environments to understand which systems they are managing with automation.
+* Manage group assignments to target automation to specific sets of systems.
+* View hosts that are configured for automation.
+
+|System monitoring
+|Tools to retrieve job logs, troubleshoot failed tasks, and check the health of your automation environment.
+|**Administrators** can:
+* Perform platform status and health checks across all services to identify issues and ensure the automation platform is running correctly.
+* Monitor service health through the platform gateway to ensure all platform components are functioning correctly.
+* Audit user activity and generate reports to ensure compliance and identify potential security issues.
+
+|User management
+|Tools to allow the AI agent to administer access and organizational structure within the {PlatformNameShort}.
+|**Administrators** can:
+* Use natural-language prompts to provision users and enforce hierarchy, rather than manually navigating the UI.
+* Create, modify, and delete users and teams to manage access to the {PlatformNameShort} and support organizational changes.
+* Configure role-based access control to ensure users have the appropriate permissions for their responsibilities while maintaining security.
+* View team memberships and structure to see who else in their organization is working on automation.
+
+|Security/compliance
+|Tools that enable the AI agent to act as a security operator, managing sensitive credentials and verifying platform integrity without exposing raw secrets.
+|**Operators** can:
+* View available credentials to understand what authentication options are available for their automation jobs.
++
+**Administrators** can:
+* Manage credentials and security policies to ensure secure access to external systems while maintaining proper governance.
+* Manage custom credential types for seamless integration with third-party applications.
+
+|Platform configuration
+|Tools that enable organization administrators and developers to inspect and tune the {PlatformNameShort} infrastructure itself.
+|**Administrators** can:
+* Manage system settings across all components to configure the platform in line with the organizational requirements and policies.
+* Manage and track licenses to ensure compliance with licensing terms and optimize license utilization.
++
+**Developers** can:
+* Tune execution environments to optimize the runtime performance of their automation content.
+|===
+
+== Controlling access and permissions
+
+The Ansible MCP server employs a dual-layer security model to ensure safe integration between AI tools and your infrastructure. This approach combines a global administrative safeguard with the granular Role-Based Access Control (RBAC) of the {PlatformNameShort}.
+
+You can grant the following access types to the Ansible MCP server:
+
+. Server-level permission: Organization administrators assign a global-level permission while deploying the Ansible MCP server. Administrators can choose one of the following access levels:
+
+* Read-only access: The default setting that enforces a strict "look but don't touch" policy. The AI agent can retrieve system data, such as logs and inventory, but the agent cannot launch jobs or modify configurations. This global safeguard overrides all individual user permissions to prevent unintended automation.
+* Read-write access: This setting authorizes the AI agent to make changes in your {PlatformNameShort}, such as executing job templates, managing resources, and applying infrastructure changes. However, these actions are subject to the specific RBAC permissions of the user-provided API token.
+
+. User-level configuration: The AI agent's specific capabilities are inherited from the user account that generated the authentication API token.
+
+* Inherited permissions: The AI tool inherits the user's permissions and performs only the actions the user is authorized to perform. For example, if the user's token only has permissions to view the "network" inventory, the AI tool cannot access or modify the "database" inventory even if the user requests it.
+* Rejection of unauthorized actions: If the AI tool attempts an action (like launching a job) that the user's token is not authorized to perform, the {PlatformNameShort} API rejects the request.
+
+[WARNING]
+====
+Enabling read-write access for the Ansible MCP server grants the AI agent autonomy to execute automation jobs. The AI agent can directly make changes in your {PlatformNameShort} environment only if the user has write permissions. Large Language Models (LLMs) can occasionally misinterpret prompts or hallucinate commands. Therefore, enabling read-write access may introduce a risk of unintended changes to your environment.
+====
+
+== Prerequisites
+
+* Platform version: An instance of {PlatformNameShort} {PlatformVers} or later.
+
+* Deployment environment:
+** OpenShift: Access to an OpenShift cluster with permissions to install operators.
+** Containerized: A supported container runtime.
+
+* Access credentials: A valid user or service account within {PlatformNameShort} with permissions to execute the desired automation jobs. You will need to generate an API token for this account.
+
+== Process
+
+Perform the following tasks to deploy and configure an Ansible MCP server and integrate it with your preferred AI tool:
+
+[cols="1,3,5", options="header"]
+|===
+|Step number
+|Task
+|Description
+
+|1
+|Deploy and configure an Ansible MCP server.
+|An administrator deploys and configures the Ansible MCP server in an {OperatorBase} or {ContainerBase} of {PlatformNameShort} {PlatformVers}.
+
+|2
+|Create an API token for your Ansible MCP server.
+|An Ansible user creates an API token for their {PlatformNameShort} instance and uses it to connect to their preferred AI tool. The AI tools will inherit the user's permissions for authentication using the API token.
+
+|3
+|Configure the external AI tool to use the API token of the Ansible MCP server.
+|An Ansible user then configures the external AI tool with the Ansible MCP server's API token, enabling the AI tool to connect to the Ansible MCP server and execute workflows and automate tasks.
+|===

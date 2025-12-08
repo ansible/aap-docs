@@ -1,0 +1,64 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-mcp-server-containerized-install_{context}"]
+
+= Deploying an Ansible MCP server on a containerized installation
+
+[role="_abstract"]
+
+Use the following procedure to deploy and configure the Ansible MCP server on a {ContainerBase} of {PlatformNameShort} {PlatformVers}.
+
+.Prerequisites
+
+You have a valid {PlatformNameShort} {PlatformVers} subscription.
+
+.Procedure
+
+. Configure the Ansible MCP server variables in the inventory file:
+
+.. Create an [ansiblemcp] group and add a host for the Ansible MCP server.
+
+.. Add the required installation variables to your inventory file under the [all: vars] group.
++
+Refer to the Appendix: {LightspeedShortName} variables (add URL) for information about required and optional variables.
++
+[source]
+----
+# This is the list of inventory file variables required to deploy Red Hat Ansible Lightspeed on a containerized installation.
+
+# Consult the docs if you are unsure what to add.
+# For information about required and optional variables, refer to the Appendix: MCP server variables
+# <add URL of appendix section>
+
+# This section is for your Ansible MCP server host
+# -------------------------------------------------
+[ansiblemcp]
+aap.example.com
+
+# This section is for Ansible MCP server deployment
+# --------------------------------------------------
+[all:vars]
+mcp_allow_write_operations: false
+----
+
+. Run the {ContainerBase} {PlatformNameShort} installation (Add URL).
+
+. Optional: If you change the permissions of the Ansible MCP server after it was created and deployed, you must delete the AnsibleMCPServer custom resource and recreate it. Perform the following steps:
+
+.. Go to the {PlatformNameShort} portal.
+.. Under **Resources**, search for the **AnsibleMCPServer** custom resource.
+.. Select the active **AnsibleMCPServer** instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
+.. Select the **Settings menu** (3-dot menu icon) on the right side of the instance, then click **Delete AnsibleMCPServer**.
++
+After the reconciliation process is completed, the existing MCP server instance is deleted, and a new Ansible MCP server instance is created.
+
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:lightspeed-variables[Appendix: {LightspeedShortName} Inventory file variables] (add URL)
+
+[role="_additional-resources"]
+.Next steps
+
+* xref:installing-containerized-aap[Installing containerized {PlatformNameShort}] (add URL)
