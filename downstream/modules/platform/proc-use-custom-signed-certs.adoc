@@ -1,0 +1,52 @@
+:_mod-docs-content-type: PROCEDURE
+
+= Using custom signed certificates in {AutomationMesh}
+
+[role="_abstract"]
+Learn how to replace the default {AutomationMesh} installer-provided certificates with custom,organization-specific certificates.
+
+[NOTE]
+====
+In the following procedure, replace `<FQDN/IP Address>` and <IP Address> with the Fully Qualified Domain Name (FQDN) or IP address of the node.
+====
+
+.Procedure
+. Stop the receptor service on all {ControllerName} and execution nodes.
++
+`# systemctl stop receptor`
+. Generate a new Certificate Authority (CA) for your mesh network.
+. Replace "common ca" in the command below with the required common name.
++
+----
+# receptor --cert-init commonname="common ca" bits=4096 outcert=/etc/receptor/tls/ca/mesh-CA.crt outkey=/etc/receptor/tls/ca/mesh-CA.key
+----
+. Generate a self-signed certificate request for each Controller and Execution Node.
++
+----
+# receptor --cert-makereq commonname=<FQDN/IP Address> bits=4096 nodeid=<FQDN/IP Address> outreq=/etc/receptor/tls/<FQDN/IP Address>.csr outkey=/etc/receptor/tls/<FQDN/IP Address>.key ipaddress=<IP Address> ipaddress=<IP Address>
+----
+. Sign the newly created certificates with your CA. 
+Make sure you adjust the `notafter=` date to meet your organizational requirements. 
+The example shown uses a date far in the future.
++
+----
+# receptor --cert-signreq verify=yes cacert=/etc/receptor/tls/ca/mesh-CA.crt cakey=/etc/receptor/tls/ca/mesh-CA.key req=/etc/receptor/tls/<FQDN/IP Address>.csr outcert=/etc/receptor/tls/<FQDN/IP Address>.crt notafter="2034-07-29T20:48:02Z"
+----
+. Transfer the newly created and signed certificates to their nodes in the `/etc/receptor/tls/` directory.
+. The `mesh-CA.crt` file must be placed in `/etc/receptor/tls/ca`.
+. Ensure that the permissions and ownership of the certificate files are set correctly. 
+* All files should be owned by receptor
+* All certificate files should have 0640 permissions.
++
+`# chown -R receptor: /etc/receptor; chmod 0640 /etc/receptor/tls/<FQDN/IP Address>.crt`
+. Start the receptor service on all Controller and Execution nodes.
++
+`# systemctl start receptor`
+. Verify the node status in the {PlatformNameShort} UI:
+. In the navigation panel, select {MenuInfrastructureInstanceGroups}
+. Select the default instance group, then go to the Instances tab.
+. Ensure that the status of all nodes is marked as Ready.
+. If any node is marked as *Unavailable*:
+.. Select the Unavailable node.
+.. Click btn:[Run Health Check].
+.. Refresh the page, and the node should now display as Ready.
