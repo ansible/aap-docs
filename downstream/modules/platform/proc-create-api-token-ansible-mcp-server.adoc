@@ -1,0 +1,54 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-create-api-token-ansible-mcp-server_{context}"]
+
+= Creating an API token for the Ansible MCP server 
+
+[role="_abstract"]
+
+Create an API token for your {PlatformNameShort} instance, so you can use it to connect with your preferred AI agent. The AI tool will inherit the user's permissions for API token-based authentication.
+
+.Prerequisites
+
+* Your organization administrator has deployed an Ansible MCP server.
+
+.Procedure
+. From the navigation panel, select menu:{MenuAM}[Users].
+. Select the username for your user profile to configure OAuth 2 tokens.
+. Select the *Tokens* tab. When no tokens are present, the *Tokens* screen prompts you to add them.
+. Click *Create token*, and provide the following details:
+
+* *Application*: Enter the name of the application with which you want to associate your token. Alternatively, you can search for it by clicking *Browse*. This opens a separate window that enables you to choose from the available options. Select *Name* from the filter list to filter by name if the list is extensive.
++
+[NOTE]
+====
+To create a Personal Access Token (PAT) that is not linked to any application, leave the *Application* field blank.
+====
+* *Description*: (Optional) Provide a short description for your token.
+* *Scope*: (Required) Specify the level of access you want this token to have. The scope of an OAuth 2 token can be set as one of the following:
+
+** *Write*: Allows requests sent with this token to add, edit, and delete resources in the system.
+** *Read*: Limits actions to read only. The write scope includes the read scope.
+. Click *Create token*. The token information is displayed.
+. On the token information page that appears, click the *Copy icon* and save the token for future use.
++
+[IMPORTANT]
+====
+This will be the only time the token is displayed. Therefore, ensure that you save the token for future use.
+====
+
+.Verification
+
+You can verify that the application now shows the user with the appropriate token by selecting the *Tokens* tab on the *Application Details* page:
+
+. From the navigation panel, select menu:{MenuAM}[OAuth Applications].
+. Select the application you want to verify from the *Applications* list view.
+. Select the *Tokens* tab.
++
+Your token should be displayed in the list of tokens associated with the application you chose.
+
+[role="_additional-resources"]
+.Next step
+
+* xref:proc-connect-ai-agent-ansible-mcp-server_deploying-ansible-mcp-server[Connect an external AI agent to the Ansible MCP server]
+

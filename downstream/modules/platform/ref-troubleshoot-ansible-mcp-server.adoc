@@ -1,0 +1,48 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="troubleshoot-ansible-mcp-server-errors"]
+= Troubleshooting Ansible MCP server errors
+
+[role="_abstract"]
+
+This section contains information to help you diagnose and resolve issues with deploying the Ansible MCP server and connecting it to an external AI agent.
+
+== API output format rejected with 406 Status Code
+
+*Issue*: {PlatformNameShort} rejects an API request (for example, retrieving job stdout) with an HTTP `406` status code if the MCP server's requested output is not in `JSON` format.
+
+*Workaround*: To obtain the output in a specific format, instruct your AI tool to use `JSON` format first. You can then transform the `JSON` output into your desired format.
+
+== User requests rejected with 400 status code
+
+*Issue*: The Ansible MCP server may reject user requests from the external AI tool with `400 Bad Request` status code. This error is encountered when the {PlatformNameShort} uses a self-signed certificate.
+
+*Workaround*: Configure the Ansible MCP server to ignore certificate errors using the following steps:
+
+* For {ContainerBase}: Set the value of variable `mcp_ignore_certificate_errors` to `true`.
+
+* For {OperatorBase}:
++
+Add the `IGNORE_CERTIFICATE_ERRORS` setting  to the `mcp:` section of *AnsibleAutomationPlatform* custom resource in the following format:
++
+[source,none]
+----
+
+  spec:
+    mcp:
+      extra_settings:
+        - setting: IGNORE_CERTIFICATE_ERRORS
+          value: true
+----
+
+== Ansible MCP server permissions are changed post deployment
+
+*Issue*: If you changed the permissions of the Ansible MCP server after it was created and deployed, you must delete the **AnsibleMCPServer** custom resource and recreate it.
+
+*Workaround*: Perform the following steps:
+
+. Navigate to the {PlatformNameShort} portal.
+. Under **Resources**, search for the **AnsibleMCPServer** custom resource.
+. Select the active **AnsibleMCPServer** instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
+. Select the **Settings menu** (3-dot menu icon) on the right side of the instance, then click **Delete AnsibleMCPServer**.
+. After the reconciliation process is completed, the existing Ansible MCP server instance is deleted and a new Ansible MCP server instance is created.
