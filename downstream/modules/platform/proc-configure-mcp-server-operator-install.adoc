@@ -1,0 +1,87 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-mcp-server-operator-install_{context}"]
+
+= Deploying an Ansible MCP server on an {OperatorBase}
+
+[role="_abstract"]
+
+Use the following procedure to deploy and configure the Ansible MCP server on an {OperatorBase} of {PlatformNameShort} {PlatformVers}.
+
+.Prerequisites
+
+* You have a valid {PlatformNameShort} {PlatformVers} subscription.
+
+.Procedure
+
+. Log in to {OCP} as an administrator.
+. Navigate to the namespace where you want to install the MCP server.
+. Select menu:Operators[Installed Operators].
+. From the list of installed operators, select *{PlatformNameShort}*. 
+. In the {PlatformNameShort} tile, click **Create instance**.
+. From the **Configure via** field, select the **Form** view, then provide the instance name. For example, `aap-mcp`.
+. Select the **YAML** view, and replace the `spec:` section with the following snippet:
++
+[source]
+----
+spec: 
+  no_log: true
+  # Components
+  controller:
+    disabled: false
+  eda:
+    disabled: false
+  hub:
+    disabled: true
+  lightspeed:
+    disabled: true
+  mcp:
+    disabled: false
+    allow_write_operations: false
+----
+
++
+[IMPORTANT]
+====
+Use the `allow_write_operations` variable to configure the operational access level of the Ansible MCP server:
+
+* *Read-only access*: Set the variable to `false` to restrict the AI agent to viewing data only. In this mode, the AI tool can query job statuses and logs, but cannot trigger new automation in the {PlatformNameShort}. The MCP server is set to read-only mode by default.
+* *Read-write access*: Set the variable to `true` to allow the AI agent to make changes in {PlatformNameShort}, such as executing jobs or modifying the system state.
+====
+
+. Click *Create*. The Ansible MCP server is created. 
+
+. Optional: If you changed the permissions of the Ansible MCP server after it was created and deployed, you must delete the *AnsibleMCPServer* custom resource and recreate it.
++
+Perform the following steps:
+
+.. Go to the {PlatformNameShort} portal.
+.. Under *Resources*, search for the *AnsibleMCPServer* custom resource.
+.. Select the active *AnsibleMCPServer* instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
+.. Select the *Settings menu* on the right side of the instance, and then click *Delete AnsibleMCPServer*.
+.. After the reconciliation process completes, the existing MCP server instance is deleted, and a new Ansible MCP server instance is created.
+
+.Verification
+
+. Navigate to menu:Workloads[Deployments]. 
+. Check that the deployment you created is listed there. For example: `aap-mcp`.
+. Check one of the pod's logs and verify there are no errors.
+
+[role="_additional-resources"]
+.Next steps
+
+. Obtain the following information:
+
+* *{PlatformNameShort} login screen URL*:
+.. Navigate to menu:Networking[Routes].
+.. For the {PlatformNameShort} deployment, click the *Copy icon* in the *Location* field. This is the URL of the {PlatformNameShort} login screen.
+
+* *{PlatformNameShort} administrator password*:
+.. Navigate to menu:Workloads[Secrets] and click `aap-admin-password`.
+.. Click *Reveal values* and then use the *Copy* icon to save the {PlatformNameShort} administrator password for future use.
+
+* *Ansible MCP server URL*:
+.. Navigate to menu:Networking[Routes].
+.. For the deployment you recently created (`aap-mcp`), click the *Copy* icon from the **Location** field. This is the URL required to configure your AI agent to connect to the Ansible MCP server.
+
+. xref:proc-create-api-token-ansible-mcp-server_deploying-ansible-mcp-server[Create an API token for the Ansible MCP server].

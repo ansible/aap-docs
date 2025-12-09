@@ -2,7 +2,7 @@
 
 [id="proc-configure-mcp-server-containerized-install_{context}"]
 
-= Deploying an Ansible MCP server on a containerized installation
+= Deploying an Ansible MCP server on a {ContainerBase}
 
 [role="_abstract"]
 
@@ -10,55 +10,66 @@ Use the following procedure to deploy and configure the Ansible MCP server on a 
 
 .Prerequisites
 
-You have a valid {PlatformNameShort} {PlatformVers} subscription.
+* You have a valid {PlatformNameShort} {PlatformVers} subscription.
 
 .Procedure
 
 . Configure the Ansible MCP server variables in the inventory file:
 
-.. Create an [ansiblemcp] group and add a host for the Ansible MCP server.
+.. Create an `[ansiblemcp]` group and add a host for the Ansible MCP server.
 
-.. Add the required installation variables to your inventory file under the [all: vars] group.
+.. Specify the Ansible MCP server permissions in the `mcp_allow_write_operations` variable under the `[all: vars]` group.
 +
-Refer to the Appendix: {LightspeedShortName} variables (add URL) for information about required and optional variables.
+Refer to the xref:ansible-mcp-server-variables[Appendix: Ansible MCP server variables] for information about required and optional variables.
 +
 [source]
 ----
-# This is the list of inventory file variables required to deploy Red Hat Ansible Lightspeed on a containerized installation.
+# This is the list of inventory file variables required to deploy an Ansible MCP server on a container-based installation.
 
-# Consult the docs if you are unsure what to add.
-# For information about required and optional variables, refer to the Appendix: MCP server variables
-# <add URL of appendix section>
-
-# This section is for your Ansible MCP server host
+# This section is for the Ansible MCP server host
 # -------------------------------------------------
 [ansiblemcp]
 aap.example.com
 
-# This section is for Ansible MCP server deployment
+# This section is for Ansible MCP server permissions
 # --------------------------------------------------
 [all:vars]
 mcp_allow_write_operations: false
+# To enable read-write access, set the "mcp_allow_write_operations" variable to "true"
 ----
 
-. Run the {ContainerBase} {PlatformNameShort} installation (Add URL).
+. xref:installing-containerized-aap[Run the `install` playbook to install containerized {PlatformNameShort}].
 
-. Optional: If you change the permissions of the Ansible MCP server after it was created and deployed, you must delete the AnsibleMCPServer custom resource and recreate it. Perform the following steps:
+. Optional: If you changed the permissions of the Ansible MCP server after it was created and deployed, you must delete the AnsibleMCPServer custom resource and recreate it.
++
+Perform the following steps:
 
 .. Go to the {PlatformNameShort} portal.
-.. Under **Resources**, search for the **AnsibleMCPServer** custom resource.
-.. Select the active **AnsibleMCPServer** instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
-.. Select the **Settings menu** (3-dot menu icon) on the right side of the instance, then click **Delete AnsibleMCPServer**.
+.. Under *Resources*, search for the *AnsibleMCPServer* custom resource.
+.. Select the active *AnsibleMCPServer* instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
+.. Select the *Settings menu* on the right side of the instance, then click *Delete AnsibleMCPServer*.
 +
 After the reconciliation process is completed, the existing MCP server instance is deleted, and a new Ansible MCP server instance is created.
 
+.Verification
 
-[role="_additional-resources"]
-.Additional resources
+Check the pods after installation is complete. You should see an `ansiblemcp` pod running with the following command:
 
-* xref:lightspeed-variables[Appendix: {LightspeedShortName} Inventory file variables] (add URL)
+[source,none]
+----
+$ podman ps
+----
 
 [role="_additional-resources"]
 .Next steps
 
-* xref:installing-containerized-aap[Installing containerized {PlatformNameShort}] (add URL)
+. Obtain the location of the Ansible MCP server:
+** The service is exposed on port 8448 of the host, and HTTPS is enabled.
+** The example above deploys the MCP server on `aap.example.com`, so the service base URL will be `\https://aap.example.com:8448`.
+
+. xref:proc-create-api-token-ansible-mcp-server_deploying-ansible-mcp-server[Create an API token for the Ansible MCP server].
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:ansible-mcp-server-variables[Appendix: Ansible MCP server variables]
