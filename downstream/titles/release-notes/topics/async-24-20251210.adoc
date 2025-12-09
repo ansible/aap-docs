@@ -1,0 +1,55 @@
+[id="async-24-20251210"]
+
+= {PlatformNameShort} patch release December 10, 2025
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+[cols="1a,3a", options="header"]
+
+|====
+
+| Release Date | Component versions
+
+| December 10, 2025 |
+
+* {ControllerNameStart} 4.5.28
+* {HubNameStart} 4.9.5
+* {EDAcontroller} 1.0.8
+* Receptor 1.6.2
+* {LightspeedShortName} 2.4.251203
+* {PlatformNameShort}-collection installer (online): 2.4-14
+* {PlatformNameShort}-collection installer (bundle): 2.4-14.1
+|
+|====
+
+The following enhancements and bug fixes have been implemented in this release of Ansible Automation Platform.
+
+CSV versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1764863789
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1764868132
+
+== General
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-64459[CVE-2025-64459] ansible-automation-platform-24/lightspeed-rhel8: Django SQL injection.(AAP-58032)
+
+== Bug fixes
+
+=== Automation Controller
+
+* Fixed an issue where there were extraneous API calls made from the job output screen when a job run completes.(AAP-58589)
+
+=== Ansible Automation Platform Operator
+
+* Fixed an issue where the user was unable to restore backup on {OCP} if {PlatformNameShort} was originally migrated from RPM. Postgres 15 restores missing no owner and no privilege flags.(AAP-55634)
+
+=== Decision Environment
+
+* Fixed an issue in the *ansible-rulebook* which previously caused the `ansible.eda.azure_service_bus` module to fail in {PlatformNameShort} 2.4, by utilizing Python 3.9. This change resolves the problem of the azure module not being found.(AAP-59506)
+
