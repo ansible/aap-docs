@@ -1,0 +1,28 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-import-custom-ee-def_{context}"]
+= Importing your custom EE definition
+
+[role="_abstract"]
+
+The EE definition workflow generates a reusable Backstage software template, named `<ee-name>-template.yaml`. This template includes the specified default configurations when you select **Publish to a Git repository** during the creation of your custom EE definition. 
+
+The template is also generated for non-SCM based publishings.
+
+You can import this template into the {SelfServiceShort} to make the default configuration available to others.
+
+.Prerequisites
+* You have installed the {SelfServiceShort}.
+* You have the EE Builder feature enabled.
+* You have a custom EE definition hosted in a repository.
+
+.Procedure
+. Go to the repository where your `<ee-name>-template.yaml` is stored and open it.
+. Copy the URL of the **template.yaml** page.
+. Log into the {SelfServiceShort} and select **EE definition files** from the lefthand navigation pane.
+. Click **Create** > **Add Template**.
+. Paste the template URL into the **Select URL** field and click **Analyze**.
+. Click **Import**.
+
+.Verification
+To verify your template was added successfully, go to **EE definition files** > **Create**. Here you should see your newly created custom template.

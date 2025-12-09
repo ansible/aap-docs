@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-enable-ee-builder_{context}"]
+= Enabling the Execution Environment Builder in {SelfServiceShort}
+
+[role="_abstract"]
+
+An administrator must enable the EE definition files feature in the configuration to display it in the left navigation panel.
+
+To enable the EE definition files feature, you must modify the `enabled` key in your Helm chart configuration.
+
+.Procedure
+
+. Open the configuration file for your Helm chart. 
+. Navigate to the `default.main-menu-items` section.
+. Set the value of the `enabled` key under the `default.ee` configuration block to `true`.
++
+[NOTE]
+====
+Setting `enabled: true` enables the EE definition files feature for all users.
+====
+
++
+**Example**
++
+The final configuration must look like the following example:
++
+----
+default.main-menu-items:
+  menuItems:
+    default.mycatalog:
+      title: Templates
+      icon: home
+      to: /self-service/catalog
+      priority: 120
+    default.myitem:
+      title: History
+      icon: category
+      to: /self-service/create/tasks
+      priority: 110
+    default.ee:
+      enabled: false
+----

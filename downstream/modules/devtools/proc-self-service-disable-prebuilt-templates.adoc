@@ -1,0 +1,41 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-disable-prebuilt-templates_{context}"]
+= Disabling pre-built templates
+
+[role="_abstract"]
+
+For environments where these pre-built templates are not needed or conflict with organizational standards, they can be disabled in the Helm chart configuration.
+
+.Procedure
+* You can disable pre-built templates by commenting them out in the Helm chart configuration. The following is an example of all three  pre-built templates commented out:
++
+----
+catalog:
+  locations:
+    # Local templates
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # The following Ansible pre-built templates are disabled:
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-start-from-scratch.yaml
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-network-automation.yaml
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-cloud-automation.yaml
+
+catalog:
+  locations:
+    # Local templates
+    - type: file
+      target: ../../examples/entities.yaml
+
+    # The following Ansible pre-built templates are disabled:
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-start-from-scratch.yaml
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-network-automation.yaml
+    # - type: url
+    #   target: https://github.com/ansible/ansible-rhdh-templates/blob/main/templates/ee-cloud-automation.yaml
+----
