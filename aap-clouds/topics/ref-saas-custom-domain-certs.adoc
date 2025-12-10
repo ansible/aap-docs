@@ -2,21 +2,9 @@
 
 [id="ref-saas-custom-domain-certs"]
 
-= Custom domain and certificates
+= Configure a custom domain 
 
 [role="_abstract"]
-You can augment the default `ansible.redhat.com` URL with your own domain (for example, `aap.company.com`).
+Configure a custom domain, starting with generating a certificate and private key, submitting a support case for SRE configuration, and finalizing the setup with a required DNS update.
 
-*Certificate Requirements*
-You must provide the TLS certificate and ensure it meets these criteria:
-
-* *Validity:* Minimum 1 year expiration.
-* *Private Key:* Must be unencrypted (cannot have a passphrase).
-* *Renewal:* You must initiate a renewal support ticket at least 14 days before expiration.
-
-*Subject Alternative Name (SAN) Requirements*
-The certificate must be valid for the following records. You must use a wildcard (for example, `*.aap.company.com`) or explicitly list these three SANs:
-
-* `platform.<your-domain>` (Main URL)
-* `mesh-ingress-0.<your-domain>`
-* `mesh-ingress-1.<your-domain>`
+For help with this process see the link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-service-definition#con-saas-custom-domain[Custom domain] section.

@@ -9,14 +9,14 @@
 
 For more AWS specific information about how {AWSPrivateLink} works, see the link:https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html[Amazon Virtual Private Cloud] documentation.
 
-== AWS PrivateLink connectivity into the {PlatformNameShort} control plane
+== {AWSPrivateLink} connectivity from customer VPC into the {PlatformNameShort} control plane
 
 For {AWSPrivateLink} connectivity into the control plane, an AWS Endpoint Service has automatically provisioned {AWSPrivateLink} connectivity into the control plane in your AWS environment.
 You must create an AWS Endpoint to connect to this service in your Virtual Private Cloud (VPC), and enable private DNS resolution of the endpoint service hostname.
 With this in place, any traffic originating from your VPC to the control plane API or mesh ingress connects to a private IP address and does not traverse the public internet.
 Traffic is stateful, so there is no need to open a private link in the reverse direction for responses to Transmission Control Protocol (TCP) requests that originate from the customer VPC
 
-== {AWSPrivateLink} connectivity out of the {PlatformNameShort} control plane
+== {AWSPrivateLink} connectivity from {PlatformNameShort} control plane to customer VPCs
 
 You can configure {PlatformNameShort} to use external resources such as source code repositories, container registries, and execution nodes. By default, the control plane connects to these resources over the public internet. However, if your resources are not publicly available, you can leverage {AWSPrivateLink} to securely access your private resources without traversing the public internet.
 
@@ -28,9 +28,4 @@ To enable {AWSPrivateLink} connectivity from the control plane to your private r
 ====
 When creating the Endpoint Service in your VPC, you must enable the *Private DNS* option. This ensures that the {PlatformNameShort} control plane can resolve and connect to your service using the specified domain over {AWSPrivateLink}.
 Private DNS enables DNS queries from {PlatformNameShort} resolve to the private IP addresses of the interface endpoint, facilitating secure and direct communication over PrivateLink.
-====
-
-[NOTE]
-====
-This document does not cover all steps required for PrivateLink connectivity. To complete PrivateLink connectivity, you must work with Red Hat through the Customer Support portal.
 ====
