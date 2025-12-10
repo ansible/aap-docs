@@ -1,0 +1,56 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="self-service-components-custom-ee-def_{context}"]
+
+= Components for custom EE definitions
+
+[role="_abstract"]
+
+When creating a custom EE, you define the core underlying elements that dictate the environment's capabilities, security, and dependencies. These components are used to define the custom EE, and are also utilized internally by the pre-defined presets.
+
+|===
+| Component or setting | Description | Key considerations and examples
+
+| Base images
+a| The foundation layer of your EE, pre-configured with a specific operating system and toolset.
+
+By default, the following base images are available in all 3 pre-defined templates:
+
+* Red Hat Ansible Minimal EE - Ansible Core 2.18 (RHEL 8)
+* Red Hat Ansible Minimal EE - Ansible Core 2.18 (RHEL 9)
+* Red Hat Ansible Minimal EE - Ansible Core 2.16 (RHEL 8)
+* Red Hat Ansible Minimal EE - Ansible Core 2.16 (RHEL 9)
+
+| Select a base image that aligns with your organization's security and Python compatibility needs. Popular base images are optimized for minimal overhead or specific compliance requirements.
+
+If you are providing a custom image, it must include `ansible-core` and `ansible-runner`.
+
+Select a base image that aligns with your organization's security and Python compatibility needs.
+
+| Collections
+| Specifies the Ansible Collections and Python libraries required by your automation content.
+a| Ensure all necessary content is included from the documentation's list. You can add collections manually or upload a `requirements.yml` file.
+
+When collections overlap, the system merges the contents. If duplicates occur:
+
+* If a version is not specified, the system prioritizes the collection using the most recent version available.
+* If versions are explicitly specified for both collections, the system defaults to using the most recent version.
+
+| Python requirements
+| Defines the minimum Python version and any extra Python packages required for this execution environment.
+| Must reflect the version compatibility used across your organization for running automation reliably.
+
+Avoid repeating Python requirements already specified as a dependency by the selected collections (for example, in their respective `requirements.txt` files).
+
+| System packages
+| Operating system (OS) libraries and packages required by the Python packages or collections.
+| Defines the extra OS libraries and packages required by the Python packages or collections listed in the EE.
+
+Examples: `git`, `gcc`, `python3-devel`. These are necessary for compiling Python packages during the build process.
+
+This list supplements, and must not repeat, any base OS dependencies already managed by your environment's build system.
+
+| Additional build steps
+| Additional build steps are custom shell commands injected directly into the container runtime instruction file.
+| Use additional build steps to perform actions like installing private certificates or configuring environment variables not covered by standard package installation.
+|===
