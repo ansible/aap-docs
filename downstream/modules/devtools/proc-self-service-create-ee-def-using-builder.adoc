@@ -1,0 +1,64 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-create-ee-definition_{context}"]
+= Creating EE definitions in {SelfServiceShortStart} using the EE Builder
+
+[role="_abstract"]
+
+You can use the Execution Environment (EE) Builder in the {SelfServiceShort} to create custom EE definitions through a guided workflow.
+
+.Prerequisites
+
+* You have installed the {SelfServiceShort}.
+* You have the EE Builder feature enabled.
+* You have reviewed the link:{URLSelfServiceUsing}/ref-self-service-planning-reference-ee-definitions.adoc[Planning and reference for EE definitions section].
+
+.Procedure
+
+. Log into the {SelfServiceShort} and select **EE definition files** from the lefthand navigation pane.
+. If this is your first time creating an EE definition file, click **Create Execution Environment definition file**, otherwise select the **Create** tab.
+. Click **Start** on your preferred template.
+. Select your preferred base image and click **Next**.
++
+[NOTE]
+====
+Red Hat recommends using the **Red Hat Minimal EE** base. If selecting **Custom Image**, it is important you fully understand what the contents of your base image are. For example, a base image without Ansible core or Ansible runner will fail to build.
+====
+. Select a collection from **Add popular Collections** or **Add Collection Manually** and click **Next**.
+.. Optional: To add additional Python or System requirements, select **Specify additional python requirements and system packages**, and then click **Add packages manually** or **Choose File**.
+. Select your desired MCP servers and click **Next**.
+. Optional: In the **Additional Build Steps** section, you can specify custom build instructions that will be executed at specific steps during the build process:
+.. Select **Add build Step**.
+.. Select a step from the **Step type** drop-down list.
+.. Input a command you want to run at that step. You can provide a string of commands by giving each command a new line.
+.. Click **Next**.
+. In the **Generate and publish** section:
+.. Fill in the following mandatory fields:
+*** **EE File name**
+*** **Description**
+*** **Select source control provider**
+*** **SCM repository organization name or username**
+*** **Repository name**
+.. Ensure the `execution-environment` tag is applied. Click the plus (+) icon to add additional tags if required.
+.. Ensure **Publish to a Git repository** is selected. If unselected, your EE will be provided as a download after the build process.
+.. If the **Repository name** you provided does not already exist, select **Create new repository**. If it does exist and you check the box, a pull request will be created instead.
+.. Click **Next**.
+. Confirm your details are correct and click **Create**. This begins the scaffolding process.
+. After the scaffolding is complete, click **Getting started** for next steps on how to build your EE definition.
+
+.Verification
+
+Verify the creation and deployment of the EE definition file using one of the following methods:
+
+. In the {SelfServiceShort}:
+
+.. Click **View details in catalog** or **Download EE files** (downloads the generated files as a `.tar` file).
+.. Alternatively, select **EE definition files** in the left-hand navigation pane. The new file appears in the **Execution Environment definition files** box.
+
+. In the repository:
+
+.. Click **GitHub repository** or **Gitlab repository** to confirm the files were scaffolded into your repository.
+
+[role="_additional-resources"]
+.Additional resources
+* link:{URLBuilder}/index[Creating and using execution environments] 
