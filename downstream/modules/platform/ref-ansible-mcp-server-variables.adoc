@@ -1,0 +1,31 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ansible-mcp-server-variables"]
+
+= Ansible MCP server variables
+
+[role="_abstract"]
+The following variables govern the access granted to Ansible MCP server.
+
+.Ansible MCP server variables
+[cols="1,2,4,1,1", options="header"]
+|===
+|RPM variable name
+|Container variable name
+|Description
+|Required or optional
+|Default
+
+|N/A
+|`mcp_allow_write_operations`
+|Determines whether the Ansible MCP server allows actions that modify state, such as launching jobs or updating templates through the external AI tool.
+
+By default, the variable's value is set to `false`, so that the Ansible MCP server enables read-only operations and blocks all write operations. To enable the Ansible MCP server to perform write operations, change the value of the variable to `true`.
+|Optional
+|`false`
+|===
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:proc-configure-mcp-server-containerized-install_deploying-ansible-mcp-server[Deploying an Ansible MCP server on a containerized installation]
