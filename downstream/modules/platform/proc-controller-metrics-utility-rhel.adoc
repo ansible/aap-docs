@@ -9,12 +9,19 @@ You can configure the `metrics-utility` on a {RHEL} system to gather and report 
 
 .Prerequisites
 
-* An active {PlatformNameShort} subscription
+* **Subscription:** An active {PlatformNameShort} subscription.
+* **Installation:** The `metrics-utility` tool is included by default with the {PlatformNameShort} installation on the {ControllerName} node. No separate installation is required.
+* **User privileges:** You must be logged in as the `root` user or the `awx` user to run the `metrics-utility` tool.
 
-`metrics-utility` is included with {PlatformNameShort}, so you do not need a separate installation. 
+[IMPORTANT]
+====
+The `metrics-utility` requires read access to `/etc/tower/SECRET_KEY` to function correctly.
+Attempting to run this utility as a standard user (non-root or non-awx) results in a `PermissionError` and execution failure.
+====
+
 The following procedure gathers the relevant data and generate a link:https://connect.redhat.com/en/programs/certified-cloud-service-provider[CCSP] report containing your usage metrics. 
-You can configure these commands as cronjobs to ensure they run at the beginning of every month. 
-See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux 'cron' utility] for more on configuring using the cron syntax. 
+You can configure these commands as `cron` jobs to ensure they run at the beginning of every month. 
+See link:https://www.redhat.com/sysadmin/linux-cron-command[How to schedule jobs using the Linux `cron` utility] for more on configuring using the cron syntax. 
 
 .Procedure
 
@@ -63,7 +70,7 @@ metrics-utility build_report
 +
 `chmod a+x /home/my-user/cron-gather /home/my-user/cron-report`
 
-. To open the cron file for editing, run:
+. To open the `cron` file for editing, run:
 +
 `crontab -e`
 
