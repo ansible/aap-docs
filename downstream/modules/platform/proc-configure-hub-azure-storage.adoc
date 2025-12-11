@@ -11,19 +11,18 @@ Azure Blob storage is a type of object storage that is supported in containerize
 . Ensure your Azure container exists before proceeding with the installation.
 . Add the following variables to your inventory file under the `[all:vars]` group to configure Azure Blob storage:
 +
-* `hub_azure_account_key`
-* `hub_azure_account_name`
-* `hub_azure_container`
-* `hub_azure_extra_settings`
-+
-You can pass extra parameters through an Ansible `hub_azure_extra_settings` dictionary. For example:
-+
-[source,yaml,subs="+attributes"]
 ----
-hub_azure_extra_settings:
-  AZURE_LOCATION: foo
-  AZURE_SSL: True
-  AZURE_URL_EXPIRATION_SECS: 60
+[all:vars]
+hub_storage_backend=azure
+hub_azure_account_key=<account_key>
+hub_azure_account_name=<account_name>
+hub_azure_container=<container_name>
+----
++
+. Optional: You can pass extra parameters to the Azure Blob storage backend by using the `hub_azure_extra_settings` variable. For example:
++
+----
+hub_azure_extra_settings={'AZURE_LOCATION': 'foo', 'AZURE_SSL': True, 'AZURE_URL_EXPIRATION_SECS': 60}
 ----
 
 [role="_additional-resources"]
