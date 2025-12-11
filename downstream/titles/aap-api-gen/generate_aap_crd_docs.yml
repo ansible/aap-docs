@@ -1,0 +1,176 @@
+---
+# Note: This playbook assumes that the following is true:
+# 1. You have an OpenShift cluster with the AAP operator installed
+# 2. You are logged in at the command-line with oc to that Openshift cluster
+
+- name: Generate AAP CRD documentation from OpenShift cluster
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  vars:
+    install_packages: false  # Can override with -e install_packages=true
+    home_dir: "{{ lookup('env', 'HOME') }}"
+    apidocs_repo: git@github.com:jboxman/openshift-apidocs-gen.git
+    apidocs_dir: "{{ home_dir }}/openshift-apidocs-gen"
+    openapi_json: "{{ home_dir }}/openapi.json"
+    config_file: "{{ home_dir }}/aap-config.yaml"
+    build_dir: "{{ home_dir }}/build"
+    bin_path: "{{ apidocs_dir }}/node_modules/.bin"
+
+  tasks:
+    - name: Optionally install system packages
+      package:
+        name:
+          - git
+          - npm
+          - jq
+          - asciidoctor
+        state: present
+      become: true
+      when: install_packages | bool
+
+    - name: Clone openshift-apidocs-gen repository via SSH (master branch)
+      git:
+        repo: "{{ apidocs_repo }}"
+        dest: "{{ apidocs_dir }}"
+        version: master
+        accept_hostkey: yes
+        force: yes
+      environment:
+        GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+
+    - name: Install openshift-apidocs-gen locally
+      shell: |
+        npm install
+      args:
+        chdir: "{{ apidocs_dir }}"
+        executable: /bin/bash
+
+    - name: Dump OpenAPI v2 schema from OpenShift
+      shell: |
+        oc get --raw /openapi/v2 | jq . > "{{ openapi_json }}"
+      args:
+        executable: /bin/bash
+
+    - name: Write aap-config.yaml to user directory
+      copy:
+        dest: "{{ config_file }}"
+        content: |
+          version: 2
+          outputDir: "{{ build_dir }}"
+          apisToHide: []
+          apiMap:
+            - name: aap.ansible.com
+              resources:
+                - kind: AnsibleAutomationPlatform
+                  group: aap.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleAutomationPlatformBackup
+                  group: aap.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleAutomationPlatformRestore
+                  group: aap.ansible.com
+                  version: v1alpha1
+            - name: automationcontroller.ansible.com
+              resources:
+                - kind: AutomationControllerMeshIngress
+                  group: automationcontroller.ansible.com
+                  version: v1alpha1
+                - kind: AutomationController
+                  group: automationcontroller.ansible.com
+                  version: v1beta1
+                - kind: AutomationControllerBackup
+                  group: automationcontroller.ansible.com
+                  version: v1beta1
+                - kind: AutomationControllerRestore
+                  group: automationcontroller.ansible.com
+                  version: v1beta1
+            - name: automationhub.ansible.com
+              resources:
+                - kind: AutomationHub
+                  group: automationhub.ansible.com
+                  version: v1beta1
+                - kind: AutomationHubBackup
+                  group: automationhub.ansible.com
+                  version: v1beta1
+                - kind: AutomationHubRestore
+                  group: automationhub.ansible.com
+                  version: v1beta1
+            - name: eda.ansible.com
+              resources:
+                - kind: EDA
+                  group: eda.ansible.com
+                  version: v1alpha1
+                - kind: EDABackup
+                  group: eda.ansible.com
+                  version: v1alpha1
+                - kind: EDARestore
+                  group: eda.ansible.com
+                  version: v1alpha1
+            - name: galaxy.ansible.com
+              resources:
+                - kind: Galaxy
+                  group: galaxy.ansible.com
+                  version: v1beta1
+                - kind: GalaxyBackup
+                  group: galaxy.ansible.com
+                  version: v1beta1
+                - kind: GalaxyRestore
+                  group: galaxy.ansible.com
+                  version: v1beta1
+            - name: lightspeed.ansible.com
+              resources:
+                - kind: AnsibleLightspeed
+                  group: lightspeed.ansible.com
+                  version: v1alpha1
+            - name: tower.ansible.com
+              resources:
+                - kind: AnsibleCredential
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleInstanceGroup
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleInventory
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleJob
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleProject
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleSchedule
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: AnsibleWorkflow
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: JobTemplate
+                  group: tower.ansible.com
+                  version: v1alpha1
+                - kind: WorkflowTemplate
+                  group: tower.ansible.com
+                  version: v1alpha1
+    - name: Run openshift-apidocs-gen to build docs
+      shell: |
+        PATH="{{ bin_path }}:$PATH" \
+        openshift-apidocs-gen build -c "{{ config_file }}" "{{ openapi_json }}"
+      args:
+        chdir: "{{ apidocs_dir }}"
+        executable: /bin/bash
+
+    - name: Convert .adoc files to HTML using asciidoctor
+      shell: |
+        find "{{ build_dir }}" -type f -name '*.adoc' \
+          | xargs -L1 -I^ -P1 asciidoctor -a toc -d book ^
+      args:
+        executable: /bin/bash
+
+    - name: Create tarball of build directory
+      archive:
+        path: "{{ build_dir }}"
+        dest: "{{ playbook_dir }}/aap-openshift-api-docs.tar.gz"
+        format: gz
+        remove: no
