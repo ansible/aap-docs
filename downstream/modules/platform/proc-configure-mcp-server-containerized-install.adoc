@@ -5,8 +5,7 @@
 = Deploying an Ansible MCP server on a {ContainerBase}
 
 [role="_abstract"]
-
-Use the following procedure to deploy and configure the Ansible MCP server on a {ContainerBase} of {PlatformNameShort} {PlatformVers}.
+As an organization administrator, you can deploy and configure an Ansible MCP server on the {ContainerBase} of {PlatformNameShort} {PlatformVers}. Use the following procedure to deploy and configure the Ansible MCP server.
 
 .Prerequisites
 
@@ -18,7 +17,7 @@ Use the following procedure to deploy and configure the Ansible MCP server on a 
 
 .. Create an `[ansiblemcp]` group and add a host for the Ansible MCP server.
 
-.. Specify the Ansible MCP server permissions in the `mcp_allow_write_operations` variable under the `[all: vars]` group.
+.. Specify the Ansible MCP server permissions in the `mcp_allow_write_operations` variable under the `[all:vars]` group.
 +
 Refer to the xref:ansible-mcp-server-variables[Appendix: Ansible MCP server variables] for information about required and optional variables.
 +
@@ -34,7 +33,7 @@ aap.example.com
 # This section is for Ansible MCP server permissions
 # --------------------------------------------------
 [all:vars]
-mcp_allow_write_operations: false
+mcp_allow_write_operations=false
 # To enable read-write access, set the "mcp_allow_write_operations" variable to "true"
 ----
 
