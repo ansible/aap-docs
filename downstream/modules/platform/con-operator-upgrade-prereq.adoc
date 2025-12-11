@@ -14,3 +14,9 @@ For help with this see link:{URLOperatorBackup}[{TitleOperatorBackup}]
 * Review the link:{URLReleaseNotes}[{TitleReleaseNotes}] for the new {PlatformNameShort} version to which you are upgrading and any intermediate versions.
 * Determine the type of upgrade you want to perform.
 See the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#operator-channel-upgrade_operator-upgrade[Channel Upgrades] section for more information.
++
+[NOTE]
+====
+If you are upgrading from AAP 2.4, it is recommended to take a backup of the API call output and save it to a file. For example:
+curl -k https://<CONTROLLER_FQDN>/api/v2/settings/all/ -u admin:password >> aap24_old_settings_all
+====
