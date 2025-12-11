@@ -23,14 +23,11 @@ a| Defines additional settings for use by PostgreSQL.
 
 Example usage for RPM:
 ----
-postgresql_extra_settings:
-   ssl_ciphers: 'HIGH:!aNULL:!MD5'
+postgresql_extra_settings={'ssl_ciphers': 'HIGH:!aNULL:!MD5'}
 ----
 Example usage for containerized:
 ----
-postgresql_extra_settings:
-  - setting: ssl_ciphers
-    value: 'HIGH:!aNULL:!MD5' 
+postgresql_extra_settings=[{"setting": "ssl_ciphers", "value": "HIGH:!aNULL:!MD5"}]
 ----
 | Optional
 |
