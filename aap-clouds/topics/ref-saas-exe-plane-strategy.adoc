@@ -1,0 +1,13 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-ex-plane-strategy"]
+
+= Execution plane strategy
+
+[role="_abstract"]
+
+Red Hat strongly advises provisioning your own execution nodes and instance groups in your VPC.
+
+* *Cost Impact:* Workloads running on the control plane trigger auto-scaling of vCPUs, which are billed at a higher variable rate ($0.10/vCPU/hr). 
+For more information see link:https://access.redhat.com/articles/7133854[Ansible Automation Platform Service on AWS: Infrastructure Metering Changes].
+* *Recommendation:* To maintain predictable costs and security isolation, use the control plane for management only and offload automation execution to your own EC2 instances.
