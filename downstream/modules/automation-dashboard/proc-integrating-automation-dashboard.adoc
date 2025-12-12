@@ -9,32 +9,36 @@
 [role="_abstract"]
 Integrate your {PlatformNameShort} instances into the {AutomationDashboardName} configuration to collect and visualise data and gain insights into your automation.
 
-.Procedure 
+.Prerequisites
 
-. Verify that {AutomationDashboardName} is running on https port 8447 on your Red Hat Enterprise Linux host.
+* You have installed {AutomationDashboardName}.
+* You have verified that {AutomationDashboardName} is running on HTTPS port 8447 on your Red Hat Enterprise Linux host.
 +
 [NOTE]
 ====
 * This verification requires your {PlatformNameShort} login details.
 * Port 8447 is enabled by default, but this is configurable.
 ====
-. Add your {PlatformNameShort} instances into `clusters.yaml` using the following information:
-* Your {PlatformNameShort} URLs/ports for front-end access
-* A preconfigured {PlatformNameShort} OAuth access token and refresh for _read_ access
-* OAuth2 client credentials
-+
-[NOTE]
-====
-If you do not have access to {PlatformNameShort}, consult your administrator.
-====
+
+.Procedure 
+
 . Configure a personal access token. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/access_management_and_authentication/gw-token-based-authentication[Configuring access to external applications with token-based authentication].
-. Once you have configured your access token, run the following command:
+. Create or update the `clusters.yaml` file. You must include the `refresh_token`, `client_id`, and `client_secret` to enable persistent authentication and automatic token rotation.
 +
-[source,bash]
+[source,yaml]
 ----
-cp clusters.example.yaml clusters.yaml
-vi clusters.yaml
+clusters:
+  - protocol: https
+    address: <aap_controller_url>
+    port: 443
+    access_token: <access_token_string>
+    refresh_token: <refresh_token_string>
+    client_id: <client_id_string>
+    client_secret: <client_secret_string>
+    verify_ssl: false
+    name: <unique_cluster_name>
 ----
++
 
 . You can add one or more {PlatformNameShort} instances (of the same {PlatformNameShort} version) into the {AutomationDashboardName} configuration for pulling and combining data by using the following: 
 +
@@ -79,61 +83,21 @@ The `access_token`, `refresh_token`, and `client_secret` are stored in the {Auto
 These values are encrypted for security.
 ====
 
-. Run the following commands to load and activate your {AutomationDashboardName} configuration:
-
+. Load and activate your {AutomationDashboardName} configuration:
 +
 [source,bash]
 ----
 podman cp clusters.yaml automation-dashboard-web:/
-podman exec automation-dashboard-web /venv/bin/python ./manage.py setclusters /clusters.yaml
-----
-+
-
-[NOTE]
-====
-{AutomationDashboardName} uses `refresh_token`, `client_id`, and `client_secret` to automatically obtain a new `access_token` and `refresh_token` when the current token expires.
-The utility uses the ping endpoint to detect the {PlatformNameShort} version and find the correct token refresh endpoint.
-====
-*Example*
-+
-[source,bash]
-----
-podman exec automation-dashboard-web /venv/bin/python ./manage.py setclusters /clusters.yaml
-Check if table exists.
-Reading YML file.
-Adding cluster: address=my-aap.example.com
-
-INFO 2025-05-20 09:55:00,926 connector 187 140208297051968 Checking if is AAP 2.4 at https://my-aap.example.com:443
-INFO 2025-05-20 09:55:00,926 connector 187 140208297051968 Pinging api https://my-aap.example.com:443/api/v2/ping/
-INFO 2025-05-20 09:55:00,926 connector 187 140208297051968 Executing GET request to https://my-aap.example.com:443/api/v2/ping/
-
-ERROR 2025-05-20 09:55:00,032 connector 301 140025281152832 GET request failed with status 404
-Successfully set up AAP clusters
+podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /clusters.yaml
 ----
 +
 [NOTE]
 ====
-{AutomationDashboardName} checks for {PlatformNameShort} 2.4, 2.5, and 2.6 instances. As shown in the example output, this can result in 404 errors. For more information on errors, see the Verification section of this chapter. 
-====
-. Use the following command to test your {AutomationDashboardName} configuration by manually fetching data: 
+**Token Rotation:** The {AutomationDashboardName} rotates tokens internally for security but does not update your local `clusters.yaml` file. If you must re-run the `setclusters` command later, your defined tokens may be expired.
 
-+
+To retrieve the current valid tokens, run the following command and save the output to a new file:
 [source,bash]
 ----
-podman exec -it automation-dashboard-web /venv/bin/python ./manage.py syncdata --since=2025-04-01 --until=2025-06-01
-Successfully created Sync task for Cluster https://my-aap.example.com:443.
+podman exec -it automation-dashboard-web /venv/bin/python manage.py getclusters --decrypt > clusters_current.yaml
 ----
-+
-
-[NOTE]
 ====
-Consider using a short date interval to reduce test time. The format is YYYY-MM-DD.
-====
-You can then use `journalctl` to check progress:
-+
-[source,bash]
-----
-sudo journalctl -fn10
-----
-+
-. Refresh your browser to view retrieved data within your {AutomationDashboardName}.
