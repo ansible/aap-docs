@@ -115,25 +115,3 @@ Successfully set up AAP clusters
 ====
 {AutomationDashboardName} checks for {PlatformNameShort} 2.4, 2.5, and 2.6 instances. As shown in the example output, this can result in 404 errors. For more information on errors, see the Verification section of this chapter. 
 ====
-. Use the following command to test your {AutomationDashboardName} configuration by manually fetching data: 
-
-+
-[source,bash]
-----
-podman exec -it automation-dashboard-web /venv/bin/python ./manage.py syncdata --since=2025-04-01 --until=2025-06-01
-Successfully created Sync task for Cluster https://my-aap.example.com:443.
-----
-+
-
-[NOTE]
-====
-Consider using a short date interval to reduce test time. The format is YYYY-MM-DD.
-====
-You can then use `journalctl` to check progress:
-+
-[source,bash]
-----
-sudo journalctl -fn10
-----
-+
-. Refresh your browser to view retrieved data within your {AutomationDashboardName}.
