@@ -4,12 +4,11 @@
 = Modifying the default memory limit for each rulebook activation
 
 [role="_abstract"]
-Memory usage is based on the number of events that {EDAcontroller} has to process.
-By default, each rulebook activation container has a 200 MB memory limit.
-For example, with 4 CPU and 16 GB of RAM, one rulebook activation container with an assigned 200 MB memory limit cannot handle more than 150,000 events per minute.
-If the number of parallel running rulebook activations is higher, then the maximum number of events each rulebook activation can process is reduced.
-If there are too many incoming events at a very high rate, the container can run out of memory trying to process the events.
-This will kill the container, and your rulebook activation will fail with a status code of 137. 
+Memory usage is based on the number of events that {EDAcontroller} has to process. By default, each rulebook activation container has a 200 MB memory limit. 
+
+For example, with 4 CPU and 16 GB of RAM, one rulebook activation container with an assigned 200 MB memory limit cannot handle more than 150,000 events per minute. If the number of parallel running rulebook activations is higher, then the maximum number of events each rulebook activation can process is reduced.
+
+If there are too many incoming events at a very high rate, the container can run out of memory trying to process the events, which will kill the container, and your rulebook activation will fail with a status code of 137. 
 
 To mitigate this status, you can modify the default memory limit for each rulebook activation _during_ or _after_ installation.
 
