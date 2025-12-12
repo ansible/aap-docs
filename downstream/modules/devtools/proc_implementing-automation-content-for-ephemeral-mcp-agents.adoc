@@ -18,24 +18,28 @@ You can create an Ansible playbook leveraging the Execution Environment (EE) set
 
 .Procedure
 
-. Define MCP support in your EE:
+. Create the `execution-environment.yml` definition file, which specifies a step to install the MCP server components: 
 +
 [source,yaml,subs="+quotes"]
 ....
 ---
-SOME CODE
+version: 3
+
+images:
+  base_image:
+    name: ansible-automation-platform-25/ee-minimal-rhel9:latest
+dependencies:
+  galaxy: requirements.yml
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_steps:
+  append_final: |
+    RUN ansible-playbook ansible.mcp_builder.install_mcp -e mcp_servers=github_mcp -e github_mcp_mode=remote
 ....
 +
-The example code above Specifies the required MCP server in the EE definition files (YAML files), so that the necessary dependencies are pulled into the file.
-
-
-. Install MCP server components:
-+
-[source,yaml,subs="+quotes"]
-....
----
-SOME CODE
-....
+The example definition file above specifies the required MCP server, so that the necessary dependencies are pulled into the file.
 +
 During the EE build process the MCP server software is installed into the EE.
 +
@@ -44,70 +48,57 @@ For embedded servers, include the MCP server binaries or libraries explicitly on
 For remote servers, define remote connection details in a manifest file within the EE.
 
 
+
 . Write custom Ansible content:
 +
 [source,yaml,subs="+quotes"]
 ....
 ---
-SOME CODE
+- name: Example Github MCP server interaction
+  hosts: github_mcp
+  tasks:
+    - name: Create a Github repository
+      ansible.mcp.run_tool:
+        name: create_repository
+        args:
+          name: my-github-repository
+          autoInit: true
 ....
 +
 The playbook syntax for invoking MCP plugins is intuitive and aligns with existing Ansible module patterns.
 +
 [IMPORTANT]
 ====
+You must configure the `ansible.mcp.mcp` connection plugin to use the `ansible.mcp` collection. For example, you should set the `ansible_mcp_server_name` custom-defined configuration variable to the name of a server in the `mcpserver.json` manifest file.
 Your playbook might use inventory variables, such as setting the connection plugin to `ansible_connection: ansible.mcp.mcp`, along with required timeout values like `ansible_connect_timeout: 30` and `ansible_command_timeout: 30`.
 ====
 
 
+
 . Create and configure credentials in AAP:
 +
-[source,yaml,subs="+quotes"]
-....
----
-SOME CODE
-....
+The required credentials vary based on which MCP server you are using. For example, the Github MCP server requires a Github Personal Access Token, which should be set in the `MCP_BEARER_TOKEN` environment variable.
 +
-The example code shows how to set up the required credential structures in the AAP credential store. This includes defining fields (for example, `gh_pat`) and the injector configuration needed to pass the secret as an environment variable (for example, `MCP_BEARER_TOKEN: “{{ gh_pat }}”`).
-
-
-. Launch the job in the AAP controller GUI:
+.. To do this, first create a custom credential type in AAP:
 +
-[source,yaml,subs="+quotes"]
-....
----
-Select the correct Execution Environment.
+image::mcp-agents-create-credential-type.png[Create credential type]
 
-Select the playbook.
-
-Attach the required credentials.
-....
+.. Create a new credential and use the custom credential type you just created:
 +
-You configured and launched the controller job template.
-
-
-.Verification
-
-. Confirm that the MCP agents were provisioned only at run time.
+image::mcp-agents-create-credential.png[Create credential]
 +
-[source,yaml,subs="+quotes"]
-....
----
-SOME CODE
-....
-+
-The agent services start during task execution and terminate gracefully upon completion. The ephemeral creation and destruction occur through the controller job creation process.
+The examples above show how to set up the required credential structures in the AAP credential store. This includes defining the relevant fields and the injector configuration needed to pass the secret as an environment variable (for example, `MCP_BEARER_TOKEN: “{{ token }}”`).
 
 
-. Verify credential wiping:
+
+. Create a new host and configure the connection variables:
 +
-[source,yaml,subs="+quotes"]
-....
----
-SOME CODE
-....
-+
-The credentials were injected into the execution environment only at run time, scoped specifically to the job execution, and were wiped immediately upon job completion.
+image::mcp-agents-create-host.png[Create a host]
+
+
+
+. Launch the relevant job in the AAP controller GUI.
+
 
 
 .Troubleshooting
