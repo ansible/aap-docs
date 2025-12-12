@@ -4,7 +4,7 @@
 = Updating an event stream with a static UUID (API Method)
 
 [role="_abstract"]
-If you prefer to use a static, custom UUID, you must use the API to update your event stream. The API endpoint for creation is `POST /api/eda/v1/event-streams/`.
+Access the API to set a static UUID, a feature critical for maintaining webhook URL consistency across service recreations, such as in disaster recovery scenarios.
 
 .Prerequisites
 * {PlatformNameShort} {PlatformVers}-next
@@ -16,7 +16,7 @@ If you prefer to use a static, custom UUID, you must use the API to update your 
 . In the URL, replace *Overview* with the API endpoint, `api/eda/v1/` (for example, `https://<platformURL>.com/api/eda/v1/`). 
 The `Api V1 Root` page displays a list of EDA resource URLs.
 +
-[example]
+
 ----
 {
     "config": "http://<aap.platform>.com/api/eda/v1/config/",
@@ -48,7 +48,7 @@ The `Api V1 Root` page displays a list of EDA resource URLs.
 . At the end of the list, click the `”eventstream-list”` URL. This takes you to the *Event Stream List* page.
 . Locate and copy the `“id”` of the event stream UUID that you want to update. This can be found at the end of the event stream data.
 +
-[example]
+
 ----
 },
 "id": *1*,

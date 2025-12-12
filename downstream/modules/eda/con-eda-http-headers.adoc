@@ -5,7 +5,9 @@
 = HTTP headers
 
 [role="_abstract"]
-In the context of {EDAName} and event streams, HTTP headers play a significant role because they carry the necessary context and security information about the incoming event from a third-party source (for example, GitHub, a monitoring tool, or a proprietary webhook). They include the following capabilities: 
+In the context of {EDAName} and event streams, HTTP headers play a significant role because they carry the necessary context and security information about the incoming event from a third-party source (for example, GitHub, a monitoring tool, or a proprietary webhook). 
+
+They include the following capabilities: 
 
 Authentication and non-repudiation::
 This is the most critical use. Headers often contain tokens, API keys, or security signatures (like an HMAC in an `X-Hub-Signature` header) that {EDAName} uses to _verify the sender's identity_ and ensure the event payload has not been tampered with. This supports non-repudiation—proof that the event came from a legitimate source.
