@@ -6,18 +6,19 @@
 
 [role="_abstract"]
 
-WHen you configure Ansible playbooks and job templates, they are stored in {PlatformNameShort}. Playbooks and job templates remain reusable and independent of the specific {Terraform} configuration that provisioned them.
+When you configure Ansible playbooks and job templates, they are stored in {PlatformNameShort}. Playbooks and job templates remain reusable and independent of the specific {Terraform} configuration that provisioned them.
 
-When you create a job template, many of the fields have a **Prompt on launch** checkbox. When enabled, you will be prompted for the value for that field when the job is launched. Most prompted values override any values set in the job template, though there are link:{URLControllerUserGuide}/controller-job-templates#controller-create-job-template[exceptions].
+When you create a job template, many of the fields have a **Prompt on launch** checkbox. When enabled, you are prompted for the value for that field when the job is launched. Most prompted values override any values set in the job template, though there are link:{URLControllerUserGuide}/controller-job-templates#controller-create-job-template[exceptions].
 
 [NOTE]
 ====
-You can add `depends_on` to the job templates section of your `*.tf` trick so that the job does not start until the host is in the inventory.
+You can add `depends_on` to the job templates section of your `*.tf` file so that the job does not start until the host is in the inventory.
 ====
 
 .Prerequisites
 
 Before you can create a job template, you must:
++
 * link:{URLControllerUserGuide}/controller-credentials#ref-controller-credential-machine[Create a machine credential type]
 * link:{URLControllerUserGuide}/controller-projects#proc-controller-adding-a-project[Add a project]
 * link:{URLControllerUserGuide}/controller-inventories[Create an inventory]
@@ -26,7 +27,7 @@ Before you can create a job template, you must:
 .Procedure
 
 . From the navigation panel, select *{MenuAETemplates}*.
-. On the *Automation Templates* page, select *Create job template* from the *Create template* list.
+. from the *Create template* list, select *Create job template* .
 . Enter the appropriate details in the following fields:
 +
 * **Name**: Enter a name for the job.
@@ -49,6 +50,7 @@ If *Prompt on launch* is selected, the user is prompted for the credentials when
 * **Limit**: (Optional) Specify a host pattern to further constrain the list of hosts managed or affected by the playbook. Select *Prompt on launch* to restrict a job template to run against only a specific host or group of hosts within an inventory.
 +
 You can separate many patterns by colons (`:`). As with core Ansible:
++
 ** `a:b` means "in group a or b"
 ** `a:b:&c` means "in a or b but must be in c"
 ** `a:!b` means "in a, and definitely not in b"
@@ -66,19 +68,20 @@ When running as part of a workflow, the workflow job template limit is used inst
 +
 If you enable webhooks, other fields display, prompting for additional information:
 +
-* **Webhook service**: Select which service to listen for webhooks from.
-* **Webhook URL**: Automatically populated with the URL for the webhook service to POST requests to.
-* **Webhook key**: Generated shared secret to be used by the webhook service to sign payloads sent to automation controller. You must configure this in the settings on the webhook service in order for automation controller to accept webhooks from this service.
-* **Webhook credential**: Optionally, give a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service. Before you can select it, the credential type must exist.
-* **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.
-* **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
-* **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.
+** **Webhook service**: Select which service to listen for webhooks from.
+** **Webhook URL**: Automatically populated with the URL for the webhook service to POST requests to.
+** **Webhook key**: Generated shared secret to be used by the webhook service to sign payloads sent to automation controller. You must configure this in the settings on the webhook service in order for automation controller to accept webhooks from this service.
+** **Webhook credential**: Optionally, give a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service. Before you can select it, the credential type must exist.
+** **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.
+** **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
+** **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.
 
 . Click *Create job template*, when you have completed configuring the details of the job template.
 +
-The template is created and you advance to the *Job Template Details* tab on the job template page. 
+The template is created and the *Job Template Details* tab is displayed. 
 
-. Save the template. After saving the template, you can:
+. Save the template.
+. After saving the template, you can:
 +
 * Click *Launch template* to start the job. 
 * Click *Edit* to add or change the attributes of the template, such as permissions, notifications, view completed jobs, and add a survey (if the job type is not a scan).
@@ -90,9 +93,9 @@ You can use the `aap_job` resource in a separate Terraform step to automatically
 
 .Verification
 
-. From the navigation panel, select *Automation Execution* -> *Templates*.
+. From the navigation panel, select *{MenuAETemplates}*.
 . Verify that the newly created template is displayed on the *Templates* page.
 
- [role="_additional-resources"]
+[role="_additional-resources"]
 .Additional resources
 * link:{URLControllerUserGuide}/controller-job-templates[Job templates]
