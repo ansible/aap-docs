@@ -7,13 +7,12 @@
 [role="_abstract"]
 Before selecting your installation method for {PlatformNameShort}, review the following recommendations. Familiarity with these recommendations will streamline the installation process.
 
-// Removed for AAP-20847 and until such time as a decision is made regarding database support.
-//* Internal databases `[database]` are not supported. See the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/containerized_ansible_automation_platform_installation_guide/index[Containerized {PlatformName} Installation Guide] for further information on using the containerized installer for environments requiring a monolithc deployment. 
 * Provide a reachable IP address or fully qualified domain name (FQDN) for hosts to ensure users can sync and install content from {HubName} from a different node.
 +
 The FQDN must not contain either the `-` or the `_` symbols, as it will not be processed correctly. 
 +
 Do not use `localhost`.
+* The `[database]` group in the inventory file defines an {PlatformNameShort} managed database. When using an externally managed database, do not include the `[database]` group in your inventory file. For more information, see link:{URLInstallationGuide}/platform-system-requirements#proc-setup-postgresql-ext-database_licensing-gw[Setting up an external database].
 * `admin` is the default user ID for the initial log in to {PlatformNameShort} and cannot be changed in the inventory file.
 * Use of special characters for `pg_password` is limited. The `!`, `#`, `0` and `@` characters are supported. Use of other special characters can cause the setup to fail.
 * Enter your Red Hat Registry Service Account credentials in `registry_username` and `registry_password` to link to the Red Hat container registry.
