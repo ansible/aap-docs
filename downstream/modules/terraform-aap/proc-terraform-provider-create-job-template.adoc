@@ -17,12 +17,10 @@ You can add `depends_on` to the job templates section of your `*.tf` file so tha
 
 .Prerequisites
 
-Before you can create a job template, you must:
-+
 * link:{URLControllerUserGuide}/controller-credentials#ref-controller-credential-machine[Create a machine credential type]
 * link:{URLControllerUserGuide}/controller-projects#proc-controller-adding-a-project[Add a project]
 * link:{URLControllerUserGuide}/controller-inventories[Create an inventory]
-* Updated the `terraform.tfvars` file with your {PlatformNameShort} credentials (and cloud provider credentials if needed).
+* Update the `terraform.tfvars` file with your {PlatformNameShort} credentials (and cloud provider credentials if needed).
 
 .Procedure
 
@@ -72,9 +70,10 @@ If you enable webhooks, other fields display, prompting for additional informati
 ** **Webhook URL**: Automatically populated with the URL for the webhook service to POST requests to.
 ** **Webhook key**: Generated shared secret to be used by the webhook service to sign payloads sent to automation controller. You must configure this in the settings on the webhook service in order for automation controller to accept webhooks from this service.
 ** **Webhook credential**: Optionally, give a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service. Before you can select it, the credential type must exist.
-** **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.
-** **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
-** **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.
+
+* **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.
+* **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
+* **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.
 
 . Click *Create job template*, when you have completed configuring the details of the job template.
 +
