@@ -1,0 +1,98 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="terraform-provider-create-job-template"]
+
+= Creating a job template
+
+[role="_abstract"]
+
+WHen you configure Ansible playbooks and job templates, they are stored in {PlatformNameShort}. Playbooks and job templates remain reusable and independent of the specific {Terraform} configuration that provisioned them.
+
+When you create a job template, many of the fields have a **Prompt on launch** checkbox. When enabled, you will be prompted for the value for that field when the job is launched. Most prompted values override any values set in the job template, though there are link:{URLControllerUserGuide}/controller-job-templates#controller-create-job-template[exceptions].
+
+[NOTE]
+====
+You can add `depends_on` to the job templates section of your `*.tf` trick so that the job does not start until the host is in the inventory.
+====
+
+.Prerequisites
+
+Before you can create a job template, you must:
+* link:{URLControllerUserGuide}/controller-credentials#ref-controller-credential-machine[Create a machine credential type]
+* link:{URLControllerUserGuide}/controller-projects#proc-controller-adding-a-project[Add a project]
+* link:{URLControllerUserGuide}/controller-inventories[Create an inventory]
+* Updated the `terraform.tfvars` file with your {PlatformNameShort} credentials (and cloud provider credentials if needed).
+
+.Procedure
+
+. From the navigation panel, select *{MenuAETemplates}*.
+. On the *Automation Templates* page, select *Create job template* from the *Create template* list.
+. Enter the appropriate details in the following fields:
++
+* **Name**: Enter a name for the job.
+* **Description**: (Optional) Enter a description of the job.
+* **Job type**: Choose a job type. `Run` will start the playbook when launched, running Ansible tasks on the selected hosts.
+* **Inventory**: Choose the inventory to use with this job template from the inventories available to the logged in user.
++
+Select the *Prompt on launch* option to allow Terraform to pass the inventory during the Terraform `apply` process and then be used in the job template. If *Prompt on launch* is not selected, Terraform will be unable to use a specific inventory.
+
+* **Project**: Select the project to use with this job template.
+* **Source control branch**: This field is only present if you chose a project that allows branch override. Specify the overriding branch to use in your job run. If left blank, the specified SCM branch (or commit hash or tag) from the project is used.
+* **Playbook**: Choose the playbook to be launched with this job template from the available playbooks. This field automatically populates with the names of the playbooks found in the project base path for the selected project.
+* **Execution environment**: Select the container image to be used to run this job.
+* **Credentials**: Choose the credential from the available options to use with this job template.
++
+If *Prompt on launch* is selected, the user is prompted for the credentials when the job is launched.
+
+* **Labels**: (Optional) Supply labels that describe this job template, such as `dev` or `test`. You can use labels to group and filter job templates and completed jobs in the display.
+* **Forks**: The number of parallel or simultaneous processes to use while executing the playbook. A value of zero uses the Ansible default setting, which is five parallel processes unless overridden in `/etc/ansible/ansible.cfg`.
+* **Limit**: (Optional) Specify a host pattern to further constrain the list of hosts managed or affected by the playbook. Select *Prompt on launch* to restrict a job template to run against only a specific host or group of hosts within an inventory.
++
+You can separate many patterns by colons (`:`). As with core Ansible:
+** `a:b` means "in group a or b"
+** `a:b:&c` means "in a or b but must be in c"
+** `a:!b` means "in a, and definitely not in b"
++
+[NOTE]
+====
+When running as part of a workflow, the workflow job template limit is used instead.
+====
+
+. (Optional) You can set the following options for launching this template:
++
+* **Privilege escalation**: If checked, you enable this playbook to run as an administrator. This is the equal of passing the `--become` option to the `ansible-playbook` command.
+* **Provisioning callback**: If checked, you enable a host to call back to automation controller through the REST API and start a job from this job template. For more information, see Provisioning Callbacks.
+* **Enable webhook**: If checked, you turn on the ability to interface with a predefined SCM system web service that is used to launch a job template. GitHub and GitLab are the supported SCM systems.
++
+If you enable webhooks, other fields display, prompting for additional information:
++
+* **Webhook service**: Select which service to listen for webhooks from.
+* **Webhook URL**: Automatically populated with the URL for the webhook service to POST requests to.
+* **Webhook key**: Generated shared secret to be used by the webhook service to sign payloads sent to automation controller. You must configure this in the settings on the webhook service in order for automation controller to accept webhooks from this service.
+* **Webhook credential**: Optionally, give a GitHub or GitLab personal access token (PAT) as a credential to use to send status updates back to the webhook service. Before you can select it, the credential type must exist.
+* **Concurrent jobs**: If checked, you are allowing jobs in the queue to run simultaneously if not dependent on one another. Check this box if you want to run job slices simultaneously. For more information, see Automation controller capacity determination and job impact.
+* **Enable fact storage**: If checked, automation controller stores gathered facts for all hosts in an inventory related to the job running.
+* **Prevent instance group fallback**: Check this option to allow only the instance groups listed in the *Instance Groups* field to run the job. If clear, all available instances in the execution pool are used based on the hierarchy described in Control where a job runs.
+
+. Click *Create job template*, when you have completed configuring the details of the job template.
++
+The template is created and you advance to the *Job Template Details* tab on the job template page. 
+
+. Save the template. After saving the template, you can:
++
+* Click *Launch template* to start the job. 
+* Click *Edit* to add or change the attributes of the template, such as permissions, notifications, view completed jobs, and add a survey (if the job type is not a scan).
++
+[NOTE]
+====
+You can use the `aap_job` resource in a separate Terraform step to automatically launch the Job after your infrastructure is provisioned or launch it manually from the {PlatformNameShort} UI.
+====
+
+.Verification
+
+. From the navigation panel, select *Automation Execution* -> *Templates*.
+. Verify that the newly created template is displayed on the *Templates* page.
+
+ [role="_additional-resources"]
+.Additional resources
+* link:{URLControllerUserGuide}/controller-job-templates[Job templates]
