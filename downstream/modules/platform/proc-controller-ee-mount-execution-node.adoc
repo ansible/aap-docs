@@ -14,36 +14,27 @@ Learn how to configure paths exposed to isolated jobs, allowing volumes to be mo
 ** Enter a list of paths that volumes are mounted from the execution node or the hybrid node to the container.
 ** Enter one path per line.
 ** The supported format is `HOST-DIR[:CONTAINER-DIR[:OPTIONS]`.
-The allowed paths are `z`, `O`, `ro`, and `rw`.
+The allowed paths are `z`, `O`, `ro`, and `rw`. For example:
 +
-*Example*
 ----
 [
   "/var/lib/awx/.ssh:/root/.ssh:O"
 ]
 ----
-+
+
 ** For the `rw` option, configure the SELinux label correctly.
 For example, to mount the `/foo` directory, complete the following commands:
 +
 ----
 sudo su
-----
-+
-----
-mkdir /foo
-----
-+
-----
-chmod 777 /foo
-----
-+
-----
-semanage fcontext -a -t container_file_t "/foo(/.*)?"
-----
-+
-----
-restorecon -vvFR /foo
+
+mkdir /<name>
+
+chmod 777 /<name>
+
+semanage fcontext -a -t container_file_t "/<name>(/.*)?"
+
+restorecon -vvFR /<name>
 ----
 +
 The `awx` user must be permitted to read or write in this directory at least.
