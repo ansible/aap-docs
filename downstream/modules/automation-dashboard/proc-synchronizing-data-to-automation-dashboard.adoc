@@ -1,0 +1,46 @@
+// Module included in the following assemblies:
+// assembly-view-key-metrics.adoc
+
+
+:_mod-docs-content-type: PROCEDURE
+[id="synchronizing-data-to-automation-dashboard_{context}"]
+= Synchronizing data to Automation Dashboard
+
+Synchronize data from your connected {PlatformNameShort} clusters to the {AutomationDashboardName} to view the latest automation metrics.
+
+.Prerequisites
+
+* You have installed {AutomationDashboardName}.
+* You have configured the `clusters.yaml` file with your platform details.
+
+.Procedure
+
+. Identify the running {AutomationDashboardName} container:
++
+[source,terminal]
+----
+$ podman ps | grep automation-dashboard-web
+----
+
+. Run the synchronization command using one of the following methods:
++
+--
+* **Interactive mode:** Run `syncdata` without arguments. You must confirm the synchronization request when prompted.
++
+[source,terminal]
+----
+$ podman exec -it automation-dashboard-web /venv/bin/python manage.py syncdata
+----
+
+* **Noninteractive mode:** Use the `--since` and `--until` flags to define the date range. This method bypasses the user prompt and is required for automated scripts or cron jobs.
++
+[source,terminal]
+----
+$ podman exec -it automation-dashboard-web /venv/bin/python manage.py syncdata --since=2024-01-01 --until=2024-06-30
+----
+--
+
+.Verification
+
+. Verify that the terminal displays the success message: `Successfully created Sync task for Cluster <cluster_url>`.
+. Refresh {AutomationDashboardName} in your browser to view the updated metrics.
