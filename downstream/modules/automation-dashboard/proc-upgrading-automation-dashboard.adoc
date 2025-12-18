@@ -14,11 +14,17 @@ Upgrade your {AutomationDashboardName} installation to the latest version. This 
 . Download the latest installation bundle from access.redhat.com. Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
 . Extract the bundle to a new directory.
 . Copy the `inventory` file from your previous installation directory to the new directory.
+. Edit the `inventory` file to include the mandatory Redis configuration. You must add a `[redis]` group and define the `redis_mode` variable:
 +
-[NOTE]
-====
-You can reuse your existing `inventory` file because this upgrade does not introduce any new inventory variables.
-====
+[source,ini]
+----
+[redis]
+<fqdn_of_host> ansible_connection=local
+
+[all:vars]
+redis_mode=standalone
+...
+----
 . Run the installation playbook from the new directory:
 +
 [source,bash]
