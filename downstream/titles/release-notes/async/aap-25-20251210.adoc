@@ -1,0 +1,169 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-25-20251210]]
+
+= {PlatformNameShort} patch release December 10, 2025
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| December 10, 2025 |
+
+* {ControllerNameStart} 4.6.23
+* {HubNameStart} 4.10.10
+* {EDAName} 1.1.14
+* Container-based installer {PlatformNameShort} (bundle) 2.5-21
+* Container-based installer {PlatformNameShort} (online) 2.5-21
+* Receptor 1.6.2
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-20
+* RPM-based installer {PlatformNameShort} (online) 2.5-20
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.5.0-0.1764945388
+
+* Cluster-scoped Bundle: aap-operator.v2.5.0-0.1764945371
+
+
+== General
+
+* {RHEL} minimum version for the RPM installer has been updated to 8.10 and 9.4.(AAP-56386)
+
+* {RHEL} minimum version for the Containerized installer has been updated to 9.4.(AAP-56386)
+
+* Updated *nginx* to 1.24.(AAP-56205)
+
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-58754[CVE-2025-58754] `automation-gateway`: Axios DoS via lack of data size check.(AAP-53717)
+
+* link:https://access.redhat.com/security/cve/cve-2025-9909[CVE-2025-9909] 1: Improper path validation in gateway allows credential exfiltration.(AAP-53585)
+
+* link:https://access.redhat.com/security/cve/cve-2025-9908[CVE-2025-9908] `event-driven-ansible`: sensitive internal headers disclosure in {PlatformNameShort} {EDAName} event streams.(AAP-53583)
+
+* link:https://access.redhat.com/security/cve/cve-2025-9907[CVE-2025-9907] `event-driven-ansible`: event stream test mode exposes sensitive headers in {PlatformNameShort} {EDAName}.(AAP-53581)
+
+* link:https://access.redhat.com/security/cve/cve-2025-59530[CVE-2025-59530] `receptor`: `quic-go` crash due to premature HANDSHAKE_DONE frame.(AAP-58581)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64459[CVE-2025-64459] `ansible-automation-platform-25/gateway-rhel9`: Django SQL injection.(AAP-59195)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64459[CVE-2025-64459] `automation-controller`: Django SQL injection.(AAP-58081)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64459[CVE-2025-64459] `ansible-automation-platform-25/lightspeed-rhel8`: Django SQL injection.(AAP-58068)
+
+* link:https://access.redhat.com/security/cve/cve-2025-62727[CVE-2025-62727] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: Starlette DoS via range header merging.(AAP-56986)
+
+* link:https://access.redhat.com/security/cve/cve-2025-62707[CVE-2025-62707] `ansible-chatbot-service`: `pypdf` affected by possible infinite loop when reading DCT inline images without EOF marker.(AAP-56627)
+
+* link:https://access.redhat.com/security/cve/cve-2025-62707[CVE-2025-62707] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: `pypdf` affected by possible infinite loop when reading DCT inline images without EOF marker.(AAP-56617)
+
+
+== {PlatformNameShort}
+
+
+=== Bug Fixes
+
+* Fixed an issue where the user could type the name of the playbook when creating a job template, to support playbooks that may exist in a branch of a project with branch override.(AAP-52566)
+
+* Fixes using and condition with multiple attributes. Where previously the authentication map would skip the missing attributes, with this fix the map will be applied only if all attributes are present and the condition(s) are met.(AAP-53523)
+
+* Fixes issue where subscription entitlement window displays again after {PlatformNameShort} had been entitled when running in a load-balanced environment with multiple controller web pods.(AAP-51618)
+
+* Fixed an issue where the job template did not remain editable after the associated project was deleted.(AAP-58474)
+
+
+== {OperatorPlatformNameShort}
+
+
+=== Bug Fixes
+
+* Fixed an issue with the object storage secrets not being included in the {HubName} backup.(AAP-59611)
+
+* Fixed a failure condition when using the `AnsibleWorkflow` CR in {PlatformNameShort} 2.6.(AAP-59107)
+
+
+
+== {ControllerNameStart}
+
+=== Features
+
+* Updated the pinned version for receptorctl in controller. This addresses edge cases that could cause JSON to fail to parse a line from the worker stream.(AAP-58415)
+
+Error message
+[source,yaml]
+----
+Error: Expecting value: line 1 column 1 (char 0) Line with invalid JSON data: b
+----
+
+=== Bug Fixes
+
+* Fixed an issue where the system would display reminders on unsupported architectures, causing confusion.(AAP-56221)
+
+* Fixed an issue where jobs failed on `fapolicyd` enabled systems where {Python} was not installed by default. Updates `automation-controller-fapolicyd` from {Python} to Python 3.11 to address this issue.(AAP-58479)
+
+* Fixed an issue where there was a Redis broken pipe error in the long-running jobs component: API.(AAP-59727)
+
+* Fixed a GitHub application installation access token lookup where it would not accept Iv2 Client IDs.(AAP-58882)
+
+* Fixed an issue where the project update and project deletions failed with no output.(AAP-58532)
+
+
+
+== {HubNameStart}
+
+=== Bug Fixes
+
+* Fixed an issue where the autocomplete setting was missing from the  Django Rest API page.(AAP-59912)
+
+
+
+== Container-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where the `EVENT_STREAM_MTLS_BASE_URL` from {EDAName} settings file duplicated entries when the `eda_extra_settings` variable was used.(AAP-57587)
+
+* Fixed an issue with *Podman* 5.6 compatibility with {ControllerName} container configuration.(AAP-58546) 
+
+
+
+== RPM-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where the installer failed during an {ExecEnvShort} image upload when there was no {HubName} node in inventory.(AAP-57122)
+
+
+
+== {EDAName}
+
+=== Features
+
+* Added a credential type for mTLS event stream.(AAP-55786)
+
+=== Bug Fixes
+
+* Fixed an issue where installing a software package on an unsupported architecture led to disruptions.(AAP-56184)
+
+* Fixed an issue where `redis_tls` did not support boolean values such as yes/no.(AAP-52828)
+
+
+
+== Receptor
+
+=== Features
+
+* Addresses edge cases that could cause JSON to fail to parse a line from the worker stream. Also raises the versions of go dependencies and other minor functionality changes.(AAP-57253)
+
+
+

@@ -8,19 +8,9 @@ ifdef::context[:parent-context: {context}]
 :context: activate-aap
 
 [role="_abstract"]
+{PlatformName} uses available subscriptions or a subscription manifest to allow the use of {PlatformNameShort}. 
 
-If you are an organization administrator, you must link:{BaseURL}/red_hat_hybrid_cloud_console/1-latest/html/creating_and_managing_service_accounts/proc-ciam-svc-acct-overview-creating-service-acct#proc-ciam-svc-acct-create-creating-service-acct[create a service account] and use the client ID and client secret to activate your subscription.
-
-If you do not have administrative access, you can enter your Red Hat username and password in the Client ID and Client secret fields, to locate and add your subscription to your {PlatformNameShort} instance.
-
-[NOTE]
-====
-If you enter your client ID and client secret but cannot locate your subscription, you might not have the correct permissions set on your service account. For more information and troubleshooting guidance for service accounts, see link:https://access.redhat.com/articles/7112649[Configure Ansible Automation Platform to authenticate through service account credentials].
-====
-
-For Red Hat Satellite, input your Satellite username and Satellite password in the fields below. 
-
-{PlatformName} uses available subscriptions or a subscription manifest to authorize the use of {PlatformNameShort}. To obtain a subscription, you can do either of the following:
+To obtain a subscription, you can do either of the following:
 
 . Use your Red Hat username and password, service account credentials, or Satellite credentials when you launch {PlatformNameShort}.
 . Upload a subscriptions manifest file either using the {PlatformName} interface or manually in an Ansible Playbook.
@@ -31,11 +21,11 @@ include::platform/proc-aap-activate-with-credentials.adoc[leveloffset=+1]
 include::platform/proc-aap-activate-with-manifest.adoc[leveloffset=+1]
 endif::operationG[]
 
-ifdef::operationG[]
+ifdef::container-install[]
 To activate {PlatformNameShort} using credentials, see link:{URLContainerizedInstall}/assembly-gateway-licensing#proc-aap-activate-with-credentials[Activate with credentials].
 
 To activate {PlatformNameShort} with a manifest file, see link:{URLContainerizedInstall}/assembly-gateway-licensing#proc-aap-activate-with-manifest[Activate with a manifest file].
-endif::operationG[]
+endif::container-install[]
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]

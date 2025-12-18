@@ -16,11 +16,11 @@ General inventory file variables for {PlatformNameShort}.
 | Path to the user provided CA certificate file used to generate SSL/TLS certificates for all {PlatformNameShort} services.
 // This content is used in RPM installation
 ifdef::aap-install[]
-For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#proc-use-custom-tls-certificates_licensing-gw[Optional: Using custom TLS certificates].
 endif::aap-install[] 
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+For more information, see link:{URLContainerizedInstall}/advanced-configuration-containerized#using-custom-tls-certificates[Using custom TLS certificates].
 endif::container-install[]
 | Optional
 |
@@ -42,11 +42,11 @@ endif::container-install[]
 | Path to the key file for the CA certificate provided in `aap_ca_cert_file` (RPM) and `ca_tls_cert` (Container).
 // This content is used in RPM installation
 ifdef::aap-install[]
-For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#proc-use-custom-tls-certificates_licensing-gw[Optional: Using custom TLS certificates].
 endif::aap-install[] 
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+For more information, see link:{URLContainerizedInstall}/advanced-configuration-containerized#using-custom-tls-certificates[Using custom TLS certificates].
 endif::container-install[]
 | Optional
 | 
@@ -116,11 +116,11 @@ endif::container-install[]
 | Path to the custom CA certificate file. This is required if any of the TLS certificates you manually provided are signed by a custom CA. 
 // This content is used in RPM installation
 ifdef::aap-install[]
-For more information, see link:{URLInstallationGuide}/platform-system-requirements#optional_using_custom_tls_certificates[Optional: Using custom TLS certificates].
+For more information, see link:{URLInstallationGuide}/platform-system-requirements#proc-use-custom-tls-certificates_licensing-gw[Optional: Using custom TLS certificates].
 endif::aap-install[] 
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#using-custom-tls-certificates_aap-containerized-installation[Using custom TLS certificates].
+For more information, see link:{URLContainerizedInstall}/advanced-configuration-containerized#using-custom-tls-certificates[Using custom TLS certificates].
 endif::container-install[]
 | Optional 
 |
@@ -131,18 +131,20 @@ endif::container-install[]
 | Optional 
 | `true`
 
-| `registry_password` 
-| `registry_password` 
-| Password credential for access to the registry source defined in `registry_url`. 
+| `registry_password`
+| `registry_password`
+| Password credential for access to the registry source defined in `registry_url`.
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
-endif::aap-install[] 
+endif::aap-install[]
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+For more information, see link:{URLContainerizedInstall}/preparing-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+
+Not required for disconnected (bundled) installations where `bundle_install=true`.
 endif::container-install[]
-| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| RPM = Required if you need a password to access `registry_url`. Container = Required for online installations if `registry_auth=true`. Not required for disconnected installations.
 | 
 
 | `registry_url` 
@@ -151,18 +153,20 @@ endif::container-install[]
 | Optional 
 | `registry.redhat.io`
 
-| `registry_username` 
-| `registry_username` 
-| Username credential for access to the registry source defined in `registry_url`. 
+| `registry_username`
+| `registry_username`
+| Username credential for access to the registry source defined in `registry_url`.
 // This content is used in RPM installation
 ifdef::aap-install[]
 For more information, see link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-set-registry-username-password[Setting registry_username and registry_password].
-endif::aap-install[] 
+endif::aap-install[]
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+For more information, see link:{URLContainerizedInstall}/preparing-containerized-installation#proc-set-registry-username-password[Setting registry_username and registry_password].
+
+Not required for disconnected (bundled) installations where `bundle_install=true`.
 endif::container-install[]
-| RPM = Required if you need a password to access `registry_url`. Container = Required if `registry_auth=true`. 
+| RPM = Required if you need a password to access `registry_url`. Container = Required for online installations if `registry_auth=true`. Not required for disconnected installations.
 | 
 
 | `registry_verify_ssl` 
@@ -258,10 +262,10 @@ Set to `false` to prevent pulling newer container images during installation.
 | Optional
 | `true`
 
-| 
-| `registry_auth` 
-| Set whether or not to use registry authentication. When this variable is set to true, `registry_username` and `registry_password` are required. 
-| Optional 
+|
+| `registry_auth`
+| Controls whether to use registry authentication. When set to `true`, `registry_username` and `registry_password` are required. Not applicable for disconnected (bundled) installations.
+| Optional
 | `true`
 
 | 
@@ -275,5 +279,11 @@ Set to `false` to prevent pulling newer container images during installation.
 | RHEL registry namespace. 
 | Optional 
 | `rhel8`
+
+| 
+| `setup_monitoring` 
+| Set to `true` to enable Performance Co-Pilot for system performance monitoring and data collection on {PlatformNameShort} control plane nodes. 
+| Optional 
+| `false`
 
 |===

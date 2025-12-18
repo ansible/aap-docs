@@ -3,6 +3,8 @@
 [id="rhdh-update-registry_{context}"]
 = Updating the plug-in registry
 
+To update the plug-in registry, you must upload your plug-in files to OpenShift,
+and start a new build of the registry.
 
 .Prerequisites
 * You have downloaded the plug-in TAR files for {SelfService}.
@@ -17,14 +19,23 @@ to represent the path to the local directory where you have stored the TAR files
 ----
 $ oc project <YOUR_SELF_SERVICE_AUTOMATION_PORTAL_PROJECT>
 ----
-. Run the following commands to update your plug-in registry build in in your OpenShift project.
+. Find the name of your current plug-in registry build configuration:
 +
-The command assumes that `$DYNAMIC_PLUGIN_ROOT_DIR` represents the directory for your TAR files.
+----
+$ oc get buildconfig
+----
+. From the output, identify the correct build configuration name, for example `aap-self-service-plugins`.
+. Run the following command to start a new build in in your OpenShift project.
++
+----
+$ oc start-build <build_config_name> --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+----
++
+--
+** The command assumes that `$DYNAMIC_PLUGIN_ROOT_DIR` represents the directory for your TAR files.
 Replace this in the command if you have chosen a different environment variable name.
-+
-----
-$ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
-----
+** Replace `<build_config_name>` with the build configuration name you identified.
+--
 +
 When the build starts, the following message is displayed:
 +
@@ -38,12 +49,12 @@ When the build starts, the following message is displayed:
 . Open the *Topology* view in the *Developer* perspective for your project in the OpenShift web console.
 . Select the plugin registry icon to open the *plugin-registry* details pane.
 . In the *Pods* section of the *plugin-registry* details pane, select *View logs* for the
-`plugin-registry-&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;&#0035;-&#0035;&#0035;&#0035;&#0035;` pod.
-// Can't use multiple hashtags characters in Asciidoc: Asciidoctor interprets them as special characters.
-+
-image::self-service-plugin-registry.png[Developer perspective]
-+
-(1) Plug-in registry
+new build pod.
+The format for the pod name is `<build_config_name>-<build_number>-build`.
+// +
+// image::self-service-plugin-registry.png[Developer perspective]
+// +
+// (1) Plug-in registry
 . Click the *terminal* tab and log in to the container.
 . In the terminal, run `ls` to view the TAR files in the plugin registry.
 . Verify that the new TAR files have been uploaded.

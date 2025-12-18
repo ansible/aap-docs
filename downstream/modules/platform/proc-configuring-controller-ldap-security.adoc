@@ -16,8 +16,13 @@ You can configure your LDAP SSL configuration for {ControllerName} through any o
 . Create a secret in your {PlatformNameShort} namespace for the `bundle-ca.crt` file (the filename must be `bundle-ca.crt`):
 +
 ----
-$ oc create secret -n aap-namespace generic bundle-ca-secret --from-file=bundle-ca.crt
+$ oc create secret -n aap generic bundle-ca-secret --from-file=bundle-ca.crt
 ----
++
+[NOTE]
+====
+The target filename for this operation must be `bundle-ca.crt` and the secret name should be `bundle-ca-secret`.
+====
 +
 . Add the `bundle_cacert_secret` to the {PlatformNameShort} customer resource:
 +
@@ -34,6 +39,12 @@ spec:
 You can verify the expected certificate by running:
 +
 ----
-oc exec -it deployment.apps/aap-gateway - openssl x509 -in /etc/pki/tls/certs/bundle-ca.crt -noout -text
+oc get deployments -l 'app.kubernetes.io/component=aap-gateway'
+----
++
+Followed by:
++
+----
+oc exec -it deployment.apps/<gateway-deployment-name-from-above> -- openssl x509 -in /etc/pki/tls/certs/ca-bundle.crt -noout -text
 ----
 

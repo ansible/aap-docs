@@ -5,14 +5,12 @@
 
 [role="_abstract"]
 To deploy your system so that it is ready for container signing, first ensure that you have 
-link:{URLContainerizedInstall}/aap-containerized-installation#enabling-automation-hub-collection-and-container-signing_aap-containerized-installation[enabled automation content collection and container signing].
+link:{URLContainerizedInstall}/advanced-configuration-containerized#enabling-automation-hub-collection-and-container-signing[enabled automation content collection and container signing].
 Then you can create a signing script, or
 link:{URLHubManagingContent}/managing-containers-hub#adding-an-execution-environment[add and sign an {ExecEnvShort}] manually.
 
-[NOTE]
-====
-Installer looks for the script and key on the same server where installer is located.
-====
+Note that installer looks for the script and key on the same server where installer is located.
+
 
 .Procedure
 . From a terminal, create a signing script, and pass the script path as an installer parameter.
@@ -60,12 +58,12 @@ automationhub_container_signing_service_key = /absolute/path/to/key/to/sign
 automationhub_container_signing_service_script = /absolute/path/to/script/that/signs
 -----
 +
-
 . Once installation is complete, log in to {PlatformNameShort} and navigate to {MenuACAdminSignatureKeys}.
-
-. Ensure that you have a key titled *container-default*, or *container*-_anyname_.
-
++
 [NOTE]
 ====
 The `container-default` service is created by the {PlatformNameShort} installer.
 ====
+
+.Verification
+Ensure that you have a key titled *container-default*, or *container*-_anyname_.

@@ -13,7 +13,7 @@ You can define remote execution nodes in the `[execution_nodes]` group of your i
 <fqdn_of_your_execution_host>
 ----
 
-By default, an execution node is configured with the following settings which can be modified as needed:
+By default, an execution node uses the following settings that you can update as needed:
 
 ----
 receptor_port=27199
@@ -23,22 +23,22 @@ receptor_type=execution
 
 * `receptor_port` - The port number that receptor listens on for incoming connections from other receptor nodes.
 * `receptor_type` - The role of the node. Valid options include `execution` or `hop`.
-* `receptor_protocol` -  The protocol used for communication. Valid options include `tcp` or `udp`.
+* `receptor_protocol` - The protocol used for communication. Valid options include `tcp` or `udp`.
 
-By default, all nodes in the `[execution_nodes]` group are added as peers for the controller node. To change the peer configuration, use the `receptor_peers` variable.
+By default, execution nodes automatically peer with all {ControllerName} nodes. To configure an execution node to peer with specific {ControllerName} nodes instead, use the `receptor_peers` variable.
 
 [NOTE]
 ====
 The value of `receptor_peers` must be a comma-separated list of host names. Do not use inventory group names.
 ====
 
-Example configuration:
-
+*Example:*
 ----
 [execution_nodes]
-# Execution nodes
+# Uses default peering (peers with all controller nodes)
 exec1.example.com
-exec2.example.com
-# Hop node that peers with the two execution nodes above
+# Only peers with specific controller nodes
+exec2.example.com receptor_peers='["controller1.example.com","controller2.example.com"]'
+# Hop node that peers with specific execution nodes
 hop1.example.com receptor_type=hop receptor_peers='["exec1.example.com","exec2.example.com"]'
 ----

@@ -280,11 +280,9 @@ Set to `false` to disable SSL verification.
 | `eda_extra_settings` 
 a| Defines additional settings for use by {EDAName} during installation.
 
-For example: 
+For example:
 ----
-eda_extra_settings:
-  - setting: RULEBOOK_READINESS_TIMEOUT_SECONDS
-    value: 120
+eda_extra_settings=[{"setting": "RULEBOOK_READINESS_TIMEOUT_SECONDS", "value": 120}]
 ----
 | Optional
 | `[]`
@@ -305,7 +303,7 @@ eda_extra_settings:
 | `eda_nginx_https_protocols` 
 | Protocols that {EDAName} supports when handling HTTPS traffic.
 | Optional
-| RPM = `[TLSv1.2]`. Container = `[TLSv1.2, TLSv1.3]`.
+| `[TLSv1.2, TLSv1.3]`
 
 | 
 | `eda_pg_socket` 
@@ -341,7 +339,7 @@ For more information, see link:{URLInstallationGuide}/assembly-platform-install-
 endif::aap-install[] 
 // This content is used in Containerized installation
 ifdef::container-install[]
-For more information, see link:{URLContainerizedInstall}/aap-containerized-installation#proc-add-eda-safe-plugin-var[Adding a safe plugin variable to {EDAcontroller}].
+For more information, see link:{URLContainerizedInstall}/advanced-configuration-containerized#proc-add-eda-safe-plugin-var[Adding a safe plugin variable to {EDAcontroller}].
 endif::container-install[]
 
 | Optional

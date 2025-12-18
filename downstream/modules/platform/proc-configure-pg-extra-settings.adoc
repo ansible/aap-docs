@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-pg-extra-settings"]
+
+= Configuring custom PostgreSQL settings for {PlatformNameShort}
+
+[role="_abstract"]
+
+The `postgres_extra_settings` variable allows you to pass a list of custom _name: value_ pairs directly to the PostgreSQL configuration file `(/var/lib/pgsql/data/postgresql.conf)` within the database pod.
+
+.Prerequisites
+* You have installed the {OperatorPlatformNameShort}.
+
+.Procedure
+. Log in to {OCP}.
+. Go to *Operators → Installed Operators*.
+. Select your {OperatorPlatformNameShort} deployment.
+. Select *All Instances* and go to your *{PlatformNameShort}* instance.
+. Click the ⋮ icon and then select *Edit {PlatformNameShort}*.
+. In the *YAML* view, locate the `spec:` section
+. Add the `database` section and the required settings under `spec:`. The following example configures SSL ciphers and the maximum connections:
++
+[source, bash]
+----
+spec:
+  database:
+    postgres_extra_settings:
+      - name: max_connections
+        value: '1000'
+----
++
+. Click btn:[Save].
+
+.Verification
+
+Inspect the PostgreSQL pod logs to verify the new settings.
+
+Alternatively, you can run the following command to check the settings. Replace `<aap postgres pod>` with the name of your PostgreSQL pod. 
++
+[source, bash]
+----
+$ oc exec -it <aap postgres pod> -- psql -d gateway -c "SHOW max_connections;"
+----

@@ -19,7 +19,8 @@ $ psql -c 'SELECT version();'
 ====
 PostgreSQL version 15 is a strict requirement for the migration process to succeed. If running PostgreSQL 13 or earlier, upgrade to version 15 before proceeding with the migration.
 
-If using an {PlatformNameShort} managed database, re-run the installation program to upgrade the PostgreSQL version. If using a customer provided (external) database, contact your database administrator or service provider to confirm the version and arrange for an upgrade if required.
+If using an {PlatformNameShort} managed database, re-run the installation program to upgrade the PostgreSQL version.
+If using a customer provided (external) database, contact your database administrator or service provider to confirm the version and arrange for an upgrade if required.
 ====
 +
 . Create a complete backup of the source environment:
@@ -78,7 +79,8 @@ Adjust the filesystem size or mount an external filesystem as needed before perf
 +
 [NOTE] 
 ====
-This procedure assumes that all target files will be sent to the `/tmp` filesystem. You must adjust the commands to match your environment's needs.
+These commands send all target files to the `/tmp` filesystem. 
+Adjust the commands to match your environment's needs.
 ====
 +
 . Perform database dumps of all components on the {Gateway} node within the artifact you created.
@@ -189,4 +191,4 @@ drwxr-xr-x ansible/ansible      0 2025-05-08 16:26 artifact/hub/
 [role="_additional-resources"]
 .Additional resources
 
-* link:{URLInstallationGuide}/assembly-platform-install-scenario#con-backup-aap_platform-install-scenario[Backing up your {PlatformNameShort} instance]
+* link:{URLInstallationGuide}/assembly-platform-install-scenario#proc-backup-aap_platform-install-scenario[Backing up your {PlatformNameShort} instance]

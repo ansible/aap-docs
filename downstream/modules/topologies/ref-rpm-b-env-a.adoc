@@ -3,19 +3,20 @@
 = RPM {EnterpriseTopology}
 
 [role="_abstract"]
-include::snippets/enterprise-topologies.adoc[]
+The RPM-based {EnterpriseTopology} provides redundancy and higher compute for large volumes of automation. 
+Included are the tested infrastructure topology, system requirements, network port configurations, and an example inventory file for installation.
 
 == Infrastructure topology
-The following diagram outlines the infrastructure topology that Red{nbsp}Hat has tested with this deployment model that customers can use when self-managing {PlatformNameShort}:
+The Red{nbsp}Hat tested infrastructure topology for this deployment model:
 
 .Infrastructure topology diagram
 image::rpm-b-env-a.png[RPM {EnterpriseTopology} diagram]
 
-Each VM has been tested with the following component requirements:
+Red Hat tests each VM with these requirements:
 
 include::snippets/rpm-tested-vm-config.adoc[]
 
-.Infrastructure topology
+.Infrastructure topology components
 [options="header"]
 |====
 | VM count | Purpose | Example VM group names
@@ -31,19 +32,21 @@ include::snippets/rpm-tested-vm-config.adoc[]
 
 [NOTE]
 ====
-* 6 VMs are required for a Redis high availability (HA) compatible deployment. Redis can be colocated on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database.
-* External Redis is not supported for RPM-based deployments of {PlatformNameShort}.
+* Redis high availability (HA) deployment requires 6 VMs. You can colocate Redis on each {PlatformNameShort} component VM except for {ControllerName}, execution nodes, or the PostgreSQL database.
+* RPM-based deployments of {PlatformNameShort} do not support external Redis.
 ====
 
 == Tested system configurations
 
-Red{nbsp}Hat has tested the following configurations to install and run {PlatformName}:
+Red{nbsp}Hat has tested these configurations to install and run {PlatformName}:
 
 include::snippets/rpm-env-a-tested-system-config.adoc[]
 
 == Network ports
 
-{PlatformName} uses several ports to communicate with its services. These ports must be open and available for incoming connections to the {PlatformName} server for it to work. Ensure that these ports are available and are not blocked by the server firewall.
+{PlatformName} uses several ports to communicate with its services. 
+These ports must be open and available for {PlatformName} to work. 
+Ensure that these ports are available and are not blocked by a firewall.
 
 .Network ports and protocols
 [options="header"]
@@ -56,6 +59,7 @@ include::snippets/rpm-env-a-tested-system-config.adoc[]
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {ControllerNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {HubNameStart}
 | 80/443 | TCP | HTTP/HTTPS | {GatewayStart} | {EDAName}
+| 80/443 | TCP | HTTP/HTTPS | Execution node | {GatewayStart}
 | 5432 | TCP | PostgreSQL | {EDAName} | External database
 | 5432 | TCP | PostgreSQL | {GatewayStart} | External database
 | 5432 | TCP | PostgreSQL | {HubNameStart} | External database
@@ -69,7 +73,12 @@ include::snippets/rpm-env-a-tested-system-config.adoc[]
 //| 50051 | TCP | gRPC | {GatewayStart} | {GatewayStart}
 |====
 
+[NOTE]
+====
+If you change any port values by using inventory variables, refer to link:{URLInstallationGuide}/appendix-inventory-files-vars[Inventory file variables] to review all default port values and ensure there are no port conflicts.
+====
+
 == Example inventory file
-Use the example inventory file to perform an installation for this topology: 
+Use the example inventory file to perform an installation: 
 
 include::snippets/inventory-rpm-b-env-a.adoc[]

@@ -8,35 +8,40 @@
 
 = Installing {AutomationDashboardName}
 
+[role="_abstract"]
+Install {AutomationDashboardName} to collect and analyze key metrics related to job execution, efficiency, and automation savings across your {PlatformNameShort} deployments.
+
 .Prerequisites
 
 * One of the following tested configurations:
 ** RHEL 9 x86 or ARM based physical or virtual host. 
-** With an external database: Postgres v15 database.  
+** With an external database: PostgreSQL v15 database.  
 [IMPORTANT]
 Do not attempt to install {AutomationDashboardName} on the same host(s) as {PlatformNameShort}.
 * Automation Dashboard installation has been tested with the following configuration: 
-** 80 GB Harddrive (depending on data growth) 
-** 4 vCPUs x 16 GB Ram
+** 80 GB hard drive (depending on data growth) 
+** 4 vCPUs x 16 GB RAM
 ** Disk IOPS - 3000
 ** Handle up to 10,000 jobs/month and 47M summaries/month
 ** Connects to three {PlatformNameShort} deployments of the same version
-* Access to _baseos_ and _{PlatformNameShort}stream_ repo packages for the RHEL 9 host.
-* A non-root login account to the RHEL 9 host for installation. This requires passwordless sudo access to root as well. By default, we use the `$HOMEDIR` of the user account.
+* Access to _baseos_ and _{PlatformNameShort}stream_ repository packages for the RHEL 9 host.
+* A non-root login account to the RHEL 9 host for installation.
+** This requires passwordless `sudo` access to root.
+** By default, we use the `$HOMEDIR` of the user account.
 * URL details for access to your {PlatformNameShort} instances.
 * An {PlatformNameShort} OAuth2 token, which is used for communication between the {PlatformNameShort} instances and {AutomationDashboardName}.
 * Access to download the installation bundle providing installation components for the {AutomationDashboardName}.
-* Open firewall access to allow for bi-directional communication between AAP instances and the {AutomationDashboardName}. 
+* Open firewall access to allow for bidirectional communication between AAP instances and the {AutomationDashboardName}. 
 ** This includes HTTPS/443 (or your {PlatformNameShort} configured port) from the dashboard to the Ansible Automation Platform instance(s).
 ** Port 8447 is the default ingress port for the {AutomationDashboardName}. This port can be configured during installation.
-** RHEL firewall ports that may block 5432 to PostgreSQL.
+** RHEL firewall ports that might block 5432 to PostgreSQL.
 * A supported version of `ansible-core` installed on supported RHEL versions.
 
 .Procedure
 
-. Download the latest installer tarball from access.redhat.com.  Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
+. Download the latest installer tar file from access.redhat.com. Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
 . Copy the installation source file to your RHEL 9 host.
-. Untar the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory: `/home/<username>`.
+. Extract the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory: `/home/<username>`.
 +
 [source,bash]
 ----
@@ -44,7 +49,7 @@ tar -xzvf ansible-automation-dashboard-containerized-setup-bundle-0.1-x86_64.tar
 cd ansible-automation-dashboard-containerized-setup/
 ----
 
-. Verify that the necessary software is installed by running the following commands:
+. Verify that the installation of necessary software by running the following commands:
 +
 [source,bash]
 ----
@@ -80,9 +85,9 @@ The values for *Name*, *Organization*, and HTTPS port number for {PlatformNameSh
 +
 * OAuth application: automation-dashboard-sso
 * Scope: read
-... Store this access token value. The access token is used in `clusters.yaml`.
+... Store this access token value. `clusters.yaml` uses this access token.
 +
-. Copy the example inventory and modify it before running the installer.
+. Copy the example inventory and change it before running the installation program.
 +
 [source,bash]
 ----
@@ -90,7 +95,7 @@ cp -i inventory.example inventory
 vi inventory
 ----
 +
-[NOTE]
+[IMPORTANT]
 ====
 * This is an example tested inventory containing default values for {PlatformNameShort} 2.4, 2.5, and 2.6. 
 * You must change the following values to use this inventory configuration in your environment:
@@ -174,7 +179,7 @@ bundle_install=true
 bundle_dir='{{ lookup("ansible.builtin.env", "PWD") }}/bundle'
 ----
 
-. Run the installer.
+. Run the installation program.
 +
 [source,bash]
 ----

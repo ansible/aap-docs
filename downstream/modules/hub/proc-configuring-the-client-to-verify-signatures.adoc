@@ -1,10 +1,10 @@
 :_mod-docs-content-type: PROCEDURE
 [id="configuring-the-client-to-verify-signatures"]
 
-= Configuring the client to verify signatures
+= Configure the client to verify signatures
 
 [role="_abstract"]
-To ensure an {ExecEnvShort} pulled from the remote registry is properly signed, you must first configure the {ExecEnvShort} with the proper public key in a policy file. 
+To ensure an {ExecEnvShort} pulled from the remote registry is properly signed, first configure the {ExecEnvShort} with the proper public key in a policy file. 
 
 .Prerequisites
 * The client must have sudo privileges configured to verify signatures.
@@ -14,7 +14,7 @@ To ensure an {ExecEnvShort} pulled from the remote registry is properly signed, 
 . Open your terminal and use the following command: 
 +
 ----
->  sudo <name of editor> /etc/containers/policy.json
+sudo <name of editor> /etc/containers/policy.json
 ----
 +
 The file that is displayed is similar to this:
@@ -73,11 +73,11 @@ name of your key file.
 * Pull the file using Podman, or your client of choice:
 
 ----
-> podman pull <server-address>/<container-name>:<tag name> --tls-verify=false
+ podman pull <server-address>/<container-name>:<tag name> --tls-verify=false
 ----
 
 This response verifies the {ExecEnvShort} has been signed with no errors. If the {ExecEnvShort} is not signed, the command fails.
 
 [role="_additional-resources"]
 .Additional resources
-* For more information about policy.json, see link:https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#signedby[documentation for containers-policy.json]. 
+* link:https://github.com/containers/image/blob/main/docs/containers-policy.json.5.md#signedby[Documentation for containers-policy.json] 
