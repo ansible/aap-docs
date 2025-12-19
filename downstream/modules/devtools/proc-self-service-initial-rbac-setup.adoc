@@ -10,6 +10,16 @@ only users with admin privileges can view the auto-generated templates.
 You must configure initial Role-Based Access Control (RBAC) in the {SelfServiceShort}. 
 This configuration is mandatory for all users; without it, the {PlatformNameShort} admin cannot view templates.
 
+[IMPORTANT]
+====
+Role-Based Access Control (RBAC) differs by template type:
+
+* **Auto-generated templates:** Permissions are synchronized from {PlatformNameShort}. Users must have permissions on the underlying {PlatformNameShort} job template.
+* **Custom templates:** Permissions must be explicitly configured within the {SelfServiceShort}. Users must also have permissions to run the associated job templates in {PlatformNameShort}.
+
+For help with RBAC on custom templates, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_self-service_automation_portal/index#self-service-set-up-rbac_self-service-rbac[Setting up RBAC for custom self-service templates].
+====
+
 .Prerequisites
 
 * You have credentials for an {PlatformNameShort} account that has admin privileges.
@@ -58,7 +68,7 @@ menu:Administration[RBAC] in the navigation pane in {SelfServiceShort}.
 
 .Verification
 
-* Log in to {SelfServiceShort} as a non-admin user who is a member of a team you granted permissions to.
-Confirm that the user can see auto-generated templates in {SelfServiceShort}.
+. Log in to {SelfServiceShort} as a non-admin user who has the assigned permissions or is a member of a team with the assigned permissions. 
+. Confirm that the user can see auto-generated templates in {SelfServiceShort}.
 +
 These correspond to the {PlatformNameShort} job templates that the user has *Execute* permissions for. To learn more about configuring RBAC in {PlatformNameShort}, see the link:https://interact.redhat.com/share/RZM69zpDpc5ymd63pMQv[{SelfServiceShort} interactive demo].
