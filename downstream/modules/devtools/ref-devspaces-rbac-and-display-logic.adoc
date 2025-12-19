@@ -1,0 +1,49 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-devspaces-rbac-and-display-logic_{context}"]
+
+= Configuring template RBAC and display logic
+
+[role="_abstract"]
+Template definitions in the YAML file control where templates appear in the {SelfService} and how to manage permissions.
+
+[NOTE]
+====
+include::snippets/technology-preview.adoc[]
+====
+
+== Role-based access control (RBAC)
+
+The template type determines where you must configure user permissions.
+
+* **Auto-generated templates**: Permissions synchronize from {PlatformNameShort}. Users must have permissions on the underlying {PlatformNameShort} job template. For more information, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_self-service_automation_portal/index#self-service-initial-rbac-setup_self-service-accessing-deployment[Setting up initial RBAC rules in {SelfService}].
+* **Custom templates**: You must explicitly configure permissions within the {SelfService}. Users must also have permission to run the associated job templates in Ansible Automation Platform. For more information see, link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/using_self-service_automation_portal/index#self-service-set-up-rbac_self-service-rbac[Setting up RBAC for custom self-service templates]. 
+
+== Backstage software template display logic (spec.type)
+
+The `spec.type` value in the template YAML determines which portal page displays the template.
+
+* **No spec.type defined**: The template appears on the {PlatformNameShort} templates page for all users.
+* **spec.type: execution-environment**: The template appears only on the **EE definition files** page.
+
+== Example: Auto-generated template
+
+The following YAML example uses the `spec.type` field to restrict the template view to the **EE definition files** page.
+
+[source,yaml]
+----
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ansible-execution-environment-template
+  title: EE template
+  description: Ansible Execution Environment Template
+  tags:
+    - ansible
+    - execution-environment
+    # ...
+spec:
+  type: execution-environment  # Restricts the template view to the Execution Environment page.
+  parameters:
+    # ...
+----
