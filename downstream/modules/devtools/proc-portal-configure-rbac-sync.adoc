@@ -1,0 +1,61 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-portal-configure-rbac-sync_{context}"]
+
+= Configuring RBAC for synchronization
+
+[role="_abstract"]
+Synchronization uses an {PlatformNameShort} token configured in the {SelfService}  to determine which data to synchronize from {PlatformNameShort}.
+
+By default, {SelfService} synchronizes {PlatformNameShort} Organization, Team, and User identity information. 
+{SelfServiceShortStart} also synchronizes {PlatformNameShort} job template information accessible by the configured {PlatformNameShort} token.
+
+[NOTE]
+====
+For more information on {PlatformNameShort} token best practices, see the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html/access_management_and_authentication/gw-token-based-authentication#gw-oauth2-security-controls[Ansible Automation Platform documentation].
+====
+
+.Prerequisites
+
+* You have credentials for an {PlatformNameShort} administrator.
+* Synchronization of {PlatformNameShort} Organization information from {PlatformNameShort} is complete.
+* Users who execute {PlatformNameShort} job templates through {SelfService} must have job template *Execute* permissions assigned in {PlatformNameShort} for the respective {PlatformNameShort} job templates.
+* The *Allow external users to create OAuth2 tokens* setting is enabled in the {MenuSetGateway} settings in {PlatformNameShort}.
+
+.Procedure
+
+. Log in to {SelfServiceShort} with an account that has {PlatformNameShort} administrator privileges.
+. In the navigation pane of {SelfServiceShort}, select menu:Administration[RBAC]. 
+. Click btn:[Create] to create a new role and enter a name, for example
+`portal-users`.
+. Click btn:[Next].
++
+image::self-service-create-new-rbac-role.png[Create new role]
+. In the *Users and Groups* section, select the {PlatformNameShort} teams and users to assign to this role, then click btn:[Next].
++
+*Note:* You can only select {PlatformNameShort} teams and users from the {PlatformNameShort} Organization that you have configured for synchronization with {SelfServiceShort}.
+. Click btn:[Next] to configure permissions in the *Add permission policies* section:
+.. Select the *Catalog* plugin from the *Select plugins* dropdown menu.
+.. Select the checkbox for `catalog.entity.read`.
++
+image::self-service-add-permission-policies.png[Add permission policies]
+. Select the *Scaffolder* plugin and enable all scaffolder permissions:
+* `scaffolder.template.parameter.read`
+* `scaffolder.template.step.read`
+* `scaffolder.action.execute`
+* `scaffolder.task.cancel`
+* `scaffolder.task.create`
+* `scaffolder.task.read`
++
+[NOTE]
+====
+The `scaffolder.task.read` permission must be enabled so that users can view previous task runs in the *History* page in the {SelfServiceShort} console.
+====
+. Click btn:[Next] to review your settings, then btn:[Create] to create the new role. 
++
+On successful completion, your new role is included in the *All roles* list when you select
+menu:Administration[RBAC] in the navigation pane in {SelfServiceShort}.
+
+.Verification
+
+On successful completion, your new role is included in the *All roles* list when you select menu:Administration[RBAC] in the navigation pane in {SelfService}.
