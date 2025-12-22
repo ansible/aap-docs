@@ -1,0 +1,24 @@
+[id="understand-portal-rbac-permissions_{context}"]
+
+= Understanding the permission model
+
+[role="_abstract"]
+{SelfServiceShortStart} and {PlatformNameShort} use separate but related permission systems. 
+{PlatformNameShort} RBAC is the source of truth for synchronization scope and execution permissions.
+
+**{SelfServiceShortStart} RBAC:**
+
+* Controls which users can view templates in the {SelfService} catalog.
+* Controls which users can access portal templates and submit jobs.
+
+**{PlatformNameShort} RBAC:**
+
+* **Controls synchronization scope:** Only {PlatformNameShort} job templates accessible by the configured {PlatformNameShort} token (ansible.rhaap.token) are synchronized to {SelfService}.
+* **Controls {PlatformNameShort} job template visibility and execution:** {PlatformNameShort} permissions determine whether authenticated users can view and execute {PlatformNameShort} job templates in {SelfService}.
+* **Validates execution permissions:** When a {SelfService} user executes a template, {PlatformNameShort} checks that user's execute permissions before launching the job.
+
+[NOTE]
+====
+If a user can see a {SelfService} template in the catalog but lacks {PlatformNameShort} execution permissions for the associated {PlatformNameShort} job template in {PlatformNameShort}, the user cannot run the {PlatformNameShort} Job.
+====
+
