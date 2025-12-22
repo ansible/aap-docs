@@ -1,0 +1,66 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="portal-config-conditional-access_{context}"]
+
+= Configuring conditional access 
+
+[role="_abstract"]
+Optionally, you can configure conditional {SelfServiceShort} RBAC policies to filter role access to specific {PlatformNameShort} job templates by tag for specific {PlatformNameShort} teams or users. 
+
+{PlatformNameShort} labels applied to {PlatformNameShort} job templates are synchronized to {SelfServiceShort} as tags and can be used for conditional access control. 
+
+[NOTE]
+====
+{PlatformNameShort} labels are converted to lowercase tags with special characters replaced by hyphens (for example, the {PlatformNameShort} label `Network-Automation` becomes the tag `network-automation`).
+====
+
+.Prerequisites
+
+* {PlatformNameShort} job templates must have {PlatformNameShort} labels applied and synchronized with {SelfServiceShort}.
+* Users who execute {PlatformNameShort} job templates through {SelfServiceShort} must have {PlatformNameShort} job template *Execute* permissions assigned in {PlatformNameShort} for the respective {PlatformNameShort} job templates.
+
+.Procedure
+
+. Log in to {SelfServiceShort} with an account that has {PlatformNameShort} administrator privileges.
+. In the navigation pane of {SelfServiceShort}, select menu:Administration[RBAC]. 
+. Click btn:[Create] to create a new role and enter a name, for example
+`network-templates`.
+. Click btn:[Next].
+. In the *Users and Groups* section, select the {PlatformNameShort} teams and users to assign to this role (for example, the {PlatformNameShort} network-team), then click btn:[Next].
++
+[NOTE]
+====
+You can only select {PlatformNameShort} teams and users from the {PlatformNameShort} Organization that you are using in {SelfServiceShort}.
+====
+. Click btn:[Next] to configure permissions in the *Add permission policies* section:
+* Select the *Catalog* plugin from the *Select plugins* dropdown menu.
+* Select the checkbox for `catalog.entity.read`.
+* Click btn:[Conditional] to configure a condition-based policy.
+. In the condition builder, configure a rule to filter by tag:
+* *Rule:* Select `HAS_METADATA` from the dropdown menu
+* *Key:* Enter `tags`
+* *Value:* Enter the tag value to filter by (for example, `network-automation`)
+. Select the *Scaffolder* plugin and enable all scaffolder permissions:
+* `scaffolder.template.parameter.read`
+* `scaffolder.template.step.read`
+* `scaffolder.action.execute`
+* `scaffolder.task.cancel`
+* `scaffolder.task.create`
+* `scaffolder.task.read`
+. Click btn:[Next] to review your settings, then click btn:[Create] to create the new role.
+
+.Verification
+
+On successful completion, your new role is included in the *All roles* list when you select menu:Administration[RBAC] in the navigation pane in {SelfService}.
+
+. Log in to {SelfService} as a non-{PlatformNameShort} administrator user who is a member of a team you granted permissions to.
+. Verify that the user can see auto-generated templates in {SelfService}. 
+* If you configured conditional access by tag, the user should see only templates with the specified tags. 
+* If you did not configure conditional access, the user should see all {PlatformNameShort} job templates for which they have job template *Execute* permissions in {PlatformNameShort}.
+. To verify execution permissions work correctly, attempt to execute a template:
+.. If the user has job template *Execute* permissions in {PlatformNameShort} for the template, the user can view the template, and the job launches successfully.
+
+
+
+
+
