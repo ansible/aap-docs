@@ -1,0 +1,19 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-02
+:_mod-docs-content-type: PROCEDURE
+
+[id="revoking-token_{context}"]
+= Revoking a token
+
+[role="_abstract"]
+To comply with security policies, you might occasionally need to revoke and regenerate a token.
+
+.Procedure
+
+. Run the following command to revoke the token:
++
+----
+curl -X POST https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/revoke -d grant_type=refresh_token -d client_id="cloud-services" -d refresh_token="${REFRESH_TOKEN}" -d token="${REFRESH_TOKEN}"
+----
++
+. To regenerate a token, follow the appropriate procedure in link:{URLHubManagingContent}/managing-cert-valid-content#token-management-hub_cloud-sync[Token management].
