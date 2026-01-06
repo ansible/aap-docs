@@ -51,7 +51,14 @@ This command displays your system identity, name, organization name, and organiz
 * For legacy accounts not using SCA, you might have to manually attach subscriptions:
 +
 -----
-$ sudo subscription-manager list --available --all | grep "Ansible Automation Platform" -B 3 -A 6
+$ sudo subscription-manager list --available --all | grep -A 30 "Ansible Automation Platform"
+-----
++
+This command displays the subscription details including the Pool ID. Look for the `Pool ID:` line in the output.
++
+Once you have identified the correct Pool ID, attach the subscription:
++
+-----
 $ sudo subscription-manager attach --pool=<pool_id>
 -----
 +
