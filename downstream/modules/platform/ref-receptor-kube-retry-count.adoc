@@ -1,0 +1,35 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="receptor-kube-retry-count"]
+
+= Receptor Kubernetes retry count variable
+
+[role="_abstract"]
+Configure the Receptor worker within the {OperatorPlatformNameShort} through the `RECEPTOR_KUBE_RETRY_COUNT` environment variable. 
+This variable controls how the worker handles Kubernetes API connection failures.
+
+[IMPORTANT]
+====
+The retry mechanism uses an exponential backoff strategy. 
+Setting this value too high can result in excessive wait times during job execution errors.
+====
+
+*RECEPTOR_KUBE_RETRY_COUNT details*
+[cols="1,4a,1,1",options="header"]
+|===
+| Variable
+| Description
+| Default Value
+| Valid Range
+
+| `RECEPTOR_KUBE_RETRY_COUNT`
+| Sets the maximum number of retry attempts for Kubernetes API operations within the Receptor worker. Retry delays increase using exponential backoff with a Fibonacci-like sequence.
+| `5`
+| `1` - `100`
+|===
+
+*Configuration recommendations*
+
+If a playbook is expected to run for more than 20 hours, or if it remains without output for more than 2 to 4 hours, increase `RECEPTOR_KUBE_RETRY_COUNT` from the default value.
+For a 20-hour job, a retry count of 10 is recommended. 
+This setting allows approximately 2 hours for each retry attempt, ensuring the worker does not time out prematurely during long-running operations.
