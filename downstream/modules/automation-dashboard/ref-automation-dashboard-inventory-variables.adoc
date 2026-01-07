@@ -78,7 +78,7 @@ The following variables control how {AutomationDashboardName} interacts with rem
 |The password for the {AutomationDashboardName} administrator user. The username is always `admin`.
 
 |`dashboard_pg_host`
-|The hostname or IP address of the database host.
+|The hostname or IP address of the PostgreSQL database. This host must be accessible from the installer node on port 5432. If a public IP address blocks this port, you must use the internal IP address.
 
 |`dashboard_pg_username`
 |The database user for {AutomationDashboardName}.
@@ -90,7 +90,7 @@ The following variables control how {AutomationDashboardName} interacts with rem
 |The database schema name for {AutomationDashboardName}.
 
 |`bundle_install`
-|Indicates the required container images are already included in the installation bundle (tar file). It must be `true`.
+|Indicates the required container images are already included in the installation bundle (tar file).
 
 |`bundle_dir`
 |The directory where the installation bundle unpacks `+ /bundle` (for example: `/home/<username>/ansible-automation-dashboard-containerized-setup/bundle`). The default value is relative to the current directory (PWD) and should work without modification.
