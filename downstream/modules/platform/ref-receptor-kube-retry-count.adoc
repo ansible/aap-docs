@@ -10,8 +10,7 @@ This variable controls how the worker handles Kubernetes API connection failures
 
 [IMPORTANT]
 ====
-The retry mechanism uses an exponential backoff strategy. 
-Setting this value too high can result in excessive wait times during job execution errors.
+The retry mechanism uses an exponential backoff strategy which is capped at 5 minutes to prevent excessive wait times during job execution errors.
 ====
 
 *RECEPTOR_KUBE_RETRY_COUNT details*
