@@ -1,0 +1,13 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-ami-build_{context}"]
+
+= Understanding the AMI build process
+
+[role="_abstract"]
+
+The `ansible.portal_installer` collection creates AMI-compatible images in two stages:
+
+. *Local Build:* The role builds a raw disk image locally using `bootc-image-builder`. This step does *not* require AWS credentials.
+. *Conversion and Upload:* You must manually convert the raw image and upload it to AWS using the AWS CLI.
+The resulting image uses the same `bootc` container source as other image formats but is formatted specifically for AWS EC2 compatibility.

@@ -5,3 +5,70 @@
 = Building the QCOW2 disk image
 
 [role="_abstract"]
+
+Use the `ansible.portal_installer` collection to build a QCOW2 image compatible with KVM and libvirt.
+
+.Prerequisites
+* You have created the `.portal.env` and `auth.json` files.
+* You have an SSH public key available.
+
+.Procedure
+. Install the portal installer collection.
++
+[source]
+----
+ansible-galaxy collection install ansible.portal_installer
+----
++
+. Install the required Python dependencies.
++
+[source]
+----
+pip install -r ~/.ansible/collections/ansible_collections/ansible/portal_installer/requirements.txt
+----
++
+. Create a playbook file named `build_qcow2.yml`.
+. Add the following content to the playbook.
++
+[source]
+----
+- name: Create QCOW2 disk image
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Load registry authentication
+      ansible.builtin.slurp:
+        src: "./auth.json"
+      register: _auth_file
+
+    - name: Build QCOW2 image
+      ansible.builtin.include_role:
+        name: ansible.portal_installer.create_image
+        tasks_from: qcow2
+      vars:
+        create_image_bootc_image: "registry.redhat.io/aap/portal-bootc:latest"
+        create_image_output_dir: "/tmp/portal-output"
+        create_image_registry_auth: "{{ _auth_file.content | b64decode | from_json }}"
+        create_image_users:
+          - name: admin
+            groups: ['wheel']
+            ssh_keys:
+              - "{{ lookup('ansible.builtin.file', '~/.ssh/portal_key.pub') }}"
+        create_image_portal_config_file: ".portal.env"
+----
++
+. Run the playbook. You must use `sudo` because the builder container requires privileged mode.
++
+[source]
+----
+sudo -E ansible-playbook build_qcow2.yml
+----
+
+.Verification
+. Verify that the QCOW2 image exists in the output directory.
++
+[source]
+----
+
+ls -l /tmp/portal-output/qcow2/disk.qcow2
+----

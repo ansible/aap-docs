@@ -1,0 +1,232 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-deploy-ami_{context}"]
+
+= Configuring {PlatformNameShort} and deploying the AMI
+
+[role="_abstract"]
+
+Use this procedure to configure the {PlatformNameShort} (AAP) authentication, prepare the AWS environment, and deploy the Amazon Machine Image (AMI).
+
+.Prerequisites
+* You have a valid subscription to {PlatformName}.
+* You have the URL for your {PlatformNameShort} instance.
+* You have configured an OAuth application in {PlatformNameShort} and retrieved the Client ID and Client Secret.
+* You have generated an admin token for {PlatformNameShort} authentication
+* AWS CLI installed and configured with appropriate permissions.
+* The `ami.yml` playbook is available in your working directory.
+
+.Procedure
+* *Configure the {PlatformNameShort} Organization and Application:*
+** Log in to your instance of {PlatformNameShort} as a user with {PlatformNameShort} administrator privileges.
+** Navigate to *Access Management > Organizations* and click *Add*.
+** Enter a unique *Name* (for example, `portal-<yourname>-org`) and click *Save*.
+** Navigate to *Access Management > OAuth Applications* and click *Create OAuth application*.
+** Complete the form with the following details:
+*** *Name*: `portal-<yourname>-oauth-app`
+*** *Organization*: Select the organization created in the previous step.
+*** *Authorization Grant Type*: Select *Authorization code*.
+*** *Client Type*: Select *Confidential*.
+*** *Redirect URI*: Enter `https://example.com/api/auth/rhaap/handler/frame`
+** Click *Create OAuth application*.
+** *Important*: Copy the *Client ID* and *Client Secret* displayed in the modal immediately. You cannot view the Client Secret again after closing the modal.
+* *Generate the Admin Token:*
+** Navigate to *Access Management > Users* and click the *admin* user.
+** Click the *Tokens* tab and click *Create token*.
+** Select the *OAuth application* created in the previous step.
+** Set *Scope* to *Read* and click *Save*.
+** Copy the generated token immediately.
+* *Update Configuration and Build the Image:*
+** Update the `.portal.env` file with the connection details and credentials generated in the previous steps:
++
+[source]
+----
+# Ansible Automation Platform Integration
+AAP_HOST_URL=https://34.226.249.151
+AAP_TOKEN=<your_generated_read_token>
+OAUTH_CLIENT_ID=<your_client_id>
+OAUTH_CLIENT_SECRET=<your_client_secret>
+----
++
+* Run the playbook to build the raw disk image:
++
+[source]
+----
+sudo ansible-playbook ami.yml
+----
+* *Prepare AWS Resources:*
+** Create a unique S3 bucket for the raw disk images:
++
+[source]
+----
+aws s3 mb s3://<username>-bucket
+----
++
+** Create a file named `trust-policy.json` to configure the `vmimport` role trust policy:
++
+[source]
+----
+{
+   "Version": "2012-10-17",
+   "Statement": [
+      {
+         "Effect": "Allow",
+         "Principal": { "Service": "vmie.amazonaws.com" },
+         "Action": "sts:AssumeRole",
+         "Condition": { "StringEquals": { "sts:Externalid": "vmimport" } }
+      }
+   ]
+}
+----
++
+** Create the IAM role:
++
+[source]
+----
+
+aws iam create-role --role-name vmimport --assume-role-policy-document file://trust-policy.json
+----
++
+** Create a file named `role-policy.json`. Replace `<username>-bucket` with your bucket name:
++
+[source]
+----
+{
+   "Version":"2012-10-17",
+   "Statement":[
+      {
+         "Effect":"Allow",
+         "Action":["s3:GetBucketLocation","s3:GetObject","s3:ListBucket"],
+         "Resource":["arn:aws:s3:::<username>-bucket","arn:aws:s3:::<username>-bucket/*"]
+      },
+      {
+         "Effect":"Allow",
+         "Action":["ec2:ModifySnapshotAttribute","ec2:CopySnapshot","ec2:RegisterImage","ec2:Describe*"],
+         "Resource":"*"
+      }
+   ]
+}
+----
++
+** Attach the policy to the role:
++
+[source]
+----
+aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document file://role-policy.json
+----
++
+* *Import and Register the AMI:*
+** Export the required environment variables. Update the values to match your specific file paths and buckets:
++
+[source]
+----
+export AWS_REGION="<your-aws-region>"
+export S3_BUCKET="<username>-bucket"
+export LOCAL_FILE="ami/image/disk.raw"
+export S3_KEY="portal-collection-$(date +%Y%m%d-%H%M%S).raw"
+export IMAGE_NAME="<username>-portal-ami"
+export AWS_ACCESS_KEY_ID="access-key"
+export AWS_SECRET_ACCESS_KEY="secret-access-key"
+----
++
+** Upload the image to S3:
++
+[source]
+----
+aws s3 cp "$LOCAL_FILE" "s3://$S3_BUCKET/$S3_KEY" --region $AWS_REGION
+----
++
+** Start the snapshot import task:
++
+[source]
+----
+IMPORT_TASK_ID=$(aws ec2 import-snapshot --description "$IMAGE_NAME Snapshot" \
+--disk-container "Format=raw,UserBucket={S3Bucket=$S3_BUCKET,S3Key=$S3_KEY}" \
+--region $AWS_REGION --query 'ImportTaskId' --output text) && echo "Started Task: $IMPORT_TASK_ID"
+----
++
+** Monitor the task status until it reports *completed*:
++
+[source]
+----
+watch -n 5 "aws ec2 describe-import-snapshot-tasks \
+    --import-task-ids $IMPORT_TASK_ID \
+    --region $AWS_REGION \
+    --query 'ImportSnapshotTasks[0].SnapshotTaskDetail.{Status:Status,Progress:Progress,SnapshotId:SnapshotId}' \
+    --output table"
+----
++
+** Register the AMI using the new Snapshot ID:
++
+[source]
+----
+SNAPSHOT_ID=$(aws ec2 describe-import-snapshot-tasks --import-task-ids $IMPORT_TASK_ID --region $AWS_REGION --query 'ImportSnapshotTasks[0].SnapshotTaskDetail.SnapshotId' --output text) && aws ec2 register-image --name "${IMAGE_NAME}-$(date +%Y%m%d)" --root-device-name /dev/sda1 --block-device-mappings "DeviceName=/dev/sda1,Ebs={SnapshotId=$SNAPSHOT_ID}" --architecture x86_64 --virtualization-type hvm --ena-support --region $AWS_REGION
+----
++
+** Record the *AMI Image ID* (for example, `ami-0dfb332d759a8bbd2`) from the output.
+* *Launch the Instance:*
+** Verify a default VPC exists. If the output is `None`, create a default VPC:
++
+[source]
+----
+aws ec2 describe-vpcs --query 'Vpcs[0].VpcId' --output text
+# If output is None:
+aws ec2 create-default-vpc
+----
++
+** Capture the VPC ID and create a security group:
++
+[source]
+----
+VPC_ID=$(aws ec2 describe-vpcs --query 'Vpcs[0].VpcId' --output text) && echo "Using VPC: $VPC_ID"
+
+SG_ID=$(aws ec2 create-security-group --group-name portal-sg-$(date +%s) \
+  --description "Security group for Portal Test" \
+  --vpc-id $VPC_ID \
+  --output text) && echo "Created Security Group: $SG_ID"
+----
++
+** Configure ingress rules for SSH and HTTPS:
++
+[source]
+----
+aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port 443 --cidr 0.0.0.0/0
+----
++
+** Launch the instance:
+…  *Instance Type*: `t3.xlarge` (Required for local QEMU tests using 16GB RAM).
+… *Key Pair*: Not required; the SSH key is embedded in the image.
++
+[source]
+----
+# Ensure AMI_ID is set if not continuing directly from previous steps
+# AMI_ID=$(aws ec2 describe-images --filters "Name=name,Values=${IMAGE_NAME}-*" --query 'Images[0].ImageId' --output text)
+
+INSTANCE_ID=$(aws ec2 run-instances \
+  --image-id $AMI_ID \
+  --count 1 \
+  --instance-type t3.xlarge \
+  --security-group-ids $SG_ID \
+  --query 'Instances[0].InstanceId' \
+  --output text) && echo "Launching Instance: $INSTANCE_ID"
+----
++
+** Retrieve the public IP address:
++
+[source]
+----
+aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+PUBLIC_IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID \
+  --query 'Reservations[0].Instances[0].PublicIpAddress' \
+  --output text) && echo "Instance IP: $PUBLIC_IP"
+----
++
+** Connect through SSH and verify the services are active:
++
+[source]
+----
+ssh <user>@$PUBLIC_IP
+sudo systemctl status postgresql
+sudo systemctl status portal
+----

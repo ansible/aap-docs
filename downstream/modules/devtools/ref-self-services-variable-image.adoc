@@ -5,3 +5,76 @@
 = Role variables for image creation
 
 [role="_abstract"]
+
+The `ansible.portal_installer.create_image` role supports the following variables for customizing the disk image build.
+
+.Role variables for image creation table
+[cols="a,a,a,a"]
+|===
+| Variable Name | Required | Default | Description
+
+| `create_image_bootc_image`
+| Yes
+| -
+| Container image name/tag of the bootc image
+
+| `create_image_output_dir`
+| Yes
+| -
+| Directory where disk images will be created
+
+| `create_image_disk_size_gb`
+| No
+| 20
+| Disk size in gigabytes (10-1000 GB)
+
+| `create_image_users`
+| No
+| []
+| List of users to create (each with `name, groups, ssh_keys`)
+
+| `create_image_ssh_keys`
+| No
+| []
+| Global list of SSH keys for the first user
+
+| `create_image_hostname`
+| No
+| -
+| Hostname to set in the disk image
+
+| `create_image_portal_config_file`
+| No
+| -
+| Path to portal config file (.portal.env)
+
+| `create_image_ssl_cert_file`
+| No
+| -
+| Path to SSL certificate (PEM). If not provided, self-signed cert is auto-generated
+
+| `create_image_ssl_key_file`
+| No
+| -
+| Path to SSL private key (PEM). Must be provided with `ssl_cert_file`
+
+| `create_image_registry_auth`
+| No
+| -
+| Podman registry authentication (auth.json content as dict)
+
+| `create_image_bound_images`
+| No
+| []
+| List of bound images to pre-pull. If not specified, auto-detected from bootc image
+
+| `create_image_pull_always`
+| No
+| false
+| If true, always pull images to check for updates (even if they exist locally)
+
+| `create_image_force_build`
+| No
+| false
+| If true, deletes existing output directory and rebuilds from scratch
+|===
