@@ -1,0 +1,16 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-bootc-image_{context}"]
+
+= Understanding RHEL bootc image mode for {SelfService}
+
+[role="_abstract"]
+
+The `ansible.portal_installer` collection provides a role to build bootable disk images from Ansible {SelfService} `bootc` container images.
+
+You can use the `bootc-image-builder` tool to generate images in the following formats:
+
+* *QCOW2:* For use with KVM/libvirt and local virtualization.
+* *ISO:* For bare-metal installations and bootable media.
+* *Raw (AMI):* For creating AWS AMI images.
+The build process configures users with SSH key authentication only. It embeds portal-related credentials and configuration directly into the image.

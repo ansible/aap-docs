@@ -1,0 +1,31 @@
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context: {context}]
+
+:context: self-service-build-ami
+
+[id="assembly-self-service-build-ami_{context}"]
+
+= Building AWS AMI images for {SelfService}
+
+[role="_abstract"]
+
+Build raw disk images locally and convert them into Amazon Machine Images (AMI) for use on AWS.
+
+== Prerequisites
+* Ansible Core 2.15 or later
+* {Python} 3.9 or later
+* Podman 5.4.1 or later
+* `bootc-image-builder` container image
+* AWS CLI installed and configured (for the upload step only)
+
+
+include::devtools/con-self-service-ami-build.adoc[leveloffset=+1]
+
+include::devtools/proc-self-service-deploy-ami.adoc[leveloffset=+1]
+
+include::devtools/ref-self-service-variable-ami.adoc[leveloffset=+1]
+
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
