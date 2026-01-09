@@ -1,0 +1,56 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-launch-qcow2_{context}"]
+
+= Launching the QCOW2 disk image
+
+[role="_abstract"]
+
+After verifying the QCOW2 image exists, you must launch it to verify the deployment. You can launch the image using QEMU directly (recommended for quick testing) or `libvirt` (recommended for persistent setups).
+
+.Prerequisites
+* QEMU/KVM installed (`qemu-system-x86_64`).
+* The generated `disk.qcow2` image from the previous build step.
+* OVMF firmware for UEFI boot (typically located at `/usr/share/OVMF/OVMF_CODE.fd` or similar, depending on your distribution).
+
+.Procedure
+* Boot the image. The following command forwards local port 2222 to the VM's SSH port and local port 7007 to the portal HTTPS port. Ensure that whatever local port you set allows forwarding to that port.
++
+[source]
+----
+sudo qemu-system-x86_64 \
+  -enable-kvm -cpu max -smp 8 -m 16G \
+  -bios /usr/share/OVMF/OVMF_CODE.fd \
+  -drive file=./qcow/qcow2/disk.qcow2,format=qcow2,if=virtio \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22,hostfwd=tcp::7007-:7007 \
+  -device virtio-net-pci,netdev=net0 \
+  -nographic
+----
++
+[NOTE]
+====
+Adjust the file paths for `OVMF_CODE.fd` and `disk.qcow2` to match your system's configuration. To exit the QEMU console, press `Ctrl+A` then `X`.
+====
+
+.Verification
+. *Verify SSH Access:* Log in to the VM using the port forwarded in the QEMU command.
++
+[source]
+----
+ssh -i ~/.ssh/portal_key -p 2222 admin@localhost
+----
++
+. *Verify Services:* After you have logged in, ensure the database and portal services are active.
++
+[source]
+----
+systemctl status postgresql
+systemctl status portal
+----
++
+. *Verify Portal Access:* Access the portal in your web browser at `https://localhost:7007`.
++
+[NOTE]
+====
+The portal uses self-signed SSL certificates by default. You must accept the security warning in your browser or tool to proceed.
+====
