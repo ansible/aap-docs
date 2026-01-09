@@ -1,0 +1,47 @@
+// Module included in the following assemblies:
+// assembly-view-key-metrics.adoc
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-troubleshooting-sync-failures"]
+
+= Troubleshooting synchronization failures
+
+[role="_abstract"]
+If new jobs from {PlatformNameShort} do not synchronize to the {AutomationDashboardName} after an upgrade, an interrupted synchronization job might be blocking the process.
+This occurs if the {AutomationDashboardName} service stops or restarts while a synchronization task is active.
+
+To resolve this issue, you must manually remove the stuck jobs from the database.
+
+.Prerequisites
+
+* You have ssh access to the host machine.
+* You have access to the PostgreSQL database, including the database user password defined in your inventory file (variable `dashboard_pg_password`).
+
+.Procedure
+
+. Connect to the {AutomationDashboardName} database. You must replace `<password>` with your configured `dashboard_pg_password`. Replace 127.0.0.1 with database server address if external database is used.
++
+[source,bash]
+----
+POSTGRES_PASSWORD=<password> psql -h 127.0.0.1 -p 5432 -U paapdashboard -d aapdashboard
+----
+
+. Identify jobs that are in a pending or running state:
++
+[source,sql]
+----
+SELECT * FROM scheduler_syncjob WHERE status IN ('pending','waiting','running');
+----
+
+. Wait approximately one minute and run the command again. If the same job IDs appear in the output, these jobs are stuck.
+
+. Delete the stuck jobs using their ID. Replace `<id>` with the ID returned in the previous step (for example, `20, 21`):
++
+[source,sql]
+----
+DELETE from scheduler_syncjob WHERE id IN (<id>);
+----
+
+.Verification
+
+* Refresh the {AutomationDashboardName} to confirm that synchronization has resumed.
