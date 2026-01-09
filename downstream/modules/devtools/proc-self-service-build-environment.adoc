@@ -1,0 +1,89 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-build-environment_{context}"]
+
+= Configuring the build environment
+
+[role="_abstract"]
+
+Before you build the disk image, you must generate SSH keys and create the necessary configuration files for the portal and registry authentication.
+
+.Prerequisites
+* You have a valid subscription to {PlatformName}.
+* You have configured an OAuth application in {PlatformNameShort} and retrieved the Client ID and Client Secret.
+* You have the URL for your {PlatformNameShort}  instance.
+* You have generated an admin token for {PlatformNameShort}  authentication
+
+.Procedure
+. Log into  `link:https://catalog.redhat.com/en[registry.redhat.io]` so that you can pull images for the building process: 
++
+[source]
+----
+sudo podman login --authfile /path/to/auth.json registry.redhat.io
+----
++
+[NOTE]
+====
+Alternatively you can create a file for registry authentication and generate a base64-encoded authentication string.
+====
++
+. Generate an SSH key pair. This key is required to authenticate with the virtual machine (VM) after deployment.
++
+[source]
+----
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" -f ~/.ssh/portal_key
+----
++
+. Create a file named `.portal.env` to store the portal configuration.
++
+[source]
+----
+touch .portal.env
+----
++
+. Add your environment configuration to `.portal.env`.
++
+[NOTE]
+====
+Do not use environment variables outside of this file. The build process requires all configuration to exist within `.portal.env`.
+====
++
+[source]
+----
+# Core Configuration
+PORTAL_ENVIRONMENT=production
+# Backend Secret (generate using: openssl rand -base64 32)
+BACKEND_SECRET=<your_generated_secret>
+
+# Database Configuration
+USE_EXTERNAL_POSTGRES=false
+POSTGRESQL_HOST=portal-postgres
+POSTGRESQL_PORT=5432
+POSTGRESQL_USER=portal_user
+POSTGRESQL_PASSWORD=<secure_password>
+POSTGRESQL_DATABASE=portal_db
+
+# Ansible Automation Platform Integration
+AAP_HOST_URL=https://aap-controller.example.com
+AAP_TOKEN=<your_aap_token>
+OAUTH_CLIENT_ID=<your_client_id>
+OAUTH_CLIENT_SECRET=<your_client_secret>
+----
++
+. Add your credentials to `auth.json`. You must include `registry.redhat.io` even if your base image is hosted elsewhere.
++ 
+[source]
+----
+{
+  "auths": {
+    "registry.redhat.io": {
+      "auth": "<base64_encoded_string>"
+    },
+  }
+}
+----
++
+[IMPORTANT]
+====
+Failure to include valid credentials for `registry.redhat.io` will cause the build to fail when resolving bound images .
+====
