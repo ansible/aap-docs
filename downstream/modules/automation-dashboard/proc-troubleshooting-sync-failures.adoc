@@ -14,16 +14,16 @@ To resolve this issue, you must manually remove the stuck jobs from the database
 
 .Prerequisites
 
-* You have root or sudo access to the host machine.
-* You have the PostgreSQL admin password defined in your inventory file (variable `postgresql_admin_password`).
+* You have ssh access to the host machine.
+* You have access to the PostgreSQL database, including the database user password defined in your inventory file (variable `dashboard_pg_password`).
 
 .Procedure
 
-. Connect to the {AutomationDashboardName} database. You must replace `<password>` with your configured `postgresql_admin_password`.
+. Connect to the {AutomationDashboardName} database. You must replace `<password>` with your configured `dashboard_pg_password`. Replace 127.0.0.1 with database server address if external database is used.
 +
 [source,bash]
 ----
-POSTGRES_PASSWORD=<password> psql -h 127.0.0.1 -p 5432 -U postgres -d aapdashboard
+POSTGRES_PASSWORD=<password> psql -h 127.0.0.1 -p 5432 -U paapdashboard -d aapdashboard
 ----
 
 . Identify jobs that are in a pending or running state:
