@@ -12,7 +12,7 @@ Install {AutomationDashboardName} to collect and analyze key metrics related to 
 .Prerequisites
 
 * One of the following tested configurations:
-** RHEL 9 x86 or ARM based physical or virtual host. 
+** RHEL 9 or RHEL 10 on x86 or ARM-based physical or virtual hosts. 
 ** With an external database: PostgreSQL v15 database.  
 [IMPORTANT]
 Do not install {AutomationDashboardName} on the same host(s) as {PlatformNameShort}.
@@ -22,8 +22,8 @@ Do not install {AutomationDashboardName} on the same host(s) as {PlatformNameSho
 ** Disk IOPS - 3000
 ** Handle up to 10,000 jobs/month and 47M summaries/month
 ** Connects to three {PlatformNameShort} deployments of the same version
-* Access to _baseos_ and _{PlatformNameShort}stream_ repository packages for the RHEL 9 host.
-* A non-root login account to the RHEL 9 host for installation.
+* Access to _baseos_ and _{PlatformNameShort}stream_ repository packages for the RHEL 9 or RHEL 10 host.
+* A non-root login account to the RHEL 9 or RHEL 10 host for installation.
 ** The login account requires `sudo` access to root.
 ** By default, we use the `$HOMEDIR` of the user account.
 * URL details for access to your {PlatformNameShort} instances.
@@ -38,7 +38,7 @@ Do not install {AutomationDashboardName} on the same host(s) as {PlatformNameSho
 .Procedure
 
 . Download the latest installer tar file from access.redhat.com. Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
-. Copy the installation source file to your RHEL 9 host.
+. Copy the installation source file to your RHEL 9 or RHEL 10 host.
 . Extract the installation source. This will require ~500Mb. of disk space. Throughout this example we will use the ec2-user home directory: `/home/<username>`.
 +
 [source,bash]
@@ -97,7 +97,7 @@ vi inventory
 ====
 * This is an example tested inventory containing default values for {PlatformNameShort} 2.4, 2.5, and 2.6. 
 * You must change the following values to use this inventory configuration in your environment:
-** Change the RHEL 9 host occurrences from `host.example.com` to your FQDN host
+** Change the RHEL 9 or RHEL 10 host occurrences from `host.example.com` to your FQDN host
 ** Change the phrase `TODO` to match your passwords within all `_admin_password` or  `_pg_password` values.
 ** Change the `dashboard_pg_host` value to the IP address or DNS name of the database server.
 * For more information, see the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_dashboard/assembly-appendix-inventory-file-automation-dashboard#ref-automation-dashboard-inventory-variables[Inventory variables] section of this document.
@@ -159,25 +159,44 @@ initial_sync_days=1
 
 [database]
 host.example.com ansible_connection=local
+[redis]
+host.example.com ansible_connection=local
+
+[all:vars]
+redis_mode=standalone
 
 [all:vars]
 postgresql_admin_username=postgres
 postgresql_admin_password=TODO
 
+# registry_username=
+# registry_password=
 # AAP Dashboard - mandatory
 # --------------------------
 dashboard_pg_containerized=True
 dashboard_admin_password=TODO
-# Ensure this host resolves to an IP address accessible by the installer. 
-# If the public IP blocks port 5432, you must use the internal IP address.
+# The value of dashboard_pg_host needs to resolve to an IP address of the database.
+# It cannot be localhost or 127.0.0.1.
+# It can be IP address of the server.
+
 dashboard_pg_host=host.example.com
 dashboard_pg_username=aapdashboard
 dashboard_pg_password=TODO
 dashboard_pg_database=aapdashboard
-#
+
 bundle_install=true
+#
+# Relevant if bundle_install=false
+# Set container_image_update to True to fetch most recent container images from registry.
+# container_image_update=True
+#
+# Relevant if bundle_install=true
 # <full path to the bundle directory>
 bundle_dir='{{ lookup("ansible.builtin.env", "PWD") }}/bundle'
+# AAP Dashboard - optional
+# --------------------------
+# Set to True to expose Django admin page.
+# nginx_dashboard_admin_exposed=False
 ----
 
 . Run the installation program.
