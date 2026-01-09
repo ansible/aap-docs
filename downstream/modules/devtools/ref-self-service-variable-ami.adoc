@@ -1,0 +1,89 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="self-service-variable-ami_{context}"]
+
+= Role variables for AMI creation
+
+[role="_abstract"]
+
+The `ansible.portal_installer.create_image` role uses specific variables when building AMI-compatible images.
+
+.Role variables for AMI creation table
+[cols="a,a,a,a"]
+|===
+| Variable Name | Required | Default | Description
+
+| `create_image_bootc_image`
+| Yes
+| -
+| Container image name/tag of the bootc image
+
+| `create_image_output_dir`
+| Yes
+| -
+| Directory where disk images will be created
+
+| `create_image_disk_size_gb`
+| No
+| 20
+| Disk size in gigabytes (10-1000 GB)
+
+| `create_image_users`
+| No
+| []
+| List of users to create (each with `name, groups, ssh_keys`)
+
+| `create_image_ssh_keys`
+| No
+| []
+| Global list of SSH keys for the first user
+|===
+
+[NOTE]
+====
+* Password authentication is disabled by default. Users must authenticate with SSH keys only.
+* AMI builds: The `ami` task file builds raw disk images locally and does not require AWS credentials. AWS credentials are only needed if you choose to upload the raw image to AWS separately.
+====
+
+== Performing In-Place Updates 
+You can update the portal without rebuilding the disk image by pushing a new container image and applying the update inside the VM.
+
+.Procedure
+. Update your bootc container image in your registry:
++
+[source]
+----
+# Build and push updated image to your registry
+podman build -t quay.io/your-org/portal-bootc-portal:latest .
+podman push quay.io/your-org/portal-bootc-portal:latest
+----
++
+. SSH into the running VM and check the current status:
++
+[source]
+----
+bootc status
+----
++
+. Check if an update is available:
++
+[source]
+----
+bootc upgrade --check
+----
++
+. Apply the upgrade and reboot:
++
+[source]
+----
+sudo bootc upgrade --apply
+----
+
+.Verification
+
+* After  the VM comes back up, verify the upgrade:
++
+[source]
+----
+bootc status
+----
