@@ -6,6 +6,9 @@
 [role="_abstract"]
 Use this method when you want {PlatformNameShort} to generate all of the certificates, but you want them signed by a custom CA rather than the default self-signed certificates.
 
+When you use `ca_tls_cert` and `ca_tls_key`, the installation program automatically creates TLS certificates for each {PlatformNameShort} service using your provided CA certificate.
+You do not need to define individual service certificate variables (such as `gateway_tls_cert`, `controller_tls_cert`, or `hub_tls_cert`) because the installation program generates these certificates for you.
+
 .Procedure
 * To use a custom Certificate Authority (CA) to generate TLS certificates for all {PlatformNameShort} services, set the following variables in your inventory file:
 +
@@ -13,3 +16,8 @@ Use this method when you want {PlatformNameShort} to generate all of the certifi
 ca_tls_cert=<path_to_ca_tls_certificate>
 ca_tls_key=<path_to_ca_tls_key>
 ----
++
+Where:
++
+* `ca_tls_cert` is the path to your custom CA certificate file.
+* `ca_tls_key` is the path to the key file for your custom CA certificate.
