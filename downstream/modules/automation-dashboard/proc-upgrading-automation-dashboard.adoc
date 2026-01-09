@@ -1,0 +1,60 @@
+// Module included in the following assemblies:
+// assembly-view-key-metrics.adoc
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-upgrading-automation-dashboard"]
+
+= Upgrading {AutomationDashboardName}
+
+[role="_abstract"]
+Upgrade your {AutomationDashboardName} installation to the latest version. This process involves running the installation program and updating your cluster configuration with new authentication requirements.
+
+.Procedure
+
+. Download the latest installation bundle from access.redhat.com. Navigate to Downloads > Red Hat Ansible Automation Platform Product Software.
+. Extract the bundle to a new directory.
+. Copy the `inventory` file from your previous installation directory to the new directory.
+. Edit the `inventory` file to include the mandatory Redis configuration. You must add a `[redis]` group and define the `redis_mode` variable:
++
+[source,ini]
+----
+[redis]
+<fqdn_of_host> ansible_connection=local
+
+[all:vars]
+redis_mode=standalone
+...
+----
+. Run the installation playbook from the new directory:
++
+[source,bash]
+----
+ansible-galaxy collection install -r requirements.yml
+ansible-playbook -i inventory ansible.containerized_installer.dashboard_install
+----
+
+. Update your `clusters.yaml` file. You must add the `refresh_token`, `client_id`, and `client_secret` variables to your existing cluster configurations.
++
+[NOTE]
+====
+For instructions on obtaining these values, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_automation_dashboard/index#proc-integrating-automation-dashboard[Integrating {AutomationDashboardName} with your {PlatformNameShort}].
+====
+
+. Apply the updated configuration to the dashboard:
++
+[source,bash]
+----
+podman cp clusters.yaml automation-dashboard-web:/
+podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /clusters.yaml
+----
+
+.Verification
+
+. Retrieve the current cluster configuration:
++
+[source,bash]
+----
+podman exec -it automation-dashboard-web /venv/bin/python ./manage.py getclusters --decrypt
+----
+
+. Verify that the output displays the content from your `clusters.yaml` file, including the `access_token`, `refresh_token`, `client_id`, and `client_secret` fields.
