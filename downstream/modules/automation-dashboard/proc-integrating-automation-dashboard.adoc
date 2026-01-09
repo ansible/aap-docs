@@ -67,15 +67,16 @@ clusters:
     port: 443				<--- Normally 443
     access_token: sampleToken	<--- Your preconfigured Ansible Automation Platform read access token
   Platform read access token
-    refresh_token: myRefreshToken 
-    client_id: myClientID 
+    refresh_token: myRefreshToken
+    client_id: myClientID
     client_secret: myClientSecret
     verify_ssl: false		<--- Can be used when using self signed certs
     sync_schedules:
       - name: Every 5 minutes sync
         rrule: DTSTART;TZID=Europe/Ljubljana:20250630T070000 FREQ=MINUTELY;INTERVAL=5
         enabled: true
-
+ # If there is one Ansible Automation Platform instance, then remove the second entry below.
+  # Alternately. If there is more than one AAP instance to connect, copy additional entries.
   - protocol: https
     address: aap2.example.com
     port: 443
@@ -84,8 +85,7 @@ clusters:
     sync_schedules:
       - name: Every 5 minutes sync
         rrule: DTSTART;TZID=Europe/Ljubljana:20250630T070000 FREQ=MINUTELY;INTERVAL=5
-        enabled: true 
-
+       enabled: true
 ----
 +
 [NOTE]
