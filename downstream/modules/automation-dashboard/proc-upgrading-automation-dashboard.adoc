@@ -16,21 +16,33 @@ Upgrade your {AutomationDashboardName} installation to the latest version. This 
 . Copy the `inventory` file from your previous installation directory to the new directory.
 . Edit the `inventory` file to include the mandatory Redis configuration. You must add a `[redis]` group and define the `redis_mode` variable:
 +
+[NOTE]
+====
+The inventory file lines prefixed with + must be added when upgrading from version 0.1 to 0.2.
+====
++
 [source,ini]
 ----
-[redis]
-<fqdn_of_host> ansible_connection=local
-
-[all:vars]
-redis_mode=standalone
-...
+ [database]
+host.example.com ansible_connection=local
+ 
++[redis]
++host.example.com ansible_connection=local
++
+ [all:vars]
++redis_mode=standalone
++
+ postgresql_admin_username=postgres
+ postgresql_admin_password=TODO
+ # registry_username=
 ----
+
 . Run the installation playbook from the new directory:
 +
 [source,bash]
 ----
 ansible-galaxy collection install -r requirements.yml
-ansible-playbook -i inventory ansible.containerized_installer.dashboard_install
+ansible-playbook -i inventory ansible.containerized_installer.dashboard_install --ask-become-pass
 ----
 
 . Update your `clusters.yaml` file. You must add the `refresh_token`, `client_id`, and `client_secret` variables to your existing cluster configurations.
