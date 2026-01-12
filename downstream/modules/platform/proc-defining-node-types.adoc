@@ -84,6 +84,14 @@ node_type=hop
 
 
 .Peer connections
+
+[IMPORTANT]
+====
+For a container-based installation of {PlatformNameShort}, use the `receptor_peers=` variable instead of `peers=`.
+
+The value of `receptor_peers` must be a comma-separated list of hostnames. Do not use inventory group names. For more information, see link:{URLContainerizedInstall}/advanced-configuration-containerized#adding-execution-nodes[Adding execution nodes].
+====
+
 Create node-to-node connections using the `peers=` host variable.
 The following example connects `control-plane-1.example.com` to `execution-node-1.example.com` and `execution-node-1.example.com` to `execution-node-2.example.com`:
 
