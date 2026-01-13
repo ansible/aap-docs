@@ -44,6 +44,7 @@ The following examples are code recommendations that the {AnsibleCodeBot} can su
 * Adding comment blocks
 * Fixing casing issues in name fields
 
+
 include::modules/proc_install-code-bot.adoc[leveloffset=+1]
 include::modules/proc_uninstall-code-bot.adoc[leveloffset=+1]
 include::modules/con-manage-repo-scans.adoc[leveloffset=+1]
@@ -52,15 +53,7 @@ include::modules/proc_manually-scan-repo-github.adoc[leveloffset=+3]
 include::modules/proc_configure-repo-scan.adoc[leveloffset=+2]
 include::modules/proc_view-repo-scan-history.adoc[leveloffset=+2]
 include::modules/proc_add-remove-repo-from-scans.adoc[leveloffset=+2]
-
-[[ansible-code-bot-duplicate-pr]]
-== How {AnsibleCodeBot} handles duplicate pull requests
-
-* If {AnsibleCodeBot} has created a pull request on the latest commit default branch, it does not scan the repository. The bot skips scanning the repository because the pull request was committed on the latest default branch, and no new commit was made after that pull request. 
-
-* If there is an existing pull request that is not on the latest commit default branch, the {AnsibleCodeBot} does a pull request difference to compare the changes in both branches. The following scenarios are possible:
-** *There is no difference in the existing and new scan results*: {AnsibleCodeBot} does not push the scan results as a new pull request. 
-** *There are differences found in the existing and the new scan results*: the {AnsibleCodeBot} creates a new pull request. The newly-created pull request does not close the existing pull request, against which the pull request difference was noted. This behavior makes it easier for the repository administrator to review only the latest pull request created by the {AnsibleCodeBot}, and the administrator can avoid reviewing the older pull requests created by the bot. If required, the administrator can close the older pull requests.
+include::modules/con_ansible-code-bot-duplicate-pr.adoc[leveloffset=+1]
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]

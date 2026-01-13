@@ -1,0 +1,14 @@
+:_content-type: CONCEPT
+
+[id="ansible-code-bot-duplicate-pr_{context}"]
+
+= How {AnsibleCodeBot} handles duplicate pull requests
+
+[role="_abstract"]
+This section outlines the conditional logic used by the Ansible code bot to manage repository scanning and pull request generation.
+
+* If {AnsibleCodeBot} has created a pull request on the latest commit default branch, it does not scan the repository. The bot skips scanning the repository because the pull request was committed on the latest default branch, and no new commit was made after that pull request. 
+
+* If there is an existing pull request that is not on the latest commit default branch, the {AnsibleCodeBot} does a pull request difference to compare the changes in both branches. The following scenarios are possible:
+** *There is no difference in the existing and new scan results*: {AnsibleCodeBot} does not push the scan results as a new pull request. 
+** *There are differences found in the existing and the new scan results*: the {AnsibleCodeBot} creates a new pull request. The newly-created pull request does not close the existing pull request, against which the pull request difference was noted. This behavior makes it easier for the repository administrator to review only the latest pull request created by the {AnsibleCodeBot}, and the administrator can avoid reviewing the older pull requests created by the bot. If required, the administrator can close the older pull requests.
