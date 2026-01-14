@@ -8,12 +8,20 @@
 [role="_abstract"]
 To comply with security policies, you might occasionally need to revoke and regenerate a token.
 
+[IMPORTANT]
+
+====
+Using the command below will revoke all of your offline tokens. 
+====
+
 .Procedure
 
 . Run the following command to revoke the token:
 +
 ----
-curl -X POST https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/revoke -d grant_type=refresh_token -d client_id="cloud-services" -d refresh_token="${REFRESH_TOKEN}" -d token="${REFRESH_TOKEN}"
+curl -X POST https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/revoke \
+  -d client_id="cloud-services" \
+  -d token="${REFRESH_TOKEN}"
 ----
 +
 . To regenerate a token, follow the appropriate procedure in link:{URLHubManagingContent}/managing-cert-valid-content#token-management-hub_cloud-sync[Token management].
