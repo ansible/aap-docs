@@ -16,7 +16,7 @@ Install {AutomationDashboardName} to collect and analyze key metrics related to 
 ** With an external database: PostgreSQL v15 database.  
 [IMPORTANT]
 Do not install {AutomationDashboardName} on the same host(s) as {PlatformNameShort}.
-* Automation Dashboard installation has been tested with the following configuration: 
+* {AutomationDashboardNameStart} installation has been tested with the following configuration: 
 ** 80 GB hard drive (depending on data growth) 
 ** 4 vCPUs x 16 GB RAM
 ** Disk IOPS - 3000
@@ -103,9 +103,9 @@ vi inventory
 * For more information, see the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_dashboard/assembly-appendix-inventory-file-automation-dashboard#ref-automation-dashboard-inventory-variables[Inventory variables] section of this document.
 ====
 +
-[source,bash]
+[source,bash,subs="+attributes"]
 ----
-# This is our Automation Dashboard front-end application
+# This is our {AutomationDashboardName} front-end application
 [automationdashboard]
 host.example.com ansible_connection=local
 
@@ -217,4 +217,4 @@ ec2-54-147-26-173.compute-1.amazonaws.com : ok=126  changed=51   unreachable=0  
 localhost                  : ok=12   changed=0    unreachable=0    failed=0    skipped=9    rescued=0    ignored=0
 ----
 
-Alternative configurations are possible (for example, the database for Automation Dashboard can be set on a different host). This requires additional changes to variables in the inventory file. Consult the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_dashboard/assembly-appendix-inventory-file-automation-dashboard#ref-automation-dashboard-inventory-variables[Inventory variables] section of this document for available variables.
+Alternative configurations are possible (for example, the database for {AutomationDashboardName} can be set on a different host). This requires additional changes to variables in the inventory file. Consult the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/using_automation_dashboard/assembly-appendix-inventory-file-automation-dashboard#ref-automation-dashboard-inventory-variables[Inventory variables] section of this document for available variables.
