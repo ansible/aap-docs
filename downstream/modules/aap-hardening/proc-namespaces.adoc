@@ -12,7 +12,9 @@
 A compliance profile might require that the kernel setting `user.max_user_namespaces` is set to "0", to prevent the launch of Linux containers. 
 The DISA STIG, for example, specifically requires this control but only if Linux containers are not required. Because {PlatformNameShort} can be installed and operated in containers and also uses containers as part of its {ExecEnvShort} capability, Linux containers are required and this control must be disabled. 
 
-To check the `user.max_user_namespaces` kernel setting, complete the following steps on each {PlatformNameShort} component in the installation inventory:
+To check the `user.max_user_namespaces` kernel setting, complete the following steps on each {PlatformNameShort} component in the installation inventory.
+
+.Procedure
 
 . Log in to your {ControllerName} at the command line.
 . Run the command `sudo sysctl user.max_user_namespaces`.

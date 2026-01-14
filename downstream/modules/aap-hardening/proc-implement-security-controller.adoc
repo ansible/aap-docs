@@ -4,6 +4,7 @@
 
 = Implementing security control for each host
 
+[role="_abstract"]
 {ControllerNameStart}'s log files must be accessible by explicitly defined privilege. 
 A failure of the confidentiality of {ControllerName} log files would enable an attacker to identify key information about the system that they might not otherwise be able to obtain that would enable them to enumerate more information to enable escalation or lateral movement. 
 
@@ -24,7 +25,7 @@ To implement the security control, use the following procedure:
 
 * `chmod 770 /var/log/supervisor/`
 * `chown root:root /var/log/supervisor/`
-
++
 {ControllerNameStart} must be configured to fail over to another system in the event of log subsystem failure.
 {ControllerNameStart} hosts must be capable of failing over to another {ControllerName} host which can handle application and logging functions upon detection of an application log processing failure. 
 This enables continual operation of the application and logging functions while minimizing the loss of operation for the users and loss of log data. 

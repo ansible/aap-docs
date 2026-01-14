@@ -1,0 +1,43 @@
+:imagesdir: images
+:numbered:
+:toclevels: 1
+
+:experimental:
+:aap-install:
+
+include::attributes/attributes.adoc[]
+:_mod-docs-content-type: CONCEPT
+
+// Book Title
+[id="aap-rpm-installation-guide"]
+= RPM installation
+
+Thank you for your interest in {PlatformName}. {PlatformNameShort} is a commercial offering that helps teams manage complex multi-tier deployments by adding control, knowledge, and delegation to Ansible-powered environments.
+
+This guide helps you to understand the installation requirements and processes behind installing {PlatformNameShort}. This document has been updated to include information for the latest release of {PlatformNameShort}.
+[NOTE]
+====
+The {PlatformNameShort} RPM installer was deprecated in 2.5 and will be removed in {PlatformNameShort} 2.7. The RPM installer will be supported for RHEL 9 during the lifecycle of {PlatformNameShort} 2.6 to support migrations to existing supported topologies. For more information on upgrade and migration paths, see the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html-single/planning_your_upgrade/index#upgrade-support-matrix[Support matrix for upgrade scenarios].
+====
+include::{Boilerplate}[]
+
+//12/2/22 [dcd: moved following assembly to new planning guide]
+//include::platform/assembly-planning-installation.adoc[leveloffset=+1]
+include::platform/assembly-platform-install-overview.adoc[leveloffset=+1]
+include::platform/assembly-gateway-licensing.adoc[leveloffset=+2] 
+include::platform/assembly-system-requirements.adoc[leveloffset=+1]
+include::platform/assembly-platform-install-scenario.adoc[leveloffset=+1]
+//[dcdacosta]Removing this assembly because modules are now included in assembly-platform-install-scenario] include::platform/assembly-deploy-high-availability-hub.adoc[leveloffset=+1]
+include::platform/assembly-horizontal-scaling.adoc[leveloffset=+1]
+include::platform/assembly-disconnected-installation.adoc[leveloffset=+1]
+//12/2/22 [dcd: moved following assemblies to new operations guide]
+//include::platform/assembly-configuring-proxy-support.adoc[leveloffset=+1]
+//include::platform/assembly-configuring-websockets.adoc[leveloffset=+1]
+//include::platform/assembly-controlling-data-collection.adoc[leveloffset=+1]
+//12/2/22 [dcd: removed the following assemblies]
+//include::platform/assembly-supported-inventory-plugins-template.adoc[leveloffset=+1]
+//include::platform/assembly-supported-attributes-custom-notifications.adoc[leveloffset=+1]
+include::platform/assembly-appendix-troubleshoot-rpm-aap.adoc[leveloffset=+1]
+
+[appendix]
+include::platform/assembly-appendix-inventory-file-vars.adoc[leveloffset=1]
