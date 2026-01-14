@@ -18,13 +18,13 @@ h| Hashed Message Authentication Code (HMAC) | Uses a shared secret between {EDA
 
 h| Basic Authentication | Uses HTTP basic authentication. | Datadog, Dynatrace
 
-h| Token Authentication | Uses Token Authentication. Usually the HTTP Header is *Authorization* but some vendors like Gitlab use *X-Gitlab-Token*. | Gitlab, ServiceNow
+h| Token Authentication | Validates incoming event data using a security token passed in the request header. While the standard HTTP header used is *Authorization*, it can be customized for specific platforms, such as using *X-Gitlab-Token* for GitLab integrations. | Gitlab, ServiceNow
 
 h| OAuth2 | Uses Machine-to-Machine (M2M) mode with a grant type called *client credentials*. The token is opaque. | Dynatrace
 
 h| OAuth2 with JWT | Uses M2M mode with a grant type called *client credentials*. The token is JSON Web Token (JWT). | Datadog
 
-h| Elliptic Curve Digital Signature Algorithm (ECDSA) | Verifies message authenticity using a public/private key pair. The sender signs the message with a private key, and the receiver (EDA Controller) validates it with a public key. | SendGrid, Twilio
+h| Elliptic Curve Digital Signature Algorithm (ECDSA) | Verifies message authenticity using a public/private key pair. The sender signs the message with a private key, and the receiver ({EDAcontroller}) validates it with a public key. | SendGrid, Twilio
 
 h| Mutual Transport Layer Security (mTLS)| Ensures two-way authentication between {EDAcontroller} and the client sending events through an event stream. It has two sub-types:
 
