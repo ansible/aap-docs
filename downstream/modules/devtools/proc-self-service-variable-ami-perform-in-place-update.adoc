@@ -1,0 +1,48 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-variable-ami-perform-in-place-update"]
+
+= Performing In-Place Updates 
+
+[role="_abstract"]
+You can update the portal without rebuilding the disk image by pushing a new container image and applying the update inside the VM.
+
+.Procedure
+. Update your bootc container image in your registry:
++
+[source]
+----
+# Build and push updated image to your registry
+podman build -t quay.io/your-org/portal-bootc-portal:latest .
+podman push quay.io/your-org/portal-bootc-portal:latest
+----
++
+. SSH into the running VM and check the current status:
++
+[source]
+----
+bootc status
+----
++
+. Check if an update is available:
++
+[source]
+----
+bootc upgrade --check
+----
++
+. Apply the upgrade and reboot:
++
+[source]
+----
+sudo bootc upgrade --apply
+----
+
+.Verification
+
+* After  the VM comes back up, verify the upgrade:
++
+[source]
+----
+bootc status
+----
