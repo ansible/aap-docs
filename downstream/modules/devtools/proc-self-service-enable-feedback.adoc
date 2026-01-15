@@ -1,0 +1,32 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-enable-feedback_{context}"]
+
+= Enabling feedback to Red Hat
+
+[role="_abstract"]
+Enable the optional feedback form to allow users to submit suggestions and general feedback directly through the portal interface.
+
+.Prerequisites
+
+* You have administrative access to the {OCPShort} console.
+* The {SelfService} is installed in an OpenShift project.
+
+.Procedure
+
+. Log in to the {OCPShort} console.
+. In the *Developer* perspective, navigate to *Helm*.
+. Click the *More actions* icon for your self-service automation portal Helm release and select *Upgrade*.
+. Select *YAML view*.
+. Locate the feedback section and set the enabled value to `true`:
++
+----
+feedback:
+  enabled: true
+----
+. Click btn:[Upgrade]
+
+.Verification
+
+. Log in to the {SelfService}.
+. Confirm that the Feedback button is visible in the bottom-left corner of the console.
