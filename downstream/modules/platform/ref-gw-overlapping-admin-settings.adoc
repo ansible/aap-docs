@@ -1,0 +1,25 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="gw-overlapping-admin-settings"]
+
+= Overlapping administrative settings
+
+[role="_abstract"]
+{GatewayStart} acts as the centralized point for configuration management in {PlatformNameShort}. 
+However, specific operational and administrative settings can exist on both {Gateway} and component services, such as {ControllerName}.
+To prevent issues, especially when workflows or scripts interact directly with the component API, you must manually keep these duplicate settings consistent between the component service and {Gateway}.
+
+*Effective settings table*
+
+The following table clarifies the authoritative source for administrative settings that you can configure in both {ControllerName} and {Gateway}.
+
+[cols="20%,20%,20%,20%,20%",options="header"] 
+|=== 
+| *Setting name (UI text)* | *API variable name* | *{GatewayStart} configuration location* | *{ControllerNameStart} configuration location* | *Synchronization requirement and notes*
+
+| *Organization Admins Can Manage Users and Teams* | `MANAGE_ORGANIZATION_AUTH` | *Settings* > *{GatewayStart}* | *Settings* > *Automation Execution* > *System* | Keep a consistent value across both systems. The {ControllerName} setting might be used by direct API workflows.
+
+| *All Users Visible to Organization Admins* | `ORG_ADMINS_CAN_SEE_ALL_USERS` | *Settings* > *{GatewayStart}* | *Settings* > *Automation Execution* > *System* | Keep a consistent value across both systems. {ControllerNameStart} does not follow gateway settings for this variable; direct API workflows use the controller's local value.
+
+| *Allow External Users to Create OAuth2 Tokens* | `ALLOW_OAUTH2_FOR_EXTERNAL_USERS` | *Settings* > *{GatewayStart}* | N/A | {GatewayStart} is authoritative. Configure this setting in the unified UI or through the gateway API. 
+|===
