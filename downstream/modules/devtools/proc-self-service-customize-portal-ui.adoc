@@ -1,0 +1,36 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-customize-portal-ui_{context}"]
+
+= Enabling custom support URL
+
+[role="_abstract"]
+Update the Helm configuration to redirect the default support link to your organization's specific support resources.
+
+.Prerequisites
+
+* You have administrative access to the {OCPShort} console.
+* The {SelfService} is installed in an OpenShift project.
+
+.Procedure
+
+. Log in to the {OCPShort} console.
+. In the *Developer* perspective, navigate to *Helm*.
+. Click the *More actions* icon for your self-service automation portal Helm release and select *Upgrade*.
+. Select *YAML view*.
+. Add the `CUSTOMER_SUPPORT_URL` environment variable to the `extraEnvVars` section:
++
+----
+redhat-developer-hub:
+  upstream:
+    backstage:
+      extraEnvVars:
+        - name: CUSTOMER_SUPPORT_URL
+          value: https://your-support-portal.example.com
+----
+. Click btn:[Upgrade].
+
+.Verification
+
+. Log in to the {SelfService}.
+. Hover over the *Support* link in the upper right of the UI (next to the *Create* icon) and verify it points to your custom URL.
