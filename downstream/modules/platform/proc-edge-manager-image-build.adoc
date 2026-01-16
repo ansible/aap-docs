@@ -5,6 +5,14 @@
 = The image building process
 
 [role="_abstract"]
+Create the bootable container (bootc) images you need to provision Edge Manager devices.
+
+.Prerequisites
+* Podman
+* Skopeo
+* bootc-image-builder
+
+.Procedure
 
 . Choose a base `bootc` operating system image, such as a Fedora, CentOS, or RHEL image.
 . Create a container file that layers the following items onto the base `bootc` image:
@@ -16,7 +24,7 @@
 . Build, publish, and sign a `bootc` operating system image using `podman` and `skopeo`.
 . Create an operating system disk image by using `bootc-image-builder`.
 . Build, publish, and sign an operating system disk image using `skopeo`.
-
++
 [NOTE]
 ====
 The operating system disk image has partitions, volumes, the file system, and the initial `bootc` image.

@@ -1,5 +1,6 @@
 :_mod-docs-content-type: PROCEDURE
 
+[id="proc-troubleshoot-multiple-cas"]
 = Correcting multiple signed certificates
 
 [role="_abstract"]
@@ -7,25 +8,21 @@ If `/etc/receptor/tls/ca/mesh-CA.crt` (for RPM-based installs) or `$HOME/aap/rec
 
 Take the following steps on all {ControllerName} and execution nodes within the {PlatformNameShort} environment.
 
-*For an RPM-based install*
-
 .Procedure
-. Make a backup of the `mesh-CA.crt` file
+. For an RPM-based install, make a backup of the `mesh-CA.crt` file:
 +
 `cp -p /etc/receptor/tls/ca/mesh-CA.crt /etc/receptor/tls/ca/mesh-CA.crt-$(date +%F)`
 . Delete everything past the first certificate within the `mesh-CA.crt` file, that is, keep only the first certificate that is present at the top of the file.
 
-. Restart receptor
+.. Restart the receptor:
 +
 `systemctl restart receptor`
 
-*For a Containerized install*
-
-. Make a backup of the `mesh-CA.crt` file
+. For a containerized install, make a backup of the `mesh-CA.crt` file:
 +
 `cp -p $HOME/aap/receptor/etc/mesh-CA.crt $HOME/aap/receptor/etc/mesh-CA.crt-$(date +%F)`
 . Delete everything past the first certificate within the `mesh-CA.crt` file, that is, keep only the first certificate that is present at the top of the file.
 
-. Restart receptor
+.. Restart the receptor:
 +
 `systemctl --user restart receptor`

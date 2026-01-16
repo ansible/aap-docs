@@ -4,13 +4,16 @@
 = Configuring a HAProxy load balancer
 
 [role="_abstract"]
-To configure a HAProxy load balancer in front of {Gateway} with a custom CA cert, set the following inventory file variables under the `[all:vars]` group:
+Configure a HAProxy load balancer in front of {Gateway} with a custom CA cert.
 
+.Procedure
+. Set the following inventory file variables under the `[all:vars]` group:
++
 ----
 custom_ca_cert=<path_to_cert_crt>
 gateway_main_url=<https://load_balancer_url>
 ----
-
++
 [IMPORTANT]
 ====
 * Ensure your load balancer is configured to use HTTP/1.1 when communicating with {Gateway}. HTTP/2 is not supported.
