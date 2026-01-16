@@ -1,0 +1,113 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2025-11-27
+:_mod-docs-content-type: PROCEDURE
+
+[id="implementing-automation-content-for-ephemeral-mcp-agents_{context}"]
+= Implementing automation content for ephemeral MCP agents
+
+[role="_abstract"]
+You can create an Ansible playbook leveraging the Execution Environment (EE) setup so that ephemeral MCP servers are provisioned during Ansible Automation Platform (AAP) controller job creation. This way you can safely use AI as an operational assistant, which can take assigned actions in your enterprise platform. 
+
+
+.Prerequisites
+
+* You must securely store all access credentials necessary for MCP plugin use exclusively within AAP credential store.
+
+* The Execution Environment (EE) image must be configured to include the necessary MCP server component, which is typically accomplished by selecting a collection with specialized roles during the EE build process.
+
+
+.Procedure
+
+. Create the `execution-environment.yml` definition file, which specifies a step to install the MCP server components: 
++
+[source,yaml,subs="+quotes"]
+....
+---
+version: 3
+
+images:
+  base_image:
+    name: ansible-automation-platform-25/ee-minimal-rhel9:latest
+dependencies:
+  galaxy: requirements.yml
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_steps:
+  append_final: |
+    RUN ansible-playbook ansible.mcp_builder.install_mcp -e mcp_servers=github_mcp -e github_mcp_mode=remote
+....
++
+The example definition file above specifies the required MCP server, so that the necessary dependencies are pulled into the file.
++
+During the EE build process the MCP server software is installed into the EE.
++
+For embedded servers, include the MCP server binaries or libraries explicitly on the EE image path.
++
+For remote servers, define remote connection details in a manifest file within the EE.
+
+
+
+. Write custom Ansible content:
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Example Github MCP server interaction
+  hosts: github_mcp
+  tasks:
+    - name: Create a Github repository
+      ansible.mcp.run_tool:
+        name: create_repository
+        args:
+          name: my-github-repository
+          autoInit: true
+....
++
+The playbook syntax for invoking MCP plugins is intuitive and aligns with existing Ansible module patterns.
++
+[IMPORTANT]
+====
+You must configure the `ansible.mcp.mcp` connection plugin to use the `ansible.mcp` collection. For example, you should set the `ansible_mcp_server_name` custom-defined configuration variable to the name of a server in the `mcpserver.json` manifest file.
+Your playbook might use inventory variables, such as setting the connection plugin to `ansible_connection: ansible.mcp.mcp`, along with required timeout values like `ansible_connect_timeout: 30` and `ansible_command_timeout: 30`.
+====
+
+
+
+. Create and configure credentials in AAP:
++
+The required credentials vary based on which MCP server you are using. For example, the Github MCP server requires a Github Personal Access Token, which should be set in the `MCP_BEARER_TOKEN` environment variable.
++
+.. To do this, first create a custom credential type in AAP:
++
+image::mcp-agents-create-credential-type.png[Create credential type]
+
+.. Create a new credential and use the custom credential type you just created:
++
+image::mcp-agents-create-credential.png[Create credential]
++
+The examples above show how to set up the required credential structures in the AAP credential store. This includes defining the relevant fields and the injector configuration needed to pass the secret as an environment variable (for example, `MCP_BEARER_TOKEN: “{{ token }}”`).
+
+
+
+. Create a new host and configure the connection variables:
++
+image::mcp-agents-create-host.png[Create a host]
+
+
+
+. Launch the relevant job in the AAP controller GUI.
+
+
+
+.Troubleshooting
+
+To manage the health of the MCP servers, the AAP environment emphasizes governance and auditability, allowing you to trace workflow success and failures.
+
+All MCP plugin invocations and credential usage events are logged and auditable through AAP audit trail systems, including the job ID, user, and timestamp, along with Ansible eventstream data. This tracking supports governance requirements for enterprise compliance.
+
+The system ensures that secrets are never hardcoded into playbooks or visible in execution logs; they are  masked automatically. This robust auditing assists in identifying security issues or operational problems during task execution.
+
+A successful operation relies on the strict, controlled lifecycle of the MCP agents. This ensures that upon job failure or completion, there are no residual data, services, or security artifacts remaining.
+
