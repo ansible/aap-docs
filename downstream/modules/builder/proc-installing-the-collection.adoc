@@ -1,0 +1,57 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-installing-the-collection"]
+
+= Installing the MCP Builder Collection
+
+[role="_abstract"]
+Install or upgrade the `ansible.mcp_builder` collection through the {Galaxy} command-line tool or a requirements file. Use the collection to deploy and manage MCP servers within an {ExecEnvShort}.
+
+
+.Prequisites
+
+* ansible-core: 2.18.0+
+* Python: 3.11+
+
+*Collections*
+
+*ansible.mcp for execution of MCP servers.
+
+*External dependencies*
+
+* ansible-builder for building execution environments
+* podman or docker for container runtime
+* Fedora/RHEL base image for use in execution environment builds
+
+.Procedure
+
+. Before using this collection, you need to install it with the {Galaxy} command-line tool:
++
+'ansible-galaxy collection install ansible.mcp_builder'
+
+. You can also include it in a 'requirements.yml' file and install it with 'ansible-galaxy collection install -r requirements.yml', using the format:
++
+----
+collections:
+ 	 - name: ansible.mcp_builder
+----
+
+. To upgrade the collection to the latest available version, run:
++
+`ansible-galaxy collection install ansible.mcp_builder --upgrade`
+
+. You can also install a specific version of the collection. Use the following syntax to install version 1.0.0:
++ 
+`ansible-galaxy collection install ansible.mcp_builder:==1.0.0`
++
+See link:https://docs.ansible.com/projects/ansible/devel/collections_guide/index.html[Using Ansible collections] for more details.
+
+. After installation, the collection provides:
++
+MCP Server Manifest (`/opt/mcp/mcpservers.json`) - JSON file describing all installed MCP servers
+
+. Servers are installed into the execution environment using the ansible.mcp_builder.install_mcp playbook.
+
+. To select which servers to install, their exact role names, for example, `github_mcp`, are passed using the `-e mcp_servers` variable during the build.
+
+. The `ansible.mcp_builder.common` role sets up the generic build environment, detects dependencies, and handles the installation of servers from various sources, including Go, npm, and PyPI.

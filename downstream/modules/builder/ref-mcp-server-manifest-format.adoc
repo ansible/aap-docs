@@ -1,0 +1,38 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="con-mcp-server-manifest-format"]
+
+= MCP Server Manifest Format
+
+[role="_abstract"]
+The MCP Server Manifest is a JSON file that describes the MCP servers installed within an Ansible {ExecEnvShort}.
+
+The example generated `/opt/mcp/mcpservers.json` file contains server definitions:
+
+----
+
+{
+    "azure_mcp_registry": {
+        "type": "stdio",
+        "lang": "npm",
+        "package": "@azure/mcp",
+        "args":
+            - "server"
+            - "start"
+            - "--namespace"
+            - "az"
+    },
+    "aws-iam-mcp-server": {
+        "type": "stdio",
+        "command": "/opt/mcp/bin/awslabs.iam-mcp-server",
+        "args": [],
+        "package": "awslabs.iam-mcp-server"
+    },
+    "github-mcp-server": {
+        "type": "stdio",
+        "command": "/opt/mcp/bin/github-mcp-server",
+        "args": ["stdio"],
+        "description": "GitHub MCP Server - Access GitHub repositories, issues, and pull requests"
+    },
+}
+----
