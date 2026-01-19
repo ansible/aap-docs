@@ -5,15 +5,15 @@
 = Building an {ExecEnvShort} with MCP servers
 
 [role="_abstract"]
-The ansible.mcp_builder collection is designed to run as a step in building an execution environment (EE), allowing you to deploy multiple MCP servers from various sources (npm packages, PyPI packages, and compiled Go binaries) in a single environment.
+The ansible.mcp_builder collection is designed to run as a step in building an {ExecEnvShort}, allowing you to deploy multiple MCP servers from various sources (npm packages, PyPI packages, and compiled Go binaries) in a single environment.
 
 .Procedure
 
 . The collection must be listed as a galaxy dependency in the `execution-environment.yml` file, either directly listed or passed using a `requirements.yml` file.
 . To select MCP servers to install, use the `-e` flag with the `mcp_servers` variable. Servers are selected by their exact role name, for example, `github_mcp`.
-
++
 *Example `execution-environment.yml` configuration*:
-
++
 ----
 version: 3
 
