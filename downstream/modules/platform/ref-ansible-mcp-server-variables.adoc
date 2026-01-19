@@ -22,5 +22,28 @@ The following variables govern the access granted to Ansible MCP server.
 By default, the variable's value is set to `false`, so that the Ansible MCP server enables read-only operations and blocks all write operations. To enable the Ansible MCP server to perform write operations, change the value of the variable to `true`.
 |Optional
 |`false`
+
+|N/A
+|`mcp_ignore_certificate_errors`
+|Specifies whether to skip validation of SSL/TLS certificates when connecting to an MCP server over a secure transport (HTTPS/WSS). 
+
+Set this parameter value to `true` to allow connections to servers with self-signed, expired, or otherwise untrusted certificates, primarily during local development or internal testing.
+|Optional
+|`false`
+
+|N/A
+|`mcp_tls_cert`
+|Path to the SSL/TLS certificate file for the Ansible MCP server.
+
+|Required if using client certificate authentication.
+|
+
+|N/A
+|`mcp_tls_key`
+|Path to the SSL/TLS key file for the Ansible MCP server.
+
+|Required if using client certificate authentication.
+|
+
 |===
 
