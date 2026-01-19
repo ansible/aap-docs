@@ -1,0 +1,36 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="con-mcp-builder-collection"]
+
+= MCP Builder Collection
+
+[role="_abstract"]
+The `mcp_builder_collection` is a collection of Ansible roles and playbooks designed to facilitate the integration and management of Model Context Protocol (MCP) servers within Ansible {ExecEnvShort}s built using {Builder}.
+
+This collection provides tools to streamline the process of configuring MCP servers, ensuring that they are properly set up to interact with Large Language Models (LLMs) and other AI systems.
+
+Roles
+
+[cols="a,a", options="header"]
+|===
+| Name | Description
+| `ansible.mcp_builder.common` | Sets up a generic MCP build environment with automatic dependency detection and installs MCP servers from multiple sources (Go, npm, PyPI)
+| `ansible.mcp_builder.aws_ccapi_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/ccapi-mcp-server[AWS Cloud Control MCP server] from PyPI
+| `ansible.mcp_builder.aws_cdk_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/cdk-mcp-server[AWS CDK MCP server] from PyPI
+| `ansible.mcp_builder.aws_core_mcp` | Installs the AWS link:https://awslabs.github.io/mcp/servers/core-mcp-server[Core MCP server] from PyPI with dynamic proxy server strategy
+| `ansible.mcp_builder.aws_iam_mcp` | Installs the AWS link:https://awslabs.github.io/mcp/servers/core-mcp-server[IAM MCP server] from PyPI
+| `ansible.mcp_builder.azure_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/azure-mcp-server[Azure MCP server] from npm to interact with Azure resources
+| `ansible.mcp_builder.github_mcp` | 
+Installs the link:https://github.com/github/github-mcp-server[GitHub MCP server] with support for local (build from source) and remote modes
+|===
+
+== Playbooks
+
+[cols="a,a", options="header"]
+|===
+| Name | Description
+| `ansible.mcp_builder.install_mcp` | Installs selected MCP servers
+|===
+
+
+

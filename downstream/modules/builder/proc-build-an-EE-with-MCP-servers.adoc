@@ -1,0 +1,40 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-build-an-EE-with-MCP-servers"]
+
+= Building an {ExecEnvShort} with MCP servers
+
+[role="_abstract"]
+The ansible.mcp_builder collection is designed to run as a step in building an {ExecEnvShort}, allowing you to deploy multiple MCP servers from various sources (npm packages, PyPI packages, and compiled Go binaries) in a single environment.
+
+.Procedure
+
+. The collection must be listed as a galaxy dependency in the `execution-environment.yml` file, either directly listed or passed using a `requirements.yml` file.
+. To select MCP servers to install, use the `-e` flag with the `mcp_servers` variable. Servers are selected by their exact role name, for example, `github_mcp`.
++
+*Example `execution-environment.yml` configuration*:
++
+----
+version: 3
+
+images:
+  base_image:
+    name: ansible-automation-platform-25/ee-minimal-rhel9:latest
+dependencies:
+  galaxy: requirements.yml
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+additional_build_steps:
+  append_final: |
+    RUN ansible-playbook ansible.mcp_builder.install_mcp -e mcp_servers=github_mcp -e github_mcp_mode=remote
+----
+
+. Run this command inside the directory containing the {ExecEnvShort} definition file:
++
+`ansible-builder build --tag my-mcp-ee:latest`
++
+This approach allows you to create custom {ExecEnvShort}s with only the MCP servers you need.
+
+
