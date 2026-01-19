@@ -17,9 +17,17 @@ As an organization administrator, you can deploy and configure an Ansible MCP se
 
 .. Create an `[ansiblemcp]` group and add a host for the Ansible MCP server.
 
-.. Specify the Ansible MCP server permissions in the `mcp_allow_write_operations` variable under the `[all:vars]` group.
+.. Add the following installation variables to your inventory file under the `[all:vars]` group:
+
+* `mcp_allow_write_operations`: Use to grant read-only or read-write permissions to the external AI tool. 
+* `mcp_ignore_certificate_errors`: Use to bypass SSL/TLS certificate validation. 
+
+.. To make your system trust a self-signed custom certificate, add the following required variables to your inventory file:
+
+* `mcp_tls_cert`: Path to TLS certificate 
+* `mcp_tls_key`:  Path to TLS key
 +
-Refer to the xref:ansible-mcp-server-variables[Appendix: Ansible MCP server variables] for information about required and optional variables.
+For information about using your own TLS certificates and keys, see link:{URLContainerizedInstall}/advanced-configuration-containerized#using-custom-tls-certificates[Configuring custom TLS certificates]. For information about required and optional variables, see xref:ansible-mcp-server-variables[Appendix: Ansible MCP server variables].
 +
 [source]
 ----
@@ -33,8 +41,10 @@ aap.example.com
 # This section is for Ansible MCP server permissions
 # --------------------------------------------------
 [all:vars]
-mcp_allow_write_operations=false
-# To enable read-write access, set the "mcp_allow_write_operations" variable to "true"
+mcp_allow_write_operations=false <To enable read-write access, set the "mcp_allow_write_operations" variable to "true">
+mcp_ignore_certificate_errors=false
+mcp_tls_cert= <path to tls certificate>
+mcp_tls_key= <path to tls key>
 ----
 
 . xref:installing-containerized-aap[Run the `install` playbook to install containerized {PlatformNameShort}].
