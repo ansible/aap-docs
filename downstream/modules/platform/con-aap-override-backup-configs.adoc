@@ -1,0 +1,39 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="aap-override-backup-configs_{context}"]
+
+= Override backup configurations for specific components
+
+[role="_abstract"]
+
+You can override the global backup configuration for specific components, such as {ControllerName}, {PrivateHubName}, or {EDAcontroller}. 
+This ensures that each component uses the appropriate storage class or resource limits during the backup process.
+
+*Example: Overriding component resources*
+This example shows a backup custom resource that applies a fast SSD storage class to the {ControllerName} while using standard storage for the {PrivateHubName}:
++
+[source, none]
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatformBackup
+metadata:
+  name: custom-backup
+spec:
+  deployment_name: myaap
+  no_log: false
+  backup_storage_class: rook-cephfs
+# Override component-level backup specs:
+  hub:
+    backup_storage_requirements: 25Gi
+    no_log: false
+  controller:
+    backup_pvc: custom-controller-backup-pvc
+    backup_storage_requirements: 15Gi
+    backup_storage_class: rook-block
+    no_log: false
+  eda:
+    backup_storage_requirements: 7Gi
+    backup_storage_class: rook-block
+    no_log: false
+
+----
