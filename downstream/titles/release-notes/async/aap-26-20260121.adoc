@@ -12,14 +12,14 @@ This release includes the following components and versions:
 
 | January 21, 2026 |
 
-* {ControllerName} <<version>>
-* {HubNameStart} <<version>>
-* {EDAName} 1.1.13
-* Container-based installer {PlatformNameShort} (bundle) <<version>>
-* Container-based installer {PlatformNameShort} (online) <<version>>
-* Receptor <<version>>
-* RPM-based installer {PlatformNameShort} (bundle) <<version>>
-* RPM-based installer {PlatformNameShort} (online) <<version>>
+* {ControllerName} 4.7.8
+* {HubNameStart} 4.11.5
+* {EDAName} 1.2.4
+* Container-based installer {PlatformNameShort} (bundle) 2.6-5
+* Container-based installer {PlatformNameShort} (online) 2.6-5
+* Receptor 1.6.3
+* RPM-based installer {PlatformNameShort} (bundle) 2.6-4
+* RPM-based installer {PlatformNameShort} (online) 2.6-4
 |
 
 |====
@@ -39,10 +39,6 @@ With this update, the following CVEs have been addressed:
 * link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/controller-rhel9`: AIOHTTP's HTTP Parser auto_decompress feature is vulnerable to zip bomb.(AAP-61915)
 
 * link:https://access.redhat.com/security/cve/cve-2025-4565[CVE-2025-4565] `python3.11-protobuf`: Unbounded recursion in Python Protobuf.(AAP-60498)
-
-* link:https://access.redhat.com/security/cve/cve-2025-6176[CVE-2025-6176] `automation-controller`: Brotli decompression bomb DoS in scrapy/scrapy.(AAP-60182)
-
-* link:https://access.redhat.com/security/cve/cve-2025-6176[CVE-2025-6176] `ansible-automation-platform-26/controller-rhel9`: Brotli decompression bomb DoS in scrapy/scrapy.(AAP-60180)
 
 * link:https://access.redhat.com/security/cve/cve-2025-66031[CVE-2025-66031] `ansible-ai-connect-service`: `node-forge` ASN.1 Unbounded Recursion.(AAP-59983)
 
@@ -93,7 +89,7 @@ With this update, the following CVEs have been addressed:
 
 * Page titles now reflect the current page content.(AAP-61754)
 
-* Ansible Automation Platform now provides support for IPv6 single-stack and dual-stack (IPv4 and IPv6) deployments in container-based environments. IPv6 is now supported across all Ansible Automation Platform deployment methods. The `FEATURE_GATEWAY_IPV6_USAGE_ENABLED` feature flag has been removed and IPv6 support is enabled by default.(ANSTRAT-1575)
+* {PlatformNameShort} now provides support for IPv6 single-stack and dual-stack (IPv4 and IPv6) deployments in container-based environments. IPv6 is now supported across all {PlatformNameShort} deployment methods. The `FEATURE_GATEWAY_IPV6_USAGE_ENABLED` feature flag has been removed and IPv6 support is enabled by default.(ANSTRAT-1575)
 
 === Enhancements
 
@@ -196,16 +192,12 @@ In a future release, all authentication logs introduced and moved from their exi
 
 * Added runtime feature flags.(AAP-62686)
 
-=== Enhancements
-
-* Upgraded to Python 3.12.(AAP-56538)
-
 
 == {HubNameStart}
 
 === Bug Fixes
 
-* Fixed an issue where  the password field on the Automation Hub Django REST framework authentication page was missing the autocomplete attribute. As a consequence, the field did not align with security best practices regarding browser autofill. With this update, the password field uses the autocomplete="new-password" attribute. As a result, the Automation Hub API authentication page now complies with recommended security settings.(AAP-59912)
+* Fixed an issue where  the password field on the {HubName} Django REST framework authentication page was missing the autocomplete attribute. As a consequence, the field did not align with security best practices regarding browser autofill. With this update, the password field uses the autocomplete="new-password" attribute. As a result, the {HubName} API authentication page now complies with recommended security settings.(AAP-59912)
 
 
 == Container-based {PlatformNameShort}
@@ -218,7 +210,7 @@ In a future release, all authentication logs introduced and moved from their exi
 
 * Fixed an issue where the system-prompt optimized for granite and OpenAI models.(AAP-60898)
 
-* Fixed an issue where the containerized installer could not properly configure Redis in the ipv6 only environment. Added ipv6 support for different AAP components within the containerized installer collection.(AAP-60532)
+* Fixed an issue where the containerized installer could not properly configure Redis in the ipv6 only environment. Added ipv6 support for different {PlatformNameShort} components within the containerized installer collection.(AAP-60532)
 
 * Fixed an issue where the ansiblemcp uninstall is failing to stop containers
 
@@ -243,18 +235,16 @@ In a future release, all authentication logs introduced and moved from their exi
 
 === Bug Fixes
 
-* Fixed an issue where the IPv6 support in the {EDAName} operator configmaps was missing the extra listen NGINX directive. We added the required directive so the event streams pod now has *NGINX* bound to its IPv6 interface.(AAP-62001) 
+* Fixed an issue where the IPv6 support in the {EDAName} operator configmaps was missing the extra listen *NGINX* directive. We added the required directive so the event streams pod now has *NGINX* bound to its IPv6 interface.(AAP-62001) 
 
 
 == {LightspeedShortName}
 
 === Enhancements
 
-* Updated settings configuration location to reflect Python 3.12 lib location.(AAP-61696)
-
 * Enabled chatbot authentication.(AAP-61015)
 
-* Supports AAP Lightspeed chatbot authentication.(AAP-59478)
+* Supports {LightspeedShortName} chatbot authentication.(AAP-59478)
 
 * Enabled chatbot authentication.(AAP-59476)
 
@@ -270,28 +260,18 @@ In a future release, all authentication logs introduced and moved from their exi
 
 * Fixed an issue where there was an error on the cursor editor. When the error occurred, the MCP server configuration on the Cursor Settings panel and Output view displayed error messages.(AAP-62002)
 
-* Fixed an issue where the Lightspeed Chatbot PROVIDER_VECTOR_DB_ID set to literal string caused degraded responses in production.(AAP-61118)
+* Fixed an issue where the Lightspeed Chatbot `PROVIDER_VECTOR_DB_ID` set to literal string caused degraded responses in production.(AAP-61118)
 
-* Fixed bug where VS Code would throw a warning when connecting to AAP MCP servers due to a period character being in the tool name.(AAP-59293)
+* Fixed bug where VS Code would throw a warning when connecting to {PlatformNameShort} MCP servers due to a period character being in the tool name.(AAP-59293)
 
 * Fixed an issue where Ansible Lightspeed intelligent assistant showed raw tool_call output in answers.(AAP-57513)
 
-* Fixed an issue where long tool names in the AAP MCP server exceeding the 60-character limit in Cursor's MCP server resulted in the MCP server tools to being hidden in Cursor, impacting tool usage. With this release, the MCP server now supports tool names exceeding 60 characters, resolving the visibility and usability issues for all tools in the AAP MCP server.(AAP-61149)
+* Fixed an issue where long tool names in the {PlatformNameShort} MCP server exceeding the 60-character limit in Cursor's MCP server resulted in the MCP server tools to being hidden in Cursor, impacting tool usage. With this release, the MCP server now supports tool names exceeding 60 characters, resolving the visibility and usability issues for all tools in the {PlatformNameShort} MCP server.(AAP-61149)
 
 * Fixed an issue where ALIA was experiencing Database or Disk is Full errors.(AAP-53081)
 
 === Deprecated
 
 * Removed ansible-risk-insights dependency from ansible-ai-connect-service.(AAP-60336)
-
-
-== Receptor
-
-=== Features
-=== Enhancements
-=== Bug Fixes
-=== Known Issues
-=== Deprecated
-
 
 
