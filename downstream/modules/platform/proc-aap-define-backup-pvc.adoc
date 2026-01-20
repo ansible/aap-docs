@@ -1,0 +1,45 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="aap-define-backup-pvc_{context}"]
+
+= Define a custom backup Persistent Volume Claim
+
+[role="_abstract"]
+Define a custom Persistent Volume Claim (PVC) to automate the allocation of specific storage classes and volume sizes for backups. This configuration ensures your backup storage is appropriately sized and adheres to environment-specific storage policies.
+
+.Prerequisites
+* You have an active {PlatformName} deployment on {OCPShort}.
+* You have the `oc` CLI tool installed and cluster administrator access.
+
+.Procedure
+. Create a backup YAML file (for example, `custom-pvc-backup.yaml`) with the `backup_pvc` and `backup_storage_requirements` parameters:
++
+[source, none]
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatformBackup
+metadata:
+  name: custom-backup
+  namespace: aap
+spec:
+  deployment_name: myaap
+  backup_pvc: custom-controller-backup-pvc
+  backup_storage_class: rook-block
+  backup_storage_requirements: 7Gi
+
+----
++
+. Apply the configuration:
++
+[source, none]
+----
+oc apply -f custom-pvc-backup.yaml
+----
+
+.Verification
+* Confirm the creation of the PVC by running the following command:
++
+[source, none]
+----
+oc get pvc custom-aap-backup-pvc -n <namespace>
+----
