@@ -1,0 +1,37 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-19
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-adt-with-assistant_{context}"]
+= configure ADT with assistant
+
+After installing ADT, you can use the MCP server-enabled AI assistant to configure your workspace, including:
+
+* Setting up a virtual environment.
+* Installing specific Python versions.
+* Adding Ansible collections.
+
+
+.Procedure
+. Open GitHub Copilot Chat.
+. In the chat window, enter a natural language prompt instructing the AI assistant to set up the configuration you want. For example:
++
+_Set up a complete Ansible development environment with Python 3.11, and install the collections amazon.aws and ansible.posix_. 
++
+The assistant triggers the `ade_setup_environment` tool, and the system automatically performs the following configuration steps: 
+
+* Create a virtual environment: the assistant creates a virtual environment (`venv/`) in your workspace. 
+* Install core tools: The assistant installs `ansible-core` and `ansible-lint` in the new virtual environment.
+* Install collections: The assistant installs the requested collections (`amazon.aws`, `ansible.posix`) and their dependencies. 
+* Check for conflicts: The assistant checks for conflicting packages and verifies `ansible-lint` status.
++
+. Review the output in the Copilot chat. When setup is complete, the assistant confirms that the environment is set up, and gives instructions on activating the environment. For example: 
+.. To activate, run `source <path>/venv/bin/activate`
+.. To deactivate, run `deactivate`.
+
+.Verification
+Verify that configuration was successful by asking the AI assistant to check the environment status again. For example:
+
+_Check my environment again to confirm that everything is set up correctly_.
+
+The `ade_environment_info` tool runs and confirms the Python version, virtual environment path, and installed collections in its output.
