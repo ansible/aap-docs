@@ -1,0 +1,25 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="validate-content-with-assistant_{context}"]
+= Validate content with the AI assistant
+
+[role="_abstract"]
+Ask the AI assistant to analyze the current playbook without modifying it. This identifies specific rule violations and potential errors.
+If errors are found, `ansible_lint` has autofix functionality, enabling it to suggest changes, and, with your permission, implement those changes in your code.
+
+.Procedure
+. Open the playbook file in the {VSCode} editor.
+. Open the Copilot chat window.
+. In the chat window, enter a natural language prompt such as:
+* _Validate my webserver playbook to check for any issues_.
++
+This triggers the `ansible-lint` tool in check-only mode. The assistant displays a list of the issues it found, including Rule IDs, line numbers, and descriptions of the errors (for example, missing FQCN, or YAML formatting issues).
++
+The assistant will ask "_Would you like ansible-lint to apply automatic fixes?_” You must grant the AI assistant permission to make any changes to your code.
++
+. Enter “yes” or “no” depending on whether you want the assistant to apply the suggested changes.
+. Select the option to *allow* or *skip* to grant the assistant permission to make changes.
+.. If you select *allow*, the AI assistant will update your code.
+.. If you select *skip*, the AI assistant will output a list of issues and the suggested fix for each. 

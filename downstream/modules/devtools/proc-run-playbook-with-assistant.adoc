@@ -1,0 +1,24 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="run-playbook-with-assistant_{context}"]
+= Run a playbook with ansible-navigator
+
+[role="_abstract"]
+Prompt the AI assistant for help with running playbooks.
+
+.Procedure
+. Prompt the assistant to generate a command that runs the playbook in your {ExecEnvShort}. For example:
+* _Give me the command to run this playbook in the {ExecEnvShort} <file name>_.
++
+The assistant then generates an appropriate `ansible-navigator` command, ensuring the `--execution-environment-image` flag points to your newly-built tag.
++
+A generated command might look like the following:
++
+[source,python]
+----
+ansible-navigator run playbook.yml --execution-environment-image webserver-ee:1.0 --mode stdout
+----
++
+. Execute the command in the {VSCode} terminal to run your automation within the custom environment.
