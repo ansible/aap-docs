@@ -1,0 +1,25 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="build-ee-with-assistant_{context}"]
+= Build the {ExecEnvShort} with the AI assistant
+
+After you have created and validated the definition file, prompt the assistant for the specific commands to build the {ExecEnvShort} image.
+
+.Prerequisites
+* A container runtime like Podman installed.
+* Copilot chat is active and your {ExecEnvShort} file is open.
+
+.Procedure
+. Prompt the assistant for build instructions. For example:
+* _How do I build this execution environment? What are the next steps?_
++
+This prompts the assistant to generate an `ansible-builder` command tailored to fit your file and tag.
++
+. Copy the build command that was generated and run it in your {VSCode} terminal. An example command might look like this:
++
+[source,python]
+----
+ansible-builder build --file execution-environment.yml --context ./context --tag webserver-ee:1.0 -vvv.
+----

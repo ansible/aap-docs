@@ -10,34 +10,20 @@ endif::[]
 ifdef::context[]
 [id="mcp-vscode-ext-create-ee_{context}"]
 endif::[]
-= mcp vscode ext create ee
+= Create and validate an {ExecEnvShort} with the AI assistant
 
 :context: mcp-vscode-ext-create-ee
 
-This paragraph is the assembly introduction. It explains what the user will accomplish by working through the modules in the assembly and sets the context for the user story the assembly is based on.
+Use the AI assistant to generate and validate a definition file, and then build an {ExecEnvShort} with `ansible-builder`.
 
 == Prerequisites
 
-* A bulleted list of conditions that must be satisfied before the user starts following this assembly.
-* You can also link to other modules or assemblies the user must follow before starting this assembly.
-* Delete the section title and bullets if the assembly has no prerequisites.
-* X is installed. For information about installing X, see <link>.
-* You can log in to X with administrator privileges.
+* The GitHub Copilot Extension installed and active.
+* Ansible {VSCode} extension installed.
+* The Ansible MCP server is enabled. Ensure the setting `ansible.mcpServer.enabled` is set to `true`.
+* {ToolsName} installed through the AI assistant (`adt_check_env`) or manually.
 
-Include modules here.
-
-== Next steps
-
-* This section is optional.
-* Provide a bulleted list of links that contain instructions that might be useful to the user after they complete this procedure.
-* Use an unnumbered bullet (*) if the list includes only one step.
-
-[role="_additional-resources"]
-== Additional resources
-
-* link:https://github.com/redhat-documentation/modular-docs#modular-documentation-reference-guide[Modular Documentation Reference Guide]
-* xref:some-module_{context}[]
-
-ifdef::parent-context-of-mcp-vscode-ext-create-ee[:context: {parent-context-of-mcp-vscode-ext-create-ee}]
-ifndef::parent-context-of-mcp-vscode-ext-create-ee[:!context:]
-
+include::devtools/proc-create-ee-def-with-assistant.adoc[leveloffset=+1]
+include::devtools/proc-generate-ee-from-playbook.adoc[leveloffset=+1]
+include::devtools/proc-validate-ee-with-assistant.adoc[leveloffset=+1]
+include::devtools/proc-build-ee-with-assistant.adoc[leveloffset=+1]
