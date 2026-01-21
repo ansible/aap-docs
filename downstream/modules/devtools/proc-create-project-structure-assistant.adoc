@@ -1,0 +1,24 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="create-project-structure-assistant_{context}"]
+= Create the project structure with the AI assistant
+
+[role="_abstract"]
+Enter a prompt in natural language to trigger the project creation tool. When prompted, `ansible-creator` works in the background to generate the directory structure.
+
+.Procedure
+. In the Copilot chat window, enter a prompt specifying the project name and type. For example:
+* _Create a new Ansible playbook project called 'webserver-deployment.`_
++
+This triggers the `create_ansible_projects` tool. The extension then executes `ansible-creator init playbook` to generate the content.
+
+.Verification
+After the assistant confirms that the task is complete, verify that the project structure is consistent with the standard layout. 
+
+. Navigate to the {VSCode} Explorer view.
+. Locate the new directory (per the example above, `webserver-deployment/`).
+. Confirm the presence of standard artifacts such as:
+.. Initial playbook files
+.. Recommended configuration files (such as `ansible.cfg`, `inventory`).
