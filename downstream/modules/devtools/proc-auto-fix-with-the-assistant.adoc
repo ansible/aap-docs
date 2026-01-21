@@ -1,0 +1,27 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="auto-fix-with-the-assistant_{context}"]
+= Auto-fixing errors with the AI assistant
+
+[role="_abstract"]
+You can also prompt the AI agent to auto-fix errors that `ansible_lint` finds. 
+
+.Procedure
+. In the GitHub Copilot chat window, enter the following prompt:
+* _Run ansible-lint on my webserver playbook and apply automatic fixes_.
++
+The AI triggers the `ansible_lint`` tool with the `fix: true` parameter.
++
+. The tool then processes the file and applies corrections for issues such as:
+
+* Converting short module names to fully qualified ones.
+* Correcting YAML indentation and Jinja2 expression spacing.
+* Fixing key ordering within tasks.
+
+.Verification
+When the AI agent completes the auto fixes, confirm the updates by taking the following steps.
+
+* Either verify in the chat window that the AI  has displayed the fixed content, or confirm that the file has been updated.
+* Review your open file in the editor. Changes (such as updated module names) should be reflected immediately in the code. 
