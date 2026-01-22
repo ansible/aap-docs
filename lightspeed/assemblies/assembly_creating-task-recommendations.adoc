@@ -1,0 +1,61 @@
+ifdef::context[:parent-context: {context}]
+
+:_content-type: ASSEMBLY
+
+[id="creating-task-recommendations_{context}"]
+= Create task recommendations
+
+:context: creating-task-recommendations
+
+[role="_abstract"]
+{LightspeedshortName} is integrated into Visual Studio (VS) Code through the Ansible VS Code extension. You can request code recommendations for your task intent by using Ansible VS Code extension.
+
+You can perform the following tasks from the Ansible VS Code extension: 
+
+* *Create single task or multitask requests by using natural language prompts* 
+** Create a single task prompt
++
+Write a description of your task in the `- name:` key of a new task line in your Ansible file. For example, to automate a task of installing PostgreSQL server, you can enter the prompt `- name: Install postgresql-server`. 
+
+** Create a multitask prompt
++
+Place your cursor on a new line in your Ansible YAML file at the correct indentation, and start your prompt with a Pound key (#).
++
+Write the descriptions of your tasks, separating each prompt by using Ampersand symbols (&). For example, to automate a multitask of installing PostgreSQL server and running the initial PostgreSQL setup command, you can enter the prompt `# Install postgresql-server & run postgresql-setup command`.
++
+The Ansible Lightspeed service reads the text, interacts with the {ibmwatsonxcodeassistant} model, and generates Ansible task recommendations based on your natural language prompt.
++
+[NOTE]
++
+====
+Currently, {LightspeedShortName} supports user prompts in English language only. However, there could be instances where the training data that was used to train the {ibmwatsonxcodeassistant} models included non-English language. In such scenarios, the model can generate code recommendations for prompts made in the same non-English language, but the generated code recommendations might or might not be accurate.
+====
+
+* *View the content source matching results*
++
+For each generated code recommendation, {LightspeedShortName} lists content source matches, including details such as potential source, content author, and relevant licenses. You can use this data to gain insight into potential training data sources used to generate the code recommendations.
+
+* *Provide feedback on the Ansible Lightspeed service*
++
+The Ansible Lightspeed service learns your organizational patterns and improves the code recommendation experience over time. You can provide feedback on whether the generated code recommendations were suitable for your task intent. This feedback enables {LightspeedFullName} to improve on the quality of its suggestions.
+
+== Best practices to improve the recommended guidance
+Follow these guidelines to improve the likelihood of a quality code recommendation. 
+
+* Ensure that your YAML file is properly formatted. See the link:https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html[Ansible YAML syntax guidelines] for details. 
+
+* Avoid context switching within a single playbook file.
++
+The Ansible Lightspeed service attempts to correlate earlier tasks to the active recommendation, and the entire contents of the file before the cursor position are used as context by the model. If the earlier task is not relevant to your prompt, VS code provides inline suggestions instead of code recommendations. 
+
+* Reword your natural language prompts to get code recommendations that match your task intent.
++
+If you get a recommendation that does not align with the intent of your task name, then rewording your prompt to provide more information about what is desired can lead to improved results.
+
+* Use descriptive prompts and provide additional content to improve the code recommendations.
++
+{LightspeedShortName} reads the full Ansible YAML file when generating a code recommendation. Using descriptive prompts and having additional YAML file content related to the desired task improves the code recommendation. For example, you can add the previous Ansible tasks and appropriate playbook and variable names to improve the code recommendations. 
+
+include::modules/proc_single-task-recs.adoc[leveloffset=+1]
+include::modules/proc_multi-task-recs.adoc[leveloffset=+1]
+include::modules/proc_view-training-matches.adoc[leveloffset=+1]

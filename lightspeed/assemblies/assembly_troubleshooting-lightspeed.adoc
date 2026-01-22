@@ -2,19 +2,113 @@ ifdef::context[:parent-context: {context}]
 
 :_content-type: ASSEMBLY
 
-[id="troubleshooting-lightspeed_{context}"]
+[id="troubleshooting-onpremise-deployment-errors_{context}"]
 
-= Troubleshooting
+= Troubleshoot {LightspeedShortName} on-premise deployment errors
 
-:context: troubleshooting-lightspeed
+:context: troubleshooting-onpremise-deployment-errors_{context}"]
 
 [role="_abstract"]
-This section contains information to help you diagnose and resolve issues with using {LightspeedFullName}.
+This section provides information about errors when configuring the {LightspeedShortName} on-premise deployment and their workarounds.
 
-include::modules/ref_troubleshooting-lightspeed-config.adoc[leveloffset=+1]
-include::modules/ref_troubleshooting-lightspeed-onpremise-config.adoc[leveloffset=+1]
-include::modules/ref_troubleshooting-vscode.adoc[leveloffset=+1]
-include::modules/ref_troubleshooting-code-bot.adoc[leveloffset=+1]
+== Cannot log out of the Ansible Lightspeed portal
+
+After you log out from the Ansible Lightspeed portal, you are redirected to the automation controller API page instead of Ansible Lightspeed.
+
+This error indicates that the logout redirect URI was not configured while setting up your {LightspeedShortName} on-premise deployment. You must configure the logout redirect URI by adding the *LOGOUT_ALLOWED_HOSTS* entry to the YAML file.
+
+== Cannot connect to the Ansible Lightspeed service from the Ansible VS Code extension
+The following scenarios are possible:
+
+* The log-in attempt fails with the following error message:
++
+`Enable lightspeed services from settings to use the feature.`
++
+This error indicates that Ansible Lightspeed is not enabled in the Ansible VS Code extension. To resolve this error, perform the following tasks:
+
+. Open the VS Code application.
+. From the *Activity* bar, click the *Extensions* icon.
+. From the *Installed Extensions* list, select *Ansible*.
+. From the *Ansible* extension page, click the *Settings* icon (image:settings-icon-ansible-vscode-extension.png[Settings icon]) and select *Extension Settings*.
+. Select *Ansible Lightspeed* settings and then select the *Enable Ansible Lightspeed* checkbox.
+
+* You are redirected to an incorrect Ansible Lightspeed instance on clicking the btn:[Connect] button.
++
+This error indicates an incorrect route URL was used while configuring the Ansible Lightspeed service in Ansible VS Code extension. Ensure that you have configured the correct value in the route URL without any suffix. For more information, see xref:configure-vscode-extension-onpremise-deployment_configuring-lightspeed-onpremise[Configuring Ansible VS Code extension for Red Hat Ansible Lightspeed on-premise deployment].
+
+* Cannot request code recommendations
++
+The following error message is displayed: 
++
+`An error occurred attempting to complete your request. Please try again later.`
++
+This error indicates that the Ansible Lightspeed service is not running or is running with issues. Please check the Lightspeed service logs (the pod with suffix `-api`) for more details and error codes. 
+
+* Cannot request code recommendations
++
+The following error message is displayed:
++
+`The {ibmwatsonxcodeassistant} is unavailable. Please try again later.`
++
+or:
++
+`{ibmwatsonxcodeassistant} Model ID is invalid. Please contact your administrator.`
++
+This error indicates that the model secret contains incorrect values. To resolve this error, ensure that you have not accidentally added any whitespace characters (extra line, space, and so on) to the `username`, `model_url`, and `model_api_key` parameters in the model connection secret. For more information, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets]. 
+
+== Cannot connect to the Ansible Lightspeed service due to SSL connection error
+
+If you are using self-signed certificates on the model server, you might encounter SSL certification verification errors, causing the connection between Ansible Lightspeed service and the model server to fail. The following error message is displayed:
+----
+Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] 
+certificate verify failed: self signed certificate in certificate chain (_ssl.c:1006)'))
+----
+
+To resolve this error, use one of the following workarounds based on your {PlatformNameShort} version:
+
+* For {PlatformName} 2.5 and later:
+
+Specify the optional key/value pair as `model_verify_ssl=true` in the model secret to connect to an {ibmwatsonxcodeassistant} model. For details about the procedure, see xref:create-connection-secrets_configuring-lightspeed-onpremise[Creating connection secrets].
+
+* For {PlatformName} 2.4:
+
+You can disable the SSL protection between the model server and the Ansible Lightspeed service. For example, you can disable the SSL protection when you are on a testing environment. To disable the SSL protection, you must add the following extra setting in the {LightspeedShortName} Custom Resource Definition (CRD) YAML file under the `spec:` section:
+----
+extra_settings:
+    - setting: ANSIBLE_AI_MODEL_MESH_API_VERIFY_SSL
+      value: false
+----
+
+[IMPORTANT]
+====
+*Reenabling the SSL protection*
+You must re-enable the SSL protection when deploying on a production environment. To re-enable the SSL protection, simply remove the extra setting from the YAML file.
+====
+
+To reenable the SSL protection, perform the following tasks:
+. Go to the {OCP}. 
+. Select menu:Operators[Installed Operators].
+. From the *Projects* list, select the namespace that you created when you installed the {PlatformName} operator.
+. Locate and select the *Ansible Automation Platform* operator.
+. Locate and select the {PlatformNameShort} custom resource, and then click the required app.
+. Select the *YAML* tab. The editor switches to a YAML editor view.
+. Scroll and find the spec: section, and add the following parameter under the `spec:` section:
+
+----
+extra_settings:
+    - setting: ANSIBLE_AI_MODEL_MESH_API_VERIFY_SSL
+      value: false
+----
+
+. Click *Save*. 
+. Restart the automation controller pods to apply the revised YAML: 
+
+.. From the {OCP}, select menu:Workloads[Pods].
+.. Locate and select the Ansible Lightspeed pod that you updated.
+.. Click the *Edit* icon beside the pod and select *Delete Pod*. 
++
+The select pod gets deleted and a new pod gets created. 
+
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]
