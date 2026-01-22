@@ -80,6 +80,25 @@ With this update, the following CVEs have been addressed:
 
 * link:https://access.redhat.com/security/cve/cve-2025-62706[CVE-2025-62706] `ansible-automation-platform-26/lightspeed-chatbot-rhel9`: `Authlib`: JWE `zip=DEF` decompression bomb enables DoS.(AAP-60596)
 
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/gateway-rhel9: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62077)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/eda-controller-rhel9`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62072)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/de-supported-rhel9`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62071)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/de-minimal-rhel9`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62070)
+
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-26/gateway-rhel9`: `urllib3` vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62446)
+
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-26/eda-controller-rhel9`: `urllib3` vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62443)
+
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-26/de-minimal-rhel9`: `urllib3` vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62383)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/de-supported-rhel9`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61917)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/de-minimal-rhel9`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61916)
+
+
 
 
 
@@ -272,6 +291,8 @@ In a future release, all authentication logs introduced and moved from their exi
 * Fixed an issue where long tool names in the {PlatformNameShort} MCP server exceeding the 60-character limit in Cursor's MCP server resulted in the MCP server tools to being hidden in Cursor, impacting tool usage. With this release, the MCP server now supports tool names exceeding 60 characters, resolving the visibility and usability issues for all tools in the {PlatformNameShort} MCP server.(AAP-61149)
 
 * Fixed an issue where ALIA was experiencing Database or Disk is Full errors.(AAP-53081)
+
+* Fixed an issue where the `CHATBOT_API_KEY` environment variable was not passed to the container when the provider was azure/openai.(AAP-63292)
 
 === Deprecated
 
