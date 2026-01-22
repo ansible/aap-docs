@@ -1,0 +1,45 @@
+ifdef::context[:parent-context: {context}]
+
+:_content-type: ASSEMBLY
+
+[id="creating-viewing-playbooks_{context}"]
+= Create playbooks and view playbook explanations 
+
+:context: creating-viewing-playbooks
+
+[role="_abstract"]
+Using the Ansible VS Code extension, you can create Ansible playbooks using a natural language interface in English. 
+
+{LightspeedFullName} reads the natural language prompts and generates an entire playbook recommendation based on your intent. You can also view the explanations for new or existing playbooks. The playbook explanations describe what the playbook does and contextualize its impact.
+
+These capabilities enable Ansible developers to use natural language prompts to create new Ansible playbooks quickly and more efficiently and also get an explanation for existing Ansible playbook, thereby reducing the overall onboarding learning period. For information about Ansible playbooks, see the link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/getting_started_with_playbooks/index[Getting started with Ansible Playbooks] guide.
+
+[NOTE]
+====
+You can create playbooks and view playbook explanations when connecting to the {LightspeedShortName} cloud service and on-premise deployments.
+====
+
+== Best practices to create playbooks 
+
+Follow these guidelines for the highest quality of a playbook recommendation.
+
+* Ensure that the goal statements directly specify what the playbook must do.
++
+Your statement should start with the goal of the playbook, for example, `Apply security patches to RHEL9`. Avoid starting statements with `Create a playbook that`, `Please prepare a playbook that`, or `I need help with`. 
+
+* Ensure that the goal statement does not contain new lines.
+
+* Ensure that the goal statement is not more than one sentence.
++
+You might have to repeat the details in the goal statement to produce the best results. It is recommended that you use the generated outline as feedback about whether your goal statement might benefit from more or less details, and then modify the goal statement as necessary.  
+
+* Ensure the following when you edit the outline:
+
+** Do not restate the goal of the playbook.
+
+** Verify that the steps considered capture the key steps in the playbook. The steps need not reflect each and every task that is expected in the playbook.
+
+** Keep the step description in one sentence without adding new lines to the outline.
+
+include::modules/proc_generate-playbook.adoc[leveloffset=+1]
+include::modules/proc_view-playbook-explanation.adoc[leveloffset=+1]

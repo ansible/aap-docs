@@ -1,0 +1,50 @@
+ifdef::context[:parent-context: {context}]
+
+:_content-type: ASSEMBLY
+
+[id="troubleshooting-lightspeed-configuration-errors"]
+
+= Troubleshoot {LightspeedShortName} configuration errors
+
+:context: troubleshooting-lightspeed-configuration-errors
+
+[role="_abstract"]
+This section provides information about errors when configuring the {LightspeedShortName} and their workarounds.
+
+== Cannot access the Ansible Lightspeed administrator portal
+
+The Ansible Lightspeed administrator portal can be accessed by the Red Hat organization administrator only.
+
+If you are the Red Hat organization administrator, before you access the Ansible Lightspeed administrator portal, ensure that: 
+
+* You have a valid {PlatformNameShort} subscription.
+
+== Cannot save the API key
+
+When you enter the {ibmwatsonxcodeassistant} API key, authentication fails and shows the following error message: 
+
+`IBM Cloud API key is invalid`
+
+{LightspeedShortName} verifies the API key by generating an associated access token. To resolve the error, ensure that you have not accidentally included any extra spaces when obtaining the API key from {ibmwatsonxcodeassistant}. If you still cannot upload the API key, contact link:https://cloud.ibm.com/docs/get-support?topic=get-support-open-case[IBM Support].
+
+== Cannot configure the model ID due to authentication failure
+
+When you enter the model ID in the {LightspeedShortName} administrator portal, the authentication fails. 
+
+To resolve the error, ensure that: 
+
+* You have configured a valid API key before you upload the model ID.
+* You have not accidentally included any extra spaces when entering the model ID. 
+
+== Cannot configure the model ID due to inference failure
+
+While validating the model ID, {LightspeedShortName} performs a test inference. If {LightspeedShortName} detects an error, the validation fails and an `Inference failed` message is displayed. 
+
+To resolve the error, ensure that: 
+
+* You have a valid API key and model ID. 
+* You have not accidentally included any extra spaces when obtaining the API key and model ID from {ibmwatsonxcodeassistant}.
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
+
