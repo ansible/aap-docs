@@ -3,16 +3,16 @@
 :_mod-docs-content-type: REFERENCE
 
 [id="handling-rbac-assignment-process-for-different-scenarios_{context}"]
-= Handling RBAC assignment process for different scenarios
+= Handle RBAC roles assignment process for different scenarios
 
 [role="_abstract"]
-The centralized approach for configuring Role-Based Access Control (RBAC) is currently incomplete and fragmented across multiple tools and collections. For example, assigning RBAC roles related to individual components still requires using separate, component-specific collections. To improve the user experience, the `role_team_assignment` module mitigates this gap by clarifying how role assignment must be handled depending on your configuration needs.
+Most of Role-Based Access Control (RBAC) settings follow a unified and centralized approach using the `ansible.platform` collection. However, specific configurations, such as assigning RBAC roles related to individual components still requires using separate, component-specific collections. To improve the user experience, the `role_team_assignment` module mitigates this gap by clarifying how role assignment must be handled depending on your configuration needs.
 
 To assign roles related to individual components, ensure you use the appropriate collection for that component:
 
-* For {ControllerNameStart} roles, use the `ansible.controller` collection.
-* For {HubNameStart} roles, use the `ansible.hub` collection.
-* For {EDAName} roles, use the `ansible.eda` collection.
+* For {ControllerNameStart} roles, use the `ansible.controller` collection. For example, use this collection if you need to assign the _Inventory Use_ role for a specific inventory to a specific team.
+* For {HubNameStart} roles, use the `ansible.hub` collection. For example, use this collection if you need to assign a role for a specific collection namespace to a specific team.
+* For {EDAName} roles, use the `ansible.eda` collection. For example, use this collection if you need to assign a role for a specific rulebook activation to a specific team.
 
 The `role_team_assignment` module focuses on assigning roles to teams and organizations. The module itself has limitations regarding which roles can be assigned to teams. You cannot assign roles such as _Platform Auditor_ or _Organization Member_ to teams. Also, once roles are assigned using this module, you cannot edit them; they can only be deleted. The following scenarios confirm the boundaries of this module and highlight the continuing fragmentation of role management.
 
@@ -30,9 +30,9 @@ You can assign a resource-scoped organization role, for example, _Organization I
   hosts: localhost
   gather_facts: false
   vars:
-    gateway_hostname: "<gateway_hostname>"
-    gateway_username: "<gateway_username>"
-    gateway_password: "<gateway_password>"
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
   tasks:
     - name: Assign Organization Inventory Admin role
       ansible.platform.role_team_assignment:
@@ -42,10 +42,10 @@ You can assign a resource-scoped organization role, for example, _Organization I
         role_definition: Organization Inventory Admin
         team: "example-team"
         state: "present"
-        gateway_hostname: "{{ gateway_hostname }}"
-        gateway_username: "{{ gateway_username }}"
-        gateway_password: "{{ gateway_password }}"
-        gateway_validate_certs: false
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
 ....
 
 
@@ -60,9 +60,9 @@ You can assign the _Team Admin_ role to another team. This confirms that the rol
   hosts: localhost
   gather_facts: false
   vars:
-    gateway_hostname: "<gateway_hostname>"
-    gateway_username: "<gateway_username>"
-    gateway_password: "<gateway_password>"
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
   tasks:
     - name: Assign Team Admin role
       ansible.platform.role_team_assignment:
@@ -72,10 +72,10 @@ You can assign the _Team Admin_ role to another team. This confirms that the rol
         role_definition: Team Admin
         team: "example-team"
         state: "present"
-        gateway_hostname: "{{ gateway_hostname }}"
-        gateway_username: "{{ gateway_username }}"
-        gateway_password: "{{ gateway_password }}"
-        gateway_validate_certs: false
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
 ....
 
 
@@ -90,9 +90,9 @@ This scenario demonstrates a key technical limitation of the centralized module,
   hosts: localhost
   gather_facts: false
   vars:
-    gateway_hostname: "<gateway_hostname>"
-    gateway_username: "<gateway_username>"
-    gateway_password: "<gateway_password>"
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
   tasks:
     - name: Get the organization details
       ansible.platform.role_team_assignment:
@@ -102,10 +102,10 @@ This scenario demonstrates a key technical limitation of the centralized module,
         role_definition: Platform Auditor
         team: "example-team"
         state: "present"
-        gateway_hostname: "{{ gateway_hostname }}"
-        gateway_username: "{{ gateway_username }}"
-        gateway_password: "{{ gateway_password }}"
-        gateway_validate_certs: false
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
 ....
 +
 The assignment fails with an error. The system restricts this action because _Platform Auditor_ contains permissions for services outside of the generic galaxy service, including {EDAName} and {ControllerNameStart}, which currently prevents team assignment.
@@ -122,9 +122,9 @@ This scenario outlines a specific prohibition against assigning organizational m
   hosts: localhost
   gather_facts: false
   vars:
-    gateway_hostname: "<gateway_hostname>"
-    gateway_username: "<gateway_username>"
-    gateway_password: "<gateway_password>"
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
   tasks:
     - name: Get the organization details
       ansible.platform.role_team_assignment:
@@ -134,10 +134,10 @@ This scenario outlines a specific prohibition against assigning organizational m
         role_definition: Organization Member
         team: "example-team"
         state: "present"
-        gateway_hostname: "{{ gateway_hostname }}"
-        gateway_username: "{{ gateway_username }}"
-        gateway_password: "{{ gateway_password }}"
-        gateway_validate_certs: false
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
 ....
 +
 The assignment fails with a message stating: “Assigning organization member permission to teams is not allowed”.
