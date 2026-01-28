@@ -1,0 +1,76 @@
+[id="async-24-20260121"]
+
+= {PlatformNameShort} patch release January 28, 2026
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+[cols="1a,3a", options="header"]
+
+|====
+
+| Release Date | Component versions
+
+| January 28, 2026 |
+
+* {ControllerNameStart} 4.5.30
+* {HubNameStart} 4.9.5
+* {EDAcontroller} 1.0.8
+* {LightspeedShortName} 2.4.20260121
+* {PlatformNameShort}-collection installer (bundle): 2.4-14.2
+* {PlatformNameShort}-collection installer (online): 2.4-14
+* Receptor 1.6.3
+|
+|====
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+CSV versions in this release:
+
+* Namespace-scoped Bundle: aap-operator.v2.4.0-0.1768592178
+
+* Cluster-scoped Bundle: aap-operator.v2.4.0-0.1768599045
+ 
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `automation-controller`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62007)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-24/lightspeed-rhel8`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62004)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `automation-controller`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61853)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-24/controller-rhel8`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61840)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64460[CVE-2025-64460] `automation-controller`: `Django`: Algorithmic complexity in XML Deserializer leads to denial of service.(AAP-60953)
+
+* link:https://access.redhat.com/security/cve/cve-2025-61729[CVE-2025-61729] `receptor`: Excessive resource consumption when printing error string for host certificate validation in `crypto/x509`.
+
+
+== Deprecated
+
+=== Execution Environment
+
+`Openvswitch.openvswitch` collection has been deprecated for two years and is no longer certified. It has been removed from `console.redhat.com`, but is still available from link:https://galaxy.ansible.com/ui/repo/published/openvswitch/openvswitch/?version=2.1.1[Galaxy.ansible.com]. While supported it remains in `ee-supported` for {PlatformNameShort} 2.4 for a brief transition period, but will be removed in a future release.(ACA-4941)
+
+
+== Bug fixes
+
+=== {ControllerNameStart}
+
+* Fixed an issue where after upgrading {PlatformNameShort} to the latest 2.4 version, no `awx.analytics.system_tracking` logger was being registered.(AAP-60506)
+
+* Fixed an issue where jobs from other templates occasionally appeared on the template jobs page.(AAP-59615)
+
+* Fixed an issue where the {PlatformNameShort} 2.4 constructed inventory could only add 25 source inventories.(AAP-59568)
+
+* Fixed an issue where there was an excess number of API calls while scrolling through job output.(AAP-58255)
+
+
+== Enhancements
+
+== {ControllerNameStart}
+
+* Added OpenShift 4.19 and 4.20 support for the operator bundle.(AAP-54875)
