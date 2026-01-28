@@ -1,0 +1,69 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-25-20260121]]
+
+= {PlatformNameShort} patch release January 28, 2026
+
+This release includes the following components and versions: 
+
+[cols="1a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| January 28, 2026 |
+
+* {ControllerNameStart} 4.6.25
+* {HubNameStart} 4.10.11
+* {EDAName} 1.1.14
+* Container-based installer {PlatformNameShort} (bundle) 2.5-21.2
+* Container-based installer {PlatformNameShort} (online) 2.5-21
+* Receptor 1.6.3
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-20.2
+* RPM-based installer {PlatformNameShort} (online) 2.5-20
+|
+
+|====
+
+CSV Versions in this release:
+
+* Namespace: aap-operator.v2.5.0-0.1768928131
+
+* Cluster: aap-operator.v2.5.0-0.1768928092
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: `urllib3` vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62395)
+
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-25/lightspeed-rhel8`: `urllib3` vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62336)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `python3.11-urllib3`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62289)
+
+* link:https://access.redhat.com/security/cve/cve-2025-61729[CVE-2025-61729] `receptor`: Excessive resource consumption when printing error string for host certificate validation in `crypto/x509`.(AAP-62239)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `automation-controller`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62044)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-25/lightspeed-rhel8`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62030)
+
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-25/lightspeed-chatbot-rhel8`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62029)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-25/controller-rhel8`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61866)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64460[CVE-2025-64460] `python3.11-django`: `Django`: Algorithmic complexity in XML Deserializer leads to denial of service.(AAP-61781)
+
+* link:https://access.redhat.com/security/cve/cve-2025-61729[CVE-2025-61729] `ansible-automation-platform-26/receptor-rhel9`: Excessive resource consumption when printing error string for host certificate validation in `crypto/x509`.(AAP-61230)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64460[CVE-2025-64460] `automation-controller`: `Django`: Algorithmic complexity in XML Deserializer leads to denial of service.(AAP-60967)
+
+* link:https://access.redhat.com/security/cve/cve-2025-64460[CVE-2025-64460] `ansible-automation-platform-25/lightspeed-rhel8`: `Django`: Algorithmic complexity in XML Deserializer leads to denial of service.(AAP-60950)
+
+* link:https://access.redhat.com/security/cve/cve-2025-53643[CVE-2025-53643] `automation-controller`: AIOHTTP HTTP Request/Response Smuggling.(AAP-54875)
+
+
+== Deprecation
+
+=== Execution Environment
+
+`Openvswitch.openvswitch` collection has been deprecated for two years and is no longer certified. It has been removed from {HubNameStart}, but is still available from `Galaxy.ansible.com`. It remains in `ee-supported` for {PlatformNameShort} 2.5 for a brief transition period, but will be removed in a future release.(ACA-4941)
