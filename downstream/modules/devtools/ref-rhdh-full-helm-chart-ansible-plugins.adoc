@@ -8,38 +8,36 @@ This example provides a full YAML configuration for the Helm chart, illustrating
 
 ----
 global:
-  ...
+  # Enable OCI mode for plugins
+  pluginMode: oci
+  imageTagInfo: "2.6"
+  
+  # Dynamic plugin configuration (removes manual package references)
   dynamic:
-    ...
-    plugins:
-      - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-backstage-rhaap plugin>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-        pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
-      - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-scaffolder-backend-module-backstage-rhaap plugin>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
-...
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins: []
+    pluginConfig:
+      dynamicPlugins:
+        frontend:
+          ansible.plugin-backstage-rhaap:
+            appIcons:
+              - importName: AnsibleLogo
+                name: AnsibleLogo
+            dynamicRoutes:
+              - importName: AnsiblePage
+                menuItem:
+                  icon: AnsibleLogo
+                  text: Ansible
+                path: /ansible
+        backend:
+          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+
 upstream:
   backstage:
-    ...
+    image:
+      pullSecrets:
+        - <your-redhat-registry-pull-secret> # Ensure you have created this secret
     extraAppConfig:
       - configMapRef: app-config-rhdh
         filename: app-config-rhdh.yaml
@@ -48,13 +46,9 @@ upstream:
           - adt
           - server
         image: >-
-          registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+          registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel8:latest
         imagePullPolicy: IfNotPresent
         name: ansible-devtools-server
         ports:
           - containerPort: 8000
-...
-
-
 ----
-
