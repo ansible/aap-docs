@@ -2,27 +2,33 @@
 
 [id="proc-configuring-controller-route-options_{context}"]
 
-= Configuring your {ControllerName} operator route options
+= Configure {ControllerName} operator route options
 
 [role="_abstract"]
 
-The {PlatformName} operator installation form allows you to further configure your {ControllerName} operator route options under *Advanced configuration*.
+The {OperatorPlatformName} installation form provides advanced options to configure your {ControllerName} operator route.
+
+[IMPORTANT]
+====
+You must assign a unique `metadata.name` to each custom resource (CR) in your namespace. If you assign an `AutomationControllerMeshIngress` the same name as your `{PlatformNameShort}` installation, the operator overrides default routes and services. This conflict causes the platform installation to fail.
+====
 
 .Procedure
 . Log in to {OCP}.
-. Navigate to menu:Operators[Installed Operators].
-. Select your {OperatorPlatformNameShort} deployment.
-. Select the *Automation Controller* tab. 
-. For new instances, click btn:[Create AutomationController].
-.. For existing instances, you can edit the YAML view by clicking the {MoreActionsIcon} icon and then btn:[Edit AutomationController].
-. Click btn:[Advanced configuration].
-. Under *Ingress type*, click the drop-down menu and select *Route*.
-. Under *Route DNS host*, enter a common host name that the route answers to.
-. Under *Route TLS termination mechanism*, click the drop-down menu and select *Edge* or *Passthrough*. For most instances *Edge* should be selected.
-. Under *Route TLS credential secret*, click the drop-down menu and select a secret from the list.
-. Under *Enable persistence for __/var/lib/projects__ directory* select either true or false by moving the slider.
+. Navigate to *Operators → Installed Operators*.
+. Select your *{OperatorPlatformNameShort}* deployment.
+. Select the *{ControllerNameStart}* tab.
+. Create or edit an instance:
+.. For new instances, click *Create {ControllerNameStart}*.
+.. For existing instances, click the *Options* icon and select *Edit {ControllerNameStart}*.
+. Click *Advanced configuration*.
+. In the *Ingress type* list, select *Route*.
+. In the *Route DNS host* field, enter the common host name the route answers to.
+. In the *Route TLS termination mechanism* list, select *Edge* or *Passthrough*. Edge is recommended for most instances.
+. In the *Route TLS credential secret* list, select a secret.
+. Use the slider to enable or disable persistence for the `/var/lib/projects` directory.
 +
 [NOTE]
 ====
-After you have configured your route you can customize your hostname by adding `route_host:` to the YAML for that {ControllerName} instance.
+After you configure your route, you can customize your hostname by adding `route_host:` to the YAML for that {ControllerName} instance.
 ====
