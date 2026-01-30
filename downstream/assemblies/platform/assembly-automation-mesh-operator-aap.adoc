@@ -2,7 +2,7 @@
 
 [id="assembly-automation-mesh-operator-aap"]
 
-= {AutomationMeshStart} for operator-based {PlatformName}
+= Scale automation in an operator environment
 
 [role="_abstract"]
 Scaling your automation mesh is available on OpenShift deployments of {PlatformName} and is possible through adding or removing nodes from your cluster dynamically, using the *Instances* resource of the {PlatformNameShort} UI, without running the installation script.
@@ -15,7 +15,27 @@ To manage instances from the {PlatformNameShort} UI, you must have System Admini
 
 In general, the more processor cores (CPU) and memory (RAM) a node has, the more jobs that can be scheduled to run on that node at once. 
 
-For more information, see link:{URLControllerUserGuide}/controller-jobs#controller-capacity-determination[{ControllerNameStart} capacity determination and job impact]. 
+For more information, see link:{URLControllerUserGuide}/controller-jobs#controller-capacity-determination[{ControllerNameStart} capacity determination and job impact].
+
+.Prerequisites
+
+[role="_abstract"]
+The automation mesh is dependent on hop and execution nodes running on _{RHEL}_ (RHEL). 
+Your {PlatformName} subscription grants you ten {RHEL} licenses that can be used for running components of {PlatformNameShort}. 
+
+For more information about {RHEL} subscriptions, see link:{BaseURL}/red_hat_enterprise_linux/9/html/configuring_basic_system_settings/assembly_registering-the-system-and-managing-subscriptions_configuring-basic-system-settings[Registering the system and managing subscriptions] in the {RHEL} documentation.
+
+The following steps prepare the RHEL instances for deployment of the automation mesh.
+
+. You require a {RHEL} operating system. 
+Each node in the mesh requires a static IP address, or a resolvable DNS hostname that {PlatformNameShort} can access. 
+. Ensure that you have the minimum requirements for the RHEL virtual machine before proceeding. 
+For more information, see the link:{URLPlanningGuide}/platform-system-requirements[System requirements].
+. Deploy the RHEL instances within the remote networks where communication is required.
+For information about creating virtual machines, see link:{BaseURL}/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/assembly_creating-virtual-machines_configuring-and-managing-virtualization[Creating Virtual Machines] in the _{RHEL}_ documentation. Remember to scale the capacity of your virtual machines sufficiently so that your proposed tasks can run on them.
+
+** RHEL ISOs can be obtained from access.redhat.com. 
+** RHEL cloud images can be built using Image Builder from {Console}.
 
 include::platform/ref-operator-mesh-prerequisites.adoc[leveloffset=+1]
 
