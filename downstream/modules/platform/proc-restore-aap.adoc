@@ -1,0 +1,20 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-restore-aap"]
+
+= Restore the platform to its original state
+
+[role="_abstract"]
+Restore your environment by running the setup.sh script to recover platform data and configurations. Ensure the backup tar file is available in the default location, or use the optional restore_backup_file flag to specify a custom path before starting.
+
+.Procedure
+. Navigate to your {PlatformNameShort} installation directory.
+
+. Run the ./setup.sh script following the example:
+
+[literal, options="nowrap" subs="+attributes"]
+----
+root@localhost:~# ./setup.sh -e 'restore_backup_file=/path/to/nondefault/backup.tar.gz' -r
+----
+
+Where: `restore_backup_file`: Path to the tar file used for the platform restore.

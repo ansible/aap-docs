@@ -1,0 +1,50 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-backup-aap_{context}"]
+
+= Back up your {PlatformNameShort} instance
+
+[role="_abstract"]
+Back up an existing {PlatformNameShort} instance by running the `.setup.sh` script with the `backup_dest` flag. This saves the content and configuration of your current environment. Use the compression flags `use_archive_compression` and `use_db_compression` to compress the backup artifacts before they are sent to the host running the backup operation. 
+
+.Procedure
+
+. Navigate to your {PlatformNameShort} installation directory.
+. Run the `./setup.sh` script following the example below:
++
+----
+$ ./setup.sh -e 'backup_dest=/ansible/mybackup' -e 
+'use_archive_compression=true' 'use_db_compression=true @credentials.yml -b
+----
+Where:
+* `backup_dest`: Specifies a directory to save your backup to.
+
+* `use_archive_compression=true` and `use_db_compression=true`: Compresses the backup artifacts before they are sent to the host running the backup operation.
++
+You can use the following variables to customize the compression:
+
+** For global control of compression for filesystem related backup files: `use_archive_compression=true`
+
+** For component-level control of compression for filesystem related backup files: `<componentName>_use_archive_compression`
++
+For example:
+
+*** `automationgateway_use_archive_compression=true`
+*** `automationcontroller_use_archive_compression=true`
+*** `automationhub_use_archive_compression=true`
+*** `automationedacontroller_use_archive_compression=true`
+
+** For global control of compression for database related backup files: `use_db_compression=true`
+
+** For component-level control of compression for database related backup files: `<componentName>_use_db_compression=true`
++
+For example:
+
+*** `automationgateway_use_db_compression=true`
+*** `automationcontroller_use_db_compression=true`
+*** `automationhub_use_db_compression=true`
+*** `automationedacontroller_use_db_compression=true`
+
+.Result
+After a successful backup, a backup file is created at `/ansible/mybackup/automation-platform-backup-<date/time>.tar.gz`.
+
