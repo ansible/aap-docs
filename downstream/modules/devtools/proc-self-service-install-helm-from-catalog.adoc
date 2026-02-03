@@ -1,47 +1,73 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-install-helm-from-catalog_{context}"]
-= Configuring the {SelfServiceShort} Helm chart from the OpenShift catalog
+= Configure the {SelfServiceShort} Helm chart from the OpenShift catalog
 
 [role="_abstract"]
 Deploy the Helm chart from the OpenShift catalog by configuring the base URL and organization name in the YAML view. This launches the self-service automation portal installation.
 
 .Prerequisites
 * You have created a project for {SelfServiceShort} in {OCPShort}.
-* You have created a plugin registry in your project.
-* You have set up secrets for {PlatformNameShort} authentication and SCM authentication.
+* You have created secrets in {OCPShort} for {PlatformNameShort} authentication.
+* If you configure SCM integration (for example, importing from private repositories or using templates that access SCM), you have created secrets in OpenShift for SCM authentication.
+* You have completed one of the plug-in delivery methods outlined in the link:{BaseURL}/red_hat_ansible_automation_platform/{Platformvers}/html-single/installing_self-service_automation_portal/index#self-service-create-ocp-registry_self-service-preinstall-config[Choose a plug-in delivery method] section:
+** For OCI delivery: You have created the `<release-name>-dynamic-plugins-registry-auth` secret.
+** For HTTP plug-in registry: You have deployed the plug-in registry.
+
+
+
 
 .Procedure
-. In a browser, navigate to your OpenShift project for {SelfServiceShort} that you created earlier.
-. Select the *Developer* view.
-. Click the *Helm* option in the OpenShift sidebar.  
-. In the *Helm* page, click btn:[Create] and select *Helm Release*. 
-. Search for `Portal` in the Helm Charts filter,
-and select the `Automation Portal` chart. 
-. In the modal dialog on the chart page, click btn:[Create].
-. Select the *YAML view* in the *Create Helm Release* page.
-. Locate the `clusterRouterBase` key in the YAML file and replace the placeholder value with the base URL of your OpenShift instance.
+. In the OpenShift Container Platform web console, select the *Developer* view.
+. Select your project and click the btn:[Helm] option in the OpenShift sidebar.  
+. Click btn:[Create] and select *Helm Release*. 
+. Search for `Portal` in the Helm Charts filter, and select the `Automation Portal` chart. 
+. Click btn:[Create] and select the *YAML view*.
+. Set the OpenShift cluster router base.
+. Update the clusterRouterBase value with the base URL of your OpenShift instance.
 +
-The base URL is the URL portion of your OpenShift URL that follows `\https://console-openshift-console`,
-for example `apps.example.com`:
-+
-----
-  redhat-developer-hub
-    global:
-      clusterRouterBase: apps.example.com
-----
-. The Helm chart is set up for the Default {PlatformNameShort} organization.
-+
-To update the Helm chart to use a different organization,
-update the value for the `catalog.providers.rhaap.orgs` key from `Default` to your {PlatformNameShort} organization name. 
+[IMPORTANT]
+====
+You must replace the default `apps.example.com` placeholder value. If the default value remains, Helm chart validation fails.
+====
 +
 ----
-  catalog:
-    providers:
-      rhaap:
-        production:
-        # Replace 'Default' with the name of the organization you created
-          orgs: '<your-org-name>'
+redhat-developer-hub:
+  global:
+    clusterRouterBase: apps.example.com
 ----
-. Click btn:[Create] to launch the deployment.
+. Configure the plugin delivery mode by setting the `pluginMode` key:
+* For OCI delivery (default), ensure the value is `oci`.
+* For HTTP registry delivery, set the value to `tarball`.
+. *Optional:* To use a specific plugin version, update the `imageTagInfo` value:
++
+----
+redhat-developer-hub:
+  global:
+    imageTagInfo: "2.1.1"
+----
+. *Optional:* To synchronize with a specific {PlatformNameShort} organization, update the `orgs` key:
++
+----
+redhat-developer-hub:
+  upstream:
+    backstage:
+      appConfig:
+        catalog:
+          providers:
+            rhaap:
+              production:
+                orgs: "<your-aap-organization-name>"
+----
+. *Optional:* Update the `CUSTOMER_SUPPORT_URL` to point to your support portal:
++
+----
+redhat-developer-hub:
+  upstream:
+    backstage:
+      extraEnvVars:
+        - name: CUSTOMER_SUPPORT_URL
+          value: https://access.redhat.com/support
+----
+. Click btn:[Create].
 
