@@ -12,19 +12,24 @@ ifdef::context[]
 [id="self-service-create-ocp-registry_{context}"]
 endif::[]
 
-= Creating a plug-in registry in OpenShift
+= Choose a plug-in delivery method
 
 :context: self-service-create-ocp-registry
 
 [role="_abstract"]
-You must create a registry in {OCPShort} for the `.tar` files for {SelfServiceShort}.
+{SelfServiceShortStart} supports two plug-in installation methods. Choose the method that fits your environment:
+
+* *OCI container (recommended)*: {SelfService} automatically pulls an Open Container Initiative (OCI) container from `registry.redhat.io`.
+* *HTTP plug-in registry*: Manually create an HTTP plug-in registry that contains the necessary {SelfService} plug-ins.
 
 
-include::devtools/proc-self-service-download-tar.adoc[leveloffset=+1]
+include::devtools/proc-self-service-oci-container-delivery.adoc[leveloffset=+1]
 
-include::devtools/proc-self-service-setup-registry-image.adoc[leveloffset=+1]
+include::devtools/con-self-service-http-plug-in-registry.adoc[leveloffset=+1]
 
-include::devtools/proc-self-service-verify-plugin-registry-files.adoc[leveloffset=+1]
+include::devtools/proc-self-service-log-into-ocp-cli.adoc[leveloffset=+2]
+
+include::devtools/proc-self-service-download-tar.adoc[leveloffset=+2]
 
 ifdef::parent-context-of-self-service-create-ocp-registry[:context: {parent-context-of-self-service-create-ocp-registry}]
 ifndef::parent-context-of-self-service-create-ocp-registry[:!context:]

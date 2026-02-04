@@ -1,21 +1,23 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="rhdh-download-tar_{context}"]
-= Downloading the plug-in TAR files
+= Download plug-ins and push to the registry
 
 [role="_abstract"]
-Download the latest `.tar.gz` plug-in files for {SelfServiceShort} from the Red Hat Customer Portal.
+To provide Ansible plug-ins to {RHDH}, download the setup bundle and push the extracted files to a local Red Hat OpenShift registry. 
+
+By setting up a centralized httpd service, you can access these plug-in files through Helm chart configuration.
 
 .Procedure
-. Create a directory on your local machine to store the files.
+. Create a directory on your local machine to store the plug-in files.
 +
 ----
-$ mkdir /path/to/<automation-portal-plugins>
+mkdir /path/to/<ansible-backstage-plugins-local-dir>
 ----
-. Set an environment variable (`$DYNAMIC_PLUGIN_ROOT_DIR`) to represent the directory path.
+. Set an environment variable `$DYNAMIC_PLUGIN_ROOT_DIR` to represent the directory path.
 +
 ----
-$ export DYNAMIC_PLUGIN_ROOT_DIR=/path/to/<automation-portal-plugins>
+export DYNAMIC_PLUGIN_ROOT_DIR=/path/to/<ansible-backstage-plugins-local-dir>
 ----
 . Download the setup bundle. In a browser, navigate to the
 link:{PlatformDownloadUrl}[Red Hat Ansible Automation Platform Product Software downloads page].
@@ -25,26 +27,49 @@ and select the *Product Software* tab.
 The format of the filename is `self-service-automation-portal-plugins-x.y.z.tar.gz`. 
 +
 Substitute the Ansible plug-ins release version, for example `2.0.0`, for `x.y.z`.
-. Extract the `self-service-automation-portal-plugins-<version-number>.tar.gz` contents to `$DYNAMIC_PLUGIN_ROOT_DIR`.
+. Extract the contents to `$DYNAMIC_PLUGIN_ROOT_DIR`:
 +
 ----
 $ tar --exclude='*code*' -xzf self-service-automation-portal-plugins-x.y.z.tar.gz -C $DYNAMIC_PLUGIN_ROOT_DIR
 ----
 +
-Substitute the Ansible plug-ins release version, for example `2.0.0`, for `x.y.z`.
-
-.Verification
-
-Run `ls` to verify that the extracted files are in the `$DYNAMIC_PLUGIN_ROOT_DIR` directory:
-
+. Verify that the extracted files are in the `$DYNAMIC_PLUGIN_ROOT_DIR` directory:
++
 ----
-$ ls $DYNAMIC_PLUGIN_ROOT_DIR
+ls $DYNAMIC_PLUGIN_ROOT_DIR
+----
++
+You should see the following files:
++
+----
 ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz
 ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity
 ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
 ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz.integrity
-
+----
++
+The files with the .integrity file type contain the plug-in SHA value.
+. Create an httpd service as part of your OpenShift project:
+----
+oc new-build httpd --name=plugin-registry --binary
+oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+oc new-app --image-stream=plugin-registry
 ----
 
-The files with the `.integrity` file type contain the plugin SHA value.
+.Verification
+
+. Run the following command to verify that the plug-in registry deployed correctly:
++
+----
+oc exec $(oc get pods -l deployment=plugin-registry -o jsonpath='{.items[0].metadata.name}') -- ls -l /opt/app-root/src
+----
+. Confirm that the required tarball files are in the plug-in registry.
+
+*Helm chart configuration*
+When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` to `tarball`:
+----
+redhat-developer-hub:
+  global:
+    pluginMode: tarball
+----
 

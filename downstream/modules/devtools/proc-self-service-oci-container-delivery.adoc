@@ -1,0 +1,81 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="oci-conatiner-delivery_{context}"]
+
+= OCI container delivery
+
+[role="_abstract"]
+{SelfService} automatically pulls an OCI container from `registry.redhat.io` that includes the {SelfService} plug-ins.
+
+This method is the default for the Helm chart and is the recommended method for production deployments.
+
+.Prerequisites 
+
+* You have a Red Hat account with access to `registry.redhat.io`.
+* You have credentials for `registry.redhat.io`.
+* You have access to the OpenShift project (namespace) where you will install the Helm chart.
+* You have installed the OpenShift CLI (`oc`) and logged in to your cluster.
+* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/terms-based-registry/[Registry Service Accounts].
+
+.Procedure 
+
+. Create an `auth.json` file on your local machine.
+. Add the following structure to the `auth.json` file:
++
+----
+{
+  "auths": {
+    "registry.redhat.io": {
+      "auth": "<base64-encoded-username:password>"
+    }
+  }
+}
+----
+. Generate the base64-encoded authentication value:
++
+----
+printf '%s' '<username>:<password>' | base64
+----
+. Replace `<base64-encoded-username:password>` in the `auth.json` file with the output from the previous step.
+. Create the authentication secret in the target OpenShift project. The secret name must match your Helm release name.
+* If you install from the OpenShift catalog and you use the default release name `redhat-rhaap-portal`:
++
+----
+oc create secret generic redhat-rhaap-portal-dynamic-plugins-registry-auth \
+  --from-file=auth.json=./auth.json
+----
+* If you use a custom release name:
++
+----
+oc create secret generic <release-name>-dynamic-plugins-registry-auth \
+  --from-file=auth.json=./auth.json
+----
+
+.Verification 
+
+* Verify that the secret exists in the namespace:
++
+----
+oc get secret <release-name>-dynamic-plugins-registry-auth
+----
++
+[IMPOTANT]
+====
+Create this secret in the same namespace as the Helm release, and create it before you install or upgrade the Helm release.
+====
+
+*Helm Chart configuration*
+When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` to `oci`:
+
+----
+redhat-developer-hub:
+  global:
+    pluginMode: oci
+----
+
+This is the default value. Omit this setting unless you must document the plugin delivery mode.
+
+
+
+
+
