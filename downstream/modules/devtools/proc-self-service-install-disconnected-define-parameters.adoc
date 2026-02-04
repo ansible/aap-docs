@@ -1,40 +1,14 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-install-disconnected-define-parameters_{context}"]
-= Defining Parameters and Navigate to Chart Location
+= Configure plug-in delivery for disconnected environments
 
 [role="_abstract"]
-Navigate to the transferred Helm chart directory on your jump box. Define environment variables for the installation namespace and cluster router base URL before beginning the installation.
+Complete one of the plug-in delivery methods from the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_self-service_automation_portal/index#self-service-create-ocp-registry_self-service-preinstall-config[Choose a plug-in delivery method] section:
+
 
 .Procedure
 
-. On the machine within your disconnected environment, navigate to the directory where you placed the transferred Helm chart `.tgz` file.
-+
-----
-cd /path/to/your/transferred/charts/
-----
-+
-Example:
-+
-----
-cd /opt/disconnected-assets/charts/
-----
-. If the namespace doesn't exist, create it:
-+
-----
-oc new-project ${MY_NAMESPACE}
-----
-. Define your namespace and cluster router base as environment variables for easier use:
-+
-----
-export MY_NAMESPACE="<your_namespace_name>"
-export MY_CLUSTER_ROUTER_BASE="<your_cluster_router_base>"
-----
-+
-Example: 
-+
-----
-export MY_NAMESPACE="rhdh-dev"
-export MY_CLUSTER_ROUTER_BASE="apps.yourcluster.example.com"
-----
+* For OCI delivery: Create the `<release-name>-dynamic-plugins-registry-auth` secret with credentials for your disconnected registry that hosts the mirrored Ansible plug-ins OCI artifacts.
+* For HTTP plug-in registry: Deploy the plug-in registry in your disconnected OpenShift project following the _HTTP plug-in registry_ procedure outlined in the link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_self-service_automation_portal/index#self-service-create-ocp-registry_self-service-preinstall-config[Choose a plug-in delivery method] section.
 

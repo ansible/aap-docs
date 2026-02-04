@@ -1,7 +1,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-install-disconnected-download-helm_{context}"]
-= Downloading the helm chart package
+= Download the helm chart package
 
 [role="_abstract"]
 Download the Helm chart package and modify the internal image references to point to your disconnected registry. This prepares the installation package for the air-gapped environment.
@@ -9,39 +9,31 @@ Download the Helm chart package and modify the internal image references to poin
 
 .Procedure
 
-. Add the OpenShift Helm charts repository:
+. Add the OpenShift Helm charts repository and update your local cache:
 +
 ----
-$ helm repo add openshift-helm-charts https://charts.openshift.io/
+helm repo add openshift-helm-charts https://charts.openshift.io/
+helm repo update
 ----
-. Update your Helm repositories to fetch the latest chart information:
+. Pull the required version of the chart:
 +
 ----
-$ helm repo update
+helm pull openshift-helm-charts/redhat-rhaap-portal --version x.y.z
 ---- 
-. Pull the chart:
++
+The chart is saved as a `.tgz` file (for example, `redhat-rhaap-portal-1.0.1.tgz`).
+
+. Extract the chart files:
 +
 ----
-$ helm pull openshift-helm-charts/redhat-rhaap-portal --version x.y.z
-----
-+
-This command downloads the chart as a `.tgz` file, for example redhat-rhaap-portal-1.0.1.tgz.
-. Unpack the chart:
-+
-----
-$ tar -xvf redhat-rhaap-portal-x.y.z.tgz
+tar -xvf redhat-rhaap-portal-x.y.z.tgz
 ----
 +
 This creates a directory with a name similar to `redhat-rhaap-portal-1.0.1/`.
-. Navigate to the unpacked chart directory (for example, `cd redhat-rhaap-portal-1.0.1`) and open the `values.yaml` file in a text editor.
-. Find all the `image:` entries in `values.yaml` and replace the original image references with the full path to the image in your disconnected registry.
-+
-For example, replace `image: registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z` with  `image: <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z`
-. Repack the modified chart:
+. In the `redhat-rhaap-portal/values.yaml` file, replace all `image:` references with the full path to the images in your disconnected registry.
+. Repack the chart with your modifications:
 +
 ----
-$ helm package redhat-rhaap-portal-x.y.z
+helm package redhat-rhaap-portal-x.y.z
 ----
-+
-This creates a new `.tgz` file with your changes (for example, `redhat-rhaap-portal-1.0.1.tgz`).
-
+. A new .tgz file is created containing your changes.
