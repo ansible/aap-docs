@@ -3,18 +3,22 @@
 [id="self-service-install-disconnected-prereqs_{context}"]
 = Prerequisites
 
-* You have installed the OpenShift CLI (`oc`).
-See the
-link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/cli_tools/openshift-cli-oc#cli-getting-started[Getting started with the OpenShift CLI]
-chapter of the _Understanding OpenShift Container Platform_ guide.
+[role="_abstract"]
+Review the mandatory subscriptions, permissions, and platform access required before starting the installation. Fulfilling these needs helps ensure a successful deployment.
+
+* You have a valid subscription to {PlatformName}.
+* You have access to an instance of {PlatformName} {PlatformVers} with the appropriate permissions to create an OAuth application.
+* You have access to an {OCPSHort} instance with the appropriate permissions within your project to create an application.
+* You have installed `oc`, the OpenShift command-line interface (CLI) tool, on your local machine.
 * You have installed Helm 3.10 or newer.
-See the link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/building_applications/working-with-helm-charts#installing-helm[Installing Helm]
-chapter of the _OpenShift Container Platform Building applications_ guide.
 * You have installed and configured Podman for pulling and pushing container images.
-* You have internet access. This is required to pull images and charts from public repositories, including `registry.redhat.io` and `https://charts.openshift.io/`. 
-* A Red Hat pull secret, for exmaple `pull-secret.json` or similar credentials file that allows you to pull images from `registry.redhat.io`.
-* Sufficient disk space to store downloaded images and chart packages.
-* Access to public registries: Docker Hub, `quay.io`, `registry.redhat.io`, and your disconnected OpenShift cluster's internal registry.
+* You have internet access to pull images and charts from public repositories, including `registry.redhat.io`.
+* A Red Hat pull secret that allows you to pull images from registry.redhat.io.
+* You have a method to provide the Ansible plug-ins in the disconnected environment:
+** For OCI delivery: A method to mirror the OCI artifacts image referenced by `imageTagInfo`.
+** For HTTP plug-in registry: The ability to host the plug-in tarball files.
+* You have registry credentials for the registry endpoint used by the dynamic plug-in installer.
+
 
 
 // * A valid subscription to {PlatformName}.

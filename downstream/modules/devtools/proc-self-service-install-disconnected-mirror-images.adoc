@@ -1,7 +1,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-install-disconnected-mirror-images_{context}"]
-= Mirroring container images
+= Mirror container images
 
 
 . Log in to `registry.redhat.io`:
@@ -9,20 +9,13 @@
 ----
 $ podman login registry.redhat.io
 ----
-+
-Enter your Red Hat username and password when prompted.
-+
-Alternatively, you can use:
-+
-----
-$ podman login --authfile <path_to_pull_secret.json> registry.redhat.io
-----
+. Enter your Red Hat username and password when prompted.
 . Log in to your disconnected registry:
 +
 ----
 $ podman login <disconnected_registry_url>
 ----
-. Pull the original image from `registry.redhat.io`:
+. Pull the {RHDH} image from `registry.redhat.io`:
 +
 ----
 $ podman pull registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z
@@ -32,15 +25,19 @@ $ podman pull registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z
 ----
 $ podman tag registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
 ----
-+
-Example: 
-+
-----
-$ podman tag registry.redhat.io/rhdh/rhdh-hub-rhel9:1.1.0 my-disconnected-registry.com/myproject/rhdh-hub-rhel9:1.1.0
-----
 . Push the tagged image to your disconnected registry:
 +
 ----
 $ podman push <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
 ----
+. If you use OCI container delivery, mirror the Ansible plug-ins OCI artifacts image. Replace `<plugin-version>` with the version specified in `imageTagInfo` in your Helm chart configuration:
++
+----
+podman pull registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version>
+podman tag registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version> <disconnected_registry_url>/<your_namespace>/automation-portal:<plugin-version>
+podman push <disconnected_registry_url>/<your_namespace>/automation-portal:<plugin-version>
+----
+. If you use OpenShift image mirroring, configure the cluster to pull from your mirrored registry for `registry.redhat.io` content using an `ImageContentSourcePolicy` or equivalent configuration for your OpenShift version.
+
+
 
