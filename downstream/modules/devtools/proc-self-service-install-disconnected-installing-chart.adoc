@@ -1,7 +1,7 @@
 :_mod-docs-content-type: PROCEDURE
 
 [id="self-service-install-disconnected-installing-chart_{context}"]
-= Installing the Helm chart
+= Install the Helm chart
 
 [role="_abstract"]
 Install the self-service automation portal by using the `helm install` command. You must reference the local Helm chart file and include the required cluster overrides using the `--set` flags.
@@ -9,20 +9,35 @@ Install the self-service automation portal by using the `helm install` command. 
 
 .Procedure
 
-* Install the chart using the `helm install` command,
-referencing the local `.tgz` file by its name and using `--set` flags to provide necessary overrides.
-+
-Add more `--set` flags for any other values that were in your original `values.yaml` file.
+. On the machine within your disconnected environment, navigate to the directory where you placed the transferred Helm chart `.tgz` file:
 +
 ----
-$ helm install redhat-rhaap-portal \
+cd /path/to/your/transferred/charts/
+----
+. If the namespace does not exist, create it:
++
+----
+oc new-project ${MY_NAMESPACE}
+----
+. Define your namespace and cluster router base as environment variables:
++
+----
+export MY_NAMESPACE="<your_namespace_name>"
+export MY_CLUSTER_ROUTER_BASE="<your_cluster_router_base>"
+----
+. Install the chart using the `helm install` command:
++
+----
+helm install redhat-rhaap-portal \
   redhat-rhaap-portal-x.y.z.tgz \
   --namespace ${MY_NAMESPACE} \
   --set redhat-developer-hub.global.clusterRouterBase=${MY_CLUSTER_ROUTER_BASE} \
-  --set redhat-developer-hub.image.name=<disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z \
+  --set redhat-developer-hub.image.name=<disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
 ----
-** `redhat-rhaap-portal`: the release name for your Helm deployment.
-** `redhat-rhaap-portal-x.y.z.tgz`: the local path/filename to your modified Helm chart .tgz file.
-** `--namespace ${MY_NAMESPACE}`: the OpenShift project (namespace) where the chart will be installed, using your defined variable.
-** `--set redhat-developer-hub.global.clusterRouterBase=${MY_CLUSTER_ROUTER_BASE}`: the cluster router base, using your defined variable.
+. Add the appropriate plug-in mode setting:
+* For OCI delivery: `--set redhat-developer-hub.global.pluginMode=oci`
+* For plug-in registry: `--set redhat-developer-hub.global.pluginMode=tarball`
+
+
+
 
