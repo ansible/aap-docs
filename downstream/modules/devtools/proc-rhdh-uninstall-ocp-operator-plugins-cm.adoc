@@ -19,25 +19,37 @@ For this example, the ConfigMap name is `rhaap-dynamic-plugins-config`.
 ** To delete the plug-ins, delete the lines that reference the plug-ins from the `plugins:` block:
 +
 ----
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
- name: rhaap-dynamic-plugins-config
+  name: rhaap-dynamic-plugins-config
 data:
- dynamic-plugins.yaml: |
-   ...
-   plugins: # Remove the Ansible plug-ins entries below the ‘plugins’ YAML key
-     - disabled: false
-       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-       integrity: <SHA512 value>
-	 ...
-     - disabled: false
-       package: >-
-         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-       integrity: <SHA512 value>
-	 ...
-
+  dynamic-plugins.yaml: |
+    ...
+    plugins:
+      # Remove the Ansible plug-ins entries below the ‘plugins’ YAML key
+      - disabled: false
+        package: 'oci:registry.redhat.io/ansible-automation-platform/automation-portal:2.1'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: 'oci:registry.redhat.io/ansible-automation-platform/automation-portal:2.1'
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
+
 . Click btn:[Save].
 

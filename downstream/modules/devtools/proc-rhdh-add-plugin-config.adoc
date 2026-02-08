@@ -13,35 +13,37 @@ Under the `plugins` section in the YAML file, add the dynamic plug-ins that you 
 +
 ----
 global:
-  ...
-    plugins:
-      - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-backstage-rhaap-dynamic plugin>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-        pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
-      - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic plugin>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+  # RHDH Dynamic Plugin Configuration
+  dynamic:
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins: []
+
+  # NEW: Enable OCI mode to pull plugins directly from Red Hat Registry
+  pluginMode: oci
+  
+  # NEW: Specify the Ansible Plug-in version (Matches the Ansible Plugin version, e.g., 2.1)
+  imageTagInfo: "2.1"
+
+  # Optional: Define plugin configuration if customization is required.
+  # Note: The 'package' and 'integrity' fields are NOT required in OCI mode.
+  pluginConfig:
+    dynamicPlugins:
+      frontend:
+        ansible.plugin-backstage-rhaap:
+          appIcons:
+            - importName: AnsibleLogo
+              name: AnsibleLogo
+          dynamicRoutes:
+            - importName: AnsiblePage
+              menuItem:
+                icon: AnsibleLogo
+                text: Ansible
+              path: /ansible
+      backend:
+        ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
-. In the `package` sections, replace `x.y.z`  in the plug-in filenames with the correct version numbers for the Ansible plug-ins.
-. For each Ansible plug-in, update the integrity values using the corresponding `.integrity` file content.
+
 . Click btn:[Upgrade].
 +
 The developer hub pods restart and the plug-ins are installed.
@@ -62,7 +64,7 @@ To verify that the plug-ins have been installed, open the `install-dynamic-plugi
 The following example from the log indicates a successful installation for one of the plug-ins:
 +
 -----
-=> Successfully installed dynamic plugin http://plugin-registry-1:8080/ansible-plugin-backstage-rhaap-dynamic-1.1.0.tgz
+=> Successfully installed dynamic plugin oci:registry.redhat.io/ansible-automation-platform/automation-portal:2.1
 -----
 +
 The following image shows the container log in the *Pod details* page.

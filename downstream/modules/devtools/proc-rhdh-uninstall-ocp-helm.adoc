@@ -4,7 +4,7 @@
 = Uninstalling a Helm chart installation
 
 [role="_abstract"]
-To uninstall the Ansible plug-ins from a Helm chart installation, you remove templates using the ansible:content:create action first. Then, you delete the plug-in configuration from the Helm chart YAML, remove the extraContainers section, delete the Ansible block from the custom ConfigMap, restart the deployment, and remove the plug-in registry application.
+To uninstall the Ansible plug-ins from a Helm chart installation, you remove templates using the ansible:content:create action first. Then, you delete the plug-in configuration from the Helm chart YAML, remove the extraContainers section, delete the Ansible block from the custom ConfigMap, and restart the deployment.
 
 .Procedure
 
@@ -15,33 +15,30 @@ To uninstall the Ansible plug-ins from a Helm chart installation, you remove tem
 ----
 ...
 global:
-...
-    plugins:
-      - disabled: false
-        integrity: <SHA512 value>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-        pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
-      - disabled: false
-        integrity: <SHA512 value>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+  ...
+  # REMOVE the lines below:
+  pluginMode: oci
+  imageTagInfo: "2.1"
+
+  dynamic:
+    plugins: []
+    pluginConfig:
+      dynamicPlugins:
+        frontend:
+          ansible.plugin-backstage-rhaap:
+            appIcons:
+              - importName: AnsibleLogo
+                name: AnsibleLogo
+            dynamicRoutes:
+              - importName: AnsiblePage
+                menuItem:
+                  icon: AnsibleLogo
+                  text: Ansible
+                path: /ansible
+        backend:
+          ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
+
 . Remove the `extraContainers` section.
 +
 ----
@@ -53,7 +50,7 @@ upstream:
           - adt
           - server
         image: >-
-          registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+          registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
         imagePullPolicy: IfNotPresent
         name: ansible-devtools-server
         ports:
@@ -90,9 +87,3 @@ data:
 
 ----
 . Restart the {RHDH} deployment.
-. Remove the `plugin-registry` OpenShift application.
-+
-----
-oc delete all -l app=plugin-registry
-----
-
