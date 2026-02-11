@@ -1,0 +1,64 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-operator-install-egress-proxy"]
+
+= Configure operator-based {PlatformNameShort} to use egress proxy
+
+[role="_abstract"]
+When installing {PlatformNameShort} using the operator-based installation method, you can configure the platform to use an egress proxy.
+
+When creating an `automationcontroller` instance, select the YAML view and add `extra_settings` in the spec definition as the `AWX_TASK_ENV` parameter for the proxy settings, as follows.
++
+----
+apiVersion: automationcontroller.ansible.com/v1beta1
+kind: AutomationController
+metadata:
+  name: example
+  namespace: ansible-automation-platform
+spec:
+  create_preload_data: true
+  route_tls_termination_mechanism: Edge
+  garbage_collect_secrets: false
+  ingress_type: Route
+  loadbalancer_port: 80
+  no_log: true
+  image_pull_policy: IfNotPresent
+  projects_storage_size: 8Gi
+  auto_upgrade: true
+  task_privileged: false
+  projects_storage_access_mode: ReadWriteMany
+  set_self_labels: true
+  projects_persistence: false
+  replicas: 1
+  admin_user: admin
+  loadbalancer_protocol: http
+  nodeport_port: 30080
+  extra_settings:
+    - setting: AWX_TASK_ENV
+      value:
+        HTTPS_PROXY: 'https://192.168.0.XXX:3128'
+        HTTP_PROXY: 'https://192.168.0.XXX:3128'
+        NO_PROXY: 10.0.0.0/8
+        http_proxy: 'https://192.168.0.XXX:3128'
+        https_proxy: 'https://192.168.0.XXX:3128'
+        no_proxy: 10.0.0.0/8
+----
+
+== Modification for a deployed instance
+
+The configuration is stored as a ConfigMap resource. See it in the *OCP console > ConfigMaps > <instancename>-automationcontroller-configmap*
+
+To modify the settings after deployment, use the Operator. 
+
+After editing extra_settings, perform the deployment again. Go to *OCP console > Deployments > your instance > Decrease the Pod count > Increase the Pod count*. You can also redeploy it in the command line utility as follows.
+
+----
+$ oc scale --replicas=0 deployment.apps/<instancename> -n ansible-automation-platform deployment.apps/<instancename> scaled 
+$ oc scale --replicas=1 deployment.apps/<instancename> -n ansible-automation-platform deployment.apps/<instancename> scaled
+----
+
+.Verification
+See the settings in the Web UI at *Settings > Jobs settings > Extra Environment Variables*. 
+If you need to set another value, you can define it in the same way.
+extra_settings settings is stored statically in the `/etc/tower/settings.py` file in the `automationcontroller` instance
+
