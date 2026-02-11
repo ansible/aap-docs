@@ -15,7 +15,7 @@ This method is the default for the Helm chart and is the recommended method for 
 * You have credentials for `registry.redhat.io`.
 * You have access to the OpenShift project (namespace) where you will install the Helm chart.
 * You have installed the OpenShift CLI (`oc`) and logged in to your cluster.
-* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/terms-based-registry/[Registry Service Accounts].
+* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/login?redirectTo=https%3A%2F%2Faccess.redhat.com%2Farticles%2FRegistryAuthentication[Registry Service Accounts].
 
 .Procedure 
 
@@ -26,7 +26,7 @@ This method is the default for the Helm chart and is the recommended method for 
 {
   "auths": {
     "registry.redhat.io": {
-      "auth": "<base64-encoded-username:password>"
+      "auth": "<base64-encoded-username-password>"
     }
   }
 }
@@ -36,7 +36,7 @@ This method is the default for the Helm chart and is the recommended method for 
 ----
 printf '%s' '<username>:<password>' | base64
 ----
-. Replace `<base64-encoded-username:password>` in the `auth.json` file with the output from the previous step.
+. Replace `<base64-encoded-username-password>` in the `auth.json` file with the output from the previous step.
 . Create the authentication secret in the target OpenShift project. The secret name must match your Helm release name.
 * If you install from the OpenShift catalog and you use the default release name `redhat-rhaap-portal`:
 +
@@ -62,6 +62,12 @@ oc get secret <release-name>-dynamic-plugins-registry-auth
 [IMPOTANT]
 ====
 Create this secret in the same namespace as the Helm release, and create it before you install or upgrade the Helm release.
+====
+
+[NOTE]
+====
+You must use a Red Hat Registry service account to generate the OpenShift secret.
+Using your standard Red Hat account username and password  is not secure and will not work.
 ====
 
 *Helm Chart configuration*
