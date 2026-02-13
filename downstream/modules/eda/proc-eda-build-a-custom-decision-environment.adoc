@@ -17,13 +17,14 @@ Customize a decision environment container image to ensure your rulebook activat
 * Use the correct {EDAcontroller} decision environment in {PlatformNameShort} to prevent rulebook activation failure.
 
 ** If you want to connect {EDAcontroller} to {PlatformNameShort} 2.4, you must use `registry.redhat.io/ansible-automation-platform-24/de-minimal-rhel9:latest`
-** If you want to connect {EDAcontroller} to {PlatformNameShort} {PlatformVers}, you must use `registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel9:latest`
+** If you want to connect {EDAcontroller} to {PlatformNameShort} 2.5, you must use `registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel9:latest`
+** If you want to connect {EDAcontroller} to {PlatformNameShort} {PlatformVers}, you must use `registry.redhat.io/ansible-automation-platform-26/de-minimal-rhel9:latest`
 ====
 
 .Procedure
 
 . Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
-This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-25/de-minimal-rhel9/650a5672a370728c710acaab[{PlatformNameShort} minimal decision environment].  
+This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-26/de-minimal-rhel9/6449633cfb26ed69bfc5d755[{PlatformNameShort} minimal decision environment].  
 +
 The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the ansible.eda collection:
 +
@@ -33,7 +34,7 @@ version: 3
 
 images:
   base_image:
-    name: 'registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel9:latest'
+    name: 'registry.redhat.io/ansible-automation-platform-26/de-minimal-rhel9:latest'
 
 dependencies:
   galaxy:
@@ -54,7 +55,7 @@ version: 3
 
 images:
   base_image:
-    name: 'registry.redhat.io/ansible-automation-platform-25/de-minimal-rhel9:latest'
+    name: 'registry.redhat.io/ansible-automation-platform-26/de-minimal-rhel9:latest'
 
 dependencies:
   galaxy:
