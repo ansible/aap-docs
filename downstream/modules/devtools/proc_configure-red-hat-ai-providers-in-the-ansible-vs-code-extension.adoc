@@ -1,0 +1,71 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-05
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-red-hat-ai-providers-in-the-ansible-vs-code-extension_{context}"]
+= Configure Red Hat AI providers in the Ansible VS Code extension
+
+You can configure the Ansible VS Code extension to interact with models hosted on Red Hat AI infrastructure, specifically the Red Hat Enterprise Linux (RHEL) AI Inference Server and Red Hat OpenShift AI (RHOAI). This integration enables you to use the "Bring Your Own LLM" (BYOLLM) capability to generate and explain Ansible playbooks and roles using your own hosted models, such as Llama, Mistral, or OpenAI, without requiring external middleware.
+
+
+.Prerequisites
+
+* You have installed the Ansible VS Code extension version 25.12.3 or later.
+* You already deployed and can access the Red Hat AI infrastructure (RHEL AI Inference Server or RHOAI).
+* You have the API endpoint URL for the inference server.
+* You have a valid API key or credential for the target model.
+* You know the specific Model Name or ID.
+
+
+.Procedure
+
+. In Visual Studio Code, open the extension settings:
++
+.. Select **File** > **Preferences** > **Settings** (Windows/Linux) or **Code** > **Settings** > **Settings** (macOS).
+.. In the search field, enter **Ansible Lightspeed**.
+
+
+. Locate the Red Hat AI provider configuration section under the **Ansible Lightspeed** namespace.
+
+
+. In the **API Endpoint URL** field, enter the full address of your RHEL AI or RHOAI instance.
+
+
+. In the **Model Name/ID** field, enter the specific identifier for the model you want to use (for example, `granite-13b-chat-v2`).
+
+
+. In the **API Key** field, enter the credentials required to authenticate with your infrastructure.
++
+[NOTE]
+====
+The extension connects directly to the provider endpoint. It does not require the `c.ai.ansible.redhat.com` middleware or Red Hat authentication to enable this feature.
+====
+
+
+. Ensure that the Red Hat AI provider is selected as the active provider.
++
+[IMPORTANT]
+====
+Only one provider can be active at a time. If you switch between providers, ensure you select the correct provider in the settings to enable the corresponding features.
+====
+
+
+.Verification
+
+. Open an Ansible playbook or role file in the editor.
+
+. Check the status bar to verify that the Red Hat AI provider status is displayed and indicates a successful connection.
+
+. Right-click within the editor and trigger **Ansible Lightspeed** > **Generate Playbook**. If the configuration is correct, the extension generates content using the model hosted on your RHEL AI or RHOAI infrastructure.
+
+
+.Troubleshooting
+
+* **Issue**: The extension fails to connect or times out.
++
+**Resolution**: Verify that the **API Endpoint URL** is reachable from your network. The extension has a default timeout of 30 seconds. Check the **Output** view in VS Code under the **Ansible Lightspeed** channel for specific error logs.
+
+
+* **Issue**: Inline suggestions (ghost text) do not appear while typing.
++
+**Resolution**: This is expected behavior. Inline task suggestions and content source matching are not currently supported for Red Hat AI infrastructure providers.
