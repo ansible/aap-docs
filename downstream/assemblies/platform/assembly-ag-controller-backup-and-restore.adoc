@@ -2,63 +2,31 @@
 
 [id="controller-backup-and-restore"]
 
-= Backup and restore
+= Backup and restore {PlatformNameShort} 
 
-You can backup and restore your system by using the {PlatformNameShort} setup playbook. 
-
-For more information, see the link:{URLControllerAdminGuide}/index#controller-backup-restore-clustered-environments[Backup and restore clustered environments] section.
+You can protect your {PlatformNameShort} environment by backing up the database, configuration files, and keys. Use the `./setup.sh` script or playbooks to create compressed artifacts. This ensures a recovery path for single nodes or clusters, including restores, to secondary instances.
 
 [NOTE]
 ====
-When backing up {PlatformNameShort}, use the installation program that matches your currently installed version of {PlatformNameShort}.
-
-When restoring {PlatformNameShort}, use the latest installation program available at the time of the restore. For example, if you are restoring a backup taken from version `2.5-1`, use the latest `2.5-x` installation program available at the time of the restore.
-
-Backup and restore functionality only works with the PostgreSQL versions supported by your current {PlatformNameShort} version. 
-For more information, see link:{URLPlanningGuide}/platform-system-requirements[System requirements] in _{TitlePlanningGuide}_.
+Use the installation program matching your current {PlatformNameShort} version for backups, and always use the latest available version for restores. Ensure your PostgreSQL version is supported by checking the link:{URLPlanningGuide}/platform-system-requirements[System requirements] in _{TitlePlanningGuide}_.
 ====
 
-The {PlatformNameShort} setup playbook is invoked as `setup.sh` from the path where you unpacked the platform installer tar file. 
-It uses the same inventory file used by the install playbook. 
-The setup script takes the following arguments for backing up and restoring:
-
-* `-b`: Perform a database backup rather than an installation.
-* `-r`: Perform a database restore rather than an installation.
-
-As the root user, call `setup.sh` with the appropriate parameters and the {PlatformNameShort} backup or restored as configured:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-root@localhost:~# ./setup.sh -b
-root@localhost:~# ./setup.sh -r
-----
-
-Backup files are created on the same path that `setup.sh` script exists. 
-You can change it by specifying the following `EXTRA_VARS`:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-root@localhost:~# ./setup.sh -e 'backup_dest=/path/to/backup_dir/' -b
-----
-
-A default restore path is used unless you provide `EXTRA_VARS` with a non-default path, as shown in the following example:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-root@localhost:~# ./setup.sh -e 'restore_backup_file=/path/to/nondefault/backup.tar.gz' -r
-----
-
-Optionally, you can override the inventory file used by passing it as an argument to the setup script:
-
-[literal, options="nowrap" subs="+attributes"]
-----
-setup.sh -i <inventory file>
-----
-
-include::platform/con-controller-backup-restore-playbooks.adoc[leveloffset=+1]
+//include::platform/con-controller-backup-restore-playbooks.adoc[leveloffset=+1]
 
 include::platform/ref-controller-backup-restore-considerations.adoc[leveloffset=+1]
 
-include::platform/ref-controller-backup-restore-clustered-environments.adoc[leveloffset=+1]
+include::platform/con-controller-backup-aap.adoc[leveloffset=+1]
 
-include::platform/con-controller-restore-different-cluster.adoc[leveloffset=+2]
+include::platform/proc-backup-using-automation-installer.adoc[leveloffset=+2]
+
+include::platform/con-controller-restore-aap.adoc[leveloffset=+1]
+
+include::platform/con-controller-restore-playbook.adoc[leveloffset=+2]
+
+include::platform/proc-restore-aap.adoc[leveloffset=+2]
+
+//include::platform/ref-controller-backup-restore-clustered-environments.adoc[leveloffset=+1]
+
+//include::platform/con-controller-restore-different-cluster.adoc[leveloffset=+2]
+
+
