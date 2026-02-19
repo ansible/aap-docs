@@ -278,7 +278,8 @@ For more information, see the upgrade document for your deployment type. Either 
 +
 For details about infrastructure and inventory file changes in various upgrade scenarios, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/planning_your_upgrade/upgrade-infrastructure-changes[Infrastructure changes].
 
-* **Authentication changes**: Enterprise authentication configuration and mappings (for example, SAML, LDAP, OIDC) move from automation controller 2.4 to platform gateway {PlatformVers} as part of the upgrade process. You do not need to manually reconfigure these authentication methods after you upgrade.
+* **Authentication changes**: Enterprise authentication configuration and mappings, including SAML, LDAP, and OIDC, automatically move from {ControllerName} 2.4 to {Gateway} {PlatformVers} during the upgrade. 
+Although these settings migrate automatically within {PlatformNameShort}, you must update the callback URLs in your external Identity Provider (IdP) settings to point to {Gateway}. For more information, see link:{URLPlanningUpgrade}/upgrade-authentication-movement-2.4-to-2.6[Authentication movement].
 +
 See link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/access_management_and_authentication/index[Access management and authentication] for information about authentication options in general.
 +
