@@ -8,6 +8,9 @@
 If your `AutomationController` customer resource matches an existing deployment, perform the following steps to resolve the issue.
 
 The name specified for the new `AutomationController` custom resource must not match an existing deployment or the recovery process will fail.
+Persistent volume claims (PVCs) and Secrets remain after a deployment is deleted. 
+If you want to reuse the same name you must delete previous PVCs and Secrets before creating a new custom resource.
+
 
 .Procedure
 
