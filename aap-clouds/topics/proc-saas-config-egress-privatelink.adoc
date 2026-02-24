@@ -10,11 +10,20 @@ This configuration allows the {PlatformNameShort} control plane to connect to yo
 
 .Procedure
 
-. To initiate control plane egress, you must submit a *separate* link:https://access.redhat.com/support/cases/?extIdCarryOver=true&sc_cid=RHCTG0250000454096#/case/new/get-support?caseCreate=true[Customer support] case using the *Egress PrivateLink request template*, after which Red Hat requests approval to connect to your VPC Endpoint Service.
-. Your Internal Network or IT Team must configure the Internal DNS.
-. To ensure users route through the secure PrivateLink connection, you must request a Split-Horizon DNS configuration. 
-. You must copy the *Egress PrivateLink request template*, fill in your specific VPC Endpoint DNS Name (found in your AWS Console), and submit it to your internal IT or Network ticketing system.  
+. Create an Endpoint Service in your VPC:
+.. Confirm your private resource is behind an AWS Network Load Balancer (NLB).
+.. Create an Endpoint Service in your AWS VPC that points to that NLB.
 +
+[IMPORTANT]
+====
+You must select the service type that supports Interface endpoints and enable the Private DNS option.
+====
+. To initiate control plane egress, you must submit a *separate* link:https://access.redhat.com/support/cases/?extIdCarryOver=true&sc_cid=RHCTG0250000454096#/case/new/get-support?caseCreate=true[Customer support] case using the *Egress PrivateLink request template*.
+. Red Hat uses the information provided to create an Interface Endpoint on their side. When Red Hat creates this endpoint, they select the category "Endpoint services that use NLBs and GWLBs" to connect to your service.
+. Your Internal Network or IT Team must configure the Internal DNS.
+. To ensure users route through the secure PrivateLink connection, you must request a Split-Horizon DNS configuration.
+. Copy the *Egress PrivateLink request template*, fill in your specific VPC Endpoint Service Name, and submit it to Red Hat.
+
 *Egress PrivateLink request template*
 ----
 Subject: 
