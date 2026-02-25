@@ -18,6 +18,15 @@ Before you begin the upgrade process, review the following considerations to pla
 ====
 When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {ControllerName}, {HubName}, and {EDAcontroller} are all available for use. These APIs are being deprecated and will be disabled in an upcoming release. This grace period is to allow for migration to the new APIs put in place with the {Gateway}.
 ====
+<<<<<<< HEAD
+=======
+* Back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLInstallationGuide}/controller-backup-and-restore#backup-using-automation-installer[Back up the platform using automation installer] and {LinkOperatorBackup} for the specific topology of the environment.
+* Capture your inventory or instance group details before upgrading.
+* Review the {Gateway} requirements:
+** {PlatformNameShort} 2.4 to 2.6 upgrades include the link:{URLPlanningGuide}/ref-aap-components#con-about-platform-gateway_planning[{Gateway}]. Ensure you review the 2.6 link:{URLPlanningGuide}/network-ports-protocols_planning[Network ports and protocols] for architectural changes.
+** {GatewayStart} has a number of associated inventory file variables, some of which are required. For details of the new and changed variables for 2.6, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/rpm_installation/appendix-inventory-files-vars[Appendix A. Inventory file variables].
+** When upgrading from {PlatformNameShort} 2.4 to 2.6, connections to the {Gateway} URL might fail on the {Gateway} UI if you are using the {ControllerName} behind a load balancer. The following error message is displayed: `Error connecting to Controller API`
+>>>>>>> fab238283... AAP-66251: Broken links (#5642)
 +
 * Verify that you have a valid subscription before upgrading from a previous version of {PlatformNameShort}. Existing subscriptions are carried over during the upgrade process. 
 * Back up your {PlatformNameShort} 2.4 environment before upgrading in case any issues occur. See link:{URLUpgrade}/proc-backup-using-automation-installer[Back up the platform using automation installer] and {LinkOperatorBackup} for the specific topology of the environment.
@@ -32,6 +41,45 @@ When upgrading from {PlatformNameShort} 2.4 to 2.5, the API endpoints for the {C
 +
 To resolve this issue, for each controller host, add the {Gateway} URL as a trusted source in the `CSRF_TRUSTED_ORIGIN` setting in the *settings.py* file for each controller host. You must then restart each controller host so that the URL changes are implemented. For more information, see _Upgrading_ in {LinkTroubleshootingAAP}. 
 
+<<<<<<< HEAD
+=======
+== System requirements
+
+
+[cols="20%,40%,40%", options="header"]
+|====
+| Type | Description | Notes 
+h| Subscription | Valid {PlatformName} subscription |
+h| Operating system  
+| {RHEL} 9.4 or later minor versions of {RHEL} 9 | {PlatformName} are also supported on OpenShift, see {LinkOperatorInstallation} for more information.
+h| CPU architecture | x86_64, AArch64, s390x (IBM Z), ppc64le (IBM Power) |
+h| Ansible-core | Ansible-core version {CoreUseVers} or later | {PlatformNameShort} uses the system-wide ansible-core package to install the platform, but uses ansible-core {CoreUseVers} for both its control plane and built-in execution environments.
+h| Browser | A currently supported version of Mozilla Firefox or Google Chrome. |
+h| Database 
+a| 
+* For {PlatformNameShort} managed databases: {PostgresVers}.
+* For customer provided (external) databases: {PostgresVers}, 16, or 17.
+a| 
+* External (customer supported) databases require ICU support.
+* External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality is dependent on utilities provided with {PostgresVers}.
+|====
+
+== Database requirements
+* {PlatformNameShort} can work with two varieties of database:
+** Database installed with {PlatformNameShort} - This database consists of a PostgreSQL installation done as part of an {PlatformNameShort} installation using PostgreSQL packages provided by Red Hat.
+** Customer provided or configured database - This is an external database that is provided by the customer, whether on bare metal, virtual machine, container, or cloud hosted service.
+{PlatformNameShort} requires customer provided (external) database to have ICU support.
+* PostgreSQL user passwords are hashed with SCRAM-SHA-256 secure hashing algorithm before storing in the database.
+* Ensure that you back up your {PlatformNameShort} environment before upgrading in case any issues occur. See link:{URLInstallationGuide}/controller-backup-and-restore[Backup and restore] and {LinkOperatorBackup} for the specific topology of the environment.
+
+== User privileges
+* Ensure a dedicated non-root user is configured on the Red Hat Enterprise Linux host.
+
+** This user requires sudo or other Ansible supported privilege escalation (sudo is recommended) to perform administrative tasks during the installation.
+** This user is responsible for the installation of RPM {PlatformNameShort}.
+** You can obtain root access either through the sudo command, or through privilege escalation. You can de-escalate privileges from root to users such as AWX, PostgreSQL, {EDAName}, or Pulp.
+** An NTP client is configured on each node.
+>>>>>>> fab238283... AAP-66251: Broken links (#5642)
 
 [role="_additional-resources"]
 .Additional resources
