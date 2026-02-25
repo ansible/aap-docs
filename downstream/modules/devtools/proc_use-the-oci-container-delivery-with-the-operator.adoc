@@ -6,13 +6,13 @@
 = Use the OCI container delivery with the Operator
 
 [role="_abstract"]
-Red Hat Developer Hub pulls the Ansible plug-ins directly from `registry.redhat.io` as OCI artifacts. This method requires a registry authentication secret in the same OpenShift project as your Red Hat Developer Hub deployment.
+{RHDH} pulls the Ansible plug-ins directly from `registry.redhat.io` as OCI artifacts. This method requires a registry authentication secret in the same OpenShift project as your {RHDH} deployment.
 
 
 .Prerequisites
 * You have a Red Hat account with access to `registry.redhat.io`.
 * You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/terms-based-registry/[Registry Service Accounts].
-* You have access to the OpenShift project where you had installed Red Hat Developer Hub.
+* You have access to the OpenShift project where you had installed {RHDH}.
 * You have installed the OpenShift CLI (`oc`) and logged in to your cluster.
 
 
@@ -34,7 +34,7 @@ Red Hat Developer Hub pulls the Ansible plug-ins directly from `registry.redhat.
 To generate the base64-encoded value, use the `printf '%s' '<username>:<password>' | base64` command.
 
 
-. Create the authentication secret in the OpenShift project where you had installed Red Hat Developer Hub.
+. Create the authentication secret in the OpenShift project where you had installed {RHDH}.
 +
 The secret name must follow the pattern `<deployment-name>-dynamic-plugins-registry-auth`, where `<deployment-name>` matches the `metadata.name` of your Backstage custom resource.
 +
@@ -56,7 +56,7 @@ oc create secret generic <deployment-name>-dynamic-plugins-registry-auth \
 +
 [IMPORTANT]
 ====
-Create this secret in the same OpenShift project as your Red Hat Developer Hub deployment, and create it before you configure the plug-ins.
+Create this secret in the same OpenShift project as your {RHDH} deployment, and create it before you configure the plug-ins.
 ====
 
 
