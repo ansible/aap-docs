@@ -10,8 +10,14 @@ you must modify the base ConfigMap for the {RHDH} deployment.
 .Procedure
 
 . In the OpenShift console, select the *Topology* view.
+
+
 . Click *More actions {MoreActionsIcon}* on the developer-hub instance and select *Edit backstage* to edit the base ConfigMap.
+
+
 . Select the *YAML* tab.
+
+
 . In the editing pane, remove the `containers` block for the sidecar container from the `spec.deployment.patch.spec.template.spec` block:
 +
 ----
@@ -26,13 +32,29 @@ spec:
               - command:
                   - adt
                   - server
-                image: ghcr.io/ansible/community-ansible-dev-tools:latest
+                image: registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
                 imagePullPolicy: always
                 ports:
                   - containerPort: 8000
                     protocol: TCP
                 terminationMessagePolicy: file
-
 ----
+
+
 . Click btn:[Save].
 
+
+. If you used OCI delivery, delete the registry auth secret:
++
+[literal,subs="+quotes"]
+----
+oc delete secret <deployment-name>-dynamic-plugins-registry-auth
+----
+
+
+. If you used the HTTP plug-in registry, remove the plug-in registry application:
++
+[literal,subs="+quotes"]
+----
+oc delete all -l app=plugin-registry
+----
