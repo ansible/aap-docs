@@ -4,95 +4,77 @@
 = Uninstalling a Helm chart installation
 
 [role="_abstract"]
-To uninstall the Ansible plug-ins from a Helm chart installation, you remove templates using the ansible:content:create action first. Then, you delete the plug-in configuration from the Helm chart YAML, remove the extraContainers section, delete the Ansible block from the custom ConfigMap, restart the deployment, and remove the plug-in registry application.
+To uninstall the Ansible plug-ins from a Helm chart installation, you remove templates using the ansible:content:create action first. Then, you delete the plug-in configuration from the Helm chart YAML, remove the extraContainers section, and delete the Ansible block from the custom ConfigMap. Finally, you restart the deployment.
 
 .Procedure
 
 . In {RHDH}, remove any software templates that use the `ansible:content:create` action.
+
+
 . In the OpenShift Developer UI, navigate to menu:Helm[developer-hub > Actions > Upgrade > Yaml view].
+
+
 . Remove the Ansible plug-ins configuration under the `plugins` section.
 +
 ----
-...
 global:
-...
+  dynamic:
     plugins:
       - disabled: false
-        integrity: <SHA512 value>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
         pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
+          ...
       - disabled: false
-        integrity: <SHA512 value>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
         pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+          ...
 ----
++
+For HTTP plug-in registry, remove the `http://plugin-registry:8080/\...` entries instead.
+
+
 . Remove the `extraContainers` section.
 +
 ----
 upstream:
-  backstage: |
+  backstage:
     ...
     extraContainers:
       - command:
           - adt
           - server
         image: >-
-          registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+          registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
         imagePullPolicy: IfNotPresent
         name: ansible-devtools-server
         ports:
           - containerPort: 8000
-    image:  
-      pullPolicy: Always
-      pullSecrets:
-        - ...
-        - rhdh-secret-registry
-    ...
 ----
-. Click btn:[Upgrade].
-. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
-. Remove the `ansible` section.
-+
-----
-data:
-  app-config-rhdh.yaml: |
-    ...
-    ansible:
-      analytics:
-        enabled: true
-      devSpaces:
-        baseUrl: '<https://MyOwnDevSpacesUrl/>'
-      creatorService:
-        baseUrl: '127.0.0.1'
-        port: '8000'
-      rhaap:
-        baseUrl: '<https://MyAapSubcriptionUrl>'
-        token: '<TopSecretAAPToken>'
-        checkSSL: true
-      automationHub:
-        baseUrl: '<https://MyOwnPAHUrl/>'
 
-----
+
+. Click btn:[Upgrade].
+
+
+. Edit your custom {RHDH} config map, for example `app-config-rhdh`.
+
+
+. Remove the `ansible` section.
+
+
 . Restart the {RHDH} deployment.
-. Remove the `plugin-registry` OpenShift application.
+
+
+. If you used OCI delivery, delete the registry auth secret:
 +
+[literal,subs="+quotes"]
+----
+oc delete secret <deployment-name>-dynamic-plugins-registry-auth
+----
+
+
+. If you used the HTTP plug-in registry method, remove the plug-in registry application:
++
+[literal,subs="+quotes"]
 ----
 oc delete all -l app=plugin-registry
 ----
-

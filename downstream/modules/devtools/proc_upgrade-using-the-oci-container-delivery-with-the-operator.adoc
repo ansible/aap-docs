@@ -1,0 +1,39 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-16
+:_mod-docs-content-type: PROCEDURE
+
+[id="upgrade-using-the-oci-container-delivery-with-the-operator_{context}"]
+= Upgrade using the OCI container delivery with the Operator
+
+[role="_abstract"]
+To upgrade the Ansible plug-ins when using OCI delivery, update the version tag in the `package` URL in your plug-ins ConfigMap.
+
+
+.Procedure
+
+. Log in to your {OCPShort} instance.
+. Navigate to **ConfigMaps** and select the **rhaap-dynamic-plugins-config** map.
+. Select the **YAML** tab.
+. In the **plugins** list, update the version tag at the end of each **package** URL:
++
+----
+plugins:
+  - disabled: false
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
+    pluginConfig:
+      ...
+  - disabled: false
+    package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
+    pluginConfig:
+      ...
+----
+
+. Click **Save**.
++
+{RHDH} detects the configuration change and reloads the plug-ins.
+
+
+.Verification
+
+. In the OpenShift UI, click **Topology**.
+. Verify that the {RHDH} instance is available.

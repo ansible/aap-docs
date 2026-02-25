@@ -4,17 +4,16 @@
 = Full Helm chart config example for Ansible plug-ins
 
 [role="_abstract"]
-This example provides a full YAML configuration for the Helm chart, illustrating the precise structure needed to integrate the Ansible plug-ins into the {RHDH} installation.
+This example provides a full YAML configuration for the Helm chart using OCI container delivery.
 
 ----
 global:
-  ...
   dynamic:
-    ...
+    includes:
+      - dynamic-plugins.default.yaml
     plugins:
       - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-backstage-rhaap plugin>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
         pluginConfig:
           dynamicPlugins:
             frontend:
@@ -29,17 +28,17 @@ global:
                       text: Ansible
                     path: /ansible
       - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-scaffolder-backend-module-backstage-rhaap plugin>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
         pluginConfig:
           dynamicPlugins:
             backend:
               ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
-...
+
 upstream:
   backstage:
-    ...
+    image:
+      pullSecrets:
+        - <your-redhat-registry-pull-secret>
     extraAppConfig:
       - configMapRef: app-config-rhdh
         filename: app-config-rhdh.yaml
@@ -48,13 +47,9 @@ upstream:
           - adt
           - server
         image: >-
-          registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel8:latest
+          registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
         imagePullPolicy: IfNotPresent
         name: ansible-devtools-server
         ports:
           - containerPort: 8000
-...
-
-
 ----
-
