@@ -1,0 +1,78 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-16
+:_mod-docs-content-type: PROCEDURE
+
+[id="use-oci-container-delivery-method_{context}"]
+= Use OCI container delivery method
+
+[role="_abstract"]
+{RHDH} pulls the Ansible plug-ins directly from `registry.redhat.io` as OCI artifacts. This the **recommended method** that requires a registry authentication secret in the same OpenShift project as your {RHDH} deployment.
+
+.Prerequisites
+* You have a Red Hat account with access to registry.redhat.io.
+* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/terms-based-registry/[Registry Service Accounts].
+* You have access to the OpenShift project. In the same project you had installed {RHDH}.
+* You have installed the OpenShift CLI (oc) and logged in to your cluster.
+
+
+
+.Procedure
+. Create an auth.json file on your local machine with your registry.redhat.io credentials:
++
+[literal,subs="+quotes"]
+----
+{
+  "auths": {
+    "registry.redhat.io": {
+      "auth": "<base64-encoded-username:password>"
+    }
+  }
+}
+----
++
+To generate the base64-encoded value use the `printf '%s' '<username>:<password>' | base64` command.
+
+
+. Create the authentication secret in the OpenShift project where you installed {RHDH}.
++
+The secret name must follow the pattern `<deployment-name>-dynamic-plugins-registry-auth`, where `<deployment-name>` matches your {RHDH} deployment name.
++
+** For a default {RHDH} Helm installation with release name `developer-hub`:
++
+[literal,subs="+quotes"]
+----
+oc create secret generic developer-hub-dynamic-plugins-registry-auth \
+  --from-file=auth.json=./auth.json
+----
+
+** If you use a different Helm release name:
++
+[literal,subs="+quotes"]
+----
+oc create secret generic <deployment-name>-dynamic-plugins-registry-auth \
+  --from-file=auth.json=./auth.json
+----
+
+** If you already have Podman credentials configured locally:
++
+[literal,subs="+quotes"]
+----
+oc create secret generic <deployment-name>-dynamic-plugins-registry-auth \
+  --from-file=auth.json=${XDG_RUNTIME_DIR}/containers/auth.json
+----
++
+[IMPORTANT]
+====
+Create this secret in the same OpenShift project as your {RHDH} deployment, and create it before you configure the plug-ins. Use a Red Hat Registry service account token, not your personal Red Hat account credentials.
+====
+
+
+.Verification
+
+* Verify that the secret exists in the project:
++
+[literal,subs="+quotes"]
+----
+oc get secret <deployment-name>-dynamic-plugins-registry-auth
+----
+

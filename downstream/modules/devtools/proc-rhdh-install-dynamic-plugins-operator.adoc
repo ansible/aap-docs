@@ -10,64 +10,96 @@ If you have not already created a ConfigMap file for your {RHDHShort} plugin set
 create one by following the procedure in the
 link:{BaseURL}/openshift_container_platform/{OCPLatest}/html-single/nodes/index#configmaps[Creating and using config maps] section of the {OCPShort} _Nodes_ guide.
 
-The example ConfigMap used in the following procedure is called `rhaap-dynamic-plugins-config`.
-
 .Procedure
 
 . Select *ConfigMaps* in the navigation pane of the OpenShift console.
 . Select the `rhaap-dynamic-plugins-config` ConfigMap from the list.
 . Select the *YAML* tab to edit the `rhaap-dynamic-plugins-config` ConfigMap.
-. In the `data.dynamic-plugins.yaml.plugins` block, add the three dynamic plug-ins from the plug-in registry.
-** For the `integrity` hash values, use the `.integrity` files in your `$DYNAMIC_PLUGIN_ROOT_DIR` directory that correspond to each plug-in, for example use `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity` for the `ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz` plug-in.
-** Replace `x.y.z` with the correct version of the plug-ins.
+. Add the Ansible plug-ins. Choose the configuration that matches your delivery method.
++
+** OCI container delivery method (recommended):
 +
 ----
 kind: ConfigMap
 apiVersion: v1
 metadata:
- name: rhaap-dynamic-plugins-config
+  name: rhaap-dynamic-plugins-config
 data:
- dynamic-plugins.yaml: |
-   ...
-   plugins:
-     - disabled: false
-       package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-       integrity: <SHA512 value> # Use hash in ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz.integrity
-       pluginConfig:
-         dynamicPlugins:
-           frontend:
-             ansible.plugin-backstage-rhaap:
-               appIcons:
-                 - importName: AnsibleLogo
-                   name: AnsibleLogo
-               dynamicRoutes:
-                 - importName: AnsiblePage
-                   menuItem:
-                     icon: AnsibleLogo
-                     text: Ansible
-                   path: /ansible
-     - disabled: false
-       package: >-
-         http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-       integrity: <SHA512 value> # Use hash in ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz.integrity
-       pluginConfig:
-         dynamicPlugins:
-           backend:
-             ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
-     - ...<REDACTED>
-
+  dynamic-plugins.yaml: |
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - disabled: false
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-backstage-rhaap'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
++
+Replace `x.y.z` with the Ansible plug-ins version.
+
+
+** HTTP plug-in registry method:
++
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rhaap-dynamic-plugins-config
+data:
+  dynamic-plugins.yaml: |
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - disabled: false
+        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
+        integrity: <SHA512 value>
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
+        integrity: <SHA512 value>
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+----
+
 . Click btn:[Save].
-. To view the progress of the rolling restart:
-.. In the *Topology* view, select the deployment pod and click *View logs*.
-.. Select `install-dynamic-plugins` from the list of containers.
+
+
 
 .Verification
 
 . In the OpenShift console, select the *Topology* view.
 . Click the *Open URL* icon on the deployment pod to open your {RHDH} instance in a browser window.
 
-The Ansible plug-in is present in the navigation pane, and if you select *Administration*,
-the installed plug-ins are listed in the *Plugins* tab.
-
- 
+The Ansible plug-in is present in the navigation pane. If you select *Administration*, you can see the installed plug-ins in the *Plugins* tab.
