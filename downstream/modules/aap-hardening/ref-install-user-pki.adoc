@@ -16,7 +16,7 @@ Where an existing PKI infrastructure is available, certificates must be generate
 Copy the certificate files and their relevant key files to the installation program directory, along with the CA certificate used to verify the certificates.
 
 Use the following inventory variables to configure the infrastructure components with the new certificates.
-+
+
 .PKI certificate inventory variables
 |====
 | *RPM Variable* | *Containerized Variable* | *Details*
@@ -42,7 +42,7 @@ If set, this will install a custom CA certificate to the system truststore.
 | - | `gateway_tls_cert` | The filename of the {Gateway} PKI certificate located in the installation program directory.
 | - | `gateway_tls_key` | The file name of the {Gateway} PKI key located in the installation program directory.
 |====
-+
+
 When multiple {Gateway}s are deployed with a load balancer, `gateway_tls_cert` and `gateway_tls_key` are shared by each {Gateway}. 
 To prevent hostname mismatches, the certificate's _Common Name_ (CN) must match the DNS FQDN used by the load balancer. 
 //This also applies when deploying multiple {PrivateHubName} and the `automationhub_ssl_cert` and `automationhub_ssl_key` variables. 
