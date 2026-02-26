@@ -47,13 +47,12 @@ tar -xzvf ansible-automation-dashboard-containerized-setup-bundle-0.1-x86_64.tar
 cd ansible-automation-dashboard-containerized-setup/
 ----
 
-. Verify that the installation of necessary software by running the following commands:
+. Install the required `ansible-core` package.
 +
 [source,bash]
 ----
 cd ansible-automation-dashboard-containerized-setup
 sudo dnf install ansible-core
-ansible-galaxy collection install -r requirements.yml
 ----
 
 . Create an application `client_id/client_secret` in your {PlatformNameShort} instance:
@@ -197,6 +196,13 @@ bundle_dir='{{ lookup("ansible.builtin.env", "PWD") }}/bundle'
 # --------------------------
 # Set to True to expose Django admin page.
 # nginx_dashboard_admin_exposed=False
+----
+
+. Install the required Ansible collections. You must complete this step to prevent module resolution errors during the installation.
++
+[source,bash]
+----
+ansible-galaxy collection install -r requirements.yml
 ----
 
 . Run the installation program.
