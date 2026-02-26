@@ -4,48 +4,33 @@
 = Updating the Ansible plug-ins version numbers for a Helm installation
 
 [role="_abstract"]
-You must navigate to the Helm chart's YAML view in the OpenShift Developer UI and replace the old version numbers and integrity hash values for both Ansible plug-ins, which triggers a restart of the Developer Hub pods to finalize the upgrade.
+To upgrade the Ansible plug-ins, you must update the `imageTagInfo` parameter in the Helm chart configuration to the desired version. This triggers the {RHDH} to pull the new container images directly from the Red Hat registry.
+
 
 .Procedure
 
 . Log in to your {OCPShort} instance.
 . In the OpenShift Developer UI, navigate to menu:Helm[developer-hub > Actions > Upgrade > Yaml view].
-. Update the Ansible plug-ins version numbers and associated `.integrity` file values.
+. Locate the `global` section.
 +
 ----
 ...
 global:
-...
-    plugins:
-      - disabled: false
-        integrity: <SHA512 value>
-        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
-        pluginConfig:
-          dynamicPlugins:
-            frontend:
-              ansible.plugin-backstage-rhaap:
-                appIcons:
-                  - importName: AnsibleLogo
-                    name: AnsibleLogo
-                dynamicRoutes:
-                  - importName: AnsiblePage
-                    menuItem:
-                      icon: AnsibleLogo
-                      text: Ansible
-                    path: /ansible
-      - disabled: false
-        integrity: <SHA512 value>
-        package: >-
-          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
-        pluginConfig:
-          dynamicPlugins:
-            backend:
-              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+  # Ensure OCI mode is enabled
+  pluginMode: oci
+  
+  # UPDATE this value to the new desired version
+  imageTagInfo: "2.1" 
 
+  # Note: Do not manually update 'plugins' packages; 
+  # OCI mode handles the download automatically based on the tag above.
+  dynamic:
+    plugins: [] 
 ----
+
 . Click btn:[Upgrade].
 +
-The developer hub pods restart and the plug-ins are installed.
+The {RHDH} pods restart and pull the new plug-in versions.
 
 .Verification
 
