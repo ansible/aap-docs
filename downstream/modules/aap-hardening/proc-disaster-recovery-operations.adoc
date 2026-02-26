@@ -9,15 +9,28 @@
 
 [role="_abstract"]
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 Taking regular backups of {PlatformNameShort} is a critical part of disaster recovery planning. Both backups and restores are performed using the {Installer}, so these actions should be performed from the dedicated installation host described earlier in this document. Refer to the link:{URLInstallationGuide}/controller-backup-and-restore[Back up and restore] section of the {TitleInstallationGuide} documentation for further details on how to perform these operations.
+=======
+Taking regular backups of {PlatformNameShort} is a critical part of disaster recovery planning. Both backups and restores are performed using the {Installer}, so these actions should be performed from the dedicated installation host. Refer to link:{URLControllerAdminGuide}/controller-backup-and-restore[Back up and restore] for further details on how to perform these operations.
+>>>>>>> b4eb97795 (Revision for 5th iteration of Hardening Guide)
+=======
+Taking regular backups of {PlatformNameShort} is a critical part of disaster recovery planning. Both backups and restores are performed using the {Installer}, so these actions should be performed from the dedicated installation host. 
+Refer to link:{URLControllerAdminGuide}/controller-backup-and-restore[Back up and restore] for further details on how to perform these operations.
+>>>>>>> 10b8ce443 (Revision for 5th iteration of Hardening Guide)
 
-An important aspect of backups is that they contain a copy of the database as well as the secret key used to decrypt credentials stored in the database, so the backup files should be stored in a secure encrypted location. This means that access to endpoint credentials are protected properly. Access to backups should be limited only to {PlatformNameShort} administrators who have root shell access to {ControllerName} and the dedicated installation host.
+Backups contain a copy of the database as well as the secret key used to decrypt credentials stored in the database. Store the backup files in a secure encrypted location. 
+Otherwise, credentials stored in the backup file may be at risk of being disclosed. 
+Limit access to backups only to {PlatformNameShort} administrators who have root shell access to the infrastructure nodes and the dedicated installation host.
 
 The two main reasons an {PlatformNameShort} administrator needs to back up their {PlatformNameShort} environment are:
 
 * To save a copy of the data from your {PlatformNameShort} environment, so you can restore it if needed.
 * To use the backup to restore the environment into a different set of servers if you're creating a new {PlatformNameShort} cluster or preparing for an upgrade.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 In all cases, the recommended and safest process is to always use the same versions of PostgreSQL and {PlatformNameShort} to back up and restore the environment.
 
 Using some redundancy on the system is highly recommended. If the secrets system is down, the {ControllerName} cannot fetch the information and can fail in a way that would be recoverable once the service is restored. If you believe the SECRET_KEY {ControllerName} generated for you has been compromised and has to be regenerated, you can run a tool from the {Installer} that behaves much like the {ControllerName} backup and restore tool.
@@ -30,3 +43,12 @@ To generate a new secret key, perform the following steps:
 
 .Result
 A backup copy of the previous key is saved in `/etc/tower/`.
+=======
+In all cases, the recommended and safest process is to always use the same versions of PostgreSQL and {PlatformNameShort} to back up and restore the environment.
+>>>>>>> b4eb97795 (Revision for 5th iteration of Hardening Guide)
+=======
+[IMPORTANT]
+====
+Always use the same versions of PostgreSQL and {PlatformNameShort} to back up and restore the environment.
+====
+>>>>>>> 53efce2da (Revision for 5th iteration of Hardening Guide)
