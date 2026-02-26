@@ -1,0 +1,71 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-version-compatibility_{context}"]
+= Understanding {SelfServiceShort} version compatibility
+
+[role="_abstract"]
+When upgrading {SelfServiceShort}, ensure version compatibility between the Helm chart, plug-in bundle, and {PlatformNameShort} version to avoid installation or upgrade failures.
+
+== Version components
+
+A {SelfServiceShort} deployment consists of three version-dependent components:
+
+Helm chart version::
+The version of the {SelfServiceShort} Helm chart deployed in {OCPShort}.
+Example: `2.1.0`
+
+Plug-in bundle version::
+The version of the Ansible plug-ins setup bundle downloaded from the Red Hat Customer Portal.
+Example: `self-service-automation-portal-plugins-2.1.0.tar.gz`
+
+{PlatformNameShort} version::
+The version of {PlatformNameShort} that {SelfServiceShort} connects to.
+Example: `2.6`
+
+== Version alignment requirements
+
+For a successful {SelfServiceShort} upgrade:
+
+* The Helm chart version and plug-in bundle version must match exactly.
++
+Example: Helm chart version `2.1.0` requires plug-in bundle `2.1.0`.
+
+* The {SelfServiceShort} version must be compatible with your {PlatformNameShort} version.
++
+See the link:https://access.redhat.com/support/policy/updates/ansible-automation-platform[{PlatformNameShort} Life Cycle] for version compatibility information.
+
+== Common version mismatch scenarios
+
+The following scenarios can cause upgrade failures:
+
+Plug-in bundle and Helm chart mismatch::
+If you download plug-in bundle version `2.0.0` but upgrade to Helm chart version `2.0.1`, the installation fails with an error indicating that required plug-in files are not found or have incorrect versions.
+
+Stale plug-in bundle::
+If you download a plug-in bundle, and a new version is released before you complete the installation, you might install an outdated bundle with a newer Helm chart.
+This causes version mismatch errors during deployment.
+
+== Best practices for version management
+
+To avoid version mismatch issues during upgrades:
+
+. Identify your target version before starting the upgrade process.
++
+Check the link:{PlatformDownloadUrl}[Red Hat Ansible Automation Platform Product Software downloads page] for the latest available versions.
+
+. Download the plug-in bundle and upgrade the Helm chart in the same maintenance window.
++
+This minimizes the risk of version drift between download and installation.
+
+. Verify the plug-in bundle version before extracting it.
++
+Check that the filename version (for example, `2.1.0` in `self-service-automation-portal-plugins-2.1.0.tar.gz`) matches your target Helm chart version.
+
+. Keep a record of your current {SelfServiceShort} version.
++
+Document the versions of all three components (Helm chart, plug-ins, {PlatformNameShort}) to simplify future upgrades and troubleshooting.
+
+.Additional resources
+
+* For information about {PlatformNameShort} version support, see the link:https://access.redhat.com/support/policy/updates/ansible-automation-platform[{PlatformNameShort} Life Cycle].
+* For information about upgrading in disconnected environments, see link:{URLSelfServiceInstall}/self-service-disconnected-install_aap-self-service-install[Installing the self-service automation portal in an air-gapped environment].
