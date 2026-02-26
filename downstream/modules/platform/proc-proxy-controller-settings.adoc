@@ -1,0 +1,60 @@
+[id="proc-proxy-controller-settings"]
+
+= Controller settings
+
+After using the RPM installer, you must configure {ControllerName} to use outbound proxy. 
+
+[NOTE]
+====
+This is not required for containerized installers because podman uses system configured proxy and redirects all the container traffic to the proxy. For automation controller you must set the `AWX_TASK_ENV` variable in `/api/v2/settings/`. 
+====
+
+To do this through the UI use the following procedure:
+
+.Procedure 
+
+. From the navigation pane, select {MenuSetJob}.
+. Click Edit.
+. Add the variables to the Extra Environment Variables field
++
+image:extra_variables.png[extra variables field]
++
+set:
+----
+"AWX_TASK_ENV": {
+"http_proxy": "http://external-proxy_0:3128",
+"https_proxy": "http://external-proxy_0:3128",
+"no_proxy": "localhost,127.0.0.0/8"
+                }
+----
+The control plane must open all outbound ports to the proxy.
+
+The {PlatformNameShort} specific ports are as follows:
+----
+acl Safe_ports port 81
+acl Safe_ports port 82
+acl Safe_ports port 389
+acl Safe_ports port 444
+acl Safe_ports port 445
+acl SSL_ports port 22
+----
+The following ports are for containerized installations:
+----
+acl SSL_ports port 444
+acl SSL_ports port 445
+acl SSL_ports port 8443
+acl SSL_ports port 8444
+acl SSL_ports port 8445
+acl SSL_ports port 8446
+acl SSL_ports port 44321
+acl SSL_ports port 44322
+
+http_access deny !Safe_ports
+http_access deny CONNECT !SSL_ports
+----
+Set the following environment variables on all nodes (ideally in the `/etc/environment` file):
+----
+http_proxy=“http://proxy_host:proxy_port”
+https_proxy=“http://proxy_host:proxy_port”
+no_proxy=“localhost,127.0.0.0/8,10.0.0.0/8”
+----
