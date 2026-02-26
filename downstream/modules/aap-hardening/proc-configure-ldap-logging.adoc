@@ -2,7 +2,7 @@
 
 [id="proc-configure-ldap-logging"]
 
-= Configuring LDAP logging
+= Configure LDAP logging
 
 [role="_abstract"]
 Enable logging for LDAP.
@@ -12,6 +12,8 @@ Enable logging for LDAP.
 . Edit the gateway settings file:
 .. On {PlatformNameShort}{PlatformVers} Containerized, the file is `~/aap/gateway/etc/settings.py` (as the user running the {Gateway} container).
 .. On {PlatformNameShort}{PlatformVers} RPM-based, the file is `/etc/ansible-automation-platform/gateway/settings.py`.
+
+. Add thhe following to the end of the file:
 +
 ----
  (...)
@@ -26,15 +28,10 @@ Enable logging for LDAP.
 
 . Restart the {Gateway} service or container:
 
-.. On {PlatformNameShort}{PlatformVers} Containerized, restart the {Gateway} service so that it restarts the {Gateway} container:
-+
-[NOTE]
-====
-Ensure that you run `systemctl with the `--user`` flag as follows:
+.. On {PlatformNameShort}{PlatformVers} Containerized, restart the {Gateway} service so that it restarts the {Gateway} as the user running the service:
 +
 `$ systemctl --user restart automation-gateway`
-====
 
-.. On {PlatformNameShort}{PlatformVers} RPM-based, use the `automation-gateway-service` command:
+.. On {PlatformNameShort} {PlatformVers} RPM-based, use the `automation-gateway-service` command:
 +
 `# automation-gateway-service restart`

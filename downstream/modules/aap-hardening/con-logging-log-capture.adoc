@@ -9,20 +9,20 @@
 
 [role="_abstract"]
 
-Visibility and analytics is an important pillar of Enterprise Security and Zero Trust Architecture. 
+Visibility and analytics is an important pillar of Enterprise Security and Zero Trust architectures. 
 Logging is key to capturing actions and auditing. 
 
-You can manage logging and auditing by using the built-in audit support described in the link:{BaseURL}/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening[Auditing the system] section of the Security hardening for {RHEL} guide. 
+You can manage logging and auditing of the {PlatformNameShort} infrastructure nodes by using the built-in audit support described in link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/security_hardening/auditing-the-system_security-hardening[Auditing the system]. 
 {PlatformNameShort}'s built-in logging and activity stream logs all change within {PlatformName} and automation logs for auditing purposes. 
 More detailed information is available in the link:{URLControllerAdminGuide}/assembly-controller-logging-aggregation[Logging and Aggregation] section of {TitleControllerAdminGuide}.
 
-This guide recommends that you configure {PlatformNameShort} and the underlying {RHEL} systems to collect logging and auditing centrally, rather than reviewing it on the local system. 
+Configure {PlatformNameShort} and the underlying {RHEL} systems to collect logging and auditing centrally, rather than reviewing it on the local system. 
 {PlatformNameShort} must be configured to use external logging to compile log records from multiple components within the {PlatformNameShort} server. 
 The events occurring must be time-correlated to conduct accurate forensic analysis. 
-This means that the {PlatformNameShort} server must be configured with an NTP server that is also used by the logging aggregator service, and the targets of {PlatformNameShort}. 
-The correlation must meet certain industry tolerance requirements. 
-Foe example, there might be a varying requirement that time stamps of different logged events must not differ by any amount greater than _x_ seconds. 
-This capability should be available in the external logging service.
+//This means that the {PlatformNameShort} server must be configured with an NTP server that is also used by the logging aggregator service, and the targets of {PlatformNameShort}. 
+//The correlation must meet certain industry tolerance requirements. 
+//For example, there might be a varying requirement that time stamps of different logged events must not differ by any amount greater than _x_ seconds. 
+//This capability should be available in the external logging service.
 
 Another critical capability of logging is the ability to use cryptography to protect the integrity of log tools. Log data includes all information (for example, log records, log settings, and log reports) needed to successfully log information system activity. 
 It is common for attackers to replace the log tools or inject code into the existing tools to hide or erase system activity from the logs. 
