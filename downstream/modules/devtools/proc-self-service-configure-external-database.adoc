@@ -1,0 +1,137 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-configure-external-database_{context}"]
+= Configuring an external PostgreSQL database for {SelfServiceShort}
+
+[role="_abstract"]
+By default, {SelfServiceShort} uses an embedded PostgreSQL database. For production deployments, you can configure {SelfServiceShort} to use an external PostgreSQL database managed by your organization's database team.
+
+.Prerequisites
+* You have administrator access to your {OCPShort} cluster.
+* You have access to an external PostgreSQL database server (version 13 or later).
+* You have database administrator privileges to create databases and users.
+* {SelfServiceShort} is installed or you are preparing to install it.
+
+.Procedure
+
+. Create a database and user on your external PostgreSQL server.
++
+Connect to your PostgreSQL server as a database administrator and run the following commands:
++
+[source,sql]
+----
+CREATE DATABASE rhdh_production;
+CREATE USER rhdh_user WITH ENCRYPTED PASSWORD 'your_secure_password';
+GRANT ALL PRIVILEGES ON DATABASE rhdh_production TO rhdh_user;
+ALTER DATABASE rhdh_production OWNER TO rhdh_user;
+----
++
+Replace `your_secure_password` with a strong password.
+
+. Verify that you can connect to the database from your {OCPShort} cluster.
++
+Test the connection using a temporary pod:
++
+----
+oc run -it --rm postgres-test --image=postgres:13 --restart=Never -- \
+  psql -h <database-host> -U rhdh_user -d rhdh_production
+----
++
+Replace `<database-host>` with your PostgreSQL server hostname or IP address.
++
+If the connection succeeds, you can proceed. If it fails, verify network connectivity and firewall rules.
+
+. Create a secret in {OCPShort} with your database credentials.
++
+----
+oc create secret generic rhdh-postgresql-secrets \
+  --from-literal=POSTGRES_USER=rhdh_user \
+  --from-literal=POSTGRES_PASSWORD=your_secure_password \
+  --from-literal=POSTGRES_HOST=<database-host> \
+  --from-literal=POSTGRES_PORT=5432 \
+  --from-literal=POSTGRES_DB=rhdh_production \
+  -n <namespace>
+----
++
+Replace `<namespace>` with the namespace where {SelfServiceShort} is installed.
+
+. Update your {SelfServiceShort} Helm chart values to use the external database.
++
+Add or modify the following configuration in your `values.yaml` file:
++
+[source,yaml]
+----
+upstream:
+  postgresql:
+    enabled: false  # Disable embedded PostgreSQL
+
+  backstage:
+    appConfig:
+      backend:
+        database:
+          client: pg
+          connection:
+            host: ${POSTGRES_HOST}
+            port: ${POSTGRES_PORT}
+            user: ${POSTGRES_USER}
+            password: ${POSTGRES_PASSWORD}
+            database: ${POSTGRES_DB}
+            ssl:
+              rejectUnauthorized: false  # Set to true if using verified SSL certificates
+
+    extraEnvVarsSecrets:
+      - rhdh-postgresql-secrets
+----
+
+. Apply the configuration by upgrading your {SelfServiceShort} Helm release.
++
+----
+helm upgrade <release-name> <chart-name> \
+  -f values.yaml \
+  -n <namespace>
+----
++
+Replace `<release-name>` with your Helm release name and `<chart-name>` with the {SelfServiceShort} chart name.
+
+. Wait for {SelfServiceShort} pods to restart and initialize the database schema.
++
+Monitor the pod status:
++
+----
+oc get pods -n <namespace> -w
+----
+
+.Verification
+
+. Verify that the {SelfServiceShort} pods are running:
++
+----
+oc get pods -n <namespace>
+----
++
+All {SelfServiceShort} pods should show a status of `Running`.
+
+. Check the {SelfServiceShort} logs to confirm the database connection:
++
+----
+oc logs -n <namespace> <backstage-pod-name> | grep -i "database\|postgres"
+----
++
+You should see log entries indicating a successful database connection without errors.
+
+. Connect to your external PostgreSQL database and verify that {SelfServiceShort} created the required schema:
++
+[source,sql]
+----
+\c rhdh_production
+\dt
+----
++
+You should see multiple tables created by {SelfServiceShort}.
+
+. Access the {SelfServiceShort} web interface and verify that your data persists across pod restarts.
+
+.Additional resources
+
+* For information about PostgreSQL SSL configuration, see link:https://www.postgresql.org/docs/current/ssl-tcp.html[PostgreSQL SSL/TLS Support].
+* For information about backing up your external database, consult your organization's database backup procedures.
