@@ -1,0 +1,44 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-precreate-pvcs-manual_{context}"]
+
+= Pre-create Persistent Volume Claims for manual provisioning
+
+[role="_abstract"]
+Follow this process to manually prepare storage for an {PlatformNameShort} installation when dynamic provisioning is disabled.
+
+.Prerequisites
+
+* You have an active {OCPShort} CLI (`oc`) session.
+* You have defined Persistent Volumes (PVs) that meet the minimum size and access mode requirements for your components.
+
+.Procedure
+
+. Identify the name you intend to use for your `AnsibleAutomationPlatform` deployment (for example, `myaap`).
+. Create a PVC manifest for the PostgreSQL database using the required naming convention: `postgres-15-<deployment_name>-0`.
+. Ensure the `accessModes` and `resources.requests.storage` match your manually provisioned PV.
+. Apply the PVC manifest:
++
+----
+oc apply -f postgres-pvc.yaml
+----
+. Repeat these steps for other components, such as {HubName}, using the correct naming conventions.
+. Leave the `storage_class` fields empty or omit them from the specification. This forces the Operator to use the pre-created PVCs.
++
+[NOTE]
+====
+Unlike core components, the `AnsibleAutomationPlatformBackup` and `Restore` custom resources provide a `backup_pvc` parameter. You must use this parameter to specify your custom PVC name instead of relying on naming conventions.
+====
+
+.Verification
+
+* Check the status of the PVCs to ensure they are in a `Bound` state:
++
+----
+oc get pvc -n <namespace>
+----
+
+
+
+
+
