@@ -2,32 +2,35 @@
 
 [id="proc-implement-security-control"]
 
-= Implementing security control
+= Implement secure logging
 
+<<<<<<< HEAD
 Some of the following examples of meeting compliance requirements come from the US DoD _Security Technical Implementation Guide_, but go back to integrity and security best practices. 
+=======
+[role="_abstract"]
+{PlatformNameShort} must use external log providers that can collect user activity logs in independent, protected repositories to prevent modification or repudiation. 
+>>>>>>> 9211c0e73 (Revision for 5th iteration of Hardening Guide (#5638))
 
-{ControllerNameStart} must use external log providers that can collect user activity logs in independent, protected repositories to prevent modification or repudiation. 
-{ControllerNameStart} must be configured to use external logging to compile log records from multiple components within the server. 
-The events occurring must be time-correlated in order to conduct accurate forensic analysis. 
+The events occurring must be time-correlated to conduct accurate forensic analysis. 
 In addition, the correlation must meet certain tolerance criteria. 
 
 
-The following steps implement the security control:
+The following steps implement secure logging for {PlatformNameShort}:
 
 .Procedure
-. Log in to {ControllerName} as an administrator.
+. Log in to {PlatformNameShort} as an administrator.
 . From the navigation panel, select {MenuSetLogging}.
 . On the *Logging settings* page, click btn:[Edit].
 . Set the following fields:
 
-* Set *Logging Aggregator* to `Not configured`. This is the default.
+* Set *Logging Aggregator* to the host name or IP address of the external log server.
 * Set *Enable External Logging* to `On`.
 * Set *Logging Aggregator Level Threshold* to DEBUG.
 * Set *TCP Connection Timeout* to 5 (the default) or to the organizational timeout.
 * Set *Enable/disable HTTPS certificate verification* to `On`.
 . Click btn:[Save].
-
-{ControllerNameStart} must allocate log record storage capacity and shut down by default upon log failure (unless availability is an overriding concern). 
++
+{PlatformNameShort} must allocate log record storage capacity and shut down by default upon log failure (unless availability is an overriding concern). 
 It is critical that when a system is at risk of failing to process logs, it detects and takes action to mitigate the failure. 
 Log processing failures include software/hardware errors, failures in the log capturing mechanisms, and log storage capacity being reached or exceeded. 
 During a failure, the application server must be configured to shut down unless the application server is part of a high availability system. 

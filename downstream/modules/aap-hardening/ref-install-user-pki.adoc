@@ -1,16 +1,18 @@
-:_mod-docs-content-type: PROCEDURE
+:_mod-docs-content-type: REFERENCE
 
 // Module included in the following assemblies:
 // downstream/assemblies/assembly-hardening-aap.adoc
 
-[id="proc-install-user-pki_{context}"]
+[id="ref-install-user-pki_{context}"]
 
-= Installing with user-provided PKI certificates
+= Install with user-provided PKI certificates
 
 [role="_abstract"]
 
 By default, {PlatformNameShort} creates self-signed _Public Key Infrastructure_ (PKI) certificates for the infrastructure components of the platform. 
-Where an existing PKI infrastructure is available, certificates must be generated for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the postgres database server. 
+
+Where an existing PKI infrastructure is available, generate certificates for the {ControllerName}, {PrivateHubName}, {EDAcontroller}, and the PostgreSQL database server. 
+
 Copy the certificate files and their relevant key files to the installation program directory, along with the CA certificate used to verify the certificates.
 
 Use the following inventory variables to configure the infrastructure components with the new certificates.
@@ -32,7 +34,7 @@ If set, this will install a custom CA certificate to the system truststore.
 
 | `postgres_ssl_cert` | `postgresql_tls_cert` | The file name of the database server PKI certificate located in the installation program directory. This variable is only needed for the {Installer} managed database server, not if a third-party database is used.
 
-| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installation program directory. This variable is only needed for the {Installer}-managed database server, not if a third-party database is used.
+| `postgres_ssl_key` | `postgresql_tls_key` | The file name of the database server PKI key located in the installation program directory. This variable is only needed for the installer-managed database server, not if a third-party database is used.
 
 | `automationedacontroller_ssl_cert` | `eda_tls_cert` | The file name of the {EDAcontroller} PKI certificate located in the installation program directory.
 
@@ -56,11 +58,9 @@ gateway1.example.com gateway_tls_cert=/path/to/cert1 gateway_tls_key=/path/to/ke
 [automationcontroller]
 controller0.example.com web_server_ssl_cert=/path/to/cert0 web_server_ssl_key=/path/to/key0
 controller1.example.com web_server_ssl_cert=/path/to/cert1 web_server_ssl_key=/path/to/key1
-controller2.example.com web_server_ssl_cert=/path/to/cert2 web_server_ssl_key=/path/to/key2
 
 [automationhub]
 hub0.example.com automationhub_ssl_cert=/path/to/cert0 automationhub_ssl_key=/path/to/key0
 hub1.example.com automationhub_ssl_cert=/path/to/cert1 automationhub_ssl_key=/path/to/key1
-hub2.example.com automationhub_ssl_cert=/path/to/cert2 automationhub_ssl_key=/path/to/key2
 ----
 

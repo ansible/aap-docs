@@ -12,7 +12,7 @@
 A compliance policy might require the `fapolicyd` daemon to be running. 
 However, {PlatformNameShort} is not currently supported when `fapolicyd` is enforcing policy, as this causes failures during both installation and operation of {PlatformNameShort}. 
 Because of this, the installation program runs a pre-flight check that halts installation if it discovers that `fapolicyd` is enforcing policy. 
-This guide recommends setting `fapolicyd` to permissive mode on {PlatformNameShort} using the following steps:
+Set `fapolicyd` to permissive mode on {PlatformNameShort} using the following steps:
 
 . Edit the file `/etc/fapolicyd/fapolicyd.conf` and set "permissive = 1".
 . Restart the service with the command 
@@ -22,5 +22,6 @@ This guide recommends setting `fapolicyd` to permissive mode on {PlatformNameSho
 
 [NOTE]
 ====
-If this security control is also applied to the installation host, the default `fapolicyd` configuration causes the {PlatformNameShort} installation program to fail. In this case, the recommendation is to set `fapolicyd` to permissive mode on the installation host.
+If this security control is also applied to the installation host, the default `fapolicyd` configuration causes the {PlatformNameShort} {Installer} to fail. 
+In this case, the recommendation is to set `fapolicyd` to permissive mode on the installation host.
 ====
