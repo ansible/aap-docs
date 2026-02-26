@@ -1,0 +1,18 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-operator-static-provisioning-aap_{context}"]
+
+= Understand static provisioning in the {OperatorPlatformNameShort}
+
+[role="_abstract"]
+By default, the {OperatorPlatformNameShort} uses dynamic provisioning to create the required storage for components such as the database and {HubName}. 
+
+If your environment does not allow dynamic provisioning, you must use static provisioning.
+
+With static provisioning, you manually create Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) before you deploy the `AnsibleAutomationPlatform` custom resource. 
+When the Operator starts the deployment, it searches the namespace for PVCs that match its internal naming conventions. 
+If a matching PVC exists, the Operator binds to that claim instead of attempting to provision new storage.
+
+Static provisioning also enables data persistence during redeployments.
+If you delete an `AnsibleAutomationPlatform` instance, the Operator does not delete the associated PVCs.
+You can redeploy the instance using the same name to reconnect to the existing data.
