@@ -1,0 +1,30 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-operator-pvc-naming_{context}"]
+
+= PVC naming conventions for {PlatformNameShort} components
+
+[role="_abstract"]
+The Operator must find PVCs with exact names to adopt them for static provisioning. Replace `<instance_name>` with the name of your `AnsibleAutomationPlatform` custom resource.
+
+
+[cols="1,1,1", options="header"]
+|===
+| Component
+| Required PVC Name
+| Default Access Mode
+
+| Ansible Automation Platform Database
+| `postgres-15-_<aap_cr_name>_-postgres-15-0`
+| ReadWriteOnce
+
+| Automation Hub Storage
+| `_<instance_name>_-hub-file-storage` 
+
+(Required when storage_type is set to file)
+| ReadWriteMany
+
+| Automation Hub Redis Persistence
+| `_<instance_name>_-hub-redis-data`
+| ReadWriteOnce
+|===
