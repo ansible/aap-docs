@@ -1,0 +1,229 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-26-20260225]]
+
+= {PlatformNameShort} patch release February 25, 2026
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| February 25, 2026 |
+
+* {ControllerName} 4.7.9
+* {HubNameStart} 4.11.6
+* {EDAName} 1.2.6
+* Container-based installer {PlatformNameShort} (bundle) 2.6-7
+* Container-based installer {PlatformNameShort} (online) 2.6-7
+* Receptor 1.6.3
+* RPM-based installer {PlatformNameShort} (bundle) 2.6-6
+* RPM-based installer {PlatformNameShort} (online) 2.6-6
+|
+
+|====
+
+CSV Versions in this release:
+
+== General
+
+
+
+== CVE
+
+With this update, the following CVEs have been addressed:
+
+//* link:https://access.redhat.com/login?redirectTo=https%3A%2F%2Faccess.redhat.com%2Fsecurity%2Fcve%2Fcve-2026-25536[CVE-2026-25536] `aap-mcp-server`: @modelcontextprotocol/sdk cross-client data leak.(AAP-65006)
+* link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible-automation-platform-26/lightspeed-chatbot-rhel9`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64188)
+* link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible-automation-platform-26/mcp-tools-rhel9`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64186)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible/aap-inventory-mcp-server`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64186)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible/aap-inventory-mcp-server`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64178)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible-mcp-tools`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64177)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible-chatbot-stack`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64176)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `ansible-chatbot-service`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64175)
+// * link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `aap-installers-rag-content`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64174)
+// * link:https://access.redhat.com/security/cve/cve-2025-13465[CVE-2025-13465] `ansible-automation-platform-ui`: prototype pollution in _.unset and _.omit functions.(AAP-64116)
+* link:https://access.redhat.com/security/cve/cve-2025-13465[CVE-2025-13465] `automation-platform-ui`: prototype pollution in `_.unset` and `_.omit` functions.(AAP-64106)
+* link:https://access.redhat.com/security/cve/cve-2025-13465[CVE-2025-13465] `ansible-automation-platform-26/lightspeed-rhel9`: prototype pollution in `_.unset` and `_.omit` functions.(AAP-64104)
+* link:https://access.redhat.com/security/cve/cve-2025-13465[CVE-2025-13465] `ansible-automation-platform-26/gateway-rhel9`: prototype pollution in `_.unset` and `_.omit` functions.(AAP-64103)
+* link:https://access.redhat.com/security/cve/cve-2026-24049[CVE-2026-24049] `automation-controller: wheel`: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking.(AAP-63877)
+* link:https://access.redhat.com/security/cve/cve-2026-24049[CVE-2026-24049] `ansible-automation-platform-26/de-supported-rhel9: wheel`: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking.(AAP-63861)
+* link:https://access.redhat.com/security/cve/cve-2026-24049[CVE-2026-24049] `ansible-automation-platform-26/de-minimal-rhel9: wheel`: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking.(AAP-63860)
+* link:https://access.redhat.com/security/cve/cve-2025-59057[CVE-2025-59057] `automation-platform-ui`: React Router has XSS Vulnerability.(AAP-62544)
+* link:https://access.redhat.com/security/cve/cve-2025-59057[CVE-2025-59057] `ansible-automation-platform-26/gateway-rhel9`: React Router has XSS Vulnerability.(AAP-62543)
+* link:https://access.redhat.com/security/cve/cve-2026-21884[CVE-2026-21884] `automation-platform-ui`: React Router SSR XSS in ScrollRestoration.(AAP-62542)
+* link:https://access.redhat.com/security/cve/cve-2026-21884[CVE-2026-21884] `ansible-automation-platform-26/gateway-rhel9`: React Router SSR XSS in ScrollRestoration.(AAP-62541)
+* link:https://access.redhat.com/security/cve/cve-2026-22029[CVE-2026-22029] `automation-platform-ui`: React Router vulnerable to XSS via Open Redirects.(AAP-62524)
+* link:https://access.redhat.com/security/cve/cve-2026-22029[CVE-2026-22029] `ansible-automation-platform-26/gateway-rhel9`: React Router vulnerable to XSS via Open Redirects.(AAP-62523)
+// * link:https://access.redhat.com/security/cve/cve-2026-22029[CVE-2026-22029] `ansible-automation-platform-ui`: React Router vulnerable to XSS via Open Redirects.(AAP-62519)
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-26/hub-web-rhel9`: urllib3 vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62449)
+* link:https://access.redhat.com/security/cve/cve-2026-21441[CVE-2026-21441] `ansible-automation-platform-26/hub-rhel9`: urllib3 vulnerable to decompression-bomb safeguard bypass when following HTTP redirects (streaming API).(AAP-62448)
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `python3.11-aiohttp`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-62286)
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/hub-web-rhel9`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62081)
+* link:https://access.redhat.com/security/cve/cve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/hub-rhel9-operator`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62080)
+* link:https://access.redhat.com/login?redirectTo=https%3A%2F%2Faccess.redhat.com%2Fsecurity%2Fcve%2Fcve-2025-66471[CVE-2025-66471] `ansible-automation-platform-26/hub-rhel9`: `urllib3` Streaming API improperly handles highly compressed data.(AAP-62079)
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/hub-rhel9`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61920)
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/ee-supported-rhel9`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61919)
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-26/ee-minimal-rhel9`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61918)
+* link:https://access.redhat.com/security/cve/cve-2025-53643[CVE-2025-53643] `ansible-automation-platform-26/ee-supported-rhel9`: AIOHTTP HTTP Request/Response Smuggling.(AAP-54841)
+* link:https://access.redhat.com/security/cve/cve-2026-23490[CVE-2026-23490] `automation-controller`: pyasn1 has a DoS vulnerability in decoder.(AAP-63123)
+* link:https://access.redhat.com/security/cve/cve-2025-61140[CVE-2025-61140] `ansible-automation-platform-26/lightspeed-rhel9: jsonpath`: Prototype Pollution vulnerability in the value function.(AAP-64332)
+* link:https://access.redhat.com/security/cve/cve-2026-0994[CVE-2026-0994] `python3.11-protobuf`: Denial of Service in Python Protobuf.(AAP-64072)
+
+
+
+
+
+
+
+== {PlatformNameShort}
+
+=== Features
+=== Enhancements
+
+* Upgraded to Python 3.12.(AAP-56538)
+
+=== Bug Fixes
+
+* Fixed an issue where there was double logging in Gateway/DAB. Fixed unit tests. (AAP-65216)
+* Fixed an issue where an organization administrator could not delegate permissions to objects within their organization.(AAP-65081)
+* If the Project's source control branch is overridden by a Template or template Schedule, it is now displayed on the schedule detail and schedule edit form review step.(AAP-60920)
+* Fixed an issue preventing reordering more than 50 authentication mappings.(AAP-59119)
+* Fixed an issue where the "Source Control Branch/Tag/Commit" option was missing on source inventory on AAP 2.5.(AAP-63544)
+* Restored a bug fix so that the feature flags table is created/updated as expected even on partial migrations.(AAP-65815)
+
+
+=== Known Issues
+=== Deprecated
+
+== {OperatorPlatformNameShort}
+
+=== Enhancements
+
+* Increased envoy request timeout from 1 second to 5 seconds.(AAP-64420)
+
+=== Bug Fixes
+
+// * Fixed an issue with {HubNameStart} file data not restored in the correct directory.(AAP-65287)
+* Fixed an issue with {HubNameStart} file data not restored in the correct directory. (AAP-65961)
+* Fixed an issue where custom PostgreSQL settings could not be applied to the {OperatorPlatformNameShort}. Added command configuration to PostgreSQL `statefulset` configuration when `postgres_extra_args` is defined.(AAP-65487)
+* Fixed an issue where there was a missing `resource_requirement` in the *nginx* container configured in the EDA event stream deployment.(AAP-64007)
+* Fixed an issue where Kubernetes Secret values were being printed in operator logs.(AAP-62943)
+* Fixed an issue with an extra_settings to allow customizing the LOGGING level for the Gateway Operator (AAP-62938)
+
+=== Known Issues
+=== Deprecated
+
+
+== {LightspeedShortName}
+=== Features
+=== Enhancements
+
+* Upgrade to Python 3.12.(AAP-61048)
+
+=== Bug Fixes
+
+* Fixed an issue where Lightspeed timed out connecting to chatbot in Testing CI containerized installer. Added chatbot and mcp tools ports to `firewalld`.(AAP-65319)
+* Fixed an issue where ChatGPT 5.1 produced blank ALIA responses while using a supported model provider. Added custom config variable to be added to the llama-stack agent configuration.(AAP-63538)
+* Fixed an issue where navigating away from the chatbot while a request was in progress would interrupt the process, often resulting in errors like duplicated messages. This issue has been resolved this by ensuring that outstanding requests continue processing even when the browser focus changes (AAP-62685)
+* chat gpt 5.1 produces blank ALIA responses, while using a supported model provider
+
+=== Known Issues
+=== Deprecated
+
+== {ControllerNameStart}
+
+=== Features
+=== Enhancements
+
+* Fixed the job list endpoint to no longer load the job artifacts, resulting in better performance.(AAP-63489)
+// * Upgraded to Django 5.2.(AAP-59873)
+
+=== Bug Fixes
+
+* Fixed an issue where the AWX CLI `modify` command did not display available field flags for users who have an admin role on a specific resource but do not have permission to create new resources of that type (AAP-65813)
+* Fixed missing `RoleUserAssignment` openapi schema component.(AAP-60826)
+// * Fixed an issue where the AWX CLI failed to authenticate to AAP 2.5 using username/password. This resolves the *Valid credentials were not provided* errors when connecting to Gateway environments.(AAP-46830)
+
+=== Known Issues
+=== Depreated
+
+
+== {HubNameStart}
+
+=== Features
+
+* Added a static OpenAPI spec to galaxy that focuses the potential endpoints users can call.(AAP-66415)
+* Improved documentation for {HubNameStart} OpenAPI specifications.(AAP-66410)
+
+=== Enhancements
+
+* Added concise descriptions to API Endpoints for AAP MCP server.(AAP-66412)
+
+=== Bug Fixes
+=== Known Issues
+=== Deprecated
+
+
+== Container-based {PlatformNameShort}
+
+=== Features
+=== Enhancements
+
+* Increased envoy request timeout from 1 second to 5 seconds.(AAP-64323)
+* Added a retry mechanism when trying to get the {ControllerNameStart} status (AAP-64291)
+* Fixed a compatibility issue when `jinja2` native is enabled on ansible-core.(AAP-62878)
+* URL anchors in the inventory samples reflect official documentation.(AAP-55780)
+
+=== Bug Fixes
+
+* Fixed automation gateway preflight check which doesn't require ansible_host to be defined anymore.(AAP-65370)
+* Fixed an issue where the installer did not make use of `ansible_user_dir` for receptor.(AAP-64452)
+* Fixed an issue where disabling TLS on envoy no longer causes a controller connection error when running Merge organization task.(AAP-62904)
+* Fixed an issue where the TLS verification when pushing container images to the Automation Hub registry and TLS was enabled.(AAP-62864)
+
+=== Known Issues
+=== Deprecated
+
+
+== RPM-based {PlatformNameShort}
+
+=== Features
+=== Enhancements
+
+* Increased envoy request timeout from 1 second to 5 seconds.(AAP-64008)
+
+=== Bug Fixes
+=== Known Issues
+=== Deprecated
+
+
+== {EDAName}
+
+=== Features
+=== Enhancements
+=== Bug Fixes
+
+* Fixed an issue where the activation worker failed to reconnect to redis after disconnection.Override RQ's default heartbeat to call `register_birth`, allowing worker re-registration in case of worker disconnects from Redis, and also eliminating ghost workers. Upgraded rq version to 2.6.1.(AAP-56872)
+
+=== Known Issues
+=== Deprecated
+
+== Execution Environments
+
+=== Enchancements
+* ee-minimal and ee-supported have been updated to use Python 3.12. The version number has been updated to 2.0.0.(AAP-56549)
+
+
+
+== Receptor
+
+=== Features
+=== Enhancements
+=== Bug Fixes
+=== Known Issues
+=== Deprecated
+
+
+
