@@ -1,0 +1,128 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-2.5-20260225]]
+
+= {PlatformNameShort} patch release February 25, 2026
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| February 25, 2026 |
+
+* {ControllerNameStart} 
+* {HubNameStart} 
+* {EDAName} 
+* Container-based installer {PlatformNameShort} (bundle) 
+* Container-based installer {PlatformNameShort} (online) 
+* Receptor 
+* RPM-based installer {PlatformNameShort} (bundle) 
+* RPM-based installer {PlatformNameShort} (online) 
+
+|====
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+== General
+
+== CVE
+
+CSV Versions in this release:
+
+With this update, the following CVEs have been addressed:
+
+* link:https://access.redhat.com/security/cve/cve-2025-61140[CVE-2025-61140] `ansible-automation-platform-25/lightspeed-rhel8`: `jsonpath`: Prototype Pollution vulnerability in the value function.(AAP-64331)
+* link:https://access.redhat.com/security/cve/cve-2026-24486[CVE-2026-24486] `aap-installers-rag-content`: Python-Multipart has Arbitrary File Write via Non-Default Configuration.(AAP-64174)
+* link:https://access.redhat.com/security/cve/cve-2025-13465[CVE-2025-13465] `ansible-automation-platform-25/lightspeed-rhel8`: `prototype` pollution in `_.unset` and `_.omit` functions.(AAP-64097)
+* link:https://access.redhat.com/security/cve/cve-2026-24049[CVE-2026-24049] `automation-controller`: `wheel`: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking.(AAP-63855)
+* link:https://access.redhat.com/security/cve/cve-2026-24049[CVE-2026-24049] `automation-controller`: `wheel`: Privilege Escalation or Arbitrary Code Execution via malicious wheel file unpacking.(AAP-63855)
+* link:https://access.redhat.com/security/cve/cve-2026-23490[CVE-2026-23490] `automation-controller`: `pyasn1` has a DoS vulnerability in decoder.(AAP-63122)
+* link:https://access.redhat.com/security/cve/cve-2026-22029[CVE-2026-22029] `automation-gateway`: React Router vulnerable to XSS via Open Redirects.(AAP-62514)
+* link:https://access.redhat.com/security/cve/cve-2025-69223[CVE-2025-69223] `ansible-automation-platform-25/hub-rhel8`: AIOHTTP's HTTP Parser `auto_decompress` feature is vulnerable to zip bomb.(AAP-61876)
+
+
+
+== {PlatformNameShort}
+
+=== Bug fixes
+
+* Fixed an issue that was preventing users from viewing complete survey question choices that contained a colon.(AAP-66389)
+* Fixed an issue where the 2.5 AAP Gateway specification was not accurate for the `legacy_auth` endpoint.
+
+
+== {ControllerNameStart}
+
+=== Enhancements
+
+* Upgraded to Python 3.12.(AAP-56537)
+
+=== Bug Fixes
+
+* Fixed an issue where the token authentication in AWX CLI was broken.(AAP-65488)
+* Fixed the job list endpoint to no longer load the job artifacts, resulting in better performance.(AAP-63221)
+* Fixed an issue where there was a restriction that disallowed assigning credentials to teams across organizations.(AAP-54804)
+
+
+
+== {OperatorPlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where {HubNameStart} file data was not restored in the correct directory.(AAP-65963)
+* Fixed an issue where custom PostgreSQL settings could not be applied on the AAP Operator.(AAP-65835)
+* Fixed an issue where Kubernetes Secret values were being printed in operator logs.(AAP-62945)
+* Fixed the `extra_settings` to allow customizing the LOGGING level for the Gateway Operator.(AAP-62937)
+
+
+== {ControllerNameStart}
+
+=== Features
+=== Bug Fixes
+
+
+
+== {HubNameStart}
+
+=== Enhancements
+
+* Added a static OpenAPI spec to galaxy that focuses the potential endpoints users can call.(AAP-66417)
+
+=== Bug Fixes
+
+== Execution Environment
+
+=== Enhancements
+
+* ee-minimal and ee-supported have been updated to use Python 3.12. The version number has been updated to 2.0.0.(AAP-56548)
+
+
+== Container-based {PlatformNameShort}
+
+=== Bug Fixes
+
+
+
+== RPM-based {PlatformNameShort}
+
+=== Bug Fixes
+
+* Fixed an issue where restore was not properly generating an SSL certificate for Redis in cluster mode.(AAP-60991)
+
+
+== {EDAName}
+
+=== Features
+=== Bug Fixes
+
+* Fixed an issue where the activation worker failed to reconnect to redis after disconnection.Override RQ's default heartbeat to call register_birth, allowing worker re-registration in case of worker disconnects from Redis, and also eliminating ghost workers. Upgraded rq version to 2.6.1.(AAP-56872)
+
+
+
+== Receptor
+
+=== Features
+
+
+
