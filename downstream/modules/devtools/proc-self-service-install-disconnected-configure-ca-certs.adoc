@@ -1,0 +1,43 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-install-disconnected-configure-ca-certs_{context}"]
+= Configure CA certificates for private registries
+
+[role="_abstract"]
+If your private registry uses a certificate signed by an internal or self-signed CA, the `install-dynamic-plugins` init container fails with `x509: certificate signed by unknown authority`. Mount the CA certificate into the init container so that `skopeo` trusts the registry.
+
+.Procedure
+
+. Obtain the CA certificate chain that signed your mirror registry's TLS certificate. If the registry uses a certificate chain, include the full chain:
++
+----
+$ cat registry.crt intermediate.crt root.crt > ca-bundle.crt
+----
+. Create a ConfigMap from the CA certificate:
++
+----
+$ oc create configmap registry-ca-crt \
+  --from-file=ca.crt=ca-bundle.crt -n <namespace>
+----
+. Add the volume and mount to your values file:
++
+----
+redhat-developer-hub:
+  upstream:
+    backstage:
+      extraVolumes:
+        - name: registry-ca-crt
+          configMap:
+            name: registry-ca-crt
+      initContainers:
+        - name: install-dynamic-plugins
+          volumeMounts:
+            - name: registry-ca-crt
+              mountPath: /etc/containers/certs.d/<registry-host>
+              readOnly: true
+----
+
+[IMPORTANT]
+====
+The `mountPath` must be the registry hostname only (for example, `/etc/containers/certs.d/mirror.example.com`). Do not include repository paths. If the registry uses a non-standard port, include it in the path (for example, `/etc/containers/certs.d/mirror.example.com:5000`).
+====

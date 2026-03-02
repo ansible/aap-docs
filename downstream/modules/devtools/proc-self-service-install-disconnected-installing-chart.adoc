@@ -34,24 +34,36 @@ redhat-developer-hub:
     clusterRouterBase: <your_cluster_router_base>
     pluginMode: oci
     imageTagInfo: "<plugin-version>"
-    # Replaces registry.redhat.io for the images.
-    imageRegistry: <disconnected_registry_url>/<your_namespace>
+    # Registry host only. Replaces registry.redhat.io for all images.
+    imageRegistry: "<disconnected_registry_url>"
+    # Optional. Full OCI plugin image path for mirrors with non-standard
+    # repository paths. Overrides imageRegistry for OCI plugin artifacts only.
+    # Use when your mirror does not preserve the default repository path
+    # (ansible-automation-platform/automation-portal).
+    # ociPluginImage: "<disconnected_registry_url>/custom-path/automation-portal"
   upstream:
-    # To override the PostgreSQL image tag, uncomment the following lines:
-    # postgresql:
-    #   image:
-    #     repository: rhel9/postgresql-15
-    #     tag: <tag>
     backstage:
+      # The Helm chart pins images by SHA256 digest by default.
+      # When mirroring with podman tag/push, the digest is not preserved.
+      # Override with tag-based references.
+      image:
+        repository: rhdh/rhdh-hub-rhel9
+        tag: "1.8"
       appConfig:
         ansible:
           rhaap:
-            # checkSSL: false  # Uncomment and set to false if using self-signed certificates.
+            checkSSL: true  # Set to false if using self-signed certificates.
         catalog:
           providers:
             rhaap:
               '{{- include "catalog.providers.env" . }}':
-                orgs: <your-aap-organization-name>
+                orgs: "<your-aap-organization-name>"
+    # If you use the built-in PostgreSQL database, uncomment the following lines.
+    # An external database is the supported production architecture.
+    # postgresql:
+    #   image:
+    #     repository: rhel9/postgresql-15
+    #     tag: "latest"
 ----
 +
 *HTTP plug-in registry delivery* (`values-tarball.yaml`):
@@ -61,25 +73,34 @@ redhat-developer-hub:
   global:
     clusterRouterBase: <your_cluster_router_base>
     pluginMode: tarball
-    # Replaces registry.redhat.io for the images
-    imageRegistry: <disconnected_registry_url>/<your_namespace>
+    # Registry host only. Replaces registry.redhat.io for the images.
+    imageRegistry: "<disconnected_registry_url>"
   upstream:
-    # To override the PostgreSQL image tag, uncomment the following lines:
-    # postgresql:
-    #   image:
-    #     repository: rhel9/postgresql-15
-    #     tag: <tag>
     backstage:
+      image:
+        repository: rhdh/rhdh-hub-rhel9
+        tag: "1.8"
       appConfig:
         ansible:
           rhaap:
-            # checkSSL: false  # Uncomment and set to false if using self-signed certificates.
+            checkSSL: true  # Set to false if using self-signed certificates.
         catalog:
           providers:
             rhaap:
               '{{- include "catalog.providers.env" . }}':
-                orgs: <your-aap-organization-name>
+                orgs: "<your-aap-organization-name>"
+    # If you use the built-in PostgreSQL database, uncomment the following lines.
+    # An external database is the supported production architecture.
+    # postgresql:
+    #   image:
+    #     repository: rhel9/postgresql-15
+    #     tag: "latest"
 ----
++
+[IMPORTANT]
+====
+Set `imageRegistry` to the registry host only (for example, `mirror.example.com`). Do not include repository paths. The chart appends the default repository path `ansible-automation-platform/automation-portal` automatically. If your mirror uses a different repository structure, set `ociPluginImage` to the full image path instead.
+====
 . Install the chart using the `helm install` command:
 +
 ----
@@ -109,8 +130,14 @@ $ helm install redhat-rhaap-portal \
   redhat-rhaap-portal-x.y.z.tgz \
   --namespace "${MY_NAMESPACE}" \
   --set redhat-developer-hub.global.clusterRouterBase="${MY_CLUSTER_ROUTER_BASE}" \
-  --set redhat-developer-hub.global.imageRegistry=<disconnected_registry_url>/<your_namespace> \
+  --set redhat-developer-hub.global.imageRegistry="<disconnected_registry_url>" \
   --set redhat-developer-hub.global.pluginMode=oci
+----
++
+To also set `ociPluginImage` via `--set`:
++
+----
+  --set redhat-developer-hub.global.ociPluginImage="<disconnected_registry_url>/custom-path/automation-portal"
 ----
 +
 *HTTP plug-in registry delivery:*
@@ -120,7 +147,7 @@ $ helm install redhat-rhaap-portal \
   redhat-rhaap-portal-x.y.z.tgz \
   --namespace "${MY_NAMESPACE}" \
   --set redhat-developer-hub.global.clusterRouterBase="${MY_CLUSTER_ROUTER_BASE}" \
-  --set redhat-developer-hub.global.imageRegistry=<disconnected_registry_url>/<your_namespace> \
+  --set redhat-developer-hub.global.imageRegistry="<disconnected_registry_url>" \
   --set redhat-developer-hub.global.pluginMode=tarball
 ----
 

@@ -33,7 +33,7 @@ Use OCI container delivery to automatically pull an OCI container from `registry
 Generate the base64-encoded authentication value:
 +
 ----
-printf '%s' '<username>:<password>' | base64
+printf '%s' '<username>:<password>' | base64 -w0
 ----
 
 . Replace `<base64-encoded-username-password>` in the `auth.json` file with the output from the previous step.
@@ -62,6 +62,8 @@ oc get secret <release-name>-dynamic-plugins-registry-auth
 ----
 +
 You must use a Red Hat Registry service account to generate the OpenShift secret. Using your standard Red Hat account username and password is not secure and will not work.
++
+The `install-dynamic-plugins` init container uses `skopeo` to pull OCI plug-in artifacts. It does not use cluster pull secrets, global pull secrets, or `imagePullSecrets`. A dedicated auth secret is required even when pulling from `registry.redhat.io`.
 
 [IMPORTANT]
 ====

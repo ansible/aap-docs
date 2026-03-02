@@ -1,0 +1,27 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="self-service-install-disconnected-troubleshooting_{context}"]
+= Troubleshooting disconnected installations
+
+[role="_abstract"]
+Use this reference to troubleshoot common issues that occur during disconnected {SelfServiceShort} installations.
+
+[cols="1,1,2",options="header"]
+|===
+|Symptom
+|Cause
+|Solution
+
+|`authentication required` or `unauthorized` in `install-dynamic-plugins` init container logs
+|Auth secret missing or malformed. The init container uses `skopeo` and does not use cluster pull secrets.
+|Create `<release-name>-dynamic-plugins-registry-auth` secret. Use `base64 -w0` to avoid multiline values that corrupt `auth.json`.
+
+|Duplicate path in OCI URL (for example, `.../ansible-automation-platform/ansible-automation-platform/...`)
+|`imageRegistry` includes a repository path instead of the registry host only.
+|Set `imageRegistry` to the registry host only. If your mirror uses a different repository structure, use `ociPluginImage` to set the full image path.
+
+|`x509: certificate signed by unknown authority` in init container logs
+|Private registry uses a self-signed or internal CA certificate.
+|Mount the CA certificate into the init container. See xref:self-service-install-disconnected-configure-ca-certs_self-service-disconnected-install-helm-chart[Configure CA certificates for private registries].
+
+|===
