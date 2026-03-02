@@ -4,8 +4,11 @@
 = Mirror container images
 
 [role="_abstract"]
-Mirror the required container images from the Red Hat registry to your local disconnected registry. This action prepares the images needed to install the self-service automation portal in an isolated environment.
+Mirror the required container images from the Red Hat registry to your local disconnected registry. This step prepares the images for installing {SelfServiceShort} in an isolated environment.
 
+If you mirror `registry.redhat.io` content to a different registry host (or to a registry prefix such as `quay.io/<org>`), you can set `redhat-developer-hub.global.imageRegistry` so the Helm chart pulls all of its images from that mirrored location. `imageRegistry` is a single override that controls the registry for the base application image, PostgreSQL image, OCI plug-in artifacts, and Ansible Dev Tools sidecar.
+
+The dynamic plug-in init container does not use cluster-level image mirror configuration (for example, `ImageDigestMirrorSet` or `ImageTagMirrorSet`). You must set `imageRegistry` even if your cluster redirects `registry.redhat.io` pulls.
 
 .Procedure
 
@@ -28,21 +31,44 @@ $ podman pull registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z
 . Tag the image for your disconnected registry:
 +
 ----
-$ podman tag registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
+$ podman tag registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z <disconnected_registry_url>/<your_namespace>/rhdh/rhdh-hub-rhel9:x.y.z
 ----
 . Push the tagged image to your disconnected registry:
 +
 ----
-$ podman push <disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
+$ podman push <disconnected_registry_url>/<your_namespace>/rhdh/rhdh-hub-rhel9:x.y.z
 ----
-. If you use OCI container delivery, mirror the Ansible plug-ins OCI artifacts image. Replace `<plugin-version>` with the version specified in `imageTagInfo` in your Helm chart configuration:
+. If you use the built-in PostgreSQL database, mirror the PostgreSQL 15 image. An external database is the supported production architecture and does not require this step:
 +
 ----
-podman pull registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version>
-podman tag registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version> <disconnected_registry_url>/<your_namespace>/automation-portal:<plugin-version>
-podman push <disconnected_registry_url>/<your_namespace>/automation-portal:<plugin-version>
+$ podman pull registry.redhat.io/rhel9/postgresql-15:<tag>
+$ podman tag registry.redhat.io/rhel9/postgresql-15:<tag> <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-15:<tag>
+$ podman push <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-15:<tag>
 ----
-. If you use OpenShift image mirroring, configure the cluster to pull from your mirrored registry for `registry.redhat.io` content using an `ImageContentSourcePolicy` or equivalent configuration for your OpenShift version.
+. If you use OCI container delivery, mirror the Ansible plug-ins OCI artifacts image:
++
+----
+$ podman pull registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version>
+$ podman tag registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version> <disconnected_registry_url>/<your_namespace>/ansible-automation-platform/automation-portal:<plugin-version>
+$ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-platform/automation-portal:<plugin-version>
+----
+. Mirror the Ansible Dev Tools sidecar image. Use the path that matches your {PlatformNameShort} version:
++
+*{PlatformNameShort} 2.5:*
++
+----
+$ podman pull registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
+$ podman tag registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
+$ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
+----
++
+*{PlatformNameShort} 2.6:*
++
+----
+$ podman pull registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+$ podman tag registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+$ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+----
 
 
 

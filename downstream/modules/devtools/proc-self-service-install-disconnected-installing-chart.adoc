@@ -4,39 +4,152 @@
 = Install the Helm chart
 
 [role="_abstract"]
-Install the self-service automation portal by using the `helm install` command. You must reference the local Helm chart file and include the required cluster overrides using the `--set` flags.
-
+Install {SelfServiceShort} by using the `helm install` command. You must reference the local Helm chart file and include the required configuration using a values file (`-f`) or `--set` flags.
 
 .Procedure
 
 . On the machine within your disconnected environment, navigate to the directory where you placed the transferred Helm chart `.tgz` file:
 +
 ----
-cd /path/to/your/transferred/charts/
-----
-. If the namespace does not exist, create it:
-+
-----
-oc new-project ${MY_NAMESPACE}
+$ cd /path/to/your/transferred/charts/
 ----
 . Define your namespace and cluster router base as environment variables:
 +
 ----
-export MY_NAMESPACE="<your_namespace_name>"
-export MY_CLUSTER_ROUTER_BASE="<your_cluster_router_base>"
+$ export MY_NAMESPACE="<your_namespace_name>"
+$ export MY_CLUSTER_ROUTER_BASE="<your_cluster_router_base>"
 ----
+. If the namespace does not exist, create it:
++
+----
+$ oc new-project "${MY_NAMESPACE}"
+----
+. Create a custom values file and reuse it for install and upgrade. Choose the example that matches your plug-in delivery method.
++
+*OCI delivery* (`values-oci.yaml`):
++
+----
+redhat-developer-hub:
+  global:
+    clusterRouterBase: <your_cluster_router_base>
+    pluginMode: oci
+    imageTagInfo: "<plugin-version>"
+    # Registry host only. Replaces registry.redhat.io for all images.
+    imageRegistry: "<disconnected_registry_url>"
+    # Optional. Full OCI plugin image path for mirrors with non-standard
+    # repository paths. Overrides imageRegistry for OCI plugin artifacts only.
+    # Use when your mirror does not preserve the default repository path
+    # (ansible-automation-platform/automation-portal).
+    # ociPluginImage: "<disconnected_registry_url>/custom-path/automation-portal"
+  upstream:
+    backstage:
+      # The Helm chart pins images by SHA256 digest by default.
+      # When mirroring with podman tag/push, the digest is not preserved.
+      # Override with tag-based references.
+      image:
+        repository: rhdh/rhdh-hub-rhel9
+        tag: "1.8"
+      appConfig:
+        ansible:
+          rhaap:
+            checkSSL: true  # Set to false if using self-signed certificates.
+        catalog:
+          providers:
+            rhaap:
+              '{{- include "catalog.providers.env" . }}':
+                orgs: "<your-aap-organization-name>"
+    # If you use the built-in PostgreSQL database, uncomment the following lines.
+    # An external database is the supported production architecture.
+    # postgresql:
+    #   image:
+    #     repository: rhel9/postgresql-15
+    #     tag: "latest"
+----
++
+*HTTP plug-in registry delivery* (`values-tarball.yaml`):
++
+----
+redhat-developer-hub:
+  global:
+    clusterRouterBase: <your_cluster_router_base>
+    pluginMode: tarball
+    # Registry host only. Replaces registry.redhat.io for the images.
+    imageRegistry: "<disconnected_registry_url>"
+  upstream:
+    backstage:
+      image:
+        repository: rhdh/rhdh-hub-rhel9
+        tag: "1.8"
+      appConfig:
+        ansible:
+          rhaap:
+            checkSSL: true  # Set to false if using self-signed certificates.
+        catalog:
+          providers:
+            rhaap:
+              '{{- include "catalog.providers.env" . }}':
+                orgs: "<your-aap-organization-name>"
+    # If you use the built-in PostgreSQL database, uncomment the following lines.
+    # An external database is the supported production architecture.
+    # postgresql:
+    #   image:
+    #     repository: rhel9/postgresql-15
+    #     tag: "latest"
+----
++
+[IMPORTANT]
+====
+Set `imageRegistry` to the registry host only (for example, `mirror.example.com`). Do not include repository paths. The chart appends the default repository path `ansible-automation-platform/automation-portal` automatically. If your mirror uses a different repository structure, set `ociPluginImage` to the full image path instead.
+====
 . Install the chart using the `helm install` command:
 +
 ----
-helm install redhat-rhaap-portal \
+$ helm install redhat-rhaap-portal \
   redhat-rhaap-portal-x.y.z.tgz \
-  --namespace ${MY_NAMESPACE} \
-  --set redhat-developer-hub.global.clusterRouterBase=${MY_CLUSTER_ROUTER_BASE} \
-  --set redhat-developer-hub.image.name=<disconnected_registry_url>/<your_namespace>/rhdh-hub-rhel9:x.y.z
+  --namespace "${MY_NAMESPACE}" \
+  -f /path/to/values-oci.yaml
 ----
-. Add the appropriate plug-in mode setting:
-* For OCI delivery: `--set redhat-developer-hub.global.pluginMode=oci`
-* For plug-in registry: `--set redhat-developer-hub.global.pluginMode=tarball`
++
+To apply changes after deployment, upgrade the Helm release. If you install from the OpenShift web console, use Developer -> Helm -> select the release -> Actions -> Upgrade -> YAML view.
++
+To upgrade from the command line:
++
+----
+$ helm upgrade redhat-rhaap-portal \
+  redhat-rhaap-portal-x.y.z.tgz \
+  --namespace "${MY_NAMESPACE}" \
+  -f /path/to/values-oci.yaml
+----
++
+Alternatively, you can pass values using `--set` flags.
++
+*OCI delivery:*
++
+----
+$ helm install redhat-rhaap-portal \
+  redhat-rhaap-portal-x.y.z.tgz \
+  --namespace "${MY_NAMESPACE}" \
+  --set redhat-developer-hub.global.clusterRouterBase="${MY_CLUSTER_ROUTER_BASE}" \
+  --set redhat-developer-hub.global.imageRegistry="<disconnected_registry_url>" \
+  --set redhat-developer-hub.global.pluginMode=oci
+----
++
+To also set `ociPluginImage` via `--set`:
++
+----
+  --set redhat-developer-hub.global.ociPluginImage="<disconnected_registry_url>/custom-path/automation-portal"
+----
++
+*HTTP plug-in registry delivery:*
++
+----
+$ helm install redhat-rhaap-portal \
+  redhat-rhaap-portal-x.y.z.tgz \
+  --namespace "${MY_NAMESPACE}" \
+  --set redhat-developer-hub.global.clusterRouterBase="${MY_CLUSTER_ROUTER_BASE}" \
+  --set redhat-developer-hub.global.imageRegistry="<disconnected_registry_url>" \
+  --set redhat-developer-hub.global.pluginMode=tarball
+----
 
 
 

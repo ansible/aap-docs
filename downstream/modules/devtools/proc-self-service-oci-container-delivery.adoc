@@ -1,23 +1,21 @@
 :_mod-docs-content-type: PROCEDURE
 
-[id="oci-conatiner-delivery_{context}"]
+[id="oci-container-delivery_{context}"]
 
 = OCI container delivery
 
 [role="_abstract"]
-{SelfService} automatically pulls an OCI container from `registry.redhat.io` that includes the {SelfService} plug-ins.
+Use OCI container delivery to automatically pull an OCI container from `registry.redhat.io` that includes the {SelfService} plug-ins. This is the recommended method for production deployments.
 
-This method is the default for the Helm chart and is the recommended method for production deployments.
-
-.Prerequisites 
+.Prerequisites
 
 * You have a Red Hat account with access to `registry.redhat.io`.
 * You have credentials for `registry.redhat.io`.
-* You have access to the OpenShift project (namespace) where you will install the Helm chart.
+* You have access to the OpenShift project where you will install the Helm chart.
 * You have installed the OpenShift CLI (`oc`) and logged in to your cluster.
-* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/login?redirectTo=https%3A%2F%2Faccess.redhat.com%2Farticles%2FRegistryAuthentication[Registry Service Accounts].
+* You have a registry service account token from the Red Hat Customer Portal. For more information, see link:https://access.redhat.com/articles/RegistryAuthentication[Registry Service Accounts].
 
-.Procedure 
+.Procedure
 
 . Create an `auth.json` file on your local machine.
 . Add the following structure to the `auth.json` file:
@@ -31,47 +29,66 @@ This method is the default for the Helm chart and is the recommended method for 
   }
 }
 ----
-. Generate the base64-encoded authentication value:
++
+Generate the base64-encoded authentication value:
 +
 ----
-printf '%s' '<username>:<password>' | base64
+printf '%s' '<username>:<password>' | base64 -w0
 ----
+
 . Replace `<base64-encoded-username-password>` in the `auth.json` file with the output from the previous step.
 . Create the authentication secret in the target OpenShift project. The secret name must match your Helm release name.
-* If you install from the OpenShift catalog and you use the default release name `redhat-rhaap-portal`:
++
+If you install from the OpenShift catalog and you use the default release name `redhat-rhaap-portal`:
 +
 ----
 oc create secret generic redhat-rhaap-portal-dynamic-plugins-registry-auth \
   --from-file=auth.json=./auth.json
 ----
-* If you use a custom release name:
++
+If you use a custom release name:
 +
 ----
 oc create secret generic <release-name>-dynamic-plugins-registry-auth \
   --from-file=auth.json=./auth.json
 ----
 
-.Verification 
+.Verification
 
-* Verify that the secret exists in the namespace:
+* Verify that the secret exists in the project:
 +
 ----
 oc get secret <release-name>-dynamic-plugins-registry-auth
 ----
 +
+You must use a Red Hat Registry service account to generate the OpenShift secret. Using your standard Red Hat account username and password is not secure and will not work.
++
+The `install-dynamic-plugins` init container uses `skopeo` to pull OCI plug-in artifacts. It does not use cluster pull secrets, global pull secrets, or `imagePullSecrets`. A dedicated auth secret is required even when pulling from `registry.redhat.io`.
+
 [IMPORTANT]
 ====
-Create this secret in the same namespace as the Helm release, and create it before you install or upgrade the Helm release.
+Create this secret in the same OpenShift project as the Helm release, and create it before you install or upgrade the Helm release.
 ====
 
-[NOTE]
-====
-You must use a Red Hat Registry service account to generate the OpenShift secret.
-Using your standard Red Hat account username and password  is not secure and does not work.
-====
+*OpenShift web console steps*
 
-*Helm Chart configuration*
-When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` to `oci`:
+You can create the `dynamic-plugins-registry-auth` secret in the OpenShift web console.
+
+. In the OpenShift web console, select the OpenShift project where you will install the Helm release.
+. In the *Administrator* view, click *Workloads* -> *Secrets*.
+. Click *Create* -> *Key/value secret*.
+. Set the secret name to `<release-name>-dynamic-plugins-registry-auth`.
+. Add a key named `auth.json` and paste the contents of your `auth.json` file as the value.
+. Click *Create*.
+
+*Helm chart configuration*
+
+When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` to match your chosen delivery method:
+
+* `oci` -- OCI container delivery (recommended).
+* `tarball` -- HTTP plug-in registry.
+
+Verify that `pluginMode` is set to the correct value. If you omit this setting, the chart uses its built-in default.
 
 ----
 redhat-developer-hub:
@@ -79,7 +96,23 @@ redhat-developer-hub:
     pluginMode: oci
 ----
 
-This is the default value. Omit this setting unless you must document the plugin delivery mode.
+If you need to change `pluginMode` after installing the Helm release, upgrade the Helm release.
+
+*OpenShift web console:*
+
+. In the *Developer* view, click *Helm*.
+. Select the Helm release.
+. Click *Actions* -> *Upgrade*.
+. In the *YAML view*, set `redhat-developer-hub.global.pluginMode` to `oci` (OCI container delivery) or `tarball` (HTTP plug-in registry).
+. Click *Upgrade*.
+
+*Command line:*
+
+Run the `helm upgrade` command with your updated values file:
+
+----
+helm upgrade <release-name> <chart> -n <project> -f <values.yaml>
+----
 
 
 
