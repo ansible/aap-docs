@@ -1,0 +1,59 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-content-mgmt-prerequisites_{context}"]
+= Prerequisites for content management
+
+[role="_abstract"]
+Before you can sync repositories and discover content in {SelfServiceShort}, you must configure authentication and ensure your repositories meet the required format and structure.
+
+== Authentication requirements
+
+To sync content from GitHub or GitLab repositories, you must configure one of the following authentication methods:
+
+* *Personal Access Token (PAT)*: Create a PAT with appropriate permissions for your source control provider and store it in an OpenShift secret named `secrets-scm`.
+* *GitHub App* (GitHub only): Create a GitHub App in your organization and configure {SelfServiceShort} with the app credentials. GitHub Apps provide organization-scoped permissions that do not depend on individual user accounts.
++
+[NOTE]
+====
+For GitHub repositories, GitHub Apps is the recommended authentication method.
+====
+
+After you configure authentication, configure catalog locations in your Helm chart to point to your repositories.
+
+For GitHub, the PAT must have the following scopes:
+
+* `repo`
+* `read:org`
+* `workflow` (optional, required only if syncing workflow templates)
+
+For GitLab, the PAT must have the following scopes:
+
+* `read_repository`
+* `api`
+
+== Repository format requirements
+
+Repositories eligible for syncing must contain valid catalog entity files in YAML format. These files define:
+
+* {ExecEnvShort} definitions
+* Ansible collections metadata
+* Software templates
+* Other discoverable content
+
+Entity files must:
+
+* Use `.yaml` or `.yml` file extensions
+* Follow the catalog entity schema
+* Include required metadata fields such as `apiVersion`, `kind`, `metadata.name`, and `spec`
+
+== Security considerations
+
+Follow these best practices when managing content and authentication:
+
+* Store PATs in OpenShift secrets, never in plain text or version control
+* Use the minimum required token permissions for your use case:
+** For syncing content from repositories, the `repo` and `read:org` scopes are sufficient for GitHub, or `read_repository` for GitLab
+** For building {ExecEnvShort}s that reference workflow files, add the `workflow` scope for GitHub
+* Rotate PATs regularly according to your organization's security policy
+* Review repository permissions to ensure only authorized users can modify synced content
+* Consider using separate PATs for different repositories or environments
