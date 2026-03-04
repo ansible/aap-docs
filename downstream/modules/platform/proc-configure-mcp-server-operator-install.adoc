@@ -20,21 +20,11 @@ As an organization administrator, you can deploy and configure an Ansible MCP se
 . From the list of installed operators, select *{PlatformNameShort}*. 
 . In the {PlatformNameShort} tile, click **Create instance**.
 . From the **Configure via** field, select the **Form** view, then provide the instance name. For example, `aap-mcp`.
-. Select the **YAML** view, and replace the `spec:` section with the following snippet:
+. Select the **YAML** view, and under the `spec:` section, add the `mcp` component:
 +
 [source]
 ----
 spec: 
-  no_log: true
-  # Components
-  controller:
-    disabled: false
-  eda:
-    disabled: false
-  hub:
-    disabled: true
-  lightspeed:
-    disabled: true
   mcp:
     disabled: false
     allow_write_operations: false
