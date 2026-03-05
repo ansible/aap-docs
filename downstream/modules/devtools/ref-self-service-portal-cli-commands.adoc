@@ -1,0 +1,139 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-self-service-portal-cli-commands_{context}"]
+
+= Portal CLI commands reference
+
+[role="_abstract"]
+
+The {SelfService} appliance provides CLI commands for management and troubleshooting.
+
+== Accessing the appliance
+
+You can access the appliance using SSH with the key you provided during initial configuration:
+
+[source,terminal,subs="+attributes"]
+----
+ssh -i /path/to/ssh-key/id_ed25519 -p <port-number> admin@<VM_IP>
+----
+
+Replace the following placeholders:
+
+* `/path/to/ssh-key/id_ed25519` with the path to your SSH private key.
+* `<port-number>` with the SSH port number (default is 22).
+* `<VM_IP>` with the IP address or hostname of your appliance.
+
+== Available commands
+
+The following commands are available for managing the {SelfService} appliance:
+
+=== portal-config
+
+Manages the portal configuration settings.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-config show    # View current configuration
+sudo portal-config edit    # Modify configuration settings
+----
+
+*Description:*
+
+* `portal-config show` displays the current portal configuration, including {PlatformNameShort} connection details and service settings.
+* `portal-config edit` opens an interactive editor to modify the portal configuration.
+
+Use `portal-config` to update existing configuration settings after the initial setup is complete.
+
+=== portal-setup
+
+Runs the initial configuration wizard or imports a configuration.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-setup              # Run the initial configuration wizard
+sudo portal-setup import       # Import a configuration file
+----
+
+*Description:*
+
+* `portal-setup` launches the interactive configuration wizard, which is the same wizard that runs automatically on first boot.
+* `portal-setup import` imports a previously exported configuration file.
+
+[IMPORTANT]
+====
+*Difference between portal-setup and portal-config:*
+
+* Use `portal-setup` to run the complete initial configuration wizard or to import an entire configuration from a file. This command is typically used during initial deployment or when migrating to a new appliance.
+* Use `portal-config` to view or modify individual configuration settings on an already-configured appliance. This command is used for day-to-day configuration updates.
+====
+
+=== portal-status
+
+Checks the status of portal services.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+portal-status
+----
+
+*Description:*
+
+Displays the current status of all {SelfService} services, including:
+
+* Service running state (active/inactive)
+* Service health checks
+* Resource usage
+* Network connectivity status
+
+Use this command to verify that all services are running correctly after installation or troubleshooting.
+
+*Example output:*
+
+[source,terminal,subs="+attributes"]
+----
+Portal Status:
+  ✓ Web Service: Running
+  ✓ Database: Connected
+  ✓ AAP Connection: Connected
+  ✓ Authentication: Configured
+----
+
+
+=== portal-backup
+
+Creates a backup of the portal configuration and data.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-backup
+sudo portal-backup --output /path/to/backup
+----
+
+*Description:*
+
+Creates a backup archive containing the portal configuration, settings, and data. Use this command before making significant configuration changes or for disaster recovery planning.
+
+The backup includes:
+
+* Portal configuration settings
+* {PlatformNameShort} OAuth application credentials
+* User customizations
+* Service configurations
+
+[NOTE]
+====
+Store backup files in a secure location. Backup archives contain sensitive credentials and should be protected accordingly.
+====
+
+== Additional resources
+
+* For information about the initial configuration wizard, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
+* For troubleshooting information, see xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting RHEL appliances].
