@@ -1,0 +1,45 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-self-service-rhel-appliances_{context}"]
+
+= About {SelfService} RHEL appliances
+
+[role="_abstract"]
+
+The {SelfService} RHEL 9 virtual machine appliances provide pre-configured virtual machines that you can deploy across multiple virtualization platforms.
+
+The appliances are available in the following formats:
+
+* *QCOW2* - For {OCPVShort} and KVM-based environments
+* *VMDK* - For VMware `vSphere` infrastructure
+
+== Supported platforms
+
+You can deploy {SelfService} appliances on the following platforms:
+
+{OCPVShort}:: Deploy the appliance as a virtual machine within your {OCPShort} environment using the QCOW2 image format.
+
+VMware `vSphere`:: Deploy the appliance on VMware infrastructure using ESXi hosts and VMFS datastores with the VMDK image format.
+
+QEMU for local testing:: Deploy the appliance on your local machine for testing and demonstrations using the QCOW2 image format. This deployment model is not supported for production environments.
+
+[NOTE]
+====
+{SelfService} appliances support AMD64/x86_64 platforms only.
+====
+
+== Initial configuration
+
+After starting the appliance, an interactive configuration wizard guides you through the initial setup. The wizard prompts you to configure:
+
+* SSH key authentication for administrative access
+* Network settings
+* {PlatformNameShort} OAuth application credentials
+* {PlatformNameShort} admin token for authentication
+
+After the configuration wizard completes, the appliance displays the portal URL that you can access from your browser.
+
+[NOTE]
+====
+You cannot log in to the virtual machine console with a username and password after the wizard completes. Administrative access is available only through SSH using the key you provided during initial configuration.
+====
