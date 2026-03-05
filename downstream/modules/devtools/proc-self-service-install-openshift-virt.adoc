@@ -1,0 +1,188 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-install-openshift-virt_{context}"]
+
+= Installing {SelfService} on OpenShift Virtualization
+
+[role="_abstract"]
+
+Deploy the {SelfService} appliance on OpenShift Virtualization to run the portal as a virtual machine alongside container workloads within your OpenShift Container Platform cluster. This approach enables you to use your existing OpenShift infrastructure to host the portal.
+
+.Prerequisites
+
+* OpenShift Container Platform cluster (4.x) with OpenShift Virtualization operator installed and configured.
+* Cluster administrator or equivalent permissions to create VirtualMachine resources.
+* A storage class configured that supports ReadWriteOnce (RWO) access mode for virtual machine disks.
+* The {SelfService} disk image in QCOW2 format.
+* The `virtctl` CLI tool installed. You can download it from the OpenShift web console under *Virtualization* -> *Overview* -> *Download virtctl*.
+* Access to the OpenShift web console or `oc` CLI tool.
+* Network configuration details for the appliance (IP address, gateway, DNS) or access to a DHCP-enabled network.
+* Sufficient cluster resources: minimum 4 GiB allocatable memory for the virtual machine.
+
+.Procedure
+
+. Install the `virtctl` CLI tool.
++
+Download `virtctl` from your OpenShift cluster:
++
+[source,terminal,subs="+attributes"]
+----
+curl -kL -o virtctl.tar.gz \
+  "https://hyperconverged-cluster-cli-download-openshift-cnv.apps.<cluster>/amd64/linux/virtctl.tar.gz"
+tar -xzf virtctl.tar.gz
+chmod +x virtctl
+sudo mv virtctl /usr/local/bin/
+----
++
+Alternatively, download `virtctl` from the OpenShift web console by navigating to *Virtualization* -> *Overview* and clicking *Download virtctl*.
+
+. Create the target namespace:
++
+[source,terminal,subs="+attributes"]
+----
+oc create namespace aap-portal
+----
+
+. Upload the disk image.
++
+The Containerized Data Importer (CDI) automatically converts the QCOW2 format to raw format during the upload process. The PVC size must be significantly larger than the QCOW2 file size to accommodate the expanded raw image. A minimum of 40 GiB is required.
++
+[source,terminal,subs="+attributes"]
+----
+virtctl image-upload dv aap-portal-disk \
+  --size=40Gi \
+  --image-path=/path/to/disk.qcow2 \
+  --uploadproxy-url=https://cdi-uploadproxy-openshift-cnv.apps.<cluster> \
+  --insecure \
+  --force-bind \
+  --wait-secs=600 \
+  -n aap-portal
+----
++
+[cols="1,3",options="header"]
+|===
+| Option | Description
+| `dv` | Creates a DataVolume resource. This is the recommended approach as it handles PVC creation and disk conversion automatically.
+| `--size` | PVC size. Must be larger than the virtual disk size to accommodate QCOW2 to raw conversion. Use 40 GiB minimum for {SelfService}.
+| `--force-bind` | Forces immediate PVC binding. This flag is required for storage classes using WaitForFirstConsumer binding mode.
+| `--insecure` | Allows connection to upload proxy with self-signed certificates. This is required for most OpenShift installations.
+| `--wait-secs` | Timeout in seconds for waiting for the upload pod. Increase this value for slower environments or larger images.
+|===
++
+Wait for the upload to complete. The "Processing completed successfully" message confirms that CDI has successfully converted the QCOW2 image to raw format.
+
+. Create the virtual machine.
++
+Create a file named `vm-aap-portal.yaml`:
++
+[source,yaml,subs="+attributes"]
+----
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: aap-portal
+  namespace: aap-portal
+spec:
+  runStrategy: Always
+  template:
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: rootdisk
+          interfaces:
+          - masquerade: {}
+            name: default
+        resources:
+          requests:
+            memory: 4Gi
+      networks:
+      - name: default
+        pod: {}
+      volumes:
+      - name: rootdisk
+        dataVolume:
+          name: aap-portal-disk
+----
+
+. Apply the manifest:
++
+[source,terminal,subs="+attributes"]
+----
+oc apply -f vm-aap-portal.yaml
+----
+
+. Monitor the virtual machine startup.
++
+The virtual machine starts automatically when using `runStrategy: Always`:
++
+[source,terminal,subs="+attributes"]
+----
+oc get vmi -n aap-portal -w
+----
++
+Wait for the PHASE to show `Running` and READY to show `True`.
+
+. Access the virtual machine console.
++
+Connect to the virtual machine console using the CLI:
++
+[source,terminal,subs="+attributes"]
+----
+virtctl console aap-portal -n aap-portal
+----
++
+Alternatively, use the web console:
+
+.. Navigate to *Virtualization* -> *VirtualMachines*.
+.. Click the `aap-portal` virtual machine.
+.. Select the *Console* tab.
+
+. Complete the initial configuration wizard.
++
+Follow the on-screen prompts in the console. For more information, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
+
+.Verification
+
+* Verify that the virtual machine is running:
++
+[source,terminal,subs="+attributes"]
+----
+oc get vmi -n aap-portal
+----
++
+The output shows the virtual machine in `Running` phase with `READY` status set to `True`.
+
+* Access the portal URL displayed at the end of the configuration wizard from your browser.
+
+.Troubleshooting
+
+Upload fails with "effective image size is larger than available storage"::
+The `--size` parameter must be larger than the virtual disk size to accommodate the QCOW2 to raw conversion. Increase the size (for example, from 40 GiB to 50 GiB) and retry. You can check the virtual size of your QCOW2 image:
++
+[source,terminal,subs="+attributes"]
+----
+qemu-img info disk.qcow2
+----
+
+Upload hangs at "Waiting for PVC upload pod to be ready"::
+This typically occurs when the storage class uses WaitForFirstConsumer binding mode. Ensure you include the `--force-bind` flag in your `virtctl` command.
+
+Virtual machine shows "Boot failed: not a bootable disk" or "No bootable device"::
+This indicates the disk image was not properly converted during upload. Verify that the upload completed with the "Processing completed successfully" message. If the upload was interrupted during the processing phase, delete the DataVolume and PVC, then re-upload:
++
+[source,terminal,subs="+attributes"]
+----
+oc delete dv aap-portal-disk -n aap-portal
+oc delete pvc aap-portal-disk -n aap-portal
+----
+
+Virtual machine stuck in Scheduling with "Insufficient memory"::
+The cluster does not have enough allocatable memory for the virtual machine. Either reduce the virtual machine memory request in the VirtualMachine spec, or add more resources to your cluster. Check available resources:
++
+[source,terminal,subs="+attributes"]
+----
+oc describe nodes | grep -A 10 "Allocated resources"
+----

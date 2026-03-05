@@ -1,0 +1,176 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-self-service-rhel-troubleshooting_{context}"]
+
+= Troubleshooting RHEL appliances
+
+[role="_abstract"]
+
+Common issues and solutions for deploying and managing {SelfService} RHEL appliances.
+
+== General troubleshooting
+
+Cannot access the portal URL after configuration::
+* Verify that the virtual machine is running and has network connectivity.
+* Check that the portal services are running using the `portal-status` command.
+* Verify that your browser can reach the portal IP address. Test with `ping <VM_IP>` from your workstation.
+* Check firewall rules on the virtual machine and your network infrastructure.
+* Review the portal logs using `portal-logs` for error messages.
+
+Cannot SSH into the appliance::
+* Verify that you are using the correct SSH key that you provided during initial configuration.
+* Verify that the virtual machine has network connectivity and you can reach the IP address.
+* Check that the SSH service is running on the appliance.
+* Verify that you are connecting to the `admin` user: `ssh admin@<VM_IP>`
+
+Portal does not connect to {PlatformNameShort}::
+* Verify that the {PlatformNameShort} URL is correct and reachable from the portal appliance.
+* Check that the OAuth application in {PlatformNameShort} is configured with the correct redirect URI: `\https://<PORTAL_IP>:7007/api/auth/callback/oidc`
+* Verify that the OAuth Client ID and Client Secret are correct.
+* Verify that the admin token is valid and has not expired.
+* Use `portal-config show` to review the current configuration.
+* Review the portal logs using `portal-logs` for authentication errors.
+
+Configuration wizard does not appear on first boot::
+* Allow sufficient time for the virtual machine to boot completely. Initial boot can take several minutes.
+* Verify that the disk image was deployed correctly and is accessible by the virtual machine.
+* Check the virtual machine console for error messages.
+
+== OpenShift Virtualization troubleshooting
+
+Upload fails with "effective image size is larger than available storage"::
+The `--size` parameter must be larger than the virtual disk size to accommodate the QCOW2 to raw conversion. Increase the size (for example, from 40 GiB to 50 GiB) and retry.
++
+Check the virtual size of your QCOW2 image:
++
+[source,terminal,subs="+attributes"]
+----
+qemu-img info disk.qcow2
+----
+
+Upload hangs at "Waiting for PVC upload pod to be ready"::
+This typically occurs when the storage class uses WaitForFirstConsumer binding mode. Ensure you include the `--force-bind` flag in your `virtctl` command:
++
+[source,terminal,subs="+attributes"]
+----
+virtctl image-upload dv aap-portal-disk \
+  --size=40Gi \
+  --image-path=/path/to/disk.qcow2 \
+  --uploadproxy-url=https://cdi-uploadproxy-openshift-cnv.apps.<cluster> \
+  --insecure \
+  --force-bind \
+  --wait-secs=600 \
+  -n aap-portal
+----
+
+Virtual machine shows "Boot failed: not a bootable disk" or "No bootable device"::
+This indicates the disk image was not properly converted during upload. Verify that the upload completed with the "Processing completed successfully" message.
++
+If the upload was interrupted during the processing phase, delete the DataVolume and PVC, then re-upload:
++
+[source,terminal,subs="+attributes"]
+----
+oc delete dv aap-portal-disk -n aap-portal
+oc delete pvc aap-portal-disk -n aap-portal
+----
+
+Virtual machine stuck in Scheduling with "Insufficient memory"::
+The cluster does not have enough allocatable memory for the virtual machine.
++
+*Solutions:*
++
+* Reduce the virtual machine memory request in the VirtualMachine spec.
+* Add more resources to your cluster.
++
+Check available resources:
++
+[source,terminal,subs="+attributes"]
+----
+oc describe nodes | grep -A 10 "Allocated resources"
+----
+
+Virtual machine has no network connectivity::
+* Verify that the pod network is configured correctly in the VirtualMachine spec.
+* Check that the virtual machine has obtained an IP address: `oc get vmi -n aap-portal`
+* Verify that NetworkAddonsConfig is properly configured in your cluster.
+* Check OpenShift Virtualization network policies.
+
+== VMware vSphere troubleshooting
+
+Disk conversion fails with vmkfstools::
+* Verify that you have SSH access to the ESXi host.
+* Verify that the `disk.vmdk` file was uploaded successfully to the datastore.
+* Check that you have sufficient permissions to run `vmkfstools` on the ESXi host.
+* Verify that there is sufficient free space on the datastore for the converted disk.
+
+Virtual machine fails to boot after attaching the disk::
+* Verify that you selected the correct converted disk file (`disk-vmfs.vmdk`) and not the original uploaded file (`disk.vmdk`).
+* Verify that the disk is attached to the correct SCSI controller and bus.
+* Check the virtual machine boot order settings and ensure the hard disk is the first boot device.
+
+Cannot upload disk image to datastore::
+* Verify that your user account has permissions to upload files to the datastore.
+* Check that there is sufficient free space on the datastore.
+* Verify that the vSphere web client is properly connected.
+* Try uploading through the ESXi host datastore browser instead of vCenter.
+
+== QEMU troubleshooting
+
+QEMU fails with "Could not access KVM kernel module" (Linux)::
+Load the KVM kernel module and set permissions:
++
+[source,terminal,subs="+attributes"]
+----
+sudo modprobe kvm_intel  # For Intel CPUs
+sudo modprobe kvm_amd    # For AMD CPUs
+sudo chmod 666 /dev/kvm
+----
+
+Virtual machine console shows no output::
+Remove the `-nographic` and `-serial mon:stdio` options to open a graphical window:
++
+[source,terminal,subs="+attributes"]
+----
+qemu-system-x86_64 \
+  -enable-kvm \
+  -machine q35 \
+  -cpu host \
+  -m 8192 \
+  -smp cpus=4 \
+  -device virtio-blk-pci,drive=disk0 \
+  -drive id=disk0,if=none,format=qcow2,file=/path/to/disk.qcow2 \
+  -device virtio-net-pci,netdev=net0 \
+  -netdev bridge,id=net0,br=virbr0
+----
+
+Virtual machine extremely slow on macOS Apple Silicon::
+This is expected behavior. The appliance runs under x86-64 emulation on Apple Silicon, which is significantly slower than native execution. This deployment method is only suitable for basic testing and demonstrations.
++
+*Recommendations:*
++
+* Use a native x86-64 system for better performance.
+* Allocate more system memory to the virtual machine if available.
+* Reduce the number of CPU cores to 1 or 2 to improve responsiveness.
+
+Network bridge not available::
+* On Linux, verify that libvirt is installed and the `virbr0` bridge exists: `ip addr show virbr0`
+* On macOS, ensure you are using `vmnet-shared` instead of bridge networking.
+* Check that your user has permissions to access the network bridge.
+
+== Getting help
+
+If you encounter issues not covered in this troubleshooting guide:
+
+. Use the `portal-logs` command to collect detailed logs for analysis.
+. Use the `portal-status` command to verify service health.
+. Review the virtual machine console output for error messages.
+. Contact Red Hat Support with the following information:
+** The virtualization platform you are using (OpenShift Virtualization, VMware vSphere, or QEMU)
+** The appliance version and disk image filename
+** Output from `portal-status` and `portal-logs`
+** Any error messages from the virtual machine console or platform logs
+
+.Additional resources
+
+* For information about portal CLI commands, see xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference].
+* For information about the initial configuration, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
