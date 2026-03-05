@@ -1,0 +1,81 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-initial-config-wizard_{context}"]
+
+= Completing the initial configuration wizard
+
+[role="_abstract"]
+
+After starting the {SelfService} appliance, an interactive text-based configuration wizard guides you through the initial setup process.
+
+.Prerequisites
+
+* The virtual machine appliance is running and displaying the configuration wizard in the console.
+* You have the {PlatformNameShort} OAuth application Client ID and Client Secret.
+* You have the {PlatformNameShort} admin token.
+* You have an SSH public key for administrative access.
+
+.Procedure
+
+. When the virtual machine boots, the configuration wizard displays in the terminal.
+
+. Configure SSH key authentication:
++
+.. The wizard prompts you to enter an SSH public key for the `admin` user.
+.. Paste your SSH public key when prompted.
++
+[NOTE]
+====
+This is the only method for accessing the virtual machine after initial configuration. Username and password authentication is not available.
+====
+
+. Configure account security:
++
+.. Confirm the SSH key configuration.
+.. The wizard validates the provided key.
+
+. Configure network settings (if not using DHCP):
++
+.. Enter the IP address, subnet mask, gateway, and DNS servers when prompted.
+.. The wizard applies the network configuration.
+
+. Configure {PlatformNameShort} integration:
++
+The wizard prompts you to enter the following information:
+
+.. *{PlatformNameShort} URL:* The full URL of your {PlatformNameShort} instance (for example, `\https://controller.example.com`).
+.. *OAuth Client ID:* The Client ID from the OAuth application you created in {PlatformNameShort}.
+.. *OAuth Client Secret:* The Client Secret from the OAuth application.
+.. *Admin Token:* The admin token generated for {PlatformNameShort} authentication.
++
+[IMPORTANT]
+====
+The OAuth application in {PlatformNameShort} must be configured with the correct redirect URI: `\https://<PORTAL_IP>:7007/api/auth/callback/oidc`, where `<PORTAL_IP>` is the IP address or hostname of the portal appliance.
+====
+
+. Review the configuration summary.
++
+The wizard displays a summary of your configuration and prompts you to confirm.
+
+. Apply the configuration.
++
+The wizard applies the configuration and starts the {SelfService} services.
+
+. Note the portal URL.
++
+After the configuration completes, the wizard displays the portal URL (for example, `Portal URL: https://192.168.2.2:4443`).
++
+[IMPORTANT]
+====
+Record this URL. You cannot log in to the virtual machine console with a username and password after the wizard completes.
+====
+
+.Verification
+
+* Access the portal URL from your browser.
+* Log in using your {PlatformNameShort} credentials.
+
+.Next steps
+
+* For information about managing the appliance using CLI commands, see xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference].
+* For information about SSH access, see xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference].

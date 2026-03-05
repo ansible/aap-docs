@@ -1,0 +1,181 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-install-qemu_{context}"]
+
+= Installing {SelfService} for local testing with QEMU
+
+[role="_abstract"]
+
+Run the {SelfService} appliance locally using QEMU for testing and development purposes. This deployment method is not supported for production environments.
+
+== Running on Linux x86-64
+
+Run the appliance on Linux x86-64 systems using QEMU with KVM hardware virtualization for near-native performance.
+
+.Prerequisites
+
+* Linux x86-64 system with KVM support (Intel VT-x or AMD-V)
+* QEMU and KVM packages installed
+* The {SelfService} disk image in QCOW2 format
+* Minimum 8 GiB of available system memory
+
+.Procedure
+
+. Verify KVM support:
++
+[source,terminal,subs="+attributes"]
+----
+lscpu | grep -E 'vmx|svm'  # Check CPU virtualization support
+lsmod | grep kvm            # Verify KVM module is loaded
+----
+
+. Install QEMU and KVM if needed:
++
+[source,terminal,subs="+attributes"]
+----
+sudo dnf install qemu-kvm libvirt
+----
+
+. Add your user to the `kvm` group:
++
+[source,terminal,subs="+attributes"]
+----
+sudo usermod -aG kvm $USER
+----
++
+Log out and log back in for the group membership to take effect.
+
+. Start the appliance:
++
+[source,terminal,subs="+attributes"]
+----
+qemu-system-x86_64 \
+  -enable-kvm \
+  -machine q35 \
+  -cpu host \
+  -m 8192 \
+  -smp cpus=4 \
+  -nographic \
+  -serial mon:stdio \
+  -usb \
+  -chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
+  -device virtio-serial \
+  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
+  -device virtio-blk-pci,drive=disk0 \
+  -drive id=disk0,if=none,format=qcow2,file=/path/to/disk.qcow2 \
+  -device virtio-net-pci,netdev=net0 \
+  -netdev bridge,id=net0,br=virbr0
+----
++
+[cols="1,3",options="header"]
+|===
+| Option | Description
+| `-enable-kvm` | Uses hardware virtualization for near-native performance.
+| `-m 8192` | Allocates 8 GiB RAM.
+| `-smp cpus=4` | Configures 4 CPU cores.
+| `-netdev bridge,br=virbr0` | Virtual machine gets an IP address on the libvirt default network.
+|===
++
+[NOTE]
+====
+This command uses the libvirt default bridge (`virbr0`), which is created automatically when you install libvirt. The command requires privileges to access the bridge.
+====
+
+. Complete the initial configuration wizard.
++
+Follow the on-screen prompts in the terminal. For more information, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
++
+After configuration completes, the wizard displays the portal URL (for example, `https://192.168.122.76:4443`).
+
+. Access the portal from your browser using the displayed URL.
+
+.Verification
+
+* Verify that you can access the portal web interface using the URL displayed by the configuration wizard.
+
+.Troubleshooting
+
+QEMU fails with "Could not access KVM kernel module"::
+Load the KVM kernel module and set permissions:
++
+[source,terminal,subs="+attributes"]
+----
+sudo modprobe kvm_intel  # For Intel CPUs
+sudo modprobe kvm_amd    # For AMD CPUs
+sudo chmod 666 /dev/kvm
+----
+
+Virtual machine console shows no output::
+Remove the `-nographic` and `-serial mon:stdio` options to open a graphical window.
+
+.Additional resources
+
+* To stop the virtual machine, press `Ctrl+a` then `c` to access the QEMU monitor, then type `quit` and press Enter.
+* You can SSH into the appliance using the SSH key provided during initial configuration: `ssh admin@<VM_IP>`
+
+== Running on macOS Apple Silicon
+
+Run the appliance on macOS Apple Silicon systems using QEMU with x86-64 emulation.
+
+[IMPORTANT]
+====
+Emulation is significantly slower than native x86-64 systems. Boot and operations take several minutes.
+====
+
+.Prerequisites
+
+* macOS system with Apple Silicon
+* QEMU installed through Homebrew (`brew install qemu`)
+* The {SelfService} disk image in QCOW2 format
+* Minimum 8 GiB of available system memory
+
+.Procedure
+
+. Install QEMU:
++
+[source,terminal,subs="+attributes"]
+----
+brew install qemu
+----
+
+. Start the appliance:
++
+[source,terminal,subs="+attributes"]
+----
+sudo qemu-system-x86_64 \
+  -L /opt/homebrew/share/qemu \
+  -accel tcg,tb-size=1024 \
+  -machine q35 \
+  -cpu Westmere \
+  -m 8192 \
+  -smp cpus=2 \
+  -nographic \
+  -serial mon:stdio \
+  -usb \
+  -chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
+  -device virtio-serial \
+  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
+  -device virtio-blk-pci,drive=disk0 \
+  -drive id=disk0,if=none,format=qcow2,file=/path/to/disk.qcow2 \
+  -device e1000,netdev=net0 \
+  -netdev vmnet-shared,id=net0
+----
++
+The virtual machine gets a DHCP address on your local network.
+
+. Complete the initial configuration wizard.
++
+Follow the on-screen prompts in the terminal. For more information, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
++
+After configuration completes, the wizard displays the portal URL (for example, `https://192.168.2.2:4443`).
+
+. Access the portal from your browser using the displayed URL.
+
+.Verification
+
+* Verify that you can access the portal web interface using the URL displayed by the configuration wizard.
+
+.Additional resources
+
+* To stop the virtual machine, press `Ctrl+a` then `c` to access the QEMU monitor, then type `quit` and press Enter.
+* You can SSH into the appliance using the SSH key provided during initial configuration: `ssh admin@<VM_IP>`
