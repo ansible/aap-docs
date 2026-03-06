@@ -1,0 +1,22 @@
+[id="con-operator-cascading-client-timeout"]
+
+= Cascading client timeouts
+
+[role="_abstract"]
+Cascading timeouts ensure that if an outer layer of the system times out, inner processes also terminate to prevent resource exhaustion from orphaned requests. 
+
+Set the primary timeout at the Gateway level to allow {PlatformNameShort} to synchronize timeouts automatically across component applications.
+
+== Timeout relationships
+
+The `client_request_timeout` serves as the primary value. Internal layers follow this logic:
+
+* The sum of the Envoy `request_timeout` and the gRPC authentication timeout (`gateway_grpc_auth_service_timeout`) must be less than the `client_request_timeout`.
+* The Nginx read timeout (`nginx_read_timeout`) must be less than or equal to the Envoy `request_timeout`.
+* The Python web server timeout (`python_webserver_timeout`) must be less than or equal to the `nginx_read_timeout`.
+
+== Timeout grace periods
+
+At the uWSGI layer, the `uwsgi_timeout_grace_period` allows the application to attempt a graceful shutdown. 
+During this period, the application displays a traceback of the current stack position. 
+If the process does not exit within the grace period, {PlatformNameShort} terminates it.
