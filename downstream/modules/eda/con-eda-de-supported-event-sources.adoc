@@ -1,0 +1,67 @@
+:_mod-docs-content-type: CONCEPT
+[id="eda-de-supported-event-sources"]
+
+= Supported event sources and filters
+
+[role="_abstract"]
+The capabilities of your decision environment are largely defined by the event sources and filters included in your container image. Event sources serve as the foundation for {EDAcontroller}, determining where your rulebooks receive incoming signals. 
+
+Selecting compatible sources is critical for successful deployment, as availability can vary—some sources are exclusive to the web-based {EDAcontroller}, while others are optimized for the `ansible-rulebook` command-line interface (CLI).
+
+When building your decision environments, the `de-minimal` image provides a curated set of supported plugins designed to ensure stability and compatibility. However, as the ecosystem evolves, plugin namespaces have been updated to reflect their specific collection origins (for example, migrating from `ansible.eda` to specific cloud collections). To ensure your rulebooks remain functional, verify that your definitions align with the latest plugin naming conventions.
+
+The following table lists the supported plugins in the `de-minimal` image, including their plugin type and any associated deprecated names:
+
+.Supported event sources and filters
+[cols="a,a,a"]
+|===
+| Plugin name | Event filter | Deprecated name
+
+h| `eda.builtin.dashes_to_underscores` | Event filter | `ansible.eda.dashes_to_underscores`
+
+h| `eda.builtin.event_splitter` | Event filter | 
+
+//confirm the next deprecated name w/ Pino Toscano
+
+h| `eda.builtin.generic` | Event source | `eda.builtin.generic`
+
+h| `eda.builtin.insert_hosts_to_meta` | Event filter | `ansible.eda.insert_hosts_to_meta`
+
+h| `eda.builtin.insert_meta_info` | Event filter | 
+
+h| `eda.builtin.json_filter` | Event filter | `ansible.eda.json_filter`
+
+h| `eda.builtin.normalize_keys` | Event filter | `ansible.eda.normalize_keys`
+
+h| `eda.builtin.pg_listener` | Event source | `ansible.eda.pg_listener`
+
+h| `eeda.builtin.range` | Event source | `ansible.eda.range`
+
+h| `eda.builtin.webhook` | Event source | `ansible.eda.webhook`
+
+|===
+
+The following event sources have been made available in dedicated collections. The original `ansible.eda` names are currently supported as deprecated plugins in `de-minimal`, but you must transition to the new `de-supported` versions to ensure long-term compatibility and overall improvements:
+
+.`de-supported` event sources
+[cols="a,a"]
+|===
+| Event source (in `de-supported`) | Deprecated name (in `de-minimal`)
+
+h| `amazon.aws.aws_cloudtrail` | `ansible.eda.aws_cloudtrail`
+
+h| `amazon.aws.aws_sqs_queue` | `ansible.eda.aws_sqs_queue`
+
+h| `azure.azcollection.azure_service_bus` | `ansible.eda.azure_service_bus` 
+
+|===
+
+In addition, the `de-minimal` image currently provides event sources that are not supported, and will be removed in a future release:
+
+* `ansible.eda.file`
+* `ansible.eda.file_watch`
+* `ansible.eda.journald`
+* `ansible.eda.tick`
+* `ansible.eda.url_check`
+
+
