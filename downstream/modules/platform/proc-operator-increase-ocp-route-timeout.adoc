@@ -1,0 +1,37 @@
+[id="proc-operator-increase-ocp-route-timeout"]
+
+= Increase the {OCPShort} Route timeout
+
+[role="_abstract"]
+
+During high-volume API operations, such as Configuration as Code (CasC) restores, the OpenShift Route might time out if the operation exceeds the default 30-second window. 
+
+You must increase the `client_request_timeout` in the `AnsibleAutomationPlatform` Custom Resource (CR) to resolve HTTP 504 (Gateway Timeout) or HTTP 503 (Service Unavailable) errors.
+
+.Prerequisites
+
+* Access to the {OCPShort} web console with administrator privileges.
+* Update the the {PlatformNameShort} {PlatformVers} operator to the latest version.
+
+.Procedure
+
+. Log in to the OpenShift web console.
+. Navigate to *Installed Operators* > *{PlatformNameShort}* > *All Instances*.
+. Select your *AnsibleAutomationPlatform* instance.
+. Click the *YAML* tab.
+. In the `spec:` section, add the `route_annotations` to extend the timeout:
++
+[source,yaml]
+----
+spec:
+  route_annotations: |
+    haproxy.router.openshift.io/timeout: 180s
+----
+. Click *Save*.
+
+
+.Verification
+
+. Navigate to *Networking* > *Routes* in the OpenShift console.
+. Select the route for your {PlatformNameShort} instance.
+. Verify the *Annotations* section contains the updated timeout value.
