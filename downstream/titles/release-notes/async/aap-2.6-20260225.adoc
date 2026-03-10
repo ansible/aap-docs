@@ -10,8 +10,8 @@ This release includes the following components and versions:
 |====
 | Release Date | Component versions
 
-| February 25, 2026 |
-
+| February 25, 2026
+a|
 * {ControllerName} 4.7.9
 * {HubNameStart} 4.11.6
 * {EDAName} 1.2.6
@@ -20,7 +20,6 @@ This release includes the following components and versions:
 * Receptor 1.6.3
 * RPM-based installer {PlatformNameShort} (bundle) 2.6-5
 * RPM-based installer {PlatformNameShort} (online) 2.6-5
-|
 
 |====
 
@@ -158,6 +157,43 @@ With this update, the following CVEs have been addressed:
 
 
 == {EDAName}
+
+=== Enhancements
+
+* The content of the `de-minimal` and `de-supported` images of the decision environment changes. There are new names for existing plugins, and the old names are still available albeit deprecated. In most of the cases only a change of the used event source or event filter is needed.(AAP-48005)
+
+** For example:
+
+----
+- name: Production ruleset
+  sources:
+    - ansible.eda.pg_listener:
+        postgres_params:
+          host: postgresql_hostname
+          port: postgresql_port
+          dbname: postgresql_database
+        channels:
+          - my_events
+          - my_alerts
+[...]
+----
+
+* The event source name will need to be changed as follows:
+
+----
+- name: Production ruleset
+  sources:
+    - eda.builtin.pg_listener:
+        postgres_params:
+          host: postgresql_hostname
+          port: postgresql_port
+          dbname: postgresql_database
+        channels:
+          - my_events
+          - my_alerts
+[...]
+----
+
 
 === Bug Fixes
 
