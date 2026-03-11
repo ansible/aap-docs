@@ -7,10 +7,12 @@
 [role="_abstract"]
 {PlatformNameShort} user accounts for accessing the user interface or API can either be local (stored in the {PlatformNameShort} database) or mapped to an external authentication source, such as a _Lightweight Directory Access Protocol_ (LDAP) server. 
 
-This guide recommends that where possible, all primary user accounts should be mapped to an external authentication source. 
+Where possible, map all primary user accounts to an external authentication source. 
 Using external account sources eliminates a source of error when working with permissions in this context and minimizes the amount of time devoted to maintaining a full set of users exclusively within {PlatformNameShort}. 
 This includes accounts assigned to individual persons and for non-person entities, such as service accounts used for external application integration. 
 Reserve any local accounts, such as the default “admin” account, for emergency access or “break glass” scenarios where the external authentication mechanism isn't available.
+
+The following external authentication mechanisms are supported in {PlatformNameShort} 2.5:
 
 * LDAP
 * SAML
@@ -27,18 +29,18 @@ Reserve any local accounts, such as the default “admin” account, for emergen
 * GitHub enterprise organization
 * GitHub enterprise team
 
-Select an authentication mechanism compliant with your organization's policies, and review {LinkCentralAuth} for prerequisite details.
+Choose an authentication mechanism that adheres to your organization's policies, and refer to {LinkCentralAuth} to understand the prerequisites for the relevant authentication mechanism.
 The authentication mechanism used must ensure that the authentication-related traffic between {PlatformNameShort} and the authentication back-end is encrypted when the traffic occurs on a public or insecure network (for example, LDAPS or LDAP over TLS, HTTPS for OAuth2 and SAML providers, and so on.).
 
-In the {PlatformNameShort} UI, any “system administrator” account can edit, change, and update any inventory or automation definition. Restrict these account privileges to the minimum set of users possible for low-level automation controller configuration and disaster recovery.
+In the {PlatformNameShort} UI, any account with “system administrator” privileges can edit, change, and update any inventory or automation resource. Restrict these account privileges to the minimum set of users necessary for {PlatformNameShort} administration and maintenance.
 
-[NOTE]
-====
-{PlatformNameShort} {PlatformVers} introduces a new central authentication mechanism used by all of the platform components: 
-
-* {ControllerNameStart}
-* {PrivateHubNameStart}
-* {EDAcontroller} 
-
-Before {PlatformVers}, each of these components had their own authentication configuration.
-====
+//NOTE]
+//====
+//{PlatformNameShort} {PlatformVers} introduces a new central authentication mechanism used by all of the platform components: 
+//
+//* {ControllerNameStart}
+//* {PrivateHubNameStart}
+//* {EDAcontroller} 
+//
+//Before {PlatformVers}, each of these components had their own authentication configuration.
+//====

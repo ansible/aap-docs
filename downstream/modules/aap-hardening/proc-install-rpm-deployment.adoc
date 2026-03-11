@@ -2,7 +2,7 @@
 
 [id="proc-install-rpm-deployment"]
 
-= Using an external vault file with an RPM-based {PlatformNameShort} deployment
+= Use an external Ansiblevault file with an RPM-based {PlatformNameShort} deployment
 
 [role="_abstract"]
 
@@ -10,7 +10,7 @@ When installing {PlatformNameShort} using RPM packages, you can use an external 
 
 For RPM-based installations, you can provide the Ansible vault at runtime when executing the setup script.
 
-Add the following sensitive variables to the vault file:
+Add the following sensitive variables to the Ansible vault file:
 
 ----
 admin_password: <secure_password>
@@ -27,11 +27,11 @@ automationedacontroller_pg_password: <secure_password>
 registry_password: <secure_cdn_password>
 ----
 
-To use the vault during installation, use the following procedure:
+To use the Ansible vault file during installation, use the following procedure:
 
 .Procedure
 
-. Ensure the vault file, for example, `vault.yml`, contains all required sensitive variables.
+. Ensure the Ansible vault file, for example, `vault.yml`, contains all required sensitive variables.
 . Run the installation using the following command: 
 +
 `./setup.sh -e @vault.yml -ask-vault-pass`

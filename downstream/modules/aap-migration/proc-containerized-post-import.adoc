@@ -22,40 +22,20 @@ $ aap-gateway-manage shell_plus
 
 ** Edit the inventory file and apply any relevant `extra_settings` to each component by using the `component_extra_settings`. 
 
-. Update the Resource Server Secret Key for each component.
-.. Gather the current Resource Secret values for each component:
+. Remove all resource server key secrets to be repopulated by the installation program:
 +
 ----
-$ podman exec -it automation-gateway bash -c 'aap-gateway-manage shell_plus --quiet -c "[print(cl.name, key.secret) for cl in ServiceCluster.objects.all() for key in cl.service_keys.all()]"'
+$ for i in `podman secret ls | egrep 'resource_server' | awk '{print $2}'`; do podman secret rm $i; done 
 ----
-
-.. Validate the current secret values:
-+
-----
-$ for secret_name in eda_resource_server hub_resource_server controller_resource_server
-do
-echo $secret_name
-podman secret inspect $secret_name --showsecret | grep SecretData
-done
-----
-
-.. If the secret value does not match the current values, delete the existing secret and re-create it, updating it with the new value:
-
-... Delete the secret:
-+
-----
-$ podman secret rm <SECRET_NAME>
-----
-
-... Re-create the secret:
-+
-----
-$ echo "secret_value" | podman secret create <SECRET_NAME> -
-----
-+
-Replace the `<SECRET_NAME>` placeholder in the commands above with the appropriate secret name for each component: `eda_resource_server` ({EDAName}), `hub_resource_server` ({HubName}), and `controller_resource_server` ({ControllerName}).
 
 . Re-run the installation program on the target environment by using the same inventory from the installation.
+
+. Sync {Gateway} resources if {EDAName} is present:
++
+----
+$ podman exec -it automation-eda-api bash
+$ aap-eda-manage resource_sync 
+----
 
 . Validate instances for automation execution.
 

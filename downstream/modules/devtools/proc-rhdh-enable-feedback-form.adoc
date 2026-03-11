@@ -1,0 +1,51 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-enable-feedback-form_{context}"]
+= Enable the {AAPRHDHShort} feedback form
+
+[role="_abstract"]
+The {AAPRHDHShort} feedback form is disabled by default. When enabled, you can submit a star rating and feedback text from the {AAPRHDHShort} interface. The feedback data is sent to Red Hat as part of the telemetry data collected by your {RHDH} instance.
+
+To enable the feedback form, set the `ansible.feedback.enabled` option to `true` in your {RHDH} configuration.
+
+*Helm installation*
+
+If you installed {RHDH} by using the Helm chart, add or update the following YAML in the `app-config-rhdh.yaml` data section of the ConfigMap:
+
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-rhdh
+data:
+  app-config-rhdh.yaml: |
+    ansible:
+      feedback:
+        enabled: true
+----
+
+After updating the ConfigMap:
+
+. In the OpenShift Developer UI, select the `{RHDH}` pod.
+. Open *Actions*.
+. Click btn:[Restart rollout].
+
+*Operator installation*
+
+If you installed {RHDH} by using the Operator, update the `app-config-rhdh` ConfigMap referenced by your `Backstage` custom resource.
+
+Add or update the following YAML in the `app-config-rhdh.yaml` data section of the ConfigMap:
+
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: app-config-rhdh
+data:
+  app-config-rhdh.yaml: |
+    ansible:
+      feedback:
+        enabled: true
+----
+
+The Operator detects the ConfigMap change and automatically restarts the {RHDH} deployment.

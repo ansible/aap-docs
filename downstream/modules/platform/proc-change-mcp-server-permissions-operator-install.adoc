@@ -1,0 +1,29 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-change-mcp-server-permissions-operator-install_{context}"]
+
+= Changing the permissions of the Ansible MCP server post deployment
+
+[role="_abstract"]
+
+If you changed the permissions of the Ansible MCP server after it was created and deployed, you must delete the *AnsibleMCPServer* custom resource and recreate it.
+
+.Prerequisites
+
+* You have a deployed an Ansible MCP server on an operator-based installation of {PlatformNameShort}.
+
+.Procedure
+
+. Log in to {OCP}.
+. Go to the resources tab under menu:Installed Operators[aap-operator.v2.6.0-], and then select *AnsibleMCPServer* details. 
+. Under *Resources*, search for the *AnsibleMCPServer* custom resource.
+. Select the active *AnsibleMCPServer* instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
+. Select the *Settings menu* on the right side of the instance, and then click *Delete AnsibleMCPServer*.
++
+After the reconciliation process completes, the existing MCP server instance is deleted, and a new Ansible MCP server instance is created.
+
+.Verification
+
+. Navigate to menu:Workloads[Deployments]. 
+. Check that the deployment you created is listed there. For example: `aap-mcp`.
+. Check one of the pod's logs and verify there are no errors.
