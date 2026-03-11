@@ -1,0 +1,94 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-setup-git-integration_{context}"]
+= Set up Git repository integration
+
+[role="_abstract"]
+Link your GitHub or GitLab repositories to {SelfServiceShort} to enable content discovery and catalog functionality.
+After completing this procedure, your repositories are configured as catalog locations, which allows content to be synced and discovered in the portal.
+
+.Prerequisites
+
+* You have created a Personal Access Token (PAT) for GitHub or GitLab with the required scopes.
+For more information, see xref:self-service-create-gh-pat_{context}[] or xref:self-service-create-gl-pat_{context}[].
+* You have stored your PAT in an OpenShift secret named `secrets-scm`.
+For more information, see xref:self-service-create-scm-secrets_{context}[].
+* You have administrator access to the {SelfServiceShort} Helm chart configuration.
+* Your repositories contain valid Backstage catalog entity files in YAML format.
+
+.Procedure
+
+. Open your {SelfServiceShort} Helm chart `values.yaml` file for editing.
+. Navigate to the `catalog.locations` section.
+. Add entries for each repository you want to sync content from using the following format:
++
+.GitHub repository example
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://github.com/<organization>/<repository>/blob/<branch>/path/to/catalog-info.yaml
+----
++
+.GitLab repository example
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://gitlab.com/<organization>/<repository>/-/blob/<branch>/path/to/catalog-info.yaml
+----
++
+[NOTE]
+====
+Replace `<organization>`, `<repository>`, `<branch>`, and the path with your actual repository details. You can point to a specific catalog file or use wildcards to discover multiple files.
+====
++
+. To discover multiple catalog files in a repository, you can point to a discovery file that references other catalog entities:
++
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://github.com/<organization>/<repository>/blob/main/catalog-discovery.yaml
+----
++
+. Save the `values.yaml` file.
+. Apply the updated Helm chart configuration:
++
+[source,bash]
+----
+$ helm upgrade <release-name> <chart-name> -f values.yaml -n <namespace>
+----
++
+Replace `<release-name>`, `<chart-name>`, and `<namespace>` with your deployment details.
+. Wait for the {SelfServiceShort} pods to restart and apply the new configuration.
+
+.Verification
+
+. Log in to {SelfServiceShort}.
+. Navigate to the catalog view or repository management page.
+. Verify that entities from your configured repositories appear in the catalog.
+. Check the {SelfServiceShort} logs for any authentication or sync errors:
++
+[source,bash]
+----
+$ oc logs -n <namespace> <pod-name> | grep -i catalog
+----
+
+.Troubleshooting
+
+If repositories fail to sync:
+
+* Verify the PAT has the required permissions and has not expired
+* Ensure the `secrets-scm` secret exists in the same namespace as {SelfServiceShort}
+* Confirm the repository URLs are accessible and correctly formatted
+* Check that catalog entity files in the repository are valid YAML and follow the Backstage schema
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://backstage.io/docs/features/software-catalog/descriptor-format[Backstage catalog entity descriptor format] in the Backstage documentation
+* xref:self-service-content-mgmt-prerequisites_{context}[]

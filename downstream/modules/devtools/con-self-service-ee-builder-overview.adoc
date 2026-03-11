@@ -1,0 +1,25 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-ee-builder-overview_{context}"]
+= The Execution Environment Builder
+
+[role="_abstract"]
+The Execution Environment (EE) Builder in {SelfServiceShort} enables you to create custom {ExecEnvShort} definitions through a guided UI wizard or backend configuration methods.
+
+The EE Builder provides both a user-friendly web interface and flexibility for advanced users who prefer configuration-based approaches.
+When you use the UI wizard, the builder generates the necessary definition files and can publish them to your Git repository or provide them as a download.
+
+The builder supports two primary workflows:
+
+* *UI wizard*: A step-by-step interface that guides you through selecting base images, collections, Python and system requirements, MCP servers, and additional build steps
+* *Backend methods*: Configuration through Helm charts and direct file management for users who require programmatic control
+
+The generated {ExecEnvShort} definition includes:
+
+* `execution-environment.yml`: The main definition file specifying your environment configuration
+* `requirements.yml`: Ansible collections required by your environment
+* `requirements.txt`: Python dependencies
+* `bindep.txt`: System-level package dependencies
+* Template file: A reusable Backstage software template for sharing your configuration
+
+When you publish to a Git repository, the EE Builder creates or updates the repository with all generated files and can create a pull request if the repository already exists.
