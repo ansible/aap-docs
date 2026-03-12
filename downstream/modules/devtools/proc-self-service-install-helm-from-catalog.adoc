@@ -10,7 +10,7 @@ Deploy the Helm chart from the OpenShift catalog by configuring the base URL and
 * You have created a project for {SelfServiceShort} in {OCPShort}.
 * You have created secrets in {OCPShort} for {PlatformNameShort} authentication.
 * If you configure SCM integration (for example, importing from private repositories or using templates that access SCM), you have created secrets in OpenShift for SCM authentication.
-* You have completed one of the plug-in delivery methods outlined in the link:{BaseURL}/red_hat_ansible_automation_platform/{Platformvers}/html-single/installing_self-service_automation_portal/index#self-service-create-ocp-registry_self-service-preinstall-config[Choose a plug-in delivery method] section:
+* You have completed one of the plug-in delivery methods outlined in xref:self-service-create-ocp-registry_self-service-preinstall-config[Choose a plug-in delivery method]:
 ** For OCI delivery: You have created the `<release-name>-dynamic-plugins-registry-auth` secret.
 ** For HTTP plug-in registry: You have deployed the plug-in registry.
 
@@ -23,7 +23,6 @@ Deploy the Helm chart from the OpenShift catalog by configuring the base URL and
 . Click btn:[Create] and select *Helm Release*. 
 . Search for `Portal` in the Helm Charts filter, and select the `Automation Portal` chart. 
 . Click btn:[Create] and select the *YAML view*.
-. Set the OpenShift cluster router base.
 . Update the `clusterRouterBase` value with the base URL of your OpenShift instance.
 +
 [IMPORTANT]
@@ -36,19 +35,24 @@ redhat-developer-hub:
   global:
     clusterRouterBase: apps.example.com
 ----
-. Configure the plugin delivery mode by setting the `pluginMode` key:
-
-* For HTTP registry delivery (default), set the value to `tarball`.
-* For OCI delivery, ensure the value is `oci`.
-
-. *Optional:* To use a specific plugin version, update the `imageTagInfo` value:
+. Configure the plug-in delivery mode by setting the `pluginMode` key:
++
+* For OCI delivery, set the value to `oci`.
+* For HTTP registry delivery, set the value to `tarball`.
 +
 ----
 redhat-developer-hub:
   global:
-    imageTagInfo: "2.1.1"
+    pluginMode: oci
 ----
-. *Optional:* To synchronize with a specific {PlatformNameShort} organization, update the `orgs` key:
+. *Optional:* To use a specific plug-in version, update the `imageTagInfo` value:
++
+----
+redhat-developer-hub:
+  global:
+    imageTagInfo: "2.1"
+----
+. Set the {PlatformNameShort} organization to synchronize. The default value is `Default`. Update the `orgs` key to match your organization name:
 +
 ----
 redhat-developer-hub:
@@ -58,7 +62,7 @@ redhat-developer-hub:
         catalog:
           providers:
             rhaap:
-              production:
+              '{{- include "catalog.providers.env" . }}':
                 orgs: "<your-aap-organization-name>"
 ----
 . *Optional:* Update the `CUSTOMER_SUPPORT_URL` to point to your support portal:
