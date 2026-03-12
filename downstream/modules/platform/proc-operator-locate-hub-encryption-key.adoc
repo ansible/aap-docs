@@ -1,0 +1,31 @@
+[id="operator-locate-hub-encryption-key_{context}"]
+
+= Locate the {HubName} encryption key
+
+[role=_abstract]
+
+To ensure a successful migration, you must retrieve the correct symmetric encryption key from your existing RPM-based {HubName} instance.
+
+.Prerequisites
+
+* SSH access to the {HubName} node.
+* Root-level permissions on the node.
+
+.Procedure
+
+. Log in to the RPM-based {HubName} node through SSH as the root user.
+. Identify the symmetric database encryption key by running the following command:
++
+----
+cat /etc/pulp/certs/database_fields.symmetric.key
+----
+. Record this value for use in your secret configuration YAML file.
++
+[NOTE]
+====
+This value is sensitive. When copying the key to {OCPShort}, do not include trailing new-line or space characters. 
+Extra characters prevent the operator from decrypting the database, which causes the installation to fail.
+====
+
+
+
