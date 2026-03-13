@@ -1,0 +1,79 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-install-vmware_{context}"]
+
+= Installing {SelfService} on VMware vSphere
+
+[role="_abstract"]
+
+Deploy the {SelfService} appliance on VMware vSphere infrastructure to integrate the portal into your existing VMware environment. This procedure guides you through creating a virtual machine and importing the VMDK disk image.
+
+.Prerequisites
+
+* VMware vSphere x86-64 environment with appropriate permissions to create and manage virtual machines.
+* SSH access to an ESXi host connected to your target VMFS datastore.
+* The {SelfService} disk image in VMDK format.
+* Network configuration details for the appliance (IP address, gateway, DNS).
+
+.Procedure
+
+. Create a blank virtual machine in vSphere with the following specifications:
++
+* Appropriate CPU and memory allocation per {PlatformNameShort} guidelines
+* Compatible guest operating system type
+* Network adapter configured for your environment
+
+. Upload the disk image to the datastore.
++
+Transfer the `disk.vmdk` file to the virtual machine's folder on the VMFS datastore:
+
+.. Navigate to the *Datastores* view in vSphere.
+.. Browse to the folder created for your blank virtual machine.
+.. Click *Upload* and select the `disk.vmdk` file.
+
+. Convert the disk to vSphere format.
++
+The disk image must be converted to a vSphere-compatible VMFS format before it can be attached to the virtual machine.
+
+.. Enable SSH on the ESXi host if not already enabled (*Host* -> *Actions* -> *Services* -> *Enable SSH*).
+.. Connect to the ESXi host using SSH.
+.. Navigate to the virtual machine folder on the datastore.
+.. Execute the conversion command:
++
+[source,terminal,subs="+attributes"]
+----
+vmkfstools -i disk.vmdk disk-vmfs.vmdk -d thin
+----
++
+Upon successful completion, you see the following output:
++
+[source,terminal,subs="+attributes"]
+----
+Destination disk format: VMFS thin-provisioned
+Cloning disk 'disk.vmdk'...
+Clone: 100% done.
+----
+
+. Attach the converted disk to the virtual machine:
+
+.. Edit the virtual machine settings in vSphere.
+.. Remove the default hard disk that was created with the blank virtual machine.
+.. Add a new hard disk and select *Existing Hard Disk*.
+.. Browse to and select the converted disk: `disk-vmfs.vmdk`.
+.. Save the virtual machine settings.
+
+. Start the virtual machine and complete the initial configuration:
+
+.. Open the virtual machine console in vSphere.
+.. Power on the virtual machine.
+.. Follow the on-screen configuration wizard instructions. For more information, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
+
+.Verification
+
+* Verify that the virtual machine boots successfully and displays the configuration wizard.
+* Access the portal URL displayed at the end of the configuration wizard from your browser.
+
+.Additional resources
+
+* The `-d thin` option creates a thin-provisioned disk, which only consumes datastore space as data is written. This is the recommended option for most deployments.
+* After confirming the virtual machine boots successfully, you can delete the original `disk.vmdk` file to reclaim datastore space.
