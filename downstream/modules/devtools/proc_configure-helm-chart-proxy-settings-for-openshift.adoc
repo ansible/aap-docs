@@ -1,0 +1,60 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-10
+:_mod-docs-content-type: PROCEDURE
+
+[id="configure-helm-chart-proxy-settings-for-openshift_{context}"]
+= Configure Helm chart proxy settings for OpenShift
+
+To ensure the self-service automation portal can retrieve external resources—such as plugins and catalog entities—while complying with corporate security policies, you must configure proxy settings. This configuration allows the portal to communicate with external networks through a forward proxy.
+
+
+.Prerequisites
+
+* You have access to an OpenShift cluster.
+* You have the Helm CLI installed.
+* You have the proxy server URLs and the list of internal domains that must bypass the proxy.
+
+
+.Procedure
+
+. In the `values.yaml` file, find the `extraEnvVars` section.
+
+
+. Add the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables as shown in the following example:
++
+[source,yaml,subs="+quotes"]
+....
+...
+upstream:
+  backstage:
+    extraEnvVars:
+      - name: HTTP_PROXY
+        value: 'http://<proxy_host>:<port>'
+      - name: HTTPS_PROXY
+        value: 'http://<proxy_host>:<port>'
+      - name: NO_PROXY
+        value: 'localhost,127.0.0.1,.cluster.local,.svc'
+....
+
+
+. Configure the `NO_PROXY` variable to include internal cluster domains and services. Use a comma-separated list and include the `.svc` and `.cluster.local` suffixes to ensure internal traffic does not route through the forward proxy.
+
+
+. Save the changes to your configuration file.
+
+
+. Upgrade the self-service portal:
++
+[literal,subs="+quotes"]
+----
+$ helm upgrade <release_name> <chart_path> -f values.yaml
+----
+
+
+
+.Verification
+
+. Log in to the OpenShift web console.
+. Navigate to the **Pods** section in your project.
+. Select a portal pod and click the **Environment** tab.
+. Verify that the `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` variables display the correct values.
