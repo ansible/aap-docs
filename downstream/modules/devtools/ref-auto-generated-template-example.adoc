@@ -1,0 +1,163 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="auto-generated-template-example_{context}"]
+= Auto-generated template example
+
+[role="_abstract"]
+The following example shows a template that {SelfServiceShort} auto-generates from an existing {PlatformNameShort} Job Template.
+Every field in the generated YAML maps directly to an {PlatformNameShort} artifact:
+
+* The {PlatformNameShort} Job Template name and description become `metadata` fields.
+* Each "Prompt on Launch" option becomes an `AAPResourcePicker` field.
+* Each {PlatformNameShort} Survey question becomes a standard form field.
+* The `steps` section launches the original {PlatformNameShort} Job Template using the `rhaap:launch-job-template` action.
+
+[source,yaml]
+----
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  # AAP artifact: Organization name → namespace
+  namespace: default
+  # AAP artifact: Job Template name → lowercase with hyphens
+  name: deploy-application
+  # AAP artifact: Job Template name → title (copied directly)
+  title: Deploy Application
+  # AAP artifact: Job Template description → description (copied directly)
+  description: Deploy application to target environment
+  # AAP artifact: Job Template labels → tags (lowercase)
+  tags:
+    - automation
+    - aap
+  # AAP artifact: Job Template URL → annotations
+  annotations:
+    backstage.io/techdocs-ref: url:https://aap.example.com/#/templates/job_template/42
+    backstage.io/source-location: url:https://aap.example.com/#/templates/job_template/42
+
+spec:
+  type: service
+
+  parameters:
+    - title: "Please enter the following details"
+      required:
+        - token
+        - inventory
+        - app_name
+      properties:
+        # Always present: OAuth token for AAP authentication (hidden from user)
+        token:
+          title: Token
+          type: string
+          description: Oauth2 token
+          ui:field: AAPTokenField
+          ui:widget: hidden
+          ui:backstage:
+            review:
+              show: false
+          ui:options:
+            disabled: true
+            hidden: true
+
+        # AAP artifact: "Prompt on Launch" → Inventory (users select by name; self-service portal resolves to AAP ID)
+        inventory:
+          title: Inventory
+          description: Please enter the inventory you want to use the services on
+          resource: inventories
+          ui:field: AAPResourcePicker
+          default: Production Servers
+
+        # AAP artifact: Survey question → "Application Name" (variable, title, type, default from survey spec)
+        app_name:
+          title: Application Name
+          description: Name of the application to deploy
+          type: string
+          default: my-app
+
+  steps:
+    - id: launch-job
+      # AAP artifact: Job Template name used as the step name
+      name: Deploy Application
+      action: rhaap:launch-job-template
+      input:
+        token: ${{ parameters.token }}
+        values:
+          # AAP artifact: Job Template name identifies which template to launch
+          template: Deploy Application
+          # "Prompt on Launch" values passed as launch parameters
+          inventory: ${{ parameters.inventory }}
+          # Survey answers passed as extra variables to AAP
+          extraVariables:
+            app_name: ${{ parameters.app_name }}
+
+  output:
+    text:
+      - title: Deploy Application template executed successfully
+        content: |
+          **Job ID:** ${{ steps['launch-job'].output.data.id }}
+          **Job status:** ${{ steps['launch-job'].output.data.status }}
+----
+
+The following table maps each generated field to its {PlatformNameShort} source:
+
+.Field mapping
+[cols="25%,20%,25%,30%",options="header"]
+|====
+| {PlatformNameShort} source | {PlatformNameShort} value | Generated field | Transformation
+
+| Job Template → Organization
+| Default
+| `metadata.namespace`
+| Lowercase with hyphens.
+
+| Job Template → Name
+| Deploy Application
+| `metadata.name`
+| Lowercase with hyphens.
+
+| Job Template → Name
+| Deploy Application
+| `metadata.title`
+| Copied directly.
+
+| Job Template → Description
+| Deploy application to target environment
+| `metadata.description`
+| Copied directly.
+
+| Job Template → Labels
+| `automation`, `aap`
+| `metadata.tags`
+| Lowercase, special characters replaced with hyphens.
+
+| Always present
+| OAuth2 token
+| `parameters.token`
+| Auto-populated and hidden from user.
+
+| Prompt on Launch → Inventory
+| Production Servers
+| `parameters.inventory`
+| `AAPResourcePicker`; user selects by name, resolved to {PlatformNameShort} ID at launch.
+
+| Survey → Question 1
+| app_name (text, required, default: "my-app")
+| `parameters.app_name`
+| Variable, title, type, and default copied from Survey spec.
+
+| Job Template → Name
+| Deploy Application
+| `input.values.template`
+| Identifies which {PlatformNameShort} Job Template to launch.
+
+| Prompt on Launch value
+| `${{ parameters.inventory }}`
+| `input.values.inventory`
+| Name resolved to {PlatformNameShort} ID at launch.
+
+| Survey answers
+| `${{ parameters.app_name }}`
+| `input.values.extraVariables`
+| Passed as `extra_vars` to the {PlatformNameShort} Job.
+|====
