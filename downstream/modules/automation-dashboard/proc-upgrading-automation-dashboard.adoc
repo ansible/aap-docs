@@ -57,12 +57,12 @@ ansible-playbook -i inventory ansible.containerized_installer.dashboard_install 
 For instructions on obtaining these values, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html-single/using_automation_dashboard/index#proc-integrating-automation-dashboard[Integrating {AutomationDashboardName} with your {PlatformNameShort}].
 ====
 
-. Apply the updated configuration to the dashboard:
+. Apply the updated configuration to the dashboard. You must copy the configuration file to the container's `/tmp/` directory:
 +
 [source,bash]
 ----
-podman cp clusters.yaml automation-dashboard-web:/
-podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /clusters.yaml
+podman cp clusters.yaml automation-dashboard-web:/tmp/
+podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /tmp/clusters.yaml
 ----
 
 .Verification
