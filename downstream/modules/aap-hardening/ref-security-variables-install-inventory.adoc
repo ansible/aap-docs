@@ -10,8 +10,9 @@
 [role="_abstract"]
 
 The installation inventory file defines the architecture of the {PlatformNameShort} infrastructure and provides several variables that can be used to modify the initial configuration of the infrastructure components. 
-For more information on the {Installer} inventory, see link:{URLPlanningGuide}/about_the_installer_inventory_file[About the installer inventory file].
+For more information on the {Installer} inventory, see link:{URLPlanningGuide}/con-inventory-introduction_planning[About the installation program inventory file].
 
+== RPM deployment variables
 The following table lists several security-relevant variables and their recommended values for an RPM-based deployment.
 
 .Security-relevant inventory variables
@@ -19,7 +20,7 @@ The following table lists several security-relevant variables and their recommen
 |===
 | *RPM deployment variable* | *Recommended Value* | *Details*
 
-| `postgres_use_ssl` | true | The installation program configures the {Installer}-managed Postgres database to accept SSL/TLS-based connections when this variable is set.
+| `postgres_use_ssl` | true | The {Installer} configures the installer-managed Postgres database to accept SSL/TLS-based connections when this variable is set.
 
 The default for this variable is false which means SSL/TLS is not used for PostgreSQL connections. 
 
@@ -31,12 +32,14 @@ By default, when each service connects to the database, it tries an encrypted co
 Setting this variable to `verify-full` enforces an mTLS negotiation between the service and the database. 
 The `postgres_use_ssl` variable must also be set to `true` for this pg_sslmode to be effective.
 
-*NOTE*: If a third-party database is used instead of the {Installer}-managed database, the third-party database must be set up independently to accept mTLS connections.
+*NOTE*: If a third-party database is used instead of the installer-managed database, the third-party database must be set up independently to accept mTLS connections.
 
 | `nginx_disable_hsts` `automation_gateway_disable_hsts` `automationhub_disable_hsts` `automationcontroller_disable_hsts` | false | If set to `true`, these variables disable HTTPS _strict transport Security_ (HSTS) connections to each of the component web services. 
 
 The default is `false`. If these variables are absent from the {Installer} inventory it is effectively equivalent to defining the variables as `false`.
 |===
+
+== Container deployment variables
 
 The following table lists several security-relevant variables and their recommended values for a container-based deployment.
 
@@ -59,7 +62,7 @@ By default, when each service connects to the database, it tries an encrypted co
 If a third-party database is used instead of the {Installer}-managed database, the third-party database must be set up independently to accept mTLS connections.
 ====
 
-| `controller_nginx_disable_https` `gateway_nginx_disable_https` `hub_nginx_disable_https` `da_nginx_disable_https` | `false` | If set to `true`, these variables disable HTTPS connections to each of the component web services. 
+| `controller_nginx_disable_https` `gateway_nginx_disable_https` `hub_nginx_disable_https` `eda_nginx_disable_https` | `false` | If set to `true`, these variables disable HTTPS connections to each of the component web services. 
 
 The default is `false`.
 
@@ -72,9 +75,8 @@ The default is `false`.
 If these variables are absent from the {Installer} inventory it is effectively equivalent to defining the variables as `false`.
 |===
 
-
 In an enterprise architecture where a load balancer is used in front of multiple {Gateway}s, SSL/TLS client connections can be terminated at the load balancer or passed through to the individual AAP servers. 
-If SSL/TLS is being terminated at the load balancer, this guide recommends that the traffic gets re-encrypted from the load balancer to the individual {PlatformNameShort} servers. 
+If SSL/TLS is being terminated at the load balancer, re-encrypt traffic from the load balancer to the individual {PlatformNameShort} servers. 
 This ensures that end-to-end encryption is in use. 
 In this scenario, the `*_disable_https` variables listed are set to the default value of `false`.
 

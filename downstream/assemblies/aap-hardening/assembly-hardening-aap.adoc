@@ -9,8 +9,7 @@ ifdef::context[:parent-context: {context}]
 
 [role="_abstract"]
 
-This guide takes a practical approach to hardening the {PlatformNameShort} security posture, starting with the planning and architecture phase of deployment and then covering specific guidance for the installation phase. 
-As this guide specifically covers {PlatformNameShort} running on {RHEL}, hardening guidance for {RHEL} is covered where it affects the automation platform components.
+Use the following guidance to harden the {PlatformNameShort} security posture during the planning, architecture, and installation deployment phases. When running {PlatformNameShort} on {RHEL}, you must also apply the relevant {RHEL} hardening configurations that affect automation platform components.
 
 include::aap-hardening/con-planning-considerations.adoc[leveloffset=+1]
 
@@ -35,8 +34,6 @@ include::aap-hardening/ref-aap-operational-secrets.adoc[leveloffset=+3]
 
 include::aap-hardening/con-automation-use-secrets.adoc[leveloffset=+3]
 
-include::aap-hardening/con-protect-sensitive-data-no-log.adoc[leveloffset=+3]
-
 include::aap-hardening/con-user-authentication-planning.adoc[leveloffset=+2]
 
 include::aap-hardening/ref-infrastructure-server-account-planning.adoc[leveloffset=+3]
@@ -45,7 +42,8 @@ include::aap-hardening/ref-aap-account-planning.adoc[leveloffset=+3]
 
 include::aap-hardening/con-logging-log-capture.adoc[leveloffset=+2]
 
-include::aap-hardening/ref-auditing-incident-detection.adoc[leveloffset=+2]
+// To be moved
+//include::aap-hardening/ref-auditing-incident-detection.adoc[leveloffset=+2]
 
 include::aap-hardening/con-rhel-host-planning.adoc[leveloffset=+2]
 
@@ -57,7 +55,7 @@ include::aap-hardening/con-install-secure-host.adoc[leveloffset=+2]
 
 include::aap-hardening/ref-security-variables-install-inventory.adoc[leveloffset=+2]
 
-include::aap-hardening/proc-install-user-pki.adoc[leveloffset=+2]
+include::aap-hardening/ref-install-user-pki.adoc[leveloffset=+2]
 
 include::aap-hardening/proc-sensitive-variables-install-inventory.adoc[leveloffset=+2]
 
@@ -104,11 +102,15 @@ include::aap-hardening/con-day-two-operations.adoc[leveloffset=+1]
 
 include::aap-hardening/con-rbac.adoc[leveloffset=+2]
 
-include::aap-hardening/ref-updates-upgrades.adoc[leveloffset=+2]
+include::aap-hardening/con-protect-sensitive-data-no-log.adoc[leveloffset=+3]
+
+//include::aap-hardening/ref-updates-upgrades.adoc[leveloffset=+2]
 
 //include::aap-hardening/proc-controller-stig-considerations.adoc[leveloffset=+3]
 
 include::aap-hardening/proc-disaster-recovery-operations.adoc[leveloffset=+3]
+
+include::aap-hardening/proc-rotate-database-secret-key.adoc[leveloffset=+3]
 
 include::aap-hardening/con-hashicorp-vault-external-secrets.adoc[leveloffset=+2]
 

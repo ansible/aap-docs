@@ -16,8 +16,10 @@ To check the `user.max_user_namespaces` kernel setting, complete the following s
 
 .Procedure
 
-. Log in to your {ControllerName} at the command line.
-. Run the command `sudo sysctl user.max_user_namespaces`.
+. Log in to each {PlatformNameShort} infrastructure node at the command line.
+. Run the command: 
++
+`sudo sysctl user.max_user_namespaces`.
 . If the output indicates that the value is zero, look at the contents of the file `/etc/sysctl.conf` and all files under `/etc/sysctl.d/`, edit the file containing the `user.max_user_namespaces` setting, and set the value to "65535".
 . To apply this new value, run the command `sudo sysctl -p <file>`, where `<file>` is the file just modified.
 . Re-run the command `sudo sysctl user.max_user_namespaces` and verify that the value is now set to "65535".

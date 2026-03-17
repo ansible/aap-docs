@@ -1,0 +1,34 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-02-16
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context-of-choose-a-plug-in-delivery-method: {context}]
+
+ifndef::context[]
+[id="choose-a-plug-in-delivery-method"]
+endif::[]
+ifdef::context[]
+[id="choose-a-plug-in-delivery-method_{context}"]
+endif::[]
+= Choose a plug-in delivery method
+
+:context: choose-a-plug-in-delivery-method
+
+[role="_abstract"]
+Ansible plug-ins for Red Hat Developer Hub support two delivery methods. Choose the method that fits your environment:
+
+* **OCI container (recommended)**: Red Hat Developer Hub pulls the Ansible plug-ins directly from registry.redhat.io as OCI artifacts during startup. You do not need to use any manual file downloads or plug-in registry deployment.
+
+* **HTTP plug-in registry**: Manually download the Ansible plug-ins tarball files, deploy an HTTP plug-in registry in your OpenShift cluster, and configure Red Hat Developer Hub to pull plug-ins from that registry. Use this method if your environment cannot pull OCI artifacts from `registry.redhat.io`.
+
+Complete one of the following procedures before configuring the Ansible plug-ins in the Required configuration section.
+
+include::devtools/proc_use-oci-container-delivery-method.adoc[leveloffset=+1]
+
+include::devtools/proc_downloading-the-ansible-plug-ins-files.adoc[leveloffset=+1]
+
+include::devtools/proc_creating-a-registry-for-the-ansible-plug-ins.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-choose-a-plug-in-delivery-method[:context: {parent-context-of-choose-a-plug-in-delivery-method}]
+ifndef::parent-context-of-choose-a-plug-in-delivery-method[:!context:]
+

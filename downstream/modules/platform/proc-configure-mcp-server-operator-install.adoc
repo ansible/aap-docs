@@ -20,21 +20,11 @@ As an organization administrator, you can deploy and configure an Ansible MCP se
 . From the list of installed operators, select *{PlatformNameShort}*. 
 . In the {PlatformNameShort} tile, click **Create instance**.
 . From the **Configure via** field, select the **Form** view, then provide the instance name. For example, `aap-mcp`.
-. Select the **YAML** view, and replace the `spec:` section with the following snippet:
+. Select the **YAML** view, and under the `spec:` section, add the `mcp` component:
 +
 [source]
 ----
 spec: 
-  no_log: true
-  # Components
-  controller:
-    disabled: false
-  eda:
-    disabled: false
-  hub:
-    disabled: true
-  lightspeed:
-    disabled: true
   mcp:
     disabled: false
     allow_write_operations: false
@@ -50,16 +40,6 @@ Use the `allow_write_operations` variable to configure the operational access le
 ====
 
 . Click *Create*. The Ansible MCP server is created. 
-
-. Optional: If you changed the permissions of the Ansible MCP server after it was created and deployed, you must delete the *AnsibleMCPServer* custom resource and recreate it.
-+
-Perform the following steps:
-
-.. Go to the {PlatformNameShort} portal.
-.. Under *Resources*, search for the *AnsibleMCPServer* custom resource.
-.. Select the active *AnsibleMCPServer* instance. An active AnsibleMCPServer instance is identified by the `-mcp` suffix appended to the {PlatformNameShort} custom resource name.
-.. Select the *Settings menu* on the right side of the instance, and then click *Delete AnsibleMCPServer*.
-.. After the reconciliation process completes, the existing MCP server instance is deleted, and a new Ansible MCP server instance is created.
 
 .Verification
 

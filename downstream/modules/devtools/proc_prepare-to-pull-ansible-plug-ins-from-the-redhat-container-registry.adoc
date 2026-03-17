@@ -1,0 +1,67 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2026-01-29
+:_mod-docs-content-type: PROCEDURE
+
+[id="prepare-to-pull-ansible-plug-ins-from-the-redhat-container-registry_{context}"]
+= Prepare to pull Ansible plug-ins from the Red Hat container registry
+
+[role="_abstract"]
+You need to go through some prerequisite steps before you can obtain plug-ins directly from `registry.redhat.io` during the deployment.
+
+
+.Prerequisites
+
+* You already have your Red Hat Customer Portal account.
+
+
+.Procedure
+
+. Navigate to link:https://access.redhat.com/terms-based-registry/[Registry Service Accounts] and create a new service account token.
++
+[NOTE]
+====
+The generated username and token are in format `<random-string>|<your-token-name>`.
+====
+
+
+. Create the `dynamic-plugins-registry-auth` secret to be able to authenticate when downloading plugins from the OCI registry.
+
+.. Create an `auth.json` file with your credentials:
++
+[literal,subs="+quotes"]
+----
+{
+  "auths": {
+    "registry.redhat.io": {
+      "auth": "<base64-encoded-username-password>"
+    }
+  }
+}
+----
++
+To generate the base64-encoded value, use the `echo -n '<username>:<password>' | base64` command in your CLI.
+
+
+.. Create the secret.
++
+Create the secret in your project. Replace `developer-hub` with the name of your Red Hat Developer Hub Custom Resource:
++
+[literal,subs="+quotes"]
+----
+oc create secret generic developer-hub-dynamic-plugins-registry-auth --from-file=auth.json=./auth.json
+----
++
+The default release name is `redhat-rhaap-portal`.
++
+[NOTE]
+====
+The secret name must follow the pattern `<deployment-name>-dynamic-plugins-registry-auth`, where `<deployment-name>` matches the metadata name of `<deployment-name>-dynamic-plugins-registry-auth`.
+====
+
+* If you already have Podman credentials configured locally:
++
+[literal,subs="+quotes"]
+----
+oc create secret generic redhat-rhaap-portal-dynamic-plugins-registry-auth --from-file=auth.json=${XDG_RUNTIME_DIR}/containers/auth.json
+----
+

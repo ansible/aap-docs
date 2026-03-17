@@ -4,19 +4,62 @@
 = Adding the Ansible plug-ins configuration
 
 [role="_abstract"]
-Modify the {RHDH} Helm chart by adding the local path of the extracted dynamic plug-in files to the `appConfig.dynamicPlugins.rootDirectory` parameter.
+Modify the Red Hat Developer Hub Helm chart to add the Ansible plug-ins. The configuration depends on the plug-in delivery method you chose earlier.
 
 .Procedure
 . In the OpenShift Developer UI, navigate to menu:Helm[developer-hub > Actions > Upgrade > Yaml view].
 . Update the Helm chart configuration to add the dynamic plug-ins in the {RHDH} instance.
-Under the `plugins` section in the YAML file, add the dynamic plug-ins that you want to enable.
+Under the `plugins` section in the YAML file, add the dynamic plug-ins that you want to enable. Choose the configuration that matches your delivery method.
++
+** OCI container delivery (recommended):
 +
 ----
 global:
-  ...
+  dynamic:
+    includes:
+      - dynamic-plugins.default.yaml
     plugins:
       - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-backstage-rhaap-dynamic plugin>
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:21!ansible-plugin-backstage-rhaap'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: 'oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.1!ansible-plugin-scaffolder-backend-module-backstage-rhaap'
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+----
++
+Replace `x.y.z` with the Ansible plug-ins version.
++
+[NOTE]
+====
+OCI delivery does not require the `integrity` hash values. The OCI registry handles integrity verification.
+====
+
+
+** HTTP plug-in registry:
++
+----
+global:
+  dynamic:
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - disabled: false
+        integrity: <SHA512 value>
         package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz'
         pluginConfig:
           dynamicPlugins:
@@ -32,7 +75,7 @@ global:
                       text: Ansible
                     path: /ansible
       - disabled: false
-        integrity: <SHA512 Integrity key for ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic plugin>
+        integrity: <SHA512 value>
         package: >-
           http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-x.y.z.tgz
         pluginConfig:
@@ -40,15 +83,17 @@ global:
             backend:
               ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
 ----
-. In the `package` sections, replace `x.y.z`  in the plug-in filenames with the correct version numbers for the Ansible plug-ins.
-. For each Ansible plug-in, update the integrity values using the corresponding `.integrity` file content.
++
+Replace `x.y.z` with the correct plug-in version numbers and update the `integrity` values using the corresponding `.integrity` file content.
+
+
 . Click btn:[Upgrade].
 +
-The developer hub pods restart and the plug-ins are installed.
+The {RHDH} pods restart and the plug-ins are installed.
 
 .Verification
 
-To verify that the plug-ins have been installed, open the `install-dynamic-plugin` container logs and check that the Ansible plug-ins are visible in {RHDH}:
+To verify that the plug-ins have been installed, open the `install-dynamic-plugin` container logs:
 
 . Open the Developer perspective for the {RHDH} application in the OpenShift Web console.
 . Select the *Topology* view.
@@ -57,16 +102,16 @@ To verify that the plug-ins have been installed, open the `install-dynamic-plugi
 . In the *Pods* section, click *View logs* to open the *Pod details* page.
 . In the *Pod details* page, select the *Logs* tab.
 . Select `install-dynamic-plugins` from the drop-down list of containers to view the container log.
-. In the `install-dynamic-plugin` container logs, search for the Ansible plug-ins.
 +
-The following example from the log indicates a successful installation for one of the plug-ins:
+** For OCI delivery, a successful installation displays:
 +
 -----
-=> Successfully installed dynamic plugin http://plugin-registry-1:8080/ansible-plugin-backstage-rhaap-dynamic-1.1.0.tgz
+=> Successfully installed dynamic plugin oci:registry.redhat.io/ansible-automation-platform/ansible-plugin-backstage-rhaap-dynamic:x.y.z
 -----
+
+** For HTTP plug-in registry, a successful installation displays:
 +
-The following image shows the container log in the *Pod details* page.
-The version numbers and file names can differ.
-+
-image::rhdh-check-plugin-config.png[container logs for install-dynamic-plugin]
+-----
+=> Successfully installed dynamic plugin http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-x.y.z.tgz
+-----
 

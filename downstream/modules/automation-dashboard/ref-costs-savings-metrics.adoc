@@ -17,17 +17,26 @@ The costs and savings analysis generates the following metrics to quantify the r
 |Description
 
 |**Cost of manual automation**
-|The estimated cost of manually performing all automated tasks. This estimated value is based on the time taken to manually run each job, multiplied by a labor cost rate.
+|Total cost if all jobs were run manually. Calculated as: (Manual time in minutes × Host executions) × Average labor cost per minute.
 
 |**Cost of automated execution**
-|The actual cost incurred for automation execution using {PlatformNameShort}. This includes the resources consumed by {PlatformNameShort}, such as server time and processing power.
+|Total cost of running jobs on {PlatformNameShort}. Calculated as: (Running time in minutes × Prorated subscription cost per minute).
 
 |**Total savings/cost avoided**
-|The difference between the **Cost of manual automation** and the **Cost of automated execution**. This is a key metric for demonstrating the return on investment.
+|The difference between manual and automated costs.
 
 |**Total hours saved/avoided**
-|The figure calculated by adding host executions and automation creation time, then subtracting the running time in minutes.
+|Time saved by automation compared to manual execution.
 
 |**Time taken to manually execute (min)**
-|The amount of time it would take for a user to perform the task manually on a host. This input compares the value of manual execution and automated execution.
+|Estimated manual execution time in minutes.
+
+|**Time taken to create automation (min)**
+|Estimated time spent creating or authoring the automation (for example, writing playbooks or setting up jobs). Included in cost calculations when enabled in settings.
+
+|**Hourly rate for manually running the job ($)**
+|The hourly labor cost used to estimate the expense of running jobs manually. Used to calculate manual cost and savings.
+
+|**Monthly cost of running {PlatformNameShort}**
+|Monthly cost of running the {PlatformNameShort}. This value includes license, labor and infrastructure costs to run {PlatformNameShort}. It is used to calculate the automation savings
 |===
