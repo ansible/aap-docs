@@ -1,0 +1,54 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-saas-backup-and-disaster-recovery"]
+= Backup and disaster recovery
+
+[role="_abstract"]
+Red{nbsp}Hat maintains daily database and file system snapshots in a separate region from each deployment.  
+
+|===
+| Component   | Snapshot Frequency | Retention Policy
+| Database    | Daily              | 7 days
+| File System | Daily              | 7 days
+|===
+
+
+This recovery data is used if an AWS regional outage cannot be resolved in a reasonable time.
+
+Customer data is replicated to a predefined secondary region based on the deployment region. The currently paired regions are:
+
+[cols="2*", options="header"]
+|===
+| Primary Region          | Business Continuity Region
+
+| af-south-1 (Cape Town)              | ap-southeast-2 (Sydney)
+| ap-east-1 (Hong Kong)          | ap-south-1 (Mumbai)
+| ap-northeast-1 (Tokyo)            | ap-northeast-3 (Osaka)
+| ap-northeast-3 (Osaka)            | ap-northeast-1 (Tokyo)
+| ap-southeast-2 (Sydney)         | ap-south-1 (Mumbai)
+| ca-central-1 (Central Canada)          | us-east-2 (Ohio)
+| ca-west-1 (Canada)         | ca-central-1 (Central Canada)
+| eu-central-1 (Frankfurt)          | eu-central-2 (Zurich)
+| eu-central-2 (Zurich)          | eu-central-1 (Frankfurt)
+| eu-south-2 (Spain)            | eu-west-3 (Paris)
+| eu-west-1 (Ireland)            | eu-north-1 (Stockholm)
+| eu-west-2 (London)              | eu-west-1 (Ireland) 
+| eu-west-3 (Paris)               | eu-south-2 (Spain)
+| sa-east-1 (São Paulo)             | us-east-1 (N. Virginia) 
+| us-east-1 (N. Virginia)              | us-west-2 (Oregon) 
+| us-east-2 (Ohio)             | us-west-2 (Oregon) 
+| us-west-2 (Oregon)              | us-east-1 (N. Virginia) 
+|===
+
+To recover an {PlatformNameShort} deployment in a different AWS region, a customer must submit a request specifying their preferred deployment region from the available options.
+Red{nbsp}Hat evaluates the request and begins building an instance in that region.
+Data from the previous instance is recovered from the customer’s business continuity region.
+The customer is responsible for any necessary post-deployment network configuration to integrate the new instance into their environment.
+
+
+[NOTE]
+====
+Backup data is not directly accessible to customers. 
+The data is only used in the event of infrastructure failure, not customer configuration errors. 
+Red{nbsp}Hat encourages using configuration-as-code practices to maintain a customer-hosted backup of your configuration.
+====
