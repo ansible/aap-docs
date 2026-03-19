@@ -1,0 +1,108 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-import-templates-disconnected_{context}"]
+= Import EE Builder templates in disconnected environments
+
+[role="_abstract"]
+Import the pre-built EE Builder software templates from the public Ansible GitHub repository into your private Git repository for use in disconnected or air-gapped environments.
+After completing this procedure, the three pre-built templates (Start from scratch, Networking Automation, and Cloud Automation) become available in the EE Builder UI wizard in your disconnected environment.
+
+.Prerequisites
+
+* You have a private Git repository accessible from your disconnected environment.
+* You have access to the public Ansible GitHub repository from a connected system to download the templates.
+* You have configured Git repository integration in your Helm chart.
+* You have created and stored a Personal Access Token for your private Git repository.
+
+.Procedure
+
+. From a system with internet access, download the EE Builder template files from the public repository:
++
+.. Navigate to link:https://github.com/ansible/ansible-rhdh-templates/tree/main/templates[https://github.com/ansible/ansible-rhdh-templates/tree/main/templates] in a web browser.
+.. Download the following template files:
++
+* `ee-start-from-scratch.yaml`
+* `ee-network-automation.yaml`
+* `ee-cloud-automation.yaml`
++
+.. Save the files to a secure location for transfer to your disconnected environment.
++
+. Transfer the template files to your disconnected environment using your organization's approved file transfer method.
++
+. Import the templates into your private Git repository:
++
+.. Clone your private Git repository:
++
+[source,bash]
+----
+$ git clone <your-private-repo-url>
+$ cd <repository-name>
+----
++
+.. Create a directory for the templates:
++
+[source,bash]
+----
+$ mkdir -p templates/ee-builder
+$ cd templates/ee-builder
+----
++
+.. Copy the downloaded template files into this directory:
++
+[source,bash]
+----
+$ cp /path/to/ee-start-from-scratch.yaml .
+$ cp /path/to/ee-network-automation.yaml .
+$ cp /path/to/ee-cloud-automation.yaml .
+----
++
+.. Commit and push the templates to your repository:
++
+[source,bash]
+----
+$ git add .
+$ git commit -m "Add EE Builder templates for disconnected environment"
+$ git push origin main
+----
++
+. Configure {SelfServiceShort} to use the templates from your private repository:
++
+.. Open your Helm chart `values.yaml` file.
+.. Navigate to the `catalog.locations` section.
+.. Add entries for each template:
++
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://<your-git-server>/<organization>/<repository>/blob/main/templates/ee-builder/ee-start-from-scratch.yaml
+    - type: url
+      target: https://<your-git-server>/<organization>/<repository>/blob/main/templates/ee-builder/ee-network-automation.yaml
+    - type: url
+      target: https://<your-git-server>/<organization>/<repository>/blob/main/templates/ee-builder/ee-cloud-automation.yaml
+----
++
+.. Save the file and apply the updated configuration:
++
+[source,bash]
+----
+$ helm upgrade <release-name> <chart-name> -f values.yaml -n <namespace>
+----
+
+.Verification
+
+. Log in to {SelfServiceShort}.
+. Navigate to *EE definition files* > *Create*.
+. Verify that the three pre-built templates appear:
++
+* Start from scratch
+* Networking Automation
+* Cloud Automation
++
+. Click *Start* on one of the templates to confirm it loads correctly.
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://github.com/ansible/ansible-rhdh-templates[Ansible RHDH Templates repository] on GitHub
