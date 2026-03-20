@@ -94,13 +94,18 @@ The `access_token`, `refresh_token`, and `client_secret` are stored in the {Auto
 These values are encrypted for security.
 ====
 
-. Load and activate your {AutomationDashboardName} configuration:
+. Load and activate your {AutomationDashboardName} configuration. You must copy the configuration file to the container’s `/tmp/` directory. The system automatically removes the file from the container after successful processing.
 +
 [source,bash]
 ----
-podman cp clusters.yaml automation-dashboard-web:/
-podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /clusters.yaml
+podman cp clusters.yaml automation-dashboard-web:/tmp
+podman exec -it automation-dashboard-web /venv/bin/python manage.py setclusters /tmp/clusters.yaml
 ----
++
+[NOTE]
+====
+If the system cannot remove the file from the /tmp/ directory, it displays an error message and continues running.
+====
 +
 [NOTE]
 ====
