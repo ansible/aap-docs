@@ -1,0 +1,43 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="output-links_{context}"]
+= Output links
+
+[role="_abstract"]
+Use `output.links` to display clickable buttons.
+Each link has a `title` and `url` field.
+You can optionally set an `icon` field.
+
+[source,yaml]
+----
+output:
+  links:
+    - title: Check Request Status
+      url: https://portal.example.com/requests/status
+      icon: help
+----
+
+You can reference step output data in link URLs:
+
+[source,yaml]
+----
+output:
+  links:
+    - title: View job in Ansible Automation Platform
+      url: ${{ steps['launch-job'].output.data.url }}
+----
+
+You can include multiple links:
+
+[source,yaml]
+----
+output:
+  links:
+    - title: View job in Ansible Automation Platform
+      url: ${{ steps['launch-job'].output.data.url }}
+    - title: RHEL documentation
+      url: https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/
+      icon: docs
+----

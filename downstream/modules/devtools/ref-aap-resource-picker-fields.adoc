@@ -1,0 +1,58 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="aap-resource-picker-fields_{context}"]
+= AAP resource picker fields
+
+[role="_abstract"]
+Use `ui:field: AAPResourcePicker` to let users select {PlatformNameShort} resources by name.
+{SelfServiceShort} queries the {PlatformNameShort} API and displays available resources in a picker.
+Set the `resource` property to specify the {PlatformNameShort} resource type.
+
+The following table lists supported `resource` values:
+
+.Supported resource values
+[cols="30%,40%,30%",options="header"]
+|====
+| `resource` value | {PlatformNameShort} resource type | Selection mode
+
+| `inventories`
+| Inventories
+| Single-select
+
+| `credentials`
+| Credentials
+| Multi-select (`type: array`)
+
+| `organizations`
+| Organizations
+| Single-select
+|====
+
+== Single-select example (inventory)
+
+[source,yaml]
+----
+inventory:
+  title: Inventory
+  description: Select target inventory.
+  resource: inventories
+  ui:field: AAPResourcePicker
+  default: Production Servers
+----
+
+== Multi-select example (credentials)
+
+[source,yaml]
+----
+credentials:
+  title: Credentials
+  description: Select credentials for accessing the target hosts.
+  type: array
+  resource: credentials
+  ui:field: AAPResourcePicker
+  default:
+    - SSH Key
+    - AWS Credentials
+----
