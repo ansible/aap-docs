@@ -28,19 +28,14 @@ a|
 
 CSV Versions in this release:
 
-* Namespace: aap-operator.v2.6.0-0.1774367109
+* Namespace-scoped bundle: aap-operator.v2.6.0-0.1774367109
 
-* Cluster: aap-operator.v2.6.0-0.1774367079
-
-
-== CVE
-
-With this update, the following CVEs have been addressed:
+* Cluster-scoped bundle: aap-operator.v2.6.0-0.1774367079
 
 
 == Overview
 
-This asynchronous update for Red Hat {PlatformNameShort} 2.6 (2.6.20260325) provides targeted enhancements, security updates, and bug fixes across {ControllerName}, {Gateway}, {HubName}, {EDAName}, Lightspeed, {ExecEnvShort}, {OperatorPlatformNameShort}, and both platform and containerized installers.
+This asynchronous update for Red Hat {PlatformNameShort} 2.6 (2.6.20260325) provides targeted enhancements, security updates, and bug fixes across {ControllerName}, {Gateway}, {HubName}, {EDAName}, {LightspeedShortName}, {ExecEnvShort}, {OperatorPlatformNameShort}, and both platform and containerized installers.
 
 This release focuses on expanding audit coverage for administrative actions, upgrading core services to Django 5.2 LTS, addressing multiple CVEs across the stack, and improving reliability, performance, and observability. It also refines user experience in the web UI and gateway and improves diagnostics through clearer logging and traceability.
 
@@ -53,26 +48,26 @@ AAP-67043, AAP-66919, AAP-66800, AAP-66668
 
 *Platform-wide move to Django 5.2 LTS*
 
-Upgrades Django for gateway, hub, controller, and Lightspeed components to Django 5.2 LTS, aligning with a supported, more secure framework baseline.
+Upgrades Django for gateway, {HubNameStart}, {ControllerNameStart}, and {LightspeedShortName} components to Django 5.2 LTS, aligning with a supported, more secure framework baseline.
 AAP-68587, AAP-68135, AAP-60155, AAP-59873, AAP-60388, AAP-64430
 
 *Security hardening through CVE remediation*
 
-Resolves multiple vulnerabilities in UI, controller, gateway proxy, automation hub, Lightspeed, and packaging, including issues in Axios, Authlib, Pillow, pyasn1, cryptography, jsonpath, AIOHTTP, express-rate-limit, and Go’s crypto/tls and net/url libraries.
+Resolves multiple vulnerabilities in UI, {ControllerName}, gateway proxy, {HubName}, {LightspeedShortName}, and packaging, including issues in Axios, Authlib, Pillow, pyasn1, cryptography, jsonpath, AIOHTTP, express-rate-limit, and Go's crypto/tls and net/url libraries.
 AAP-69040, AAP-68686, AAP-68683, AAP-68529, AAP-68526, AAP-67735, AAP-67503, AAP-66903, AAP-66695, AAP-66655, AAP-66636, AAP-65713, AAP-65711, AAP-65695, AAP-65507, AAP-65506, AAP-65505, AAP-65475, AAP-65474, AAP-65473, AAP-65472, AAP-65412, AAP-65411, AAP-65410, AAP-65409, AAP-65224, AAP-64902, AAP-61921
 
 *Improved stability and performance across services*
 
-Addresses issues impacting UI responsiveness, containerized installer behavior after Django upgrades, constructed inventory and facts handling, credential validation in Event-Driven Ansible, database restore flows in platform operators, and certificate handling in execution environments.
+Addresses issues impacting UI responsiveness, containerized installer behavior after Django upgrades, constructed inventory and facts handling, credential validation in {EDAName}, database restore flows in platform operators, and certificate handling in execution environments.
 AAP-69005, AAP-68843, AAP-68842, AAP-68841, AAP-68135, AAP-68079, AAP-67759, AAP-67749, AAP-67579, AAP-67552, AAP-67550, AAP-67549, AAP-67548, AAP-67498, AAP-67460, AAP-67371, AAP-67230, AAP-67081, AAP-67080, AAP-67079, AAP-67078, AAP-67038, AAP-66864, AAP-66845, AAP-66806, AAP-66706, AAP-66579, AAP-66400, AAP-66106, AAP-66105, AAP-66104, AAP-66102, AAP-65109, AAP-65081, AAP-64996, AAP-64630, AAP-64146, AAP-60313, AAP-60238, AAP-58769, AAP-58535, AAP-22149
 
-This update rebases the containerized installer to ansible.platform collection version 2.6.20260306, aligning the installer with the current AAP 2.6 collection release. AAP-67548
+This update rebases the containerized installer to `ansible.platform` collection version 2.6.20260306, aligning the installer with the current {PlatformNameShort} 2.6 collection release. AAP-67548
 
 == Features
 
 === {ControllerNameStart}
 
-* This update improves compatibility with the receptor control tooling used by automation controller by updating the pinned receptorctl version for Tower 4.7 / AAP 2.6. AAP-66806
+* This update improves compatibility with the receptor control tooling used by automation controller by updating the pinned receptorctl version for Tower 4.7 / {PlatformNameShort} 2.6. AAP-66806
 
 == Enhancements
 
@@ -110,13 +105,13 @@ This update rebases the containerized installer to ansible.platform collection v
 
 === {HubNameStart}
 
-* This update improves the robustness of the automation hub container registry by setting gunicorn and proxy timeouts to better handle varied workloads and network conditions. AAP-67759
+* This update improves the robustness of the {HubName} container registry by setting gunicorn and proxy timeouts to better handle varied workloads and network conditions. AAP-67759
 
-* This update enhances logging parity across services by adding nginx log markers for direct API access to hub so that traffic bypassing the gateway can be detected. AAP-66104
+* This update enhances logging parity across services by adding nginx log markers for direct API access to {HubNameStart} so that traffic bypassing the gateway can be detected. AAP-66104
 
-* This update prepares for future token management changes by adding a deprecation warning for the ah_token module in the ansible.hub collection on AAP 2.6 (Hub 4.11) behind AAP gateway. AAP-65109
+* This update prepares for future token management changes by adding a deprecation warning for the `ah_token` module in the ansible.hub collection on {PlatformNameShort} 2.6 (Hub 4.11) behind AAP gateway. AAP-65109
 
-* This update modernizes automation hub by upgrading its Django dependency to version 5.2 LTS. AAP-60388
+* This update modernizes {HubName} by upgrading its Django dependency to version 5.2 LTS. AAP-60388
 
 == CVE
 
@@ -214,13 +209,13 @@ This update rebases the containerized installer to ansible.platform collection v
 
 * Fixed an issue where teams from other organizations were not visible to organization administrators as expected when organization-wide visibility was enabled. AAP-68841
 
-* Fixed an issue where an organization administrator could not assign team access to projects in AAP 2.6, preventing proper delegation of permissions. AAP-65081
+* Fixed an issue where an organization administrator could not assign team access to projects in {PlatformNameShort} 2.6, preventing proper delegation of permissions. AAP-65081
 
 * Fixed an issue where list views in the gateway UI loaded slowly because of excessive duplicate API requests and aggressive polling intervals, improving responsiveness. AAP-67460
 
 * Fixed an issue where redirects using the `next` URL parameter failed when the value included a plus sign (`+`), whether encoded or unencoded, so redirects now work correctly. AAP-64996
 
-* Fixed an issue where creating Event-Driven Ansible projects concurrently from multiple users could result in server errors when handling project creation. AAP-67749
+* Fixed an issue where creating {EDAName} projects concurrently from multiple users could result in server errors when handling project creation. AAP-67749
 
 * Fixed an issue where general project creation flows in Django Ansible Base could lead to errors when invoked by multiple users, improving stability. AAP-60238
 
@@ -242,37 +237,37 @@ This update rebases the containerized installer to ansible.platform collection v
 
 * Fixed an issue where Decision Environment credential validation rejected container registry credentials when the password came from an external credential provider unless placeholder text was used, allowing those credentials to be attached without workarounds. AAP-69005
 
-* Fixed an issue where Jinja2 variable substitution in rule names failed in EDA controller worker mode even though the same variables worked in action `extra_vars`, aligning behavior with the CLI. AAP-67038
+* Fixed an issue where Jinja2 variable substitution in rule names failed in {EDAcontroller} worker mode even though the same variables worked in action `extra_vars`, aligning behavior with the CLI. AAP-67038
 
-* Fixed an issue where EDA server could not sync git projects using `ssh:// or git+ssh://` URL schemes, restoring project sync behavior. AAP-66353
+* Fixed an issue where {EDAName} server could not sync git projects using `ssh:// or git+ssh://` URL schemes, restoring project sync behavior. AAP-66353
 
 === {ExecEnvNameStartSing}
 
-* Fixed an issue where a change in the `certifi` package affected default trust store paths in AAP 2.6 execution environments by switching to `system-certifi` to restore expected behavior. AAP-58769
+* Fixed an issue where a change in the `certifi` package affected default trust store paths in {PlatformNameShort} 2.6 {ExecEnvShort}s by switching to `system-certifi` to restore expected behavior. AAP-58769
 
 === {HubNameStart}
 
-* Fixed an issue where the X-Forwarded-Proto header could be incorrectly set in conjunction with the `alter_hostname_settings` configuration on Azure when passing traffic from gateway to hub. AAP-66706
+* Fixed an issue where the X-Forwarded-Proto header could be incorrectly set in conjunction with the `alter_hostname_settings` configuration on Azure when passing traffic from gateway to {HubNameStart}. AAP-66706
 
-=== Lightspeed
+=== {LightspeedShortName}
 
-* Fixed an issue where OAuth2 authentication on containerized installer deployments could fail when the Lightspeed port was set to 443 because of incorrect URL handling and default port logic. AAP-66845
+* Fixed an issue where OAuth2 authentication on containerized installer deployments could fail when the {LightspeedShortName} port was set to 443 because of incorrect URL handling and default port logic. AAP-66845
 
 * Fixed an issue where the platform configuration MCP server exposed the `settings_list` tool twice, causing API errors in clients, by renaming the tools to `controller-settings_list` and `gateway-settings_list`. AAP-66400
 
-* Fixed an issue where the /check endpoint of the Ansible Lightspeed API container reported an incorrect commit version and SHA, improving diagnostics. AAP-60313
+* Fixed an issue where the /check endpoint of the Ansible {LightspeedShortName} API container reported an incorrect commit version and SHA, improving diagnostics. AAP-60313
 
 === {OperatorPlatformNameShort}
 
 * Fixed an issue where deleting a restored {PlatformNameShort} object did not delete the associated deployment or pods, leaving orphaned resources. AAP-68079
 
-* Fixed an issue where IRSA-based S3 authentication support from galaxy-operator was not available in automation hub operator for stable-2.6, allowing S3 access-key fields to be optional. AAP-67498
+* Fixed an issue where IRSA-based S3 authentication support from galaxy-operator was not available in {HubNameStart} operator for stable-2.6, allowing S3 access-key fields to be optional. AAP-67498
 
-* Fixed an issue where Galaxy operator restores with `force_drop_db` failed due to missing CREATEDB privileges and partitioned index handling, causing pg_restore to fail during restores. AAP-67081
+* Fixed an issue where Galaxy operator restores with `force_drop_db` failed due to missing CREATEDB privileges and partitioned index handling, causing `pg_restore` to fail during restores. AAP-67081
 
 * Fixed an issue where EDA operator restores with `force_drop_db` failed because the managed PostgreSQL user lacked permissions to recreate databases, causing failures on restore. AAP-67080
 
-* Fixed an issue where gateway operator restores with `force_drop_db` failed because required privileges were missing and partitioned indexes caused errors during pg_restore. AAP-67079
+* Fixed an issue where gateway operator restores with `force_drop_db` failed because required privileges were missing and partitioned indexes caused errors during `pg_restore`. AAP-67079
 
 * Fixed an issue where AWX operator restores with `force_drop_db` were ignored, preventing databases from being dropped and recreated as expected. AAP-67078
 
@@ -282,9 +277,9 @@ This update rebases the containerized installer to ansible.platform collection v
 
 == Known issues
 
-=== {RHLightspeed}
+=== {LightspeedShortName}
 
-* This update documents that validation of Lightspeed enablement in related ATF pipelines is part of ongoing work, with pipelines verified for coverage. AAP-66885
+* This update documents that validation of {LightspeedShortName} enablement in related ATF pipelines is part of ongoing work, with pipelines verified for coverage. AAP-66885
 
 
 == Developer preview
