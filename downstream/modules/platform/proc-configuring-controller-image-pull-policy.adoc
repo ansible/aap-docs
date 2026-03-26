@@ -13,30 +13,68 @@ Use this procedure to configure the image pull policy on your {ControllerName}.
 . Log in to {OCP}.
 . Go to menu:Operators[Installed Operators].
 . Select your {OperatorPlatformNameShort} deployment.
-. Select the *Automation Controller* tab. 
-. For new instances, click btn:[Create AutomationController].
-.. For existing instances, you can edit the YAML view by clicking the  {MoreActionsIcon} icon and then btn:[Edit AutomationController].
-. Click btn:[advanced Configuration].
-Under *Image Pull Policy*, click on the radio button to select
-* *Always*
-* *Never*
-* *IfNotPresent*
-. To display the option under *Image Pull Secrets*, click the arrow.
-.. Click btn:[+] beside *Add Image Pull Secret* and enter a value.
-. To display fields under the *Web container resource requirements* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display fields under the *Task container resource requirements* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display fields under the *EE Control Plane container resource requirements* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display fields under the *PostgreSQL init container resource requirements (when using a managed service)* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display fields under the *Redis container resource requirements* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display fields under the *PostgreSQL container resource requirements (when using a managed instance)** drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. To display the *PostgreSQL container storage requirements (when using a managed instance)* drop-down list, click the arrow.
-.. Under *Limits*, and *Requests*, enter values for *CPU cores*, *Memory*, and *Storage*.
-. Under Replicas, enter the number of instance replicas.
-. Under *Remove used secrets on instance removal*, select *true* or *false*. The default is false.
-. Under *Preload instance with data upon creation*, select *true* or *false*. The default is true.
+. Select the *Ansible Automation Platform* tab.
+. Click the {MoreActionsIcon} icon next to your {PlatformNameShort} instance and select btn:[Edit AnsibleAutomationPlatform].
+. Click btn:[YAML view] and locate the `spec.controller:` section.
+. Configure the image pull policy and resource requirements under the `controller:` section:
++
+[source,yaml]
+----
+spec:
+  controller:
+    image_pull_policy: IfNotPresent  # Options: Always, Never, IfNotPresent
+    image_pull_secrets:
+      - pull-secret-name
+    web_resource_requirements:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    task_resource_requirements:
+      limits:
+        cpu: 2000m
+        memory: 4Gi
+      requests:
+        cpu: 1000m
+        memory: 2Gi
+    ee_resource_requirements:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    redis_resource_requirements:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+    postgres_resource_requirements:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
+      requests:
+        cpu: 500m
+        memory: 1Gi
+    postgres_storage_requirements:
+      limits:
+        storage: 10Gi
+      requests:
+        storage: 8Gi
+    replicas: 1
+    garbage_collect_secrets: false
+    create_preload_data: true
+----
++
+. Click btn:[Save].
++
+[NOTE]
+====
+These settings apply to the {ControllerName} component managed by this {PlatformNameShort} instance. If you specified an existing controller under `controller.name`, these settings will update that instance.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
+====

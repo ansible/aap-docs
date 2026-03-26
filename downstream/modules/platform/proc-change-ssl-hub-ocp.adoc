@@ -13,29 +13,40 @@ The following procedure describes how to change the SSL/TLS certificate and key 
 . Create a TLS secret within OpenShift:
 +
 ----
-oc create secret tls ${AUTOMATION_HUB_INSTANCE}-certs-$(date +%F) --cert=/path/to/ssl.crt --key=/path/to/ssl.key
-----
-. Modify the {HubName} custom resource to add `route_tls_secret` and the name of the new secret to the spec section.
-+
-----
-oc edit automationhub/${AUTOMATION_HUB_INSTANCE}
+oc create secret tls hub-certs-$(date +%F) --cert=/path/to/ssl.crt --key=/path/to/ssl.key -n <namespace>
 ----
 +
+. Edit the {PlatformNameShort} custom resource to add `route_tls_secret` under the `hub` section:
++
 ----
-...
+oc edit ansibleautomationplatform <aap-instance-name> -n <namespace>
+----
++
+. Add or update the `route_tls_secret` parameter under `spec.hub`:
++
+[source,yaml]
+----
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: myaap
+  namespace: ansible-automation-platform
 spec:
-  route_tls_secret: automation-hub-certs-2023-04-06
-...
+  hub:
+    route_tls_secret: hub-certs-2024-03-24
 ----
++
 [NOTE]
 ====
 The name of the TLS secret is arbitrary.
 In this example, it is timestamped with the date that the secret is created, to differentiate it from other TLS secrets applied to the {HubName} instance.
+
+The operator automatically applies this configuration to the {HubName} instance managed by this {PlatformNameShort} deployment.
 ====
 . Wait a few minutes for the changes to be applied.
 . Verify that new SSL/TLS certificate and key have been installed:
 +
 ----
-true | openssl s_client -showcerts -connect ${CONTROLLER_FQDN}:443
+true | openssl s_client -showcerts -connect ${HUB_FQDN}:443
 ----
 
