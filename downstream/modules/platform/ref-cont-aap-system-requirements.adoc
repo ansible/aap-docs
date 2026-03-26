@@ -24,7 +24,12 @@ Use this information when planning your installation of containerized {PlatformN
 
 [IMPORTANT]
 ====
-Podman does not support storing container images on an NFS share. To use an NFS share for the user home directory, set up the Podman storage backend path outside of the NFS share. 
+Containerized {PlatformNameShort} stores all runtime data, configuration files, container images, and Podman volumes under the installing user's home directory. This includes `$HOME/aap/` for component configuration and data, and `$HOME/.local/share/containers/` for container images and volumes.
+====
+
+[IMPORTANT]
+====
+Podman does not support storing container images on an NFS share. To use an NFS share for the user home directory, set up the Podman storage backend path outside of the NFS share.
 For more information, see link:https://www.redhat.com/en/blog/rootless-podman-nfs[Rootless Podman and NFS].
 ====
 
