@@ -16,6 +16,7 @@ You must assign a unique `metadata.name` to each custom resource (CR) in your na
 .Procedure
 . Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
+<<<<<<< HEAD
 . Select your *{OperatorPlatformNameShort}* deployment.
 . Select the *{ControllerNameStart}* tab.
 . Create or edit an instance:
@@ -27,8 +28,30 @@ You must assign a unique `metadata.name` to each custom resource (CR) in your na
 . In the *Route TLS termination mechanism* list, select *Edge* or *Passthrough*. Edge is recommended for most instances.
 . In the *Route TLS credential secret* list, select a secret.
 . Select the toggle to enable or disable persistence for the `/var/lib/projects` directory.
+=======
+. Select your {OperatorPlatformNameShort} deployment.
+. Select the *Ansible Automation Platform* tab.
+. Click the {MoreActionsIcon} icon next to your {PlatformNameShort} instance and select btn:[Edit AnsibleAutomationPlatform].
+. Click btn:[YAML view] and locate the `spec.controller:` section.
+. Configure the route options under the `controller:` section:
++
+[source,yaml]
+----
+spec:
+  controller:
+    ingress_type: Route
+    route_host: controller.example.com  # Custom hostname for the route
+    route_tls_termination_mechanism: Edge  # Options: Edge, Passthrough
+    route_tls_secret: controller-tls-secret  # Optional: TLS credential secret
+    projects_persistence: false  # Enable/disable persistence for /var/lib/projects
+----
++
+. Click btn:[Save].
+>>>>>>> d3269c3e4 (AAP-55497 OCP edits (#5808))
 +
 [NOTE]
 ====
-After you configure your route, you can customize your hostname by adding `route_host:` to the YAML for that {ControllerName} instance.
+Edge termination is recommended for most instances. After configuring your route, you can customize additional route settings by adding them to the `controller:` section in the {PlatformNameShort} custom resource.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
 ====

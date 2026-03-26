@@ -61,13 +61,25 @@ type: Opaque
 ----
 $ oc create -f external-postgres-configuration-secret.yml
 ----
-. When creating your `AutomationHub` custom resource object, specify the secret on your spec, following the example below:
+. When creating your `AnsibleAutomationPlatform` custom resource object, specify the secret under the `hub` section in your spec, following the example below:
 +
 ----
-apiVersion: automationhub.ansible.com/v1beta1
-kind: AutomationHub
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
 metadata:
-  name: hub-dev
+  name: myaap
 spec:
-  postgres_configuration_secret: external-postgres-configuration
+  hub:
+    name: hub-dev  # Optional: specify existing instance or custom name
+    postgres_configuration_secret: external-postgres-configuration
+    storage_type: file
+    file_storage_storage_class: <your-read-write-many-storage-class>
+    file_storage_size: 10Gi
 ----
++
+[NOTE]
+====
+If you have an existing {HubName} instance, specify its name under `hub.name` to apply these settings to the existing instance. If you omit the `name` field, the operator will create a new instance with the default name pattern `<aap-instance-name>-hub`.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
+====
