@@ -58,13 +58,22 @@ type: Opaque
 ----
 $ oc create -f external-postgres-configuration-secret.yml
 ----
-. When creating your `AutomationController` custom resource object, specify the secret on your spec, following the example below:
+. When creating your `AnsibleAutomationPlatform` custom resource object, specify the secret under the `controller` section in your spec, following the example below:
 +
 ----
-apiVersion: automationcontroller.ansible.com/v1beta1
-kind: AutomationController
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
 metadata:
-  name: controller-dev
+  name: myaap
 spec:
-  postgres_configuration_secret: external-postgres-configuration
+  controller:
+    name: controller-dev  # Optional: specify existing instance or custom name
+    postgres_configuration_secret: external-postgres-configuration
 ----
++
+[NOTE]
+====
+If you have an existing {ControllerName} instance, specify its name under `controller.name` to apply these settings to the existing instance. If you omit the `name` field, the operator will create a new instance with the default name pattern `<aap-instance-name>-controller`.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
+====

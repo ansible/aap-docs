@@ -13,17 +13,34 @@ The {OperatorPlatformNameShort} installation form allows you to further configur
 . Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
 . Select your {OperatorPlatformNameShort} deployment.
-. Select the *Automation Controller* tab. 
-. For new instances, click btn:[Create AutomationController].
-.. For existing instances, you can edit the YAML view by clicking the {MoreActionsIcon} icon and then btn:[Edit AutomationController].
-. Click btn:[Advanced configuration].
-. Under *Ingress type*, click the drop-down menu and select *Ingress*.
-. Under *Ingress annotations*, enter any annotations to add to the ingress.
-. Under *Ingress TLS secret*, click the drop-down menu and select a secret from the list.
+. Select the *Ansible Automation Platform* tab.
+. Click the {MoreActionsIcon} icon next to your {PlatformNameShort} instance and select btn:[Edit AnsibleAutomationPlatform].
+. Click btn:[YAML view] and locate the `spec.controller:` section.
+. Configure the ingress options under the `controller:` section:
++
+[source,yaml]
+----
+spec:
+  controller:
+    ingress_type: Ingress
+    ingress_annotations: |
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    ingress_tls_secret: controller-ingress-tls-secret
+----
++
+. Click btn:[Save].
++
+[NOTE]
+====
+These ingress settings apply to the {ControllerName} component managed by this {PlatformNameShort} instance. The operator automatically updates the ingress configuration for the controller.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
+====
 
 .Verification
 
-After you have configured your {ControllerName} operator, click btn:[Create] at the bottom of the form view. {OCP} creates the pods. This may take a few minutes.
+After you have configured your {ControllerName} ingress settings, {OCP} updates the pods. This may take a few minutes.
 
 You can view the progress by navigating to menu:Workloads[Pods] and locating the newly created instance.
 
