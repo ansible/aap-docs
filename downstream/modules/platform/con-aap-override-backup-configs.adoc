@@ -2,17 +2,18 @@
 
 [id="aap-override-backup-configs_{context}"]
 
-= Override backup configurations for specific components
+= Custom backup configurations for specific components
 
 [role="_abstract"]
 
-You can override the global backup configuration for specific components, such as {ControllerName}, {PrivateHubName}, or {EDAcontroller}. 
-This ensures that each component uses the appropriate storage class or resource limits during the backup process.
+You can override the global backup configuration for specific components, such as {ControllerName}, {PrivateHubName}, or {EDAcontroller}.
+This enables each component to use its own storage class, PVC name, storage size, or resource limits during the backup process.
 
-*Example: Overriding component resources*
-This example shows a backup custom resource that applies a fast SSD storage class to the {ControllerName} while using standard storage for the {PrivateHubName}:
-+
-[source, none]
+.Example: Overriding component backup settings
+
+In this backup custom resource, each component has a unique PVC name and storage class:
+
+[source,yaml]
 ----
 apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatformBackup
@@ -21,19 +22,26 @@ metadata:
 spec:
   deployment_name: myaap
   no_log: false
-  backup_storage_class: rook-cephfs
-# Override component-level backup specs:
+  backup_storage_class: rook-cephfs <1>
   hub:
+    backup_pvc: custom-hub-backup-pvc <2>
     backup_storage_requirements: 25Gi
+    backup_storage_class: rook-cephfs
+    create_backup_pvc: true
     no_log: false
   controller:
     backup_pvc: custom-controller-backup-pvc
     backup_storage_requirements: 15Gi
-    backup_storage_class: rook-block
+    backup_storage_class: rook-block <3>
+    create_backup_pvc: true
     no_log: false
   eda:
+    backup_pvc: custom-eda-backup-pvc
     backup_storage_requirements: 7Gi
     backup_storage_class: rook-block
+    create_backup_pvc: true
     no_log: false
-
 ----
+<1> The global `backup_storage_class` applies to the platform gateway. Components that do not specify their own `backup_storage_class` inherit this value.
+<2> Each component can define its own `backup_pvc` to create a uniquely named PVC. Set `create_backup_pvc: true` to have the operator create the PVC automatically.
+<3> Component-level values, such as `backup_storage_class: rook-block`, override the global setting for that component.
