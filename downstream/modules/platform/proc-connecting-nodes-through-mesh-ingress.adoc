@@ -30,20 +30,20 @@ Your file should resemble the following:
 apiVersion: automationcontroller.ansible.com/v1alpha1
 kind: AutomationControllerMeshIngress
 metadata:
-    name:
-    namespace:
+    name: <mesh-ingress-name>
+    namespace: <namespace>
 spec:
-    deployment_name: aap-controller
+    deployment_name: <controller-instance-name>
 ----
 +
 Where:
 
-* *apiVersion*: defines the versioned schema of this representation of an object. 
+* *apiVersion*: defines the versioned schema of this representation of an object.
 Servers should convert recognized schemas to the latest internal value, and might reject unrecognized values.
 This value is static.
-* *kind*: Is the type of node to create. 
+* *kind*: Is the type of node to create.
 +
-Use the value `AutomationControllerMeshIngress`. 
+Use the value `AutomationControllerMeshIngress`.
 +
 `AutomationControllerMeshIngress` controls the deployment and configuration of mesh ingress on {ControllerName}.
 * *name*: enter a name for the mesh ingress node.
@@ -52,6 +52,16 @@ Use the value `AutomationControllerMeshIngress`.
 This must be in the same namespace as the {ControllerName} that the mesh is connected to.
 * *deployment_name*: is the {ControllerName} instance that this mesh ingress is attached to.
 Provide the name of your {ControllerName} instance.
++
+[NOTE]
+====
+If you deployed {ControllerName} through an {PlatformNameShort} custom resource, the controller instance name follows the pattern `<aap-instance-name>-controller` unless you specified a custom name under `spec.controller.name` in your {PlatformNameShort} CR.
+
+To find your controller instance name, run:
+----
+oc get automationcontroller -n <namespace>
+----
+====
 
 . Apply this YAML file using:
 +
