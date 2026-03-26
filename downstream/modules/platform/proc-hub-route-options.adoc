@@ -13,16 +13,26 @@ The {PlatformName} operator installation form allows you to further configure yo
 . Log in to {OCP}.
 . Navigate to menu:Operators[Installed Operators].
 . Select your {OperatorPlatformNameShort} deployment.
-. Select the *Automation Hub* tab. 
-. For new instances, click btn:[Create AutomationHub].
-.. For existing instances, you can edit the YAML view by clicking the {MoreActionsIcon} icon and then btn:[Edit AutomationHub].
-. Click btn:[Advanced configuration].
-. Under *Ingress type*, click the drop-down menu and select *Route*.
-. Under *Route DNS host*, enter a common host name that the route answers to.
-. Under *Route TLS termination mechanism*, click the drop-down menu and select *Edge* or *Passthrough*.
-. Under *Route TLS credential secret*, click the drop-down menu and select a secret from the list.
+. Select the *Ansible Automation Platform* tab.
+. Click the {MoreActionsIcon} icon next to your {PlatformNameShort} instance and select btn:[Edit AnsibleAutomationPlatform].
+. Click btn:[YAML view] and locate the `spec.hub:` section.
+. Configure the route options under the `hub:` section:
++
+[source,yaml]
+----
+spec:
+  hub:
+    ingress_type: Route
+    route_host: hub.example.com  # Custom hostname for the route
+    route_tls_termination_mechanism: Edge  # Options: Edge, Passthrough
+    route_tls_secret: hub-tls-secret  # Optional: TLS credential secret
+----
++
+. Click btn:[Save].
 +
 [NOTE]
 ====
-After you have configured your route you can customize your hostname by adding `route_host:` to the YAML for that {HubName} instance. 
+Edge termination is recommended for most instances. After configuring your route, you can customize additional route settings by adding them to the `hub:` section in the {PlatformNameShort} custom resource.
+
+For more examples of {PlatformNameShort} custom resources, see link:{BaseURL}/red_hat_ansible_automation_platform/{PlatformVers}/html-single/installing_on_openshift_container_platform/index#appendix-operator-crs_operator-platform-doc[Appendix: {PlatformName} custom resources].
 ====
