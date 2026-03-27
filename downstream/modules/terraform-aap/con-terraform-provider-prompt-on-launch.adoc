@@ -6,21 +6,21 @@
 
 [role="_abstract"]
 
-As an administrator using Terraform provider, you can configure optional Prompt on Launch parameters in Ansible job and workflow templates to dynamically override default execution settings at runtime. 
+As an administrator using {Terraform} provider, you can configure optional Prompt on Launch parameters in Ansible job and workflow templates to dynamically override default execution settings at runtime. 
 
-Essentially, this means that you can use one Ansible template with different Terraform *.tf files to deploy many environments. Terraform provides the values when the Ansible job or workflow runs.
+This means that you can use one Ansible template with different {Terraform} `*.tf` files to deploy many environments. {Terraform} provides the values when the Ansible job or workflow runs.
 
-The Ansible playbooks and templates stored in Ansible Automation Platform remain reusable and independent of the specific Terraform configuration that provisioned them.
+The Ansible playbooks and templates stored in {PlatformNameShort} remain reusable and independent of the specific {Terraform} configuration that provisioned them.
 
 You must do the following steps to use Prompt on Launch:
 
 - **Ansible UI:** Select the **Prompt on Launch** checkbox for any of the supported fields in the Ansible job or workflow template. 
 
-- **Terraform:** Set the values for the corresponding fields in the *.tf file that will launch jobs from that template. If the corresponding value is not set in the *.tf file, then the run fails and Ansible Automation Platform sends an error message.
+- **{Terraform}:** Set the values for the corresponding fields in the `*.tf` file that will launch jobs from that template. If the corresponding value is not set in the `*.tf` file, then the run fails and {PlatformNameShort} sends an error message.
 
 The supported Prompt on Launch settings include:
 
-- **Inventory:** Allows Terraform to specify the inventory that will be used by the Ansible job template.
+- **Inventory:** Allows {Terraform} to specify the inventory that will be used by the Ansible job template.
 
 - **Extra variables:** To use extra variables to pass data or trigger actionable workflows, provide either a JSON or YAML string.
 

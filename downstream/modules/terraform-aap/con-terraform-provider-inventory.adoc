@@ -1,0 +1,19 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="inventory-best-practices"]
+
+= Inventory best practices
+
+[role="_abstract"]
+
+When you integrate the {Terraform} provider with {PlatformNameShort}, create static inventory resources using the {Terraform} provider or the inventory plugin for your specific cloud provider, such as Amazon Web Services (AWS) or Microsoft Azure. You can also use inventory from a configuration management database (CMDB), such as ServiceNow.
+
+Do not use a {Terraform} state-backed inventory plugin to manage your resources as it is error prone due to technical limitations in cloud environments, such as timing errors and race conditions during resource provisioning.
+
+Specific cloud provider inventory plugins are designed to handle these cases, allowing {PlatformNameShort} to accurately discover and target newly created instances. This results in a more stable and reliable integration between your provisioning and configuration management workflows.
+
+To ensure a reliable workflow, follow these steps to set up your inventory:
+
+. Provision your cloud infrastructure by using the {Terraform} provider collection.
+. Configure a dynamic inventory in {PlatformNameShort} using the relevant cloud provider plugin or create static inventory resources using {Terraform} provider.
+. Set the inventory refresh frequency to account for the time required for new instances to become reachable after creation.
