@@ -48,6 +48,11 @@ AAP-67043, AAP-66919, AAP-66800, AAP-66668
 *Platform-wide move to Django 5.2 LTS*
 
 Upgrades Django for gateway, {HubNameStart}, {ControllerNameStart}, and {LightspeedShortName} components to Django 5.2 LTS, aligning with a supported, more secure framework baseline.
+
+[NOTE]
+====
+Due to this upgrade, all users must use a new installer for both containerized and RPM versions. 
+====
 AAP-68587, AAP-68135, AAP-60155, AAP-59873, AAP-60388, AAP-64430
 
 *Security hardening through CVE remediation*
@@ -116,17 +121,17 @@ This update rebases the containerized installer to `ansible.platform` collection
 
 === {PlatformNameShort} UI
 
-* CVE-2026-29074 - SVGO denial of service via XML entity expansion in:
+* link:https://access.redhat.com/security/cve/cve-2026-29074[CVE-2026-29074] - SVGO denial of service via XML entity expansion in:
 
 ** `automation-platform-ui`. AAP-68529
 
 ** `gateway-rhel9` image. AAP-68526
 
-* CVE-2026-27904 - Minimatch denial of service via catastrophic backtracking in glob expressions in:
+* https://access.redhat.com/security/cve/cve-2026-27904[CVE-2026-27904] - Minimatch denial of service via catastrophic backtracking in glob expressions in:
 
 ** `automation-platform-ui`. AAP-66695
 
-* CVE-2025-69873 - Regular expression denial of service (ReDoS) via `$data` references in:
+* link:https://access.redhat.com/security/cve/cve-2026-69873[CVE-2025-69873] - Regular expression denial of service (ReDoS) via `$data` references in:
 
 ** `automation-platform-ui` for {PlatformNameShort} 2.6. AAP-65713
 
@@ -134,7 +139,7 @@ This update rebases the containerized installer to `ansible.platform` collection
 
 ** `lightspeed-rhel9`. AAP-66655
 
-* CVE-2026-25639 - Axios denial of service via `__proto__` handling in mergeConfig in:
+* link:https://access.redhat.com/security/cve/cve-2026-25639[CVE-2026-25639] - Axios denial of service via `__proto__` handling in mergeConfig in:
 
 ** `automation-platform-ui`. AAP-65475
 
@@ -144,35 +149,35 @@ This update rebases the containerized installer to `ansible.platform` collection
 
 === Automation gateway 
 
-* CVE-2025-68121 - Unexpected session resumption in Go `crypto/tls` in:
+* link:https://access.redhat.com/security/cve/cve-2026-68121[CVE-2025-68121] - Unexpected session resumption in Go `crypto/tls` in:
 
 ** `automation-gateway-proxy` for {PlatformNameShort} 2.6. AAP-65695
 
-* CVE-2025-61726 - Memory exhaustion via query parameter parsing in Go `net/url` in:
+* link:https://access.redhat.com/security/cve/cve-2026-61726[CVE-2025-61726] - Memory exhaustion via query parameter parsing in Go `net/url` in:
 
 ** `automation-gateway-proxy` for {PlatformNameShort} 2.6. AAP-64902
 
 === {RHLightspeed} / MCP / RAG
 
-* CVE-2026-30922 - pyasn1 denial of service via unbounded recursion in:
+* link:https://access.redhat.com/security/cve/cve-2026-30922[CVE-2026-30922] - pyasn1 denial of service via unbounded recursion in:
 
 ** `lightspeed-chatbot-rhel9` image for {PlatformNameShort} 2.6. AAP-69040
 
-* CVE-2026-28498 - Authlib authentication bypass via forged OpenID Connect ID tokens in:
+* link:https://access.redhat.com/security/cve/cve-2026-28498[CVE-2026-28498] - Authlib authentication bypass via forged OpenID Connect ID tokens in:
 
 ** `lightspeed-chatbot-rhel9` image for {PlatformNameShort} 2.6. AAP-68686
 
-* CVE-2026-28802 - Authlib signature verification bypass allowing unauthorized access via malicious JWTs in:
+* link:https://access.redhat.com/security/cve/cve-2026-28802[CVE-2026-28802] - Authlib signature verification bypass allowing unauthorized access via malicious JWTs in:
 
 ** `lightspeed-chatbot-rhel9` image. AAP-67503
 
-* CVE-2026-25990 - Pillow out-of-bounds write via specially crafted PSD images in:
+* link:https://access.redhat.com/security/cve/cve-2026-25990[CVE-2026-25990] - Pillow out-of-bounds write via specially crafted PSD images in:
 
 ** `lightspeed-chatbot-rhel9`. AAP-65506
 
 ** `hub-rhel9`. AAP-65505
 
-* CVE-2026-26007 - cryptography subgroup attack due to missing subgroup validation for SECT curves in:
+* link:https://access.redhat.com/security/cve/cve-2026-26007[CVE-2026-26007] - cryptography subgroup attack due to missing subgroup validation for SECT curves in:
 
 ** `mcp-tools-rhel9`. AAP-65412
 
@@ -180,21 +185,21 @@ This update rebases the containerized installer to `ansible.platform` collection
 
 ** `lightspeed-chatbot-rhel9`. AAP-65410
 
-* CVE-2026-1615 - jsonpath arbitrary code execution via unsafe JSON Path evaluation in:
+* link:https://access.redhat.com/security/cve/cve-2026-1615[CVE-2026-1615] - jsonpath arbitrary code execution via unsafe JSON Path evaluation in:
 
 ** `lightspeed-service-container`. AAP-65224
 
-* CVE-2025-69223 - AIOHTTP HTTP parser auto_decompress vulnerability exploitable with zip bombs in:
+* link:https://access.redhat.com/security/cve/cve-2026-69223[CVE-2025-69223] - AIOHTTP HTTP parser auto_decompress vulnerability exploitable with zip bombs in:
 
 ** `lightspeed-chatbot-rhel9`. AAP-61921
 
-* CVE-2026-30827 - express-rate-limit denial of service for IPv4 clients due to incorrect IPv6 subnet masking in:
+* link:https://access.redhat.com/security/cve/cve-2026-30827[CVE-2026-30827] - express-rate-limit denial of service for IPv4 clients due to incorrect IPv6 subnet masking in:
 
 ** `mcp-server-rhel9`. AAP-67735
 
 === Pillow / Image processing
 
-* CVE-2026-25990 - Out-of-bounds write via specially crafted PSD images in:
+* link:https://access.redhat.com/security/cve/cve-2026-25990[CVE-2026-25990] - Out-of-bounds write via specially crafted PSD images in:
 
 ** `hub-rhel9`. AAP-65505
 
