@@ -1,0 +1,208 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-26-20260325]]
+
+= {PlatformNameShort} patch release March 25, 2026
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| March 25, 2026 
+a|
+
+* {ControllerNameStart} 4.6.27
+* {HubNameStart} 4.10.13
+* {EDAName} 1.1.17
+* Container-based installer {PlatformNameShort} (bundle) 2.5-23
+* Container-based installer {PlatformNameShort} (online) 2.5-23
+* Receptor 1.6.4
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-22
+* RPM-based installer {PlatformNameShort} (online) 2.5-22
+
+|====
+
+CSV versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1774618015
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1774617850
+
+
+== General
+
+ Upgraded to Python 3.12.(AAP-56538)
+
+[NOTE]
+====
+Due to this upgrade, all users must use a new installer for both containerized and RPM versions. 
+====
+
+== Features
+
+=== {ControllerNameStart}
+
+* This update introduces a pinned `receptorctl` version so that Tower 4.6 / {PlatformNameShort} 2.5 uses `receptorctl` 1.6.4, keeping the CLI in sync with the receptor binary. AAP-66804
+
+=== Django-ansible-base
+
+* This enhancement adds comprehensive audit logging and control fields to the DAB `AuditableModel` signal handler so that creations, deletions, and updates for users, teams, organizations, role assignments, and settings generate well-structured audit log entries. AAP-66670
+
+=== {EDAName}
+
+* This change upgrades the {EDAName} component to Django 5.2 LTS so that EDA runs on a current, supported version of the Django framework. AAP-60169
+
+== Enhancements
+
+=== {LightspeedShortName}
+
+* This enhancement adjusts the {LightspeedShortName} operator to control the verbosity of the wisdom-manage shell command so that Django 5.2 debug output no longer contaminates shell results used by Ansible tasks. AAP-69164
+
+* This update moves {LightspeedShortName} 2.5 to Django 5.2 LTS so that its services benefit from an actively supported framework with current security and maintenance updates. AAP-64429
+
+=== Container-based installer {PlatformNameShort}
+
+* This enhancement adds the `--no-imports` flag to shell commands used during the Controller containerized install so that stdout remains clean and installations are no longer broken by Django 5.2's changed import behavior. AAP-68705
+
+* This backport updates the containerized installer to use the new default file storage formats required by Django 5.2 so that storage configuration remains compatible after the framework upgrade. AAP-68136
+
+* This update refreshes the `ansible.platform` collection used by the containerized installer to version 2.5.20260306 so that containerized installs ship with the latest supported collection. AAP-67545
+
+=== {OperatorPlatformNameShort}
+
+* This change backports IRSA S3 authentication support to the a`utomationhub-operator` so that S3 access key and secret key can be optional and clusters can rely on IAM roles instead of static credentials. AAP-68102
+
+* This enhancement improves the {PlatformNameShort} 2.5 {OperatorPlatformNameShort} so that it consistently creates persistent volume claims (PVCs) with unique names and avoids name collisions in complex deployments. AAP-68072
+
+* This update revises `AutomationHubRestore` logic so that `force_drop_db` is honored and the managed PostgreSQL user has the rights needed to recreate the database during restores, even when partitioned indexes are present. AAP-67077
+
+* This enhancement updates EDARestore handling so that `force_drop_db` is respected and the managed PostgreSQL user has permissions to recreate the database during restores, with support for partitioned indexes. AAP-67076
+
+* This enhancement updates AnsibleAutomationPlatformRestore logic so that `force_drop_db` is honored, the PostgreSQL user can recreate databases, and partitioned indexes no longer cause restore failures. AAP-67075
+
+* This enhancement ensures AWXRestore respects `force_drop_db`, grants the necessary database privileges, and handles partitioned indexes so that Controller database restores under the AWX Operator succeed reliably. AAP-67074
+
+=== Django-ansible-base
+
+* This enhancement enables audit logging for user and team role assignment operations so that `UserRoleAssignment` and `TeamRoleAssignment` changes now generate INFO-level audit log entries with activity stream entries kept suppressed. AAP-67042
+
+* This update implements audit logging for dynamic preference changes so that modifications to registered gateway preferences and settings are captured in the audit log for compliance and traceability. AAP-66799
+
+=== {PlatformNameShort}-{GatewayStart} & django-ansible-base
+
+* This change enables audit logging for creation, deletion, and modification of users, teams, and organizations so that identity lifecycle events are tracked in gateway audit logs. AAP-66918
+
+=== {HubNameStart}
+
+* This enhancement adds a deprecation warning to the `ah_user` module in the `ansible.hub` collection so that users are informed it will be removed in {PlatformNameShort} 2.7 and can migrate to supported alternatives in advance. AAP-66502
+
+* This enhancement upgrades {HubNameStart}'s' Django dependency to version 5.2 LTS so that HubName runs on an actively supported Django release with updated security fixes. AAP-60389
+
+=== {PlatformNameShort}-metrics
+
+* This enhancement validates the Python 3.12 upgrade for the aap-metrics component so that metrics services are confirmed to function correctly on Python 3.12. AAP-65538
+
+=== {ControllerNameStart}
+
+* This enhancement provides internal developer documentation about building and using indirect query files so that developers and partners can understand how to author and apply indirect queries. AAP-63318
+
+* This update upgrades the {ControllerNameStart}'s' Django dependency to version 5.2 LTS so that {ControllerNameStart} runs on a supported, secure web framework version. AAP-59872
+
+=== Packaging
+
+* This change updates the `ansible.platform` collection bundled in the offline installer to version 2.5.20260306 so that the installer provides the latest supported collection at install time. AAP-67551
+
+=== {OperatorPlatformNameShort} (bundled collection)
+
+* This update refreshes the `ansible.platform` collection used by the {OperatorPlatformNameShort} to version 2.5.20260306 so that operator-driven installs use the current collection release. AAP-67547
+
+=== RPM-based installer {PlatformNameShort}
+
+* This change updates the `ansible.platform` collection in the platform/RPM installer to version 2.5.20260306 so that traditional installs rely on the latest supported collection. AAP-67546
+
+== Deprecated
+
+=== {HubNameStart}
+
+* This update introduces a deprecation warning in the `ah_token` module of the `ansible.hub` collection so that users are warned it will be removed in {PlatformNameShort} 2.7 and are directed to the `ansible.platform` collection for token management. AAP-65108
+
+== CVE
+
+* link:https://access.redhat.com/security/cve/cve-2026-25990[CVE-2026-25990] - Pillow out-of-bounds write via specially crafted PSD image in:
+** `ansible-lightspeed-chatbot-container`. AAP-66936
+** `aap-rag-content`. AAP-66635
+** `python3.11-pillow` package for {PlatformNameShort} 2.5. AAP-65504
+
+* link:https://access.redhat.com/security/cve/cve-2026-26007[CVE-2026-26007] - Cryptography subgroup attack due to missing subgroup validation for SECT curves in:
+** `ansible-chatbot-service`. AAP-66930
+** `ansible-lightspeed-container`. AAP-65401
+
+* link:https://access.redhat.com/security/cve/cve-2026-69873[CVE-2025-69873] - Ajv regular expression denial of service via $data reference in:
+** `ansible_ai_connect_admin_portal` (served by ansible-wisdom-service). AAP-66653
+
+* link:https://access.redhat.com/security/cve/cve-2026-1615[CVE-2026-1615] - jsonpath arbitrary code execution / XSS via unsafe JSON Path expression evaluation in:
+** `ansible-lightspeed-service-container`. AAP-65223
+
+* link:https://access.redhat.com/security/cve/cve-2026-69223[CVE-2025-69223] - AIOHTTP HTTP parser auto_decompress zip-bomb vulnerability in:
+** `ansible-wisdom-service`. AAP-61878
+** `ansible-chatbot-service`. AAP-61877
+
+* link:https://access.redhat.com/security/cve/cve-2026-68121[CVE-2025-68121] - Unexpected TLS session resumption behaviour in crypto/tls in:
+** `automation-gateway-proxy`. AAP-65687
+
+* link:https://access.redhat.com/security/cve/cve-2026-61726[CVE-2025-61726] - Memory exhaustion via large forms with many unique query parameters in net/url in:
+** `automation-gateway-proxy`. AAP-65038
+
+* link:https://access.redhat.com/security/cve/cve-2026-14550[CVE-2025-14550] - Django denial of service via crafted requests with duplicate headers in:
+** `automation-controller` for {PlatformNameShort} 2.5 (bumped to Django 5.2.11). AAP-64794
+
+=== Packaging (automation-gateway-proxy / Go)
+
+* link:https://access.redhat.com/security/cve/cve-2026-68121[CVE-2025-68121] - Unexpected TLS session resumption cannot occur when ClientCAs or RootCAs are mutated between the initial and resumed handshakes.
+** `automation-gateway-proxy`. AAP-65687
+
+* link:https://access.redhat.com/security/cve/cve-2026-61726[CVE-2025-61726] - Memory exhaustion in query parameter parsing in net/url. 
+** `automation-gateway-proxy`. AAP-65038
+
+=== Packaging (Pillow / python3.11)
+
+* link:https://access.redhat.com/security/cve/cve-2026-25990[CVE-2026-25990] - Out-of-bounds write via specially crafted PSD Image. 
+** `Python3.11-pillow`. AAP-65504
+
+=== {ControllerNameStart} / Django
+
+* link:https://access.redhat.com/security/cve/cve-2026-14550[CVE-2025-14550] - Denial of Service via crafted request with duplicate headers. 
+** `automation-controller`. AAP-64794
+
+== Bug Fixes
+
+=== {LightspeedShortName}
+
+* Fixed an issue where the Django 5.2 upgrade caused wisdom-manage shell to emit extra verbosity output that broke scripts parsing its results by invoking the command with `-v 0` in the {LightspeedShortName} operator. AAP-69164
+
+=== {OperatorPlatformNameShort}
+
+* Fixed an issue where AutomationHubRestore operations failed when `force_drop_db` was requested and the managed PostgreSQL user lacked the permissions to recreate the database, especially in the presence of partitioned indexes. AAP-67077
+
+* Fixed an issue where `EDARestore` operations ignored `force_drop_db`, lacked CREATEDB privilege, and failed when partitioned indexes were present during {EDAName} database restores. AAP-67076
+
+* Fixed an issue where `AnsibleAutomationPlatformRestore` did not honor `force_drop_db`, did not grant sufficient database privileges, and failed with partitioned indexes during gateway database restores. AAP-67075
+
+* Fixed an issue where AWXRestore did not correctly handle `force_drop_db`, lacked permissions to recreate the database, and failed on partitioned indexes when restoring {ControllerNameStart} databases. AAP-67074
+
+=== {ControllerNameStart}
+
+* Fixed an issue where concurrently running job templates with fact storage enabled could save Ansible facts to the wrong host or delete facts in a race condition when multiple inventories had same-named hosts. AAP-67372
+
+* Fixed an issue where constructed inventories could not be created with verbosity greater than 2 on Controller 4.6, by correcting the behavior so that higher verbosity levels work as expected. AAP-66863
+
+* Fixed an issue where the `JobJobEventsChildrenSummary` API view raised uncaught exceptions when job events had missing event types, by hardening the view so such events no longer cause failures. AAP-64629
+
+=== {EDAName}
+
+* Fixed an issue where EDA Server was not able to sync git projects using ssh:// or git+ssh:// URL schemes, by adjusting {EDAName}'s project sync logic so these schemes are handled correctly. AAP-66354
+
+=== {OperatorPlatformNameShort} (IRSA)
+
+* Fixed an issue where IRSA S3 authentication could not be used with the `automationhub-operator` because S3 access key and secret key were mandatory, by allowing those fields to be optional when IRSA is configured. AAP-68102
