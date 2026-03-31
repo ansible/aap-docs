@@ -1,0 +1,96 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-configure-custom-ssl_{context}"]
+= Configuring custom SSL certificates for {SelfServiceShort}
+
+[role="_abstract"]
+If your {PlatformNameShort} instance uses custom or self-signed SSL certificates, you must configure {SelfServiceShort} to trust those certificates. Without this configuration, authentication between {SelfServiceShort} and {PlatformNameShort} fails with SSL verification errors.
+
+.Prerequisites
+* You have administrator access to your {OCPShort} cluster.
+* You have the custom Certificate Authority (CA) certificate file used by your {PlatformNameShort} instance.
+* {SelfServiceShort} is installed in your {OCPShort} cluster.
+
+.Procedure
+
+. Obtain the CA certificate file from your {PlatformNameShort} instance.
++
+If you do not have the CA certificate file, you can extract it from your {PlatformNameShort} server:
++
+----
+openssl s_client -showcerts -connect <aap-hostname>:443 </dev/null 2>/dev/null | openssl x509 -outform PEM > aap-ca-cert.pem
+----
++
+Replace `<aap-hostname>` with your {PlatformNameShort} hostname.
+
+. Log in to your {OCPShort} cluster with administrator privileges.
+
+. Create a ConfigMap containing your custom CA certificate:
++
+----
+oc create configmap custom-ca-bundle \
+  --from-file=ca-bundle.crt=aap-ca-cert.pem \
+  -n <namespace>
+----
++
+Replace `<namespace>` with the namespace where {SelfServiceShort} is installed.
+
+. Update your {SelfServiceShort} Helm chart values to mount the custom CA certificate:
++
+----
+upstream:
+  backstage:
+    extraEnvVarsSecrets:
+      - custom-ca-bundle
+    extraVolumes:
+      - name: custom-ca
+        configMap:
+          name: custom-ca-bundle
+    extraVolumeMounts:
+      - name: custom-ca
+        mountPath: /etc/pki/ca-trust/source/anchors/
+        readOnly: true
+----
+
+. Apply the updated configuration by upgrading the {SelfServiceShort} Helm chart:
++
+----
+helm upgrade <release-name> <chart-name> \
+  -f values.yaml \
+  -n <namespace>
+----
++
+Replace `<release-name>` with your Helm release name and `<chart-name>` with the {SelfServiceShort} chart name.
+
+. Wait for the {SelfServiceShort} pods to restart with the new configuration.
+
+.Verification
+
+. Verify that the {SelfServiceShort} pods are running:
++
+----
+oc get pods -n <namespace>
+----
++
+All {SelfServiceShort} pods should show a status of `Running`.
+
+. Attempt to sign in to {SelfServiceShort} using your {PlatformNameShort} credentials.
++
+If the SSL certificate configuration is correct, you can authenticate successfully without SSL verification errors.
+
+. Check the {SelfServiceShort} logs for SSL-related errors:
++
+----
+oc logs -n <namespace> <pod-name> | grep -i ssl
+----
++
+If you see no SSL verification errors, the custom CA certificate is trusted correctly.
+
+.Troubleshooting
+
+If you continue to experience SSL verification errors after following this procedure:
+
+* Verify that the CA certificate file contains the complete certificate chain.
+* Ensure that the certificate file is in PEM format.
+* Confirm that the {PlatformNameShort} hostname in your configuration matches the hostname in the SSL certificate.
+* Check that the `checkSSL` parameter in your Helm values is set to `true` (the default). Setting it to `false` disables SSL verification entirely, which is not recommended for production environments.

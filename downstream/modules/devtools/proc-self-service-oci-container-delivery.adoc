@@ -63,10 +63,6 @@ oc create secret generic <release-name>-dynamic-plugins-registry-auth \
 oc get secret <release-name>-dynamic-plugins-registry-auth
 ----
 +
-You must use a Red Hat Registry service account to generate the OpenShift secret. Using your standard Red Hat account username and password is not secure and will not work.
-+
-The `install-dynamic-plugins` init container uses `skopeo` to pull OCI plug-in artifacts. It does not use cluster pull secrets, global pull secrets, or `imagePullSecrets`. A dedicated auth secret is required even when pulling from `registry.redhat.io`.
-
 [IMPORTANT]
 ====
 Create this secret in the same OpenShift project as the Helm release, and create it before you install or upgrade the Helm release.
