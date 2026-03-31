@@ -1,0 +1,170 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="self-service-upgrade-troubleshooting_{context}"]
+= Troubleshooting {SelfServiceShort} upgrades
+
+[role="_abstract"]
+You might encounter issues during {SelfServiceShort} upgrades.
+The following sections describe common problems and their solutions.
+
+== Plug-in version mismatch errors
+
+*Symptom*: After you upgrade the Helm chart, {SelfServiceShort} pods fail to start with errors indicating that plug-in files cannot be loaded or have incorrect versions.
+
+*Cause*: The plug-in bundle major.minor version does not match the Helm chart major.minor version, or the plug-in bundle patch version is lower than the Helm chart patch version.
+
+*Solution*:
+
+. Check your current plug-in bundle version:
++
+[source,terminal]
+----
+oc exec $(oc get pods -l deployment=plugin-registry -o jsonpath='{.items[0].metadata.name}') -- \
+  ls -l /opt/app-root/src | grep ansible-plugin
+----
++
+The version number appears in the plug-in file names.
+
+. Identify your Helm chart version:
++
+[source,terminal]
+----
+helm list -n <namespace>
+----
++
+Look for your {SelfServiceShort} release and note the chart version.
+
+. If the versions do not match:
++
+.. Download the correct plug-in bundle version from the link:{PlatformDownloadUrl}[Red Hat Ansible Automation Platform Product Software downloads page].
+.. Update your plug-in registry following the procedure in xref:rhdh-download-tar_{context}[].
+.. Wait for the {SelfServiceShort} pods to restart automatically.
+
+== Pods stuck in CrashLoopBackOff after upgrade
+
+*Symptom*: After you upgrade, {SelfServiceShort} pods repeatedly restart and show a status of `CrashLoopBackOff`.
+
+*Cause*: Database schema migration failed, or the upgrade introduced configuration errors.
+
+*Solution*:
+
+. Check the pod logs for specific error messages:
++
+[source,terminal]
+----
+oc logs -n <namespace> <pod_name> --previous
+----
+
+. If you see database migration errors:
++
+.. Verify that your database is accessible:
++
+[source,terminal]
+----
+oc exec -it -n <namespace> <pod_name> -- pg_isready -h <database_host>
+----
+.. Check database connection secrets:
++
+[source,terminal]
+----
+oc get secret -n <namespace> | grep -i database
+----
+.. If you use an external database, verify that the database user has the required permissions.
+
+. If you see configuration errors:
++
+.. Review your Helm values for syntax errors:
++
+[source,terminal]
+----
+helm get values <release_name> -n <namespace>
+----
+.. Compare with your previous working configuration to identify changes.
+.. Revert problematic configuration changes and upgrade again.
+
+== {SelfServiceShort} upgrade considerations for {PlatformNameShort} 2.4 to 2.6
+
+Consider the following when you upgrade {SelfServiceShort} from {PlatformNameShort} 2.4 to {PlatformNameShort} 2.6:
+
+. Upgrade your {PlatformNameShort} instance to version 2.6 before you upgrade {SelfServiceShort}.
++
+The {SelfServiceShort} version that is compatible with {PlatformNameShort} 2.6 requires {PlatformNameShort} 2.6 features for full functionality.
+
+. Review the {PlatformNameShort} 2.6 release notes for breaking changes that affect {SelfServiceShort}.
+
+. Back up your existing {SelfServiceShort} configuration before you upgrade:
++
+[source,terminal]
+----
+helm get values <release_name> -n <namespace> > backup-values.yaml
+----
+
+. After you upgrade, verify that OAuth authentication still functions:
++
+.. Check that your OAuth application in {PlatformNameShort} is configured correctly.
+.. Test the sign-in functionality.
+.. If authentication fails, verify that the OAuth redirect URL matches your upgraded deployment URL.
+
+. Update any custom templates or configurations to use syntax that is compatible with the new {SelfServiceShort} version.
+
+== Helm upgrade fails with a `release not found` error
+
+*Symptom*: Running `helm upgrade` returns an error stating that the release cannot be found.
+
+*Cause*: The Helm release name or namespace is incorrect.
+
+*Solution*:
+
+. List all Helm releases in your cluster:
++
+[source,terminal]
+----
+helm list --all-namespaces
+----
+
+. Identify the correct release name and namespace for your {SelfServiceShort} deployment.
+
+. Run the upgrade command with the correct parameters:
++
+[source,terminal]
+----
+helm upgrade <correct_release_name> openshift-helm-charts/redhat-rhaap-portal \
+  --version <target_version> \
+  -n <correct_namespace>
+----
+
+== Custom values lost after upgrade
+
+*Symptom*: After you upgrade, your custom configurations (such as custom CA certificates, OAuth settings, or RBAC configurations) are no longer applied.
+
+*Cause*: The upgrade command did not include your custom values file, or the values were overwritten.
+
+*Solution*:
+
+. Before you upgrade, export your current values:
++
+[source,terminal]
+----
+helm get values <release_name> -n <namespace> > current-values.yaml
+----
+
+. When you upgrade, specify your values file:
++
+[source,terminal]
+----
+helm upgrade <release_name> openshift-helm-charts/redhat-rhaap-portal \
+  --version <target_version> \
+  -f current-values.yaml \
+  -n <namespace>
+----
+
+. After you upgrade, verify that your custom values are still applied:
++
+[source,terminal]
+----
+helm get values <release_name> -n <namespace>
+----
+
+.Additional resources
+
+* xref:self-service-version-compatibility_{context}[]
