@@ -10,20 +10,18 @@ If you installed {PlatformNameShort} {PlatformVers} to use {EDAName} in a suppor
 
 .Prerequisites
 
-* An inventory from 2.4 for {ControllerName} and {HubName} and a 2.6 inventory for unified UI ({Gateway}) and {EDAName}. You must run upgrades on 2.4 services (using the inventory file to specify only {ControllerName} and {HubName} VMs) to get them to the initial version of {PlatformNameShort} {PlatformVers} first. When all the services are at the same version, run an upgrade (using a complete inventory file) on all the services to go to the latest version of {PlatformNameShort} {PlatformVers}.
+* An inventory from 2.4 for {ControllerName} and {HubName} and a {PlatformVers} inventory for the unified UI ({Gateway}) and {EDAName}. You must merge both inventories into a single {PlatformVers} inventory file before running the upgrade. The {Gateway} host must be included in the inventory for the installation program to run successfully.
 
 [IMPORTANT]
 ====
-DO NOT upgrade {EDAName} and the unified UI ({Gateway}) to the latest version of {PlatformNameShort} {PlatformVers} without first upgrading the individual services ({ControllerName} and {HubName}) to the initial version of {PlatformNameShort} {PlatformVers}.
+Ensure you have upgraded to the latest version of {PlatformNameShort} 2.4 before merging inventories and running the {PlatformVers} upgrade.
 ====
-
-* Ensure you have upgraded to the latest version of {PlatformNameShort} 2.4 before upgrading your {PlatformName}.
 
 .Procedure
 
-. Merge 2.4 inventory data into the 2.6 inventory. 
+. Merge 2.4 inventory data into the {PlatformVers} inventory.
 +
-The example below shows the inventory file for {ControllerName} and {HubName} for 2.4 and the inventory file for {EDAName} and the unified UI ({Gateway}) for 2.6, respectively, as the starting point, and what the merged inventory looks like. 
+The example below shows the inventory file for {ControllerName} and {HubName} for 2.4 and the inventory file for {EDAName} and the unified UI ({Gateway}) for {PlatformVers}, respectively, as the starting point, and what the merged inventory looks like.
 +
 *Inventory files from 2.4*
 +
@@ -41,15 +39,15 @@ hub-2
 # Here we have the admin passwd, db credentials, etc.
 ----
 +
-*Inventory files from 2.6*
+*Inventory files from {PlatformVers}*
 +
 [source,]
 ----
-[edacontroller]
+[automationedacontroller]
 eda-1
 eda-2
  
-[gateway]
+[automationgateway]
 gw-1
 gw-2
  
@@ -69,11 +67,11 @@ controller-2
 hub-1
 hub-2
  
-[edacontroller]
+[automationedacontroller]
 eda-1
 eda-2
  
-[gateway]
+[automationgateway]
 gw-1
 gw-2
  
@@ -83,10 +81,10 @@ gw-2
 
 . Run `setup.sh`
 +
-The installer upgrades {ControllerName} and {HubName} from 2.4 to {PlatformNameShort} {PlatformVers}, latest {EDAName}, and the unified UI ({Gateway}) from the fresh install of 2.6 to the latest version of 2.6, and connects {ControllerName} and {HubName} properly with the unified UI ({Gateway}) node to initialize the unified experience. 
+The installation program upgrades all services to the latest version of {PlatformNameShort} {PlatformVers} and connects them to the unified UI ({Gateway}).
 
 .Verification
 
-* Verify that everything has upgraded to 2.6 and is working properly in one of two ways: 
+* Verify that everything has upgraded to {PlatformVers} and is working properly in one of two ways:
 ** Perform an SSH to {ControllerName} and {EDAName}.
-** In the unified UI, navigate to menu:Help[About] to verify the RPM versions are at 2.6.
+** In the unified UI, go to menu:Help[About] to verify the RPM versions are at {PlatformVers}.
