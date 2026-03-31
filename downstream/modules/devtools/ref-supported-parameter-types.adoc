@@ -1,0 +1,35 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="supported-parameter-types_{context}"]
+= Supported parameter types
+
+[role="_abstract"]
+Templates support standard Backstage parameter types (`string`, `number`, `integer`, `boolean`, `array`) and widgets (`textarea`, `select`, `checkboxes`, `hidden`).
+For a complete reference of standard types and widgets, see the link:https://backstage.io/docs/features/software-templates/input-examples[Backstage Software Templates documentation].
+
+{SelfServiceShort} adds the following {PlatformNameShort}-specific field types:
+
+.{PlatformNameShort}-specific field types
+[cols="15%,20%,35%,30%",options="header"]
+|====
+| Type | Widget | Description | Example use case
+
+| `ui:field: AAPTokenField`
+| Hidden token field
+| OAuth2 authentication token, auto-populated and hidden from the user.
+| Always present in auto-generated templates.
+
+| `resource` + `ui:field: AAPResourcePicker`
+| {PlatformNameShort} resource picker (single-select)
+| Select one {PlatformNameShort} resource by name.
+| Inventory, organization.
+
+| `type: array` + `ui:field: AAPResourcePicker`
+| {PlatformNameShort} resource picker (multi-select)
+| Select multiple {PlatformNameShort} resources by name.
+| Credentials.
+|====
+
+These {PlatformNameShort}-specific fields are documented in detail in xref:aap-resource-picker-fields_{context}[AAP resource picker fields].
