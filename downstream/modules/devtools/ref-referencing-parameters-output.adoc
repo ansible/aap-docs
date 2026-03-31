@@ -1,0 +1,48 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="referencing-parameters-output_{context}"]
+= Referencing parameters in output
+
+[role="_abstract"]
+You can reference any value the user entered in the `parameters` section by using the `${{ parameters.<field_name> }}` syntax.
+
+The following table lists common parameter references:
+
+.Common parameter references
+[cols="40%,30%,30%",options="header"]
+|====
+| Reference | Description | Example output
+
+| `${{ parameters.app_name }}`
+| User-entered text field value
+| `my-app`
+
+| `${{ parameters.inventory }}`
+| User-selected {PlatformNameShort} resource name
+| `Production Servers`
+
+| `${{ parameters.credentials }}`
+| User-selected credentials (array)
+| `["SSH Key", "AWS Credentials"]`
+
+| `${{ parameters.environment }}`
+| User-selected enum value
+| `production`
+|====
+
+== Example: Displaying user selections in the output
+
+[source,yaml]
+----
+output:
+  text:
+    - title: Request submitted
+      content: |
+        Your request for **${{ parameters.app_name }}** has been submitted.
+
+        **Configuration:**
+        - Inventory: ${{ parameters.inventory }}
+        - Environment: ${{ parameters.environment }}
+----
