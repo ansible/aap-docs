@@ -1,0 +1,71 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="how-templates-are-generated_{context}"]
+= How templates are generated
+
+[role="_abstract"]
+When synchronization runs, {SelfServiceShort} reads {PlatformNameShort} Job Template configurations and generates corresponding templates.
+{SelfServiceShort} maps {PlatformNameShort} Job Template properties to template fields as follows.
+
+== Metadata mapping
+
+The following table shows how {PlatformNameShort} Job Template properties are mapped to template metadata fields:
+
+.Metadata mapping
+[cols="40%,40%,20%",options="header"]
+|====
+| {PlatformNameShort} Job Template property | Generated template field | Transformation
+
+| Name
+| `metadata.name`
+| Converted to lowercase with hyphens
+
+| Name
+| `metadata.title`
+| Copied directly
+
+| Description
+| `metadata.description`
+| Copied directly
+
+| Labels
+| `metadata.tags`
+| Converted to lowercase, special characters replaced with hyphens
+
+| N/A
+| `metadata.namespace`
+| Hardcoded to `default`
+|====
+
+== Parameter mapping
+
+The following table shows how {PlatformNameShort} Job Template sources are mapped to template parameters:
+
+.Parameter mapping
+[cols="50%,50%",options="header"]
+|====
+| {PlatformNameShort} Job Template source | Generated template parameter type
+
+| Survey questions
+| Standard form fields (`type: string`, `enum`, `ui:widget`)
+
+| "Prompt on Launch" options
+| `AAPResourcePicker` fields for {PlatformNameShort} resources
+|====
+
+== Field order
+
+{SelfServiceShort} generates form fields from two sources in the {PlatformNameShort} Job Template configuration.
+Fields appear in the following order:
+
+. *OAuth token (hidden):* Auto-populated with the user's authentication token. This field is always present and always hidden.
+. *"Prompt on Launch" fields:* Each enabled "Prompt on Launch" option becomes an `AAPResourcePicker` field. Users select {PlatformNameShort} resources by name (Inventories, Credentials, Execution Environments). {SelfServiceShort} resolves names to {PlatformNameShort} internal IDs at launch time.
+. *Survey questions:* Each survey question becomes a form field with the matching input type (`text`, `dropdown`, `password`, `textarea`, `integer`, `float`, `multiplechoice`, `multiselect`).
+
+== Defaults and required fields
+
+* Survey question defaults and required/optional settings are preserved from the {PlatformNameShort} Job Template Survey.
+* "Prompt on Launch" fields use the current {PlatformNameShort} Job Template settings for defaults and required/optional status.
+* {PlatformNameShort} resource picker fields display resource names, not internal IDs.
