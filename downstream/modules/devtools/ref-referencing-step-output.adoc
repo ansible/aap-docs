@@ -1,0 +1,45 @@
+:_newdoc-version: 2.18.3
+:_template-generated: 2026-03-09
+:_mod-docs-content-type: REFERENCE
+
+[id="referencing-step-output_{context}"]
+= Referencing step output in output
+
+[role="_abstract"]
+After the `rhaap:launch-job-template` action runs, the step output includes job execution data.
+Reference this data using the `${{ steps['<step-id>'].output.data.<field> }}` syntax.
+
+The `rhaap:launch-job-template` action returns the following output fields:
+
+.Output fields from rhaap:launch-job-template
+[cols="50%,15%,35%",options="header"]
+|====
+| Reference | Type | Description
+
+| `${{ steps['launch-job'].output.data.id }}`
+| number
+| {PlatformNameShort} Job ID.
+
+| `${{ steps['launch-job'].output.data.status }}`
+| string
+| {PlatformNameShort} Job status (for example, `pending`, `running`, `successful`).
+
+| `${{ steps['launch-job'].output.data.url }}`
+| string
+| Direct URL to the job in {PlatformNameShort}.
+|====
+
+== Example: Displaying job execution data in the output
+
+[source,yaml]
+----
+output:
+  text:
+    - title: Job launched
+      content: |
+        **Job ID:** ${{ steps['launch-job'].output.data.id }}
+        **Status:** ${{ steps['launch-job'].output.data.status }}
+  links:
+    - title: View job in Ansible Automation Platform
+      url: ${{ steps['launch-job'].output.data.url }}
+----
