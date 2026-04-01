@@ -1,0 +1,31 @@
+:_mod-docs-content-type: PROCEDURE
+[id="eda-example-configure-remote-sys"]
+
+= Configure your remote system to send events
+
+[role="_abstract"]
+Configuring a GitHub webhook establishes the outbound connection from your repository to the {PlatformName} controller. This configuration enables your remote system to transmit event data directly to your designated event stream URL.
+
+.Procedure
+
+. Go to your GitHub account to configure your event source.
+. In the top right of the GitHub page, click *Your profile name → Your repositories* and select the repository you want to configure.
+. Navigate to *Settings* in the tool bar.
+. In the left navigation, select *Webhooks*.
+. On the top right, click btn:[Add webhook] to create a webhook in your GitHub repository that will send events to your event stream.
+. Complete the following fields:
++
+Payload URL:: Copy and paste the URL you saved from the event stream you created. 
+Content type:: Select application/json from the list.
+Secret:: Add your secret from your event stream credential you created earlier.
+SSL verification:: If you’re using self-signed SSL certificates, select Disable under SSL verification to ensure a successful webhook connection. Otherwise, you can keep the Enable SSL verification toggled on.
++
+[NOTE]
+====
+If you are using a test environment or SSL certifications, under SSL verification, select the *Disable* option to ensure your webhook connects successfully.  
+====
+
+. Click *Add webhook* to save your configuration.
+
+.Results
+Your webhook has been created, and you can return to {PlatformNameShort}.
