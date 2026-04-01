@@ -24,7 +24,12 @@ Customize a decision environment container image to ensure your rulebook activat
 .Procedure
 
 . Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
-This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-26/de-minimal-rhel9/6449633cfb26ed69bfc5d755[{PlatformNameShort} minimal decision environment].  
+This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-26/de-minimal-rhel9/6449633cfb26ed69bfc5d755[{PlatformNameShort} minimal decision environment]. 
++
+[IMPORTANT] 
+====
+The `ansible.eda` collection requires specific system dependencies (`libsystemd0`, `libsystemd-dev`, and `pkg-config`) to function correctly. These must be included in your decision environment build as shown in the following examples.
+====
 +
 The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the ansible.eda collection:
 +
@@ -40,6 +45,10 @@ dependencies:
   galaxy:
     collections:
       - ansible.eda
+  system:          
+      - libsystemd0 [platform:rpm platform:dpkg]                                                            
+      - libsystemd-dev [platform:rpm platform:dpkg]                                                         
+      - pkg-config [platform:rpm platform:dpkg]
   python_interpreter:
     package_system: "python3.12"
 
@@ -65,7 +74,10 @@ dependencies:
     - six
     - psutil
   system:
-    - iputils [platform:rpm]
+     - libsystemd0 [platform:rpm platform:dpkg]                                                            
+     - libsystemd-dev [platform:rpm platform:dpkg]         
+     - pkg-config [platform:rpm platform:dpkg]  
+     - iputils [platform:rpm]
   python_interpreter:
     package_system: "python3.12"
 
