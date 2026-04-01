@@ -1,0 +1,34 @@
+:_mod-docs-content-type: REFERENCE
+[id="eda-github-event-stream-prereqs"]
+
+= Prerequisites for GitHub repository
+
+[role="_abstract"]
+Before configuring simplified event routing, you must prepare your {PlatformName} environment and GitHub repository. Ensuring that your decision environment, credentials, and rulebooks are properly aligned prevents errors during activation.
+
+To successfully integrate GitHub event streams with rulebook activations, verify that the following components and configurations are in place:
+
+* *Decision environment:* Use the image version that corresponds to your specific {PlatformNameShort} instance (for example, `de-minimal-rhel9`).
+* *Event stream credentials:* Configure credentials specifically for simplified event routing within the controller interface.
+* *Project synchronization:* Ensure your Ansible project is synced to the Git repository containing your rulebook YAML files.
+* *Plugin compatibility:* Verify that your decision environment supports the required event source plugins (for example, `eda.builtin`).
+* *User Permissions:* Confirm you have sufficient permissions to create and manage rulebook activations in the controller.
+* *Active Event Source:* A functional webhook or message bus must be configured to send signals to the controller.
+* *Correct Namespacing:* Ensure your rulebooks call current plugin namespaces (for example, using `amazon.aws` rather than deprecated `ansible.eda paths`).
+* *Rulebook Configuration:* Your rulebook must conform to the standard YAML format and specify the correct source and port (as in the following example).
+
+*YAML*
+
+[literal, options="nowrap" subs="+attributes"]
+---
+- name: Listen for GitHub Events
+  hosts: all
+  sources:
+    - ansible.builtin.webhook:
+        port: 5000 
+  rules:
+    - name: Respond to a Pull Request
+      condition: event.payload.action == "opened"
+      action:
+        debug:
+          msg: "A new pull request was opened!"
