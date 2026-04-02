@@ -1,0 +1,59 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-create-github-app_{context}"]
+= Create a GitHub App for {SelfServiceShort}
+
+[role="_abstract"]
+To use GitHub Apps authentication with {SelfServiceShort}, you must create a GitHub App in your GitHub organization.
+After you create the app, you configure {SelfServiceShort} to use the app credentials for repository access.
+
+.Prerequisites
+
+* You have owner or admin permissions in your GitHub organization.
+
+.Procedure
+
+. In a browser, log in to GitHub.
+. Navigate to your organization settings.
+. Select *Developer settings* -> *GitHub Apps*.
+. Click *New GitHub App*.
+. Enter the following details:
++
+** *GitHub App name*: A descriptive name, for example `ansible-portal-content-sync`.
+** *Homepage URL*: The URL of your {SelfServiceShort} deployment.
+** *Webhook*: Clear the *Active* checkbox if you do not require webhook events.
+
+. In the *Permissions* section, set the following repository permissions:
++
+** *Contents*: `Read-only`
+** *Metadata*: `Read-only`
++
+These permissions grant read access to repository content and metadata for content synchronization.
+
+. In the *Where can this GitHub App be installed?* section, select *Only on this account*.
+. Click *Create GitHub App*.
+. On the GitHub App settings page, note the *App ID*. You need this value when you configure {SelfServiceShort}.
+. In the *Private keys* section, click *Generate a private key*.
++
+Your browser downloads a `.pem` file containing the private key. Store this file securely.
+
+. In the *Client secrets* section, click *Generate a new client secret*.
++
+Save the client secret value. You cannot view it again after you leave the page.
+
+. Install the GitHub App in your organization:
++
+.. On the GitHub App settings page, click *Install App* in the sidebar.
+.. Select your organization.
+.. Select *All repositories* or select specific repositories that {SelfServiceShort} requires access to.
+.. Click *Install*.
++
+[NOTE]
+====
+The GitHub App must have access to the organizations configured for content discovery under `ansibleGitContents` in your Helm chart.
+You can create a single GitHub App installed across multiple organizations, or create separate GitHub Apps for each organization.
+====
+
+.Verification
+
+* On the GitHub App settings page, the *Install App* section shows your organization with an *Installed* status.
