@@ -1,0 +1,91 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-setup-git-integration_{context}"]
+= Set up Git repository integration
+
+[role="_abstract"]
+Configure {SelfServiceShort} to access private GitHub or GitLab repositories that require authentication.
+After completing this procedure, your private repositories are configured as catalog locations, which allows content to be synced and discovered in the portal.
+
+.Prerequisites
+
+* You have configured authentication for your Git repositories using one of the following methods:
+** A Personal Access Token (PAT) stored in an OpenShift secret named `secrets-scm`. For more information, see xref:self-service-create-gh-pat_{context}[] or xref:self-service-create-gl-pat_{context}[] and xref:self-service-create-scm-secrets_{context}[].
+** A GitHub App configured for your organization (GitHub only). For more information, see xref:self-service-create-github-app_{context}[] and xref:self-service-configure-github-app_{context}[].
+* You have administrator access to the {SelfServiceShort} Helm chart configuration.
+* Your repositories contain valid catalog entity files in YAML format.
+
+.Procedure
+
+. In your {SelfServiceShort} Helm chart configuration, navigate to the `catalog.locations` section.
+. Add entries for each repository you want to sync content from using the following format:
++
+.GitHub repository example
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://github.com/<organization>/<repository>/blob/<branch>/path/to/catalog-info.yaml
+----
++
+.GitLab repository example
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://gitlab.com/<organization>/<repository>/-/blob/<branch>/path/to/catalog-info.yaml
+----
++
+[NOTE]
+====
+Replace `<organization>`, `<repository>`, `<branch>`, and the path with your actual repository details. You can point to a specific catalog file or use wildcards to discover multiple files.
+====
++
+. To discover multiple catalog files in a repository, you can point to a discovery file that references other catalog entities:
++
+[source,yaml]
+----
+catalog:
+  locations:
+    - type: url
+      target: https://github.com/<organization>/<repository>/blob/main/catalog-discovery.yaml
+----
++
+. Apply the updated Helm chart configuration:
++
+[source,bash]
+----
+$ helm upgrade <release-name> <chart-name> -f values.yaml -n <namespace>
+----
++
+Replace `<release-name>`, `<chart-name>`, and `<namespace>` with your deployment details.
+. Wait for the {SelfServiceShort} pods to restart and apply the new configuration.
+
+.Verification
+
+. Log in to {SelfServiceShort}.
+. Navigate to the catalog view or repository management page.
+. Verify that entities from your configured repositories appear in the catalog.
+. Check the {SelfServiceShort} logs for any authentication or sync errors:
++
+[source,bash]
+----
+$ oc logs -n <namespace> <pod-name> | grep -i catalog
+----
+
+.Troubleshooting
+
+If repositories fail to sync:
+
+* If you use a PAT, verify the token has the required permissions and has not expired
+* If you use a GitHub App, verify the app is installed for the target repositories and the credentials are correctly configured
+* Ensure the authentication secret (`secrets-scm` for PATs, or `github-app-credentials` for GitHub Apps) exists in the same namespace as {SelfServiceShort}
+* Confirm the repository URLs are accessible and correctly formatted
+* Check that catalog entity files in the repository are valid YAML and follow the catalog entity schema
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:self-service-content-mgmt-prerequisites_{context}[]
