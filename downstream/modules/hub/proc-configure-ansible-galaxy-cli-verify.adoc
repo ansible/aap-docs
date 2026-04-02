@@ -1,14 +1,14 @@
 :_mod-docs-content-type: PROCEDURE
 [id="proc-configure-ansible-galaxy-cli-verify"]
 
-= Configuring Ansible-Galaxy CLI to verify collections
+= Configure Ansible-Galaxy CLI to verify collections
 
 [role="_abstract"]
 You can configure Ansible-Galaxy CLI to verify collections. 
 This ensures that downloaded collections are approved by your organization and have not been changed after they were uploaded to {HubName}.
 
 If a collection has been signed by {HubName}, the server provides ASCII armored, GPG-detached signatures to verify the authenticity of `MANIFEST.json` before using it to verify the collection's contents. 
-You must opt into signature verification by link:https://docs.ansible.com/projects/ansible/latest/reference_appendices/config.html#galaxy-gpg-keyring[configuring a keyring] for `ansible-galaxy` or providing the path with the `--keyring` option.
+First you must opt into signature verification by configuring a keyring for `ansible-galaxy` or providing the path with the `--keyring` option.
 
 .Prerequisites
 
@@ -55,3 +55,7 @@ ansible-galaxy collection verify -r requirements.yml --keyring ~/.ansible/pubrin
 +
 When you install a collection from {HubName}, the signatures provided by the server are saved along with the installed collections to verify the collection's authenticity.
 . (Optional) If you need to verify the internal consistency of your collection again without querying the {Galaxy} server, run the same command you used previously using the `--offline` option.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://docs.ansible.com/projects/ansible/latest/reference_appendices/config.html#galaxy-gpg-keyring[Configuring a keyring]

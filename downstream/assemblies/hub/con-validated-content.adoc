@@ -1,0 +1,23 @@
+:_mod-docs-content-type: CONCEPT
+[id="assembly-validated-content"]
+= Configuring {Valid} with the installer
+
+[role="_abstract"]
+{PlatformName} includes {Valid}, which complements existing {CertifiedCon}. {Valid} provides an expert-led path for performing operational tasks on a variety of platforms from both Red Hat and our trusted partners.
+
+You can obtain {Valid} during the installation process.
+When you download and run the RPM bundle installer, certified and validated collections are automatically uploaded.
+Certified collections are uploaded into the `rh-certified` repository.
+Validated collections are uploaded into the `validated` repository.
+
+You can change the default configuration by using two variables:
+
+* `automationhub_seed_collections` is a boolean that defines whether or not preloading is enabled.
+* `automationhub_collection_seed_repository` is a variable that enables you to specify the type of content to upload when it is set to `true`.
+Possible values are `certified` or `validated`.
+If this variable is missing, both content sets will be uploaded.
+
+[NOTE]
+====
+Changing the default configuration might require further platform configuration changes for other content. 
+====
