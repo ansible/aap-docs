@@ -1,0 +1,48 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="self-service-github-apps-overview_{context}"]
+= GitHub Apps authentication
+
+[role="_abstract"]
+You can authenticate {SelfServiceShort} with GitHub repositories by using a GitHub App instead of a Personal Access Token (PAT).
+GitHub Apps provide more granular permissions and do not depend on individual user accounts.
+
+== GitHub Apps compared to Personal Access Tokens
+
+GitHub Apps and PATs are both valid authentication methods for connecting {SelfServiceShort} to GitHub repositories.
+The following table compares the two methods:
+
+.Authentication method comparison
+[cols="30%,35%,35%",options="header"]
+|===
+| Feature | Personal Access Token (PAT) | GitHub App
+
+| Permission scope
+| Scoped to the user who created the token
+| Scoped to the organization or specific repositories where the app is installed
+
+| Account dependency
+| Tied to an individual GitHub user account
+| Independent of individual user accounts
+
+| Permission granularity
+| Broad permission scopes (`repo`, `read:org`)
+| Fine-grained permissions per resource type
+
+| Token management
+| Manual creation and rotation
+| Automatic token generation and renewal
+
+| Audit trail
+| Actions attributed to the user who owns the token
+| Actions attributed to the GitHub App
+|===
+
+== Credential resolution
+
+When you configure both a GitHub App and a PAT, {SelfServiceShort} uses the following credential resolution order:
+
+. {SelfServiceShort} attempts to obtain a GitHub App installation token for the target repository or organization.
+. If the GitHub App is not installed for the target repository, {SelfServiceShort} falls back to the configured PAT.
+
+This fallback behavior means you can configure a GitHub App for your primary repositories while maintaining a PAT for repositories where the app is not installed.

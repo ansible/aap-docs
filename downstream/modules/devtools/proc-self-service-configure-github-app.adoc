@@ -1,0 +1,99 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="self-service-configure-github-app_{context}"]
+= Configure {SelfServiceShort} to use a GitHub App
+
+[role="_abstract"]
+After you create a GitHub App, configure {SelfServiceShort} to use the app credentials for authenticating with GitHub repositories.
+
+.Prerequisites
+
+* You have created a GitHub App and noted the App ID, client ID, and client secret.
+For more information, see xref:self-service-create-github-app_{context}[].
+* You have the private key `.pem` file generated for the GitHub App.
+* You have administrator access to your {OCPShort} cluster.
+* {SelfServiceShort} is installed in your {OCPShort} cluster.
+
+.Procedure
+
+. Create an {OCPShort} secret to store the GitHub App private key:
++
+[source,terminal]
+----
+oc create secret generic github-app-credentials \
+  --from-file=GITHUB_APP_PRIVATE_KEY=<path_to_private_key>.pem \
+  --from-literal=GITHUB_APP_CLIENT_SECRET=<client_secret> \
+  -n <namespace>
+----
++
+Replace `<path_to_private_key>` with the path to your `.pem` file, `<client_secret>` with your GitHub App client secret, and `<namespace>` with the namespace where {SelfServiceShort} is installed.
+
+. Update your {SelfServiceShort} Helm chart `values.yaml` file to include the GitHub App configuration:
++
+[source,yaml]
+----
+upstream:
+  backstage:
+    extraEnvVarsSecrets:
+      - github-app-credentials
+
+    appConfig:
+      integrations:
+        github:
+          - host: github.com
+            apps:
+              - appId: <app_id>
+                clientId: <client_id>
+                clientSecret: ${GITHUB_APP_CLIENT_SECRET}
+                privateKey: ${GITHUB_APP_PRIVATE_KEY}
+----
++
+Where:
+
+`<app_id>`:: Specifies the App ID from your GitHub App settings page.
+`<client_id>`:: Specifies the Client ID from your GitHub App settings page.
+`$\{GITHUB_APP_CLIENT_SECRET}`:: References the client secret stored in the `github-app-credentials` {OCPShort} secret.
+`$\{GITHUB_APP_PRIVATE_KEY}`:: References the private key stored in the `github-app-credentials` {OCPShort} secret.
++
+[NOTE]
+====
+If you also have a PAT configured under `integrations.github[].token`, {SelfServiceShort} uses the GitHub App credentials when available and falls back to the PAT for repositories where the app is not installed.
+====
+
+. Apply the updated Helm chart configuration:
++
+[source,terminal]
+----
+helm upgrade <release_name> <chart_name> -f values.yaml -n <namespace>
+----
++
+Replace `<release_name>`, `<chart_name>`, and `<namespace>` with your deployment details.
+
+. Verify that the {SelfServiceShort} pods restart with the new configuration by running the following command:
++
+[source,terminal]
+----
+oc rollout status deployment -n <namespace>
+----
+
+.Verification
+
+. Verify that the {SelfServiceShort} pods are running:
++
+[source,terminal]
+----
+oc get pods -n <namespace>
+----
++
+All {SelfServiceShort} pods show a status of `Running`.
+
+. Log in to {SelfServiceShort} and verify that content from GitHub repositories configured with the GitHub App syncs correctly.
+
+. Check the {SelfServiceShort} logs to confirm GitHub App authentication:
++
+[source,terminal]
+----
+oc logs -n <namespace> <pod_name> | grep -i github
+----
++
+Successful authentication shows log entries indicating credential resolution through the GitHub App.
