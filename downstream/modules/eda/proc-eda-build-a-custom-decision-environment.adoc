@@ -44,13 +44,13 @@ images:
 dependencies:
   galaxy:
     collections:
-      - ansible.eda
-  system:          
-      - libsystemd0 [platform:rpm platform:dpkg]                                                            
-      - libsystemd-dev [platform:rpm platform:dpkg]                                                         
-      - pkg-config [platform:rpm platform:dpkg]
+      - name: google.cloud
   python_interpreter:
     package_system: "python3.12"
+  exclude:
+    all_from_collections:
+      # ansible.eda is already installed in de-minimal
+      - ansible.eda
 
 options:
   package_manager_path: /usr/bin/microdnf
@@ -69,17 +69,16 @@ images:
 dependencies:
   galaxy:
     collections:
-      - ansible.eda
+      - name: google.cloud
   python:
     - six
     - psutil
-  system:
-     - libsystemd0 [platform:rpm platform:dpkg]                                                            
-     - libsystemd-dev [platform:rpm platform:dpkg]         
-     - pkg-config [platform:rpm platform:dpkg]  
-     - iputils [platform:rpm]
   python_interpreter:
     package_system: "python3.12"
+  exclude:
+    all_from_collections:
+      # ansible.eda is already installed in de-minimal
+      - ansible.eda
 
 options:
   package_manager_path: /usr/bin/microdnf
