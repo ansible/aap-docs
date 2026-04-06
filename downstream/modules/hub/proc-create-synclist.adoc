@@ -4,23 +4,18 @@
 = Synchronizing content collections
 
 [role="_abstract"]
-You can sync certified and validated collections in {HubNameMain} on {Console}.
-//[ddacosta]This needs to be checked. I don't see a Repositories selection in the console verion. I think the way I've rewritten is correct.
-// [hherbly] Looks like there is no synclist info in console or the test instance; commenting out this info for 2.5
-// Your synclist repository is located on the {HubName} navigation panel under {MenuACAdminRepositories}, which is updated whenever you manage content within {CertifiedName}.
-
-//All {CertifiedName} are included by default in your initial organization synclist.
+You can sync certified and validated collections in {HubNameMain} from {Console}.
 
 [NOTE]
 ====
-When syncing content, keep in mind that {HubName} does not check other repositories for dependencies. To avoid an error, turn off dependency downloading by editing your remote settings. See link:{URLHubManagingContent}/managing-collections-hub#proc-create-remote_remote-management[Creating a remote configuration in {HubName}] for more information.
+When syncing content, keep in mind that {HubName} does not check other repositories for dependencies. To avoid an error, turn off dependency downloading by editing your remote settings. 
 ====
 
 .Prerequisites
 
 * You have a valid {PlatformNameShort} subscription.
 * You have organization administrator permissions for {Console}.
-* You have created a link:{URLHubManagingContent}/managing-cert-valid-content#create-requirements-file_cloud-sync[requirements file].
+* You have created a requirements file.
 * The following domain names are part of either the firewall or the proxy's allowlist.
 They are required for successful connection and download of collections from {HubName} or Galaxy server:
 ** `galaxy.ansible.com`
@@ -38,7 +33,7 @@ The following domain names must be in the allow list:
 
 ====
 
-Before you begin your content sync, consult the Knowledgebase article link:https://access.redhat.com/articles/7118757[Resource requirements for syncing automation content] to ensure that you have the resources to sync the collections you need. 
+Before you begin your content sync, ensure that you have the resources to sync the collections you need. 
 
 ====
 
@@ -59,3 +54,9 @@ Before you begin your content sync, consult the Knowledgebase article link:https
 The *Sync status* column updates to notify you whether the  synchronization is successful.
 
 * Navigate to {MenuACCollections} to confirm that your collections content has synchronized successfully.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://access.redhat.com/articles/7118757[Resource requirements for syncing automation content] 
+* link:{URLHubManagingContent}/managing-collections-hub#proc-create-remote_remote-management[Creating a remote configuration in {HubName}]
+* link:{URLHubManagingContent}/managing-cert-valid-content#create-requirements-file_cloud-sync[Creating a requirements file]
