@@ -30,7 +30,12 @@ You can create a custom decision environment for {EDAName} that provides a custo
 . Use `de-minimal` as the base image with {Builder} to build your custom decision environments. 
 This image is built from a base image provided by Red Hat at link:https://catalog.redhat.com/software/containers/ansible-automation-platform-25/de-minimal-rhel9/650a5672a370728c710acaab[{PlatformNameShort} minimal decision environment].  
 +
-The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the ansible.eda collection:
+[IMPORTANT] 
+====
+The `ansible.eda` collection is already installed in the `de-minimal` base image. To prevent Ansible Builder from attempting to reinstall it, add `ansible.eda` to the `exclude.all_from_collections` list as shown in the following examples.
+====
++
+The following is an example of the {Builder} definition file that uses `de-minimal` as a base image to build a custom decision environment with the `servicenow.itsm` collection:
 +
 
 ----
@@ -43,9 +48,13 @@ images:
 dependencies:
   galaxy:
     collections:
-      - ansible.eda
+      - name: servicenow.itsm
   python_interpreter:
     package_system: "python3.12"
+  exclude:
+    all_from_collections:
+      # ansible.eda is already installed in de-minimal
+      - ansible.eda
 
 options:
   package_manager_path: /usr/bin/microdnf
@@ -64,14 +73,16 @@ images:
 dependencies:
   galaxy:
     collections:
-      - ansible.eda
+      - name: servicenow.itsm
   python:
     - six
     - psutil
-  system:
-    - iputils [platform:rpm]
   python_interpreter:
     package_system: "python3.12"
+  exclude:
+    all_from_collections:
+      # ansible.eda is already installed in de-minimal
+      - ansible.eda
 
 options:
   package_manager_path: /usr/bin/microdnf
