@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-An AnsibleJob custom resource launches a job in the {ControllerName} instance specified in the Kubernetes secret ({ControllerName} host URL, token).
+An AnsibleJob custom resource launches a job in the {PlatformNameShort} instance specified in the Kubernetes secret ({ControllerName} host URL, token).
 You can launch an automation job on {ControllerName} by creating an AnsibleJob resource.
 
 .Procedure
@@ -19,7 +19,7 @@ kind: AnsibleJob
 metadata:
   generateName: demo-job-1 # generate a unique suffix per 'kubectl create'
 spec:
-  connection_secret: controller-access
+  connection_secret: aap-access
   job_template_name: Demo Job Template
 ----
 +
@@ -27,7 +27,7 @@ spec:
 +
 ----
 spec:
-  connection_secret: controller-access
+  connection_secret: aap-access
   job_template_name: Demo Job Template
   inventory: Demo Inventory                    # Inventory prompt on launch needs to be enabled
   runner_image: quay.io/ansible/controller-resource-runner
@@ -52,6 +52,6 @@ kind: AnsibleJob
 metadata:
   generateName: demo-job-1 # generate a unique suffix per 'kubectl create'
 spec:
-  connection_secret: controller-access
+  connection_secret: aap-access
   workflow_template_name: Demo Workflow Template
 ----
