@@ -31,16 +31,23 @@ For GitLab, the PAT must have the following scopes:
 * `read_repository`
 * `api`
 
+== Collection discovery sources
+
+{SelfServiceShort} discovers Ansible collections from content sources configured in the `app-config`.
+You can configure the following source types for collection discovery:
+
+* *Git repositories*: {SelfServiceShort} scans configured Git repositories for `galaxy.yml` files that contain valid collection metadata.
+* *{PrivateHubName} repositories*: {SelfServiceShort} can discover collections from {PrivateHubName} repositories configured as content sources.
+
+Configure Git content sources in the `ansibleGitContents` section of your Helm chart `app-config` to specify which Git organizations and repositories to scan for collections.
+Configure {PrivateHubName} content sources in the `pahCollections` section to specify which {PrivateHubName} repositories to sync collections from.
+
 == Repository format requirements
 
-Repositories eligible for syncing must contain valid catalog entity files in YAML format. These files define:
+For collection discovery, repositories must contain valid `galaxy.yml` files with collection metadata.
+For software templates and other catalog entities, repositories must contain valid catalog entity files in YAML format.
 
-* {ExecEnvShort} definitions
-* Ansible collections metadata
-* Software templates
-* Other discoverable content
-
-Entity files must:
+Catalog entity files must:
 
 * Use `.yaml` or `.yml` file extensions
 * Follow the catalog entity schema
