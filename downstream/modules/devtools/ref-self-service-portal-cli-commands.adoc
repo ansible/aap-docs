@@ -14,13 +14,13 @@ You can access the appliance using SSH with the key you provided during initial 
 
 [source,terminal,subs="+attributes"]
 ----
-ssh -i /path/to/ssh-key/id_ed25519 -p <port-number> admin@<VM_IP>
+ssh -i /path/to/ssh-key/id_ed25519 -p <port_number> admin@<VM_IP>
 ----
 
 Replace the following placeholders:
 
 * `/path/to/ssh-key/id_ed25519` with the path to your SSH private key.
-* `<port-number>` with the SSH port number (default is 22).
+* `<port_number>` with the SSH port number (default is 22).
 * `<VM_IP>` with the IP address or hostname of your appliance.
 
 == Available commands
@@ -30,44 +30,57 @@ The following commands are available for managing the {SelfService} appliance:
 === portal-config
 
 Manages the portal configuration settings.
+Use `portal-config` to view, modify, export, import, or roll back configuration on an already-configured appliance.
 
 *Usage:*
 
 [source,terminal,subs="+attributes"]
 ----
-sudo portal-config show    # View current configuration
-sudo portal-config edit    # Modify configuration settings
+sudo portal-config show               # View current configuration
+sudo portal-config show --secrets     # View configuration including sensitive values
+sudo portal-config edit               # Open interactive configuration editor
+sudo portal-config export --format yaml  # Export configuration to stdout
+sudo portal-config import /path/to/config.yaml  # Import configuration from file
+sudo portal-config set KEY=VALUE      # Set a single configuration value
+sudo portal-config rollback --list    # List configuration snapshots
+sudo portal-config rollback --previous  # Roll back to most recent snapshot
+sudo portal-config regenerate-secrets # Regenerate portal secrets
 ----
 
 *Description:*
 
-* `portal-config show` displays the current portal configuration, including {PlatformNameShort} connection details and service settings.
-* `portal-config edit` opens an interactive editor to modify the portal configuration.
-
-Use `portal-config` to update existing configuration settings after the initial setup is complete.
+* `portal-config show` displays the current portal configuration, including {PlatformNameShort} connection details and service settings. Add `--secrets` to display sensitive values (requires root).
+* `portal-config edit` opens the interactive setup wizard pre-filled with the current configuration (requires root).
+* `portal-config export` exports the current configuration to stdout. Use `--format` to specify the output format (`yaml` or `env`).
+* `portal-config import` imports a configuration from a YAML or `.env` file.
+* `portal-config set` sets a single configuration key-value pair, for example `AAP_HOST_URL=https://aap.example.com`.
+* `portal-config rollback` lists or restores previous configuration snapshots. Use `--previous` to roll back to the most recent snapshot, or specify a timestamp to roll back to a specific entry.
+* `portal-config regenerate-secrets` regenerates portal secrets (requires root).
 
 === portal-setup
 
-Runs the initial configuration wizard or imports a configuration.
+Runs the initial configuration wizard or applies a configuration file non-interactively.
 
 *Usage:*
 
 [source,terminal,subs="+attributes"]
 ----
-sudo portal-setup              # Run the initial configuration wizard
-sudo portal-setup import       # Import a configuration file
+sudo portal-setup                                    # Interactive wizard
+sudo portal-setup --config /path/to/config.env       # Pre-fill wizard from config file
+sudo portal-setup --config /path/to/config.env --accept-defaults  # Non-interactive mode
 ----
 
 *Description:*
 
 * `portal-setup` launches the interactive configuration wizard, which is the same wizard that runs automatically on first boot.
-* `portal-setup import` imports a previously exported configuration file.
+* `portal-setup --config` pre-fills the wizard with values from a configuration file.
+* `portal-setup --config --accept-defaults` applies the configuration non-interactively without prompting.
 
 [IMPORTANT]
 ====
 *Difference between portal-setup and portal-config:*
 
-* Use `portal-setup` to run the complete initial configuration wizard or to import an entire configuration from a file. This command is typically used during initial deployment or when migrating to a new appliance.
+* Use `portal-setup` to run the complete initial configuration wizard or to apply an entire configuration from a file. This command is typically used during initial deployment or when migrating to a new appliance.
 * Use `portal-config` to view or modify individual configuration settings on an already-configured appliance. This command is used for day-to-day configuration updates.
 ====
 
@@ -79,7 +92,8 @@ Checks the status of portal services.
 
 [source,terminal,subs="+attributes"]
 ----
-portal-status
+sudo portal-status            # One-shot status display
+sudo portal-status --watch    # Refresh status every 5 seconds
 ----
 
 *Description:*
@@ -92,6 +106,7 @@ Displays the current status of all {SelfService} services, including:
 * Network connectivity status
 
 Use this command to verify that all services are running correctly after installation or troubleshooting.
+Use `--watch` to continuously monitor service status.
 
 *Example output:*
 
@@ -113,25 +128,98 @@ Creates a backup of the portal configuration and data.
 
 [source,terminal,subs="+attributes"]
 ----
-sudo portal-backup
-sudo portal-backup --output /path/to/backup
+sudo portal-backup                          # Interactive backup (select content)
+sudo portal-backup --full                   # Full backup (all items)
+sudo portal-backup --minimal                # Required items only
+sudo portal-backup --list                   # List existing backups
+sudo portal-backup --export /path/to/dir/   # Copy latest backup to a directory
 ----
 
 *Description:*
 
 Creates a backup archive containing the portal configuration, settings, and data. Use this command before making significant configuration changes or for disaster recovery planning.
 
-The backup includes:
-
-* Portal configuration settings
-* {PlatformNameShort} OAuth application credentials
-* User customizations
-* Service configurations
+* `portal-backup` without options starts an interactive backup where you select the content to include.
+* `portal-backup --full` creates a complete backup of all configuration and data.
+* `portal-backup --minimal` backs up only the required configuration items.
+* `portal-backup --list` lists existing backups.
+* `portal-backup --export` copies the latest backup to the specified directory. If no backup exists, one is created first.
 
 [NOTE]
 ====
-Store backup files in a secure location. Backup archives contain sensitive credentials and should be protected accordingly.
+Store backup files in a secure location. Backup archives contain sensitive credentials. Protect them accordingly.
 ====
+
+=== portal-apply
+
+Applies a configuration file and optionally restarts services.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-apply --config /path/to/config.env
+sudo portal-apply --config config.yaml --test-connections
+----
+
+*Description:*
+
+Applies portal configuration from a YAML, JSON, or `.env` file.
+
+* `--config` specifies the configuration file to apply (required).
+* `--test-connections` tests the {PlatformNameShort} and database connections before applying the configuration.
+* `--output-json` outputs the result as JSON.
+
+=== portal-restore
+
+Restores the portal from a backup.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-restore --list                  # List available backups
+sudo portal-restore --latest                # Restore the newest backup
+sudo portal-restore /path/to/backup.tar.gz  # Restore a specific backup file
+----
+
+*Description:*
+
+Restores the portal configuration and data from a backup created by `portal-backup`.
+
+* `portal-restore --list` lists all available backups.
+* `portal-restore --latest` restores from the most recent backup.
+* `portal-restore` with a file path restores from a specific backup archive.
+
+[NOTE]
+====
+Restoring a backup overwrites the current portal configuration. Create a backup of the current state before restoring if you want to preserve it.
+====
+
+=== portal-registry-login
+
+Manages container registry credentials for pulling portal images.
+
+*Usage:*
+
+[source,terminal,subs="+attributes"]
+----
+sudo portal-registry-login                 # Log in to registry.redhat.io (default)
+sudo portal-registry-login quay.io         # Log in to a specific registry
+sudo portal-registry-login --test          # Test stored credentials
+sudo portal-registry-login --logout        # Remove stored credentials
+----
+
+*Description:*
+
+Manages authentication to container registries used for pulling {SelfService} images and updates.
+
+* `portal-registry-login` without arguments prompts for credentials for `registry.redhat.io`.
+* Specify a registry hostname to authenticate to a different registry.
+* `--test` verifies that stored credentials are valid.
+* `--logout` removes stored credentials for the registry.
+
+Use this command to configure registry authentication for `bootc upgrade` operations. In disconnected environments, use this command to authenticate to your private registry mirror.
 
 == Additional resources
 
