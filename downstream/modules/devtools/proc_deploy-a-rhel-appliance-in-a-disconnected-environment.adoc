@@ -1,0 +1,95 @@
+:_newdoc-version: 2.18.7
+:_template-generated: 2026-04-09
+:_mod-docs-content-type: PROCEDURE
+
+[id="deploy-a-rhel-appliance-in-a-disconnected-environment_{context}"]
+= Deploy a RHEL appliance in a disconnected environment
+
+[role="_abstract"]
+Deploy the {SelfService} RHEL appliance in a disconnected or air-gapped environment where the appliance has no access to external registries or the internet.
+The pre-built appliance images include all required container images and plug-ins, so no external network access is required during initial deployment.
+
+.Prerequisites
+
+* You have downloaded the appliance disk image (QCOW2 or VMDK) from the Red Hat Customer Portal on a connected system.
+* You have a method to transfer the disk image to the disconnected environment (for example, portable media or a secure file transfer system).
+* You have a virtualization platform available in the disconnected environment ({OCPVShort}, VMware vSphere, or KVM/QEMU).
+
+.Procedure
+
+. On a connected system, download the appliance disk image from the link:https://access.redhat.com[Red Hat Customer Portal].
+
+. Transfer the disk image to the disconnected environment using your organization's approved transfer method.
+
+. Deploy the appliance on your virtualization platform following the standard deployment procedure for your environment:
++
+* For {OCPVShort}, see xref:proc-self-service-install-openshift-virt_{context}[Deploying on OpenShift Virtualization].
+* For VMware vSphere, see xref:proc-self-service-install-vmware_{context}[Deploying on VMware vSphere].
+
+. Complete the initial configuration wizard.
++
+The appliance starts and runs without external network access because all required container images and plug-ins are pre-loaded in the appliance image.
+
+. Verify that the portal services are running:
++
+[source,terminal]
+----
+sudo portal-status
+----
+
+.Verification
+
+* Verify that the portal URL is accessible from your browser.
+* Verify that all services show a healthy status in the `portal-status` output.
+
+.Next steps
+
+* To apply future appliance upgrades in a disconnected environment, configure authentication to a private registry mirror that hosts the {SelfService} container images:
++
+.. On a connected system, mirror the {SelfService} container images from `registry.redhat.io` to your private registry.
+.. On the appliance, authenticate to your private registry mirror:
++
+[source,terminal]
+----
+sudo portal-registry-login <your_mirror_registry>
+----
++
+.. Verify that the credentials are valid:
++
+[source,terminal]
+----
+sudo portal-registry-login --test
+----
++
+If authentication fails, verify that the mirror registry is reachable from the appliance, check that any custom CA certificates are trusted, and verify your credentials are correct.
++
+.. Switch the appliance to track images from your mirror registry (one-time operation):
++
+[source,terminal]
+----
+sudo bootc switch <your_mirror_registry>/<image_path>
+----
++
+The system reboots automatically after applying the change.
++
+.. For subsequent upgrades, pull the latest update:
++
+[source,terminal]
+----
+sudo bootc upgrade --apply
+----
++
+The system reboots automatically. Wait for the system to restart, then reconnect via SSH.
++
+.. If an upgrade causes issues, roll back to the previous version:
++
+[source,terminal]
+----
+sudo bootc rollback
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference]
+* xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting RHEL appliances]

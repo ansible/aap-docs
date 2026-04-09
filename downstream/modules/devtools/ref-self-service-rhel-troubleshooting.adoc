@@ -157,9 +157,95 @@ Network bridge not available::
 * On macOS, ensure you are using `vmnet-shared` instead of bridge networking.
 * Check that your user has permissions to access the network bridge.
 
+== SSH key recovery
+
+After initial configuration, the `admin` user account is locked and console login is disabled.
+If you lose SSH access, use one of the following recovery methods for your deployment environment.
+
+[IMPORTANT]
+====
+Back up your SSH private key before configuring the appliance.
+If you lose your SSH key, you must use infrastructure-level access (hypervisor console, cloud provider tools) to recover.
+====
+
+=== Recovery on {OCPVShort}
+
+. Access the virtual machine console through the {OCPShort} web console.
+. Reboot the virtual machine.
+. At the GRUB boot menu, press *e* to edit boot parameters.
+. Add `init=/bin/bash` to the end of the kernel line.
+. Press *Ctrl+X* to boot into an emergency shell.
+. Remount the filesystem and add a new SSH key:
++
+[source,terminal]
+----
+mount -o remount,rw /
+passwd -u admin
+mkdir -p /home/admin/.ssh
+echo "<your_ssh_public_key>" >> /home/admin/.ssh/authorized_keys
+chown -R admin:admin /home/admin/.ssh
+chmod 600 /home/admin/.ssh/authorized_keys
+restorecon -R /home/admin/.ssh
+passwd -l admin
+exec /sbin/init
+----
+
+=== Recovery on VMware vSphere
+
+. Open the virtual machine console in vCenter.
+. Reboot the virtual machine.
+. At the GRUB boot menu, press *e* to edit boot parameters.
+. Add `init=/bin/bash` to the end of the kernel line.
+. Press *Ctrl+X* to boot into an emergency shell.
+. Remount the filesystem and add a new SSH key:
++
+[source,terminal]
+----
+mount -o remount,rw /
+passwd -u admin
+mkdir -p /home/admin/.ssh
+echo "<your_ssh_public_key>" >> /home/admin/.ssh/authorized_keys
+chown -R admin:admin /home/admin/.ssh
+chmod 600 /home/admin/.ssh/authorized_keys
+restorecon -R /home/admin/.ssh
+passwd -l admin
+exec /sbin/init
+----
+
+=== Recovery on KVM/QEMU
+
+Shut down the virtual machine and mount the QCOW2 image directly to add a new SSH key:
+
+[source,terminal]
+----
+sudo modprobe nbd max_part=8
+sudo qemu-nbd --connect=/dev/nbd0 disk.qcow2
+sudo fdisk -l /dev/nbd0
+sudo mount /dev/nbd0pN /mnt
+sudo mkdir -p /mnt/home/admin/.ssh
+echo "<your_ssh_public_key>" | sudo tee -a /mnt/home/admin/.ssh/authorized_keys
+sudo chown 1000:1000 /mnt/home/admin/.ssh/authorized_keys
+sudo chmod 600 /mnt/home/admin/.ssh/authorized_keys
+sudo umount /mnt
+sudo qemu-nbd --disconnect /dev/nbd0
+----
+
+Where:
+
+* `fdisk -l /dev/nbd0` lists partitions to identify the root filesystem. The root partition is typically the largest partition.
+* Replace `N` in `/dev/nbd0pN` with the correct root partition number from the `fdisk` output.
+
+=== Account locking behavior
+
+When the admin account is locked with `passwd -l`, the system adds a `!` prefix to the password hash in `/etc/shadow`.
+This disables all password-based authentication (console login, SSH password auth) while SSH key authentication continues to work.
+
+To temporarily unlock the account for recovery, use `passwd -u admin`.
+After adding a new SSH key, lock the account again with `passwd -l admin` for security.
+
 == Getting help
 
-If you encounter issues not covered in this troubleshooting guide:
+If you cannot resolve an issue by using these troubleshooting steps:
 
 . Use the `journalctl -u portal.service -f` command to collect detailed logs for analysis.
 . Use the `portal-status` command to verify service health.
