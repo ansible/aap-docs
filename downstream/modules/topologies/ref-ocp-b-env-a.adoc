@@ -83,6 +83,9 @@ The external database must meet these minimum requirements:
 * 4 vCPUs
 * 16 GB RAM
 * `max_connections`: 1024 (minimum). You might need more connections when scaling replicas.
+* 200 GB storage on a volume capable of at least 3000 IOPS
+
+Database storage consumption depends on your workload, including job frequency, playbook task count, output verbosity, and the number of managed hosts per job. Start with a 200 GB baseline and monitor actual usage after deployment. Configure automated cleanup jobs to prevent unbounded database growth.
 
 These requirements ensure adequate database performance for the {EnterpriseTopology} workload profile.
 ====
