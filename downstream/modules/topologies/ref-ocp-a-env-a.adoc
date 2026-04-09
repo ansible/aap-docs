@@ -72,18 +72,21 @@ a|
 * External (customer supported) databases require International Components for Unicode (ICU) support.
 * External databases using PostgreSQL 16 or 17 must rely on external backup and restore processes. Backup and restore functionality depends on utilities provided with {PostgresVers}.
 
-.Operator-deployed database connection limits
+.Operator-deployed database connection and storage limits
 [WARNING]
 ====
-The operator-deployed PostgreSQL database has a default `max_connections` limit of 100.
+The operator-deployed PostgreSQL database has a default `max_connections` limit of 100 and a maximum database size of 100 GB.
 
 Do not use the operator-deployed database if any of the following conditions apply:
 
 * You are running more than 1 replica of any component ({Gateway}, {ControllerName}, {HubName}, or {EDAName}).
 * The {ControllerName} capacity exceeds 100 concurrent jobs.
 * Total database connections from all components exceed 100.
+* Estimated 30-day database storage exceeds 100 GB.
 
-If you need more than 100 database connections, use an external database instead of the operator-deployed database.
+If your deployment exceeds any of these limits, use an external database instead of the operator-deployed database.
+
+Database storage consumption depends on your workload, including job frequency, playbook task count, output verbosity, and the number of managed hosts per job. Higher verbosity levels can increase storage consumption by 3-5x.
 ====
 | IP version
 | IPv4, IPv6 (single-stack and dual-stack)
