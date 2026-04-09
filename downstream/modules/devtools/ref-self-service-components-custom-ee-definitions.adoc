@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-When creating a custom EE, you define the core underlying elements that dictate the environment's capabilities, security, and dependencies. These components are used to define the custom EE, and are also utilized internally by the pre-defined presets.
+When creating a custom EE, you define the core underlying elements that dictate the environment's capabilities, security, and dependencies. These components define a custom EE. The predefined templates also use these components.
 
 |===
 | Component or setting | Description | Key considerations and examples
@@ -14,7 +14,7 @@ When creating a custom EE, you define the core underlying elements that dictate 
 | Base images
 a| The foundation layer of your EE, pre-configured with a specific operating system and toolset.
 
-By default, the following base images are available in all 3 pre-defined templates:
+By default, the following base images are available in all 3 predefined templates:
 
 * Red Hat Ansible Minimal EE - Ansible Core 2.18 (RHEL 8)
 * Red Hat Ansible Minimal EE - Ansible Core 2.18 (RHEL 9)
@@ -26,8 +26,8 @@ By default, the following base images are available in all 3 pre-defined templat
 If you are providing a custom image, it must include `ansible-core` and `ansible-runner`.
 
 | Collections
-| Specifies the Ansible Collections and Python libraries required by your automation content.
-a| Ensure all necessary content is included from the documentation's list. You can add collections manually or upload a `requirements.yml` file.
+| Specifies the Ansible Collections required by your automation content.
+a| Select collections from the list of discovered and cataloged collections available in {SelfServiceShort}.
 
 When collections overlap, the system merges the contents. If duplicates occur:
 
@@ -42,9 +42,7 @@ Avoid repeating Python requirements already specified as a dependency by the sel
 
 | System packages
 | Operating system (OS) libraries and packages required by the Python packages or collections.
-| Defines the extra OS libraries and packages required by the Python packages or collections listed in the EE.
-
-Examples: `git`, `gcc`, `python3-devel`. These are necessary for compiling Python packages during the build process.
+| Examples: `git`, `gcc`, `python3-devel`. These are necessary for compiling Python packages during the build process.
 
 This list supplements, and must not repeat, any base OS dependencies already managed by your environment's build system.
 

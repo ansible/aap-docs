@@ -4,16 +4,17 @@
 = Synchronize Git repositories
 
 [role="_abstract"]
-Sync Git repositories to discover and catalog {ExecEnvShort} definitions, collections, and software templates in {SelfServiceShort}.
+Sync Git repositories to discover and catalog Ansible collections in {SelfServiceShort}.
 After syncing, content from your repositories appears in the portal's catalog views where users can find and manage it.
 You can sync repositories manually on demand or configure automatic synchronization schedules.
 
 .Prerequisites
 
 * You have configured Git repository integration in your Helm chart, including catalog locations and authentication.
-* Your repositories contain valid catalog entity files in YAML format.
 * You have the required permissions to trigger repository synchronization.
-* For private repositories, you have configured authentication with personal access tokens stored in the `secrets-scm` secret.
+* For private repositories, you have configured authentication using one of the following methods:
+** Personal access tokens stored in the `secrets-scm` secret.
+** A GitHub App configured for your organization (GitHub only).
 
 .Procedure
 
@@ -47,6 +48,6 @@ Schedule configuration options and workflow will be documented here with screens
 +
 * Authentication failures due to expired or invalid PATs
 * Repository URLs that are inaccessible or incorrectly formatted
-* Invalid YAML syntax in catalog entity files
-* Missing required metadata fields in entity definitions
+* For collection discovery, missing or invalid `galaxy.yml` files in repositories
+* For catalog entities, invalid YAML syntax or missing required metadata fields in entity definitions
 
