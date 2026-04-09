@@ -2,35 +2,39 @@
 
 [id="con-mcp-builder-collection"]
 
-= MCP Builder Collection
+= Understand the MCP builder framework
 
 [role="_abstract"]
-The `mcp_builder_collection` is a collection of Ansible roles and playbooks designed to facilitate the integration and management of Model Context Protocol (MCP) servers within Ansible {ExecEnvShort}s built using {Builder}.
+The `ansible.mcp_builder`` collection provides a reusable framework for installing MCP servers inside execution environments. Rather than manually scripting installation steps in your container build, you define a role with metadata about your MCP server, and the framework handles the rest.
 
-This collection provides tools to streamline the process of configuring MCP servers, ensuring that they are properly set up to interact with Large Language Models (LLMs) and other AI systems.
+To automate the installation and lifecycle management of your servers, you must understand how the `ansible.mcp_builder` framework operates.
 
-Roles
+*How the framework works*
 
-[cols="a,a", options="header"]
-|===
-| Name | Description
-| `ansible.mcp_builder.common` | Sets up a generic MCP build environment with automatic dependency detection and installs MCP servers from multiple sources (Go, npm, PyPI)
-| `ansible.mcp_builder.aws_ccapi_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/ccapi-mcp-server[AWS Cloud Control MCP server] from PyPI
-| `ansible.mcp_builder.aws_cdk_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/cdk-mcp-server[AWS CDK MCP server] from PyPI
-| `ansible.mcp_builder.aws_core_mcp` | Installs the AWS link:https://awslabs.github.io/mcp/servers/core-mcp-server[Core MCP server] from PyPI with dynamic proxy server strategy
-| `ansible.mcp_builder.aws_iam_mcp` | Installs the AWS link:https://awslabs.github.io/mcp/servers/core-mcp-server[IAM MCP server] from PyPI
-| `ansible.mcp_builder.azure_mcp` | Installs the link:https://awslabs.github.io/mcp/servers/azure-mcp-server[Azure MCP server] from npm to interact with Azure resources
-| `ansible.mcp_builder.github_mcp` | 
-Installs the link:https://github.com/github/github-mcp-server[GitHub MCP server] with support for local (build from source) and remote modes
-|===
+The framework consists of three main components:
 
-*Playbooks*
+* The common role ( `ansible.mcp_builder.common` ) provides shared installation logic for MCP servers. Based on the language specified in your role's registry metadata, the common role automatically:
 
-[cols="a,a", options="header"]
-|===
-| Name | Description
-| `ansible.mcp_builder.install_mcp` | Installs selected MCP servers
-|===
+** Installs the appropriate language runtime (Go, Node.js, or Python/uv) if not already present.
+** Downloads and installs the MCP server package from the correct source (PyPI, npm, or Git).
+** Generates a unified manifest file (`/opt/mcp/mcpservers.json/opt/mcp/
+mcpservers.json`) listing all available MCP servers.
+** Creates the `mcp_manage` utility for listing, querying, and running installed MCP servers
+* Your custom role defines metadata about the MCP server you want to install. At minimum, it includes:
 
+** A registry variable that specifies the server name, transport type, language, and description.
+** A tasks file that invokes the common role's install_manager and
+generate_manifest tasks.
+* A playbook ties your custom role into the build process. This playbook is called by ansible-builder during the execution environment container build.
 
+*Selecting an installation method*
+
+The framework supports three installation methods, selected by the `lang` field in your registry metadata:
+
+|====
+| Language | Install method | Example servers
+| pyoi | Installed with uv tool install from PyPI | AWS CloudFormation MCP, AWS Core MCP, AWS IAM MCP
+| npm | Installed with npm from the npm registry | Azure MCP
+| go | Built from source with go build from a Git repository | GitHub MCP
+|====
 

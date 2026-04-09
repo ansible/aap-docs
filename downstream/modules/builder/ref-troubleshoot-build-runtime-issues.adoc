@@ -1,0 +1,87 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-troubleshoot-build-runtime-issues"]
+
+= Troubleshoot build and runtime errors
+
+[role="_abstract"]
+Diagnose and resolve common issues encountered when building, configuring, and integrating custom or built-in Model Context Protocol (MCP) servers within your {ExecEnvShort}s.
+
+.Build failures
+Common causes of build failures include:
++
+|====
+| Error | Reason
+| Unable to find collection artifact file a| This error occurs when the collection tarball path in `requirements.yml` does not match the path inside the container. Ensure that:
+* The tarball is listed in `additional_build_files`` with a dest value.
+* The source path in
+`requirements.yml` uses `/build/
+configs/<filename>` (not the host filesystem path).
+| Package download fails during build | The {ExecEnvShory} build environment requires network access to download packages from
+PyPI, npm, or Git repositories. If building behind a
+proxy, configure proxy settings in your container build
+environment. If building in an air-gapped environment,
+you must pre-download packages and include them
+using `additional_build_files`.
+| Go build fails with "module not found" | For Go-based MCP servers, ensure the`build_repo` URL and `build_repo_branch`
+are correct and accessible. The framework clones the
+repository and runs go mod download before building.
+|====
+
+.Runtime failures
+If your MCP server builds successfully but encounters errors at runtime, consider the following troubleshooting steps:
++
+|====
+| Error | Reason
+| mcp_manage : command not found | The mcp_manage script is installed at /opt/mcp/mcp_manage with a symlink at /usr/local/bin/mcp_manage. If it is missing, the common role's generate_management task might have been skipped.
+
+Ensure your playbook includes `ansible.mcp_builder.common` with
+`public: true` as the first task.
+| MCP server fails with permission errors a| The execution environment runs as user 1000 (non-root). Ensure your playbook includes the ownership fix task:
+----
+- name: Fix ownership of all MCP installations for runtime user
+  ansible.builtin.file:
+    path: "{{ common_mcp_base_path }}"
+    state: directory
+    recurse: true
+    owner: "{{ common_runtime_user }}"
+    group: "{{ common_runtime_user }}"
+----
+| Server listed but not executing a| If mcp_manage list shows your server but mcp_manage run fails, check:
+
+* The binary exists at the path shown in the manifest.
+* Required runtime dependencies are present (for example, Node.js for npm-based servers).
+* Environment variables required by the server are passed at container runtime.
+|====
+
+.Variable validation errors
+If your server fails due to missing or invalid variables, check the following:
++
+|====
+| Error | Reason
+| Missing registry variables | The common role expects a registry variable named `<role_name>_registry`. Ensure your `defaults/main.yml` follows the naming convention. For a role named `x defaults/
+main.yml`, the variable must be `cfn_mcp_registry`.
+| Invalid language type | The lang field in the registry must be one of: pypi, npm, or go. Any other value causes the install manager
+to skip installation. 
+|====
+
+.Understanding support boundaries
+The MCP Builder framework provides the tools and structure to build and integrate MCP servers, but you are responsible for ensuring the correctness of your server's code, its dependencies, and its configuration.
+
+Red Hat provides and supports the following components:
+
+* The `ansible.mcp_builder` collection, including the common role and its installation framework.
+* The ansible-builder tool for creating execution environments.
+* The {ExecEnvShort} runtime within {PlatformNameShort}.
+
+The following are the customer's responsibility:
+
+* Individual MCP server implementations. Red Hat does not support any specific MCP server, including the reference examples (AWS, Azure, GitHub) provided in the `ansible.mcp_builder` collection. These examples are Dev Preview.
+* Custom MCP roles and collections. Your organization owns the creation, testing, and maintenance of custom roles.
+* MCP server security. Your organization is responsible for evaluating, auditing, and securingm the MCP servers you deploy.
+* MCP server credentials and access controls. Configuring and securing access to external services is your responsibility.
+
+If you encounter issues:
+
+* For problems with ansible-builder, the common role, or the {ExecEnvShort} build process, contact Red Hat support.
+* For problems with a specific MCP server, contact the MCP server vendor or community.
