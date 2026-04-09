@@ -61,9 +61,9 @@ a|
 ** 2 worker nodes in different availability zones (AZs) at t3.xlarge
 | Ansible-core | Ansible-core version {CoreUseVers} or later
 | Browser | A currently supported version of Mozilla Firefox or Google Chrome.
-| AWS RDS PostgreSQL service 
+| AWS RDS PostgreSQL service
 a|
-* engine: "postgres" 
+* engine: "postgres"
 * engine_version: 15"
 * parameter_group_name: "default.postgres15"
 * allocated_storage: 20
@@ -74,6 +74,18 @@ a|
 * multi_az: true
 * backup_retention_period: 5
 * database: must have International Components for Unicode (ICU) support
+
+.Minimum external database requirements
+[IMPORTANT]
+====
+The external database must meet these minimum requirements:
+
+* 4 vCPUs
+* 16 GB RAM
+* `max_connections`: 1024 (minimum). You might need more connections when scaling replicas.
+
+These requirements ensure adequate database performance for the {EnterpriseTopology} workload profile.
+====
 | AWS Memcached Service
 a|
 * engine: "redis"
