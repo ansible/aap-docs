@@ -13,7 +13,6 @@ After completing this procedure, your private repositories are configured as cat
 ** A Personal Access Token (PAT) stored in an OpenShift secret named `secrets-scm`. For more information, see xref:self-service-create-gh-pat_{context}[] or xref:self-service-create-gl-pat_{context}[] and xref:self-service-create-scm-secrets_{context}[].
 ** A GitHub App configured for your organization (GitHub only). For more information, see xref:self-service-create-github-app_{context}[] and xref:self-service-configure-github-app_{context}[].
 * You have administrator access to the {SelfServiceShort} Helm chart configuration.
-* Your repositories contain valid catalog entity files in YAML format.
 
 .Procedure
 
@@ -83,7 +82,8 @@ If repositories fail to sync:
 * If you use a GitHub App, verify the app is installed for the target repositories and the credentials are correctly configured
 * Ensure the authentication secret (`secrets-scm` for PATs, or `github-app-credentials` for GitHub Apps) exists in the same namespace as {SelfServiceShort}
 * Confirm the repository URLs are accessible and correctly formatted
-* Check that catalog entity files in the repository are valid YAML and follow the catalog entity schema
+* For collection discovery, check that repositories contain valid `galaxy.yml` files with collection metadata
+* For other catalog entities, check that entity files are valid YAML and follow the catalog entity schema
 
 [role="_additional-resources"]
 .Additional resources
