@@ -1,0 +1,144 @@
+:_newdoc-version: 2.18.7
+:_template-generated: 2026-04-09
+:_mod-docs-content-type: REFERENCE
+
+[id="ansible-platform-collection-modules_{context}"]
+= Modules in the ansible.platform collection
+
+[role="_abstract"]
+The `ansible.platform` collection provides modules for managing {PlatformNameShort} resources.
+The following tables list the available modules grouped by category.
+
+== Identity and access management
+
+[cols="1,2,1",options="header"]
+|===
+| Module | Description | Supported states
+
+| `organization`
+| Create, update, or delete organizations.
+| present, absent, exists, enforced
+
+| `user`
+| Create, update, or delete users. Configure superuser status and authenticator associations.
+| present, absent, exists, enforced
+
+| `team`
+| Create, update, or delete teams within an organization.
+| present, absent, exists, enforced
+
+| `role_definition`
+| Create, update, or delete custom RBAC role definitions with specific permissions.
+| present, absent, exists, enforced
+
+| `role_user_assignment`
+| Assign roles to users for specific resources or organizations.
+| present, absent, exists
+
+| `role_team_assignment`
+| Assign roles to teams for specific resources or organizations. Supports batch operations with `assignment_objects`.
+| present, absent, exists
+|===
+
+== Authentication
+
+[cols="1,2,1",options="header"]
+|===
+| Module | Description | Supported states
+
+| `authenticator`
+| Configure authentication providers such as LDAP, OIDC, SAML, and GitHub.
+| present, absent, exists, enforced
+
+| `authenticator_map`
+| Define authentication mapping rules to map external groups to {PlatformNameShort} roles, teams, and organizations.
+| present, absent, exists, enforced
+
+| `authenticator_user`
+| Associate users with authentication providers for migration between providers. This module does not support deleting associations.
+| present, exists
+|===
+
+== Gateway infrastructure
+
+[cols="1,2,1",options="header"]
+|===
+| Module | Description | Supported states
+
+| `service`
+| Configure API service routes for {ControllerName}, {HubName}, and {EDAcontroller}.
+| present, absent, exists, enforced
+
+| `route`
+| Configure non-API gateway routes.
+| present, absent, exists, enforced
+
+| `service_cluster`
+| Manage service clusters with health check and outlier detection settings.
+| present, absent, exists, enforced
+
+| `service_node`
+| Add or remove individual service nodes within clusters.
+| present, absent, exists, enforced
+
+| `service_type`
+| Define service type definitions with login and logout paths.
+| present, absent, exists, enforced
+
+| `service_key`
+| Manage service authentication keys for inter-service communication.
+| present, absent, exists, enforced
+
+| `http_port`
+| Configure HTTP listener ports for the Envoy proxy.
+| present, absent, exists, enforced
+
+| `ui_plugin_route`
+| Configure UI plugin routes for front-end plugin integration.
+| present, absent, exists, enforced
+|===
+
+== Platform configuration
+
+[cols="1,2,1",options="header"]
+|===
+| Module | Description | Supported states
+
+| `settings`
+| Modify platform-wide settings including token authentication, JWT configuration, password policies, and session settings. This module has no `state` parameter and always applies changes.
+| N/A (always applies)
+
+| `feature_flag`
+| Query and manage feature flags. Only run-time flags can be modified; install-time flags are read-only.
+| present, absent, exists, enforced
+|===
+
+== Token and certificate management
+
+[cols="1,2,1",options="header"]
+|===
+| Module | Description | Supported states
+
+| `token`
+| Create or delete OAuth2 tokens. Each run creates a new token; this module is not idempotent. The token value is only available at creation time.
+| present, absent
+
+| `ca_certificate`
+| Manage CA certificates for mutual TLS (mTLS) authentication.
+| present, absent, exists
+|===
+
+== Lookup plugin
+
+[cols="1,2",options="header"]
+|===
+| Plugin | Description
+
+| `gateway_api`
+| Query any {Gateway} API endpoint. Supports pagination, filtering, and returning objects or IDs. Use for read-only lookups of users, teams, organizations, settings, and other resources.
+|===
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/content/?showing=module[ansible.platform module documentation on {HubNameStart}]
