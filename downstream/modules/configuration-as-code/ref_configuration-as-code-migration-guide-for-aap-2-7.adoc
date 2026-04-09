@@ -1,0 +1,124 @@
+:_newdoc-version: 2.18.7
+:_template-generated: 2026-04-09
+:_mod-docs-content-type: REFERENCE
+
+[id="configuration-as-code-migration-guide-for-aap-2-7_{context}"]
+= Configuration as Code migration guide for {PlatformNameShort} 2.7
+
+[role="_abstract"]
+If you are upgrading to {PlatformNameShort} 2.7, review the following changes to the `ansible.platform` and `ansible.hub` collections that can affect your existing Configuration as Code playbooks.
+
+== Deprecated parameters
+
+The following parameters are deprecated and scheduled for removal in a future release of {PlatformNameShort}.
+Update your playbooks to use the replacement parameters.
+
+[cols="1,1,1,2",options="header"]
+|===
+| Module | Deprecated parameter | Replacement | Details
+
+| `user`
+| `organizations`
+| `role_user_assignment` module
+| Use the `role_user_assignment` module to assign organization roles to users instead of the `organizations` parameter.
+
+| `user`
+| `is_platform_auditor`
+| `role_user_assignment` module
+| Assign the Platform Auditor role by using the `role_user_assignment` module.
+
+| `user`
+| `authenticators`
+| `associated_authenticators`
+| The `associated_authenticators` parameter accepts a dictionary keyed by authenticator ID with values containing `uid` and `email`.
+
+| `user`
+| `authenticator_uid`
+| `associated_authenticators`
+| Use the `associated_authenticators` parameter instead.
+
+| `role_user_assignment`
+| `object_id`
+| `object_ids`
+| The `object_ids` parameter accepts a list of resource identifiers, enabling batch role assignments in a single task.
+|===
+
+== Removed modules from the ansible.hub collection
+
+{PlatformNameShort} 2.7 removes the following modules from the `ansible.hub` collection.
+Use the `ansible.platform` replacements instead.
+
+[cols="1,1,2",options="header"]
+|===
+| Removed module | Replacement | Action required
+
+| `ansible.hub.ah_user`
+| `ansible.platform.user`
+| Update all playbooks that use `ansible.hub.ah_user` to use `ansible.platform.user`. The `ansible.platform.user` module manages users through the {Gateway} and supports additional parameters such as `associated_authenticators`.
+
+| `ansible.hub.ah_token`
+| `ansible.platform.token`
+| Update all playbooks that use `ansible.hub.ah_token` to use `ansible.platform.token`. Note that the `ansible.platform.token` module is not idempotent; each run creates a new token.
+|===
+
+== New modules
+
+The following modules are new in `ansible.platform` version 2.7:
+
+`feature_flag`:: Query and manage feature flags. Use this module to enable or disable run-time feature flags for your platform.
+
+`ca_certificate`:: Manage CA certificates for mutual TLS (mTLS) authentication between services.
+
+`role_team_assignment`:: Assign roles to teams for specific resources or organizations. Supports batch operations through the `assignment_objects` parameter.
+
+`role_definition`:: Create custom RBAC role definitions with specific permissions scoped to a content type.
+
+`ui_plugin_route`:: Configure UI plugin routes for front-end plugin integration with the {Gateway}.
+
+== New features in existing modules
+
+The following features are available in existing modules:
+
+* *Mutual TLS support*: The `service` and `route` modules support an `enable_mtls` parameter for mutual TLS authentication. The `enable_mtls` and `enable_gateway_auth` parameters are mutually exclusive.
+* *Route timeouts*: The `service`, `route`, and `ui_plugin_route` modules support `request_timeout_seconds` and `idle_timeout_seconds` parameters for per-route timeout configuration.
+* *OIDC User Identity*: The `authenticator` module supports OIDC User Identity configuration for {Gateway}.
+* *Batch role assignments*: The `role_user_assignment` module supports `object_ids` for assigning a role to a user across multiple resources in a single task.
+
+== Example: Update a playbook for 2.7
+
+The following example shows how to update a playbook that uses deprecated parameters.
+
+.Before (2.6)
+[source,yaml]
+----
+- name: Create user with org membership
+  ansible.platform.user:
+    username: "demo-user"
+    organizations:
+      - "Demo-Organization"
+    is_platform_auditor: true
+----
+
+.After (2.7)
+[source,yaml]
+----
+- name: Create user
+  ansible.platform.user:
+    username: "demo-user"
+    state: present
+
+- name: Assign organization role to user
+  ansible.platform.role_user_assignment:
+    user: "demo-user"
+    role_definition: "Organization Member"
+    object_ids:
+      - "Demo-Organization"
+    state: present
+
+- name: Assign Platform Auditor role to user
+  ansible.platform.role_user_assignment:
+    user: "demo-user"
+    role_definition: "Platform Auditor"
+    # object_ids is not required for platform-wide roles
+    state: present
+----
