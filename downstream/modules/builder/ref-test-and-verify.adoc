@@ -1,0 +1,58 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-test-and-verify"]
+
+= Test and verify your MCP server
+
+[role="_abstract"]
+Verify your MCP server configuration by listing registered servers, inspecting the generated JSON manifest, and testing container connectivity with Podman.
+
+.Test your MCP server in the execution environment
+After building the execution environment, verify that your MCP server is correctly installed and functional.
+
+.List MCP servers registered in the manifest
+
+`podman run --rm my-cfn-mcp-ee:latest mcp_manage list`
+
+Expected output:
++
+----
+Available MCP servers:
+  - awslabs.cfn-mcp-server (type: stdio, path: /opt/mcp/bin/awslabs.cfn-mcp-server)
+----
+
+.Verify the manifest file
+
+Inspect the generated manifest directly:
+
+`podman run --rm my-cfn-mcp-ee:latest cat /opt/mcp/mcpservers.json`
+
+Expected output:
++
+----
+{
+    "awslabs.cfn-mcp-server": {
+        "args": [],
+        "command": "/opt/mcp/bin/awslabs.cfn-mcp-server",
+        "description": "AWS CloudFormation MCP Server - manage AWS resources via Cloud Control API",
+        "type": "stdio"
+    }
+}
+----
+
+.Test server connectivity
+
+Run the MCP server with --help to confirm it is callable:
+
+`podman run --rm my-cfn-mcp-ee:latest mcp_manage run awslabs.cfn-mcp-server --help`
+
+For servers that require credentials (such as AWS), pass environment variables:
++
+----
+podman run --rm \
+  -e AWS_PROFILE=my-profile \
+  -e AWS_REGION=us-east-1 \
+  -v ~/.aws:/home/runner/.aws:ro \
+  my-cfn-mcp-ee:latest \
+  mcp_manage run awslabs.cfn-mcp-server
+----

@@ -1,0 +1,65 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-configure-remote-mcp-server"]
+
+= Configure a remote MCP Server
+
+[role="_abstract"]
+If you need to bypass local installation and dynamically choose your deployment mode at build time, configure your role to reference a remote MCP server over HTTP.
+
+.Add a remote server to your role
+To define a remote MCP server, set the type to http in your registry metadata:
+
+----
+# roles/cfn_mcp/defaults/main.yml (remote mode example)
+---
+cfn_mcp_registry:
+  - name: "awslabs.cfn-mcp-server"
+    type: "http"
+    lang: "pypi"
+    path: "https://my-mcp-host.example.com:8443/cfn"
+    args: []
+    description: "Remote AWS CloudFormation MCP Server"
+
+cfn_mcp_version: "latest"
+----
+
+When type is http, the framework skips installation and only registers the server in the manifest with its URL.
+
+.Support both modes
+The GitHub MCP role in `ansible.mcp_builder` demonstrates a pattern for supporting both embedded and remote modes. You can adopt this pattern by:
+
+. Creating a `vars/remote.yml` file with the remote registry definition.
+. Loading it conditionally in your tasks:
++
+----
+# roles/cfn_mcp/tasks/main.yml
+---
+- name: Override registry for remote mode
+  ansible.builtin.include_vars:
+    file: remote.yml
+  when: cfn_mcp_mode | default('local') == 'remote'
+
+- name: Include install manager tasks
+  ansible.builtin.include_role:
+    name: ansible.mcp_builder.common
+    tasks_from: install_manager
+
+- name: Update MCP servers manifest
+  ansible.builtin.include_role:
+    name: ansible.mcp_builder.common
+    tasks_from: generate_manifest
+----
+
+. You can then select the mode when building the execution environment:
++
+----
+additional_build_steps:
+  append_final: |
+    RUN ansible-playbook myorg.mcp_cfn.install_cfn_mcp -e cfn_mcp_mode=remote
+----
+
+
+
+
+ 
