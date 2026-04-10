@@ -13,11 +13,11 @@ Common causes of build failures include:
 |====
 | Error | Reason
 | Unable to find collection artifact file a| This error occurs when the collection tarball path in `requirements.yml` does not match the path inside the container. Ensure that:
-* The tarball is listed in `additional_build_files`` with a dest value.
+* The tarball is listed in `additional_build_files` with a dest value.
 * The source path in
 `requirements.yml` uses `/build/
 configs/<filename>` (not the host filesystem path).
-| Package download fails during build | The {ExecEnvShory} build environment requires network access to download packages from
+| Package download fails during build | The {ExecEnvShort} build environment requires network access to download packages from
 PyPI, npm, or Git repositories. If building behind a
 proxy, configure proxy settings in your container build
 environment. If building in an air-gapped environment,
@@ -59,8 +59,7 @@ If your server fails due to missing or invalid variables, check the following:
 +
 |====
 | Error | Reason
-| Missing registry variables | The common role expects a registry variable named `<role_name>_registry`. Ensure your `defaults/main.yml` follows the naming convention. For a role named `x defaults/
-main.yml`, the variable must be `cfn_mcp_registry`.
+| Missing registry variables | The common role expects a registry variable named `<role_name>_registry`. Ensure your `defaults/main.yml` follows the naming convention. For a role named `cfn_mcp`, the variable in `defaults/main.yml` must be `cfn_mcp_registry`.
 | Invalid language type | The lang field in the registry must be one of: pypi, npm, or go. Any other value causes the install manager
 to skip installation. 
 |====
@@ -78,7 +77,7 @@ The following are the customer's responsibility:
 
 * Individual MCP server implementations. Red Hat does not support any specific MCP server, including the reference examples (AWS, Azure, GitHub) provided in the `ansible.mcp_builder` collection. These examples are Dev Preview.
 * Custom MCP roles and collections. Your organization owns the creation, testing, and maintenance of custom roles.
-* MCP server security. Your organization is responsible for evaluating, auditing, and securingm the MCP servers you deploy.
+* MCP server security. Your organization is responsible for evaluating, auditing, and securing the MCP servers you deploy.
 * MCP server credentials and access controls. Configuring and securing access to external services is your responsibility.
 
 If you encounter issues:
