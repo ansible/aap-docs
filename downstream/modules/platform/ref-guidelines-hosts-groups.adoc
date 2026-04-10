@@ -16,7 +16,7 @@ Follow these configuration guidelines to properly set up databases, {HubName}, {
 When using an external database with {PlatformNameShort}, you must create and maintain that database.
 Ensure that you clear your external database when uninstalling the {PlatformNameShort}.
 ====
-
++
 == {HubNameStart}
 * If there is an `[automationhub]` group, you must include the variables `automationhub_pg_host` and `automationhub_pg_port`.
 * Add {HubNameMain} information in the `[automationhub]` group.
@@ -26,7 +26,7 @@ Ensure that you clear your external database when uninstalling the {PlatformName
 The FQDN must not contain the `_` symbol, as it will not be processed correctly in Skopeo. You can use the `-` symbol provided that it is not at the start or the end of the hostname.
 +
 Do not use `localhost`.
-
++
 == {PrivateHubNameStart}
 * Do not install {PrivateHubName} and {ControllerName} on the same node.
 * You can use the same PostgreSQL (database) instance, but they must use a different (database) name.
@@ -37,7 +37,7 @@ Do not use `localhost`.
 You must separate the installation of {ControllerName} and {HubNameMain} because the `[database]` group does not distinguish between the two if both are installed at the same time.
 If you use one value in `[database]` and both {ControllerName} and {HubNameMain} define it, they would use the same database.
 ====
-
++
 == {ControllerNameStart}
 * {ControllerNameStart} does not configure replication or failover for the database that it uses.
 * {ControllerNameStart} works with any replication that you have.
