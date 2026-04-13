@@ -8,6 +8,7 @@
 Follow these configuration guidelines to properly set up databases, {HubName}, {ControllerName}, {EDAcontroller}, and {Gateway} hosts for reliable {PlatformNameShort} installations.
 
 *Databases*
+
 * The `[database]` group in your inventory file defines the {PlatformNameShort} managed database. When using an externally managed database, do not include the `[database]` group in your inventory file.
 * To improve performance, do not colocate the database and the {ControllerName} on the same server.
 +
@@ -18,6 +19,7 @@ Ensure that you clear your external database when uninstalling the {PlatformName
 ====
 
 *{HubNameStart}*
+
 * If there is an `[automationhub]` group, you must include the variables `automationhub_pg_host` and `automationhub_pg_port`.
 * Add {HubNameMain} information in the `[automationhub]` group.
 * Do not install {HubNameMain} and {ControllerName} on the same node.
@@ -27,7 +29,9 @@ The FQDN must not contain the `_` symbol, as it will not be processed correctly 
 
 Do not use `localhost`.
 
+
 *{PrivateHubNameStart}*
+
 * Do not install {PrivateHubName} and {ControllerName} on the same node.
 * You can use the same PostgreSQL (database) instance, but they must use a different (database) name.
 * If you install {PrivateHubName} from an internal address, and have a certificate that only encompasses the external address, it can result in an installation you cannot use as a container registry without certificate issues.
@@ -39,17 +43,21 @@ If you use one value in `[database]` and both {ControllerName} and {HubNameMain}
 ====
 
 *{ControllerNameStart}*
+
 * {ControllerNameStart} does not configure replication or failover for the database that it uses.
 * {ControllerNameStart} works with any replication that you have.
 
 *{EDAName}*
+
 * For RPM installations: {EDAName} must be installed on a separate server and cannot be installed on the same host as {HubName} and {ControllerName}.
 * For containerized installations: {EDAName} is co-located with all other {PlatformNameShort} components in the growth topolgy. In the enterprise topology, {EDAName} runs on separate dedicated nodes. 
 
 *{GatewayStart}*
+
 * The {Gateway} is the service that handles authentication and authorization for {PlatformNameShort}. It provides a single entry into the platform and serves the platform’s user interface.
 
 *Clustered installations*
+
 * When upgrading an existing cluster, you can also reconfigure your cluster to omit existing instances or instance groups. 
 Omitting the instance or the instance group from the inventory file is not enough to remove them from the cluster. 
 In addition to omitting instances or instance groups from the inventory file, you must also deprovision instances or instance groups before starting the upgrade.
