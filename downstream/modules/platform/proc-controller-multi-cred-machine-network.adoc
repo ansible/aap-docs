@@ -1,0 +1,58 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-controller-multi-cred-machine-network"]
+
+= Using Machine and Network credentials together
+
+[role="_abstract"]                                                            
+You can assign both Machine and Network credentials to a single job template to manage network devices that require multi-hop SSH access, such as connecting through a jumphost.
+                                                                                
+When you assign multiple credential types to a job template, {ControllerName} injects each credential into the job environment differently:
+                                                                                
+* *Machine credentials* set the SSH username, password, and key used by Ansible to connect to hosts. These values are passed through the `ansible -u` flag and SSH authentication.                                                  
+* *Network credentials* set the `ANSIBLE_NET_USERNAME` and `ANSIBLE_NET_PASSWORD` environment variables, which Ansible networking modules use to authenticate to network devices.
+                                                                                
+[IMPORTANT]                                                                   
+====
+The credential type must match the connection type used by the network device:
+                                                                                
+* For `local` connections using `provider`, use the *Network* credential type.
+* For `httpapi`, `netconf`, and `network_cli` connections, use the *Machine* credential type, not the Network credential type.                             
+                  
+For more information, see                                                   xref:ref-controller-multiple-connection-protocols[Multiple communication protocols].                                                                   
+====            
+
+.Prerequisites                                                                
+   
+* You have created a Machine credential for the jumphost or bastion host.     
+* You have created a Network credential for the target network device (if using `local` connection with `provider`), or a second Machine credential (if using `network_cli`, `netconf`, or `httpapi`).
+* Your inventory is configured with appropriate connection variables, such as `ansible_ssh_common_args` for ProxyCommand settings.                          
+   
+.Procedure                                                                    
+                  
+. From the navigation panel, select {MenuAETemplates}.                        
+. Create or edit a job template.
+. In the *Credentials* field, select the image:examine.png[examine,15,15]     
+  icon.                                                                         
+. Add the Machine credential for the jumphost.                                
+. Add the Network credential for the network device (or a second Machine credential, depending on your connection type).                               
+. Configure your inventory or playbook variables with the appropriate SSH proxy settings. For example, to use a jumphost with ProxyCommand:             
++               
+[literal, options="nowrap" subs="+attributes"]                                
+----                                                                          
+ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q user@gateway.example.com"'                                                    
+----                                                                          
++                                                                             
+. Click btn:[Save] and then btn:[Launch template].
+                                                                                
+.Verification                                                                 
+                                                                                
+Review the job output to confirm that both credentials were injected and the playbook successfully authenticated to the target network devices through the jumphost.                                                                    
+                  
+                  
+.Additional resources
+
+* xref:ref-controller-credential-machine[Machine credential type]             
+* xref:ref-controller-credential-network[Network credential type]
+* xref:ref-controller-access-network-creds-playbook[Access network credentials in an Ansible playbook]                                                      
+   
