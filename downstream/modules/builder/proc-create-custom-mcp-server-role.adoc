@@ -42,7 +42,7 @@ collections/ansible_collections/myorg/mcp_cfn/
 ---
 namespace: myorg
 name: mcp_cfn
-version: 1.0.0
+version: 0.7.2
 readme: README.md
 authors:
   - Your Name
@@ -53,7 +53,7 @@ tags:
   - aws
   - cloudformation
 dependencies:
-  ansible.mcp_builder: ">=1.0.0"
+  ansible.mcp_builder: ">=0.7.2"
 ----
 The dependencies field ensures that the `ansible.mcp_builder` collection is installed alongside your collection.
 +
@@ -70,7 +70,7 @@ cfn_mcp_registry:
     description: "AWS CloudFormation MCP Server - manage AWS resources via
 Cloud Control API"
 
-cfn_mcp_version: "latest"
+cfn_mcp_version: "0.7.2"
 ----
 +
 The registry variable must follow the naming convention `<role_name>_registry`. The fields are:
@@ -205,4 +205,4 @@ The built-in `ansible.mcp_builder.install_mcp` playbook only supports roles with
 `cd collections/ansible_collections/myorg/mcp_cfn`
 `ansible-galaxy collection build --output-path /path/to/output/`
 +
-This produces a file like `myorg-mcp_cfn-1.0.0.tar.gz`.
+This produces a file like `myorg-mcp_cfn-0.7.2.tar.gz`.
