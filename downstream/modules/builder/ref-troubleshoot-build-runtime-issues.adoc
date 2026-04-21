@@ -9,7 +9,7 @@ Diagnose and resolve common issues encountered when building, configuring, and i
 
 .Build failures
 Common causes of build failures include:
-+
+
 |====
 | Error | Reason
 | Unable to find collection artifact file a| This error occurs when the collection tarball path in `requirements.yml` does not match the path inside the container. Ensure that:
@@ -30,7 +30,7 @@ repository and runs go mod download before building.
 
 .Runtime failures
 If your MCP server builds successfully but encounters errors at runtime, consider the following troubleshooting steps:
-+
+
 |====
 | Error | Reason
 | mcp_manage : command not found | The mcp_manage script is installed at /opt/mcp/mcp_manage with a symlink at /usr/local/bin/mcp_manage. If it is missing, the common role's generate_management task might have been skipped.
@@ -56,7 +56,7 @@ Ensure your playbook includes `ansible.mcp_builder.common` with
 
 .Variable validation errors
 If your server fails due to missing or invalid variables, check the following:
-+
+
 |====
 | Error | Reason
 | Missing registry variables | The common role expects a registry variable named `<role_name>_registry`. Ensure your `defaults/main.yml` follows the naming convention. For a role named `cfn_mcp`, the variable in `defaults/main.yml` must be `cfn_mcp_registry`.
