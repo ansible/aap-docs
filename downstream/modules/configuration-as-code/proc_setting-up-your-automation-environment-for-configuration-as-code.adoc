@@ -8,6 +8,16 @@
 [role="_abstract"]
 Configuration as Code is a way of working where you define and manage the configuration of the {PlatformNameShort} itself using the version-controlled configuration files (such as YAML, or JSON), instead of clicking through the web UI.
 
+[IMPORTANT]
+====
+Direct API access to individual service components ({ControllerName}, {HubName}, and {EDAName}) is not supported.
+All CasC playbooks must authenticate through {Gateway}.
+If you previously used {ControllerName} Personal Access Tokens (PATs), replace them with {Gateway} tokens.
+Ensure that the `aap_hostname` variable in your playbooks points to your {Gateway} URL.
+
+For more information about creating tokens, see link:{URLCentralAuth}/gw-token-based-authentication#proc-controller-apps-create-tokens[Adding tokens] in _{TitleCentralAuth}_.
+====
+
 As an Ansible content developer, you can use the Configuration as Code approach to apply settings on your {ControllerName} to get the following benefits:
 
 * Predictable job behavior
@@ -21,7 +31,8 @@ As an Ansible content developer, you can use the Configuration as Code approach 
 
 * You have a Git account.
 * Your {Gateway} instance is accessible.
-* You built and registered your own {ExecEnvShort}. Alternatively, you have available the supported {ExecEnvShort} to run playbooks that use the `ansible.platform` collection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/creating_and_using_execution_environments/index[Creating and using execution environments].
+* You have a valid {Gateway} token or user credentials for {Gateway} authentication. Legacy {ControllerName} PATs are not supported.
+* You built and registered your own {ExecEnvShort}. Alternatively, you have available the supported {ExecEnvShort} to run playbooks that use the `ansible.platform` collection. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/{PlatformVers}/html/creating_and_using_execution_environments/index[Creating and using execution environments].
 
 
 .Procedure
@@ -76,12 +87,29 @@ user_password: "3ncrypt3d_P@$$word"
 # Role names as they exist in your {PlatformNameShort}
 role_for_team_in_org: "Organization Inventory Admin" # "Executor"
 role_for_user_in_org: "Organization Auditor"
-role_for_user_in_team: "Auditor" # if your platform supports team-scoped roles
 
 # Custom role definition details
 custom_role_name: "NetOps ReadOnly"
 custom_role_description: "Read-only access to network objects"
 ----
++
+[NOTE]
+====
+The `aap_hostname` variable must point to your {Gateway} URL, not to individual service endpoints such as {ControllerName} or {HubName}.
+The `aap_username` and `aap_password` variables are your {Gateway} credentials.
+
+Alternatively, you can authenticate by using a {Gateway} OAuth 2 token instead of a username and password.
+Replace the `aap_username` and `aap_password` variables with `aap_token`:
+
+[literal,source,yaml,subs="attributes+"]
+----
+aap_hostname: "<GATEWAY>"
+aap_token: "<GATEWAY_OAUTH2_TOKEN>"
+aap_validate_certs: false
+----
+
+For more information about creating tokens, see link:{URLCentralAuth}/gw-token-based-authentication#proc-controller-apps-create-tokens[Adding tokens] in _{TitleCentralAuth}_.
+====
 
 
 . Compose the `/my_ansible_project/RBAC_settings.yml` playbook, which creates RBAC objects and assigns roles to those objects:
@@ -165,6 +193,8 @@ custom_role_description: "Read-only access to network objects"
         aap_validate_certs: "{{ aap_validate_certs }}"
 ....
 +
+If you are using token-based authentication, replace the `aap_username` and `aap_password` parameters with `aap_token` in each task.
++
 Many values in this playbook are provided in the form of variables, such as object names, their details, {PlatformNameShort} credentials. You can easily reuse the variables throughout files in your Ansible project, which will also simplify the creation and maintenance of the project and reduce the number of errors.
 +
 Refer to the `all.yml` file to see the expanded values of those variables. For details about the module parameters, default values, and further examples how to use the modules, see the resources on {HubNameStart} for the link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/content/?showing=module[ansible.platform] collection.
@@ -172,7 +202,7 @@ Refer to the `all.yml` file to see the expanded values of those variables. For d
 
 . Push the variables and the playbook to your Git repository so that the {ControllerName} can later read in the correct data.
 +
-[subs="+quotes",subs="attributes+"]
+[subs="+quotes,attributes+"]
 ....
 git add .
 git commit -m "Provide variables and RBAC_settings.yml playbook resources for {PlatformNameShort} project"
@@ -220,35 +250,24 @@ image::cac-create-job-template.png[Create job template]
 +
 [listing,options="nowrap"]
 ....
-Vault password: 
-[WARNING]: Collection ansible.platform does not support Ansible version 2.15.13
+Vault password:
 
-PLAY [Create organization] *****************************************************
+PLAY [Create RBAC objects and assign roles to them] ****************************
 
 TASK [Ensure new organization exists] ******************************************
 changed: [localhost]
 
-PLAY [Create team] *************************************************************
-
 TASK [Ensure new team exists in organization] **********************************
 changed: [localhost]
-
-PLAY [Create user] *************************************************************
 
 TASK [Ensure new user exists] **************************************************
 changed: [localhost]
 
-PLAY [Create custom role] ******************************************************
-
 TASK [Ensure new custom role exists] *******************************************
 changed: [localhost]
 
-PLAY [Team gets role] **********************************************************
-
 TASK [Assign already existing role to team in organization] ********************
 changed: [localhost]
-
-PLAY [User gets role] **********************************************************
 
 TASK [Assign already existing role to user in organization] ********************
 changed: [localhost]
@@ -285,3 +304,11 @@ image::cac-user-exists.png[User with assigned role exists]
 * Check that you see your created custom role, which was assigned the permissions as specified in your `RBAC_settings.yml` playbook:
 +
 image::cac-custom-role-exists.png[Custom role with assigned permissions exists]
+
+[role="_additional-resources"]
+.Additional resources
+
+* link:{URLCentralAuth}/gw-token-based-authentication#proc-controller-apps-create-tokens[Adding tokens] in _{TitleCentralAuth}_ for creating OAuth 2 tokens through the {Gateway} UI.
+* link:{URLCentralAuth}/gw-token-based-authentication#ref-controller-create-oauth2-token[create_oauth2_token] in _{TitleCentralAuth}_ for creating tokens from the command line.
+* link:https://console.redhat.com/ansible/automation-hub/repo/published/ansible/platform/content/?showing=module[ansible.platform] collection on {HubNameStart} for module reference documentation.
+* The `ansible.platform` collection replaces the service-specific `ansible.controller`, `ansible.hub`, and `ansible.eda` collections. For more information, see link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/release_notes/aap-2.6-deprecated-features[Deprecated features] in the _Release Notes_ for {PlatformNameShort} 2.6.
