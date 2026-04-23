@@ -1,0 +1,143 @@
+:_newdoc-version: 2.18.5
+:_template-generated: 2025-11-20
+:_mod-docs-content-type: REFERENCE
+
+[id="handling-rbac-assignment-process-for-different-scenarios_{context}"]
+= Handle RBAC roles assignment process for different scenarios
+
+[role="_abstract"]
+Most of Role-Based Access Control (RBAC) settings follow a unified and centralized approach using the `ansible.platform` collection. However, specific configurations, such as assigning RBAC roles related to individual components still requires using separate, component-specific collections. To improve the user experience, the `role_team_assignment` module mitigates this gap by clarifying how role assignment must be handled depending on your configuration needs.
+
+To assign roles related to individual components, ensure you use the appropriate collection for that component:
+
+* For {ControllerNameStart} roles, use the `ansible.controller` collection. For example, use this collection if you need to assign the _Inventory Use_ role for a specific inventory to a specific team.
+* For {HubNameStart} roles, use the `ansible.hub` collection. For example, use this collection if you need to assign a role for a specific collection namespace to a specific team.
+* For {EDAName} roles, use the `ansible.eda` collection. For example, use this collection if you need to assign a role for a specific rulebook activation to a specific team.
+
+The `role_team_assignment` module focuses on assigning roles to teams and organizations. The module itself has limitations regarding which roles can be assigned to teams. You cannot assign roles such as _Platform Auditor_ or _Organization Member_ to teams. Also, once roles are assigned using this module, you cannot edit them; they can only be deleted. The following scenarios confirm the boundaries of this module and highlight the continuing fragmentation of role management.
+
+
+Successful scenario - Assigning Organization Inventory Admin role to a team::
+
+The `role_team_assignment` module requires the role definition (the name of the role) and the assignment objects (the resource name and type).
++
+You can assign a resource-scoped organization role, for example, _Organization Inventory Admin_, to teams. This assigns all permissions associated with inventories within a specific organization to the target team as shown in the example playbook below:
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Assign Organization Inventory Admin role to a team
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
+  tasks:
+    - name: Assign Organization Inventory Admin role
+      ansible.platform.role_team_assignment:
+        assignment_objects:
+          - name: "example-organization"
+            type: "organizations"
+        role_definition: Organization Inventory Admin
+        team: "example-team"
+        state: "present"
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
+....
+
+
+Successful scenario - Assigning Team Admin role to another team::
+
+You can assign the _Team Admin_ role to another team. This confirms that the role allows management of a single team and inherits all existing role assignments associated with that team, as shown in the example playbook below:
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Assign Team Admin role to a team
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
+  tasks:
+    - name: Assign Team Admin role
+      ansible.platform.role_team_assignment:
+        assignment_objects:
+          - name: "example-organization"
+            type: "organizations"
+        role_definition: Team Admin
+        team: "example-team"
+        state: "present"
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
+....
+
+
+Failed scenario - Assigning Platform Auditor role to a team::
+
+This scenario demonstrates a key technical limitation of the centralized module, specifically prohibiting the assignment of roles that span multiple components.
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Assign Platform Auditor role to a team
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
+  tasks:
+    - name: Get the organization details
+      ansible.platform.role_team_assignment:
+        assignment_objects:
+          - name: "example-organization"
+            type: "organizations"
+        role_definition: Platform Auditor
+        team: "example-team"
+        state: "present"
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
+....
++
+The assignment fails with an error. The system restricts this action because _Platform Auditor_ contains permissions for services outside of the generic galaxy service, including {EDAName} and {ControllerNameStart}, which currently prevents team assignment.
+
+
+Failed scenario - Assigning Organization Member role to a team::
+
+This scenario outlines a specific prohibition against assigning organizational membership status.
++
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Assign Organization Member role to a team
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "<aap_hostname>"
+    aap_username: "<aap_username>"
+    aap_password: "<aap_password>"
+  tasks:
+    - name: Get the organization details
+      ansible.platform.role_team_assignment:
+        assignment_objects:
+          - name: "example-organization"
+            type: "organizations"
+        role_definition: Organization Member
+        team: "example-team"
+        state: "present"
+        aap_hostname: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        aap_validate_certs: false
+....
++
+The assignment fails with a message stating: “Assigning organization member permission to teams is not allowed”.
