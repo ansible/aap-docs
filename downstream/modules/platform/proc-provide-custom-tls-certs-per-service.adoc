@@ -51,3 +51,35 @@ receptor_tls_key=<path_to_tls_key>
 redis_tls_cert=<path_to_tls_certificate>
 redis_tls_key=<path_to_tls_key>
 ----
+
+If all components share the same fully qualified domain name (FQDN), use the same certificate and key for each service:
+
+[source,yaml]
+----
+gateway_tls_cert=/home/user/certs/myhost.example.com.crt
+gateway_tls_key=/home/user/certs/myhost.example.com.key
+controller_tls_cert=/home/user/certs/myhost.example.com.crt
+controller_tls_key=/home/user/certs/myhost.example.com.key
+hub_tls_cert=/home/user/certs/myhost.example.com.crt
+hub_tls_key=/home/user/certs/myhost.example.com.key
+eda_tls_cert=/home/user/certs/myhost.example.com.crt
+eda_tls_key=/home/user/certs/myhost.example.com.key
+postgresql_tls_cert=/home/user/certs/myhost.example.com.crt
+postgresql_tls_key=/home/user/certs/myhost.example.com.key
+----
+
+If components are deployed on separate hosts with different FQDNs, provide a unique certificate for each service:
+
+[source,yaml]
+----
+gateway_tls_cert=/home/user/certs/gateway.example.com.crt
+gateway_tls_key=/home/user/certs/gateway.example.com.key
+controller_tls_cert=/home/user/certs/controller.example.com.crt
+controller_tls_key=/home/user/certs/controller.example.com.key
+hub_tls_cert=/home/user/certs/hub.example.com.crt
+hub_tls_key=/home/user/certs/hub.example.com.key
+eda_tls_cert=/home/user/certs/eda.example.com.crt
+eda_tls_key=/home/user/certs/eda.example.com.key
+postgresql_tls_cert=/home/user/certs/postgresql.example.com.crt
+postgresql_tls_key=/home/user/certs/postgresql.example.com.key
+----
