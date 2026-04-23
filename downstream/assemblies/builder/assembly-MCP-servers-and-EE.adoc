@@ -9,14 +9,14 @@ A _Model Context Protocol_ (MCP) Server is an external service that acts as a ga
 
 An MCP eliminates the need for custom integrations by providing a universal "language" for AI models to access and interact with real-world systems, data, and tools.
 
-The MCP operates using a client-server architecture:
+The MCP operates using a client/server architecture:
 
 [cols="a,a,a", options="header"]
 |===
 | Component | Role | Description
-| MCP Host | The application environment | This is where the user interacts with the AI, such as an AI-powered IDE like VS Code or a chatbot interface.
+| MCP Host | The application environment | This is where the user interacts with the AI, such as an AI-powered IDE like Visual Studio Code or a chatbot interface.
 | MCP Client | Connection manager | A component within the Host that translates LLM requests into the MCP format.
-| MCP Server | Resource provider | An external service that connects to underlying systems like databases or APIs.
+| MCP Server | Resource provider | An external service that connects to underlying systems such as databases or APIs.
 |===
 
 By using this standardized protocol, any LLM that implements the MCP Client can use any MCP Server.

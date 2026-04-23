@@ -5,14 +5,14 @@
 = Evaluate MCP servers before installation
 
 [role="_abstract"]
-To protect your execution environment from vulnerabilities, evaluate MCP servers before installation by auditing code, pinning versions, enforcing read-only modes, and verifying permissions.
+To protect your execution environment from vulnerabilities, evaluate _Model Context Protocol_ (MCP) servers before installation by auditing code, pinning versions, enforcing read-only modes, and verifying permissions.
 
 Before including an MCP server in your execution environment:
 
-* *Review the source code*: MCP servers can execute arbitrary operations on your infrastructure. Audit the server code before installing, especially for servers from community or third-party sources.
+* *Review the source code*: MCP servers can run arbitrary operations on your infrastructure. Audit the server code before installing, especially for servers from community or third-party sources.
 * *Pin to specific versions*: Use explicit version numbers in your registry metadata rather than latest:
 +
-`cfn_mcp_version: "0.7.2"`
+`cfn_mcp_version: "1.0.1.9"`
 +
 This ensures reproducible builds and prevents unexpected behavior from upstream changes.
 
@@ -22,7 +22,7 @@ This ensures reproducible builds and prevents unexpected behavior from upstream 
   cfn_mcp_registry:
     - name: "awslabs.cfn-mcp-server"
       type: "stdio"
-      lang: "pypi"
+      lang: "pyoi"
       args: ["--readonly"]
       description: "AWS CloudFormation MCP Server (read-only)"
 ----
