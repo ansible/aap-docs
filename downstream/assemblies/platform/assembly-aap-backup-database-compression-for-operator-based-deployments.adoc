@@ -9,15 +9,14 @@ ifdef::context[:parent-context: {context}]
 :context: backup-database-compression-for-operator-based-deployments
 
 [role="_abstract"]
-As a platform administrator, you can implement advanced configurations to customize {PlatformNameShort}, including database connections, logging, caching, and gRPC server parameters.
 
-include::platform/con-settings-py.adoc[leveloffset=+1]
+{PlatformNameShort} {PlatformVers} supports database compression for operator-based backup operations. You can enable or disable compression globally or per component to optimize backup size and performance.
 
-// include::platform/con-grpc-settings-py.adoc[leveloffset=+1]
+When you enable database compression, the operator compresses the PostgreSQL database dump for each component. This reduces the overall backup size but increases CPU usage during the backup process.
 
-// include::platform/con-loading-impacts-grpc-settings.adoc[leveloffset=+2]
+include::platform/ref-backup-compression-configuration-parameters.adoc[leveloffset=+1]
 
-// include::platform/con-loading-order-grpc-settings.adoc[leveloffset=+1]
+include::platform/proc-configure-backup-compression.adoc[leveloffset=+1]
 
 ifdef::parent-context[:context: {parent-context}]
 ifndef::parent-context[:!context:]

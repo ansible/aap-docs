@@ -1,0 +1,36 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-backup-compression-configuration-parameters"]
+
+= Backup compression configuration parameters
+
+[role="_abstract"]
+
+Use these compression parameters to configure the `AnsibleAutomationPlatformBackup` custom resource:
+
+[cols="a,a,a"]
+|===
+| Parameter | Description | Default
+
+| `spec.use_db_compression`
+| Enables or disables database dump compression for all components globally.
+| `True`
+
+| `spec.gateway.use_db_compression`
+| Overrides the global compression setting for the {Gateway}.
+| Value of `spec.use_db_compression`
+
+| `spec.controller.use_db_compression`
+| Overrides the global compression setting for {ControllerName}.
+| Value of `spec.use_db_compression`
+
+| `spec.hub.use_db_compression`
+| Overrides the global compression setting for {HubName}.
+| Value of `spec.use_db_compression`
+
+| `spec.eda.use_db_compression`
+| Overrides the global compression setting for {EDAName}.
+| Value of `spec.use_db_compression`
+|===
+
+When you set a per-component parameter, it overrides the global `spec.use_db_compression` value for that component only.
