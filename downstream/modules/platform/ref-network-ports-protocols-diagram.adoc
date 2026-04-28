@@ -14,36 +14,29 @@ Hop nodes are an option for connecting control and execution nodes.
 Hop nodes use minimal CPU and memory, so vertically scaling hop nodes does not impact system capacity.
 ====
 
-*RPM based installations*
-
-[NOTE]
-====
-The following diagram shows client initiated connections between {PlatformNameShort} components.
-Direct connections shown in the diagram between the Client and {HubName}, {EDAName}, and {ControllerName} only apply when systems are upgraded from {PlatformName} 2.4 to {PlatformName} {PlatformVers}.
-This provides backward compatibility.
-====
-
-**{PlatformNameShort} Client initiated network ports and protocols**
-
-image::network_client_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
-
-[NOTE]
-====
-The following diagram shows internally initiated connections between {PlatformNameShort} components for new installs {PlatformName} {PlatformVers}.
-====
-
-**{PlatformNameShort} Internally initiated network ports and protocols**
-
-image::network_internally_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
-
-
 *Container-based installations*
 
 [NOTE]
 ====
-The following diagram shows connections between {PlatformNameShort} components for a container-based installation {PlatformName} {PlatformVers}.
+The following diagram shows connections between {PlatformNameShort} components. All external client traffic is routed through {Gateway}. Direct external access to {HubName}, {EDAName}, and {ControllerName} is not available.
 ====
 
-**Containerized {PlatformNameShort} network ports and protocols**
+**{PlatformNameShort} network ports and protocols**
 
 image::Container-network_internally_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used in a container-based installation.]
+
+
+*RPM-based installations (deprecated)*
+
+[NOTE]
+====
+The following diagrams applied to RPM-based installations in {PlatformNameShort} 2.6 and earlier. RPM-based installation is removed in {PlatformNameShort} 2.7. In {PlatformNameShort} 2.7, all external client traffic is routed through {Gateway}. Direct external access to {HubName}, {EDAName}, and {ControllerName} is no longer available.
+====
+
+**{PlatformNameShort} Client initiated network ports and protocols (deprecated)**
+
+image::network_client_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
+
+**{PlatformNameShort} Internally initiated network ports and protocols (deprecated)**
+
+image::network_internally_initiated.png[Interaction of {PlatformNameShort} components on the network with information about the ports and protocols that are used.]
