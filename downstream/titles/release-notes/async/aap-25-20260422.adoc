@@ -1,0 +1,174 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-25-20260422]]
+
+= {PlatformNameShort} patch release April 22, 2026
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| April 22, 2026 
+a|
+
+* {ControllerNameStart} 4.6.28
+* {HubNameStart} 4.10.14
+* {EDAName} 1.1.18
+* Container-based installer {PlatformNameShort} (bundle) 2.5-23.1
+* Container-based installer {PlatformNameShort} (online) 2.5-23.1
+* Receptor 1.6.4
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-22.1
+* RPM-based installer {PlatformNameShort} (online) 2.5-22
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: 
+* Cluster-scoped bundle: 
+
+
+== Overview
+
+This {PlatformNameShort} 2.5.20260422 async release includes a small set of product improvements (including Automation Hub PQC signature verification), a deprecation notice related to operator migration secrets, multiple security fixes (CVEs) across several AAP components, and bug fixes focused on stability, performance, and UI responsiveness.
+
+
+== Enhancements
+
+
+=== {HubNameStart}
+
+
+* Added PCQ signature support so Automation Hub now supports Execution Environments with PQC signatures.(AAP-71607)
+
+
+
+== Deprecated
+
+=== {HubNameStart}
+
+
+* The `old_postgres_configuration_secret` has been deprecated for automation controller and {EDAName}; the `postgres_migrant_configuration_secret` has been deprecated for {HubName}.(AAP-68844)
+
+
+== CVE
+
+=== {PlatformNameShort} UI
+
+* link:https://access.redhat.com/security/cve/cve-2026-27606[CVE-2026-27606] - Rollup: Remote Code Execution via Path Traversal Vulnerability in:
+** `automation-platform-ui` for {PlatformNameShort} 2.6.(AAP-66534)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69873[CVE-2025-69873] - ReDoS via $`data` reference in:
+** `automation-platform-ui` for {PlatformNameShort} 2.6.(AAP-65710)
+
+=== {GatewayStart}
+
+* link:https://access.redhat.com/security/cve/cve-2026-32597[CVE-2026-32597] - PyJWT accepts unknown `crit` header extensions (RFC 7515 §4.1.11 MUST violation) in:
+** `automation-gateway` for {PlatformNameShort} 2.6.(AAP-69180)
+
+=== {ControllerNameStart}
+
+* link:https://access.redhat.com/security/cve/cve-2026-32597[CVE-2026-32597] - PyJWT accepts unknown `crit` header extensions (RFC 7515 §4.1.11 MUST violation) in:
+** `automation-controller` for {PlatformNameShort} 2.6.(AAP-68396)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69534[CVE-2025-69534] - Denial of service via malformed HTML-like sequences in:
+** `automation-controller` for {PlatformNameShort} 2.6.(AAP-67443)
+
+* link:https://access.redhat.com/security/cve/cve-2026-26007[CVE-2026-26007] - cryptography subgroup attack due to missing subgroup validation for SECT curves in:
+** `automation-controller` for {PlatformNameShort} 2.6.(AAP-65404)
+
+=== {HubNameStart}
+
+* link:https://access.redhat.com/security/cve/cve-2026-32597[CVE-2026-32597] - PyJWT accepts unknown `crit` header extensions (RFC 7515 §4.1.11 MUST violation) in:
+** `automation-hub` for {PlatformNameShort} 2.6.(AAP-72079)
+
+* link:https://access.redhat.com/security/cve/cve-2026-32274[CVE-2026-32274] - Black: arbitrary file writes from unsanitized user input in cache file name in:
+** `automation-hub` for {PlatformNameShort} 2.6.(AAP-72069)
+
+* link:https://access.redhat.com/security/cve/cve-2026-27459[CVE-2026-27459] - DTLS cookie callback buffer overflow in:
+** `automation-hub` for {PlatformNameShort} 2.6.(AAP-72068)
+
+=== {LightspeedShortName}
+
+* link:https://access.redhat.com/security/cve/cve-2026-26007[CVE-2026-26007] - cryptography subgroup attack due to missing subgroup validation for SECT curves in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-71201)
+
+* link:https://access.redhat.com/security/cve/cve-2026-4800[CVE-2026-4800] - lodash: arbitrary code execution via untrusted input in template imports in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-70453)
+
+* link:https://access.redhat.com/security/cve/cve-2026-33154[CVE-2026-33154] - Dynaconf: arbitrary code execution via server-side template injection in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-69460)
+
+* link:https://access.redhat.com/security/cve/cve-2026-30922[CVE-2026-30922] - pyasn1 vulnerable to denial of service via unbounded recursion in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-69027)
+
+* link:https://access.redhat.com/security/cve/cve-2026-27459[CVE-2026-27459] - DTLS cookie callback buffer overflow in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-68948)
+
+* link:https://access.redhat.com/security/cve/cve-2026-29074[CVE-2026-29074] - SVGO: denial of service via XML entity expansion in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-68533)
+
+* link:https://access.redhat.com/security/cve/cve-2026-32274[CVE-2026-32274] - Black: arbitrary file writes from unsanitized user input in cache file name in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-68417)
+
+* link:https://access.redhat.com/security/cve/cve-2026-32597[CVE-2026-32597] - PyJWT accepts unknown `crit` header extensions (RFC 7515 §4.1.11 MUST violation) in:
+** `ansible-lightspeed` for {PlatformNameShort} 2.6.(AAP-68393)
+
+* link:https://access.redhat.com/security/cve/cve-2025-69227[CVE-2025-69227] - aiohttp denial of service via specially crafted POST request in:
+** `ansible-lightspeed-service-container` for {PlatformNameShort} 2.6.(AAP-65575)
+** `ansible-lightspeed-chatbot-container` for {PlatformNameShort} 2.6.(AAP-65574)
+
+=== Receptor
+
+* link:https://access.redhat.com/security/cve/cve-2026-25679[CVE-2026-25679] - Incorrect parsing of IPv6 host literals in `net/url` in:
+** receptor for {PlatformNameShort} 2.6.(AAP-69508)
+
+
+
+== Bug Fixes
+
+
+=== {PlatformNameShort} UI
+
+* Fixed an issue where the Jobs list page generated excessive API requests due to unthrottled WebSocket refresh events, which could result in queued requests and an unresponsive UI on systems with many concurrent jobs.(AAP-70350)
+
+* Fixed an issue where the Jobs list page generated excessive API requests due to unthrottled WebSocket refresh events, which could result in queued requests and an unresponsive UI on systems with many concurrent jobs.(AAP-66302)
+
+
+=== Content
+
+* Fixed an issue where the `ansible.controller` collection `job_template` module did not support Bitbucket.(AAP-71826)
+
+
+=== {ControllerNameStart}
+
+
+* Fixed an issue where variables from set_stats artifacts were passed via extra_vars and could take higher precedence than artifacts set by later nodes in the workflow chain.(AAP-70755)
+
+* Fixed an issue where creating an object could take excessive time in an organization with many resources due to RoleEvaluation object creation overhead.(AAP-70753)
+
+* Fixed an issue where an inventory sync with a large amount of changes could take an excessive amount of time.(AAP-70376)
+
+* Fixed an issue in ee-supported where the pyVmomi dependency in the community.vmware collection was not compatible with Python 3.12.(AAP-70105)
+
+* Fixed an issue where concurrent jobs could incorrectly clear host facts due to a race condition.(AAP-69263)
+
+* Fixed an issue where canceling did not propagate to dependent jobs in workflows.(AAP-68974)
+
+* Fixed an issue where project_update.yml could fail with a Jinja2 error when using custom execution environment images with newer ansible-core versions.(AAP-68784)
+
+
+=== {EDAName}
+
+* Fixed an issue where a project could be deleted while a project sync was running.(AAP-71407)
+
+=== {HubNameStart}
+
+* Fixed an issue where CollectionArtifactDownloadView.count_download did not provide name and namespace instead of filename.(AAP-71347)
+
+
+=== {OperatorPlatformNameShort}
+
+* Fixed an issue where wisdom-manage shell command output was incorrect due to a verbosity-level change.(AAP-69164)
