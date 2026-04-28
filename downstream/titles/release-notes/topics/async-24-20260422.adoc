@@ -1,0 +1,75 @@
+[id="async-24-20260422"]
+
+= {PlatformNameShort} patch release April 22, 2026
+
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+
+[cols="1a,3a", options="header"]
+
+|====
+
+| Release Date | Component versions
+
+| April 22, 2026 
+a|
+
+* {ControllerNameStart} 4.5.33
+* {HubNameStart} 4.9.8
+* {EDAcontroller} 1.0.11
+* {LightspeedShortName} 2.4.260325
+* {PlatformNameShort}-collection installer (bundle): 2.4-16.1
+* {PlatformNameShort}-collection installer (online): 2.4-16
+* Receptor 1.6.4
+
+|====
+
+== Overview
+
+This release contains security updates and a set of bug fixes across multiple {PlatformNameShort} 2.4 components. 
+This async release includes an {HubNameStart} enhancement for PQC-signed {ExecEnvShort}s, multiple fixes across {HubNameStart}, the {OperatorPlatformNameShort}, {ControllerName}, and {LightspeedShortName}, and a security fix for receptor.
+
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: 
+* Cluster-scoped bundle: 
+
+
+== Enhancements
+
+=== {HubNameStart}
+
+Added PCQ signature support so {HubNameStart} now supports {ExecEnvShort}s with PQC signatures.
+
+
+=== CVE
+
+== {AutomationMeshStart}
+
+* CVE-2026-25679: Incorrect parsing of IPv6 host literals in `net/url`:
+`receptor` for {PlatformNameShort} 2.6.(AAP-69500)
+
+
+== Bug fixes
+
+=== {HubNameStart}
+
+
+* Fixed an issue where container images in the {HubNameStart} UI could be incorrectly hidden when the `exclude_child_manifests` filter matched a parent manifest list in a different repository.(AAP-71824)
+
+
+* Fixed an issue where downloading an invalid collection artifact could return an error due to `CollectionArtifactDownloadView`.`count_download` not providing name/namespace as expected.(AAP-71348)
+
+
+=== {ControllerNameStart} and ee-supported 
+
+* Fixed an issue in ee-supported where the `community.vmware` collection could be incompatible with Python 3.12 due to the `pyVmomi` dependency version requirement.(AAP-70105)
+
+=== {OperatorPlatformNameShort}
+
+
+* Fixed an issue where upgrading AAP 2.4 could fail during hub database migrations when `pulp_ansible` was upgraded from versions older than 0.23.0, by scaling down existing deployments and waiting for stale heartbeat records to expire before proceeding.(AAP-69743)
+
+
+* Fixed an issue where `wisdom-manage` shell output could be incorrect after the Django 5.2 upgrade due to verbosity level changes.(AAP-69164)
