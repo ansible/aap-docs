@@ -16,7 +16,7 @@ Configure database compression for your {PlatformNameShort} backup by setting co
 
 . Create or edit an `AnsibleAutomationPlatformBackup` custom resource file. The following example enables compression globally but disables it for automation controller:
 +
-[source,bash]
+[source,yaml]
 ----
 apiVersion: aap.ansible.com/v1alpha1
 kind: AnsibleAutomationPlatformBackup
@@ -36,14 +36,14 @@ spec:
 +
 . Apply the custom resource to your cluster:
 +
-[source,bash]
+[source,terminal]
 ----
-$ oc apply -f <backup_cr_file>.yml
+$ oc apply -f _<backup_cr_file>_.yml
 ----
 +
 . Monitor the backup progress:
 +
-[source,bash]
+[source,terminal]
 ----
 $ oc get ansibleautomationplatformbackup -n aap -w
 ----
@@ -52,10 +52,9 @@ $ oc get ansibleautomationplatformbackup -n aap -w
 
 * Verify that the backup completed successfully:
 +
-[source,bash]
+[source,terminal]
 ----
-$ oc get ansibleautomationplatformbackup <backup_name> -n aap -o jsonpath='{.status.conditions}'
+$ oc get ansibleautomationplatformbackup _<backup_name>_ -n aap -o jsonpath='{.status.conditions}'
 ----
 +
 The output shows a `Successful` condition when the backup completes.
-
