@@ -12,8 +12,7 @@ This procedure uses the AWS CloudFormation MCP Server (`awslabs.cfn-mcp-server`)
 .Procedure
 . Create the collection directory structure and a new Ansible collection to hold your custom MCP role:
 +
-`mkdir -p collections/ansible_collections/myorg/mcp_cfn/roles/cfn_mcp/
-{defaults,tasks,meta}`
+`mkdir -p collections/ansible_collections/myorg/mcp_cfn/[defaults,tasks,meta]`
 +
 `mkdir -p collections/ansible_collections/myorg/mcp_cfn/playbooks`
 +
@@ -42,7 +41,7 @@ collections/ansible_collections/myorg/mcp_cfn/
 ---
 namespace: myorg
 name: mcp_cfn
-version: 0.7.2
+version: 1.0.1.9
 readme: README.md
 authors:
   - Your Name
@@ -53,7 +52,7 @@ tags:
   - aws
   - cloudformation
 dependencies:
-  ansible.mcp_builder: ">=0.7.2"
+  ansible.mcp_builder: ">=1.0.1.9"
 ----
 The dependencies field ensures that the `ansible.mcp_builder` collection is installed alongside your collection.
 +
@@ -70,7 +69,7 @@ cfn_mcp_registry:
     description: "AWS CloudFormation MCP Server - manage AWS resources via
 Cloud Control API"
 
-cfn_mcp_version: "0.7.2"
+cfn_mcp_version: "1.0.1.9"
 ----
 +
 The registry variable must follow the naming convention `<role_name>_registry`. The fields are:
@@ -132,7 +131,7 @@ myrole_build_path: "example/build"
     - cfn_mcp_verify_result.rc != 0
 ----
 +
-The two `include_role` tasks are the minimum required. The `install_manager`` task reads your registry metadata and installs the MCP server using the appropriate method. The `generate_manifest` task adds the server to the `mcpservers.json` manifest.
+The two `include_role` tasks are the minimum required. The `install_manager`` task reads your registry metadata and installs the MCP server by using the appropriate method. The `generate_manifest` task adds the server to the `mcpservers.json` manifest.
 +
 The verification step is optional but recommended. It confirms the installed server is callable.
 
@@ -192,7 +191,7 @@ collections:
 [IMPORTANT]
 ====
 
-The first task must include `ansible.mcp_builder.common` with `public: true`. This initializes the framework and makes shared variables (such as `common_mcp_base_path`) available to subsequent tasks. The ownership fix at the end ensures the MCP server files are accessible by the non-root runtime user inside the execution environment.
+The first task must include `ansible.mcp_builder.common` with `public: true`. This initializes the framework and makes shared variables (such as `common_mcp_base_path`) available to later tasks. The ownership fix at the end ensures the MCP server files are accessible by the non-root runtime user inside the execution environment.
 ====
 +
 [NOTE]
@@ -200,9 +199,9 @@ The first task must include `ansible.mcp_builder.common` with `public: true`. Th
 The built-in `ansible.mcp_builder.install_mcp` playbook only supports roles within the `ansible.mcp_builder` namespace. Custom roles in your own collection namespace require their own playbook, as shown above.
 ====
 
-. Build your collection into a distributable tarball:
+. Build your collection into a distributable tar file:
 +
 `cd collections/ansible_collections/myorg/mcp_cfn`
 `ansible-galaxy collection build --output-path /path/to/output/`
 +
-This produces a file like `myorg-mcp_cfn-0.7.2.tar.gz`.
+This produces a file like `myorg-mcp_cfn-1.0.0.tar.gz`.
