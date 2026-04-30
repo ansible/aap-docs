@@ -7,21 +7,6 @@
 Export databases, secrets, and custom configurations from your source containerized {PlatformNameShort} deployment to create the migration artifact.
 
 .Procedure
-. Verify the PostgreSQL database version is PostgreSQL version 15.
-+
-You can verify your current PostgreSQL version by connecting to your database server and running the following command as the `postgres` user:
-+
-----
-$ podman exec -it postgresql bash -c 'psql -c "SELECT version();"'
-----
-+
-[IMPORTANT]
-====
-PostgreSQL version 15 is a strict requirement for the migration process to succeed. If running PostgreSQL 13 or earlier, upgrade to version 15 before proceeding with the migration.
-
-If using an {PlatformNameShort} managed database, re-run the installation program to upgrade the PostgreSQL version. If using a customer provided (external) database, contact your database administrator or service provider to confirm the version and arrange for an upgrade if required.
-====
-
 . Create a complete backup of the source environment:
 +
 ----

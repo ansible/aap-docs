@@ -342,7 +342,7 @@ pod/aap-gateway-6c989b846c-47b91 2/2 Running 0 45s
 ----
 +
 ----
-for i in HTTPPort Route ServiceNode; do; oc exec -it deployment.apps/aap-gateway -- aap-gateway-manage shell -c 'from aap_gateway_api.models import '$i';print('$i'.objects.all().delete())'; done
+for i in HTTPPort Route ServiceNode; do oc exec -it deployment.apps/aap-gateway -- aap-gateway-manage shell -c 'from aap_gateway_api.models import '$i';print('$i'.objects.all().delete())'; done
 ----
 +
 Example output:
@@ -395,8 +395,8 @@ bash-4.4$
 .. Remove old nodes with `awx-manage`, leaving only `aap-controller-task`:
 +
 ----
-awx-manage deprovision_instance --host=node1.example.org
-awx-manage deprovision_instance --host=node2.example.org
+awx-manage deprovision_instance --hostname=node1.example.org
+awx-manage deprovision_instance --hostname=node2.example.org
 ----
 
 . Remove the `aap-resource-server` secret and allow the deployments to reconcile. This will recreate the resource service keys and secret for the components:
