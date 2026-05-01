@@ -12,7 +12,7 @@ This procedure uses the AWS CloudFormation MCP Server (`awslabs.cfn-mcp-server`)
 .Procedure
 . Create the collection directory structure and a new Ansible collection to hold your custom MCP role:
 +
-`mkdir -p collections/ansible_collections/myorg/mcp_cfn/[defaults,tasks,meta]`
+`mkdir -p collections/ansible_collections/myorg/mcp_cfn/roles/cfn_mcp/{defaults,tasks,meta}`
 +
 `mkdir -p collections/ansible_collections/myorg/mcp_cfn/playbooks`
 +
@@ -131,7 +131,7 @@ myrole_build_path: "example/build"
     - cfn_mcp_verify_result.rc != 0
 ----
 +
-The two `include_role` tasks are the minimum required. The `install_manager`` task reads your registry metadata and installs the MCP server by using the appropriate method. The `generate_manifest` task adds the server to the `mcpservers.json` manifest.
+The two `include_role` tasks are the minimum required. The `install_manager` task reads your registry metadata and installs the MCP server by using the appropriate method. The `generate_manifest` task adds the server to the `mcpservers.json` manifest.
 +
 The verification step is optional but recommended. It confirms the installed server is callable.
 
@@ -201,7 +201,7 @@ The built-in `ansible.mcp_builder.install_mcp` playbook only supports roles with
 
 . Build your collection into a distributable tar file:
 +
-`cd collections/ansible_collections/myorg/mcp_cfn`
+`cd collections/ansible_collections/myorg/cfn_mcp`
 `ansible-galaxy collection build --output-path /path/to/output/`
 +
-This produces a file like `myorg-mcp_cfn-1.0.0.tar.gz`.
+This produces a file `myorg-cfn_mcp-1.0.1.9.tar.gz`.
