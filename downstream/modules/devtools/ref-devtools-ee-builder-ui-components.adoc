@@ -156,6 +156,29 @@ Displays available Model Context Protocol (MCP) servers as selectable cards. Use
 |Array of available MCP server identifiers.
 |===
 
+== ScmSelector
+
+Provides a source control management (SCM) provider selector with built-in authentication. Users select a configured GitHub or GitLab instance, then authenticate through the SCM provider's OAuth flow. The component validates credentials and displays connection status.
+
+*Usage:*
+
+[cols="2,5"]
+|===
+|Property |Description
+
+|`ui:field`
+|`ScmSelector`
+
+|type
+|`string` (returns the selected SCM provider identifier)
+
+|`ui:options.providers`
+|Array of provider configuration objects with `label`, `provider` (`github` or `gitlab`), and optional `host`.
+
+|`ui:options.requestUserCredentials.secretsKey`
+|Key used to store the authenticated SCM token in template secrets.
+|===
+
 == AdditionalBuildStepsPicker
 
 Provides an interface for specifying custom build steps to include in the execution environment build process. Supports multiple build phases with command entry.
