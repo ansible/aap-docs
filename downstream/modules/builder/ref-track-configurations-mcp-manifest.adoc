@@ -1,0 +1,33 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-track-configurations-mcp-manifest"]
+
+= Track MCP server configurations with the manifest file
+
+[role="_abstract"]
+Understand how the MCP servers manifest registers and automatically merges multiple server installations into the `/opt/mcp/mcpservers.json` file so that you can effectively track and verify your {ExecEnvShort} configurations.
+
+All installed MCP servers are registered in `/opt/mcp/mcpservers.json`. This file follows the `mcp.json` format established by VS Code, with each server entry containing:
+
+----
+{
+   "server-name": {
+      "type": "stdio",
+      "command": "/opt/mcp/bin/server-name",
+      "args": [],
+      "description": "Description of the MCP server"
+   }
+}   
+----
+
+For remote (HTTP-based) MCP servers, the entry uses the URL instead of a command:
+
+----
+{
+   "server-name": {
+      "type": "http",
+      "url": \"https://remote-server:12345",
+      "description": "Remote MCP server"
+   }
+}
+----

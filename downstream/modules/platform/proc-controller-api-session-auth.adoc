@@ -5,17 +5,18 @@
 = Using session authentication
 
 [role="_abstract"]
-You can use session authentication when logging in directly to the {ControllerName}'s API or UI to manually create resources, such as inventories, projects, and job templates and start jobs in the browser. 
+You can use session authentication when logging in to the platform through {Gateway} to manually create resources, such as inventories, projects, and job templates, and start jobs in the browser. 
 
 With this method, you can remain logged in for a prolonged period of time, not just for that HTTP request. 
 For example, when browsing the API or UI in a browser such as Chrome or Mozilla Firefox. 
-When you log in, a session cookie is created, this means that you can remain logged in when navigating to different pages within {ControllerName}. 
+When you log in, a session cookie is created. 
+You can remain logged in when navigating to different pages across the platform.
 
 The following image represents the communication that occurs between the client and server in a session:
 
 image::session-auth-architecture.png[Session authentication architecture]
 
-Use the curl tool to see the activity that occurs when you log in to {ControllerName}.
+Use the curl tool to see the activity that occurs when you log in through {Gateway}.
 
 .Procedure
 
@@ -48,8 +49,9 @@ https://<gateway server name>/api/gateway/v1/login/ -k -D - -o /dev/null
 +
 [NOTE]
 ====
-All of this is done by {ControllerName} when you log in to the UI or API in the browser, and you must only use it when authenticating in the browser. 
-For programmatic integration with {ControllerName}, see xref:controller-api-oauth2-token[OAuth2 token authentication].
+{GatewayStart} performs all of these steps when you log in to the UI or API in the browser. 
+You must use this procedure only when authenticating in the browser. 
+For programmatic integration with the platform, see xref:controller-api-oauth2-token[OAuth 2 token authentication].
 ====
 +
 ----

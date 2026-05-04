@@ -6,21 +6,21 @@
 
 [role="_abstract"]
 OAuth (Open Authorization) is an open standard for token-based authentication and authorization.
-OAuth 2 authentication is commonly used when interacting with the {ControllerName} API programmatically.
+OAuth 2 authentication is commonly used when interacting with the {Gateway} API programmatically.
 
-Similar to Basic authentication, you are given an OAuth 2 token with each API request through the Authorization header.
+You provide an OAuth 2 token with each API request through the Authorization header.
 Unlike Basic authentication, OAuth 2 tokens have a configurable timeout and are scopable.
-Tokens have a configurable expiration time and can be easily revoked for one user or for the entire {ControllerName} system by an administrator if needed.
+Tokens have a configurable expiration time and can be revoked for one user or for the entire {Gateway} system by an administrator if needed.
 You can do this with the link:{URLCentralAuth}/gw-token-based-authentication#ref-controller-revoke-oauth2-token[revoke_oauth2_tokens] management command, or by using the API as explained in link:{URLCentralAuth}/gw-token-based-authentication#ref-controller-revoke-access-token[Revoke an access token].
 
-The different methods for obtaining OAuth2 access tokens in {ControllerName} include the following:
+The different methods for obtaining OAuth 2 access tokens include the following:
 
 * Personal access tokens (PAT)
 * Application token: Password grant type
 * Application token: Implicit grant type
 * Application token: Authorization Code grant type
 
-A user needs to create an OAuth 2 token in the API or in the {MenuAMAdminOauthApps} tab of the {Gateway} UI.
+You can create an OAuth 2 token in the API or in the {MenuAMAdminOauthApps} tab of the {Gateway} UI.
 For more information about creating tokens through the UI, see link:{URLCentralAuth}/gw-token-based-authentication#proc-controller-apps-create-tokens[Adding tokens].
 
 For the purpose of this example, use the PAT method for creating a token in the API.
@@ -32,20 +32,22 @@ You can configure the expiration time of the token system-wide.
 For more information, see link:{URLCentralAuth}/gw-token-based-authentication[Configuring access to external applications with token-based authentication].
 ====
 
-Token authentication is best used for any programmatic use of the {ControllerName} API, such as Python scripts or tools such as curl.
+Token authentication is the recommended method for any programmatic use of the {Gateway} API, such as Python scripts or tools such as curl.
 
 *Curl example*
 
+Create a token through the {Gateway} tokens endpoint:
+
 [literal, options="nowrap" subs="+attributes"]
 ----
-curl -u user:password -k -X POST https://<platform-host>/api/gateway/v1/tokens/
+curl -u user:password -k -X POST https://<gateway server name>/api/gateway/v1/tokens/
 ----
 
 This call returns JSON data with the following:
 
 image::api_oauth2_json_returned_token_value.png[API OAuth2 JSON]
 
-You can use the value of the `token` property to perform a `GET` request for an {ControllerName} resource, such as Hosts:
+You can use the value of the `token` property to perform a `GET` request for a resource, such as Hosts:
 
 [literal, options="nowrap" subs="+attributes"]
 ----

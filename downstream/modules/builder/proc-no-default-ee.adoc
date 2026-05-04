@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-no-default-ee"]
+
+= If no default {ExecEnvShort} is provided
+
+[role="_abstract"]
+Troubleshoot why a job bypasses the Default Execution Environment by verifying overrides in template, project, organization, or global settings, and checking environment array orders in configuration files and the database.
+
+When the "Default Execution Environment" is not used for a job, double-check the following:
+
+.Procedure
+. Check if a different {ExecEnvShort} EE has been defined for the template, project, or organization of the job.
+. Check if the `GLOBAL_JOB_EXECUTION_ENVIRONMENTS` setting is configured with any {ExecEnvShort}s, as these take precedence over the Default {ExecEnvShort}.
++
+[NOTE]
+====
+This setting is not configured by default.
+====
+
+. Check the order of the GLOBAL_JOB_EXECUTION_ENVIRONMENTS in `/etc/tower/conf.d/execution_environments.py`. "Default Execution Environment" should be the first item in the array.
+. Check the order of the {ExecEnvShort} defined in the database.
+. Run the following command as root on the controller node to output the `main_executionenvironment` table:
++
+`# echo "select id, name, created from main_executionenvironment where organization_id is null and managed = False order by created desc;" | awx-manage dbshell`
+
+To ensure that the "Default Execution Environment" is used regardless of the `GLOBAL_JOB_EXECUTION_ENVIRONMENTS`mm setting and database order, set the "Global default execution environment" in {MenuSetSystem} to "Default Execution Environment".
