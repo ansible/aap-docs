@@ -1,0 +1,75 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="devtools-clean-up_{context}"]
+
+= `rhaap:clean-up`
+
+[role="_abstract"]
+Remove resources created during a software template execution from {PlatformNameShort}. Use this action as a cleanup step to delete projects, execution environments, or job templates that were created by earlier steps in the template workflow.
+
+*Input parameters*
+
+[cols="2,2,1,5"]
+|===
+|Parameter |Type |Required |Description
+
+|`token`
+|string
+|Yes
+|OAuth2 token for {PlatformNameShort} authentication.
+
+|`values`
+|object
+|Yes
+|Object specifying which resources to remove.
+|===
+
+*"values" Object Structure*
+
+[cols="3,2,1,4"]
+|===
+|Field |Type |Required |Description
+
+|`project`
+|object
+|No
+|Project to delete. Include `projectName` and `organization`.
+
+|`executionEnvironment`
+|object
+|No
+|Execution environment to delete. Include `environmentName` and `organization`.
+
+|`template`
+|object
+|No
+|Job template to delete. Include `templateName` and `organization`.
+|===
+
+*Output parameters*
+
+[cols="3,2,5"]
+|===
+|Parameter |Type |Description
+
+|`cleanUp`
+|string
+|Confirmation message indicating successful cleanup.
+|===
+
+*Example*
+----
+steps:
+  - id: cleanup
+    name: Clean Up Resources
+    action: rhaap:clean-up
+    input:
+      token: ${{ parameters.AAP_TOKEN }}
+      values:
+        project:
+          projectName: ${{ steps['create-project'].output.data.name }}
+          organization: ${{ parameters.organization | resourceFilter('name') }}
+        template:
+          templateName: ${{ steps['create-template'].output.data.name }}
+          organization: ${{ parameters.organization | resourceFilter('name') }}
+----

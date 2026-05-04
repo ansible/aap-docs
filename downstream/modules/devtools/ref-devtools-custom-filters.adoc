@@ -18,4 +18,12 @@ The plugins provide custom filters to extract specific properties from resource 
 |`multiResourceFilter`
 |Extracts a specific property from multiple resource objects (when the input is an array).
 |`$!{{ parameters.organization \| multiResourceFilter('name') }}`
+
+|`useCaseNameFilter`
+|Extracts the `name` property from each object in an array. Returns an array of name strings.
+|`$!{{ parameters.useCases \| useCaseNameFilter }}`
+
+|`uuidFilter`
+|Generates a random 8-character hexadecimal identifier.
+|`$!{{ uuidFilter() }}`
 |===
