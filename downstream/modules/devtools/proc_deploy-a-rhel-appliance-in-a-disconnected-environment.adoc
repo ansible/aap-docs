@@ -14,6 +14,7 @@ The pre-built appliance images include all required container images and plug-in
 * You have downloaded the appliance disk image (QCOW2 or VMDK) from the Red Hat Customer Portal on a connected system.
 * You have a method to transfer the disk image to the disconnected environment (for example, portable media or a secure file transfer system).
 * You have a virtualization platform available in the disconnected environment ({OCPVShort}, VMware vSphere, or KVM/QEMU).
+* You have network connectivity from the appliance to your {PlatformNameShort} instance.
 
 .Procedure
 
@@ -26,53 +27,82 @@ The pre-built appliance images include all required container images and plug-in
 * For {OCPVShort}, see xref:proc-self-service-install-openshift-virt_{context}[Deploying on OpenShift Virtualization].
 * For VMware vSphere, see xref:proc-self-service-install-vmware_{context}[Deploying on VMware vSphere].
 
-. Complete the initial configuration wizard.
+. Provide initial configuration through cloud-init, VMware `guestinfo` properties, or a pre-seeded configuration file.
 +
 The appliance starts and runs without external network access because all required container images and plug-ins are pre-loaded in the appliance image.
+
+. If no registry is available for image upgrades, bypass the registry authentication gate:
++
+[source,terminal]
+----
+sudo touch /etc/portal/.registry-auth-override
+----
 
 . Verify that the portal services are running:
 +
 [source,terminal]
 ----
-sudo portal-status
+sudo ansible-portal status
 ----
 
 .Verification
 
 * Verify that the portal URL is accessible from your browser.
-* Verify that all services show a healthy status in the `portal-status` output.
+* Verify that all services show a healthy status in the `ansible-portal status` output.
 
 .Next steps
 
-* To apply future appliance upgrades in a disconnected environment, configure authentication to a private registry mirror that hosts the {SelfService} container images:
-+
-.. On a connected system, mirror the {SelfService} container images from `registry.redhat.io` to your private registry.
-.. On the appliance, authenticate to your private registry mirror:
+* To apply future appliance upgrades in a disconnected environment, configure a mirror registry or use OCI archive transfer:
+
+=== Upgrading from a mirror registry
+
+.. On a connected system, mirror the {SelfService} container images from `registry.redhat.io` to your private registry:
 +
 [source,terminal]
 ----
-sudo portal-registry-login <your_mirror_registry>
+skopeo copy \
+    docker://registry.redhat.io/ansible-automation-platform/portal-bootc:<version> \
+    docker://<your_mirror_registry>/portal-bootc:<version>
+----
+
+.. On the appliance, create a `registries.conf` drop-in to redirect image pulls through the mirror:
++
+[source,terminal]
+----
+sudo tee /etc/containers/registries.conf.d/50-mirror.conf > /dev/null << 'EOF'
+[[registry]]
+prefix = "registry.redhat.io"
+location = "registry.redhat.io"
+
+[[registry.mirror]]
+location = "<your_mirror_registry>"
+insecure = false
+EOF
 ----
 +
+If your mirror uses a self-signed certificate, add the CA to the system trust store:
++
+[source,terminal]
+----
+sudo cp ca.crt /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust
+----
+
+.. Authenticate to the mirror registry:
++
+[source,terminal]
+----
+sudo ansible-portal registry-login <your_mirror_registry>
+----
+
 .. Verify that the credentials are valid:
 +
 [source,terminal]
 ----
-sudo portal-registry-login --test
+sudo ansible-portal registry-login --test
 ----
-+
-If authentication fails, verify that the mirror registry is reachable from the appliance, check that any custom CA certificates are trusted, and verify your credentials are correct.
-+
-.. Switch the appliance to track images from your mirror registry (one-time operation):
-+
-[source,terminal]
-----
-sudo bootc switch <your_mirror_registry>/<image_path>
-----
-+
-The system reboots automatically after applying the change.
-+
-.. For subsequent upgrades, pull the latest update:
+
+.. Upgrade the appliance:
 +
 [source,terminal]
 ----
@@ -80,7 +110,34 @@ sudo bootc upgrade --apply
 ----
 +
 The system reboots automatically. Wait for the system to restart, then reconnect via SSH.
+
+=== Upgrading from an OCI archive
+
+For environments with no network path to a mirror registry, use sneakernet transfer.
+
+.. On a connected system, save the image as an OCI archive:
 +
+[source,terminal]
+----
+skopeo copy \
+    docker://registry.redhat.io/ansible-automation-platform/portal-bootc:<version> \
+    oci-archive:portal-bootc-<version>.tar
+----
+
+.. Transfer the archive to the appliance using your organization's approved transfer method.
+
+.. On the appliance, import and switch to the new image:
++
+[source,terminal]
+----
+sudo skopeo copy \
+    oci-archive:/tmp/portal-bootc-<version>.tar \
+    containers-storage:localhost/portal-bootc:<version>
+sudo bootc switch --transport containers-storage localhost/portal-bootc:<version>
+----
++
+The system reboots automatically after applying the change.
+
 .. If an upgrade causes issues, roll back to the previous version:
 +
 [source,terminal]

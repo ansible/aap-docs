@@ -12,7 +12,7 @@ Common issues and solutions for deploying and managing {SelfService} RHEL applia
 
 Cannot access the portal URL after configuration::
 * Verify that the virtual machine is running and has network connectivity.
-* Check that the portal services are running using the `portal-status` command.
+* Check that the portal services are running using the `ansible-portal status` command.
 * Verify that your browser can reach the portal IP address. Test with `ping <VM_IP>` from your workstation.
 * Check firewall rules on the virtual machine and your network infrastructure.
 * Review the portal logs using `journalctl -u portal.service -f` for error messages.
@@ -28,13 +28,15 @@ Portal does not connect to {PlatformNameShort}::
 * Check that the OAuth application in {PlatformNameShort} is configured with the correct redirect URI: `\https://<PORTAL_IP>:7007/api/auth/callback/oidc`
 * Verify that the OAuth Client ID and Client Secret are correct.
 * Verify that the admin token is valid and has not expired.
-* Use `portal-config show` to review the current configuration.
+* Review the configuration in `/etc/portal/configs/app-config/app-config.production.yaml`.
 * Review the portal logs using `journalctl -u portal.service -f` for authentication errors.
 
-Configuration wizard does not appear on first boot::
+Portal services do not start after first boot::
+* Verify that initial configuration was provided through cloud-init, VMware `guestinfo`, or a pre-seeded configuration file.
+* Check the first-boot configuration status: `ls -la /etc/portal/.config-ready`
+* If the configuration is not ready, check the reason: `cat /etc/portal/.config-not-ready-reason`
 * Allow sufficient time for the virtual machine to boot completely. Initial boot can take several minutes.
 * Verify that the disk image was deployed correctly and is accessible by the virtual machine.
-* Check the virtual machine console for error messages.
 
 == OpenShift Virtualization troubleshooting
 
@@ -248,15 +250,14 @@ After adding a new SSH key, lock the account again with `passwd -l admin` for se
 If you cannot resolve an issue by using these troubleshooting steps:
 
 . Use the `journalctl -u portal.service -f` command to collect detailed logs for analysis.
-. Use the `portal-status` command to verify service health.
+. Use the `ansible-portal status` command to verify service health.
 . Review the virtual machine console output for error messages.
 . Contact Red Hat Support with the following information:
 ** The virtualization platform you are using (OpenShift Virtualization, VMware vSphere, or QEMU)
 ** The appliance version and disk image filename
-** Output from `portal-status` and `journalctl -u portal.service -f`
+** Output from `ansible-portal status` and `journalctl -u portal.service -f`
 ** Any error messages from the virtual machine console or platform logs
 
 .Additional resources
 
 * xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference].
-* xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].

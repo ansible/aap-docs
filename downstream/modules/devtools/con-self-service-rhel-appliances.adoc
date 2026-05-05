@@ -30,28 +30,30 @@ QEMU for local testing:: Deploy the appliance on your local machine for testing 
 
 == Initial configuration
 
-The appliance supports multiple methods for providing initial configuration:
+The appliance requires configuration at first boot to connect to {PlatformNameShort} and start portal services.
+You must provide configuration through one of the following methods, listed in priority order:
 
-Interactive wizard:: An interactive text-based wizard guides you through the setup. The wizard runs automatically on first boot if no other configuration source is detected.
+Baked-in configuration:: For advanced installations using the Ansible collection to build a customized appliance image with pre-baked settings.
+
+VMware `guestinfo` properties:: For VMware deployments, provide SSH keys and portal configuration through `guestinfo` properties set in `vSphere`.
 
 cloud-init user-data:: For cloud and {OCPVShort} deployments, provide SSH keys and portal configuration through cloud-init user-data. The appliance configures itself automatically on first boot.
 
-VMware OVF properties:: For VMware deployments, provide SSH keys and portal configuration through `guestinfo` properties set in `vSphere`.
+Pre-seeded configuration file:: Place a YAML configuration file at `/etc/portal/config.yaml` before first boot for automated deployment.
 
-Pre-seeded configuration file:: Place a YAML configuration file at `/etc/portal/config.yaml` before first boot for automated deployment without interactive prompts.
+If no configuration source is found at first boot, portal services do not start.
+You can provide configuration after deployment by editing `/etc/portal/configs/app-config/app-config.production.yaml` and restarting the portal service.
 
-The configuration wizard prompts you to configure:
+The initial configuration includes:
 
 * SSH key authentication for administrative access
-* Network settings
-* {PlatformNameShort} OAuth application credentials
-* {PlatformNameShort} admin token for authentication
-
-After the initial configuration completes, the appliance displays the portal URL that you can access from your browser.
+* {PlatformNameShort} URL, OAuth application credentials, and admin token
+* Database settings (built-in or external PostgreSQL)
+* Base URL and network configuration
 
 [NOTE]
 ====
-After the initial configuration completes, the admin user account is locked and console login is disabled. Administrative access is available only through SSH using the key you provided during configuration.
+The `admin` user account is locked by default and console login is disabled. Administrative access is available only through SSH using the key you provided during configuration.
 ====
 
 == Disconnected environments
@@ -60,4 +62,4 @@ You can deploy {SelfService} appliances in disconnected or air-gapped environmen
 The pre-built appliance images include all required container images and plug-ins, so no external network access is required during initial deployment.
 
 For appliance upgrades in disconnected environments, a mirror registry or OCI archive provides the updated container images.
-The `portal-registry-login` command authenticates to a private registry mirror.
+Use the `ansible-portal registry-login` command to authenticate to a private registry mirror.

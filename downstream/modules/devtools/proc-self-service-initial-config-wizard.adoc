@@ -2,87 +2,133 @@
 
 [id="proc-self-service-initial-config-wizard_{context}"]
 
-= Complete the initial configuration wizard
+= Configuring the appliance at first boot
 
 [role="_abstract"]
 
-Complete the initial configuration to connect your {SelfService} appliance to {PlatformNameShort} and make the portal accessible. An interactive text-based configuration wizard guides you through setting up SSH access, network configuration, and {PlatformNameShort} authentication.
+Provide initial configuration for the {SelfService} appliance so that portal services can start and connect to {PlatformNameShort}. You must supply SSH keys and portal settings through one of the supported configuration methods during or before deployment.
 
 .Prerequisites
 
-* The virtual machine appliance is running and displaying the configuration wizard in the console.
-* You have the {PlatformNameShort} OAuth application Client ID and Client Secret.
-* You have the {PlatformNameShort} admin token.
-* You have an SSH public key for administrative access.
+* The {PlatformNameShort} OAuth application Client ID and Client Secret.
+* The {PlatformNameShort} admin token.
+* An SSH public key for administrative access.
+* The URL of your {PlatformNameShort} instance.
 
 .Procedure
 
-. When you SSH into the virtual machine for the first time, the configuration wizard displays in the terminal.
+Choose one of the following methods to provide the initial configuration.
 
-. Configure the default admin password:
-+
-.. Enter the default password `PortalFirstBoot!` when prompted.
-.. The wizard prompts you to reset the password.
-.. Enter and confirm your new password.
-+
-[NOTE]
-====
-After SSH key authentication is configured in the next step, password-based login will be deactivated.
-====
+=== Using cloud-init user-data
 
-. Configure SSH key authentication:
-+
-.. The wizard prompts you to enter an SSH public key for the `admin` user.
-.. Paste your SSH public key when prompted.
-.. After you add the SSH key, the SSH connection closes. Reconnect using your SSH key to continue.
-+
-[NOTE]
-====
-SSH key authentication is the only method for accessing the virtual machine after initial configuration. Username and password authentication is not available.
-====
+Use this method for {OCPVShort}, cloud, and KVM/QEMU deployments.
 
-. Configure account security:
+. Create a cloud-init user-data file:
 +
-.. Confirm the SSH key configuration.
-.. The wizard validates the provided key.
+[source,yaml,subs="+attributes"]
+----
+#cloud-config
+users:
+  - name: admin
+    groups: sudo
+    ssh_authorized_keys:
+      - <your_ssh_public_key>
 
-. Configure network settings (if not using DHCP):
-+
-.. Enter the IP address, subnet mask, gateway, and DNS servers when prompted.
-.. The wizard applies the network configuration.
+aap:
+  host_url: https://<aap_host>
+  token: <aap_admin_token>
+  oauth:
+    client_id: <oauth_client_id>
+    client_secret: <oauth_client_secret>
+  check_ssl: true
 
-. Configure {PlatformNameShort} integration:
+database:
+  type: builtin
+----
 +
-The wizard prompts you to enter the following information:
+Replace the placeholder values with your {PlatformNameShort} credentials and SSH public key.
++
+The appliance parses the custom `aap` and `database` fields directly from the cloud-init user-data at first boot.
++
+The following additional fields are available for cloud-init configuration:
++
+* `network.base_url` — Set the portal base URL (auto-detected if not specified).
+* `network.port` — Set the HTTPS port (default: 443).
+* `database.external.*` — Configure an external PostgreSQL database (`host`, `port`, `name`, `user`, `password`, `ssl`).
+* `integrations.github.token` and `integrations.gitlab.token` — Configure SCM integration tokens.
+* `backup.enabled`, `backup.schedule`, `backup.retention_days` — Configure automated backups.
 
-.. *{PlatformNameShort} URL:* The full URL of your {PlatformNameShort} instance (for example, `\https://controller.example.com`).
-.. *OAuth Client ID:* The Client ID from the OAuth application you created in {PlatformNameShort}.
-.. *OAuth Client Secret:* The Client Secret from the OAuth application.
-.. *Admin Token:* The admin token generated for {PlatformNameShort} authentication.
+. Provide the user-data file during deployment:
 +
-[IMPORTANT]
-====
-The OAuth application in {PlatformNameShort} must be configured with the correct redirect URI: `\https://<PORTAL_IP>:<CONFIGURED_PORT>/api/auth/rhaap/handler/frame`, where `<PORTAL_IP>` is the IP address or hostname of the portal appliance and `<CONFIGURED_PORT>` defaults to `443`. You can change the port at any time by using the TUI or CLI.
-====
+* For {OCPVShort}, add a `cloudInitNoCloud` volume to the `VirtualMachine` manifest.
+* For cloud providers (AWS, GCP, Azure), pass the user-data through the instance launch configuration.
+* For local KVM/QEMU, create a cloud-init ISO or use the `-smbios` option to pass user-data.
 
-. Review the configuration summary.
-+
-The wizard displays a summary of your configuration and prompts you to confirm.
+=== Using VMware `guestinfo` properties
 
-. Apply the configuration.
-+
-The wizard applies the configuration and starts the {SelfService} services.
+Use this method for VMware vSphere deployments.
 
-. Note the portal URL.
+. Set the following `guestinfo` properties on the virtual machine in vSphere:
 +
-After the configuration completes, the wizard displays the portal URL (for example, `Portal URL: https://192.168.2.2:443`).
+[source,terminal]
+----
+guestinfo.portal.ssh_public_key = "<your_ssh_public_key>"
+guestinfo.portal.config = "<base64_encoded_config_yaml>"
+----
 +
-[IMPORTANT]
-====
-Record this URL. You cannot log in to the virtual machine console with a username and password after the wizard completes.
-====
+Where `<base64_encoded_config_yaml>` is the Base64-encoded content of your portal configuration YAML.
+
+. Power on the virtual machine. The appliance detects and applies the `guestinfo` properties on first boot.
+
+=== Using a pre-seeded configuration file
+
+Use this method for automated deployments with Ansible or Terraform.
+
+. Place a YAML configuration file at `/etc/portal/config.yaml` on the appliance disk image before first boot:
++
+[source,yaml,subs="+attributes"]
+----
+aap:
+  host_url: https://<aap_host>
+  token: <aap_admin_token>
+  oauth:
+    client_id: <oauth_client_id>
+    client_secret: <oauth_client_secret>
+database:
+  type: builtin
+----
+
+. Boot the appliance. The first-boot service detects and applies the configuration automatically.
+
+=== Configuring after deployment
+
+If you deployed the appliance without providing configuration, portal services do not start.
+You can configure the appliance after deployment by editing the configuration files directly.
+
+. SSH into the appliance using the key you provided through cloud-init or another method.
+
+. Edit the application configuration file:
++
+[source,terminal]
+----
+sudo vi /etc/portal/configs/app-config/app-config.production.yaml
+----
+
+. Restart the portal service:
++
+[source,terminal]
+----
+sudo systemctl restart portal
+----
 
 .Verification
+
+* Verify that portal services are running:
++
+[source,terminal]
+----
+sudo ansible-portal status
+----
 
 * Access the portal URL from your browser.
 * Log in using your {PlatformNameShort} credentials.

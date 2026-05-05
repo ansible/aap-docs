@@ -125,24 +125,19 @@ oc get vmi -n aap-portal -w
 +
 Wait for the PHASE to show `Running` and READY to show `True`.
 
-. Access the virtual machine console.
+. Provide initial configuration.
 +
-Connect to the virtual machine console using the CLI:
-+
-[source,terminal,subs="+attributes"]
-----
-virtctl console aap-portal -n aap-portal
-----
-+
-Alternatively, use the web console:
+The appliance requires configuration through cloud-init user-data, a pre-seeded configuration file, or post-deployment YAML editing.
+For details, see xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
 
-.. Navigate to *Virtualization* -> *VirtualMachines*.
-.. Click the `aap-portal` virtual machine.
-.. Select the *Console* tab.
-
-. Complete the initial configuration wizard.
+. Verify that portal services are running.
 +
-Follow the on-screen prompts in the console.
+SSH into the appliance and check the service status:
++
+[source,terminal]
+----
+sudo ansible-portal status
+----
 
 .Verification
 
@@ -155,7 +150,7 @@ oc get vmi -n aap-portal
 +
 The output shows the virtual machine in `Running` phase with `READY` status set to `True`.
 
-* Access the portal URL displayed at the end of the configuration wizard from your browser.
+* Access the portal URL from your browser.
 
 .Troubleshooting
 
@@ -189,4 +184,4 @@ oc describe nodes | grep -A 10 "Allocated resources"
 
 .Additional resources
 
-* xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard]
+* xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot]

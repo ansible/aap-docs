@@ -6,7 +6,7 @@
 
 [role="_abstract"]
 
-The {SelfService} appliance provides CLI commands for management and troubleshooting.
+The {SelfService} appliance provides the `ansible-portal` management CLI for administration and troubleshooting.
 
 == Accessing the appliance
 
@@ -23,205 +23,235 @@ Replace the following placeholders:
 * `<port_number>` with the SSH port number (default is 22).
 * `<VM_IP>` with the IP address or hostname of your appliance.
 
-== Available commands
+== The ansible-portal CLI
 
-The following commands are available for managing the {SelfService} appliance:
+The `ansible-portal` command is the primary management interface for the appliance, following Red Hat Ansible tooling conventions (`ansible-navigator`, `ansible-builder`, `ansible-lint`).
 
-=== portal-config
+[source,terminal]
+----
+ansible-portal <command> [options]
+----
 
-Manages the portal configuration settings.
-Use `portal-config` to view, modify, export, import, or roll back configuration on an already-configured appliance.
+.Available commands
+[cols="2,5"]
+|===
+|Command |Description
+
+|`status`
+|Show portal service status and diagnostics.
+
+|`backup`
+|Create portal backup. Use `--list` to list backups.
+
+|`restore <file>`
+|Restore from backup archive. Use `--latest` for most recent.
+
+|`registry-login`
+|Log in to container registry for image upgrades.
+|===
+
+Run `ansible-portal <command> --help` for command-specific options.
+
+== ansible-portal status
+
+Displays the current status of all {SelfService} services.
 
 *Usage:*
 
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-sudo portal-config show               # View current configuration
-sudo portal-config show --secrets     # View configuration including sensitive values
-sudo portal-config edit               # Open interactive configuration editor
-sudo portal-config export --format yaml  # Export configuration to stdout
-sudo portal-config import /path/to/config.yaml  # Import configuration from file
-sudo portal-config set KEY=VALUE      # Set a single configuration value
-sudo portal-config rollback --list    # List configuration snapshots
-sudo portal-config rollback --previous  # Roll back to most recent snapshot
-sudo portal-config regenerate-secrets # Regenerate portal secrets
-----
-
-*Description:*
-
-* `portal-config show` displays the current portal configuration, including {PlatformNameShort} connection details and service settings. Add `--secrets` to display sensitive values (requires root).
-* `portal-config edit` opens the interactive setup wizard pre-filled with the current configuration (requires root).
-* `portal-config export` exports the current configuration to stdout. Use `--format` to specify the output format (`yaml` or `env`).
-* `portal-config import` imports a configuration from a YAML or `.env` file.
-* `portal-config set` sets a single configuration key-value pair, for example `AAP_HOST_URL=https://aap.example.com`.
-* `portal-config rollback` lists or restores previous configuration snapshots. Use `--previous` to roll back to the most recent snapshot, or specify a timestamp to roll back to a specific entry.
-* `portal-config regenerate-secrets` regenerates portal secrets (requires root).
-
-=== portal-setup
-
-Runs the initial configuration wizard or applies a configuration file non-interactively.
-
-*Usage:*
-
-[source,terminal,subs="+attributes"]
-----
-sudo portal-setup                                    # Interactive wizard
-sudo portal-setup --config /path/to/config.env       # Pre-fill wizard from config file
-sudo portal-setup --config /path/to/config.env --accept-defaults  # Non-interactive mode
-----
-
-*Description:*
-
-* `portal-setup` launches the interactive configuration wizard, which is the same wizard that runs automatically on first boot.
-* `portal-setup --config` pre-fills the wizard with values from a configuration file.
-* `portal-setup --config --accept-defaults` applies the configuration non-interactively without prompting.
-
-[IMPORTANT]
-====
-*Difference between portal-setup and portal-config:*
-
-* Use `portal-setup` to run the complete initial configuration wizard or to apply an entire configuration from a file. This command is typically used during initial deployment or when migrating to a new appliance.
-* Use `portal-config` to view or modify individual configuration settings on an already-configured appliance. This command is used for day-to-day configuration updates.
-====
-
-=== portal-status
-
-Checks the status of portal services.
-
-*Usage:*
-
-[source,terminal,subs="+attributes"]
-----
-sudo portal-status            # One-shot status display
-sudo portal-status --watch    # Refresh status every 5 seconds
+sudo ansible-portal status            # One-shot status display
+sudo ansible-portal status --watch    # Refresh status every 5 seconds
 ----
 
 *Description:*
 
 Displays the current status of all {SelfService} services, including:
 
-* Service running state (active/inactive)
-* Service health checks
-* Resource usage
-* Network connectivity status
+* Setup completion status
+* PostgreSQL database state and connectivity
+* Devtools service state
+* Portal service state and plug-in installation status
+* Scheduled backup status
+* Disk and memory resource usage
 
 Use this command to verify that all services are running correctly after installation or troubleshooting.
 Use `--watch` to continuously monitor service status.
 
-*Example output:*
-
-[source,terminal,subs="+attributes"]
-----
-Portal Status:
-  ✓ Web Service: Running
-  ✓ Database: Connected
-  ✓ AAP Connection: Connected
-  ✓ Authentication: Configured
-----
-
-
-=== portal-backup
+== ansible-portal backup
 
 Creates a backup of the portal configuration and data.
 
 *Usage:*
 
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-sudo portal-backup                          # Interactive backup (select content)
-sudo portal-backup --full                   # Full backup (all items)
-sudo portal-backup --minimal                # Required items only
-sudo portal-backup --list                   # List existing backups
-sudo portal-backup --export /path/to/dir/   # Copy latest backup to a directory
+sudo ansible-portal backup                          # Interactive backup (select content)
+sudo ansible-portal backup --full                   # Full backup (all items)
+sudo ansible-portal backup --minimal                # Required items only
+sudo ansible-portal backup --list                   # List existing backups
+sudo ansible-portal backup --export /path/to/dir/   # Copy latest backup to a directory
 ----
 
 *Description:*
 
-Creates a backup archive containing the portal configuration, settings, and data. Use this command before making significant configuration changes or for disaster recovery planning.
+Creates a backup archive containing the portal configuration, Podman secrets, and data. Use this command before making significant configuration changes or for disaster recovery planning.
 
-* `portal-backup` without options starts an interactive backup where you select the content to include.
-* `portal-backup --full` creates a complete backup of all configuration and data.
-* `portal-backup --minimal` backs up only the required configuration items.
-* `portal-backup --list` lists existing backups.
-* `portal-backup --export` copies the latest backup to the specified directory. If no backup exists, one is created first.
+* `backup` without options starts an interactive backup where you select the content to include.
+* `--full` creates a complete backup of all configuration and data.
+* `--minimal` backs up only the required configuration items.
+* `--list` lists existing backups.
+* `--export` copies the latest backup to the specified directory. If no backup exists, one is created first.
 
 [NOTE]
 ====
 Store backup files in a secure location. Backup archives contain sensitive credentials. Protect them accordingly.
 ====
 
-=== portal-apply
-
-Applies a configuration file and optionally restarts services.
-
-*Usage:*
-
-[source,terminal,subs="+attributes"]
-----
-sudo portal-apply --config /path/to/config.env
-sudo portal-apply --config config.yaml --test-connections
-----
-
-*Description:*
-
-Applies portal configuration from a YAML, JSON, or `.env` file.
-
-* `--config` specifies the configuration file to apply (required).
-* `--test-connections` tests the {PlatformNameShort} and database connections before applying the configuration.
-* `--output-json` outputs the result as JSON.
-
-=== portal-restore
+== ansible-portal restore
 
 Restores the portal from a backup.
 
 *Usage:*
 
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-sudo portal-restore --list                  # List available backups
-sudo portal-restore --latest                # Restore the newest backup
-sudo portal-restore /path/to/backup.tar.gz  # Restore a specific backup file
+sudo ansible-portal restore --list                  # List available backups
+sudo ansible-portal restore --latest                # Restore the newest backup
+sudo ansible-portal restore --latest --dry-run      # Preview restore without changes
+sudo ansible-portal restore /path/to/backup.tar.gz  # Restore a specific backup file
 ----
 
 *Description:*
 
-Restores the portal configuration and data from a backup created by `portal-backup`.
+Restores the portal configuration, Podman secrets, Quadlet drop-in files, and data from a backup created by `ansible-portal backup`.
 
-* `portal-restore --list` lists all available backups.
-* `portal-restore --latest` restores from the most recent backup.
-* `portal-restore` with a file path restores from a specific backup archive.
+* `--list` lists all available backups.
+* `--latest` restores from the most recent backup.
+* `--dry-run` previews what would be restored without making changes.
+* Specify a file path to restore from a specific backup archive.
 
 [NOTE]
 ====
-Restoring a backup overwrites the current portal configuration. Create a backup of the current state before restoring if you want to preserve it.
+Restoring a backup overwrites the current portal configuration. Use `--dry-run` to preview the restore before executing. Create a backup of the current state before restoring if you want to preserve it.
 ====
 
-=== portal-registry-login
+== ansible-portal registry-login
 
 Manages container registry credentials for pulling portal images.
 
 *Usage:*
 
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-sudo portal-registry-login                 # Log in to registry.redhat.io (default)
-sudo portal-registry-login quay.io         # Log in to a specific registry
-sudo portal-registry-login --test          # Test stored credentials
-sudo portal-registry-login --logout        # Remove stored credentials
+sudo ansible-portal registry-login                 # Log in to registry.redhat.io (default)
+sudo ansible-portal registry-login <registry_host> # Log in to a specific registry
+sudo ansible-portal registry-login --test          # Test stored credentials
+sudo ansible-portal registry-login --logout        # Remove stored credentials
 ----
 
 *Description:*
 
 Manages authentication to container registries used for pulling {SelfService} images and updates.
 
-* `portal-registry-login` without arguments prompts for credentials for `registry.redhat.io`.
-* Specify a registry hostname to authenticate to a different registry.
-* `--test` verifies that stored credentials are valid.
-* `--logout` removes stored credentials for the registry.
+* `registry-login` without arguments prompts for credentials for `registry.redhat.io`.
+* Specify a registry hostname to authenticate to a different registry, such as a private mirror.
+* `--test` verifies that stored credentials are valid by inspecting the registry without downloading images.
+* `--logout` clears stored credentials for the registry.
 
 Use this command to configure registry authentication for `bootc upgrade` operations. In disconnected environments, use this command to authenticate to your private registry mirror.
 
+In disconnected environments where no registry is available, you can bypass the registry authentication gate by creating an override marker:
+
+[source,terminal]
+----
+sudo touch /etc/portal/.registry-auth-override
+----
+
+== Configuration management
+
+The appliance uses two YAML configuration files at `/etc/portal/configs/app-config/`:
+
+`app-config.yaml`:: Infrastructure configuration (base URL, database connection, TLS, system defaults). This file is set during initial deployment and is not typically modified.
+
+`app-config.production.yaml`:: Application configuration ({PlatformNameShort} connection, OAuth settings, SCM integrations, catalog sync). Edit this file for day-to-day configuration changes.
+
+Sensitive values such as tokens and passwords are stored as Podman secrets and injected into the portal container through environment variable interpolation (`${VAR}` syntax in the YAML files).
+
+=== Updating configuration
+
+To update the portal configuration:
+
+. Edit the application configuration file:
++
+[source,terminal]
+----
+sudo vi /etc/portal/configs/app-config/app-config.production.yaml
+----
+
+. Restart the portal service to apply the changes:
++
+[source,terminal]
+----
+sudo systemctl restart portal
+----
+
+== Managing secrets
+
+The portal stores sensitive values as Podman secrets, separate from the configuration files.
+
+.Portal secrets reference
+[cols="3,3,2"]
+|===
+|Secret name |Environment variable |Type
+
+|`portal_backend_secret`
+|`BACKEND_SECRET`
+|Auto-generated
+
+|`portal_postgresql_password`
+|`POSTGRESQL_PASSWORD`
+|Auto-generated or user-provided
+
+|`portal_postgresql_admin_password`
+|`POSTGRESQL_ADMIN_PASSWORD`
+|Auto-generated
+
+|`portal_aap_token`
+|`AAP_TOKEN`
+|User-provided
+
+|`portal_aap_oauth_client_secret`
+|`AAP_OAUTH_CLIENT_SECRET`
+|User-provided
+
+|`portal_github_token`
+|`GITHUB_TOKEN`
+|Optional
+
+|`portal_gitlab_token`
+|`GITLAB_TOKEN`
+|Optional
+|===
+
+=== Listing secrets
+
+[source,terminal]
+----
+sudo podman secret ls
+----
+
+=== Updating a secret
+
+To update a secret value, remove the existing secret and create a new one:
+
+[source,terminal]
+----
+sudo podman secret rm portal_aap_token
+echo -n "<new_token_value>" | sudo podman secret create portal_aap_token -
+sudo systemctl restart portal
+----
+
 == Additional resources
 
-* For information about the initial configuration wizard, see xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard].
-* For troubleshooting information, see xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting RHEL appliances].
+* xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting RHEL appliances]

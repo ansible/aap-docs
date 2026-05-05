@@ -62,19 +62,22 @@ Clone: 100% done.
 .. Browse to and select the converted disk: `disk-vmfs.vmdk`.
 .. Save the virtual machine settings.
 
-. Start the virtual machine and complete the initial configuration:
+. Start the virtual machine and provide initial configuration:
 
-.. Open the virtual machine console in vSphere.
 .. Power on the virtual machine.
-.. Follow the on-screen configuration wizard instructions.
+.. The appliance applies any configuration provided through VMware `guestinfo` properties automatically on first boot.
+.. Alternatively, SSH into the appliance after boot to configure it manually.
++
+For details, see xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
 
 .Verification
 
-* Verify that the virtual machine boots successfully and displays the configuration wizard.
-* Access the portal URL displayed at the end of the configuration wizard from your browser.
+* Verify that the virtual machine boots successfully.
+* SSH into the appliance and verify that portal services are running: `sudo ansible-portal status`
+* Access the portal URL from your browser.
 
 .Additional resources
 
-* xref:proc-self-service-initial-config-wizard_{context}[Completing the initial configuration wizard]
+* xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot]
 * The `-d thin` option creates a thin-provisioned disk, which only consumes datastore space as data is written. This is the recommended option for most deployments.
 * After confirming the virtual machine boots successfully, you can delete the original `disk.vmdk` file to reclaim datastore space.
