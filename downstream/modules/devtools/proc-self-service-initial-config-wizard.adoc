@@ -19,7 +19,7 @@ Provide initial configuration for the {SelfService} appliance so that portal ser
 
 Choose one of the following methods to provide the initial configuration.
 
-=== Using cloud-init user-data
+== Using cloud-init user-data
 
 Use this method for {OCPVShort}, cloud, and KVM/QEMU deployments.
 
@@ -64,7 +64,7 @@ The following additional fields are available for cloud-init configuration:
 * For cloud providers (AWS, GCP, Azure), pass the user-data through the instance launch configuration.
 * For local KVM/QEMU, create a cloud-init ISO or use the `-smbios` option to pass user-data.
 
-=== Using VMware `guestinfo` properties
+== Using VMware `guestinfo` properties
 
 Use this method for VMware vSphere deployments.
 
@@ -80,7 +80,7 @@ Where `<base64_encoded_config_yaml>` is the Base64-encoded content of your porta
 
 . Power on the virtual machine. The appliance detects and applies the `guestinfo` properties on first boot.
 
-=== Using a pre-seeded configuration file
+== Using a pre-seeded configuration file
 
 Use this method for automated deployments with Ansible or Terraform.
 
@@ -100,7 +100,7 @@ database:
 
 . Boot the appliance. The first-boot service detects and applies the configuration automatically.
 
-=== Configuring after deployment
+== Configuring after deployment
 
 If you deployed the appliance without providing configuration, portal services do not start.
 You can configure the appliance after deployment by editing the configuration files directly.

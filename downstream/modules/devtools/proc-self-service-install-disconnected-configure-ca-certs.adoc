@@ -19,25 +19,116 @@ $ cat registry.crt intermediate.crt root.crt > ca-bundle.crt
 $ oc create configmap registry-ca-crt \
   --from-file=ca.crt=ca-bundle.crt -n <namespace>
 ----
-. Add the volume and mount to your values file:
+. Add the volume and mount to your values file.
++
+[IMPORTANT]
+====
+Helm replaces arrays entirely rather than merging them. You must include all chart-default volumes, mounts, and init container configuration in your override. If you specify only the CA certificate entries, the chart-default values are removed and the deployment fails.
+
+To inspect the current chart defaults, run:
+
+----
+$ helm show values redhat-rhaap-portal-x.y.z.tgz
+----
+====
++
+Add the `registry-ca-crt` volume to `extraVolumes` alongside the chart defaults, and add the CA certificate volume mount to the `install-dynamic-plugins` init container:
 +
 ----
 redhat-developer-hub:
   upstream:
     backstage:
       extraVolumes:
+        # -- Chart defaults (do not remove) --
+        - name: dynamic-plugins-root
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 2Gi
+        - name: audit-log-data
+          persistentVolumeClaim:
+            claimName: '{{ printf "%s-audit-log" .Release.Name }}'
+        - name: dynamic-plugins
+          configMap:
+            defaultMode: 420
+            name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
+            optional: true
+        - name: dynamic-plugins-npmrc
+          secret:
+            defaultMode: 420
+            optional: true
+            secretName: dynamic-plugins-npmrc
+        - configMap:
+            defaultMode: 420
+            name: rbac-policy
+          name: rbac-policy
+        - name: npmcacache
+          emptyDir: {}
+        # -- Custom addition: private registry CA certificate --
         - name: registry-ca-crt
           configMap:
             name: registry-ca-crt
       initContainers:
         - name: install-dynamic-plugins
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 2.5Gi
+              ephemeral-storage: 5Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            runAsNonRoot: true
+            seccompProfile:
+              type: "RuntimeDefault"
+          image: '{{ include "backstage.image" . }}'
+          command:
+            - ./install-dynamic-plugins.sh
+            - /dynamic-plugins-root
+          env:
+            - name: NPM_CONFIG_USERCONFIG
+              value: /opt/app-root/src/.npmrc.dynamic-plugins
+          imagePullPolicy: Always
           volumeMounts:
+            # -- Chart defaults (do not remove) --
+            - mountPath: /dynamic-plugins-root
+              name: dynamic-plugins-root
+            - mountPath: /opt/app-root/src/dynamic-plugins.yaml
+              name: dynamic-plugins
+              readOnly: true
+              subPath: dynamic-plugins.yaml
+            - mountPath: /opt/app-root/src/.npmrc.dynamic-plugins
+              name: dynamic-plugins-npmrc
+              readOnly: true
+              subPath: .npmrc
+            - mountPath: /opt/app-root/src/.npm/_cacache
+              name: npmcacache
+            # -- Custom addition: private registry CA certificate --
             - name: registry-ca-crt
               mountPath: /etc/containers/certs.d/<registry-host>
               readOnly: true
+          workingDir: /opt/app-root/src
 ----
++
+[NOTE]
+====
+The `mountPath` for the CA certificate must be the registry hostname only (for example, `/etc/containers/certs.d/mirror.example.com`). Do not include repository paths. If the registry uses a non-standard port, include it in the path (for example, `/etc/containers/certs.d/mirror.example.com:5000`).
+====
 
-[IMPORTANT]
-====
-The `mountPath` must be the registry hostname only (for example, `/etc/containers/certs.d/mirror.example.com`). Do not include repository paths. If the registry uses a non-standard port, include it in the path (for example, `/etc/containers/certs.d/mirror.example.com:5000`).
-====
+.Verification
+
+. After the deployment restarts, check the `install-dynamic-plugins` init container logs for certificate errors:
++
+----
+$ oc logs <pod-name> -c install-dynamic-plugins -n <namespace> | grep -i "x509\|certificate"
+----
++
+If the CA certificate is mounted correctly, there are no `x509: certificate signed by unknown authority` errors.

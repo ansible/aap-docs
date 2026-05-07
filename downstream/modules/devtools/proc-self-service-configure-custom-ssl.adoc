@@ -35,18 +35,70 @@ oc create configmap custom-ca-bundle \
 +
 Replace `<namespace>` with the namespace where {SelfServiceShort} is installed.
 
-. Update your {SelfServiceShort} Helm chart values to mount the custom CA certificate:
+. Update your {SelfServiceShort} Helm chart values to mount the custom CA certificate.
++
+[IMPORTANT]
+====
+Helm replaces arrays entirely rather than merging them. You must include all chart-default volumes, volume mounts, and secrets in your override alongside your custom addition. If you specify only the CA certificate entries, the chart-default values are removed and the deployment fails.
+
+To inspect the current chart defaults, run:
+
+----
+$ helm show values redhat-rhaap-portal-x.y.z.tgz
+----
+====
++
+Add the `custom-ca` volume, volume mount, and any extra secrets to your values file alongside the chart defaults:
 +
 ----
 upstream:
   backstage:
     extraEnvVarsSecrets:
-      - custom-ca-bundle
+      # -- Chart default (do not remove) --
+      - rhdh-secrets
     extraVolumes:
+      # -- Chart defaults (do not remove) --
+      - name: dynamic-plugins-root
+        ephemeral:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 2Gi
+      - name: audit-log-data
+        persistentVolumeClaim:
+          claimName: '{{ printf "%s-audit-log" .Release.Name }}'
+      - name: dynamic-plugins
+        configMap:
+          defaultMode: 420
+          name: '{{ printf "%s-dynamic-plugins" .Release.Name }}'
+          optional: true
+      - name: dynamic-plugins-npmrc
+        secret:
+          defaultMode: 420
+          optional: true
+          secretName: dynamic-plugins-npmrc
+      - configMap:
+          defaultMode: 420
+          name: rbac-policy
+        name: rbac-policy
+      - name: npmcacache
+        emptyDir: {}
+      # -- Custom addition: AAP CA certificate --
       - name: custom-ca
         configMap:
           name: custom-ca-bundle
     extraVolumeMounts:
+      # -- Chart defaults (do not remove) --
+      - name: dynamic-plugins-root
+        mountPath: /opt/app-root/src/dynamic-plugins-root
+      - name: audit-log-data
+        mountPath: /var/log/redhat-developer-hub/audit
+      - mountPath: /opt/app-root/src/rbac
+        name: rbac-policy
+      # -- Custom addition: AAP CA certificate --
       - name: custom-ca
         mountPath: /etc/pki/ca-trust/source/anchors/
         readOnly: true

@@ -41,6 +41,9 @@ redhat-developer-hub:
     # Use when your mirror does not preserve the default repository path
     # (ansible-automation-platform/automation-portal).
     # ociPluginImage: "<disconnected_registry_url>/custom-path/automation-portal"
+  catalogIndex:
+    image:
+      registry: "<disconnected_registry_url>"
   upstream:
     backstage:
       # The Helm chart pins images by SHA256 digest by default.
@@ -48,7 +51,7 @@ redhat-developer-hub:
       # Override with tag-based references.
       image:
         repository: rhdh/rhdh-hub-rhel9
-        tag: "1.8"
+        tag: "<rhdh_version>"
       appConfig:
         ansible:
           rhaap:
@@ -58,13 +61,16 @@ redhat-developer-hub:
             rhaap:
               '{{- include "catalog.providers.env" . }}':
                 orgs: "<your-aap-organization-name>"
-    # If you use the built-in PostgreSQL database, uncomment the following lines.
-    # An external database is the supported production architecture.
-    # postgresql:
-    #   image:
-    #     repository: rhel9/postgresql-15
-    #     tag: "latest"
+    postgresql:
+      image:
+        repository: rhel9/postgresql-<version>
+        tag: "<postgresql_tag>"
 ----
++
+[NOTE]
+====
+The Helm chart pins the PostgreSQL image by SHA256 digest. When mirroring with `podman tag` and `podman push`, the digest is not preserved. Set `postgresql.image.tag` to the tag you used when mirroring the image.
+====
 +
 *HTTP plug-in registry delivery* (`values-tarball.yaml`):
 +
@@ -75,11 +81,14 @@ redhat-developer-hub:
     pluginMode: tarball
     # Registry host only. Replaces registry.redhat.io for the images.
     imageRegistry: "<disconnected_registry_url>"
+  catalogIndex:
+    image:
+      registry: "<disconnected_registry_url>"
   upstream:
     backstage:
       image:
         repository: rhdh/rhdh-hub-rhel9
-        tag: "1.8"
+        tag: "<rhdh_version>"
       appConfig:
         ansible:
           rhaap:
@@ -89,17 +98,25 @@ redhat-developer-hub:
             rhaap:
               '{{- include "catalog.providers.env" . }}':
                 orgs: "<your-aap-organization-name>"
-    # If you use the built-in PostgreSQL database, uncomment the following lines.
-    # An external database is the supported production architecture.
-    # postgresql:
-    #   image:
-    #     repository: rhel9/postgresql-15
-    #     tag: "latest"
+    postgresql:
+      image:
+        repository: rhel9/postgresql-<version>
+        tag: "<postgresql_tag>"
 ----
++
+[NOTE]
+====
+Replace `<rhdh_version>` and `<version>` with the versions bundled with your Helm chart. See the link:https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle[Self-Service Automation Portal Lifecycle] page for version mappings.
+====
 +
 [IMPORTANT]
 ====
 Set `imageRegistry` to the registry host only (for example, `mirror.example.com`). Do not include repository paths. The chart appends the default repository path `ansible-automation-platform/automation-portal` automatically. If your mirror uses a different repository structure, set `ociPluginImage` to the full image path instead.
+====
++
+[NOTE]
+====
+The `secrets-scm` secret is only required if you use private SCM repositories for importing catalog entities or running software templates that access SCM. If you do not use SCM integration, you can skip creating this secret.
 ====
 . Install the chart using the `helm install` command:
 +

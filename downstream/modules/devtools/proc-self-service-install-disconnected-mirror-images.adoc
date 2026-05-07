@@ -38,13 +38,24 @@ $ podman tag registry.redhat.io/rhdh/rhdh-hub-rhel9:x.y.z <disconnected_registry
 ----
 $ podman push <disconnected_registry_url>/<your_namespace>/rhdh/rhdh-hub-rhel9:x.y.z
 ----
-. If you use the built-in PostgreSQL database, mirror the PostgreSQL 15 image. An external database is the supported production architecture and does not require this step:
+. If you use the built-in PostgreSQL database, mirror the PostgreSQL image. An external database is the supported production architecture and does not require this step:
 +
 ----
-$ podman pull registry.redhat.io/rhel9/postgresql-15:<tag>
-$ podman tag registry.redhat.io/rhel9/postgresql-15:<tag> <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-15:<tag>
-$ podman push <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-15:<tag>
+$ podman pull registry.redhat.io/rhel9/postgresql-<version>:<tag>
+$ podman tag registry.redhat.io/rhel9/postgresql-<version>:<tag> <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-<version>:<tag>
+$ podman push <disconnected_registry_url>/<your_namespace>/rhel9/postgresql-<version>:<tag>
 ----
++
+Replace `<version>` with the PostgreSQL major version bundled with your Helm chart. See the link:https://access.redhat.com/page/ansible-automation-platform-self-service-automation-portal-lifecycle[Self-Service Automation Portal Lifecycle] page for version mappings.
+. Mirror the plug-in catalog index image:
++
+----
+$ podman pull registry.redhat.io/rhdh/rhdh-plugin-catalog-index-rhel9:<rhdh_version>
+$ podman tag registry.redhat.io/rhdh/rhdh-plugin-catalog-index-rhel9:<rhdh_version> <disconnected_registry_url>/<your_namespace>/rhdh/rhdh-plugin-catalog-index-rhel9:<rhdh_version>
+$ podman push <disconnected_registry_url>/<your_namespace>/rhdh/rhdh-plugin-catalog-index-rhel9:<rhdh_version>
+----
++
+Replace `<rhdh_version>` with the {RHDH} version bundled with your Helm chart.
 . If you use OCI container delivery, mirror the Ansible plug-ins OCI artifacts image:
 +
 ----
