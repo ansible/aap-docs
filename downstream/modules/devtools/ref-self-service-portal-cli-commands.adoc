@@ -243,12 +243,15 @@ sudo podman secret ls
 
 === Updating a secret
 
-To update a secret value, remove the existing secret and create a new one:
+To update a secret value, remove the existing secret and create a new one. Write the value to a temporary file on tmpfs to avoid exposing it in the process list:
 
 [source,terminal]
 ----
 sudo podman secret rm portal_aap_token
-echo -n "<new_token_value>" | sudo podman secret create portal_aap_token -
+temp_file=$(mktemp -p /dev/shm) && chmod 600 "$temp_file"
+printf '%s' "<new_token_value>" > "$temp_file"
+sudo podman secret create portal_aap_token "$temp_file"
+rm -f "$temp_file"
 sudo systemctl restart portal
 ----
 
