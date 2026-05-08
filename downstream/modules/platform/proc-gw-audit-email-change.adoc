@@ -1,0 +1,32 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="gw-audit-email-change"]
+
+= Audit email address changes
+
+Use the `detect_changed_emails` management command to identify users whose email addresses have been changed. 
+The command analyzes audit data from the activity stream and compares it against current user records. 
+
+The command does not attribute changes to specific causes. 
+It provides data for you to investigate changes that might require further action.
+
+.Procedure
+
+* To list email changes recorded in the activity stream:
++
+----
+$ aap-gateway-manage detect_changed_emails
+----
+
+* To run a full security audit that includes authenticator linkage checks, duplicate email detection, and high-risk scoring:
++
+----
+$ aap-gateway-manage detect_changed_emails --audit
+----
+
+Review the output and investigate any accounts where:
+
+* The email address does not match the expected owner based on your organization's directory.
+* The account has elevated RBAC permissions, such as organization administrator or superuser roles.
+* The email change occurred shortly before a new identity provider login.
+* The account has both local and external authenticators linked (flagged in --audit mode). 
