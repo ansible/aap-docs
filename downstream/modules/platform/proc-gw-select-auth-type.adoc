@@ -36,3 +36,17 @@ If *Remove Users* is enabled, the `is_superuser` permission will be removed from
 If *Remove Users* is disabled, the `is_superuser` permission _will not_ be removed from the user. The authenticator maps will not have an opinion as to whether it should be there or not so after login the user _will_ have the `is_superuser` permission.
 +
 . Click btn:[Create Authentication Method] and proceed to xref:gw-define-rules-triggers[Define authentication mapping rules and triggers].
++
+[IMPORTANT]
+====
+Before you enable an external authenticator, verify that your identity provider enforces email verification and restricts self-service email changes. 
+The platform accepts email claims from identity providers without verifying email ownership.
+====
++
+If an identity provider permits unverified email addresses or unrestricted email changes, this can result in unintended account linking.
++
+When you select an identity provider:
++
+* Confirm that the provider verifies email addresses during user registration.
+* Confirm that the provider requires administrator approval for email changes, or that email changes trigger re-verification.
+* If the provider does not meet these requirements, use a different provider or implement compensating controls.
