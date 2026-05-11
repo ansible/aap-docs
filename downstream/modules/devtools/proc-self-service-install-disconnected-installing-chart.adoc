@@ -47,8 +47,8 @@ redhat-developer-hub:
   upstream:
     backstage:
       # The Helm chart pins images by SHA256 digest by default.
-      # When mirroring with podman tag/push, the digest is not preserved.
-      # Override with tag-based references.
+      # Override with tag-based references if your mirroring method
+      # does not preserve digests.
       image:
         repository: rhdh/rhdh-hub-rhel9
         tag: "<rhdh_version>"
@@ -69,7 +69,7 @@ redhat-developer-hub:
 +
 [NOTE]
 ====
-The Helm chart pins the PostgreSQL image by SHA256 digest. When mirroring with `podman tag` and `podman push`, the digest is not preserved. Set `postgresql.image.tag` to the tag you used when mirroring the image.
+The Helm chart pins the PostgreSQL image by SHA256 digest. If your mirroring method does not preserve digests, set `postgresql.image.tag` to the tag you used when mirroring the image.
 ====
 +
 *HTTP plug-in registry delivery* (`values-tarball.yaml`):
