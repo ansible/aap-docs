@@ -5,9 +5,7 @@
 = OCI container delivery
 
 [role="_abstract"]
-Use OCI container delivery to automatically pull an OCI container from `registry.redhat.io` that includes the {SelfService} plug-ins. This is the recommended method for production deployments.
-
-This method is the default for the Helm chart and is the recommended method for production deployments.
+Use OCI container delivery to automatically pull an OCI container from `registry.redhat.io` that includes the {SelfService} plug-ins. This is the recommended method for new installations and production deployments.
 
 .Prerequisites
 
@@ -20,7 +18,7 @@ This method is the default for the Helm chart and is the recommended method for 
 .Procedure
 
 . Create an `auth.json` file on your local machine.
-. Add the following structure to the `auth.json` file:
+. Add registry credentials for `registry.redhat.io` to the `auth.json` file:
 +
 ----
 {
@@ -31,14 +29,31 @@ This method is the default for the Helm chart and is the recommended method for 
   }
 }
 ----
++
+If you pull plug-in artifacts from a private or mirror registry, add an entry for that registry in the same `auth.json` file:
++
+----
+{
+  "auths": {
+    "registry.redhat.io": {
+      "auth": "<base64-encoded-username-password>"
+    },
+    "<private_registry_url>": {
+      "auth": "<base64-encoded-registry-credentials>"
+    }
+  }
+}
+----
++
+For full mirror registry configuration including `imageRegistry`, `ociPluginImage`, and image mirroring procedures, see xref:self-service-disconnected-install-prepare_self-service-disconnected-install-prepare[Install {SelfServiceShort} in air-gapped {OCP} environments].
 
-. Generate the base64-encoded authentication value:
+. Generate the base64-encoded authentication value for each registry:
 +
 ----
 printf '%s' '<username>:<password>' | base64 -w0
 ----
 
-. Replace `<base64-encoded-username-password>` in the `auth.json` file with the output from the previous step.
+. Replace the `<base64-encoded-username-password>` and `<base64-encoded-registry-credentials>` placeholders in the `auth.json` file with the output from the previous step.
 . Create the authentication secret in the target OpenShift project. The secret name must match your Helm release name.
 +
 If you install from the OpenShift catalog and you use the default release name `redhat-rhaap-portal`:
@@ -66,6 +81,8 @@ oc get secret <release-name>-dynamic-plugins-registry-auth
 [IMPORTANT]
 ====
 Create this secret in the same OpenShift project as the Helm release, and create it before you install or upgrade the Helm release.
+
+The dynamic plug-in init container uses `skopeo` to pull OCI artifacts directly. It does not use Kubernetes `imagePullSecrets`, cluster-level `ImageDigestMirrorSet` or `ImageTagMirrorSet`, or {OCPShort} global pull secrets. You must provide registry credentials in the `auth.json` secret even if your cluster is configured with image mirrors.
 ====
 
 *OpenShift web console steps*
@@ -86,7 +103,7 @@ When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` 
 * `oci` -- OCI container delivery (recommended).
 * `tarball` -- HTTP plug-in registry.
 
-Verify that `pluginMode` is set to the correct value. If you omit this setting, the chart uses its built-in default.
+Verify that `pluginMode` is set to the correct value. If you omit this setting, the chart defaults to `tarball`.
 
 ----
 redhat-developer-hub:

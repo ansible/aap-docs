@@ -17,11 +17,15 @@ endif::[]
 :context: self-service-create-ocp-registry
 
 [role="_abstract"]
-{SelfServiceShortStart} supports two plug-in installation methods. Choose the method that fits your environment:
+{SelfServiceShortStart} supports two plug-in delivery methods:
 
-* *OCI container (recommended)*: {SelfService} automatically pulls an Open Container Initiative (OCI) container from `registry.redhat.io`.
-* *HTTP plug-in registry*: Manually create an HTTP plug-in registry that contains the necessary {SelfService} plug-ins.
+* *OCI container delivery (recommended)*: {SelfService} automatically pulls an Open Container Initiative (OCI) container from `registry.redhat.io` that contains the plug-ins. Use this method for new installations.
+* *HTTP plug-in registry (deprecated)*: Manually create an HTTP plug-in registry that hosts plug-in tarball files. This method is deprecated and will be removed in a future release of {PlatformNameShort}. Existing installations that use this method should migrate to OCI container delivery.
 
+[NOTE]
+====
+If you are installing {SelfServiceShort} in a disconnected or air-gapped {OCP} environment, complete the pre-installation configuration in this chapter and then follow the procedures in xref:self-service-disconnected-install-prepare_self-service-disconnected-install-prepare[Install {SelfServiceShort} in air-gapped {OCP} environments]. The disconnected installation chapter includes additional steps for mirroring container images, configuring registry authentication, and installing the Helm chart in isolated environments.
+====
 
 include::devtools/proc-self-service-oci-container-delivery.adoc[leveloffset=+1]
 
