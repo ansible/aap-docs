@@ -1,0 +1,85 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-add-devtools-sidecar_{context}"]
+= Adding the Ansible Developer Tools sidecar container
+
+[role="_abstract"]
+After the plug-ins load, add the Ansible Developer Tools container (`ansible-devtools-server`) as a sidecar container to the {RHDH} pod.
+
+[NOTE]
+====
+The `ansible-dev-tools-rhel9` container image is hosted on `registry.redhat.io` and requires {PlatformName} subscription entitlements.
+If your {OCPShort} cluster's global pull secret does not include AAP-entitled credentials, you must create an `imagePullSecrets` entry in the deployment patch.
+You can reuse the same `auth.json` credentials created for the dynamic plug-ins registry secret:
+
+[source,terminal]
+----
+$ oc create secret docker-registry rhdh-registry-pull-secret \
+    --from-file=.dockerconfigjson=auth.json \
+    -n <your_rhdh_namespace>
+----
+
+Then add the `imagePullSecrets` field to the deployment patch as shown in the examples below.
+====
+
+.Operator installation
+
+Modify the Backstage custom resource to add a `containers` block in the `spec.deployment.patch.spec.template.spec` block:
+
+[source,yaml,subs="+attributes"]
+----
+apiVersion: rhdh.redhat.com/v1alpha5
+kind: Backstage
+metadata:
+  name: developer-hub
+spec:
+  deployment:
+    patch:
+      spec:
+        template:
+          spec:
+            imagePullSecrets:
+              - name: rhdh-registry-pull-secret
+            containers:
+              - command:
+                  - adt
+                  - server
+                image: registry.redhat.io/ansible-automation-platform-{PlatformVers}/ansible-dev-tools-rhel9:latest
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 8000
+                    protocol: TCP
+----
+
+Click btn:[Save].
+
+.Helm chart installation
+
+Update the `extraContainers` section in the Helm chart YAML:
+
+[source,yaml,subs="+attributes"]
+----
+upstream:
+  backstage:
+    # ...
+    extraContainers:
+      - command:
+          - adt
+          - server
+        image: >-
+          registry.redhat.io/ansible-automation-platform-{PlatformVers}/ansible-dev-tools-rhel9:latest
+        imagePullPolicy: IfNotPresent
+        name: ansible-devtools-server
+        ports:
+          - containerPort: 8000
+    # ...
+----
+
+[NOTE]
+=====
+The image pull policy is `imagePullPolicy: IfNotPresent`.
+The image is pulled only if it does not already exist on the node.
+Update it to `imagePullPolicy: Always` if you always want to use the latest image.
+=====
+
+Click btn:[Upgrade].

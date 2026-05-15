@@ -1,0 +1,24 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-verify-plugin-installation_{context}"]
+= Verifying the plug-in installation
+
+[role="_abstract"]
+After configuring the dynamic plug-ins and sidecar container, verify that the Ansible plug-ins installed successfully.
+
+.Procedure
+
+. In the `install-dynamic-plugin` container logs, search for the Ansible plug-ins.
+A successful installation shows:
++
+[source,terminal]
+----
+==> Successfully installed dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<tag>!ansible-plugin-backstage-rhaap
+==> Successfully installed dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<tag>!ansible-plugin-backstage-self-service
+==> Successfully installed dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<tag>!ansible-backstage-plugin-catalog-backend-module-rhaap
+==> Successfully installed dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<tag>!ansible-plugin-scaffolder-backend-module-backstage-rhaap
+----
+
+. Verify that the Ansible plug-in is present in the navigation pane.
+
+. If you select *Administration*, the installed plug-ins are listed in the *Plugins* tab.
