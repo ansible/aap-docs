@@ -52,10 +52,13 @@ The appliance parses the custom `aap` and `database` fields directly from the cl
 +
 The following additional fields are available for cloud-init configuration:
 +
-* `network.base_url` — Set the portal base URL (auto-detected if not specified).
+* `network.base_url` — Set the user-accessible URL (auto-detected from the VM IP address if not specified). Set this when users access {SelfService} through a hostname, route, or load balancer.
 * `network.port` — Set the HTTPS port (default: 443).
-* `database.external.*` — Configure an external PostgreSQL database (`host`, `port`, `name`, `user`, `password`, `ssl`).
-* `integrations.github.token` and `integrations.gitlab.token` — Configure SCM integration tokens.
+* `security.backend_secret` — Set the backend authentication secret (`auto` generates a random value).
+* `database.builtin.password` and `database.builtin.admin_password` — Set built-in database passwords (`auto` generates random values).
+* `database.external.*` — Configure an external PostgreSQL database (`host`, `port`, `name`, `user`, `password`, `ssl`). The database user requires the `CREATEDB` privilege.
+* `integrations.github.url`, `integrations.github.token` — Configure GitHub integration (URL defaults to `github.com`).
+* `integrations.gitlab.url`, `integrations.gitlab.token` — Configure GitLab integration (URL defaults to `gitlab.com`).
 * `backup.enabled`, `backup.schedule`, `backup.retention_days` — Configure automated backups.
 
 . Provide the user-data file during deployment:

@@ -103,10 +103,34 @@ Creates a backup archive containing the portal configuration, Podman secrets, an
 * `--list` lists existing backups.
 * `--export` copies the latest backup to the specified directory. If no backup exists, one is created first.
 
-[NOTE]
+[IMPORTANT]
 ====
-Store backup files in a secure location. Backup archives contain sensitive credentials. Protect them accordingly.
+Backup archives contain credentials in plain text. Restrict file permissions on backup archives. Encrypt archives before transferring to remote storage:
+
+[source,terminal]
+----
+gpg --symmetric --cipher-algo AES256 /var/lib/portal/backups/<backup-file>.tar.gz
+----
 ====
+
+.Example output
+[source,terminal]
+----
+Portal Backup Tool
+==================
+1) Full backup (config + database + secrets) [recommended]
+2) Config only (config + secrets, no database)
+3) Database only
+
+Select backup type [1]: 1
+
+Creating backup...
+  Backing up configuration... done
+  Backing up secrets... done
+  Backing up database... done
+
+Backup created: /var/lib/portal/backups/portal-backup-2026-05-07-143022.tar.gz
+----
 
 == ansible-portal restore
 
@@ -135,6 +159,24 @@ Restores the portal configuration, Podman secrets, Quadlet drop-in files, and da
 ====
 Restoring a backup overwrites the current portal configuration. Use `--dry-run` to preview the restore before executing. Create a backup of the current state before restoring if you want to preserve it.
 ====
+
+.Example output
+[source,terminal]
+----
+Portal Restore Tool
+===================
+Restoring from: /var/lib/portal/backups/portal-backup-2026-05-07-143022.tar.gz
+
+Stopping services...
+  Restoring configuration... done
+  Restoring secrets... done
+  Restoring database... done
+Starting services...
+
+Restore complete.
+----
+
+Services stop during restore and restart automatically.
 
 == ansible-portal registry-login
 

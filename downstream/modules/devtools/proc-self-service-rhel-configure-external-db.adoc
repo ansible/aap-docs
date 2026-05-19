@@ -1,0 +1,75 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-rhel-configure-external-db_{context}"]
+
+= Configure an external database
+
+[role="_abstract"]
+
+By default, the {SelfService} {RHEL} appliance runs a built-in PostgreSQL database.
+For production deployments, connect to an external PostgreSQL database.
+
+You can provide external database settings in the cloud-init user-data at first boot (see xref:con-self-service-rhel-prerequisites_{context}[External database cloud-init template]) or configure the database after deployment.
+
+.Prerequisites
+
+* A PostgreSQL database instance accessible from the appliance.
+* A database user with the `CREATEDB` privilege.
+* The database password.
+* SSH access to the appliance.
+
+.Procedure
+
+. Edit the configuration file:
++
+[source,terminal]
+----
+$ sudo vi /etc/portal/configs/app-config/app-config.production.yaml
+----
+
+. Update the `backend.database` section:
++
+[source,yaml]
+----
+backend:
+  database:
+    connection:
+      host: <database-host>
+      port: 5432
+      user: <database-user>
+      ssl:
+        require: true
+    client: pg
+----
++
+The database user requires the `CREATEDB` privilege.
+
+. Store the database password as a Podman secret.
++
+Write the value to a temporary file on tmpfs to avoid exposing it in the process list:
++
+[source,terminal]
+----
+$ temp_file=$(mktemp -p /dev/shm) && chmod 600 "$temp_file"
+$ printf '%s' "<database-password>" > "$temp_file"
+$ sudo podman secret create portal_postgresql_password "$temp_file"
+$ rm -f "$temp_file"
+----
+
+. Restart the {SelfService} service:
++
+[source,terminal]
+----
+$ sudo systemctl restart portal
+----
+
+.Verification
+
+* Check the portal logs to verify the database connection:
++
+[source,terminal]
+----
+$ sudo journalctl -u portal --no-pager | grep -i "database"
+----
++
+The output shows a successful database connection with no errors.

@@ -1,0 +1,73 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-self-service-rhel-upgrade-survival_{context}"]
+
+= What survives an upgrade
+
+[role="_abstract"]
+
+The following table describes what happens to each type of content during a bootc upgrade of the {SelfService} {RHEL} appliance.
+
+[cols="2,2,1,3",options="header"]
+|===
+| Content | Location | Survives upgrade | Notes
+
+| Portal configuration
+| `/etc/portal/configs/`
+| Yes
+| Three-way merge preserves your modifications
+
+| SSL certificates
+| `/etc/portal/ssl/`
+| Yes
+| Three-way merge
+
+| Quadlet drop-ins
+| `/etc/containers/systemd/portal.container.d/`
+| Yes
+| Three-way merge
+
+| Quadlet port customization
+| `/etc/containers/systemd/`
+| Yes
+| Three-way merge
+
+| PostgreSQL data
+| `/var/lib/portal/postgres-data/`
+| Yes
+| Never touched by bootc
+
+| Backups
+| `/var/lib/portal/backups/`
+| Yes
+| Never touched by bootc
+
+| Podman secrets
+| `/var/lib/containers/`
+| Yes
+| Never touched by bootc
+
+| Ansible plugins
+| `/usr/share/portal/plugins/`
+| Updated
+| New plugins from the new image
+
+| Portal scripts
+| `/usr/share/portal/scripts/`
+| Updated
+| New scripts from the new image
+
+| Dynamic plugin configs
+| `/var/lib/portal/dynamic-plugins-root/`
+| Cleared
+| Regenerated from new plugins on first start
+|===
+
+== Post-upgrade reconciliation
+
+After reboot, the appliance automatically reconciles Ansible plugins and configuration with the new image version:
+
+. Clears the dynamic plugins directory so that plugins are regenerated from the new image.
+. Clears generated configuration files (regenerated on portal start).
+. Creates any new directories required by the new image version.
+. Fixes file ownership for portal and PostgreSQL directories.

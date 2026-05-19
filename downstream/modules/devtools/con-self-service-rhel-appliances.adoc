@@ -63,3 +63,42 @@ The pre-built appliance images include all required container images and plug-in
 
 For appliance upgrades in disconnected environments, a mirror registry or OCI archive provides the updated container images.
 Use the `ansible-portal registry-login` command to authenticate to a private registry mirror.
+
+== Understanding the appliance
+
+Before configuring or managing the appliance, review how its key components work together.
+
+=== Configuration files
+
+The {SelfService} RHEL appliance uses two YAML configuration files at `/etc/portal/configs/app-config/`:
+
+`app-config.yaml`:: Infrastructure configuration including the base URL, database connection, TLS, and system defaults. This file is set during initial deployment and is not typically modified.
+
+`app-config.production.yaml`:: Application configuration including {PlatformNameShort} connection, OAuth settings, SCM integrations, and catalog synchronization. Edit this file for day-to-day configuration changes. To apply changes, edit the file and restart the {SelfService} service. Changes take effect after the restart, which takes approximately 60 seconds.
+
+=== Service management
+
+The {SelfService} RHEL appliance runs three `systemd` services that manage Podman containers:
+
+`portal.service`:: {SelfService} application. Listens on port 443 (HTTPS).
+
+`postgres.service`:: PostgreSQL database. Listens on port 5432 (internal container network only). This service is skipped when an external database is configured.
+
+`devtools.service`:: Ansible development tools. Provides Ansible Navigator and content creator services for building execution environments and developing Ansible content from the {SelfService} interface.
+
+[NOTE]
+====
+Restarting the `portal` service also restarts `postgres` and `devtools` due to service dependencies.
+====
+
+Use standard `systemctl` and `journalctl` commands to manage and inspect these services:
+
+[source,terminal]
+----
+sudo systemctl restart portal
+sudo journalctl -u portal -f
+----
+
+=== SSL certificates
+
+The appliance generates self-signed SSL certificates at first boot and stores them at `/etc/portal/ssl/`. Replace these with certificates from a trusted certificate authority for production use.

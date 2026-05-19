@@ -1,0 +1,219 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-self-service-rhel-prerequisites_{context}"]
+
+= Prerequisites for deploying {SelfService} on {RHEL}
+
+[role="_abstract"]
+
+Before you deploy a {SelfService} {RHEL} appliance, verify that your environment meets the system requirements, network requirements, and access requirements.
+Complete the pre-installation configuration in {PlatformNameShort} and prepare a cloud-init configuration file for first-boot setup.
+
+== System requirements
+
+.System requirements for {SelfService} {RHEL} appliances
+[cols="1,1,1",options="header"]
+|===
+|Resource |Minimum |Recommended
+
+|CPU
+|4 vCPU
+|6 vCPU
+
+|Memory
+|16 GB
+|24 GB
+
+|Disk space
+|40 GB
+|60 GB
+
+|Architecture
+|AMD64/x86_64
+|--
+
+|Operating system
+|{RHEL} 9.6 or later (included in appliance)
+|{RHEL} 9.7
+|===
+
+The recommended values include headroom for the built-in database.
+For production deployments, use an external PostgreSQL database.
+The built-in database is suitable for evaluation and small environments.
+
+== Network requirements
+
+The following table lists the default ports used by the {SelfService} {RHEL} appliance.
+The HTTPS port is configurable after deployment.
+See xref:proc-self-service-rhel-configure-url_{context}[Set a custom user-accessible URL or port].
+
+.Default ports for {SelfService} {RHEL} appliances
+[cols="1,1,1,3",options="header"]
+|===
+|Direction |Port |Protocol |Purpose
+
+|Inbound
+|443 (default)
+|HTTPS
+|User access to {SelfService}
+
+|Inbound
+|22
+|SSH
+|Administrator access to the appliance
+
+|Outbound
+|443
+|HTTPS
+|Communication with the {PlatformNameShort} instance
+
+|Outbound
+|443
+|HTTPS
+|Image pulls from `registry.redhat.io` (upgrades only, not required with a mirror registry)
+|===
+
+Port 5432 (PostgreSQL) is used internally between containers and is not exposed to the network.
+
+== Required access
+
+* An {PlatformNameShort} 2.5 or later instance with administrator privileges.
+* An active Red Hat {PlatformNameShort} subscription.
+* An active {RHEL} subscription (for the KVM host, if applicable).
+* The pre-built QCOW2 or VMDK appliance image, available from the link:https://access.redhat.com/downloads/content/480[Red Hat {PlatformNameShort} downloads page].
+* An SSH key pair for appliance access.
+
+== Prepare for installation
+
+Before deploying the appliance, complete the prerequisite steps in link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html/installing_self-service_automation_portal/self-service-preinstall-config_aap-self-service-install[Pre-installation configuration].
+Create an OAuth application and generate an API token.
+You need the *Client ID*, *Client Secret*, and *API Token* values for the cloud-init configuration.
+
+Optional: If you want to import custom templates from private GitHub or GitLab repositories, create a personal access token for each service before you begin.
+You provide these tokens in the cloud-init configuration.
+See xref:ref-self-service-cloud-init-reference_{context}[Cloud-init reference] for required token scopes.
+
+== Prepare the cloud-init configuration
+
+The appliance uses cloud-init to apply your configuration at first boot.
+Cloud-init is a standard tool for automating the initial setup of virtual machines.
+It creates user accounts, injects SSH keys, and runs custom configuration scripts.
+The appliance extends cloud-init with custom fields for {PlatformNameShort} credentials and database settings.
+For general information about cloud-init, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_cloud-init_for_rhel_9/configuring-cloud-init_cloud-content[Configuring cloud-init] in the {RHEL} documentation.
+
+Create a cloud-init user-data file with your SSH keys and {PlatformNameShort} credentials.
+
+The following four {PlatformNameShort} fields are required.
+Without them, {SelfService} services do not start:
+
+* `aap.host_url`
+* `aap.token`
+* `aap.oauth.client_id`
+* `aap.oauth.client_secret`
+
+SSH keys are required for access.
+The appliance has no default password.
+
+All other fields are optional.
+The {SelfService} {RHEL} appliance auto-generates passwords for the default built-in database deployed during initial installation, backend secrets, and a user-accessible URL if you omit them.
+
+[TIP]
+====
+Keep quotation marks around SSH public keys in the cloud-init user-data file.
+====
+
+=== Minimal cloud-init template
+
+Replace the placeholder values in angle brackets.
+All other values auto-generate at first boot.
+
+[source,yaml]
+----
+#cloud-config
+
+users:
+  - name: <username>
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - "<your-ssh-public-key>"
+
+aap:
+  host_url: "https://<aap-host>"
+  token: "<aap-api-token>"
+  oauth:
+    client_id: "<oauth-client-id>"
+    client_secret: "<oauth-client-secret>"
+----
+
+=== Full cloud-init template
+
+This template includes all supported fields.
+Replace values marked with angle brackets.
+Remove or leave optional sections as-is.
+
+[source,yaml]
+----
+#cloud-config
+
+users:
+  - name: <username>
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - "<your-ssh-public-key>"
+
+aap:
+  host_url: "https://<aap-host>"
+  token: "<aap-api-token>"
+  check_ssl: true
+  oauth:
+    client_id: "<oauth-client-id>"
+    client_secret: "<oauth-client-secret>"
+
+database:
+  type: builtin
+  builtin:
+    password: "auto"
+    admin_password: "auto"
+
+security:
+  backend_secret: "auto"
+
+network:
+  port: 443
+  base_url: "https://portal.example.com"
+
+integrations:
+  github:
+    url: "github.com"
+    token: "<github-personal-access-token>"
+  gitlab:
+    url: "gitlab.com"
+    token: "<gitlab-personal-access-token>"
+----
+
+* *`aap.check_ssl`* -- Set to `false` if your {PlatformNameShort} instance uses a self-signed certificate.
+* *`network.base_url`* -- Set this when users access the {SelfService} {RHEL} appliance through a hostname, route, or load balancer. If omitted, the user-accessible URL is auto-detected from the VM IP address.
+* *`network.port`* -- The HTTPS listen port. Default is `443`. If you are using the standard port 443, you do not need to specify the port. If you set a custom port, you must also open that port on any firewall and, for {OCPVShort} deployments, update the {OCPShort} route to use the custom port.
+* *`integrations`* -- Optional. Only required if you need to import custom templates from private GitHub or GitLab repositories. Public repository access does not require a token.
+
+=== External database cloud-init template
+
+To connect to an existing PostgreSQL database instead of the built-in one, use the following `database` section:
+
+[source,yaml]
+----
+database:
+  type: external
+  external:
+    host: "<database-host>"
+    port: 5432
+    name: "portal_db"
+    user: "<database-user>"
+    password: "<database-password>"
+    ssl: true
+----
+
+The database user requires the `CREATEDB` privilege.
+
+Save the cloud-init user-data file.
+You will use it during the platform-specific installation procedure.

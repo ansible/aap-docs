@@ -1,0 +1,65 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-connect-verify_{context}"]
+
+= Connecting and verifying {SelfService}
+
+[role="_abstract"]
+
+After deploying the {SelfService} appliance on any platform, complete these post-installation steps to update the OAuth redirect URI, verify service health, and sign in to the portal.
+
+== Update the OAuth redirect URI
+
+Update the OAuth application in {PlatformNameShort} with the actual {SelfService} address.
+
+.Procedure
+. Log in to {PlatformNameShort} as an administrator.
+. Navigate to *Access Management > OAuth Applications > automation-portal*.
+. Update *Redirect URIs* to `\https://<portal-address>/api/auth/rhaap/handler/frame`.
++
+* For {RHEL} with KVM: use the VM IP address.
+* For {OCPVShort}: use the route hostname.
+* For VMware `vSphere`: use the VM IP address or hostname.
++
+. Click *Save*.
+
+== Verify service health
+
+SSH into the {SelfService} {RHEL} appliance and check the service status:
+
+[source,terminal]
+----
+$ sudo systemctl status portal postgres devtools
+----
+
+Example output for a healthy {SelfService} {RHEL} appliance:
+
+[source,terminal]
+----
+● portal.service - Automation portal
+     Active: active (running) since ...
+● postgres.service - PostgreSQL database
+     Active: active (running) since ...
+● devtools.service - Ansible development tools
+     Active: active (running) since ...
+----
+
+All three services should show `active (running)`.
+
+To view detailed logs for a specific service:
+
+[source,terminal]
+----
+$ sudo journalctl -u portal -n 100 --no-pager
+----
+
+== Sign in to {SelfService}
+
+.Procedure
+. Open `\https://<portal-address>` in a browser.
+. Click *Sign in with RHAAP*.
+. Authenticate with your {PlatformNameShort} credentials.
+
+A successful login confirms that the OAuth integration with {PlatformNameShort} is working.
+The {SelfService} catalog displays synchronized job templates from {PlatformNameShort}.
+If no templates appear, verify that the API token has access to job templates in {PlatformNameShort}.

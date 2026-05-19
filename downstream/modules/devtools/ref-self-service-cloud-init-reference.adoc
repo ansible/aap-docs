@@ -1,0 +1,187 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-self-service-cloud-init-reference_{context}"]
+
+= Cloud-init reference
+
+[role="_abstract"]
+
+The following tables describe all cloud-init fields supported by the {SelfService} {RHEL} appliance.
+
+== SSH access (standard cloud-init)
+
+.SSH access fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`users[].name`
+|Yes
+|--
+|Linux username for SSH access.
+
+|`users[].sudo`
+|Yes
+|--
+|Sudo privileges. Use `ALL=(ALL) NOPASSWD:ALL`.
+
+|`users[].ssh_authorized_keys[]`
+|Yes
+|--
+|One or more SSH public keys.
+|===
+
+== {PlatformNameShort} connection
+
+.{PlatformNameShort} connection fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`aap.host_url`
+|Yes
+|--
+|{PlatformNameShort} URL (for example, `\https://aap.example.com`).
+
+|`aap.token`
+|Yes
+|--
+|{PlatformNameShort} API token with administrator privileges.
+
+|`aap.check_ssl`
+|No
+|`true`
+|Set `false` for self-signed {PlatformNameShort} certificates.
+
+|`aap.oauth.client_id`
+|Yes
+|--
+|OAuth 2.0 application client ID.
+
+|`aap.oauth.client_secret`
+|Yes
+|--
+|OAuth 2.0 application client secret.
+|===
+
+== Database
+
+.Database fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`database.type`
+|No
+|`builtin`
+|`builtin` or `external`.
+
+|`database.builtin.password`
+|No
+|`auto`
+|PostgreSQL user password. `auto` generates a random value.
+
+|`database.builtin.admin_password`
+|No
+|`auto`
+|PostgreSQL admin password. `auto` generates a random value.
+
+|`database.builtin.name`
+|No
+|`portal_db`
+|Database name.
+
+|`database.builtin.user`
+|No
+|`portal_user`
+|Database user.
+
+|`database.external.host`
+|Yes (if external)
+|--
+|External PostgreSQL hostname.
+
+|`database.external.port`
+|No
+|`5432`
+|External PostgreSQL port.
+
+|`database.external.name`
+|No
+|`portal_db`
+|External database name.
+
+|`database.external.user`
+|No
+|`portal_user`
+|External database user. Requires the `CREATEDB` privilege.
+
+|`database.external.password`
+|Yes (if external)
+|--
+|External database password.
+
+|`database.external.ssl`
+|No
+|`true`
+|Enable SSL for external database connection.
+|===
+
+== Security
+
+.Security fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`security.backend_secret`
+|No
+|`auto`
+|Backend authentication secret. `auto` generates a random value.
+|===
+
+== Network
+
+.Network fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`network.port`
+|No
+|`443`
+|{SelfService} HTTPS listen port. If you are using the standard port 443, you do not need to specify this field.
+
+|`network.base_url`
+|No
+|Auto-detected
+|User-accessible URL that users enter in their browser. Set this when users access {SelfService} through a hostname, route, or load balancer. If omitted, auto-detected from the VM IP address.
+|===
+
+== Source control integrations
+
+.Source control integration fields
+[cols="2,1,1,4",options="header"]
+|===
+|Field |Required |Default |Description
+
+|`integrations.github.url`
+|No
+|`github.com`
+|GitHub hostname. For GitHub Enterprise, omit `\https://`.
+
+|`integrations.github.token`
+|No
+|--
+|GitHub personal access token.
+
+|`integrations.gitlab.url`
+|No
+|`gitlab.com`
+|GitLab hostname. For self-hosted GitLab, omit `\https://`.
+
+|`integrations.gitlab.token`
+|No
+|--
+|GitLab personal access token.
+|===

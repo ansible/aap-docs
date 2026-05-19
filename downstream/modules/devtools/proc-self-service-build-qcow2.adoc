@@ -46,7 +46,7 @@ pip install -r ~/.ansible/collections/ansible_collections/ansible/portal_install
         name: ansible.portal_installer.create_image
         tasks_from: qcow2
       vars:
-        create_image_bootc_image: "registry.redhat.io/aap/portal-bootc:latest"
+        create_image_bootc_image: "registry.redhat.io/ansible-automation-platform/bootc-automation-portal-rhel9:latest"
         create_image_output_dir: "/tmp/portal-output"
         create_image_registry_auth: "{{ _auth_file.content | b64decode | from_json }}"
         create_image_users:

@@ -1,0 +1,182 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-rhel-upgrade_{context}"]
+
+= Upgrade the {SelfService} {RHEL} appliance
+
+[role="_abstract"]
+
+The {SelfService} {RHEL} appliance uses {RHEL} image mode (bootc) for atomic upgrades.
+When you upgrade, the entire system image is replaced atomically.
+Your configuration, data, and secrets are preserved.
+If an upgrade causes issues, you can roll back to the previous image in one command.
+
+Bootc downloads only the layers that changed between the current and new image, making incremental upgrades fast and bandwidth-efficient.
+
+Bootc divides the filesystem into three categories that determine what happens during an upgrade:
+
+[cols="1,2,3",options="header"]
+|===
+| Path | Upgrade behavior | What the appliance stores here
+
+| `/usr`
+| Replaced atomically with the new image
+| Portal scripts, pre-baked Ansible plugins, image version stamp
+
+| `/etc`
+| Three-way merged (your changes are preserved)
+| Portal configuration (`app-config.production.yaml`), Quadlet files, Quadlet drop-ins, SSL certificates
+
+| `/var`
+| Never touched by bootc
+| PostgreSQL database, backups, Podman secrets, generated configs
+|===
+
+Your configuration files in `/etc` are preserved through upgrades using a three-way merge: bootc compares the original file from the old image, your modified version, and the new file from the new image.
+Your changes take precedence.
+Files in `/var` (database, backups) are never modified by bootc.
+
+For more information about {RHEL} image mode, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/managing-rhel-bootc-images[Managing RHEL bootc images].
+
+.Prerequisites
+
+* Back up your data before upgrading.
+See xref:ref-self-service-portal-cli-commands_{context}[Back up and restore data].
+* For connected upgrades, authenticate to `registry.redhat.io` (see xref:authenticate-to-the-container-registry_{context}[Authenticate to the container registry]).
+* For disconnected upgrades, configure a mirror registry.
+See xref:proc-self-service-rhel-upgrade-disconnected_{context}[Upgrade the appliance in a disconnected environment].
+
+[id="authenticate-to-the-container-registry_{context}"]
+== Authenticate to the container registry
+
+To pull new appliance images from `registry.redhat.io`, authenticate to the registry and save the credentials where bootc can find them.
+
+[IMPORTANT]
+====
+Bootc and Podman use separate credential stores.
+The `--authfile /etc/ostree/auth.json` flag saves credentials to the location that `bootc upgrade` and `bootc switch` read.
+Running `podman login` without `--authfile` stores credentials only for Podman and does not authenticate bootc operations.
+====
+
+.Procedure
+
+. SSH into the {SelfService} {RHEL} appliance and log in to the container registry:
++
+[source,terminal]
+----
+$ sudo podman login --authfile /etc/ostree/auth.json registry.redhat.io
+----
+
+== Upgrade the appliance
+
+.Procedure
+
+. Back up your data.
+See xref:ref-self-service-portal-cli-commands_{context}[Back up and restore data].
+
+. Run the upgrade:
++
+[source,terminal]
+----
+$ sudo bootc upgrade
+----
++
+The upgrade is staged and does not take effect until you reboot.
+The current version continues running.
+You can schedule the reboot for a convenient maintenance window.
++
+`bootc upgrade` pulls the latest image for the current tag.
+To upgrade to a specific version, use `bootc switch` with a version tag:
++
+[source,terminal]
+----
+$ sudo bootc switch registry.redhat.io/ansible-automation-platform/bootc-automation-portal-rhel9:<version>
+----
+
+. Reboot to activate the new image:
++
+[source,terminal]
+----
+$ sudo systemctl reboot
+----
+
+.Verification
+
+* Verify that the new image is booted:
++
+[source,terminal]
+----
+$ sudo bootc status
+----
++
+The booted digest matches the digest from the upgrade output.
+The previous version is retained as a rollback target.
+
+* Check the portal service logs:
++
+[source,terminal]
+----
+$ sudo journalctl -u portal -f
+----
+
+* Verify that all services are running:
++
+[source,terminal]
+----
+$ sudo systemctl status portal postgres devtools
+----
++
+All three services (`portal`, `postgres`, `devtools`) show `active (running)`.
+
+== Roll back an upgrade
+
+Bootc maintains two image slots: the booted image and one rollback image.
+After an upgrade, the previous version becomes the rollback target.
+After a rollback, the upgraded version becomes the rollback target.
+You can switch between the two versions as needed.
+
+If the new version has issues, roll back to the previous image.
+
+.Procedure
+
+. Roll back to the previous image:
++
+[source,terminal]
+----
+$ sudo bootc rollback
+----
+
+. Reboot to activate the rollback image:
++
+[source,terminal]
+----
+$ sudo systemctl reboot
+----
+
+.Verification
+
+* Confirm the rollback was applied:
++
+[source,terminal]
+----
+$ sudo bootc status
+----
++
+The booted image shows the previous digest.
+The upgraded image is now listed as the rollback target.
+
+* Verify that all services are running:
++
+[source,terminal]
+----
+$ sudo systemctl status portal postgres devtools
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference]
+* xref:ref-self-service-rhel-upgrade-survival_{context}[What survives an upgrade]
+* xref:proc-self-service-rhel-upgrade-disconnected_{context}[Upgrade the appliance in a disconnected environment]
+* xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting {RHEL} appliances]
+* link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/using_image_mode_for_rhel_to_build_deploy_and_manage_operating_systems/managing-rhel-bootc-images[Managing RHEL bootc images]

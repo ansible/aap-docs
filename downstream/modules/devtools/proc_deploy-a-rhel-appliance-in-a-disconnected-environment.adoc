@@ -7,29 +7,42 @@
 
 [role="_abstract"]
 Deploy the {SelfService} RHEL appliance in a disconnected or air-gapped environment where the appliance has no access to external registries or the internet.
-The pre-built appliance images include all required container images and plug-ins, so no external network access is required during initial deployment.
+
+The appliance image includes everything needed to run without pulling content from external registries:
+
+* *Pre-bundled Ansible plugins* -- Dynamic plugins are extracted at build time and stored at `/usr/share/portal/plugins/`. The appliance loads plugins from the local filesystem, not from a registry.
+* *Pre-pulled container images* -- The {SelfService} and PostgreSQL container images are embedded in the appliance image. No container image pulls occur at runtime.
+* *Self-signed SSL certificates* -- Generated locally at first boot. You can replace them with your own certificates after deployment.
+* *No registry authentication required* -- The appliance starts and runs without registry credentials. Registry authentication is only needed for future upgrades.
 
 .Prerequisites
 
-* You have downloaded the appliance disk image (QCOW2 or VMDK) from the Red Hat Customer Portal on a connected system.
+* You have downloaded the appliance disk image (QCOW2 or VMDK) from the link:https://access.redhat.com/downloads/content/480[Red Hat Ansible Automation Platform downloads page] on a connected system.
 * You have a method to transfer the disk image to the disconnected environment (for example, portable media or a secure file transfer system).
-* You have a virtualization platform available in the disconnected environment ({OCPVShort}, VMware vSphere, or KVM/QEMU).
-* You have network connectivity from the appliance to your {PlatformNameShort} instance.
+* You have a virtualization platform available in the disconnected environment ({OCPVShort}, VMware vSphere, or KVM).
+* You have network connectivity from the appliance to your {PlatformNameShort} instance (internal network).
+* You have {PlatformNameShort} credentials: host URL, API token, OAuth client ID, and OAuth client secret.
+* You have an SSH key pair for appliance access.
 
 .Procedure
 
-. On a connected system, download the appliance disk image from the link:https://access.redhat.com[Red Hat Customer Portal].
+. On a connected system, download the appliance disk image from the link:https://access.redhat.com/downloads/content/480[Red Hat Ansible Automation Platform downloads page].
 
 . Transfer the disk image to the disconnected environment using your organization's approved transfer method.
 
 . Deploy the appliance on your virtualization platform following the standard deployment procedure for your environment:
 +
-* For {OCPVShort}, see xref:proc-self-service-install-openshift-virt_{context}[Deploying on OpenShift Virtualization].
-* For VMware vSphere, see xref:proc-self-service-install-vmware_{context}[Deploying on VMware vSphere].
+* For {OCPVShort}, see xref:proc-self-service-install-openshift-virt_{context}[Install {SelfService} on {OCPVShort}].
+* For VMware vSphere, see xref:proc-self-service-install-vmware_{context}[Install {SelfService} on VMware vSphere].
 
 . Provide initial configuration through cloud-init, VMware `guestinfo` properties, or a pre-seeded configuration file.
 +
 The appliance starts and runs without external network access because all required container images and plug-ins are pre-loaded in the appliance image.
++
+The following differences apply in a disconnected environment:
++
+* *Source control integrations require network access.* The `integrations.github` and `integrations.gitlab` cloud-init fields require network access to the source control service. If your disconnected environment has internal GitHub Enterprise or GitLab instances, configure these fields with the internal hostnames.
+* *Set `network.base_url` to match your internal DNS or IP.* Set `network.base_url` to the hostname or IP address that users will use to access the {SelfService} RHEL appliance on your internal network. If omitted, the appliance auto-detects the VM IP address.
 
 . If no registry is available for image upgrades, bypass the registry authentication gate:
 +
@@ -45,6 +58,15 @@ sudo touch /etc/portal/.registry-auth-override
 sudo ansible-portal status
 ----
 
+. Verify that Ansible plugins loaded from the local filesystem:
++
+[source,terminal]
+----
+sudo podman exec portal ls /opt/app-root/src/dynamic-plugins-root/
+----
++
+You should see plugin directories listed. These plugins were loaded from the pre-baked files at `/usr/share/portal/plugins/`, not from a registry.
+
 .Verification
 
 * Verify that the portal URL is accessible from your browser.
@@ -52,98 +74,7 @@ sudo ansible-portal status
 
 .Next steps
 
-* To apply future appliance upgrades in a disconnected environment, configure a mirror registry or use OCI archive transfer:
-
-== Upgrading from a mirror registry
-
-.. On a connected system, mirror the {SelfService} container images from `registry.redhat.io` to your private registry:
-+
-[source,terminal]
-----
-skopeo copy \
-    docker://registry.redhat.io/ansible-automation-platform/portal-bootc:<version> \
-    docker://<your_mirror_registry>/portal-bootc:<version>
-----
-
-.. On the appliance, create a `registries.conf` drop-in to redirect image pulls through the mirror:
-+
-[source,terminal]
-----
-sudo tee /etc/containers/registries.conf.d/50-mirror.conf > /dev/null << 'EOF'
-[[registry]]
-prefix = "registry.redhat.io"
-location = "registry.redhat.io"
-
-[[registry.mirror]]
-location = "<your_mirror_registry>"
-insecure = false
-EOF
-----
-+
-If your mirror uses a self-signed certificate, add the CA to the system trust store:
-+
-[source,terminal]
-----
-sudo cp ca.crt /etc/pki/ca-trust/source/anchors/
-sudo update-ca-trust
-----
-
-.. Authenticate to the mirror registry:
-+
-[source,terminal]
-----
-sudo ansible-portal registry-login <your_mirror_registry>
-----
-
-.. Verify that the credentials are valid:
-+
-[source,terminal]
-----
-sudo ansible-portal registry-login --test
-----
-
-.. Upgrade the appliance:
-+
-[source,terminal]
-----
-sudo bootc upgrade --apply
-----
-+
-The system reboots automatically. Wait for the system to restart, then reconnect via SSH.
-
-== Upgrading from an OCI archive
-
-For environments with no network path to a mirror registry, use sneakernet transfer.
-
-.. On a connected system, save the image as an OCI archive:
-+
-[source,terminal]
-----
-skopeo copy \
-    docker://registry.redhat.io/ansible-automation-platform/portal-bootc:<version> \
-    oci-archive:portal-bootc-<version>.tar
-----
-
-.. Transfer the archive to the appliance using your organization's approved transfer method.
-
-.. On the appliance, import and switch to the new image:
-+
-[source,terminal]
-----
-sudo skopeo copy \
-    oci-archive:/tmp/portal-bootc-<version>.tar \
-    containers-storage:localhost/portal-bootc:<version>
-sudo bootc switch --transport containers-storage localhost/portal-bootc:<version>
-----
-+
-The system reboots automatically after applying the change.
-
-.. If an upgrade causes issues, roll back to the previous version:
-+
-[source,terminal]
-----
-sudo bootc rollback
-----
+* For appliance upgrades in disconnected environments, see xref:proc-self-service-rhel-upgrade-disconnected_{context}[Upgrading in disconnected environments].
 
 [role="_additional-resources"]
 .Additional resources

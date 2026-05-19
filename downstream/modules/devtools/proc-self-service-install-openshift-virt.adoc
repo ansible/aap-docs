@@ -8,6 +8,8 @@
 
 Deploy the {SelfService} appliance on {OCPVShort} to run the portal as a virtual machine alongside container workloads within your {OCPShort} cluster. This approach enables you to use your existing OpenShift infrastructure to host the portal.
 
+For more information about {OCPVShort}, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html-single/virtualization/index#about-virt[About OpenShift Virtualization].
+
 .Prerequisites
 
 * {OCPShort} cluster (4.x) with {OCPVShort} operator installed and configured.
@@ -16,72 +18,62 @@ Deploy the {SelfService} appliance on {OCPVShort} to run the portal as a virtual
 * The {SelfService} disk image in QCOW2 format.
 * The `virtctl` CLI tool installed. You can download it from the OpenShift web console under *Virtualization* -> *Overview* -> *Download virtctl*.
 * Access to the OpenShift web console or `oc` CLI tool.
-* Network configuration details for the appliance (IP address, gateway, DNS) or access to a DHCP-enabled network.
-* Sufficient cluster resources: minimum 4 GiB allocatable memory for the virtual machine.
+* Your cloud-init user-data file prepared with {PlatformNameShort} credentials and SSH keys. See xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+* Sufficient cluster resources: minimum 16 GiB allocatable memory for the virtual machine.
+
+== Install using the CLI
 
 .Procedure
 
-. Install the `virtctl` CLI tool.
-+
-Download `virtctl` from your OpenShift cluster:
+. Create a project for the deployment:
 +
 [source,terminal,subs="+attributes"]
 ----
-curl -kL -o virtctl.tar.gz \
-  "https://hyperconverged-cluster-cli-download-openshift-cnv.apps.<cluster>/amd64/linux/virtctl.tar.gz"
-tar -xzf virtctl.tar.gz
-chmod +x virtctl
-sudo mv virtctl /usr/local/bin/
-----
-+
-Alternatively, download `virtctl` from the OpenShift web console by navigating to *Virtualization* -> *Overview* and clicking *Download virtctl*.
-
-. Create the target namespace:
-+
-[source,terminal,subs="+attributes"]
-----
-oc create namespace aap-portal
+oc new-project <project-name>
 ----
 
-. Upload the disk image.
-+
-The Containerized Data Importer (CDI) automatically converts the QCOW2 format to raw format during the upload process. The PVC size must be significantly larger than the QCOW2 file size to accommodate the expanded raw image. A minimum of 40 GiB is required.
+. Upload the QCOW2 disk image using `virtctl`:
 +
 [source,terminal,subs="+attributes"]
 ----
-virtctl image-upload dv aap-portal-disk \
-  --size=40GiB \
+virtctl image-upload dv <disk-datavolume-name> \
+  --size=50Gi \
   --image-path=/path/to/disk.qcow2 \
-  --uploadproxy-url=https://cdi-uploadproxy-openshift-cnv.apps.<cluster> \
-  --insecure \
-  --force-bind \
+  --uploadproxy-url=https://cdi-uploadproxy-openshift-cnv.apps.<cluster-domain> \
   --wait-secs=600 \
-  -n aap-portal
+  -n <project-name>
 ----
 +
 [cols="1,3",options="header"]
 |===
 | Option | Description
-| `dv` | Creates a DataVolume resource. This is the recommended approach as it handles PVC creation and disk conversion automatically.
-| `--size` | PVC size. Must be larger than the virtual disk size to accommodate QCOW2 to raw conversion. Use 40 GiB minimum for {SelfService}.
-| `--force-bind` | Forces immediate PVC binding. This flag is required for storage classes using WaitForFirstConsumer binding mode.
-| `--insecure` | Allows connection to upload proxy with self-signed certificates. This is required for most OpenShift installations.
-| `--wait-secs` | Timeout in seconds for waiting for the upload pod. Increase this value for slower environments or larger images.
+| `--size` | Set to at least 50 Gi. The QCOW2 expands during conversion to raw format and requires additional space.
+| `--insecure` | Add this flag if the Containerized Data Importer (CDI) upload proxy uses a self-signed certificate. Omit it when the proxy has a trusted certificate.
+| `--force-bind` | Add this flag if the storage class uses `WaitForFirstConsumer` volume binding mode.
 |===
 +
-Wait for the upload to complete. The "Processing completed successfully" message confirms that CDI has successfully converted the QCOW2 image to raw format.
+Wait for both upload and processing to complete. The "Processing completed successfully" message confirms that CDI converted the image. For more information about CDI, see link:https://docs.redhat.com/en/documentation/openshift_container_platform/4.18/html/virtualization/storage#virt-using-cdi-to-import-data-volumes[Managing data volumes] in the {OCPVShort} documentation.
 
-. Create the virtual machine.
+. Create a Secret from the cloud-init file:
 +
-Create a file named `vm-aap-portal.yaml`:
+[source,terminal,subs="+attributes"]
+----
+oc create secret generic <cloudinit-secret-name> \
+  --from-file=userdata=cloud-init-user-data.yaml \
+  -n <project-name>
+----
+
+. Create a VirtualMachine manifest.
++
+The following example shows a minimal configuration. Replace the resource names and namespace to match your environment:
 +
 [source,yaml,subs="+attributes"]
 ----
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: aap-portal
-  namespace: aap-portal
+  name: <vm-name>
+  namespace: <project-name>
 spec:
   runStrategy: Always
   template:
@@ -89,54 +81,92 @@ spec:
       domain:
         devices:
           disks:
-          - disk:
-              bus: virtio
-            name: rootdisk
+            - disk:
+                bus: virtio
+              name: rootdisk
+            - disk:
+                bus: virtio
+              name: cloudinitdisk
           interfaces:
-          - masquerade: {}
-            name: default
+            - masquerade: {}
+              name: default
         resources:
           requests:
-            memory: 4GiB
+            memory: 16Gi
       networks:
-      - name: default
-        pod: {}
+        - name: default
+          pod: {}
       volumes:
-      - name: rootdisk
-        dataVolume:
-          name: aap-portal-disk
+        - name: rootdisk
+          dataVolume:
+            name: <disk-datavolume-name>
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            secretRef:
+              name: <cloudinit-secret-name>
 ----
++
+The `dataVolume` name must match the DataVolume created by `virtctl image-upload` in step 2. The `secretRef` name must match the Secret created in step 3.
 
 . Apply the manifest:
 +
 [source,terminal,subs="+attributes"]
 ----
-oc apply -f vm-aap-portal.yaml
+oc apply -f <vm-manifest>.yaml
 ----
 
-. Monitor the virtual machine startup.
-+
-The virtual machine starts automatically when using `runStrategy: Always`:
+. Wait for the VM to reach `Running` status:
 +
 [source,terminal,subs="+attributes"]
 ----
-oc get vmi -n aap-portal -w
+oc get vmi -n <project-name> -w
 ----
 +
-Wait for the PHASE to show `Running` and READY to show `True`.
+The VM is ready when PHASE shows `Running` and READY shows `True`.
 
-. Provide initial configuration.
+. Create a Service and Route to expose {SelfService}:
 +
-The appliance requires configuration through cloud-init user-data, a pre-seeded configuration file, or post-deployment YAML editing.
-For details, see xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+[source,terminal,subs="+attributes"]
+----
+virtctl expose vm <vm-name> --port=443 --name=<service-name> -n <project-name>
+oc create route passthrough <route-name> --service=<service-name> --port=443 -n <project-name>
+ROUTE_HOST=$(oc get route <route-name> -o jsonpath='{.spec.host}' -n <project-name>)
+echo "Automation portal URL: https://$ROUTE_HOST"
+----
 
-. Verify that portal services are running.
+. Update the {SelfService} user-accessible URL to match the route.
 +
-SSH into the appliance and check the service status:
+SSH into the VM:
++
+[source,terminal,subs="+attributes"]
+----
+virtctl ssh <username>@<vm-name> -n <project-name>
+----
++
+Edit the configuration file:
 +
 [source,terminal]
 ----
-sudo ansible-portal status
+sudo vi /etc/portal/configs/app-config/app-config.production.yaml
+----
++
+Set the following three values, replacing `<route-host>` with the route hostname from step 7:
++
+[source,yaml]
+----
+app:
+  baseUrl: "https://<route-host>"
+backend:
+  baseUrl: "https://<route-host>"
+  cors:
+    origin: "https://<route-host>"
+----
++
+Save the file and restart the {SelfService} service. Restarting the `portal` service also restarts `postgres` and `devtools` due to service dependencies:
++
+[source,terminal]
+----
+sudo systemctl restart portal
 ----
 
 .Verification
@@ -145,43 +175,70 @@ sudo ansible-portal status
 +
 [source,terminal,subs="+attributes"]
 ----
-oc get vmi -n aap-portal
+oc get vmi -n <project-name>
 ----
 +
 The output shows the virtual machine in `Running` phase with `READY` status set to `True`.
 
+* SSH into the appliance and verify that all services are running:
++
+[source,terminal]
+----
+sudo ansible-portal status
+----
+
 * Access the portal URL from your browser.
 
-.Troubleshooting
+== Install using the OpenShift web console
 
-Upload fails with "effective image size is larger than available storage"::
-The `--size` parameter must be larger than the virtual disk size to accommodate the QCOW2 to raw conversion. Increase the size (for example, from 40 GiB to 50 GiB) and retry. You can check the virtual size of your QCOW2 image:
+You can also deploy the appliance from the OpenShift web console without using the CLI.
+
+.Prerequisites
+
+* {OCPShort} with the {OCPVShort} operator installed and configured.
+* Cluster administrator or equivalent permissions.
+* The {SelfService} QCOW2 disk image available on your local machine.
+* Your cloud-init user-data file prepared with {PlatformNameShort} credentials and SSH keys.
+
+.Procedure
+
+. Go to *Storage* -> *PersistentVolumeClaims*.
+
+. Create a PVC using *Data upload form*. Upload the QCOW2 image. Set the size to at least 50 Gi.
+
+. Go to *Workloads* -> *Secrets*. Create a key/value secret with a key named `userdata`. Paste the cloud-init user-data contents as the value.
+
+. Go to *Virtualization* -> *VirtualMachines*. Click *Create VirtualMachine* -> *From YAML*. Apply the manifest from the CLI procedure.
+
+. Wait for the VM status to change to *Running*.
+
+. Go to *Networking* -> *Services*. Create a service targeting port 443 on the VM.
+
+. Go to *Networking* -> *Routes*. Create a passthrough TLS route for the service. Note the route hostname.
+
+. SSH into the VM. Set `app.baseUrl`, `backend.baseUrl`, and `backend.cors.origin` to `\https://<route-hostname>`.
+
+. Restart the portal service:
 +
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-qemu-img info disk.qcow2
+sudo systemctl restart portal
 ----
 
-Upload hangs at "Waiting for PVC upload pod to be ready"::
-This typically occurs when the storage class uses WaitForFirstConsumer binding mode. Ensure you include the `--force-bind` flag in your `virtctl` command.
+.Verification
 
-Virtual machine shows "Boot failed: not a bootable disk" or "No bootable device"::
-This indicates the disk image was not properly converted during upload. Verify that the upload completed with the "Processing completed successfully" message. If the upload was interrupted during the processing phase, delete the DataVolume and PVC, then re-upload:
+* SSH into the VM and confirm that all services are running:
 +
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-oc delete dv aap-portal-disk -n aap-portal
-oc delete pvc aap-portal-disk -n aap-portal
+sudo ansible-portal status
 ----
 
-Virtual machine stuck in Scheduling with "Insufficient memory"::
-The cluster does not have enough allocatable memory for the virtual machine. Either reduce the virtual machine memory request in the VirtualMachine spec, or add more resources to your cluster. Check available resources:
-+
-[source,terminal,subs="+attributes"]
-----
-oc describe nodes | grep -A 10 "Allocated resources"
-----
+* Access the portal URL from your browser.
+
+If you encounter upload, boot, or scheduling failures, see xref:ref-self-service-rhel-troubleshooting_{context}[Troubleshooting RHEL appliances].
 
 .Additional resources
 
 * xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot]
+* xref:proc-self-service-connect-verify_{context}[Connect and verify]

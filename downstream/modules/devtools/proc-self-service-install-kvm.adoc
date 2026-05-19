@@ -1,0 +1,127 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-install-kvm_{context}"]
+
+= Installing {SelfService} on {RHEL} with KVM
+
+[role="_abstract"]
+
+Deploy the {SelfService} appliance on a {RHEL} 9 host with KVM using `virt-install`.
+The following procedure provides example commands that you can adapt to your environment.
+
+.Prerequisites
+* A {RHEL} 9 host with KVM support (Intel VT-x or AMD-V enabled).
+* An SSH key pair on the host.
+* The {SelfService} QCOW2 disk image.
+* Minimum 24 GB available memory on the host.
+* A completed cloud-init user-data file. See xref:con-self-service-rhel-prerequisites_{context}[Prepare the cloud-init configuration].
+
+For details on enabling virtualization on {RHEL} 9, see link:https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_virtualization/index[Configuring and managing virtualization].
+
+.Procedure
+. Install the required packages and enable `libvirtd`:
++
+[source,terminal]
+----
+$ sudo dnf install -y qemu-kvm libvirt virt-install genisoimage
+$ sudo systemctl enable --now libvirtd
+----
++
+. Verify that KVM is available:
++
+[source,terminal]
+----
+$ lsmod | grep kvm
+----
++
+. Ensure you have an SSH key pair to use in the cloud-init configuration. If you do not have one, generate a key pair:
++
+[source,terminal]
+----
+$ ssh-keygen -t ed25519 -N ""
+----
++
+. Set environment variables for your deployment. Replace the placeholder values. The examples in this procedure use `automation-portal` as the VM and project name. You can choose any name that suits your environment:
++
+[source,terminal]
+----
+$ export QCOW2_PATH="/path/to/portal-appliance.qcow2"
+$ export VM_NAME="automation-portal"
+$ export VM_MEMORY=24576
+$ export VM_CPUS=6
+$ export WORK_DIR="$HOME/portal-deploy"
+$ export IMAGE_DIR="/var/lib/libvirt/images"
+$ mkdir -p "$WORK_DIR"
+----
++
+. Save your cloud-init user-data file as `$WORK_DIR/cloud-init-user-data.yaml`.
++
+. Create a cloud-init ISO from your user-data file. KVM delivers cloud-init configuration to the VM as a small ISO disk image labeled `cidata`. Cloud-init expects two files on the ISO: `user-data` (your configuration) and `meta-data` (instance identity):
++
+[source,terminal]
+----
+$ cd "$WORK_DIR"
+$ cp cloud-init-user-data.yaml user-data
+$ echo "instance-id: ${VM_NAME}" > meta-data
+$ genisoimage -output cloud-init.iso -volid cidata -joliet -rock user-data meta-data
+----
++
+. Copy the disk image and create the VM:
++
+[source,terminal]
+----
+$ sudo cp "$QCOW2_PATH" "$IMAGE_DIR/${VM_NAME}.qcow2"
+$ sudo virt-install \
+  --name "$VM_NAME" \
+  --memory "$VM_MEMORY" \
+  --vcpus "$VM_CPUS" \
+  --disk "$IMAGE_DIR/${VM_NAME}.qcow2" \
+  --disk "$WORK_DIR/cloud-init.iso,device=cdrom" \
+  --osinfo rhel9-unknown \
+  --network default \
+  --noautoconsole \
+  --import
+----
++
+. Wait 1-3 minutes for first-boot configuration to complete, then retrieve the VM IP address:
++
+[source,terminal]
+----
+$ sudo virsh domifaddr "$VM_NAME"
+----
+
+.Verification
+* SSH into the {SelfService} {RHEL} appliance and confirm that all services are running:
++
+[source,terminal]
+----
+$ ssh -i <private-key> <username>@<vm-ip>
+$ sudo systemctl status portal postgres devtools
+----
++
+Example output for a healthy {SelfService} {RHEL} appliance:
++
+[source,terminal]
+----
+● portal.service - Automation portal
+     Active: active (running) since ...
+● postgres.service - PostgreSQL database
+     Active: active (running) since ...
+● devtools.service - Ansible development tools
+     Active: active (running) since ...
+----
++
+All three services should show `active (running)`.
+
+Continue to xref:proc-self-service-connect-verify_{context}[Connect and verify] to complete the post-installation steps.
+
+== Remove the VM
+
+To delete the VM and its storage after an evaluation:
+
+[source,terminal]
+----
+$ sudo virsh destroy "$VM_NAME"
+$ sudo virsh undefine "$VM_NAME" --remove-all-storage
+$ rm -rf "$WORK_DIR"
+----

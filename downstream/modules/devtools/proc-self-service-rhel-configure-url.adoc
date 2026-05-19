@@ -1,0 +1,63 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-rhel-configure-url_{context}"]
+
+= Set a custom user-accessible URL or port
+
+[role="_abstract"]
+
+The {SelfService} {RHEL} appliance auto-detects the user-accessible URL from the VM IP address at each boot.
+To set a custom hostname or port, update the configuration file and restart the service.
+
+.Prerequisites
+
+* SSH access to the appliance.
+* The hostname or IP address and port that users will use to access {SelfService}.
+
+.Procedure
+
+. Edit the configuration file:
++
+[source,terminal]
+----
+$ sudo vi /etc/portal/configs/app-config/app-config.production.yaml
+----
+
+. Update the following three values.
++
+This example uses port 8443.
+If you are using the standard port 443, you do not need to specify the port:
++
+[source,yaml]
+----
+app:
+  baseUrl: "https://portal.example.com:8443"
+backend:
+  baseUrl: "https://portal.example.com:8443"
+  cors:
+    origin: "https://portal.example.com:8443"
+----
+
+. Save the file and restart the {SelfService} service.
++
+Restarting the `portal` service also restarts `postgres` and `devtools` due to service dependencies:
++
+[source,terminal]
+----
+$ sudo systemctl restart portal
+----
+
+. If you set a custom port, open that port on any firewall and, for {OCPVShort} deployments, update the OpenShift route.
+
+. Update the OAuth redirect URI in {PlatformNameShort} to match the new URL.
+
+.Verification
+
+* Verify that {SelfService} is accessible at the new URL:
++
+[source,terminal]
+----
+$ curl -fk https://<new-url>
+----
++
+A successful response confirms that the URL and port are configured correctly.

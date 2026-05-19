@@ -6,78 +6,181 @@
 
 [role="_abstract"]
 
-Deploy the {SelfService} appliance on VMware vSphere infrastructure to integrate the portal into your existing VMware environment. This procedure guides you through creating a virtual machine and importing the VMDK disk image.
+Deploy the {SelfService} appliance on VMware vSphere using the vSphere web client or the `govc` CLI.
 
 .Prerequisites
 
-* VMware vSphere x86-64 environment with appropriate permissions to create and manage virtual machines.
-* SSH access to an ESXi host connected to your target VMFS datastore.
-* The {SelfService} disk image in VMDK format.
-* Network configuration details for the appliance (IP address, gateway, DNS).
+* VMware vSphere/vCenter with permissions to create VMs and upload files to a datastore.
+* The {SelfService} disk image in VMDK format, available from the link:https://access.redhat.com/downloads/content/480[Red Hat Ansible Automation Platform downloads page].
+* Your cloud-init user-data file prepared with {PlatformNameShort} credentials and SSH keys. See xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+* An SSH key pair for appliance access.
+* `genisoimage` installed on your local machine (for creating the cloud-init ISO).
+* `govc` CLI installed (for CLI deployment only). See the link:https://github.com/vmware/govmomi/tree/main/govc[govc documentation].
+
+== Install using the vSphere web client
 
 .Procedure
 
-. Create a blank virtual machine in vSphere with the following specifications:
+. Upload the VMDK disk image to a datastore:
 +
-* Appropriate CPU and memory allocation per {PlatformNameShort} guidelines
-* Compatible guest operating system type
-* Network adapter configured for your environment
+.. Open the vCenter web client.
+.. Navigate to *Storage* -> *Datastores* and select your datastore.
+.. Click *Upload Files* and upload the {SelfService} VMDK file.
 
-. Upload the disk image to the datastore.
+. Save your cloud-init user-data file as `cloud-init-user-data.yaml`. Use the template from xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+
+. Create a cloud-init ISO from your user-data file.
 +
-Transfer the `disk.vmdk` file to the virtual machine's folder on the VMFS datastore:
-
-.. Navigate to the *Datastores* view in vSphere.
-.. Browse to the folder created for your blank virtual machine.
-.. Click *Upload* and select the `disk.vmdk` file.
-
-. Convert the disk to vSphere format.
+VMware delivers cloud-init configuration to the VM as a small ISO disk image labeled `cidata`. Cloud-init expects two files on the ISO: `user-data` (your configuration) and `meta-data` (instance identity):
 +
-The disk image must be converted to a vSphere-compatible VMFS format before it can be attached to the virtual machine.
-
-.. Enable SSH on the ESXi host if not already enabled (*Host* -> *Actions* -> *Services* -> *Enable SSH*).
-.. Connect to the ESXi host using SSH.
-.. Navigate to the virtual machine folder on the datastore.
-.. Execute the conversion command:
-+
-[source,terminal,subs="+attributes"]
+[source,terminal]
 ----
-vmkfstools -i disk.vmdk disk-vmfs.vmdk -d thin
-----
-+
-Upon successful completion, you see the following output:
-+
-[source,terminal,subs="+attributes"]
-----
-Destination disk format: VMFS thin-provisioned
-Cloning disk 'disk.vmdk'...
-Clone: 100% done.
+cp cloud-init-user-data.yaml user-data
+echo "instance-id: automation-portal" > meta-data
+genisoimage -output cloud-init.iso -volid cidata -joliet -rock user-data meta-data
 ----
 
-. Attach the converted disk to the virtual machine:
+. Upload the cloud-init ISO to the same datastore.
 
-.. Edit the virtual machine settings in vSphere.
-.. Remove the default hard disk that was created with the blank virtual machine.
-.. Add a new hard disk and select *Existing Hard Disk*.
-.. Browse to and select the converted disk: `disk-vmfs.vmdk`.
-.. Save the virtual machine settings.
-
-. Start the virtual machine and provide initial configuration:
-
-.. Power on the virtual machine.
-.. The appliance applies any configuration provided through VMware `guestinfo` properties automatically on first boot.
-.. Alternatively, SSH into the appliance after boot to configure it manually.
+. Create a virtual machine:
 +
-For details, see xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+.. Right-click the cluster or host and select *New Virtual Machine* -> *Create a new virtual machine*.
+.. Set the following example values. Replace the name, CPU, and memory to match your environment:
++
+[cols="1,2",options="header"]
+|===
+| Field | Example value
+| *Name* | `automation-portal`
+| *Guest OS* | Red Hat Enterprise Linux 9 (64-bit)
+| *CPU* | 6 cores
+| *Memory* | 24 GB
+| *Hard disk* | Remove the default disk
+| *Network* | Select your VM network
+|===
++
+.. Click *Next* and then *Finish*.
+
+. Attach the VMDK disk and cloud-init ISO to the VM:
++
+.. Copy the uploaded VMDK and cloud-init ISO to the VM folder on the datastore.
+.. Edit the VM settings.
+.. Click *Add hard disk* -> *Existing Hard Disk* and browse to the copied VMDK.
+.. Click *Add CD/DVD Drive* -> *Datastore ISO File* and browse to the copied cloud-init ISO.
+.. Save the VM settings.
+
+. Power on the VM. First-boot configuration takes 2-3 minutes.
 
 .Verification
 
-* Verify that the virtual machine boots successfully.
-* SSH into the appliance and verify that portal services are running: `sudo ansible-portal status`
+* Open the VM console in vSphere or SSH into the VM and confirm that all services are running:
++
+[source,terminal]
+----
+sudo ansible-portal status
+----
+
+* Access the portal URL from your browser.
+
+== Install using the govc CLI
+
+.Procedure
+
+. Set `govc` environment variables. Replace the placeholder values:
++
+[source,terminal]
+----
+export GOVC_URL="<vcenter-host>"
+export GOVC_USERNAME="<vcenter-username>"
+export GOVC_PASSWORD="<vcenter-password>"
+export GOVC_INSECURE=true
+----
+
+. Upload the VMDK disk image to a datastore:
++
+[source,terminal]
+----
+govc datastore.upload -ds=<datastore> portal.vmdk automation-portal/portal.vmdk
+----
+
+. Save your cloud-init user-data file as `cloud-init-user-data.yaml`. Use the template from xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot].
+
+. Create the VM. Replace the memory, CPU, network, and resource pool values to match your environment:
++
+[source,terminal]
+----
+govc vm.create \
+  -m 24576 -c 6 \
+  -g rhel9_64Guest \
+  -net "<network-name>" \
+  -ds <datastore> \
+  -pool "<resource-pool>" \
+  -on=false \
+  automation-portal
+----
+
+. Attach the VMDK disk to the VM:
++
+[source,terminal]
+----
+govc vm.disk.attach -vm automation-portal -ds <datastore> \
+  -disk automation-portal/portal.vmdk
+----
+
+. Set the cloud-init configuration.
++
+Choose one of the following options:
++
+*Option A: Cloud-init ISO*
++
+Create the cloud-init ISO on your local machine, upload it, and attach it as a CD-ROM:
++
+[source,terminal]
+----
+cp cloud-init-user-data.yaml user-data
+echo "instance-id: automation-portal" > meta-data
+genisoimage -output cloud-init.iso -volid cidata -joliet -rock user-data meta-data
+
+govc datastore.upload -ds=<datastore> cloud-init.iso automation-portal/cloud-init.iso
+
+govc device.cdrom.add -vm automation-portal
+govc device.cdrom.insert -vm automation-portal -ds <datastore> \
+  automation-portal/cloud-init.iso
+----
++
+*Option B: GuestInfo properties (no ISO required)*
++
+Pass cloud-init data directly through VMware GuestInfo properties. The VM must be powered off:
++
+[source,terminal]
+----
+govc vm.change -vm automation-portal \
+  -e guestinfo.userdata="$(base64 -w0 cloud-init-user-data.yaml)" \
+  -e guestinfo.userdata.encoding="base64" \
+  -e guestinfo.metadata="$(echo 'instance-id: automation-portal' | base64 -w0)" \
+  -e guestinfo.metadata.encoding="base64"
+----
+
+. Power on the VM:
++
+[source,terminal]
+----
+govc vm.power -on automation-portal
+----
++
+First-boot configuration takes 2-3 minutes.
+
+.Verification
+
+* SSH into the VM and confirm that all services are running:
++
+[source,terminal]
+----
+sudo ansible-portal status
+----
+
 * Access the portal URL from your browser.
 
 .Additional resources
 
 * xref:proc-self-service-initial-config-wizard_{context}[Configuring the appliance at first boot]
-* The `-d thin` option creates a thin-provisioned disk, which only consumes datastore space as data is written. This is the recommended option for most deployments.
-* After confirming the virtual machine boots successfully, you can delete the original `disk.vmdk` file to reclaim datastore space.
+* xref:proc-self-service-connect-verify_{context}[Connect and verify]

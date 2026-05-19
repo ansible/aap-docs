@@ -1,0 +1,95 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-rhel-configure-ssl_{context}"]
+
+= Replace self-signed SSL certificates
+
+[role="_abstract"]
+
+The {SelfService} {RHEL} appliance generates self-signed SSL certificates at first boot and stores them at `/etc/portal/ssl/`.
+Replace these certificates with certificates from a trusted certificate authority for production use.
+
+== Replace the SSL certificates
+
+.Prerequisites
+
+* A TLS certificate and private key in PEM format, issued by a certificate authority trusted by your organization.
+* SSH access to the appliance.
+
+.Procedure
+
+. Copy your certificates to the appliance:
++
+[source,terminal]
+----
+$ sudo cp <certificate-file>.pem /etc/portal/ssl/cert.pem
+$ sudo cp <private-key-file>.pem /etc/portal/ssl/key.pem
+$ sudo chmod 644 /etc/portal/ssl/cert.pem
+$ sudo chmod 600 /etc/portal/ssl/key.pem
+----
+
+. Restart the {SelfService} service:
++
+[source,terminal]
+----
+$ sudo systemctl restart portal
+----
+
+.Verification
+
+* Verify that the {SelfService} is using the new certificate:
++
+[source,terminal]
+----
+$ curl -vk https://localhost 2>&1 | grep -i "issuer"
+----
++
+The output displays the issuer from your certificate, not the self-signed issuer.
+
+== Trust a custom certificate authority
+
+If your organization uses a custom certificate authority (CA) or a self-signed certificate for your {PlatformNameShort} instance, configure the {SelfService} {RHEL} appliance to trust it.
+
+.Prerequisites
+
+* The CA certificate or self-signed certificate in PEM format.
+* SSH access to the appliance.
+
+.Procedure
+
+. Copy the CA certificate or self-signed certificate to the appliance:
++
+[source,terminal]
+----
+$ sudo cp <ca-certificate-file>.pem /etc/portal/ssl/ca-bundle.crt
+----
++
+If you have multiple CA certificates to trust, concatenate them into a single bundle file before copying it to the appliance.
+
+. Create a Quadlet drop-in to set the `NODE_EXTRA_CA_CERTS` environment variable:
++
+[source,terminal]
+----
+$ sudo mkdir -p /etc/containers/systemd/portal.container.d
+$ echo -e '[Container]\nEnvironment=NODE_EXTRA_CA_CERTS=/etc/portal/ssl/ca-bundle.crt' \
+  | sudo tee /etc/containers/systemd/portal.container.d/ca-certs.conf
+----
+
+. Reload systemd and restart the {SelfService} service:
++
+[source,terminal]
+----
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart portal
+----
+
+.Verification
+
+* Verify that the environment variable is set in the portal container:
++
+[source,terminal]
+----
+$ sudo podman exec portal env | grep NODE_EXTRA_CA_CERTS
+----
++
+The output displays `NODE_EXTRA_CA_CERTS=/etc/portal/ssl/ca-bundle.crt`.

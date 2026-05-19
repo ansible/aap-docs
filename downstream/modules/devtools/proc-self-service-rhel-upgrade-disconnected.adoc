@@ -1,0 +1,144 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-self-service-rhel-upgrade-disconnected_{context}"]
+
+= Upgrade the {SelfService} {RHEL} appliance in a disconnected environment
+
+[role="_abstract"]
+
+In disconnected environments, you can upgrade the {SelfService} {RHEL} appliance using a mirror registry.
+Configure the mirror registry so that `bootc upgrade` pulls images from your internal registry instead of `registry.redhat.io`.
+Once configured, `bootc upgrade` checks the mirror automatically.
+
+== Configure a mirror registry
+
+.Prerequisites
+
+* A mirror registry accessible from the {SelfService} {RHEL} appliance on the internal network.
+* The new appliance image copied to the mirror registry.
+* SSH access to the appliance.
+
+.Procedure
+
+. On a connected machine, copy the new appliance image to your internal registry:
++
+[source,terminal]
+----
+$ skopeo copy \
+  docker://registry.redhat.io/ansible-automation-platform/bootc-automation-portal-rhel9:<version> \
+  docker://mirror.internal.example.com:5000/ansible-automation-platform/bootc-automation-portal-rhel9:<version>
+----
+
+. On the {SelfService} {RHEL} appliance, create a registry mirror configuration:
++
+[source,terminal]
+----
+$ sudo tee /etc/containers/registries.conf.d/50-mirror.conf > /dev/null << 'EOF'
+[[registry]]
+prefix = "registry.redhat.io"
+location = "registry.redhat.io"
+
+[[registry.mirror]]
+location = "mirror.internal.example.com:5000"
+insecure = false
+EOF
+----
++
+Replace `mirror.internal.example.com:5000` with your mirror registry address.
+
+. If your mirror registry uses a self-signed certificate, add the CA certificate to the system trust store:
++
+[source,terminal]
+----
+$ sudo cp ca.crt /etc/pki/ca-trust/source/anchors/
+$ sudo update-ca-trust
+----
++
+Alternatively, set `insecure = true` in the mirror block.
+This is not recommended for production environments.
+
+. Authenticate to the mirror registry:
++
+[source,terminal]
+----
+$ sudo ansible-portal registry-login
+----
+
+. Authenticate bootc to the mirror registry.
++
+Bootc requires credentials in `/etc/ostree/auth.json` to pull images:
++
+[source,terminal]
+----
+$ sudo podman login --authfile /etc/ostree/auth.json mirror.internal.example.com:5000
+----
+
+. Run the upgrade:
++
+[source,terminal]
+----
+$ sudo bootc upgrade
+----
++
+If your mirror does not carry Red Hat GPG signatures, add `--no-signature-verification` to the `bootc switch` command when switching image sources.
+This flag is not needed for `bootc upgrade` when the image source is already configured.
+
+. Reboot to activate the new image:
++
+[source,terminal]
+----
+$ sudo systemctl reboot
+----
+
+[NOTE]
+====
+The mirror configuration in `/etc/containers/registries.conf.d/` survives bootc upgrades because bootc preserves `/etc` using a three-way merge.
+You do not need to reconfigure the mirror after each upgrade.
+====
+
+.Verification
+
+* Verify that the new image is booted:
++
+[source,terminal]
+----
+$ sudo bootc status
+----
+
+* Verify that all services are running:
++
+[source,terminal]
+----
+$ sudo systemctl status portal postgres devtools
+----
+
+== Sync new versions to the mirror
+
+When a new appliance version is available, copy it to the mirror from a connected machine.
+
+.Procedure
+
+. Copy the new image version to the mirror registry:
++
+[source,terminal]
+----
+$ skopeo copy \
+  docker://registry.redhat.io/ansible-automation-platform/bootc-automation-portal-rhel9:<new-version> \
+  docker://mirror.internal.example.com:5000/ansible-automation-platform/bootc-automation-portal-rhel9:<new-version>
+----
+
+. On the appliance, run the upgrade and reboot:
++
+[source,terminal]
+----
+$ sudo bootc upgrade
+$ sudo systemctl reboot
+----
+
+[role="_additional-resources"]
+.Additional resources
+
+* xref:ref-self-service-portal-cli-commands_{context}[Portal CLI commands reference]
+* xref:ref-self-service-rhel-upgrade-survival_{context}[What survives an upgrade]
+* xref:proc-self-service-rhel-upgrade_{context}[Upgrade the {SelfService} {RHEL} appliance]
+* xref:deploy-a-rhel-appliance-in-a-disconnected-environment_{context}[Deploy a {RHEL} appliance in a disconnected environment]
