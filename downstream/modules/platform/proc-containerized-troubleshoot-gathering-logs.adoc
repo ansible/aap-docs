@@ -18,6 +18,14 @@ You can collect an `sos` report for each host in your containerized {PlatformNam
 $ ansible-playbook -i <path_to_inventory_file> ansible.containerized_installer.log_gathering
 ----
 +
+. To collect container-level logs, run the `sos` report directly on each host with the `aap_containerized` plugin enabled:
++
+----
+$ sudo sos report -e aap_containerized -k aap_containerized.username=<username>
+----
++
+where `<username>` is the service account or user running the containerized installation.
+
 . Optional: To define additional parameters, specify them with the `-e` option. For example:
 +
 ----
