@@ -14,7 +14,48 @@ To assign roles related to individual components, ensure you use the appropriate
 * For {HubNameStart} roles, use the `ansible.hub` collection. For example, use this collection if you need to assign a role for a specific collection namespace to a specific team.
 * For {EDAName} roles, use the `ansible.eda` collection. For example, use this collection if you need to assign a role for a specific rulebook activation to a specific team.
 
-The `role_team_assignment` module focuses on assigning roles to teams and organizations. The module itself has limitations regarding which roles can be assigned to teams. You cannot assign roles such as _Platform Auditor_ or _Organization Member_ to teams. Also, once roles are assigned using this module, you cannot edit them; they can only be deleted. The following scenarios confirm the boundaries of this module and highlight the continuing fragmentation of role management.
+To simplify managing role assignments across multiple collections, you can use the `infra.aap_configuration` collection.
+This collection provides roles that abstract the underlying module calls for each component:
+
+* `gateway_role_team_assignments` for platform and organization-level roles by using the `ansible.platform` collection.
+* `controller_role_team_assignments` for {ControllerNameStart} roles by using the `ansible.controller` collection.
+* `hub_group_roles` for {HubNameStart} group roles by using the `ansible.hub` collection.
+
+By using the `infra.aap_configuration` collection, you can define role assignments as data structures and apply them in a single playbook run, rather than writing individual tasks for each collection.
+
+The following example shows how to assign the _Organization Inventory Admin_ role to a team by using the `gateway_role_team_assignments` role from the `infra.aap_configuration` collection:
+
+[source,yaml,subs="+quotes"]
+....
+---
+- name: Configure RBAC assignments
+  hosts: localhost
+  gather_facts: false
+  vars:
+    aap_hostname: "_<aap_hostname>_"
+    aap_username: "_<aap_username>_"
+    aap_password: "_<aap_password>_"
+    gateway_role_team_assignments:
+      - role_definition: Organization Inventory Admin
+        team: "example-team"
+        assignment_objects:
+          - name: "example-organization"
+            type: "organizations"
+  roles:
+    - infra.aap_configuration.gateway_role_team_assignments
+....
+
+== Limitations of the role_team_assignment module
+
+The `role_team_assignment` module focuses on assigning roles to teams and organizations. The module has the following limitations:
+
+* Global roles, such as _Platform Auditor_, cannot be assigned to teams because they span multiple components.
+* Team roles cannot be assigned to another team. For example, assigning _Team Admin_ to a team is not supported.
+* The _Organization Member_ role cannot be assigned to teams.
+* Only resource-scoped organization roles, such as _Organization Inventory Admin_ and _Organization Credential Admin_, can be meaningfully assigned to teams.
+* After creation, role assignments cannot be edited. You can only delete and re-create them.
+
+The following scenarios confirm the boundaries of this module.
 
 
 Successful scenario - Assigning Organization Inventory Admin role to a team::
@@ -49,36 +90,6 @@ You can assign a resource-scoped organization role, for example, _Organization I
 ....
 
 
-Successful scenario - Assigning Team Admin role to another team::
-
-You can assign the _Team Admin_ role to another team. This confirms that the role allows management of a single team and inherits all existing role assignments associated with that team, as shown in the example playbook below:
-+
-[source,yaml,subs="+quotes"]
-....
----
-- name: Assign Team Admin role to a team
-  hosts: localhost
-  gather_facts: false
-  vars:
-    aap_hostname: "<aap_hostname>"
-    aap_username: "<aap_username>"
-    aap_password: "<aap_password>"
-  tasks:
-    - name: Assign Team Admin role
-      ansible.platform.role_team_assignment:
-        assignment_objects:
-          - name: "example-organization"
-            type: "organizations"
-        role_definition: Team Admin
-        team: "example-team"
-        state: "present"
-        aap_hostname: "{{ aap_hostname }}"
-        aap_username: "{{ aap_username }}"
-        aap_password: "{{ aap_password }}"
-        aap_validate_certs: false
-....
-
-
 Failed scenario - Assigning Platform Auditor role to a team::
 
 This scenario demonstrates a key technical limitation of the centralized module, specifically prohibiting the assignment of roles that span multiple components.
@@ -94,7 +105,7 @@ This scenario demonstrates a key technical limitation of the centralized module,
     aap_username: "<aap_username>"
     aap_password: "<aap_password>"
   tasks:
-    - name: Get the organization details
+    - name: Assign Platform Auditor role
       ansible.platform.role_team_assignment:
         assignment_objects:
           - name: "example-organization"
@@ -126,7 +137,7 @@ This scenario outlines a specific prohibition against assigning organizational m
     aap_username: "<aap_username>"
     aap_password: "<aap_password>"
   tasks:
-    - name: Get the organization details
+    - name: Assign Organization Member role
       ansible.platform.role_team_assignment:
         assignment_objects:
           - name: "example-organization"
