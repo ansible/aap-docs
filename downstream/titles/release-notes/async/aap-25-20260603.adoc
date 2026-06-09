@@ -1,0 +1,171 @@
+:_mod-docs-content-type: REFERENCE
+
+[[aap-25-20260603]]
+
+= {PlatformNameShort} patch release June 3, 2026
+
+This release includes the following components and versions: 
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| June 3, 2026 
+a|
+
+* {ControllerNameStart} 4.6.29
+* {HubNameStart} 4.10.14
+* {EDAName} 1.1.18
+* Container-based installer {PlatformNameShort} (bundle) 2.5-24
+* Container-based installer {PlatformNameShort} (online) 2.5-24
+* Receptor 1.6.4
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-23
+* RPM-based installer {PlatformNameShort} (online) 2.5-23
+
+|====
+
+CSV Versions in this release:
+
+* Namespace: aap-operator.v2.5.0-0.1780320522
+* cluster: aap-operator.v2.5.0-0.1780320379 
+
+
+== Overview
+
+This async release of Red Hat Ansible Automation Platform 2.5 delivers targeted bug fixes, security patches for multiple CVEs across platform components, and a platform installer rebase. Key areas of improvement include proxy compatibility for the automation calculator, performance gains for fact storage queries, resilience for transient HTTP errors in the automation controller collection, and critical vulnerability remediations in execution environments, automation hub, Ansible Lightspeed, the platform gateway UI, receptor, and controller dependencies. The minimum supported RHEL version is also updated to 9.6 for both the RPM and containerized installers.
+
+
+
+== Rebase
+
+=== RPM-based installer {PlatformNameShort}
+
+* RHEL minimum version is updated to 9.6. (AAP-74308)
+
+
+== CVE
+
+=== {ControllerNameStart}
+
+* link:https://access.redhat.com/security/cve/cve-2026-33154[CVE-2026-33154] — Dynaconf: Arbitrary code execution via Server-Side Template Injection in:
+automation-controller for Ansible Automation Platform 2.5. AAP-69463
+
+* link:https://access.redhat.com/security/cve/cve-2026-30922[CVE-2026-30922] — pyasn1: Vulnerable to Denial of Service via Unbounded Recursion in:
+automation-controller for Ansible Automation Platform 2.5. AAP-69029
+
+* link:https://access.redhat.com/security/cve/cve-2026-39892[CVE-2026-39892] — Cryptography: Buffer overflow via non-contiguous buffer in API in:
+automation-controller for Ansible Automation Platform 2.5. AAP-75021
+
+
+=== Execution environments
+
+* link:https://access.redhat.com/security/cve/cve-2026-39892[CVE-2026-39892] — Cryptography: Buffer overflow via non-contiguous buffer in API in:
+execution-environments for Ansible Automation Platform 2.5. AAP-75243
+
+
+
+=== {HubNameStart}
+
+* link:https://access.redhat.com/security/cve/cve-2026-39892[CVE-2026-39892] — Cryptography: Buffer overflow via non-contiguous buffer in API in:
+** automation-hub for Ansible Automation Platform 2.5. AAP-75163
+
+* link:https://access.redhat.com/security/cve/cve-2026-40192[CVE-2026-40192] — Pillow: Denial of Service via decompression bomb in FITS image processing in:
+** automation-hub for Ansible Automation Platform 2.5. AAP-75159
+
+
+=== {LightspeedShortName}
+
+* link:https://access.redhat.com/security/cve/cve-2026-39892[CVE-2026-39892] — Cryptography: Buffer overflow via non-contiguous buffer in API in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-75143
+
+* link:https://access.redhat.com/security/cve/cve-2026-6321[CVE-2026-6321] — fast-uri: Path traversal vulnerability allows bypass of security policies in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-75141
+
+* link:https://access.redhat.com/security/cve/cve-2025-62718[CVE-2025-62718] — Axios: Server-Side Request Forgery and proxy bypass due to improper hostname normalization in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-71544
+
+* link:https://access.redhat.com/security/cve/cve-2026-34070[CVE-2026-34070] — langchain-core: Path traversal in legacy load_prompt functions in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-75024
+
+* link:https://access.redhat.com/security/cve/cve-2026-34040[CVE-2026-34070] — langchain-core: Path traversal in legacy load_prompt functions in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-74330
+
+* link:https://access.redhat.com/security/cve/cve-2025-62718[CVE-2025-62718] — Axios: Server-Side Request Forgery and proxy bypass due to improper hostname normalization in:
+** ansible-lightspeed for Ansible Automation Platform 2.5. AAP-70285
+
+
+=== {GatewayStart} UI
+
+* link:https://access.redhat.com/security/cve/cve-2026-33896[CVE-2026-33896] — Forge (node-forge): Certificate validation bypass allows unauthorized certificate issuance in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-70108
+
+* link:https://access.redhat.com/security/cve/cve-2026-33895[CVE-2026-33895] — Forge: Authentication bypass via forged Ed25519 cryptographic signatures in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-70111
+
+* link:https://access.redhat.com/security/cve/cve-2026-33894[CVE-2026-33894] — Forge: Signature Forgery via Weak RSASSA PKCS#1 v1.5 Verification in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-70118
+
+* link:https://access.redhat.com/security/cve/cve-2026-33891[CVE-2026-33891] — node-forge: Denial of Service via infinite loop in BigInteger.modInverse() in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-70123
+
+* link:https://access.redhat.com/security/cve/cve-2026-39363[CVE-2026-39363] — Vite: Information disclosure via WebSocket connection bypasses access control in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-71090
+
+* link:https://access.redhat.com/security/cve/cve-2026-40175[CVE-2026-40175] — Axios: Remote Code Execution via Prototype Pollution escalation in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-73005
+
+* link:https://access.redhat.com/security/cve/cve-2026-26996[CVE-2026-26996] — Minimatch: Denial of Service via specially crafted glob patterns in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-66291
+
+* link:https://access.redhat.com/security/cve/cve-2026-27904[CVE-2026-27904] — Minimatch: Denial of Service via catastrophic backtracking in glob expressions in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-66694
+
+* link:https://access.redhat.com/security/cve/cve-2026-4926[CVE-2026-4926] — path-to-regexp: Denial of Service via crafted regular expressions in:
+** platform-gateway-ui for Ansible Automation Platform 2.5. AAP-70020
+
+
+=== Receptor
+
+* link:https://access.redhat.com/security/cve/cve-2026-32282[CVE-2026-32282] — Root.Chmod can follow symlinks out of the root in:
+** receptor for Ansible Automation Platform 2.5. AAP-71378
+
+* link:https://access.redhat.com/security/cve/cve-2026-32283[CVE-2026-32283] — Go crypto/tls: Denial of Service via multiple TLS 1.3 key update messages in:
+** receptor for Ansible Automation Platform 2.5. AAP-71648
+
+* link:https://access.redhat.com/security/cve/cve-2026-32280[CVE-2026-32280] — Go: Denial of Service vulnerability in certificate chain building in:
+** receptor for Ansible Automation Platform 2.5. AAP-71635
+
+
+=== Packaging
+
+* link:https://access.redhat.com/security/cve/cve-2026-7246[CVE-2026-7246] — python3.12-click: Pallets Click: Arbitrary command execution via command injection in click.edit() in:
+** packaging for Ansible Automation Platform 2.5. AAP-74031
+
+== Bug fixes
+
+=== {ControllerNameStart}
+
+* Fixed an issue where analytics API requests did not respect proxy environment variables, causing DNS resolution failures in proxy environments. (AAP-75559)
+
+* Fixed an issue where updating extra_data on a workflow job template node via PATCH failed with a labels validation error when the node had labels associated but the underlying Job Template had ask_labels_on_launch=False. (AAP-75203)
+
+* Fixed an issue where the awxkit CLI failed on clean installs due to a missing packaging dependency in setup.py. (AAP-74279)
+
+* Fixed an issue where long-running fact storage queries caused jobs and workflows to fail. (AAP-74521)
+
+* Fixed an issue where the ansible.controller collection did not automatically retry transient HTTP errors (502, 503, 500, 504) with exponential backoff. (AAP-72704)
+
+
+=== {ExecEnvNameStart}
+
+* Fixed an issue where propcache >=0.5.0 was incompatible with setuptools < 82. (AAP-75088)
+
+
+=== {GatewayStart} UI
+
+* Fixed an issue where searching for a collection by name returned incorrect results. (AAP-65974)
+
+
+=== Containerized installer {PlatformNameShort}
+
+* Fixed an issue where uploading large images to automation hub returned a "502 Bad Gateway" error. (AAP-55134)
