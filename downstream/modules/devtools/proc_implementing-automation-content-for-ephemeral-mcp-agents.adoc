@@ -20,14 +20,14 @@ You can create an Ansible playbook leveraging the Execution Environment (EE) set
 
 . Create the `execution-environment.yml` definition file, which specifies a step to install the MCP server components: 
 +
-[source,yaml,subs="+quotes"]
+[source,yaml,subs="+quotes,+attributes"]
 ....
 ---
 version: 3
 
 images:
   base_image:
-    name: ansible-automation-platform-26/ee-minimal-rhel9:latest
+    name: {AAPRegistryNS}/ee-minimal-{AAPRHELVer}:latest
 dependencies:
   galaxy: requirements.yml
 

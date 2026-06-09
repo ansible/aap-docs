@@ -47,6 +47,7 @@ collections:
 
 . Create `ee-build/execution-environment.yml` with this content:
 +
+[subs="+attributes"]
 ----
 # execution-environment.yml
 ---
@@ -54,7 +55,7 @@ version: 3
 
 images:
   base_image:
-    name: registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel9:latest
+    name: registry.redhat.io/{AAPRegistryNS}/ee-minimal-{AAPRHELVer}:latest
 
 dependencies:
   galaxy: requirements.yml
@@ -77,7 +78,7 @@ Where
 
 * `additional_build_files`: Copies your collection tarballs into the container build context so they can be referenced during the build.
 * `additional_build_steps.append_final`: Runs your installation playbook in the final build stage, after collections are installed.
-* `options.package_manager_path`: Set to `/usr/bin/microdnf` for `ee-minimal-rhel9`, or `/usr/bin/dnf` for UBI9-based images.
+* `options.package_manager_path`: Set to `/usr/bin/microdnf` for `ee-minimal-{AAPRHELVer}`, or `/usr/bin/dnf` for UBI9-based images.
 
 . Run ansible-builder to build your {ExecEnvShort} image:
 +

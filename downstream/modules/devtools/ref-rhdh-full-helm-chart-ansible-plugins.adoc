@@ -6,6 +6,7 @@
 [role="_abstract"]
 This example provides a full YAML configuration for the Helm chart using OCI container delivery.
 
+[subs="+attributes"]
 ----
 global:
   dynamic:
@@ -47,7 +48,7 @@ upstream:
           - adt
           - server
         image: >-
-          registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+          registry.redhat.io/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest
         imagePullPolicy: IfNotPresent
         name: ansible-devtools-server
         ports:

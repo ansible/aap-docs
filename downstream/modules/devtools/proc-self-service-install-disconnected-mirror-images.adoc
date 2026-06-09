@@ -54,20 +54,11 @@ $ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-pl
 ----
 . Mirror the Ansible Dev Tools sidecar image. Use the path that matches your {PlatformNameShort} version:
 +
-*{PlatformNameShort} 2.5:*
-+
+[subs="+attributes"]
 ----
-$ podman pull registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
-$ podman tag registry.redhat.io/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
-$ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-25/ansible-dev-tools-rhel9:latest
-----
-+
-*{PlatformNameShort} 2.6:*
-+
-----
-$ podman pull registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
-$ podman tag registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
-$ podman push <disconnected_registry_url>/<your_namespace>/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+$ podman pull registry.redhat.io/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest
+$ podman tag registry.redhat.io/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest <disconnected_registry_url>/<your_namespace>/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest
+$ podman push <disconnected_registry_url>/<your_namespace>/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest
 ----
 
 

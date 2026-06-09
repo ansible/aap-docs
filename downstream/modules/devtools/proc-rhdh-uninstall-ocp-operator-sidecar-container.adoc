@@ -20,6 +20,7 @@ you must modify the base ConfigMap for the {RHDH} deployment.
 
 . In the editing pane, remove the `containers` block for the sidecar container from the `spec.deployment.patch.spec.template.spec` block:
 +
+[subs="+attributes"]
 ----
 ...
 spec:
@@ -32,7 +33,7 @@ spec:
               - command:
                   - adt
                   - server
-                image: registry.redhat.io/ansible-automation-platform-26/ansible-dev-tools-rhel9:latest
+                image: registry.redhat.io/{AAPRegistryNS}/ansible-dev-tools-{AAPRHELVer}:latest
                 imagePullPolicy: always
                 ports:
                   - containerPort: 8000
