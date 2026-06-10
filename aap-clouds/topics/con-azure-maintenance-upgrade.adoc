@@ -1,0 +1,57 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-azure-maintenance-upgrade"]
+
+= Product lifecycle and maintenance
+
+[role="_abstract"]
+Understand the version lifecycle, planned upgrade windows, uptime policy, and support coverage for {AAPonAzureName}.
+
+== Version lifecycle
+
+{AAPonAzureName} employs a continuous release approach to versioning, meaning that customers are upgraded to the latest version that Red Hat supports on a cadence that Red Hat defines. {AAPonAzureNameShort} cannot be version locked for customers at this time.
+
+As a managed application, Red Hat provides upgrades to the offering as per the cadence defined below to deliver modern application features, product fixes, and security updates.
+
+[cols="a,a,a"]
+|===
+| {PlatformNameShort} on Azure  | {PlatformNameShort} | Seeded Content
+| Continuously Released outside of {PlatformNameShort} version | Updated to maintain cadence with the most recently published version of {PlatformNameShort} (x.y.z release streams) | Continuously Released outside of {PlatformNameShort} version
+|===
+
+== Planned upgrade windows
+
+Red Hat has defined windows in which upgrades occur, and those windows may change over time in an effort to improve service offerings. Every effort is taken to reduce or eliminate any downtime during these windows. However, these windows are provided to allow for system downtime should it be required.
+
+In the cases where operations require more time than the planned window, then the operation time has precedence over the defined window time. The "upgrade window" timeline is not synonymous with an expected outage timeline; it defines the time over which upgrades are planned to occur.
+
+[cols="a,a,a,a"]
+|===
+| Cadence | Expected upgrade window | Time | Purpose
+| Ad Hoc | N/A | As needed for security reasons | Critical CVE patches
+| Daily | 1 hour | 2 AM ET | CVE patches
+| Weekly | 2 hour | 2 AM ET Tuesdays | {PlatformNameShort} and infrastructure upgrades (North America Deployments).
+| Weekly | 2 hour | 2 AM UTC Tuesdays | {PlatformNameShort} and infrastructure upgrades (EMEA Deployments).
+| Weekly | 2 hour | 2 AM JST Tuesdays | {PlatformNameShort} and infrastructure upgrades (APAC Deployments).
+| Ad Hoc | 1 hour | 2 AM UTC Sunday | Azure Database for PostgreSQL - Flexible Server.
+| Ad Hoc | 4 hour | 2 AM UTC Sunday | AKS cluster node operating system images.
+|===
+
+[NOTE]
+====
+These windows are only a guidance, and Red Hat reserves the ability to perform platform operations as needed to maintain the health of Ansible on Azure deployments.
+====
+
+== Uptime policy
+
+As a managed application, Red Hat strives to limit any solution downtime. Red Hat has a team of _Site Reliability Engineers_ (SREs) dedicated to {AAPonAzureNameShort} to provide monitoring and cloud offering support. However, there is no current uptime guarantee for {PlatformNameShort} on Azure. 
+Due to the nature of managed applications, such as resources running on a third-party provider (Microsoft Azure), there might be circumstances that cause downtime that are outside of Red Hat control. 
+Red Hat works closely with Microsoft to deliver a stable and reliable solution.
+
+=== Scope of coverage
+
+Support is provided for use according to the published Scope of Coverage in Appendix 1 of the link:https://www.redhat.com/en/about/enterprise-agreements[Red Hat Enterprise Agreement].
+As a managed application, Red Hat supports the managed application as currently deployed to customers. Versions that are not actively in use by {PlatformNameShort} on Azure are not supported.
+
+
+
