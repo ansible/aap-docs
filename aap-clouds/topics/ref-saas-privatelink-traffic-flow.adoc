@@ -1,0 +1,32 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-privatelink-traffic-flow"]
+
+= {AWSPrivateLink} traffic flow summary
+
+[role="_abstract"]
+The following table summarizes the primary AWS components, critical settings, and corresponding automation mesh connectivity model for each {AWSPrivateLink} direction.
+
+[cols="1,1,2,2,3", options="header"]
+|===
+|Traffic flow |Connectivity model |Direction |Primary component required |Critical setting
+
+|Ingress
+|PULL
+|Customer VPC to {PlatformNameShort} control plane
+|AWS VPC Endpoint (Interface)
+|Enable Private DNS resolution and restrict the security group attached to your VPC Endpoint to HTTPS (port 443).
+
+|Egress
+|PUSH
+|{PlatformNameShort} control plane to customer VPC
+|AWS VPC Endpoint Service and Network Load Balancer (NLB)
+|Enable Private DNS on the Endpoint Service and implement split-horizon DNS.
+|===
+
+[NOTE]
+====
+*PULL* and *PUSH* refer to the automation mesh connectivity models described in link:{BaseURL}/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-pull-push[{SaaSonAWS} PULL and PUSH models].
+Ingress PrivateLink supports the PULL model (UI/API and mesh-ingress access from your VPC).
+Egress PrivateLink supports the PUSH model (control plane access to private resources in your VPC, such as execution nodes, Git, and {PrivateHubName}).
+====
