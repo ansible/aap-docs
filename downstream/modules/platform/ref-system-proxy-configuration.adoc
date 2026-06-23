@@ -1,0 +1,14 @@
+[id="ref-system-proxy-configuration"]
+
+= System proxy configuration
+
+The outbound proxy is configured on the system level for all the nodes in the restricted security group.
+
+The following environment variables must be set:
+----
+http_proxy=“http://{{ groups[‘external_proxy’][0] }}:3128”
+https_proxy=“http://{{ groups[‘external_proxy’][0] }}:3128”
+no_proxy=“localhost,127.0.0.0/8,10.0.0.0/8”
+----
+
+The installer ensures that all external communication during the installation goes through the proxy. 
