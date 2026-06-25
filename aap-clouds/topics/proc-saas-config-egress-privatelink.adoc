@@ -10,7 +10,7 @@ This configuration allows the {PlatformNameShort} control plane to connect to yo
 
 .Procedure
 
-. *Step 1: Create the NLB and Endpoint Service in your customer VPC*
+. Create the NLB and Endpoint Service in your customer VPC:
 .. Confirm your private resource is behind an AWS Network Load Balancer (NLB).
 .. Create an Endpoint Service in your AWS VPC that points to that NLB.
 +
@@ -19,7 +19,7 @@ This configuration allows the {PlatformNameShort} control plane to connect to yo
 You must select the service type that supports Interface endpoints and enable the Private DNS option.
 ====
 
-. *Step 2: Copy your Endpoint Service Name into the Egress template and submit the support request*
+. Copy your Endpoint Service Name into the Egress template and submit the support request
 +
 Copy the resulting VPC Endpoint Service Name from your Endpoint Service configuration into the *Egress PrivateLink request template* below, fill in the remaining details, and submit a *separate* {CustomerSupport} case to Red Hat.
 +
@@ -41,23 +41,24 @@ Please confirm when Red Hat has initiated the connection request so we can appro
 Thank you. 
 ----
 
-. *Step 3: Approve the pending endpoint connection request after Red Hat SRE initiates it*
+. Approve the pending endpoint connection request after Red Hat SRE initiates it
 +
 Red Hat uses the information you provided to create an Interface Endpoint on their side. When Red Hat creates this endpoint, they select the category "Endpoint services that use NLBs and GWLBs" to connect to your service.
 +
 When Red Hat SRE initiates the connection request, approve the pending endpoint connection request in your AWS console:
++
 .. Log in to the AWS console and navigate to menu:VPC[Endpoint services].
 .. Select your Endpoint Service.
 .. On the *Endpoint connections* tab, locate the pending connection from Red Hat and click btn:[Accept endpoint connection request].
 
-. *Step 4: Configure Internal and Split-Horizon DNS*
+. Configure internal and split-horizon DNS
 +
 After Red Hat completes the endpoint connection, work with your organization's internal DNS or network team to ensure name resolution routes traffic over the PrivateLink connection.
 +
 Your internal DNS team must implement one of the following approaches:
 +
-* *Split-horizon DNS (customer-managed):* Configure split-horizon DNS so that the Fully Qualified Domain Name (FQDN) of your private resource (for example, `git.company.com`) resolves to the private IP addresses of the AWS resources behind the Endpoint Service you created in Step 1. This ensures that DNS queries within your environment return private addresses instead of public ones, and that traffic to the resource uses the secure PrivateLink path.
-* *Private DNS on the Endpoint Service (control plane resolution):* If you enabled the *Private DNS* option when you created your Endpoint Service in Step 1, the {PlatformNameShort} control plane can natively resolve your resource's FQDN over the egress PrivateLink connection. AWS maps DNS queries from the control plane to the private IP addresses of Red Hat's consuming Interface Endpoint, allowing secure connectivity without additional customer DNS changes for the control plane path.
+* *Split-horizon DNS (customer-managed)*: Configure split-horizon DNS so that the Fully Qualified Domain Name (FQDN) of your private resource (for example, `git.company.com`) resolves to the private IP addresses of the AWS resources behind the Endpoint Service you created in the first step. This ensures that DNS queries within your environment return private addresses instead of public ones, and that traffic to the resource uses the secure PrivateLink path.
+* *Private DNS on the Endpoint Service (control plane resolution)*: If you enabled the *Private DNS* option when you created your Endpoint Service in the first step, the {PlatformNameShort} control plane can natively resolve your resource's FQDN over the egress PrivateLink connection. AWS maps DNS queries from the control plane to the private IP addresses of Red Hat's consuming Interface Endpoint, allowing secure connectivity without additional customer DNS changes for the control plane path.
 +
 [NOTE]
 ====
