@@ -10,7 +10,7 @@ This configuration allows the {PlatformNameShort} control plane to connect to yo
 
 .Procedure
 
-. Create an Endpoint Service in your VPC:
+. Create the NLB and Endpoint Service in your customer VPC:
 .. Confirm your private resource is behind an AWS Network Load Balancer (NLB).
 .. Create an Endpoint Service in your AWS VPC that points to that NLB.
 +
@@ -18,13 +18,11 @@ This configuration allows the {PlatformNameShort} control plane to connect to yo
 ====
 You must select the service type that supports Interface endpoints and enable the Private DNS option.
 ====
-. To initiate control plane egress, you must submit a *separate* {CustomerSupport} case using the *Egress PrivateLink request template*.
-. Red Hat uses the information provided to create an Interface Endpoint on their side. When Red Hat creates this endpoint, they select the category "Endpoint services that use NLBs and GWLBs" to connect to your service.
-. Your Internal Network or IT Team must configure the Internal DNS.
-. To ensure users route through the secure PrivateLink connection, you must request a Split-Horizon DNS configuration.
-. Copy the *Egress PrivateLink request template*, fill in your specific VPC Endpoint Service Name, and submit it to Red Hat.
 
-*Egress PrivateLink request template*
+. Copy your Endpoint Service Name into the Egress template and submit the support request
++
+Copy the resulting VPC Endpoint Service Name from your Endpoint Service configuration into the following *Egress PrivateLink request template*, fill in the remaining details, and submit a *separate* {CustomerSupport} case to Red Hat.
++
 ----
 Subject: 
 Egress PrivateLink Configuration for <Instance ID>
@@ -42,3 +40,28 @@ Please confirm when Red Hat has initiated the connection request so we can appro
 
 Thank you. 
 ----
+
+. Approve the pending endpoint connection request after Red Hat SRE initiates it
++
+Red Hat uses the information you provided to create an Interface Endpoint on their side. When Red Hat creates this endpoint, they select the category "Endpoint services that use NLBs and GWLBs" to connect to your service.
++
+When Red Hat SRE initiates the connection request, approve the pending endpoint connection request in your AWS console:
++
+.. Log in to the AWS console and navigate to menu:VPC[Endpoint services].
+.. Select your Endpoint Service.
+.. On the *Endpoint connections* tab, locate the pending connection from Red Hat and click btn:[Accept endpoint connection request].
+
+. Configure internal and split-horizon DNS
++
+After Red Hat completes the endpoint connection, work with your organization's internal DNS or network team to ensure name resolution routes traffic over the PrivateLink connection.
++
+Your internal DNS team must implement one of the following approaches:
++
+* *Split-horizon DNS (customer-managed)*: Configure split-horizon DNS so that the Fully Qualified Domain Name (FQDN) of your private resource (for example, `git.company.com`) resolves to the private IP addresses of the AWS resources behind the Endpoint Service you created in the first step. This ensures that DNS queries within your environment return private addresses instead of public ones, and that traffic to the resource uses the secure PrivateLink path.
+* *Private DNS on the Endpoint Service (control plane resolution)*: If you enabled the *Private DNS* option when you created your Endpoint Service in the first step, the {PlatformNameShort} control plane can natively resolve your resource's FQDN over the egress PrivateLink connection. AWS maps DNS queries from the control plane to the private IP addresses of Red Hat's consuming Interface Endpoint, allowing secure connectivity without additional customer DNS changes for the control plane path.
++
+[NOTE]
+====
+If you use split-horizon DNS, coordinate with your internal DNS team before you configure {PlatformNameShort} to use the private resource. The FQDN you register in {PlatformNameShort} (for example, `git.company.com`) must match the name your DNS team maps to the private IP addresses behind your Endpoint Service.
+====
+

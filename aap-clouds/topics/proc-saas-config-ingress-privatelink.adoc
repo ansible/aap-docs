@@ -10,16 +10,14 @@ This configuration allows your internal users and automation to access the {Plat
 
 .Procedure 
 
-. To request Ingress PrivateLink submit a {CustomerSupport} case to Red Hat using the *Ingress AWS PrivateLink request template* step 2. 
-. You must include your:
-* *AWS  Account ID*.
-* *Region*.
-* *Deployment URL*.
-* After Red Hat provides you with a VPC Endpoint Service Name, you must create a VPC Endpoint in your AWS account that points to the provided service name.
-. For your *Ingress {AWSPrivateLink} request template*:
-* Select "Endpoint services that use NLBs and GWLBs".
-** In the *Service name* field, paste the VPC Endpoint Service Name provided by Red Hat and click btn:[Verify service].
-* Complete the network and security group configuration as required by your organization.
+. Submit the Ingress PrivateLink support request
++
+Copy the following *Ingress AWS PrivateLink request template*, fill in your deployment details, and submit a {CustomerSupport} case to Red Hat.
++
+You must include your:
+* *AWS Account ID*
+* *Region*
+* *Deployment URL*
 +
 ----
 Subject: 
@@ -42,4 +40,13 @@ Please create the Endpoint Service configuration on the Control Plane side and p
 
 Thank you. 
 ----
+
+. Create a VPC Endpoint after Red Hat Support responds with your Service Name
++
+After Red Hat provides you with a VPC Endpoint Service Name, create a VPC Endpoint in your AWS account that points to the provided service name:
++
+.. In the AWS console, navigate to menu:VPC[Endpoints] and click btn:[Create endpoint].
+.. Select "Endpoint services that use NLBs and GWLBs".
+.. In the *Service name* field, paste the VPC Endpoint Service Name provided by Red Hat and click btn:[Verify service].
+.. Complete the network and security group configuration as required by your organization.
 

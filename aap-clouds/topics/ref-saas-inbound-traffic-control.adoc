@@ -23,3 +23,10 @@ You must provide the specific **IP CIDR blocks** (for example, `192.0.2.0/24`) t
 |Customer
 |Configure the **AWS Security Group** attached to your **VPC Endpoint** to allow inbound **HTTPS (443)** traffic only from specific internal subnets or VPN CIDRs.
 |===
+
+[NOTE]
+====
+Public internet access and PrivateLink access are independent layers that can coexist. Enabling PrivateLink does not automatically disable public internet access to the {PlatformNameShort} UI and API.
+
+If you require absolute network isolation, you must explicitly request that Red Hat SRE disable public internet access entirely, or restrict public access to specific CIDR blocks. Submit this request as a separate {CustomerSupport} case alongside your PrivateLink initialization ticket.
+====
