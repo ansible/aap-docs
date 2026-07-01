@@ -1,0 +1,26 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-disconnect-aws-privatelink"]
+
+= Disconnecting and deleting {AWSPrivateLink} connectivity
+
+[role="_abstract"]
+Before you remove any PrivateLink resources, open a {CustomerSupport} case and wait for Red Hat to complete teardown on the control plane side.
+
+[IMPORTANT]
+====
+Open a {CustomerSupport} case with Red Hat *before* deleting PrivateLink resources.
+Red Hat must delete the consumer VPC endpoint on the control plane side before you remove your Endpoint Service, Network Load Balancer (NLB), or related components.
+If customer-side resources are deleted first, the connection may remain in a failed or disconnected state and prevent a clean teardown.
+Once Red Hat confirms removal on the control plane side, you can safely delete your AWS resources.
+====
+
+[NOTE]
+====
+*PULL* and *PUSH* refer to the automation mesh connectivity models described in link:{BaseURL}/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-pull-push[{SaaSonAWS} PULL and PUSH models].
+
+* *Ingress PrivateLink (PULL):* Used when users, automation, or execution nodes in your VPC access the {PlatformNameShort} UI, API, or mesh ingress over PrivateLink.
+* *Egress PrivateLink (PUSH):* Used when the {PlatformNameShort} control plane connects to private resources in your VPC, such as execution nodes, Git, or {PrivateHubName}.
+
+If you configured both directions, submit a *separate* {CustomerSupport} case for each direction you want to disconnect.
+====
