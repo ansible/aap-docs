@@ -1,0 +1,10 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-network-dns-routing"]
+= Network DNS Routing
+
+[role="_abstract"]
+The platform uses automated networking mechanics to abstract failover shifts away from external calling systems.
+
+* *Service endpoints and URLs*: The customer-facing {PlatformNameShort} endpoint URL does not change during or after a failover event. Customers need not update bookmarks, API integrations, CI/CD pipelines, or automation mesh configurations. The URL used to access the primary region resolves smoothly to the secondary region after the cutover.
+* *DNS-layer routing*: Traffic redirection from the primary region to the secondary region is handled natively at the DNS layer. When a failover is initiated, upstream DNS records are updated so that the existing custom domain or auto-generated Red Hat URL resolves to the secondary region's infrastructure footprint.

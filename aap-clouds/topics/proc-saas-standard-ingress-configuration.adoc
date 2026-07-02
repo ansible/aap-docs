@@ -1,0 +1,19 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-saas-standard-ingress-configuration"]
+
+= Standard ingress configuration (without AWS PrivateLink)
+
+[role="_abstract"]
+For standard deployments, the automation mesh configuration relies on persistent, load-balanced ingress endpoints that resolve dynamically during a disaster recovery event.
+
+.Procedure
+. Locate the configuration files or installation playbooks for the remote execution nodes.
+. Configure the remote execution nodes to peer directly with the designated ingress routing addresses matching the custom domain or deployment naming convention:
+.. `mesh-ingress-0.<exampledomain.com>`
+.. `mesh-ingress-1.<exampledomain.com>`
++
+[NOTE]
+====
+When peered with these standard endpoints, remote execution nodes automatically reconnect and self-heal following a failover window. No manual reconfiguration of local mesh nodes or topology files is required.
+====
