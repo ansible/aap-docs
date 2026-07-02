@@ -1,0 +1,17 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-technical-operational-impacts"]
+= Technical and operational impacts
+
+[role="_abstract"]
+During a failover event, active operations on the primary control plane are impacted as follows:
+
+* *Control plane job failures*: Any jobs actively running on the control plane at the exact time of failover will fail. This scenario explicitly applies to:
+** Running playbook jobs dispatched but not yet completed.
+** Project synchronizations (for example, in-progress Git clones).
+** Inventory synchronizations in progress.
+** Scheduled jobs that are triggered during the active failover window.
+* *Job Queue*: Jobs that were queued but not yet dispatched to an execution node are not preserved during the transition.
+* *Post-failover remediation*: Once the failover process is complete and the secondary environment is fully active, the customer must manually re-launch any failed or queued jobs from the secondary region.
+* *External execution node behavior*: Jobs running directly on customer execution nodes (such as long-running playbooks against targeted managed hosts) can continue to execute uninterrupted, provided the execution nodes themselves remain healthy. However, these nodes will be unable to report their final results back to the control plane until the failover completes and control plane connectivity is completely restored.
+

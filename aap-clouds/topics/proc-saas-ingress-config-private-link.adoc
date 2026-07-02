@@ -1,0 +1,17 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-saas-ingress-config-private-link"]
+
+= Ingress configuration with AWS PrivateLink
+
+[role="_abstract"]
+The automated self-healing behavior of the automation mesh endpoints does not automatically bridge across separate private cloud networks.
+
+[IMPORTANT]
+====
+Private endpoints and interface VPC endpoints are inherently tied to specific cloud regional boundaries. During a regional failover event, private network connectivity to the secondary region is not automatically established by Red Hat.
+====
+
+.Procedure
+. Pre-configure or manually verify corresponding AWS PrivateLink connections, route tables, and security policy rules inside the secondary region's AWS infrastructure.
+. Ensure that remote execution nodes are permitted to establish a network path to the secondary control plane endpoints during a failover scenario.
