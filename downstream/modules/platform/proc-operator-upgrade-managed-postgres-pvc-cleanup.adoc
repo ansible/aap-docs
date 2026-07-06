@@ -1,0 +1,62 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-operator-upgrade-managed-postgres-pvc-cleanup_{context}"]
+
+= Removing the retained Postgres 13 PVC
+
+[role="_abstract"]
+
+After upgrading {PlatformName} from a version that uses Postgres 13 to one that uses Postgres 15, the original Postgres 13 Persistent Volume Claim (PVC) is not automatically removed for {ControllerName} deployments using a managed database. If your deployment uses an external database, no PVC cleanup is required.
+
+.Prerequisites
+
+* You have upgraded {PlatformNameShort} to a version that uses Postgres 15.
+* Your {ControllerName} deployment uses a managed database. Deployments that use an external database do not require PVC cleanup.
+
+.Procedure
+
+. Confirm that the Postgres 15 pod is running:
++
+[source,terminal]
+----
+$ oc get pods -n <your_namespace> | grep postgres
+----
++
+.Verification
+Verify that a pod with `postgres-15` in its name is in `Running` state.
+
+. List the PVCs in your namespace to identify the retained Postgres 13 PVC:
++
+[source,terminal]
+----
+$ oc get pvc -n <your_namespace>
+----
++
+The retained Postgres 13 PVC follows this naming format:
++
+----
+postgres-13-<deployment_name>-postgres-13-0
+----
++
+The current Postgres 15 PVC follows this naming format:
++
+----
+postgres-15-<deployment_name>-postgres-15-0
+----
+
+. Delete the retained Postgres 13 PVC:
++
+[IMPORTANT]
+====
+Do not delete the Postgres 13 PVC before confirming that the upgrade completed successfully. The retained volume can be used for data recovery if the upgrade fails.
+====
++
+[source,terminal]
+----
+$ oc delete pvc postgres-13-<deployment_name>-postgres-13-0 -n <your_namespace>
+----
+
+[NOTE]
+====
+The `postgres_keep_pvc_after_upgrade` field in the `AutomationController` custom resource definition (CRD) has no effect in {PlatformNameShort} 2.4 and later. Manual PVC cleanup is always required.
+====
