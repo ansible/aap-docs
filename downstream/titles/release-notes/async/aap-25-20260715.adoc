@@ -18,14 +18,17 @@ a|
 * {ControllerNameStart} 4.6.30
 * {HubNameStart} 4.10.16
 * {EDAName} 1.1.20
-* Container-based installer {PlatformNameShort} (bundle) 2.5-25
+* Container-based installer {PlatformNameShort} (bundle) 2.5-25.1
 * Container-based installer {PlatformNameShort} (online) 2.5-25
 * Receptor 1.6.6
-* RPM-based installer {PlatformNameShort} (bundle) 2.5-23
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-23.2
 * RPM-based installer {PlatformNameShort} (online) 2.5-23
 
 |====
 
+CSV Versions in this release:
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1784067919
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1784067933
 
 == Overview
 
@@ -70,13 +73,17 @@ _(No deprecated functionality entries for this release.)_
 ** link:https://access.redhat.com/security/cve/CVE-2026-4800[CVE-2026-4800] – lodash: Arbitrary code execution via untrusted input in template imports in:
 *** `automation-gateway` for {PlatformNameShort} 2.5. (AAP-70456)
 
+* Ansible Core
+** link:https://access.redhat.com/security/cve/cve-2026-11332[CVE-2026-11332] – Argument injection in ansible-galaxy role install leads to arbitrary code execution
+*** `ansible-core`. AAP-78064
+
+
 * Automation controller
 ** link:https://access.redhat.com/security/cve/CVE-2026-44432[CVE-2026-44432] – urllib3: Denial of Service due to excessive HTTP response decompression in:
 *** `automation-controller` for {PlatformNameShort} 2.5. (AAP-76248)
 ** link:https://access.redhat.com/security/cve/CVE-2026-8643[CVE-2026-8643] – Path traversal via malicious entry point name in pip wheel installation allows arbitrary file overwrite in:
-*** `ansible-automation-platform-25/controller-rhel8` for {PlatformNameShort} 2.5. (AAP-76307)
+*** `controller-rhel8` for {PlatformNameShort} 2.5. (AAP-76307)
 *** `automation-controller` for {PlatformNameShort} 2.5. (AAP-76310)
-*** `ansible-automation-platform-26/controller-rhel9` for {PlatformNameShort} 2.6. (AAP-76312)
 
 * {EDAName}
 ** EDA PGNotify SQL Injection via Dollar-Quote Escape in Unauthenticated Event Stream Payload: Parameterizes SQL channel and payload to reduce risk of dollar-quote escape SQL injections in:
@@ -84,26 +91,26 @@ _(No deprecated functionality entries for this release.)_
 
 * {ExecEnvNameStart}
 ** link:https://access.redhat.com/security/cve/CVE-2025-57847[CVE-2025-57847] – Privilege escalation via excessive group writable /etc/passwd permissions in:
-*** `ansible-automation-platform-24/ee-minimal-rhel8` for {PlatformNameShort} 2.4. (AAP-52301)
-*** `ansible-automation-platform-24/ee-minimal-rhel9` for {PlatformNameShort} 2.4. (AAP-52303)
+*** `ee-minimal-rhel8` for {PlatformNameShort} 2.4. (AAP-52301)
+*** `ee-minimal-rhel9` for {PlatformNameShort} 2.4. (AAP-52303)
 
 * {HubNameStart}
 ** link:https://access.redhat.com/security/cve/CVE-2026-44432[CVE-2026-44432] – urllib3: Denial of Service due to excessive HTTP response decompression in:
-*** `ansible-automation-platform-25/hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78067)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78067)
 ** link:https://access.redhat.com/security/cve/CVE-2026-44431[CVE-2026-44431] – urllib3: Information disclosure via cross-origin redirects forwarding sensitive headers in:
-*** `ansible-automation-platform-25/hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78068)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78068)
 ** link:https://access.redhat.com/security/cve/CVE-2026-48526[CVE-2026-48526] – PyJWT: Authentication bypass due to forged JSON Web Tokens in:
-*** `ansible-automation-platform-25/hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78304)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78304)
 ** link:https://access.redhat.com/security/cve/CVE-2026-42284[CVE-2026-42284] – GitPython: Arbitrary code execution via improper validation of clone options in:
-*** `cloudservices/automation-hub-galaxy-ng` for {PlatformNameShort} 2.5. (AAP-81352)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81352)
 ** link:https://access.redhat.com/security/cve/CVE-2026-42215[CVE-2026-42215] – GitPython: Arbitrary command execution due to bypass of dangerous Git option checks in:
-*** `cloudservices/automation-hub-galaxy-ng` for {PlatformNameShort} 2.5. (AAP-81361)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81361)
 ** link:https://access.redhat.com/security/cve/CVE-2026-44244[CVE-2026-44244] – GitPython: Arbitrary code execution via injected newlines in Git configuration in:
-*** `cloudservices/automation-hub-galaxy-ng` for {PlatformNameShort} 2.5. (AAP-81367)
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81367)
 
 * Ansible Lightspeed
 ** link:https://access.redhat.com/security/cve/CVE-2026-48526[CVE-2026-48526] – PyJWT: Authentication bypass due to forged JSON Web Tokens in:
-*** `ansible-automation-platform-25/lightspeed-rhel8` for {PlatformNameShort} 2.5. (AAP-78023)
+*** `lightspeed-rhel8` for {PlatformNameShort} 2.5. (AAP-78023)
 
 * Receptor
 ** link:https://access.redhat.com/security/cve/CVE-2026-32281[CVE-2026-32281] – Go crypto/x509: Denial of Service via inefficient certificate chain validation in:
@@ -119,7 +126,7 @@ _(No deprecated functionality entries for this release.)_
 
 == Bug fixes
 
-=== {GatewayStart} / Aap-security
+=== {GatewayStart}
 
 * Fixed an issue where a potential Subject header spoofing vulnerability existed on gateway routes. (AAP-79294)
 
@@ -146,7 +153,7 @@ _(No deprecated functionality entries for this release.)_
 * Fixed an issue where KubeVirt inventory sync was failing. Updated the following collections: kubernetes.core 5.4.0, redhat.openshift 4.0.2, redhat.openshift_virtualization 1.5.0. (AAP-49501)
 * Fixed an issue where collections were outdated. Updated the following collections: ansible.platform 2.7.20260615, ansible.controller 4.8.2, ansible.eda 2.12.1. (AAP-79065)
 
-=== Hub / Pulp
+=== Hub
 
 * Fixed an issue where deleting a community.general collection caused excessive memory usage, leading to SIGKILL. (AAP-53296)
 
