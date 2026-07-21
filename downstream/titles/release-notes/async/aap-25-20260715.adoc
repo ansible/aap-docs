@@ -85,14 +85,15 @@ _(No deprecated functionality entries for this release.)_
 *** `controller-rhel8` for {PlatformNameShort} 2.5. (AAP-76307)
 *** `automation-controller` for {PlatformNameShort} 2.5. (AAP-76310)
 
-* {EDAName}
-** EDA PGNotify SQL Injection via Dollar-Quote Escape in Unauthenticated Event Stream Payload: Parameterizes SQL channel and payload to reduce risk of dollar-quote escape SQL injections in:
-*** `event-driven-ansible` for {PlatformNameShort} 2.5. (AAP-77312)
-
 * {ExecEnvNameStart}
 ** link:https://access.redhat.com/security/cve/CVE-2025-57847[CVE-2025-57847] – Privilege escalation via excessive group writable /etc/passwd permissions in:
 *** `ee-minimal-rhel8` for {PlatformNameShort} 2.4. (AAP-52301)
 *** `ee-minimal-rhel9` for {PlatformNameShort} 2.4. (AAP-52303)
+
+* Platform Gateway
+** link:https://access.redhat.com/security/cve/cve-2026-12382[CVE-2026-12382] - missing requestHeadersToRemove allows mTLS bypass via Subject header spoofing. 
+*** `automation-gateway` (AAP-79294)
+
 
 * {HubNameStart}
 ** link:https://access.redhat.com/security/cve/CVE-2026-44432[CVE-2026-44432] – urllib3: Denial of Service due to excessive HTTP response decompression in:
@@ -126,10 +127,6 @@ _(No deprecated functionality entries for this release.)_
 
 == Bug fixes
 
-=== {GatewayStart}
-
-* Fixed an issue where a potential Subject header spoofing vulnerability existed on gateway routes. (AAP-79294)
-
 === {GatewayStart} UI
 
 * Fixed an issue where the collection Documentation tab in {HubName} would crash when the API response included large unnecessary fields, causing the page to fail to render. (AAP-75538)
@@ -147,6 +144,8 @@ _(No deprecated functionality entries for this release.)_
 * Fixed an issue where PostgreSQL logs were flooded with "could not receive data from client: Connection reset by peer" messages. Adds setting for db connection to maintain/reuse the connection for up to 10 minutes to reduce noise in the logs. (AAP-77001)
 * Fixed an issue where sandboxed Jinja2 rendering was not enforced in EDA Server. (AAP-77443)
 * Fixed an issue where transient Kubernetes API errors could cause rulebook activations to enter an unrecoverable error state, leading to orphaned activation pods and duplicate pod spawning. Activations now retry on transient errors and automatically recover when the API becomes available again. (AAP-81709)
+* Fixed an issue where transient Kubernetes API errors could cause rulebook activations to enter an unrecoverable error state, leading to orphaned activation pods and duplicate pod spawning. Activations now retry on transient errors and automatically recover when the API becomes available again. (AAP-81709)
+
 
 === {ExecEnvNameStart}
 
