@@ -1,0 +1,161 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-2.5-20260715]]
+
+= {PlatformNameShort} 2.5 Release Notes July 15, 2026
+
+This release includes the following components and versions: 
+
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| July 15, 2026
+a|
+
+* {ControllerNameStart} 4.6.30
+* {HubNameStart} 4.10.16
+* {EDAName} 1.1.20
+* Container-based installer {PlatformNameShort} (bundle) 2.5-25.1
+* Container-based installer {PlatformNameShort} (online) 2.5-25
+* Receptor 1.6.6
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-23.2
+* RPM-based installer {PlatformNameShort} (online) 2.5-23
+
+|====
+
+CSV Versions in this release:
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1784067919
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1784067933
+
+== Overview
+
+This release of {PlatformNameShort} 2.5 delivers a new analytics logging feature, performance and metadata enhancements for the automation controller, an EDA role-assignment API, updated {ExecEnvShort} collections, and security fixes addressing multiple CVEs across controller, hub, receptor, {ExecEnvShort}, and gateway components. Bug fixes improve stability for EDA activations, documentation rendering, RBAC permission grants, and inventory host counting.
+
+== Highlights
+
+* New controller logging of ingress API response metadata for analytics upload traceability
+* RBAC query performance optimization for non-superuser API requests at scale
+* EDA API endpoint for role team assignment
+* Security fixes for 17 CVEs across receptor, hub, controller, {ExecEnvShort}, lightspeed, and gateway
+* Stability improvements for EDA rulebook activations on Kubernetes
+
+== Features
+
+=== {ControllerNameStart}
+
+* The controller now logs the `request_id`, `account_number`, and `org_id` from the ingress API response after a successful `gather_analytics` tarball upload. Previously, this response data was silently discarded, requiring support engineers to manually patch the controller source code to trace analytics uploads through Kibana. The new log entry appears at INFO level in `task_system.log` and can be searched directly by `request_id` or `account_number` to correlate controller uploads with backend ingestion. (AAP-79938)
+
+== Enhancements
+
+=== {ControllerNameStart}
+
+* Installed collections and Ansible version are now recorded for every job run, regardless of whether the Indirect Node Counting feature flag is enabled. Previously, this metadata was only collected when FEATURE_INDIRECT_NODE_COUNTING_ENABLED was on. (AAP-74343), (AAP-79224)
+* Performance: Optimized RBAC permission filtering for non-superuser API requests to /api/v2/unified_jobs/ and /api/v2/unified_job_templates/. Replaced an inefficient 3-table JOIN in UnifiedJobTemplate.accessible_pk_qs() with a direct subquery using _actor_role_filter(), eliminating an unnecessary scan of the dab_rbac_objectrole table. This reduces query latency for non-superusers, particularly at scale. (AAP-70902) (AAP-78349)
+
+=== {EDAName}
+
+* API Endpoint for Role Team Assignment for EDA. (AAP-80332)
+
+=== {ExecEnvNameStart}
+
+* Updated the following collection versions: ansible.controller 4.6.30, redhat.satellite 3.15.0, redhat.satellite_operations 3.0.0. (AAP-81430)
+
+== Deprecated
+
+_(No deprecated functionality entries for this release.)_
+
+== CVE
+
+* Automation Platform UI
+** link:https://access.redhat.com/security/cve/CVE-2026-4800[CVE-2026-4800] – lodash: Arbitrary code execution via untrusted input in template imports in:
+*** `automation-gateway` for {PlatformNameShort} 2.5. (AAP-70456)
+
+* Ansible Core
+** link:https://access.redhat.com/security/cve/cve-2026-11332[CVE-2026-11332] – Argument injection in ansible-galaxy role install leads to arbitrary code execution
+*** `ansible-core`. AAP-78064
+
+
+* Automation controller
+** link:https://access.redhat.com/security/cve/CVE-2026-44432[CVE-2026-44432] – urllib3: Denial of Service due to excessive HTTP response decompression in:
+*** `automation-controller` for {PlatformNameShort} 2.5. (AAP-76248)
+** link:https://access.redhat.com/security/cve/CVE-2026-8643[CVE-2026-8643] – Path traversal via malicious entry point name in pip wheel installation allows arbitrary file overwrite in:
+*** `controller-rhel8` for {PlatformNameShort} 2.5. (AAP-76307)
+*** `automation-controller` for {PlatformNameShort} 2.5. (AAP-76310)
+
+* {ExecEnvNameStart}
+** link:https://access.redhat.com/security/cve/CVE-2025-57847[CVE-2025-57847] – Privilege escalation via excessive group writable /etc/passwd permissions in:
+*** `ee-minimal-rhel8` for {PlatformNameShort} 2.4. (AAP-52301)
+*** `ee-minimal-rhel9` for {PlatformNameShort} 2.4. (AAP-52303)
+
+* Platform Gateway
+** link:https://access.redhat.com/security/cve/cve-2026-12382[CVE-2026-12382] - missing requestHeadersToRemove allows mTLS bypass via Subject header spoofing. 
+*** `automation-gateway` (AAP-79294)
+
+
+* {HubNameStart}
+** link:https://access.redhat.com/security/cve/CVE-2026-44432[CVE-2026-44432] – urllib3: Denial of Service due to excessive HTTP response decompression in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78067)
+** link:https://access.redhat.com/security/cve/CVE-2026-44431[CVE-2026-44431] – urllib3: Information disclosure via cross-origin redirects forwarding sensitive headers in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78068)
+** link:https://access.redhat.com/security/cve/CVE-2026-48526[CVE-2026-48526] – PyJWT: Authentication bypass due to forged JSON Web Tokens in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-78304)
+** link:https://access.redhat.com/security/cve/CVE-2026-42284[CVE-2026-42284] – GitPython: Arbitrary code execution via improper validation of clone options in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81352)
+** link:https://access.redhat.com/security/cve/CVE-2026-42215[CVE-2026-42215] – GitPython: Arbitrary command execution due to bypass of dangerous Git option checks in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81361)
+** link:https://access.redhat.com/security/cve/CVE-2026-44244[CVE-2026-44244] – GitPython: Arbitrary code execution via injected newlines in Git configuration in:
+*** `hub-rhel8` for {PlatformNameShort} 2.5. (AAP-81367)
+
+* Ansible Lightspeed
+** link:https://access.redhat.com/security/cve/CVE-2026-48526[CVE-2026-48526] – PyJWT: Authentication bypass due to forged JSON Web Tokens in:
+*** `lightspeed-rhel8` for {PlatformNameShort} 2.5. (AAP-78023)
+
+* Receptor
+** link:https://access.redhat.com/security/cve/CVE-2026-32281[CVE-2026-32281] – Go crypto/x509: Denial of Service via inefficient certificate chain validation in:
+*** `receptor` for {PlatformNameShort} 2.5. (AAP-75612)
+** link:https://access.redhat.com/security/cve/CVE-2026-39821[CVE-2026-39821] – golang.org/x/net/idna: Privilege escalation via incorrect Punycode label processing in:
+*** `receptor` for {PlatformNameShort} 2.5. (AAP-78507)
+** link:https://access.redhat.com/security/cve/CVE-2026-33811[CVE-2026-33811] – Go net package: Denial of Service via long CNAME response in LookupCNAME in:
+*** `receptor` for {PlatformNameShort} 2.5. (AAP-80149)
+** link:https://access.redhat.com/security/cve/CVE-2026-25681[CVE-2026-25681] – golang.org/x/net/html: Arbitrary code execution via Cross-Site Scripting in:
+*** `receptor` for {PlatformNameShort} 2.5. (AAP-81198)
+** link:https://access.redhat.com/security/cve/CVE-2026-27136[CVE-2026-27136] – golang.org/x/net/html: Cross-Site Scripting via HTML parsing bypass in:
+*** `receptor` for {PlatformNameShort} 2.5. (AAP-81356)
+
+== Bug fixes
+
+=== {GatewayStart} UI
+
+* Fixed an issue where the collection Documentation tab in {HubName} would crash when the API response included large unnecessary fields, causing the page to fail to render. (AAP-75538)
+
+=== {ControllerNameStart}
+
+* Fixed an issue where organization project admins could not assign sibling teams permissions on projects. (AAP-48417)
+* Fixed an issue where a non-admin user with "can add notification template" permission received an Internal Server Error when creating a notification template, due to an AttributeError in give_creator_permissions preventing the DAB RBAC assignment from succeeding without a corresponding old-style role. (AAP-77110)
+* Fixed an issue where after controller-task pod recreation, the control node was not re-added to the controlplane, causing all jobs to remain indefinitely pending until manual instance-group adjustments were performed. (AAP-78338)
+* Fixed an issue where constructed inventories would increase the host count in the main dashboard. (AAP-80063)
+
+=== {EDAName}
+
+* Fixed an issue where automatic sync was not triggered after editing a project in EDA. (AAP-63051)
+* Fixed an issue where PostgreSQL logs were flooded with "could not receive data from client: Connection reset by peer" messages. Adds setting for db connection to maintain/reuse the connection for up to 10 minutes to reduce noise in the logs. (AAP-77001)
+* Fixed an issue where sandboxed Jinja2 rendering was not enforced in EDA Server. (AAP-77443)
+* Fixed an issue where transient Kubernetes API errors could cause rulebook activations to enter an unrecoverable error state, leading to orphaned activation pods and duplicate pod spawning. Activations now retry on transient errors and automatically recover when the API becomes available again. (AAP-81709)
+* Fixed an issue where transient Kubernetes API errors could cause rulebook activations to enter an unrecoverable error state, leading to orphaned activation pods and duplicate pod spawning. Activations now retry on transient errors and automatically recover when the API becomes available again. (AAP-81709)
+
+
+=== {ExecEnvNameStart}
+
+* Fixed an issue where KubeVirt inventory sync was failing. Updated the following collections: kubernetes.core 5.4.0, redhat.openshift 4.0.2, redhat.openshift_virtualization 1.5.0. (AAP-49501)
+* Fixed an issue where collections were outdated. Updated the following collections: ansible.platform 2.7.20260615, ansible.controller 4.8.2, ansible.eda 2.12.1. (AAP-79065)
+
+=== Hub
+
+* Fixed an issue where deleting a community.general collection caused excessive memory usage, leading to SIGKILL. (AAP-53296)
+
+== Known issues
+
+_(No known issues reported for this release.)_
