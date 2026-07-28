@@ -1,0 +1,29 @@
+[id="assembly-aap-through-a-proxy"]
+
+ifdef::context[:parent-context: {context}]
+:context: planning-mesh
+
+= Configure {PlatformNameShort} to use egress proxy
+
+You can deploy {PlatformNameShort} so that egress from the platform functions properly through proxy servers. 
+
+The procedure prepares infrastructure, installs {PlatformNameShort}, and runs tests on the topology with a proxy on the control plane.
+
+Several steps are involved:
+
+* Deploying {PlatformNameShort} either using RPM or containerized installers
+* Configuring the {RHEL} host proxy settings to point to a proxy server to which outbound traffic is routed.
+* Launch an {PlatformNameShort} job that automates a remote resource either through HTTP/HTTPS or SSH.
+
+After which the automation traffic routes through the proxy server and completes successfully.
+
+include::platform/con-overview-egress-proxy.adoc[leveloffset=+1]
+include::platform/con-proxy-backends.adoc[leveloffset=+1]
+include::platform/ref-system-proxy-configuration.adoc[leveloffset=+1]
+include::platform/ref-supported-cloud-providers.adoc[leveloffset=+1]
+include::platform/proc-proxy-controller-settings.adoc[leveloffset=+1]
+include::hub/hub/proc-configure-proxy-remote.adoc[leveloffset=+1]
+include::platform/proc-eda-proxy-settings.adoc[leveloffset=+1]
+include::platform/ref-automation-mesh-settings.adoc[leveloffset=+1]
+include::platform/ref-environment-proxy-settings.adoc[leveloffset=+2]
+
