@@ -1,0 +1,27 @@
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context: {context}]
+
+[id="assembly-rhdh-configure_{context}"]
+= Configuring the {AAPRHDHShort}
+
+:context: rhdh-configure
+
+[role="_abstract"]
+After installing the {AAPRHDHShort}, configure them to connect to your {PlatformName} instance and enable software templates.
+
+Add the following configuration to your {RHDH} custom ConfigMap (for example, `app-config-rhdh`).
+
+For Operator deployments, edit the ConfigMap directly.
+For Helm deployments, edit the ConfigMap referenced in `upstream.backstage.extraAppConfig`.
+
+include::devtools/proc-rhdh-configure-devtools-server.adoc[leveloffset=+1]
+
+include::devtools/proc-rhdh-configure-aap-details.adoc[leveloffset=+1]
+
+include::devtools/proc-rhdh-add-plugin-software-templates.adoc[leveloffset=+1]
+
+include::devtools/proc-rhdh-configure-rbac.adoc[leveloffset=+1]
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]

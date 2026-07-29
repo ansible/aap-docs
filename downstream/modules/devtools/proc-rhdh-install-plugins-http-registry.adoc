@@ -1,0 +1,108 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-install-plugins-http-registry_{context}"]
+= Installing the plug-ins from the HTTP registry
+
+[role="_abstract"]
+Add the {AAPRHDHShort} from the HTTP registry to your {RHDH} dynamic plug-in configuration.
+
+For each plug-in, you need the HTTP URL to the `.tgz` file in the registry and the SHA-512 integrity hash from the corresponding `.integrity` file.
+
+.Operator installation
+
+Add the plug-ins to your dynamic plug-ins ConfigMap (for example, `rhaap-dynamic-plugins-config`).
+Replace `_<x.y.z>_` with the correct plug-in version.
+Use the SHA-512 hash from the corresponding `.integrity` file for each `integrity` value.
+
+[source,yaml]
+----
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rhaap-dynamic-plugins-config
+data:
+  dynamic-plugins.yaml: |
+    # ...
+    plugins:
+      - disabled: false
+        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-<x.y.z>.tgz'
+        integrity: <SHA512_value>
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-<x.y.z>.tgz
+        integrity: <SHA512_value>
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+----
+
+Reference this ConfigMap in your `Backstage` CR under `spec.application.dynamicPluginsConfigMapName`.
+
+.Helm chart installation
+
+In the {OCPShort} Developer UI, navigate to *Helm* > *developer-hub* > *Actions* > *Upgrade* > *Yaml view*.
+Add the plug-ins under the `global.dynamic.plugins` section.
+Replace `_<x.y.z>_` with the correct plug-in version.
+Use the SHA-512 hash from the corresponding `.integrity` file for each `integrity` value.
+
+[source,yaml]
+----
+global:
+  # ...
+    plugins:
+      - disabled: false
+        integrity: <SHA512_value>
+        package: 'http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-<x.y.z>.tgz'
+        pluginConfig:
+          dynamicPlugins:
+            frontend:
+              ansible.plugin-backstage-rhaap:
+                appIcons:
+                  - importName: AnsibleLogo
+                    name: AnsibleLogo
+                dynamicRoutes:
+                  - importName: AnsiblePage
+                    menuItem:
+                      icon: AnsibleLogo
+                      text: Ansible
+                    path: /ansible
+      - disabled: false
+        integrity: <SHA512_value>
+        package: >-
+          http://plugin-registry:8080/ansible-plugin-scaffolder-backend-module-backstage-rhaap-dynamic-<x.y.z>.tgz
+        pluginConfig:
+          dynamicPlugins:
+            backend:
+              ansible.plugin-scaffolder-backend-module-backstage-rhaap: null
+----
+
+Click btn:[Upgrade].
+The Developer Hub pods restart and the plug-ins are installed.
+
+.Verification
+
+. In the {OCPShort} web console, open the pod details for the {RHDH} deployment.
+. Select the *Logs* tab and choose the `install-dynamic-plugins` container from the drop-down list.
+. Search the log for the Ansible plug-ins.
+A successful installation produces log entries similar to:
++
+[source,terminal]
+----
+=> Successfully installed dynamic plugin http://plugin-registry:8080/ansible-plugin-backstage-rhaap-dynamic-<x.y.z>.tgz
+----
+
+After installing the plug-ins from the HTTP registry, continue with the configuration steps in xref:rhdh-configure-devtools-server_rhdh-configure[Configuring the Ansible Dev Tools Server].

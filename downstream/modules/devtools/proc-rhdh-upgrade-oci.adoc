@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-upgrade-oci_{context}"]
+= Upgrading the {AAPRHDHShort} using OCI delivery
+
+[role="_abstract"]
+To upgrade the {AAPRHDHShort}, update the OCI image tag in your dynamic plug-ins configuration to the new version.
+
+.Prerequisites
+
+* You have installed the {AAPRHDHShort} using OCI container delivery.
+* You have the new Ansible plug-ins image tag for your release.
+
+.Procedure
+
+. Edit your dynamic plug-ins configuration:
+* For Operator deployments, edit the dynamic plug-ins ConfigMap (for example, `dynamic-plugins-rhdh`).
+* For Helm deployments, in the {OCPShort} Developer UI, navigate to *Helm* > *developer-hub* > *Actions* > *Upgrade* > *Yaml view*.
+. Update the `_<tag>_` value in each `oci://registry.redhat.io/ansible-automation-platform/automation-portal:_<tag>_` reference to the new version.
+. Apply the changes:
+* For Operator deployments, click btn:[Save]. The {RHDH} pod restarts automatically with the updated plug-ins.
+* For Helm deployments, click btn:[Upgrade].
+
+.Verification
+
+. Check the `install-dynamic-plugin` container logs for the new version.
+. Verify that the Ansible plug-in is present in the navigation pane.

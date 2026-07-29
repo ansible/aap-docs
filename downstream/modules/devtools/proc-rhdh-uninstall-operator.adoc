@@ -1,0 +1,21 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="rhdh-uninstall-operator_{context}"]
+= Uninstalling from an Operator installation
+
+[role="_abstract"]
+To uninstall the {AAPRHDHShort} from an Operator installation, edit the ConfigMaps that reference Ansible.
+The deployment auto-reloads when the ConfigMaps are updated.
+
+.Procedure
+
+. Remove the Ansible plug-in entries from the `plugins:` block in your dynamic plug-ins ConfigMap.
+Alternatively, set `disabled: true` for each Ansible plug-in entry.
+
+. Edit your custom {RHDH} ConfigMap (for example, `app-config-rhdh`):
+.. Remove the Ansible software templates entry from the `catalog.locations` block.
+.. Remove the entire `ansible` block (including `creatorService`, `rhaap`, `devSpaces`, and `automationHub` entries).
+.. Click btn:[Save].
+
+. Modify the Backstage custom resource and remove the `containers` block for the Ansible Developer Tools sidecar from the `spec.deployment.patch.spec.template.spec` block.
+Click btn:[Save].
