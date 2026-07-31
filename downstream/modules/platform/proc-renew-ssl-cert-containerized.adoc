@@ -1,0 +1,70 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="renew-ssl-cert-containerized_{context}"]
+
+= Renewing self-signed TLS certificates using the installation program
+
+[role="_abstract"]
+The following procedure regenerates new self-signed TLS certificates for all {PlatformNameShort} components in a container-based installation.
+
+.Prerequisites
+
+* You have root access or equal privileges on the host where the containerized installer is running.
+* You have access to the inventory file used during the initial installation.
+
+.Procedure
+. Add `aap_service_regen_cert=true` to the inventory file in the `[all:vars]` section:
++
+----
+[all:vars]
+aap_service_regen_cert=true
+----
++
+To also regenerate the internal CA certificate, add the following variable:
++
+----
+[all:vars]
+aap_service_regen_cert=true
+aap_ca_regenerate=true
+----
+
+. Run the `install` playbook from your installation directory:
++
+----
+ansible-playbook -i <inventory_file_name> ansible.containerized_installer.install
+----
+
+.Verification
+
+* Verify the CA file and certificate file on {EDAcontroller}:
++
+----
+openssl verify -CAfile ~/aap/eda/etc/eda.cert ~/aap/eda/etc/eda.cert
+openssl s_client -connect <EDA_FQDN>:443
+----
+
+* Verify the CA file and certificate file on {Gateway}:
++
+----
+openssl verify -CAfile ~/aap/gateway/etc/gateway.cert ~/aap/gateway/etc/gateway.cert
+openssl s_client -connect <GATEWAY_FQDN>:443
+----
+
+* Verify the CA file and certificate file on {HubName}:
++
+----
+openssl verify -CAfile ~/aap/hub/etc/pulp.cert ~/aap/hub/etc/pulp.cert
+openssl s_client -connect <HUB_FQDN>:443
+----
+
+* Verify the CA file and certificate file on {ControllerName}:
++
+----
+openssl verify -CAfile ~/aap/controller/etc/tower.cert ~/aap/controller/etc/tower.cert
+openssl s_client -connect <CONTROLLER_FQDN>:443
+----
+
+[role="_additional-resources"]
+.Additional resources
+* link:{URLContainerizedInstall}/advanced-configuration-containerized#using-custom-tls-certificates[Using custom TLS certificates]
+* link:{URLTroubleshootingAAP}/troubleshoot-networking#troubleshooting-ssl-tls-issues[Troubleshooting SSL/TLS issues]
