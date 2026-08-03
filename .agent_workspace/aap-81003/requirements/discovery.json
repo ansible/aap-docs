@@ -1,0 +1,193 @@
+{
+  "ticket": "AAP-81003",
+  "ticket_summary": "Update custom TLS certificate guidance to reflect mesh-CA.crt behavior change in containerized installer",
+  "release": "2.6, 2.7",
+  "source_date": "2026-06-30",
+  "sources_consulted": {
+    "jira_tickets": [
+      {
+        "key": "AAP-81003",
+        "url": "https://redhat.atlassian.net/browse/AAP-81003",
+        "summary": "Docs: Update custom TLS certificate guidance to reflect mesh-CA.crt behavior change"
+      },
+      {
+        "key": "AAP-70677",
+        "url": "https://redhat.atlassian.net/browse/AAP-70677",
+        "summary": "Containerized AAP: custom CA bundled into mesh CA hits receptor size limits; custom CA not required for mesh trust"
+      },
+      {
+        "key": "AAP-51480",
+        "url": "https://redhat.atlassian.net/browse/AAP-51480",
+        "summary": "Receptor CA Bundle Optimizations (Epic)"
+      },
+      {
+        "key": "AAP-47511",
+        "url": "https://redhat.atlassian.net/browse/AAP-47511",
+        "summary": "[ASB][04155290]containerized installation failed to load custom CA cert to receptor container"
+      }
+    ],
+    "pull_requests": [
+      {
+        "url": "https://gitlab.cee.redhat.com/ansible/aap-containerized-installer/-/merge_requests/1088",
+        "title": "Update mesh-CA.crt bundle logic",
+        "files_changed": 2
+      }
+    ],
+    "specifications": [],
+    "existing_docs": [
+      {
+        "path": "downstream/modules/platform/con-using-custom-tls-certificates.adoc",
+        "relevance": "Primary concept module for custom TLS certificates; needs scenario updates and variable clarification"
+      },
+      {
+        "path": "downstream/modules/platform/proc-use-custom-ca-certs.adoc",
+        "relevance": "Procedure for using custom CA certs in containerized installation; directly affected by mesh-CA.crt behavior change"
+      },
+      {
+        "path": "downstream/modules/platform/proc-provide-custom-ca-cert.adoc",
+        "relevance": "Procedure for providing custom CA cert; needs clarification on custom_ca_cert vs ca_tls_cert distinction"
+      },
+      {
+        "path": "downstream/modules/platform/proc-use-custom-signed-certs.adoc",
+        "relevance": "Procedure for custom signed certs; may need updates for receptor cert scenarios"
+      },
+      {
+        "path": "downstream/modules/platform/proc-import-mesh-ca.adoc",
+        "relevance": "Procedure for importing mesh CA; directly related to mesh-CA.crt content changes"
+      },
+      {
+        "path": "downstream/modules/platform/ref-receptor-inventory-variables.adoc",
+        "relevance": "Reference for receptor inventory variables including receptor_tls_cert, receptor_tls_key"
+      },
+      {
+        "path": "downstream/modules/platform/ref-general-inventory-variables.adoc",
+        "relevance": "Reference for general inventory variables including custom_ca_cert, ca_tls_cert, ca_tls_key"
+      },
+      {
+        "path": "downstream/assemblies/platform/assembly-using-custom-tls-certificates.adoc",
+        "relevance": "Assembly that includes the custom TLS certificate modules"
+      },
+      {
+        "path": "downstream/assemblies/platform/assembly-advanced-configuration-containerized.adoc",
+        "relevance": "Assembly for advanced containerized configuration; may include custom CA cert procedures"
+      },
+      {
+        "path": "downstream/modules/platform/proc-troubleshoot-multiple-cas.adoc",
+        "relevance": "Troubleshooting for multiple CAs; relevant to large CA bundle warning"
+      },
+      {
+        "path": "downstream/modules/platform/con-certs-per-service-considerations.adoc",
+        "relevance": "Considerations for per-service certificates; contextually related"
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "title": "Document three mesh-CA.crt population scenarios",
+      "priority": "critical",
+      "category": "enhancement",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"},
+        {"type": "jira", "key": "AAP-70677", "url": "https://redhat.atlassian.net/browse/AAP-70677"},
+        {"type": "mr", "number": 1088, "url": "https://gitlab.cee.redhat.com/ansible/aap-containerized-installer/-/merge_requests/1088"}
+      ],
+      "one_line_summary": "Document the three scenarios that determine what goes into mesh-CA.crt: default (installer-generated CA), enterprise CA via ca_tls_cert+ca_tls_key, and pre-signed receptor certs via receptor_tls_cert+custom_ca_cert."
+    },
+    {
+      "id": "REQ-002",
+      "title": "Clarify distinction between custom_ca_cert and ca_tls_cert variables",
+      "priority": "critical",
+      "category": "enhancement",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"},
+        {"type": "mr", "number": 1088, "url": "https://gitlab.cee.redhat.com/ansible/aap-containerized-installer/-/merge_requests/1088"}
+      ],
+      "one_line_summary": "Clearly distinguish custom_ca_cert (system-level trust via update-ca-trust) from ca_tls_cert+ca_tls_key (used by installer to sign receptor node certificates and becomes mesh CA)."
+    },
+    {
+      "id": "REQ-003",
+      "title": "Document behavior change: custom_ca_cert no longer added to mesh-CA.crt by default",
+      "priority": "critical",
+      "category": "breaking_change",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"},
+        {"type": "jira", "key": "AAP-70677", "url": "https://redhat.atlassian.net/browse/AAP-70677"},
+        {"type": "mr", "number": 1088, "url": "https://gitlab.cee.redhat.com/ansible/aap-containerized-installer/-/merge_requests/1088"}
+      ],
+      "one_line_summary": "The containerized installer no longer bundles custom_ca_cert into mesh-CA.crt by default; it is only included when receptor_tls_cert is also provided (Scenario 3)."
+    },
+    {
+      "id": "REQ-004",
+      "title": "Document new preflight validation for receptor_tls_cert without ca_tls_cert",
+      "priority": "high",
+      "category": "new_feature",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"},
+        {"type": "mr", "number": 1088, "url": "https://gitlab.cee.redhat.com/ansible/aap-containerized-installer/-/merge_requests/1088"}
+      ],
+      "one_line_summary": "Document the new installer preflight check that requires custom_ca_cert when receptor_tls_cert is provided without ca_tls_cert, including the error message users will see."
+    },
+    {
+      "id": "REQ-005",
+      "title": "Add recommended guidance for custom receptor certificate approaches",
+      "priority": "high",
+      "category": "enhancement",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"}
+      ],
+      "one_line_summary": "Add guidance recommending customers create an AAP-specific child/intermediate CA (Scenario 2) as the preferred approach, with pre-signed receptor certs (Scenario 3) as the advanced alternative."
+    },
+    {
+      "id": "REQ-006",
+      "title": "Add warning about large CA bundles in mesh-CA.crt",
+      "priority": "high",
+      "category": "enhancement",
+      "sources": [
+        {"type": "jira", "key": "AAP-81003", "url": "https://redhat.atlassian.net/browse/AAP-81003"},
+        {"type": "jira", "key": "AAP-51480", "url": "https://redhat.atlassian.net/browse/AAP-51480"},
+        {"type": "jira", "key": "AAP-70677", "url": "https://redhat.atlassian.net/browse/AAP-70677"}
+      ],
+      "one_line_summary": "Add a warning that receptor mesh has a practical size limit on mesh-CA.crt and large enterprise CA bundles can cause CRYPTO_BUFFER_EXCEEDED errors breaking receptor connectivity."
+    }
+  ],
+  "related_tickets": {
+    "parent": null,
+    "ancestors": [],
+    "children": [],
+    "siblings": [],
+    "linked": [
+      {
+        "key": "AAP-70677",
+        "url": "https://redhat.atlassian.net/browse/AAP-70677",
+        "summary": "Containerized AAP: custom CA bundled into mesh CA hits receptor size limits; custom CA not required for mesh trust"
+      },
+      {
+        "key": "AAP-51480",
+        "url": "https://redhat.atlassian.net/browse/AAP-51480",
+        "summary": "Receptor CA Bundle Optimizations (Epic)"
+      },
+      {
+        "key": "AAP-47511",
+        "url": "https://redhat.atlassian.net/browse/AAP-47511",
+        "summary": "[ASB][04155290]containerized installation failed to load custom CA cert to receptor container"
+      }
+    ],
+    "web_links": [
+      "https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/install-con_using_custom_tls_certificates#installer-generated-certificates",
+      "https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/html-single/containerized_installation/index#use-custom-ca-certs"
+    ]
+  },
+  "persisted_sources": {
+    "comments_file": "/home/ifowler/aap-docs/.agent_workspace/aap-81003/requirements.json",
+    "comments_brief_file": "/home/ifowler/aap-docs/.agent_workspace/aap-81003/comments-brief.md",
+    "comments_total": 1,
+    "attachment_dir": null,
+    "attachment_count": 0,
+    "spec_files": [],
+    "diff_files": []
+  },
+  "errors": [
+    "MR 1088 diff retrieval failed: GitLabReviewAPI.get_diff() got an unexpected keyword argument 'ignore_patterns'. MR info and file list were retrieved successfully."
+  ]
+}
