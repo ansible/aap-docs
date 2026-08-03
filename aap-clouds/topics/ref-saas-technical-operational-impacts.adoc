@@ -6,7 +6,7 @@
 [role="_abstract"]
 During a failover event, active operations on the primary control plane are impacted as follows:
 
-* Operations Running on the Control Plane:The outcome of in-flight jobs depends entirely on the nature of the regional failure.
+* *Operations Running on the Control Plane*: The outcome of in-flight jobs depends entirely on the nature of the regional failure.
 ** *Ingress Failures*: If external ingress fails but the internal control plane remains operational, jobs currently dispatched to execution nodes may continue to run and complete successfully.
 ** *Total Control Plane Failures*: If the primary control plane crashes entirely, running playbook jobs, project synchronizations (e.g., in-progress Git clones), and inventory synchronizations fail immediately. Scheduled jobs triggered during the active failover window are also dropped.
 ** *Job Queue*: Jobs that were queued but not yet dispatched to an execution node are not preserved during the transition.
