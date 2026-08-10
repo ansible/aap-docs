@@ -1,0 +1,109 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-2.5-20260804]]
+
+= {PlatformNameShort} 2.5 Release Notes August 4, 2026
+
+This release includes the following components and versions: 
+
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| August 4, 2026
+a|
+
+* {ControllerNameStart} 4.6.31
+* {HubNameStart} 4.10.17
+* {EDAName} 2.9.0
+* Container-based installer {PlatformNameShort} (bundle) 2.5-25.2
+* Container-based installer {PlatformNameShort} (online) 2.5-25
+* Receptor 1.6.7
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-23.2
+* RPM-based installer {PlatformNameShort} (online) 2.5-23
+
+|====
+
+CSV Versions in this release:
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1785458922
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1785458863
+
+== Overview
+
+Red Hat {PlatformNameShort} 2.5 (2.5.20260804) delivers a new feature for the metrics service, an execution environment collection update, and addresses multiple security vulnerabilities across {ControllerNameStart}, {ExecEnvShort}, {HubNameStart}, Ansible Lightspeed, and Receptor. This release also resolves bug fixes in the AAP Gateway, Controller scheduling and role management, Event-Driven Ansible, and the Platform Operator backup process.
+
+== Enhancements
+
+=== Execution environments
+
+* ansible.controller collection: 4.6.31 (AAP-83514)
+
+
+== CVE
+
+* {ControllerNameStart}
+** link:https://access.redhat.com/security/cve/CVE-2026-48526[CVE-2026-48526] – PyJWT: bumped pyjwt to 2.13.0 in:
+*** `automation-controller`. AAP-78010
+
+* Execution Environments
+** link:https://access.redhat.com/security/cve/CVE-2026-11332[CVE-2026-11332] – ansible-core: argument injection in ansible-galaxy role install leads to arbitrary code execution in:
+*** `ee-supported-rhel9`. AAP-84162
+*** `ee-supported-rhel8`. AAP-84161
+*** `ee-minimal-rhel9`. AAP-84160
+*** `ee-minimal-rhel8`. AAP-84159
+** link:https://access.redhat.com/security/cve/CVE-2026-34993[CVE-2026-34993] – AIOHTTP: arbitrary code execution via untrusted input to CookieJar.load() in:
+*** `ee-supported-rhel8`. AAP-83358
+
+* {HubNameStart}
+** link:https://access.redhat.com/security/cve/CVE-2026-55379[CVE-2026-55379] – Pillow: bump version from 12.2.0 to 12.3.0 in:
+*** `hub-rhel8`. AAP-82173
+
+* Ansible Lightspeed
+** link:https://access.redhat.com/security/cve/CVE-2026-11332[CVE-2026-11332] – ansible-core: argument injection in ansible-galaxy role install leads to arbitrary code execution in:
+*** `lightspeed-rhel8-operator`. AAP-84157
+*** `lightspeed-rhel8`. AAP-82632
+** link:https://access.redhat.com/security/cve/CVE-2026-59869[CVE-2026-59869] – js-yaml: Denial of Service via crafted YAML documents in:
+*** `lightspeed-rhel8`. AAP-84071
+** link:https://access.redhat.com/security/cve/CVE-2026-9595[CVE-2026-9595] – webpack-dev-server: information disclosure and denial of service via improper proxy configuration in:
+*** `lightspeed-rhel8`. AAP-84062
+** link:https://access.redhat.com/security/cve/CVE-2026-13149[CVE-2026-13149] – Brace-expansion: Denial of Service due to exponential-time complexity in:
+*** `lightspeed-rhel8`. AAP-82753
+** link:https://access.redhat.com/security/cve/CVE-2026-44545[CVE-2026-44545] – daphne: Denial of Service via excessive WebSocket message size in:
+*** `lightspeed-rhel8`. AAP-82612
+** link:https://access.redhat.com/security/cve/CVE-2026-59939[CVE-2026-59939] – httplib2: Denial of Service via unbounded decompression of HTTP response bodies in:
+*** `lightspeed-rhel8`. AAP-82569
+
+* Receptor
+** link:https://access.redhat.com/security/cve/CVE-2026-40898[CVE-2026-40898] – quic-go: denial of service via excessive memory allocation in HTTP/3 trailers; dependency updated to 0.59.1 in:
+*** `receptor` . AAP-82607
+** link:https://access.redhat.com/security/cve/CVE-2026-27145[CVE-2026-27145] – golang crypto/x509: Denial of Service via excessive processing of DNS SAN entries in:
+*** `receptor`. AAP-80907
+
+
+== Bug fixes
+
+=== Aap-gateway
+
+* Fixed an issue where the Gateway API returned 403 "Action not allowed from proxy" on PATCH/PUT to service_clusters when the gateway route had `enable_gateway_auth=False`. (AAP-83438)
+
+=== Controller
+
+* Fixed an issue where AAP Controller failed to load subscriptions when using Satellite (`REDHAT_CANDLEPIN_HOST`) because `validate_rh()` only used the configured host as a fallback when `rhsm.conf` was missing, and `get_satellite_subs()` ignored `REDHAT_CANDLEPIN_VERIFY`, making it impossible to configure TLS verification for Satellite connections via settings. (AAP-84437)
+* Fixed an issue where Organization child admin roles did not contain the `view_team` permission, causing team role assignment to return "Invalid pk" after upgrade. (AAP-84213)
+* Fixed an issue where specialized Organization Admin roles were missing the `shared.member_organization` permission, causing create operations to fail with 403. Adds the permission to all six specialized Admin role definitions and connects `setup_managed_role_definitions` to the `dab_post_migrate` signal for automatic fix on upgrade. (AAP-83960)
+* Fixed an issue where the task manager assigned all burst jobs to a single controller node when capacity was tied, by adding least-connections tie-breaking to prefer the instance with fewer `jobs_running`. (AAP-83715)
+* Fixed an issue where the jobs page failed to load due to DB slowness. The Job list API can now optionally exclude large fields like `extra_vars` and `artifacts` through a new query parameter. (AAP-82683)
+
+
+=== {EDAName}
+
+* Fixed an issue where `test_delete_credential_tied_to_decision_env_sync` was failing. (AAP-83310)
+
+
+=== Platform operator
+
+* Fixed an issue where unnecessary file permission changes in the database backup task caused failures on storage backends enforcing POSIX identity, such as AWS EFS with access points. (AAP-84421)
+* Fixed an issue where unnecessary file permission changes in the database backup task caused failures on storage backends enforcing POSIX identity, such as AWS EFS with access points. (AAP-84418)
+* Fixed an issue where unnecessary file permission changes in the database backup task caused failures on storage backends enforcing POSIX identity, such as AWS EFS with access points. (AAP-84415)
