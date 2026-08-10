@@ -1,0 +1,53 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[id="async-24-20260804"]
+
+= {PlatformNameShort} patch release August 4, 2026
+
+[role="_abstract"]
+The following enhancements and bug fixes have been implemented in this release of {PlatformNameShort}.
+
+This release includes the following components and versions:
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| August 4, 2026
+a|
+
+* {ControllerNameStart} 4.5.35
+* {HubNameStart} 4.9.8
+* {EDAName} 1.0.11
+* Receptor 1.6.4
+* RPM-based installer {PlatformNameShort} (bundle) 2.4-16.3
+* RPM-based installer {PlatformNameShort} (online) 2.4-16
+
+|====
+
+CSV Versions in this release:
+* Namespace-scoped bundle: aap-operator.v2.4.0-0.1785427615
+* Cluster-scoped bundle: aap-operator.v2.4.0-0.1785432057
+
+
+
+== Overview
+
+This release of {PlatformNameShort} 2.4 includes an {ExecEnvShort} collection update and bug fixes addressing UI rendering failures and database query performance issues affecting job execution.
+
+== Enhancements
+
+=== Execution environments
+
+* ansible.controller collection updated to 4.5.35 (AAP-83487)
+
+== Bug fixes
+
+=== AAP UI
+
+* Fixed an issue where the collection Documentation tab in the {HubName} would crash when the API response included large unnecessary fields, causing the page to fail to render. (AAP-75539)
+
+=== Controller
+
+* Fixed an issue where jobs and workflows were failing after long-running queries by improving fact cache performance and avoiding expensive queries. (AAP-81250)
