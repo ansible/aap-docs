@@ -1,0 +1,41 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-subscription-lifecycle-timeline"]
+
+= Subscription lifecycle timeline
+
+[role="_abstract"]
+When your AWS subscription for {SaaSonAWS} ends, your environment follows a defined lifecycle. Understanding this timeline helps you plan subscription renewals and avoid unintended data loss.
+
+The following timeline describes what happens at each stage after your AWS subscription ends.
+
+== Contract end (Day 0)
+
+* AWS stops all billing for your AWS subscription.
+* AWS sends Red Hat a contract-ended notice.
+* Your environment remains fully operational.
+* No immediate action is taken.
+
+== 0 to 72 hours post-contract-end
+
+* Red Hat holds the contract-ended notice for approximately 72 hours.
+* Your environment remains available and fully operational during this window.
+* If you establish a new AWS subscription using the same AWS account during this period, your environment continues uninterrupted with no data loss.
+
+== After 72 hours (no new AWS subscription)
+
+* If no new AWS subscription is detected, Red Hat initiates environment shutdown.
+* Job execution ceases.
+* Environment resources are spun down.
+* Your environment data is retained but not actively running.
+
+== 72 hours to 14 days post-shutdown
+
+* Your environment data is retained for approximately 14 days after shutdown
+* If you establish a new AWS subscription using the same AWS account during this window, your environment may be restorable.
+* Administrative support may be required to link the new subscription to your existing environment.
+
+== After 14 days (no new AWS subscription)
+
+* If no new AWS subscription has been established, your environment is permanently deleted.
+* Recovery is not possible after this point.
