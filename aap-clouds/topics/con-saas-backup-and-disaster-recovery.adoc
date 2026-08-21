@@ -42,13 +42,14 @@ Customer data is replicated to a predefined secondary region based on the deploy
 
 To recover an {PlatformNameShort} deployment in a different AWS region, a customer must submit a request specifying their preferred deployment region from the available options.
 Red{nbsp}Hat evaluates the request and begins building an instance in that region.
-Data from the previous instance is recovered from the customer’s business continuity region.
+Data from the previous instance is recovered from the customer's business continuity region.
 The customer is responsible for any necessary post-deployment network configuration to integrate the new instance into their environment.
 
 
 [NOTE]
 ====
-Backup data is not directly accessible to customers. 
+* Backup data is not directly accessible to customers. 
 The data is only used in the event of infrastructure failure, not customer configuration errors. 
 Red{nbsp}Hat encourages using configuration-as-code practices to maintain a customer-hosted backup of your configuration.
+* The backup and restore disaster recovery (DR) model will be deprecated on August 3, 2026, for environments exceeding 50 nodes. Customers currently using this model must migrate to the new multi-region active-passive infrastructure shape before August 3, 2027. For more information. see link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-service-definition#proc-saas-existing-customers[Existing customers].
 ====
