@@ -1,0 +1,103 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-2.5-20260824]]
+
+= {PlatformNameShort} 2.5 Release Notes August 24, 2026
+
+This release includes the following components and versions: 
+
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| August 24, 2026
+a|
+
+* {ControllerNameStart} 4.6.32
+* {HubNameStart} 4.10.18
+* {EDAName} 1.1.22
+* Container-based installer {PlatformNameShort} (bundle) 2.5-25.3
+* Container-based installer {PlatformNameShort} (online) 2.5-25
+* Receptor 1.6.7
+* RPM-based installer {PlatformNameShort} (bundle) 2.5-23.4
+* RPM-based installer {PlatformNameShort} (online) 2.5-23
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1787244584
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1787244629
+
+
+== Overview
+
+This release of Red Hat {PlatformNameShort} 2.5.20260824 includes 24 security updates, 1 enhancements, and 3 bug fixes across 8 components. The release addresses critical vulnerabilities in Controller, Hub, and Lightspeed, including fixes for path traversal, remote code execution, and denial-of-service vulnerabilities.
+
+== Enhancements
+
+=== {ExecEnvNameStart}
+* ansible-controller 4.6.31 --> ansible-controller-4.6.32 (AAP-87247)
+
+== CVE
+
+=== {LightspeedShortName}
+
+* Ansible Lightspeed (container image: ansible-automation-platform-25/lightspeed-rhel8)
+** link:https://access.redhat.com/security/cve/CVE-2026-59886[CVE-2026-59886] - pyasn1: Denial of Service via crafted ASN.1 REAL values. AAP-83729
+** link:https://access.redhat.com/security/cve/CVE-2025-69223[CVE-2025-69223] - AIOHTTP's HTTP Parser auto_decompress feature is vulnerable to zip bomb. AAP-85394
+** link:https://access.redhat.com/security/cve/CVE-2026-69152[CVE-2026-69152] - brace-expansion: Denial of Service via unbounded intermediate arrays. AAP-85487
+** link:https://access.redhat.com/security/cve/CVE-2026-69244[CVE-2026-69244] - AIOHTTP: Denial of Service via malformed HTTP responses. AAP-85533
+** link:https://access.redhat.com/security/cve/CVE-2026-14257[CVE-2026-14257] - Brace-expansion: Denial of Service via memory exhaustion in expand() function. AAP-85639
+** https://access.redhat.com/security/cve/CVE-2026-15307[CVE-2026-15307] - Django: Remote code execution via GeoDjango spatial lookups. AAP-85797
+** link:https://access.redhat.com/security/cve/CVE-2026-34070[CVE-2026-34070] - path traversal in legacy load_prompt functions in langchain-core. AAP-86194
+** link:https://access.redhat.com/security/cve/CVE-2024-53908[CVE-2024-53908] - Potential SQL injection in HasKey(lhs, rhs) on Oracle. AAP-86532
+** link:https://access.redhat.com/security/cve/CVE-2025-64460[CVE-2025-64460] - Django: Algorithmic complexity in XML Deserializer leads to denial of service. AAP-86537
+** link:https://access.redhat.com/security/cve/CVE-2025-43859[CVE-2025-43859] - h11 accepts some malformed Chunked-Encoding bodies. AAP-87866
+
+=== {ControllerNameStart}
+
+* Automation controller
+** link:https://access.redhat.com/security/cve/CVE-2026-39373[CVE-2026-39373] - JWCrypto: Memory exhaustion via crafted compressed JWE tokens. AAP-71145
+** link:https://access.redhat.com/security/cve/CVE-2026-52902[CVE-2026-52902] - path traversal via YAML !include directive. AAP-80010
+** link:https://access.redhat.com/security/cve/CVE-2026-34993[CVE-2026-34993] - AIOHTTP: Arbitrary code execution via untrusted input to CookieJar.load(). AAP-83359
+** link:https://access.redhat.com/security/cve/CVE-2026-59886[CVE-2026-59886] - pyasn1: Denial of Service via crafted ASN.1 REAL values. AAP-83764
+** link:https://access.redhat.com/security/cve/CVE-2026-69244[CVE-2026-69244] - AIOHTTP: Denial of Service via malformed HTTP responses. AAP-85539
+** link:https://access.redhat.com/security/cve/CVE-2026-71365[CVE-2026-71365] - webhook status callback SSRF leaks the Git PAT. AAP-86703
+** link:https://access.redhat.com/security/cve/CVE-2026-71364[CVE-2026-71364] - project archive extraction allows path traversal file writes. AAP-86701
+** link:https://access.redhat.com/security/cve/CVE-2026-71366[CVE-2026-71366] - notification backends allow SSRF and credential leakage. AAP-86706
+
+* Automation controller (container image: ansible-automation-platform-25/controller-rhel8)
+** link:https://access.redhat.com/security/cve/CVE-2026-69244[CVE-2026-69244] - AIOHTTP: Denial of Service via malformed HTTP responses. AAP-85566
+** link:https://access.redhat.com/security/cve/CVE-2026-44244[CVE-2026-44244] - GitPython: Arbitrary code execution via injected newlines in Git configuration. AAP-88243
+
+* Automation controller (container image: ansible-automation-platform-27/ee-supported-rhel9)
+** link:https://access.redhat.com/security/cve/CVE-2026-52902[CVE-2026-52902] - path traversal via YAML !include directive. AAP-78319
+
+=== {HubNameStart}
+
+* Automation hub (container image: ansible-automation-platform-25/hub-rhel8)
+** link:https://access.redhat.com/security/cve/CVE-2026-69244[CVE-2026-69244] - AIOHTTP: Denial of Service via malformed HTTP responses. AAP-85531
+** link:https://access.redhat.com/security/cve/CVE-2026-15307[CVE-2026-15307] - Django: Remote code execution via GeoDjango spatial lookups. AAP-85789
+** link:https://access.redhat.com/security/cve/CVE-2026-67325[CVE-2026-67325] - GitPython: Command Injection via Git option prefix abbreviation. AAP-86816
+
+=== {PlatformNameShort} UI
+
+* Automation platform UI
+** link:https://access.redhat.com/security/cve/CVE-2026-44705[CVE-2026-44705] - path Traversal via unsanitized prefix/postfix enables directory escape. AAP-85826
+
+=== {EDAcontroller}
+
+* Event-Driven Ansible controller (container image: ansible-automation-platform-25/eda-controller-rhel9)
+** link:https://access.redhat.com/security/cve/CVE-2026-59886[CVE-2026-59886] - pyasn1: Denial of Service via crafted ASN.1 REAL values. AAP-86763
+
+== Bug fixes
+
+=== {ControllerNameStart}
+* Fixed an issue where job list API can optionally exclude large fields like extra_vars and artifacts through new query parameter (AAP-82683)
+* Fixed an issue where a revert prior change that added member_organization permission to other organization-level controller roles. (AAP-88597)
+
+=== {EDAName}
+* Fixed an issue where jWT Tokens generated are scoped to activation_instance_id to limit the acess to other activations (AAP-84862)
