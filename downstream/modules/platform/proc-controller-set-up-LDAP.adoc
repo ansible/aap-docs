@@ -26,8 +26,10 @@ Users created through an LDAP login should not change their username, first name
 
 [IMPORTANT]
 ====
-Migration of LDAP authentication settings are not supported for 2.4 to 2.5 in the platform UI. If you are upgrading from {PlatformNameShort} 2.4 to 2.5, be sure to save your authentication provider data before upgrading. 
+Migration of LDAP authentication settings are not supported for 2.4 to 2.5 in the platform UI. If you are upgrading from {PlatformNameShort} 2.4 to 2.5, be sure to save your authentication provider data before upgrading.
 ====
+
+The `AUTH_LDAP_REQUIRE_GROUP`, `AUTH_LDAP_DENY_GROUP`, and `AUTH_LDAP_USER_FLAGS_BY_GROUP` settings are not configured directly on the {Gateway} LDAP authenticator. When you upgrade, these settings are converted to authenticator maps. To configure equivalent group-based access and user flags for a new LDAP authenticator, use authenticator maps. See link:{URLCentralAuth}/gw-configure-authentication#gw-authenticator-map-triggers[Authenticator map triggers].
 
 .Procedure
 
