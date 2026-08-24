@@ -15,11 +15,10 @@ The control plane infrastructure meter counts the peak simultaneously observed c
 
 == Base vCPU use by component configuration
 
-The control plane cluster requires a minimum number of vCPUs based on which components you enable. The cluster may scale up to handle additional workload demands.
+The control plane cluster requires a minimum number of vCPUs. The cluster might scale up to handle additional workload demands.
 
 |===
-| Component enabled | Idle CPU count | Hourly price/unit | Hourly cost | Monthly cost | Annual Cost
-| Platform gateway, {ControllerName}, {HubName} | 12 | $0.10 | $1.20 | $876.00 | $10,512.00
+| Component configuration | Idle CPU count | Hourly price/unit | Hourly cost | Monthly cost | Annual Cost
 | Platform gateway, {ControllerName}, {HubName}, {EDAName} | 16 | $0.10 | $1.60 | $1,168.00 | $14,016.00
 | Secondary region (Warm standby) | 12 | $0.10 | $1.20 | $876.00 | $10,512.00
 | With multi-region deployment (Primary + Secondary Regions) | 28 | $0.10 | $2.80 | $2,044.00 | $24,528.00
@@ -27,15 +26,14 @@ The control plane cluster requires a minimum number of vCPUs based on which comp
 
 [NOTE]
 ====
-The cluster with {EDAName} enabled idles at 16 vCPUs, but may scale down to 12 vCPUs if the system workload is small. The cluster without {EDAName} idles at 12 vCPUs. Actual vCPU usage depends on your workload.
+{EDAName} is generally available and enabled by default on all {SaaSonAWSShort} deployments. The cluster idles at 16 vCPUs. Actual vCPU usage depends on your workload.
 ====
 
-When you need to run {EDAName}, Red Hat Lightspeed, or control plane automation alongside core platform components, the variable metering model lets you pay only for the vCPUs your workload actually consumes, so you can enable additional capabilities without committing to a fixed infrastructure cost.
+When you need to run Red Hat Lightspeed or control plane automation alongside core platform components, the variable metering model charges only for the vCPUs your workload actually consumes. You can enable additional capabilities without committing to a fixed infrastructure cost.
 
-== Enable {EDAName}
+== {EDAName} on {SaaSonAWSShort}
 
-When you want to enable {EDAName} on your {SaaSonAWSShort} deployment, contact Red Hat Support to request the change. 
-Enabling {EDAName} increases the idle cluster baseline from 12 to 16 vCPUs. Allow for a brief service reconfiguration window when the change is applied.
+{EDAName} is generally available and is enabled by default on all {SaaSonAWSShort} deployments. This increases the default idle cluster baseline to 16 vCPUs.
 
 == Workload impact on infrastructure metering
 
