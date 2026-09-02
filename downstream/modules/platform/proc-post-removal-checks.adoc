@@ -1,0 +1,29 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-post-removal-checks"]
+
+= Post-removal checks
+
+[role="_abstract"]
+After deprovisioning nodes or instance groups, perform the following verification steps.
+
+.Procedure
+
+. Confirm the node or group is removed from the cluster:
++
+`podman exec -it automation-controller-task awx-manage list_instances`
+
+. Check the automation controller UI:
++
+* Navigate to {MenuInfrastructureInstances} to verify node removal.
+* Navigate to {MenuInfrastructureInstanceGroups} to verify group removal.
+
+. Verify that remaining mesh connections are healthy:
++   
+In the UI, check the topology view under {MenuInfrastructureTopology} for any broken links or error indicators.
+
+. Run a test job on any remaining execution nodes to ensure the mesh is functioning correctly after the node removal.
+
+. Update the inventory file to remove the deprovisioned host entries, so they are not re-added on a subsequent installer run.
+
+
