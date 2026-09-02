@@ -5,20 +5,17 @@
 = Deprovision instance groups in containerized deployments
 
 [role="_abstract"]
-Deprovisioning nodes removes them from the mesh. For instance groups, unregister the group from automation controller's cluster registry by using the `awx-manage unregister_queue` command. This removes the group definition but does not deprovision its member nodes.
+Unregister instance groups by using the `awx-manage` command to cleanly remove group definitions from a containerized {PlatformNameShort} deployment without impacting member nodes.
 
 .Prerequisites
 
-* You have root or sudo access to the host running the automation controller containers.
+* You have root or sudo access to the host running the {ControllerName} containers.
 * You know the name of the instance group to remove.
 * No active jobs are running on nodes that are members of the instance group.
 
 .Procedure
 
 . Ensure that no jobs are currently running on instances in the group. In the automation controller UI, navigate to {MenuAEJobs} and confirm that no jobs with a status of `Running` or `Pending` are assigned to instances in the group.
-
-. (Optional) If the instance group contains nodes that should also be deprovisioned, deprovision each node using the procedure in
-xref:proc-deprovision-nodes-in-containerized[Deprovision nodes in a containerized deployment]. Deprovisioning a node automatically removes its membership from any instance groups, so no specific order of operations is required.
 
 . On the primary automation controller node, run the unregister command inside the automation controller task container. Replace `<group_name>` with the name of the instance group:
 +
@@ -28,8 +25,11 @@ For example:
 +
 `podman exec -it automation-controller-task awx-manage unregister_queue --queuename=remote_execution_group`
 
-. Verify the instance group has been removed by checking the Instance Groups list in the automation controller UI, or by using the API:
+. (Optional) If the instance group contains nodes that should also be deprovisioned, deprovision each node using the procedure in
+xref:proc-deprovision-nodes-in-containerized[Deprovision nodes in a containerized deployment]. Deprovisioning a node automatically removes its membership from any instance groups, so no specific order of operations is required.
+
+. Verify the instance group has been removed by checking the Instance Groups list in the automation controller UI.
 +
-Navigate to {MenuInfrastructureInstances} and confirm the group no longer appears.
+Navigate to {MenuInfrastructureInstanceGroups} and confirm the group no longer appears.
 
 
