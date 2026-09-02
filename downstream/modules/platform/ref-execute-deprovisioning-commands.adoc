@@ -1,0 +1,24 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-execute-deprovisioning-commands"]
+
+= Execute deprovisioning commands
+
+[role="_abstract"]
+To safely remove nodes or instance groups from a containerized Ansible Automation Platform cluster without disrupting service, execute deprovisioning commands from inside the controller container and perform post-removal verification checks.
+
+For containerized AAP deployments, all `awx-manage` commands must be executed from inside the automation controller container on the primary controller node:
+
+`podman exec -it automation-controller-task awx-manage <command>`
+
+The automation-controller-task container runs as a rootless Podman container under the Ansible Automation Platform service user. Ensure you are logged in as the correct user (the user who installed the Ansible Automation Platform containers) before running Podman commands.
+
+To confirm you are operating on the correct host, list the running containers:
+
+`podman ps --all --format "{{.Names}}" | grep controller`
+
+Expected output includes:
+
+`automation-controller-task`
+`automation-controller-web`
+`automation-controller-rsyslog`
