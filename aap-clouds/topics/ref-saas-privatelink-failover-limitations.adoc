@@ -1,0 +1,15 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-privatelink-failover-limitations"]
+
+= PrivateLink failover limitations
+
+[role="_abstract"]
+To maintain continuous automation mesh connectivity during a regional failover, configure AWS PrivateLink endpoints, route tables, and network security policies in your secondary region.
+
+With the release of multi region active passive deployment, the automated self-healing behavior of the automation mesh endpoints does not automatically bridge across separate private cloud networks when using AWS PrivateLink.
+
+During a regional failover, AWS PrivateLink connections do not automatically fail over to the secondary region. Customers are responsible for the following actions:
+
+* Pre-configure or manually verify corresponding AWS PrivateLink connections, route tables, and security policy rules inside the secondary region's AWS infrastructure. Customers should apply this step during initial deployment configuration. 
+* Ensure that remote execution nodes are permitted to establish a network path to the secondary control plane endpoints during a failover scenario. Customers can work with internal teams responsible for Cloud Infrastructure or Network Security to ensure that execution nodes can communicate with secondary regions. 
