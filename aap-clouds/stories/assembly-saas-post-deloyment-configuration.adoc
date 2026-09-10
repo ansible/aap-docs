@@ -1,0 +1,29 @@
+:_mod-docs-content-type: ASSEMBLY
+
+ifdef::context[:parent-context: {context}]
+
+:context: saas-post-deployment
+
+[id="assembly-saas-post-deployment-configuration"]
+
+= Post-deployment configurations for Multi-Region Active/Passive
+
+[role="_abstract"]
+To maintain continuous automation mesh connectivity during a regional failover, configure AWS PrivateLink endpoints, route tables, and network security policies in your secondary region.
+
+= PrivateLink failover operations
+
+With the release of the multi-region active/passive deployment model, customers must give consideration to how automation mesh functions during an infrastructure region failover. 
+
+Post deployment configuration (preparation for a failover):
+
+* Configure AWS PrivateLink connections, route tables, and security policy rules inside the secondary region's AWS infrastructure.
+*Ensure that remote execution nodes are permitted to establish a network path to the secondary control plane endpoints during a failover scenario. Customers can work with internal teams responsible for Cloud Infrastructure or Network Security to ensure that execution nodes can communicate with secondary regions. 
+
+During a regional failover, customers are responsible for the following actions:
+
+* If your environment uses a custom domain, update your DNS configurations to route traffic to the secondary region.
+* Manually restart any jobs that were actively running on the control plane during the failover event (jobs running on remote execution nodes should not need to be restarted).
+
+ifdef::parent-context[:context: {parent-context}]
+ifndef::parent-context[:!context:]
