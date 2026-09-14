@@ -17,6 +17,44 @@ include::aap-common/external-site-disclaimer.adoc[]
 
 include::{Boilerplate}[]
 
+[WARNING]
+====
+*External security and monitoring tools can impact job stability*
+
+Enterprise endpoint detection software, monitoring agents, and operating system audit logging can interfere with {PlatformNameShort} job execution, resulting in unexpected job delays, stalls, or complete failures.
+
+This interference is not a defect in {PlatformNameShort}, but rather a side effect of how external tools interact with normal {PlatformNameShort} operational behavior (high I/O rates, rapid file access, network communication, and CPU resource usage).
+
+*Common interference sources:*
+
+* Antivirus or Endpoint Detection and Response (EDR) software, for example, Microsoft Defender for Endpoint, Trend Micro Deep Security.
+* System monitoring and telemetry agents
+* Operating system audit logging (`auditd`, syslog) configured with granular rules
+====
+
+*Mitigation:*
+
+Work with your security and infrastructure teams to implement the following
+exclusions on all {PlatformNameShort} execution nodes and control nodes:
+
+. Add the following paths to antivirus/EDR scanning exclusions:
+* `/var/lib/awx/`
+* `/var/lib/receptor/`
+* `/var/run/receptor/`
+* `/var/log/tower/`
+* `/tmp` (and any other temporary directories configured for{PlatformNameShort})
+
+. Configure monitoring agents to exclude {PlatformNameShort} process monitoring or reduce sampling frequency on {PlatformNameShort} nodes.
+
+. Review auditd rules on {PlatformNameShort} nodes and disable overly granular system call auditing that may create disk I/O contention.
++
+[Note]
+====
+`auditd` is configured on RHEL by default. If it is configured on your systems, this step is applicable.
+====
+
+For more information, see link:https://access.redhat.com/solutions/7144721[Red Hat Knowledge Solution 7144721]
+
 // ddacosta - removed to avoid duplication with access management guide 
 // ifowler - added assembly back in but with links to access management
 include::platform/assembly-aap-activate.adoc[leveloffset=+1]
