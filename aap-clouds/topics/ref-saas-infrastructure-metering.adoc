@@ -54,7 +54,7 @@ A managed active node is a connection to a unique host per billing cycle. {Platf
 
 Multiple automation events against the same host count as one managed active node for the entire billing cycle. The billing cycle runs from the first day to the last day of each month.
 
-== Unique host identification
+== Identify unique hosts
 
 {PlatformNameShort} determines unique hosts by the connection reference, which can be:
 
@@ -67,7 +67,7 @@ Multiple automation events against the same host count as one managed active nod
 The same physical host referenced in multiple ways counts as multiple managed active nodes. For example, if you reference a single host as 10.0.0.0, vm, and vm.fully.qualified.domain in your inventory, {PlatformNameShort} counts three separate nodes.
 ====
 
-== AWS infrastructure automation
+== Automate AWS infrastructure
 
 When you automate AWS APIs or control planes using the amazon.aws collection, configure your playbooks to run from localhost. This configuration counts as only one managed active node per billing cycle, regardless of how many AWS resources you manage.
 
@@ -86,11 +86,11 @@ For example:
 ----
 In this example, all AWS automation tasks count as one managed active node because they run from localhost.
 
-== Billing integration
+== Integrate billing
 
 {SaaSonAWSShort} integrates with AWS billing systems. Your infrastructure usage appears on your AWS bill with full cost visibility. A percentage of the cost counts toward your AWS spend agreements.
 
-The AWS Marketplace displays two primary meters:
+The {Market} displays two primary meters:
 
 * *Control Plane Infrastructure and Service Fee Per Hour*: Charged at $0.10 per vCPU per hour based on peak hourly use.
 * *Managed Active Nodes*: Charged per unique managed node per billing cycle
