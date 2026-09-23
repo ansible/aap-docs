@@ -1,0 +1,73 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-24-2_4_20260923]]
+
+= Ansible Automation Platform 2.4 Release Notes September 23, 2026
+
+
+[role="_abstract"]
+The following release notes detail the CVEs and Bug fixes for the Ansible Automation Platform patch released on September 23, 2026
+
+This release includes the following components and versions:
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| September 23, 2026
+a|
+
+* Automation controller 4.5.36
+* Automation hub 4.9.8
+* Event-Driven Ansible 1.0.11
+* Receptor 1.6.4
+* RPM-based installer Ansible Automation Platform (bundle) 2.4-16.5
+* RPM-based installer Ansible Automation Platform (online) 2.4-16
+
+|====
+
+
+CSV Versions in this release:
+
+* Namespace: aap-operator.v2.4.0-0.1789660429
+* Cluster: aap-operator.v2.4.0-0.1789667225
+
+
+== Overview
+
+This release of Ansible Automation Platform 2.4 includes 1 security update, 1 enhancement, and 1 bug fix. This patch release addresses a critical vulnerability in the HashiCorp Vault credential plugin and includes stability improvements for Controller and Execution Environments.
+
+== Enhancements
+
+=== Execution Environments
+
+* ansible-controller-4.5.35-> ansible-controller-4.5.36 (AAP-92160)
+
+== CVE
+
+== Automation controller
+
+* Automation controller
+** link:https://access.redhat.com/security/cve/CVE-2026-12564[CVE-2026-12564] – Kubernetes service account token exfiltration via HashiCorp Vault credential SSRF. AAP-79771
+
+** link:https://access.redhat.com/security/cve/CVE-2026-75884[CVE-2026-75884] – awx: Privilege escalation to OpenShift namespace via pod_spec_override injection in container groups. AAP-89868
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84502[CVE-2026-84502] – Remote code execution via Project scm_url git argument injection. AAP-90959
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84638[CVE-2026-84638] – Instance-group privilege escalation via Schedule and workflow node attachment. AAP-90998
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84684[CVE-2026-84684] – Privilege escalation via constructed inventory attachment. AAP-91079
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84711[CVE-2026-84711] – Arbitrary file read via Project scm_branch git argument injection. AAP-91155
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84719[CVE-2026-84719] – Instance-group privilege escalation via workflow job template copy. AAP-91186
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84474[CVE-2026-84474] – Privilege escalation via provisioning-callback host-match bypass. AAP-92919
+
+
+== Bug fixes
+
+=== Controller
+
+* Fixed an issue where Fixes a locking issue when updating the last_seen timestamp of control and execution nodes (AAP-89557)
