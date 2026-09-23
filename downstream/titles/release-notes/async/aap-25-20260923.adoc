@@ -1,0 +1,314 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-2_5_20260923]]
+
+= Ansible Automation Platform 2.5 Release Notes September 23, 2026
+
+
+[role="_abstract"]
+The following release notes detail the CVEs and Bug fixes for the Ansible Automation Platform patch released on September 23, 2026
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| September 23, 2026
+a|
+
+* Automation controller 4.6.33
+* Automation hub 4.10.19
+* Event-Driven Ansible 1.1.23
+* Container-based installer Ansible Automation Platform (bundle) 2.5-25.4
+* Container-based installer Ansible Automation Platform (online) 2.5-25
+* Receptor 1.6.8
+* RPM-based installer Ansible Automation Platform (bundle) 2.5-23.5
+* RPM-based installer Ansible Automation Platform (online) 2.5-23
+
+
+|====
+
+== Overview
+
+This release of Ansible Automation Platform 2.5 includes 64 security updates, 1 enhancements, and 7 bug fixes across multiple components including Controller, Execution Environments, Hub, Lightspeed, and Receptor.
+
+== Enhancements
+
+== Execution Environments
+* ansible.controller collection and automation-controller-cli updated to 4.6.33 (AAP-92134)
+
+== CVE
+
+== AAP Gateway
+
+* ansible-automation-platform-25/gateway-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-59893[CVE-2026-59893] – sqlparse: Denial of Service via inefficient SQL parsing. AAP-89763
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71491[CVE-2026-71491] – sqlparse: Denial of Service via quadratic CPU consumption in comment grouping. AAP-89805
+
+** link:https://access.redhat.com/security/cve/CVE-2026-54284[CVE-2026-54284] – sqlparse: Denial of Service via quadratic CPU consumption in SQL parsing. AAP-89927
+
+* automation-gateway-proxy
+** link:https://access.redhat.com/security/cve/CVE-2026-56858[CVE-2026-56858] – Go html/template: Cross-Site Scripting via pathological input. AAP-88022
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56862[CVE-2026-56862] – Golang crypto/tls: Denial of Service via indefinite KeyUpdate messages. AAP-88035
+
+** link:https://access.redhat.com/security/cve/CVE-2026-33818[CVE-2026-33818] – Go encoding/asn1: Denial of Service via excessive recursion in Unmarshal. AAP-88077
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56860[CVE-2026-56860] – golang net/url: Denial of Service from quadratic complexity in path resolution. AAP-88092
+
+** link:https://access.redhat.com/security/cve/CVE-2026-42504[CVE-2026-42504] – Golang MIME: Denial of Service via maliciously-crafted MIME header. AAP-90271
+
+== Ansible Lightspeed
+
+* ansible-automation-platform-25/lightspeed-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-59893[CVE-2026-59893] – sqlparse: Denial of Service via inefficient SQL parsing. AAP-89757
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71491[CVE-2026-71491] – sqlparse: Denial of Service via quadratic CPU consumption in comment grouping. AAP-89799
+
+** link:https://access.redhat.com/security/cve/CVE-2026-54284[CVE-2026-54284] – sqlparse: Denial of Service via quadratic CPU consumption in SQL parsing. AAP-89921
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84375[CVE-2026-84375] – js-yaml: Denial of Service vulnerability in YAML parsing. AAP-91023
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84292[CVE-2026-84292] – fast-uri: Authority Injection via Unvalidated Port Serialization. AAP-91497
+
+** link:https://access.redhat.com/security/cve/CVE-2026-82417[CVE-2026-82417] – qs: Denial of Service via improper validation in stringify function. AAP-91551
+
+** link:https://access.redhat.com/security/cve/CVE-2026-85393[CVE-2026-85393] – node-forge: Signature forgery vulnerability in RSA PKCS#1 v1.5 verification. AAP-91665
+
+== Automation Platform UI
+
+* automation-gateway
+** link:https://access.redhat.com/security/cve/CVE-2026-59869[CVE-2026-59869] – js-yaml: Denial of Service via crafted YAML documents. AAP-84075
+
+** link:https://access.redhat.com/security/cve/CVE-2026-69153[CVE-2026-69153] – PostCSS: Information disclosure via crafted sourceMappingURL. AAP-85474
+
+** link:https://access.redhat.com/security/cve/CVE-2026-69152[CVE-2026-69152] – brace-expansion: Denial of Service via unbounded intermediate arrays. AAP-87091
+
+== Automation controller
+
+* ansible-automation-platform-25/controller-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-15307[CVE-2026-15307] – No particular code change was needed, Django path upgrade only fixed vulnerabilities. AAP-85777
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67322[CVE-2026-67322] – GitPython: Environment variable exfiltration via attacker-controlled clone URL. AAP-86801
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67325[CVE-2026-67325] – GitPython: Command Injection via Git option prefix abbreviation. AAP-86821
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67323[CVE-2026-67323] – GitPython: Arbitrary code execution via command injection due to unguarded Git options. AAP-86834
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73624[CVE-2026-73624] – GitPython: Arbitrary File Overwrite via improper git option validation. AAP-87985
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73625[CVE-2026-73625] – GitPython: Remote Code Execution via kwarg value smuggling. AAP-88040
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73622[CVE-2026-73622] – GitPython: Information disclosure via environment variable expansion in URL handling. AAP-88046
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73623[CVE-2026-73623] – GitPython: Remote Code Execution via malicious Git template. AAP-88144
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73620[CVE-2026-73620] – GitPython: Arbitrary file overwrite and read via unsafe git option forwarding. AAP-88162
+
+** link:https://access.redhat.com/security/cve/CVE-2026-42284[CVE-2026-42284] – GitPython: Arbitrary code execution via improper validation of clone options. AAP-88205
+
+** link:https://access.redhat.com/security/cve/CVE-2026-42215[CVE-2026-42215] – GitPython: Arbitrary command execution due to bypass of dangerous Git option checks. AAP-88214
+
+** link:https://access.redhat.com/security/cve/CVE-2026-42215[CVE-2026-42215] – GitPython: Arbitrary command execution due to bypass of dangerous Git option checks. AAP-88229
+
+** link:https://access.redhat.com/security/cve/CVE-2026-44244[CVE-2026-44244] – GitPython: Arbitrary code execution via injected newlines in Git configuration. AAP-88243
+
+** link:https://access.redhat.com/security/cve/CVE-2026-59893[CVE-2026-59893] – sqlparse: Denial of Service via inefficient SQL parsing. AAP-89761
+
+** link:https://access.redhat.com/security/cve/CVE-2026-76222[CVE-2026-76222] – GitPython: Arbitrary file creation via path traversal in .gitmodules submodule names. AAP-90014
+
+** link:https://access.redhat.com/security/cve/CVE-2026-76218[CVE-2026-76218] – GitPython: Remote Code Execution via malicious Git hooks. AAP-90044
+
+** link:https://access.redhat.com/security/cve/CVE-2026-76220[CVE-2026-76220] – GitPython: Arbitrary command execution via crafted kwargs. AAP-90059
+
+** link:https://access.redhat.com/security/cve/CVE-2026-76219[CVE-2026-76219] – GitPython: Arbitrary File Overwrite via `git read-tree` option injection. AAP-90070
+
+** link:https://access.redhat.com/security/cve/CVE-2026-76221[CVE-2026-76221] – GitPython: Arbitrary code execution via config-name injection. AAP-90083
+
+** link:https://access.redhat.com/security/cve/CVE-2026-78676[CVE-2026-78676] – GitPython before 3.1.59 Remote Code Execution via Config Injection. AAP-91599
+
+** link:https://access.redhat.com/security/cve/CVE-2026-87817[CVE-2026-87817] – GitPython: Remote Code Execution via Git directory impersonation. AAP-92289
+
+* automation-controller
+** link:https://access.redhat.com/security/cve/CVE-2026-12564[CVE-2026-12564] – Kubernetes service account token exfiltration via HashiCorp Vault credential SSRF. AAP-79770
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67322[CVE-2026-67322] – GitPython: Environment variable exfiltration via attacker-controlled clone URL. AAP-86809
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67325[CVE-2026-67325] – GitPython: Command Injection via Git option prefix abbreviation. AAP-86814
+
+** link:https://access.redhat.com/security/cve/CVE-2026-67323[CVE-2026-67323] – GitPython: Arbitrary code execution via command injection due to unguarded Git options. AAP-86835
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71460[CVE-2026-71460] – Unrestricted subscription and license information disclosure. AAP-86997
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71458[CVE-2026-71458] – Cross-tenant resource enumeration via Named-URL 404 response oracle. AAP-87047
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71459[CVE-2026-71459] – Cross-tenant job event data exposure via missing RBAC check. AAP-87053
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71462[CVE-2026-71462] – Filesystem path-existence oracle via CUSTOM_VENV_PATHS validation. AAP-87057
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71463[CVE-2026-71463] – Stack trace disclosure via notification-template Jinja whitelist bypass. AAP-87063
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71464[CVE-2026-71464] – Git argument-injection guard bypass via Schedule scm_branch prompt. AAP-87068
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71465[CVE-2026-71465] – Command-line argument injection via ad hoc command limit field. AAP-87073
+
+** link:https://access.redhat.com/security/cve/CVE-2026-75884[CVE-2026-75884] – awx: Privilege escalation to OpenShift namespace via pod_spec_override injection in container groups. AAP-89870
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84470[CVE-2026-84470] – Instance-group privilege escalation via Bulk Job Launch permission check. AAP-90923
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84474[CVE-2026-84474] – Privilege escalation via provisioning-callback host-match bypass. AAP-90929
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84499[CVE-2026-84499] – Survey password disclosure via validation error message. AAP-90947
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84502[CVE-2026-84502] – Remote code execution via Project scm_url git argument injection. AAP-90960
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84638[CVE-2026-84638] – Instance-group privilege escalation via Schedule and workflow node attachment. AAP-90997
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84643[CVE-2026-84643] – Cross-organization credential exposure via Project signature-validation binding. AAP-91001
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84644[CVE-2026-84644] – Server-side request forgery via Thycotic Secret Server credential test. AAP-91012
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84678[CVE-2026-84678] – Code execution via GALAXY_TASK_ENV environment variable injection. AAP-91020
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84679[CVE-2026-84679] – Arbitrary environment variable injection via AWX_TASK_ENV setting. AAP-91040
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84680[CVE-2026-84680] – Credential-use privilege escalation via organization Galaxy credential attachment. AAP-91069
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84683[CVE-2026-84683] – Stored cross-site scripting via ANSI hyperlink sequence in job output. AAP-91076
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84684[CVE-2026-84684] – Privilege escalation via constructed inventory attachment. AAP-91080
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84686[CVE-2026-84686] – Credential token disclosure via notification template type-switch replay. AAP-91087
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84689[CVE-2026-84689] – Cross-tenant job hijack via Bulk Job Launch node reference. AAP-91097
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84691[CVE-2026-84691] – Secret key and database credential disclosure via format-string injection. AAP-91099
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84692[CVE-2026-84692] – Cross-tenant execution privilege bypass via workflow job template node patch. AAP-91108
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84703[CVE-2026-84703] – Cross-tenant credential exposure via execution environment binding. AAP-91110
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84706[CVE-2026-84706] – Code execution via credential type environment-injector blocklist bypass. AAP-91130
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84707[CVE-2026-84707] – Unauthorized job output disclosure via host filter query traversal. AAP-91135
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84708[CVE-2026-84708] – Control-plane secret exposure via container group pod spec override. AAP-91141
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84709[CVE-2026-84709] – Denial of service via credential type injector Jinja rendering. AAP-91146
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84711[CVE-2026-84711] – Arbitrary file read via Project scm_branch git argument injection. AAP-91156
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84712[CVE-2026-84712] – Automation mesh topology disclosure via unauthenticated ping endpoint. AAP-91161
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84714[CVE-2026-84714] – Template injection via sanitize_jinja regex bypass. AAP-91170
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84716[CVE-2026-84716] – Mesh certificate issuance for arbitrary hostnames via install bundle. AAP-91175
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84718[CVE-2026-84718] – Audit log falsification via unrestricted X-Forwarded-For trust. AAP-91180
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84719[CVE-2026-84719] – Instance-group privilege escalation via workflow job template copy. AAP-91185
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84720[CVE-2026-84720] – Masked credential data disclosure via workflow job node artifact search. AAP-91189
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84724[CVE-2026-84724] – Command argument injection via SystemJob extra_vars. AAP-91212
+
+** link:https://access.redhat.com/security/cve/CVE-2026-84717[CVE-2026-84717] – Job template enumeration via unauthenticated Bitbucket webhook oracle. AAP-92201
+
+** link:https://access.redhat.com/security/cve/CVE-2026-87817[CVE-2026-87817] – GitPython: Remote Code Execution via Git directory impersonation. AAP-92290
+
+== Automation hub
+
+* ansible-automation-platform-25/hub-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-73624[CVE-2026-73624] – GitPython: Arbitrary File Overwrite via improper git option validation. AAP-87989
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73625[CVE-2026-73625] – GitPython: Remote Code Execution via kwarg value smuggling. AAP-88048
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73622[CVE-2026-73622] – GitPython: Information disclosure via environment variable expansion in URL handling. AAP-88054
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73623[CVE-2026-73623] – GitPython: Remote Code Execution via malicious Git template. AAP-88149
+
+** link:https://access.redhat.com/security/cve/CVE-2026-73620[CVE-2026-73620] – GitPython: Arbitrary file overwrite and read via unsafe git option forwarding. AAP-88167
+
+** link:https://access.redhat.com/security/cve/CVE-2026-59893[CVE-2026-59893] – sqlparse: Denial of Service via inefficient SQL parsing. AAP-89764
+
+** link:https://access.redhat.com/security/cve/CVE-2026-71491[CVE-2026-71491] – sqlparse: Denial of Service via quadratic CPU consumption in comment grouping. AAP-89806
+
+** link:https://access.redhat.com/security/cve/CVE-2026-54284[CVE-2026-54284] – sqlparse: Denial of Service via quadratic CPU consumption in SQL parsing. AAP-89928
+
+== Event-Driven Ansible
+
+* ansible-automation-platform-25/de-minimal-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2025-57847[CVE-2025-57847] – privilege escalation via excessive group writable /etc/passwd permissions. AAP-52296
+
+* ansible-automation-platform-25/de-minimal-rhel9
+** link:https://access.redhat.com/security/cve/CVE-2025-57847[CVE-2025-57847] – privilege escalation via excessive group writable /etc/passwd permissions. AAP-52297
+
+== Execution Environments
+
+* ansible-automation-platform-25/ee-minimal-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-49825[CVE-2026-49825] – lxml: URL bypass vulnerability in Cleaner via missing xlink:href. AAP-90317
+
+* ansible-automation-platform-25/ee-minimal-rhel9
+** link:https://access.redhat.com/security/cve/CVE-2026-49825[CVE-2026-49825] – lxml: URL bypass vulnerability in Cleaner via missing xlink:href. AAP-90318
+
+* ansible-automation-platform-25/ee-supported-rhel8
+** link:https://access.redhat.com/security/cve/CVE-2026-49825[CVE-2026-49825] – lxml: URL bypass vulnerability in Cleaner via missing xlink:href. AAP-90302
+
+** link:https://access.redhat.com/security/cve/CVE-2025-66418[CVE-2025-66418] – urllib3: Unbounded decompression chain leads to resource exhaustion. AAP-90437
+
+* ansible-automation-platform-25/ee-supported-rhel9
+** link:https://access.redhat.com/security/cve/CVE-2026-49825[CVE-2026-49825] – lxml: URL bypass vulnerability in Cleaner via missing xlink:href. AAP-90319
+
+** link:https://access.redhat.com/security/cve/CVE-2025-66418[CVE-2025-66418] – urllib3: Unbounded decompression chain leads to resource exhaustion. AAP-90438
+
+== Receptor
+
+* receptor
+** link:https://access.redhat.com/security/cve/CVE-2026-56853[CVE-2026-56853] – Go net/http: Unencrypted HTTP/2 connections vulnerable to Denial of Service. AAP-88003
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56858[CVE-2026-56858] – Go html/template: Cross-Site Scripting via pathological input. AAP-88021
+
+** link:https://access.redhat.com/security/cve/CVE-2026-33818[CVE-2026-33818] – Go encoding/asn1: Denial of Service via excessive recursion in Unmarshal. AAP-88067
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56860[CVE-2026-56860] – golang net/url: Denial of Service from quadratic complexity in path resolution. AAP-88086
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56859[CVE-2026-56859] – Go: Denial of Service via XML decoding recursion depth issue. AAP-88111
+
+** link:https://access.redhat.com/security/cve/CVE-2026-56862[CVE-2026-56862] – Golang crypto/tls: Denial of Service via indefinite KeyUpdate messages. AAP-88176
+
+== Other packages
+
+* python3.12-gitpython
+** link:https://access.redhat.com/security/cve/CVE-2026-87817[CVE-2026-87817] – Remote Code Execution via Git directory impersonation. AAP-92286
+
+* python3.12-sqlparse
+** link:https://access.redhat.com/security/cve/CVE-2026-71491[CVE-2026-71491] – Denial of Service via quadratic CPU consumption in comment grouping. AAP-89821
+
+** link:https://access.redhat.com/security/cve/CVE-2026-59893[CVE-2026-59893] – Denial of Service via inefficient SQL parsing. AAP-89904
+
+** link:https://access.redhat.com/security/cve/CVE-2026-54284[CVE-2026-54284] – Denial of Service via quadratic CPU consumption in SQL parsing. AAP-89943
+
+
+== Bug fixes
+
+== Aap Dev
+* Fixed an issue where silently-dropped AWX_TASK_ENV blocklist validation in jobs_validate. (AAP-91855)
+
+== Aap UI
+* Fixed an issue where description entered on the approval node (and returned by the API) is visible in the Workflow Approvals UI (list and/or details), as it was in AAP 2.4.
+
+Approvers can complete approvals using UI context alone, without consulting the API. (AAP-87838)
+
+== Controller
+* Fixed an issue where bumps the kubernetes client to >=36.0.0 to fix NO_PROXY silently being reset to None. (AAP-82811)
+* Fixed an issue where this ticket addresses the silent data loss in indirect node audit when event_query yields null name. The changes skip audit records with null/missing name instead of letting them cause a NotNullViolation that aborts the entire job's audit batch and restructure the transaction in save_indirect_host_entries so that bulk_create and the event_queries_processed flag are committed atomically (AAP-88280)
+* Fixed an issue where fixes a locking issue when updating the last_seen timestamp of control and execution nodes (AAP-89558)
+* Fixed an issue where a single UnifiedJob row with a start_args value that cannot be decrypted with the controller's current SECRET_KEY causes the dependency_manager scheduler task to raise an unhandled cryptography.fernet.InvalidToken on every run. Because that task runs on a fixed 20-second periodic beat and the exception aborts the scheduling pass before any bookkeeping is committed, the exact same job is retried and the exact same crash repeats indefinitely, matching the reported "crash every 20 seconds" signature exactly. While this loop is broken, no pending job anywhere in the instance can ever transition out of Pending, because the main TaskManager and WorkflowManager loops only ever act on jobs the DependencyManager has already marked dependencies_processed=True which it can never do once it starts crashing.
+
+For both DependencyManager.gen_dep_for_job and WorkflowManager.spawn_workflow_graph_jobs catch and handle cryptography.fernet.InvalidToken, treat that job's start_args as unknown ({}), and let the scheduling loop continue for every other job. (AAP-92000)
+
+== Event Driven Ansible
+* Fixed an issue where improve error handling when user inputs values that are not booleans or strings when using the credentials module (AAP-56184)
