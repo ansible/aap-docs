@@ -116,3 +116,7 @@ The following functionality was deprecated and removed in {PlatformNameShort} 2.
 * Fixed the *setup.sh* script to escalate privileges if necessary for installing {PlatformNameShort}. 
 
 * Fixed an issue when restoring a backup to an {HubName} with a different hostname.
+
+== Known Issues
+
+* During an upgrade from an operator-based {PlatformNameShort} 2.4 deployment to 2.5, the {ControllerName} migration job might complete successfully but be reapplied during a later reconciliation. Reconciliation can fail with a Kubernetes error similar to `Job.batch "automationcontroller-<name>-migration-4.6.33" is invalid: spec.template: Invalid value: ...: field is immutable`. The {ControllerName} remains unready, and the upgrade test harness can time out after approximately one hour. (AAP-93806)
