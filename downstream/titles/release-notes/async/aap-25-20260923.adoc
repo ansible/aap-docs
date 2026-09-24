@@ -30,6 +30,14 @@ a|
 
 |====
 
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1789750141
+
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1789750222
+
+
 == Overview
 
 This release of Ansible Automation Platform 2.5 includes 64 security updates, 1 enhancements, and 7 bug fixes across multiple components including Controller, Execution Environments, Hub, Lightspeed, and Receptor.
@@ -294,21 +302,26 @@ This release of Ansible Automation Platform 2.5 includes 64 security updates, 1 
 
 == Bug fixes
 
-== Aap Dev
-* Fixed an issue where silently-dropped AWX_TASK_ENV blocklist validation in jobs_validate. (AAP-91855)
-
 == Aap UI
+
 * Fixed an issue where description entered on the approval node (and returned by the API) is visible in the Workflow Approvals UI (list and/or details), as it was in AAP 2.4.
 
 Approvers can complete approvals using UI context alone, without consulting the API. (AAP-87838)
 
 == Controller
-* Fixed an issue where bumps the kubernetes client to >=36.0.0 to fix NO_PROXY silently being reset to None. (AAP-82811)
+
+* Fixed an issue where upgrades to the kubernetes client to >=36.0.0 to fix NO_PROXY were silently being reset to None. (AAP-82811)
+
 * Fixed an issue where this ticket addresses the silent data loss in indirect node audit when event_query yields null name. The changes skip audit records with null/missing name instead of letting them cause a NotNullViolation that aborts the entire job's audit batch and restructure the transaction in save_indirect_host_entries so that bulk_create and the event_queries_processed flag are committed atomically (AAP-88280)
+
 * Fixed an issue where fixes a locking issue when updating the last_seen timestamp of control and execution nodes (AAP-89558)
+
 * Fixed an issue where a single UnifiedJob row with a start_args value that cannot be decrypted with the controller's current SECRET_KEY causes the dependency_manager scheduler task to raise an unhandled cryptography.fernet.InvalidToken on every run. Because that task runs on a fixed 20-second periodic beat and the exception aborts the scheduling pass before any bookkeeping is committed, the exact same job is retried and the exact same crash repeats indefinitely, matching the reported "crash every 20 seconds" signature exactly. While this loop is broken, no pending job anywhere in the instance can ever transition out of Pending, because the main TaskManager and WorkflowManager loops only ever act on jobs the DependencyManager has already marked dependencies_processed=True which it can never do once it starts crashing.
+
+* Fixed an issue where silently-dropped AWX_TASK_ENV blocklist validation in jobs_validate. (AAP-91855)
 
 For both DependencyManager.gen_dep_for_job and WorkflowManager.spawn_workflow_graph_jobs catch and handle cryptography.fernet.InvalidToken, treat that job's start_args as unknown ({}), and let the scheduling loop continue for every other job. (AAP-92000)
 
 == Event Driven Ansible
+
 * Fixed an issue where improve error handling when user inputs values that are not booleans or strings when using the credentials module (AAP-56184)
