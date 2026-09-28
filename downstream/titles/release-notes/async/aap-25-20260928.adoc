@@ -1,0 +1,59 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-20260928]]
+
+= Ansible Automation Platform 2.5 patch release September 28, 2026 (portal-2.1.8)
+
+
+[role="_abstract"]
+The following enhancements and bug fixes have been implemented in this release of Ansible automation portal.
+
+This release includes the following components and versions:
+
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date |
+
+| September 28, 2026
+a|
+|====
+
+
+== Overview
+
+Red Hat Ansible Automation Platform portal 2.1.8 is a security patch update for the AAP 2.5 plugin stream. This release delivers third-party dependency security patches in automation portal plugins. No RHEL bootc appliance or OpenShift operator changes are included in the 2.1.8 scope.
+
+== Features
+
+No new features are included in this release.
+
+== Highlights
+
+* *Security:* Third-party dependency updates address vulnerabilities in automation portal plugins, mirroring the portal-2.2.8 CVE set plus an additional Immutable.js denial-of-service fix and multer upload handling on the 2.1 release branch.
+
+== Bug fixes
+
+No customer-facing bug fixes beyond security remediations are included in this release.
+
+== CVE
+
+=== Ansible automation portal
+
+* link:https://access.redhat.com/security/cve/cve-2026-55553[CVE-2026-55553] - Credential leakage via cross-origin redirects (urllib). (AAP-89884)
+* link:https://access.redhat.com/security/cve/cve-2026-5038[CVE-2026-5038] - Denial of Service via aborted or malformed multipart uploads (Multer). (AAP-90370)
+* link:https://access.redhat.com/security/cve/cve-2026-59869[CVE-2026-59869] - Denial of Service via crafted YAML documents (js-yaml). (AAP-90385)
+* link:https://access.redhat.com/security/cve/cve-2026-59879[CVE-2026-59879] - Denial of Service via unbounded merge operations (Immutable.js). (AAP-90646)
+* link:https://access.redhat.com/security/cve/cve-2026-84375[CVE-2026-84375] - Denial of Service vulnerability in YAML parsing (js-yaml). (AAP-91036)
+* link:https://access.redhat.com/security/cve/cve-2026-82417[CVE-2026-82417] - Denial of Service via improper validation in stringify function (qs). (AAP-91553)
+* link:https://access.redhat.com/security/cve/cve-2026-19534[CVE-2026-19534] - Denial of Service via unrequested WebSocket subprotocol (undici). (AAP-91750)
+* link:https://access.redhat.com/security/cve/cve-2026-89011[CVE-2026-89011] - Information disclosure via prototype pollution in getRemoteInfo function (isomorphic-git). (AAP-92393)
+* link:https://access.redhat.com/security/cve/cve-2026-87776[CVE-2026-87776] - Denial of Service via memory leak on premature response close (compression). (AAP-92536)
+* link:https://access.redhat.com/security/cve/cve-2026-88932[CVE-2026-88932] - Denial of Service via orphaned disk writes on aborted uploads (multer). (AAP-92731)
+* link:https://access.redhat.com/security/cve/cve-2026-92000[CVE-2026-92000] - Denial of Service via crafted ZIP archives with zero declared uncompressed size (adm-zip). (AAP-92996)
+* link:https://access.redhat.com/security/cve/cve-2026-92959[CVE-2026-92959] - Asynchronous code execution bypass via Promise thenable assimilation (vm2). (AAP-93381)
+* link:https://access.redhat.com/security/cve/cve-2026-92961[CVE-2026-92961] - Denial of Service via memory exhaustion (vm2). (AAP-93382)
+* link:https://access.redhat.com/security/cve/cve-2026-92958[CVE-2026-92958] - Sandbox escape via denylist bypass in NodeVM (vm2). (AAP-93385)
+* link:https://access.redhat.com/security/cve/cve-2026-92942[CVE-2026-92942] - Denial of Service via timeout bypass in sandboxed code (vm2). (AAP-93388)
+* link:https://access.redhat.com/security/cve/cve-2026-47683[CVE-2026-47683] - Denial of Service due to memory allocation limit bypass (vm2). (AAP-93419)
