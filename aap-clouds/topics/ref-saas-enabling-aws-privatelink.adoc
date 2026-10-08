@@ -14,3 +14,19 @@ You must create *two* separate support tickets for bi-directional connectivity:
 * One enabling {AWSPrivateLink} connectivity from Customer VPC *into the* control plane
 * One enabling {AWSPrivateLink} connectivity *out of the* control plane to Customer VPC. 
 ====
+
+== DNS Resolution and Custom Domains
+
+When using {AWSPrivateLink}, you will also configure custom domain names for the AAP endpoints. These hostnames must be resolvable by the Red Hat managed service, not just by your infrastructure.
+
+See link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-aws#con-saas-dns-resolution-requirements[DNS Resolution Requirements for Custom Domains] for detailed information on:
+
+* The distinction between customer-side DNS and service-side DNS
+* Common DNS misconfigurations
+* How to validate that your hostnames are resolvable by the service
+* Split-horizon DNS considerations
+
+[IMPORTANT]
+====
+Do not configure custom hostnames in {PlatformNameShort} until you have verified that they are resolvable by the Red Hat managed service, not just your internal network.
+====

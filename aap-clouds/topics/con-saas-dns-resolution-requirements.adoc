@@ -1,0 +1,173 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-saas-dns-resolution-requirements"]
+
+= DNS resolution requirements for custom domains
+
+[role="_abstract"]
+When configuring custom domains or hostnames for {SaaSonAWS}, these names must be resolvable by the Red Hat managed service, not just by your infrastructure.
+
+Many customers configure split-horizon or private DNS that allows local resolution within their network. This is not sufficient for {SaaSonAWS}.
+
+== Customer-Side DNS (Your Network)
+
+Customer-side DNS is what your infrastructure can resolve:
+
+* Private DNS zones in Route 53
+* Internal DNS servers in your VPC
+* Customer-private DNS entries
+* Only resolvable from your network or VPC
+
+== Service-Side DNS (Required)
+
+Service-side DNS is what the Red Hat managed service must resolve:
+
+* Must be resolvable by the Red Hat control plane
+* Must be resolvable by service components connecting to your endpoints
+* Must be publicly available or accessible via {AWSPrivateLink}
+
+== Core requirement
+
+Your custom hostnames must be resolvable by BOTH your infrastructure AND the Red Hat service.
+
+Without service-side DNS resolution, the service cannot connect to the endpoints you configure.
+
+== Common misconfigurations
+
+[IMPORTANT]
+====
+*Private-Only DNS (fails)*
+
+You configure a custom hostname that exists only in your private DNS zone:
+
+* `platform.example.com` → Only in customer's private Route 53 zone
+* Resolvable: Only within example.com VPC
+* Resolvable by Red Hat service: NO ✗
+* Result: Service cannot resolve, configuration fails
+
+*Unresolvable Hostname (fails)*
+
+You configure a hostname that does not exist in any DNS:
+
+* `platform.internal` → Not registered anywhere
+* Resolvable: Nowhere
+* Resolvable by Red Hat service: NO ✗
+* Result: Service cannot resolve, configuration fails
+
+*Dual-Resolution (works)*
+
+You configure a hostname that is resolvable both locally and by the service:
+
+* `platform.example.com` → Through {AWSPrivateLink} Private DNS or public DNS
+* Resolvable: From your VPC and from Red Hat service
+* Resolvable by Red Hat service: YES ✓
+* Result: Service can resolve, configuration works
+====
+
+== {AWSPrivateLink} and DNS
+
+{AWSPrivateLink} establishes secure connectivity between your VPC and the Red Hat managed service. DNS resolution works as follows:
+
+== Without {AWSPrivateLink}
+
+* Custom hostnames must exist in public DNS
+* Reachable from both your infrastructure and Red Hat service
+* Standard DNS resolution applies
+
+== With {AWSPrivateLink}
+
+* You enable *Private DNS* on the {AWS} VPC endpoint
+* {AWSPrivateLink} intercepts DNS queries for your custom domain
+* Private DNS queries resolve to the {AWSPrivateLink} endpoint
+* Red Hat service can resolve your custom hostnames via {AWSPrivateLink}
+
+== Split-Horizon DNS with {AWSPrivateLink}
+
+For advanced configurations, you might use split-horizon DNS:
+
+* Internal DNS (customer network): `platform.example.com` → 10.0.1.100
+* External DNS or {AWSPrivateLink}: `platform.example.com` → VPC endpoint
+* Result: Your infrastructure resolves locally, service resolves via {AWSPrivateLink}
+
+This setup requires proper {AWSPrivateLink} configuration and Private DNS enablement.
+
+== Validation Checklist
+
+Before configuring custom hostnames in {SaaSonAWS}:
+
+[cols="1,3"]
+|===
+| Validation | Success Criteria
+
+| DNS Resolvability | `nslookup platform.example.com` returns an IP address
+| Local Resolution | Hostname resolves from your VPC
+| Service Resolution | Red Hat support confirms service can resolve the hostname
+| {AWSPrivateLink} Readiness | Private DNS is enabled on VPC endpoint (if using {AWSPrivateLink})
+| CNAME Correctness | CNAME points to correct VPC endpoint or DNS name
+| All Endpoints | All three hostnames (platform, mesh-ingress-0, mesh-ingress-1) are resolvable
+|===
+
+== Validation
+
+.Test Local Resolution
+
+---
+nslookup platform.example.com
+dig platform.example.com +short
+---
+
+Expected result: Returns the VPC endpoint DNS name or IP address
+
+*Verify {AWSPrivateLink} Configuration*
+
+---
+aws ec2 describe-vpc-endpoints \
+  --vpc-endpoint-ids vpce-xxxx \
+  --query 'VpcEndpoints[0].{
+    ServiceName:ServiceName,
+    PrivateDnsEnabled:PrivateDnsEnabled,
+    DnsEntries:DnsEntries[0].DnsName
+  }'
+---
+
+Expected results:
+* `ServiceName`: Should show the Red Hat service name
+* `PrivateDnsEnabled`: Should be `true`
+* `DnsEntries`: Should show VPC endpoint DNS name
+
+== Getting help with validation
+
+If you cannot validate DNS resolution yourself:
+
+. Verify that:
+   .. Your custom hostname is configured in DNS
+   .. {AWSPrivateLink} Private DNS is enabled (if using {AWSPrivateLink})
+   .. Security groups and NACLs allow DNS traffic
+
+. Contact link:{CustomerSupport}[Red Hat support] with:
+   .. Your custom domain name(s)
+   .. Your VPC endpoint ID
+   .. DNS configuration details
+   .. {AWSPrivateLink} configuration (if applicable)
+
+Red Hat support can validate service-side DNS resolution as part of the configuration process.
+
+==Troubleshooting
+
+[cols="1,2"]
+|===
+| Problem | Solution
+
+| `nslookup` returns "non-existent domain" | Hostname not configured in your DNS. Create the CNAME record first.
+| Hostname resolves to wrong address | Verify CNAME points to correct VPC endpoint DNS name
+| Hostname not resolvable from outside your VPC | {AWSPrivateLink} Private DNS may not be enabled. Check enablement in {AWS} console.
+| Service-side resolution failing | Contact Red Hat support. Verify Private DNS is enabled on {AWSPrivateLink} endpoint.
+| Connection timeouts to custom hostname | Verify CNAME points to working VPC endpoint. Check security group rules.
+|===
+
+[role="_related-topics"]
+* link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-aws#proc-saas-custom-dom-with-awsprivatelink[Setting up a custom domain with {AWSPrivateLink}]
+* link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-private-link#ref-saas-enabling-aws-privatelink[Enabling {AWSPrivateLink} connectivity]
+* {AWS} {AWSPrivateLink} documentation: https://docs.aws.amazon.com/vpc/latest/privatelink/
+
+
