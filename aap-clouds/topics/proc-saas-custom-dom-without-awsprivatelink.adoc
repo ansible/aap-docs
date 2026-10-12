@@ -6,6 +6,12 @@
 [role="_abstract"]
 If you are not planning to connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
 
+.Prerequisites
+
+* Ensure the custom domain hostnames you plan to use are resolvable by the Red Hat managed control plane and service components.
+* Verify that your custom domain is properly configured in your DNS provider.
+* Ensure the hostnames you configure exist in a DNS zone that is resolvable by the Red Hat service, not just your internal network.
+
 .Procedure
 
 . Identify the canonical names of the load balancers of your deployment. 
@@ -26,7 +32,39 @@ Shell
 # Replace the URL with the "mesh-ingress" URL of your deployment 
 dig mesh-ingress-0.cus-<id>.aws.ansiblecloud.com
 ----
++
+[IMPORTANT]
+====
+*DNS Resolution Requirements*
+
+The hostnames you configure must be resolvable by the Red Hat managed service, not just by your infrastructure.
+
+If you create a custom DNS entry that exists only in your customer-private DNS zone (accessible only within your VPC), the service will NOT be able to resolve it.
+
+For example:
+
+* ✓ CORRECT: `platform.example.com` → resolvable via PrivateLink-enabled DNS
+*  ✗ WRONG: `platform.example.com` → only in customer private DNS zone, not resolvable by service
+
+The CNAME you create must point to a name that the Red Hat service can resolve.
+====
+
 . Create DNS CNAME records for your custom domain using the following hostnames pointing to the DNS names identified in the previous step:
 * platform (for example, `platform._exampledomain_.com`) → `cus-xxxxx-alb-11111111.us-east-1.elb.amazonaws.com`
 * mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
 * mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
+
+.Validation
+
+After configuring your custom domain DNS records:
+
+. From your network, verify the hostname resolves correctly:
+.. Run: `nslookup platform.<yourdomain>.com`
+.. Confirm it resolves to your platform's IP address or endpoint
+
+. Confirm that the Red Hat managed service can also resolve your custom hostname:
+.. Contact link:{CustomerSupport}[Red Hat support] to validate service-side DNS resolution
+.. Provide your custom domain name and the DNS records you configured
+.. Red Hat support can verify that the service can reach your configured endpoints
+
+. Do not proceed with {PlatformNameShort} configuration until you have confirmed service-side DNS resolution.

@@ -6,6 +6,13 @@
 [role="_abstract"]
 If you are planning to connect to the {PlatformNameShort} UI or use {AutomationMesh} through {AWSPrivateLink}, complete the following steps to configure your DNS.
 
+.Prerequisites
+
+- Ensure the custom domain hostnames you plan to use are resolvable by the Red Hat managed control plane and service components, not just by your infrastructure.
+- Verify that PrivateLink connectivity is established from the Red Hat service to your VPC.
+- For split-horizon DNS configurations (where names resolve differently from different locations), ensure the service-side resolution is working correctly before configuring in {PlatformNameShort}.
+- Understand that a hostname existing only in your customer-private DNS zone is not sufficient. The service must be able to resolve these names.
+
 .Procedure 
 
 . Retrieve the main DNS name of the Amazon Virtual Private Cloud (VPC) endpoint you created to connect to {AWSPrivateLink} endpoint service by performing the following steps:
@@ -13,7 +20,7 @@ If you are planning to connect to the {PlatformNameShort} UI or use {AutomationM
 .. Click the *VPC* Endpoint for {SaaSonAWS}.
 .. Retrieve the *DNS names* in the Details tab.
 +
-There are a few entries. To find the correct DNS name, go to the *Details* tab and look for the entry that is not tied to a specific Availability Zone (AZ). For instance, choose `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com` rather than one that includes an AZ like `us-east-1a` or `us-east-1b`.
+There are a few entries. To find the correct DNS name, go to the *Details* tab and look for the entry that is not tied to a specific _Availability Zone_ (AZ). For instance, choose `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com` rather than one that includes an AZ like `us-east-1a` or `us-east-1b`.
 +
 Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that endpoint by entering:
 +
@@ -21,10 +28,46 @@ Alternatively, you can choose to use {AWS} CLI to retrieve the DNS names of that
 Shell
 aws ec2 describe-vpc-endpoints --vpc-endpoint-ids vpce-xxxx --query 'VpcEndpoints[0].DnsEntries[*].DnsName'
 ----
++
+[IMPORTANT]
+====
+*DNS Resolution Requirements*
+
+The hostnames you configure must be resolvable by the Red Hat managed service, not just by your infrastructure.
+
+If you create a custom DNS entry that exists only in your customer-private DNS zone (accessible only within your VPC), the service will NOT be able to resolve it.
+
+For example:
+* ✓ CORRECT: `platform.example.com` → resolvable via PrivateLink-enabled DNS
+* ✗ WRONG: `platform.example.com` → only in customer private DNS zone, not resolvable by service
+
+The CNAME you create must point to a name that the Red Hat service can resolve.
+====
 
 . After you have retrieved the DNS name, create the DNS CNAME records for your custom domain using the following hostnames pointing to the DNS name identified in the previous step:
 .. platform (for example, `platform._exampledomain_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 
+.Validation
+
+After creating the CNAME records, you must validate that your hostnames are resolvable by the Red Hat service:
+
+. From a machine with potential access to the Red Hat service or control plane:
+.. Run: `nslookup platform.<yourdomain>.com`
+.. Confirm the hostname resolves to the VPC endpoint address
+.. Repeat for `mesh-ingress-0.<yourdomain>.com` and `mesh-ingress-1.<yourdomain>.com`
+
+. If the hostnames do not resolve from the service's perspective:
+.. Review your PrivateLink configuration to ensure Private DNS is enabled
+.. Verify that your DNS (whether public DNS, split-horizon DNS, or PrivateLink-enabled) allows the service to resolve these names
+.. Check AWS CloudWatch logs or VPC Flow Logs for DNS-related errors
+.. Contact link:{CustomerSupport}[Red Hat support] before proceeding with {PlatformNameShort} configuration
+
+. Do not configure these hostnames in {PlatformNameShort} until DNS resolution has been validated from the service's perspective.
+
+[NOTE]
+====
+If you cannot validate service-side DNS resolution yourself, Red Hat support can help you test DNS resolution from the service environment as part of the PrivateLink setup process.
+====
 
