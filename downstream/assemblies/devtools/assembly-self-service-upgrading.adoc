@@ -18,7 +18,12 @@ endif::[]
 
 [role="_abstract"]
 To ensure that your {SelfServiceShort} deployment has the latest features and fixes,
-you must upgrade the plug-in registry and Helm chart to the latest versions.
+you must upgrade your Helm values and chart to the latest versions.
+
+[IMPORTANT]
+====
+Starting with portal release v2.3.0, the {SelfServiceShort} Helm chart defaults to OCI container delivery (`pluginMode: oci`). If your existing deployment uses an HTTP plug-in registry or tarball package URLs, you must update your Helm values or set `pluginMode: tarball` before you upgrade. Upgrading to a chart release that defaults to OCI without updating your configuration can cause deployment failures.
+====
 
 include::devtools/con-self-service-version-compatibility.adoc[leveloffset=+1]
 

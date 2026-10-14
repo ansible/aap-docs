@@ -81,12 +81,12 @@ You can create the `dynamic-plugins-registry-auth` secret in the OpenShift web c
 
 *Helm chart configuration*
 
-When you configure the Helm chart, set `redhat-developer-hub.global.pluginMode` to match your chosen delivery method:
+The Helm chart defaults to OCI container delivery (`pluginMode: oci`) starting with portal release v2.3.0. Set `redhat-developer-hub.global.pluginMode` to match your chosen delivery method:
 
-* `oci` -- OCI container delivery (recommended).
-* `tarball` -- HTTP plug-in registry.
+* `oci` -- OCI container delivery (default and recommended).
+* `tarball` -- HTTP plug-in registry (deprecated override).
 
-Verify that `pluginMode` is set to the correct value. If you omit this setting, the chart uses its built-in default.
+Verify that `pluginMode` is set to the correct value. If you omit this setting, the chart defaults to `oci`.
 
 ----
 redhat-developer-hub:

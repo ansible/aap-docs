@@ -25,9 +25,16 @@ select the `install-dynamic-plugins` container from the *INIT CONTAINERS* sectio
 +
 image::self-service-view-install-messages.png[View install messages]
 +
-The log stream displays the progress of the installation of the plug-ins from the plug-in registry. 
+The log stream displays the progress of dynamic plug-in installation.
 +
-The log stream for successful installation of the plug-ins resembles the following output:
+When `pluginMode` is `oci` (default), successful installation resembles the following output:
++
+----
+ ======= Installing dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version>!ansible-backstage-plugin-catalog-backend-module-rhaap
+ -> Successfully installed dynamic plugin oci://registry.redhat.io/ansible-automation-platform/automation-portal:<plugin-version>!ansible-backstage-plugin-catalog-backend-module-rhaap
+----
++
+When `pluginMode` is `tarball`, successful installation resembles the following output:
 +
 ----
  ======= Installing dynamic plugin http://plugin-registry:8080/ansible-backstage-plugin-catalog-backend-module-rhaap-dynamic-0.1.0.tgz

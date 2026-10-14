@@ -26,7 +26,7 @@ $ oc new-project "${MY_NAMESPACE}"
 ----
 . Create a custom values file and reuse it for install and upgrade. Choose the example that matches your plug-in delivery method.
 +
-*OCI delivery* (`values-oci.yaml`):
+*OCI delivery (default and recommended)* (`values-oci.yaml`):
 +
 ----
 redhat-developer-hub:
@@ -66,7 +66,7 @@ redhat-developer-hub:
     #     tag: "latest"
 ----
 +
-*HTTP plug-in registry delivery* (`values-tarball.yaml`):
+*HTTP plug-in registry delivery (deprecated override)* (`values-tarball.yaml`):
 +
 ----
 redhat-developer-hub:
@@ -123,7 +123,7 @@ $ helm upgrade redhat-rhaap-portal \
 +
 Alternatively, you can pass values using `--set` flags.
 +
-*OCI delivery:*
+*OCI delivery (default and recommended):*
 +
 ----
 $ helm install redhat-rhaap-portal \
@@ -140,7 +140,7 @@ To also set `ociPluginImage` via `--set`:
   --set redhat-developer-hub.global.ociPluginImage="<disconnected_registry_url>/custom-path/automation-portal"
 ----
 +
-*HTTP plug-in registry delivery:*
+*HTTP plug-in registry delivery (deprecated override):*
 +
 ----
 $ helm install redhat-rhaap-portal \

@@ -3,8 +3,12 @@
 [id="rhdh-update-helm_{context}"]
 = Updating the {SelfServiceShort} version numbers for a Helm installation
 
-After you have updated your plug-in registry for your {SelfServiceShort} project on your {OCPShort} instance,
-you must update the Helm chart with the new versions of your plug-ins files.
+To upgrade {SelfServiceShort}, update the Helm chart configuration with the new version of the chart and the target plug-in version.
+
+[IMPORTANT]
+====
+Starting with portal release v2.3.0, the Helm chart defaults to OCI container delivery (`pluginMode: oci`). If your existing deployment uses an HTTP plug-in registry or tarball package URLs, you must update your Helm values or set `pluginMode: tarball` before you upgrade. Upgrading to a chart that defaults to OCI without updating your configuration can cause deployment failures.
+====
 
 You can update the Helm chart from the command line using `helm` commands, or from the OpenShift web console.
 
@@ -13,7 +17,7 @@ You can update the Helm chart from the command line using `helm` commands, or fr
 For upgrades in air-gapped or disconnected environments, the standard procedure cannot be used directly.
 You must first mirror the necessary container images to your local registry and prepare the Helm chart for offline use.
 
-For detailed instructions on this process, see the 
+For detailed instructions on this process, see the
 link:{URLSelfServiceInstall}/self-service-disconnected-install_aap-self-service-install[Installing the self-service automation portal in an air-gapped environment] section of _{LinkSelfServiceInstall}_.
 ====
 

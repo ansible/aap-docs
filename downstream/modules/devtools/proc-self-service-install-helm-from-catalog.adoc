@@ -8,17 +8,15 @@
 * You have created secrets in {OCPShort} for {PlatformNameShort} authentication.
 * If you configure SCM integration (for example, importing from private repositories or using templates that access SCM), you have created secrets in OpenShift for SCM authentication.
 
-* You have completed one of the plug-in delivery methods:
-** For OCI delivery: You have created the `<release-name>-dynamic-plugins-registry-auth` secret.
-
-
-
+* You have completed the plug-in delivery prerequisites:
+** For OCI container delivery (default): You have created the `<release-name>-dynamic-plugins-registry-auth` secret.
+** For HTTP plug-in registry (deprecated override): If you are overriding the default OCI delivery to use an in-cluster HTTP plug-in registry, you have deployed the plug-in registry and plan to set `pluginMode` to `tarball`.
 
 .Procedure
 . In the {OCPShort} web console, select the *Developer* view.
-. Select your project and click the btn:[Helm] option in the OpenShift sidebar.  
-. Click btn:[Create] and select *Helm Release*. 
-. Search for `Portal` in the Helm Charts filter, and select the `Automation Portal` chart. 
+. Select your project and click the btn:[Helm] option in the OpenShift sidebar.
+. Click btn:[Create] and select *Helm Release*.
+. Search for `Portal` in the Helm Charts filter, and select the `Automation Portal` chart.
 . Click btn:[Create] and select the *YAML view*.
 . Update the `clusterRouterBase` value with the base URL of your OpenShift instance.
 +
@@ -32,21 +30,15 @@ redhat-developer-hub:
   global:
     clusterRouterBase: apps.example.com
 ----
-. Configure the plug-in delivery mode by setting the `pluginMode` key:
+. Configure the plug-in delivery mode and version by setting the `imageTagInfo` key:
 +
-* For OCI delivery, set the value to `oci`.
+The Helm chart defaults to OCI container delivery (`pluginMode: oci`). Set `imageTagInfo` to the plug-in version from the Helm chart or the lifecycle page. To override the default and use the deprecated HTTP plug-in registry, set `pluginMode` to `tarball`.
 +
 ----
 redhat-developer-hub:
   global:
     pluginMode: oci
-----
-. *Optional:* To use a specific plug-in version, update the `imageTagInfo` value:
-+
-----
-redhat-developer-hub:
-  global:
-    imageTagInfo: "2.1"
+    imageTagInfo: "<plugin-version>"
 ----
 . Set the {PlatformNameShort} organization to synchronize. The default value is `Default`. Update the `orgs` key to match your organization name:
 +

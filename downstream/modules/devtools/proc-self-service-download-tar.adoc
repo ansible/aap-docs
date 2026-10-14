@@ -4,9 +4,14 @@
 = Download plug-ins and push to the registry
 
 [role="_abstract"]
-To provide Ansible plug-ins to {RHDH}, download the setup bundle and push the extracted files to a local Red Hat OpenShift registry. 
+To provide Ansible plug-ins to {RHDH}, download the setup bundle and push the extracted files to a local Red Hat OpenShift registry.
 
 By setting up a centralized httpd service, you can access these plug-in files through Helm chart configuration.
+
+[IMPORTANT]
+====
+The HTTP plug-in registry method using downloaded TAR files is deprecated and will be removed in a future release of {PlatformNameShort}. Starting with portal release v2.3.0, the Helm chart defaults to OCI container delivery (`pluginMode: oci`). {RH} recommends using OCI delivery. Follow this procedure only if you require a manual values override (`pluginMode: tarball`).
+====
 
 .Procedure
 . Create a directory on your local machine to store the plug-in files.
