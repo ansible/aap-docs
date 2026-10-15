@@ -23,6 +23,13 @@ you must upgrade your Helm values and chart to the latest versions.
 [IMPORTANT]
 ====
 Starting with portal release v2.3.0, the {SelfServiceShort} Helm chart defaults to OCI container delivery (`pluginMode: oci`). If your existing deployment uses an HTTP plug-in registry or tarball package URLs, you must update your Helm values or set `pluginMode: tarball` before you upgrade. Upgrading to a chart release that defaults to OCI without updating your configuration can cause deployment failures.
+
+Also, with portal release v2.3.0, the type for {PlatformNameShort} job templates changes from `spec.type: service` to `spec.type: automation-template` during catalog synchronization. This change applies to all portal deployments.
+
+If your deployment uses role-based access control (RBAC) conditional policies that filter by `spec.type: service`, those policies will no longer match synchronized templates after upgrade, resulting in lost access for non-admin users. Before or immediately after upgrading:
+
+* In the automation portal web interface, navigate to *Administration* > *RBAC*, select the affected roles, and update conditional policies to filter on `spec.type: automation-template`.
+* If you use software templates imported from Git repositories, update `spec.type` in your template YAML files to `automation-template` (and optionally add the `ansible.com/template-source: scm` annotation), or update your catalog location to point to the latest template release.
 ====
 
 include::devtools/con-self-service-version-compatibility.adoc[leveloffset=+1]
