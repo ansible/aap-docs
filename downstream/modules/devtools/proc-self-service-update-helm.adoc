@@ -13,7 +13,7 @@ Also, with portal release v2.3.0, the type for {PlatformNameShort} job templates
 
 If your deployment uses role-based access control (RBAC) conditional policies that filter by `spec.type: service`, those policies will no longer match synchronized templates after upgrade, resulting in lost access for non-admin users. Before or immediately after upgrading:
 
-* In the automation portal web interface, navigate to *Administration* > *RBAC*, select the affected roles, and update conditional policies to filter on `spec.type: automation-template`.
+* In the automation portal web interface, navigate to menu:Administration[RBAC], select the affected roles, and update conditional policies to filter on `spec.type: automation-template`.
 * If you use software templates imported from Git repositories, update `spec.type` in your template YAML files to `automation-template` (and optionally add the `ansible.com/template-source: scm` annotation), or update your catalog location to point to the latest template release.
 ====
 
