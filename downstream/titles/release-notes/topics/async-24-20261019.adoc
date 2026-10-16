@@ -1,0 +1,49 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-24-2_4_20261019]]
+
+= Ansible Automation Platform 2.4 Release Notes October 19, 2026
+
+
+[role="_abstract"]
+The following release notes detail the CVEs and Bug fixes for the Ansible Automation Platform patch released on October 19, 2026
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| October 19, 2026
+a|
+
+* Automation controller 4.5.37
+* Automation hub 4.9.8
+* Event-Driven Ansible 1.0.11
+* Receptor 1.6.4
+* RPM-based installer Ansible Automation Platform (bundle) `
+* RPM-based installer Ansible Automation Platform (online) 2.4-16
+
+
+|====
+
+== Overview
+
+This release of Ansible Automation Platform 2.4 includes performance enhancements and bug fixes for the automation controller and execution environments. Three critical bug fixes address row-level lock contention issues that could impact API responsiveness during high concurrency scenarios. Additionally, the controller collection has been updated to version 4.5.37.
+
+== Enhancements
+
+== Execution environments
+
+* Controller collection updated to 4.5.37 (AAP-96285)
+
+== Bug fixes
+
+== Controller
+
+* Fixed an issue where row lock convoy occurred when using oauth2 tokens excessively (AAP-93866)
+
+* Fixed a performance issue where concurrent job completions could cause row-level lock contention on the main_host table. The last_job_id and last_job_host_summary_id fields are no longer written to main_host on every job completion. Instead, the latest job host summary is derived at read time via query, eliminating the contention point. (AAP-95886)
+
+* Job Template Lock Convoy Prevention (AAP-95887): Fixed a performance issue where concurrent job completions on a job template with allow_simultaneous enabled could cause row-level lock convoys on the main_unifiedjobtemplate table, leading to API unresponsiveness. The parent job template update now uses PostgreSQL SKIP LOCKED to avoid queuing behind locked rows, allowing concurrent updaters to return immediately instead of waiting. (AAP-96776)
