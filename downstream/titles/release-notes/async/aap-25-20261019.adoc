@@ -1,0 +1,79 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-20261019]]
+
+= Ansible automation portal patch release October 19, 2026
+
+
+[role="_abstract"]
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| October 19, 2026
+a|
+
+* Automation controller 4.6.34
+* Automation hub 4.10.19
+* Event-Driven Ansible 1.1.23
+* Container-based installer Ansible Automation Platform (bundle) 2.5-25.5
+* Container-based installer Ansible Automation Platform (online) 2.5-25
+* Receptor 1.6.8
+* RPM-based installer Ansible Automation Platform (bundle) 2.5-23.6
+* RPM-based installer Ansible Automation Platform (online) 2.5-23
+
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1791992932
+
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1791992655
+
+== Overview
+
+This async release of Ansible Automation Platform 2.5 updates the supported ansible.controller collection in execution environments and the base container images for the Ansible Automation Platform 2.5 operators. It also fixes bugs in the automation controller and the platform operator. The fixes cover OAuth2 token performance, how HostList API errors are handled, and AutomationController reconciliation after an operator upgrade.
+
+== Highlights
+
+* The ansible.controller collection is updated to 4.6.34. (AAP-96260)
+* The base container images for the Ansible Automation Platform 2.5 operators are updated, along with kube-rbac-proxy compatibility changes. (AAP-76357)
+* Automation controller no longer gets row lock convoys when OAuth2 tokens are used heavily. (AAP-94180)
+* Error responses from the HostList API no longer show internal database details. (AAP-90885)
+
+
+== Features
+* No features in this release.
+
+== Enhancements
+
+=== Execution environments
+* The ansible.controller collection has been updated to 4.6.34. (AAP-96260)
+
+=== Platform operator
+* Updated the base container image across the Ansible Automation Platform 2.5 operators, including related kube-rbac-proxy compatibility changes. (AAP-76357)
+
+
+== Deprecated
+* No deprecated functionality in this release.
+
+== CVE
+* No CVEs in this release.
+
+== Bug fixes
+
+=== Controller
+* Fixed an issue where heavy use of OAuth2 tokens caused a row lock convoy. (AAP-94180)
+* Fixed an issue where the HostList view caught all exceptions and returned the raw exception message in the HTTP 400 response. Crafted host_filter query parameters, such as credential__search=x, could trigger Django FieldError or database-level exceptions. Their messages could expose schema details and raw PostgreSQL errors to the caller. RuntimeError messages from known SmartFilter parse failures are still returned to the caller. All other exceptions are now logged on the server and return a generic "Invalid host filter." message. SmartFilter.BoolOperand._expand_search now also checks that the search relation is a real Host model field, and raises a ParseException if it isn't. (AAP-90885)
+
+=== Platform operator
+* Fixed an issue where AutomationController could fail to reconcile after an operator upgrade. (AAP-93806)
+
+
+== Known issues
+* No known issues in this release.
