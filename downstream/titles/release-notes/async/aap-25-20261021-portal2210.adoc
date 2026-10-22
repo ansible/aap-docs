@@ -1,0 +1,105 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[portal-2_2_10]]
+
+= Ansible automation portal patch release October 21, 2026 (portal-2.2.10)
+
+
+[role="_abstract"]
+The following security remediations and bug fixes have been implemented in this release of Ansible automation portal.
+
+This release includes the following components and versions:
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| October 21, 2026
+a|
+
+* Ansible automation portal 2.2.10
+
+|====
+
+
+== Overview
+
+Red Hat Ansible automation portal 2.2.10 is a security and bug fix update. This release delivers third-party dependency security patches across automation portal plugins and the RHEL bootc appliance, and fixes custom TLS certificate configuration when `network.base_url` is set on the appliance.
+
+== Features
+
+This release includes no new features.
+
+== Highlights
+
+* *Security*: Third-party dependency updates address vulnerabilities in portal plugins (adm-zip, multer, vm2, scaffolder, proxy-addr, source-map-js) and the RHEL appliance (nodemailer, node-forge, compression, isomorphic-git, graphql-tools, redis-parser, basic-ftp, vm2).
+* *Bug fix*: Custom TLS certificates with a DNS hostname in `network.base_url` on the RHEL appliance no longer cause OAuth and catalog TLS hostname mismatch failures without manual discovery and hosts configuration. (AAP-82546)
+
+== Enhancements
+
+No enhancements are included in this release.
+
+== Bug fixes
+
+=== Ansible automation portal RHEL appliance
+
+* Previously, configuring a custom TLS certificate with a hostname `network.base_url` on the Automation Portal RHEL appliance could cause OAuth and catalog requests to fail with a TLS certificate hostname mismatch (`ERR_TLS_CERT_ALTNAME_INVALID`). The appliance now automatically configures discovery endpoints and local hostname resolution when `network.base_url` is a DNS hostname, so custom SSL certificates work without additional manual configuration. (AAP-82546)
+
+== Changed features
+
+* Ansible automation portal Helm chart sets `redhat-developer-hub.global.pluginMode` to `oci` by default. Each plug-in is referenced with a package value such as `oci://registry.redhat.io/ansible-automation-platform/automation-portal:2.3!<plugin-name>`. Before you upgrade, migrate Helm values that use an HTTP plug-in registry or tarball package URLs. For more information, see the Ansible automation portal upgrade guide.
+
+== CVE
+
+=== Ansible automation portal plug-ins
+
+* https://access.redhat.com/security/cve/CVE-2026-102282[CVE-2026-102282] – Privilege escalation via unfiltered permission bits in extracted archives (adm-zip). (AAP-95744)
+
+* https://access.redhat.com/security/cve/CVE-2026-102990[CVE-2026-102990] – Denial of Service via crafted Unix directory listings (basic-ftp). (AAP-95238)
+
+* https://access.redhat.com/security/cve/CVE-2026-106501[CVE-2026-106501] – Sensitive information exposure in Scaffolder (Backstage Scaffolder). (AAP-95993)
+
+* https://access.redhat.com/security/cve/CVE-2026-106503[CVE-2026-106503] – Authorization bypass via scaffolder action inputs (plugin-scaffolder-backend). (AAP-96068)
+
+* https://access.redhat.com/security/cve/CVE-2026-77037[CVE-2026-77037] – Denial of Service via file descriptor leak on aborted uploads (Multer). (AAP-94519)
+
+* https://access.redhat.com/security/cve/CVE-2026-77301[CVE-2026-77301] – Denial of Service via uncontrolled memory allocation (adm-zip). (AAP-94000)
+
+* https://access.redhat.com/security/cve/CVE-2026-77301[CVE-2026-77301] – Denial of Service via uncontrolled memory allocation (adm-zip). (AAP-94001)
+
+* https://access.redhat.com/security/cve/CVE-2026-82333[CVE-2026-82333] – Denial of Service via oversized array index in field names (Multer). (AAP-94522)
+
+* https://access.redhat.com/security/cve/CVE-2026-90711[CVE-2026-90711] – IP spoofing via IPv4-mapped IPv6 trust subnet (proxy-addr). (AAP-96059)
+
+* https://access.redhat.com/security/cve/CVE-2026-92955[CVE-2026-92955] – Sandbox Escape via NodeVM (vm2). (AAP-95289)
+
+* https://access.redhat.com/security/cve/CVE-2026-93749[CVE-2026-93749] – Denial of Service via malformed indexed source maps (source-map-js). (AAP-93930)
+
+=== Ansible automation portal RHEL appliance
+
+* https://access.redhat.com/security/cve/CVE-2026-100700[CVE-2026-100700] – Denial of Service via regular expression backtracking in addressparser (nodemailer). (AAP-94494)
+
+* https://access.redhat.com/security/cve/CVE-2026-100721[CVE-2026-100721] – Authorization Bypass via Custom Resolver (vm2). (AAP-97956)
+
+* https://access.redhat.com/security/cve/CVE-2026-102990[CVE-2026-102990] – Denial of Service via crafted Unix directory listings (basic-ftp). (AAP-95236)
+
+* https://access.redhat.com/security/cve/CVE-2026-104852[CVE-2026-104852] – Denial of Service (DoS) via prototype pollution in mergeDeep (@graphql-tools/utils). (AAP-95836)
+
+* https://access.redhat.com/security/cve/CVE-2026-82659[CVE-2026-82659] – Arbitrary file read and Server-Side Request Forgery via raw option bypass (Nodemailer). (AAP-90598)
+
+* https://access.redhat.com/security/cve/CVE-2026-85393[CVE-2026-85393] – Signature forgery vulnerability in RSA PKCS#1 v1.5 verification (node-forge). (AAP-91669)
+
+* https://access.redhat.com/security/cve/CVE-2026-87776[CVE-2026-87776] – Denial of Service via memory leak on premature response close (compression). (AAP-92538)
+
+* https://access.redhat.com/security/cve/CVE-2026-89011[CVE-2026-89011] – Information disclosure via prototype pollution in getRemoteInfo function (isomorphic-git). (AAP-92395)
+
+* https://access.redhat.com/security/cve/CVE-2026-90776[CVE-2026-90776] – Denial of Service via crafted email headers (Nodemailer). (AAP-92668)
+
+* https://access.redhat.com/security/cve/CVE-2026-92596[CVE-2026-92596] – Denial of Service in addressparser component (Nodemailer). (AAP-93374)
+
+* https://access.redhat.com/security/cve/CVE-2026-97057[CVE-2026-97057] – Denial of Service via invalid RESP protocol array length (redis-parser). (AAP-94187)
+
+== Known issues
+
+No known issues are documented in this release.
