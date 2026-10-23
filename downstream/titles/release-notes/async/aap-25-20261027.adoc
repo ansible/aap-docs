@@ -1,0 +1,45 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-20261027]]
+
+= Ansible automation portal patch release October 27, 2026
+
+
+[role="_abstract"]
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| October 27, 2026
+a|
+
+* Automation controller 
+* Automation hub 
+* Event-Driven Ansible 
+* Container-based installer Ansible Automation Platform (bundle) 
+* Container-based installer Ansible Automation Platform (online) 
+* Receptor 
+* RPM-based installer Ansible Automation Platform (bundle) 
+* RPM-based installer Ansible Automation Platform (online) 
+
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: 
+
+* Cluster-scoped bundle: 
+
+== Overview
+
+This Ansible Automation Platform 2.5 async release contains a security update for Receptor. It fixes a vulnerability in the Go crypto/x509 library that could allow man-in-the-middle attacks through untrusted intermediate certificates. We recommend that all Ansible Automation Platform 2.5 users apply this update.
+
+== CVE
+* Receptor
+** Receptor (container image: `ansible-automation-platform-25/<image-name>`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-111943[CVE-2026-111943] – receptor: crypto/x509: Man-in-the-middle attacks via untrusted intermediate certificates. AAP-98619
