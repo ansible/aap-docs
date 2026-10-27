@@ -3,10 +3,33 @@
 
 // https://access.redhat.com/articles/6761811
 
-= Entitling your subscription
+= Subscription Entitlement and Billing Renewals
 
 [role="_abstract"]
-To access your deployment, you need an existing subscription entitlement that you can assign to your {PlatformNameShort} when you first log in. 
+{AAPonAzureNameShort} is available as an Azure Marketplace managed application. 
+
+Billing and product support entitlements are managed separately:
+
+* *Billing renewals*: Handled automatically by Microsoft at the start of each billing cycle as long as the managed application remains deployed. No customer action is required to maintain billing continuity or the application lifecycle. Each deployment maintains its own billing cycle based on the date it was provisioned.
+* *Red Hat Support entitlement renewals*: Support entitlements are provided directly by Red Hat, outside of the Azure billing process. Linking your Azure deployment to your Red Hat account ensures Red Hat Support recognizes your active deployment when you open support cases.
+
+To ensure your support entitlements renew automatically, configure one of the automated entitlement options.
+ 
+== Automated Support Entitlement Options
+
+There are two methods to associate your deployment with your Red Hat account for automatic renewals:
+
+[cols="1,1,1", options="header"]
+|===
+| Method | When to use | Description
+| {PlatformNameShort} Deployment Driver | Recommended for new deployments | Authenticate during the initial provisioning process using the temporary deployment driver interface.
+| Red Hat Subscription Offering on Azure Marketplace | Recommended for existing deployments | Deploy the free _Red Hat Subscription Support Registration_ offer to permanently link accounts.
+|===
+
+
+When deploying {AAPonAzureNameShort}, the provisioning workflow is handled by an ephemeral service called the Deployment Driver. This interface is active only during the installation process (typically one hour or less).
+
+
 
 For information on obtaining a subscription entitlement and attaching it to {PlatformNameShort}, see
 link:https://access.redhat.com/articles/6761811[Red Hat Ansible Automation Platform on Microsoft Azure Subscription Entitlement Association].
