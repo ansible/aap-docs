@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-monitor-deployment-driver"]
+
+= Method 1: Monitoring the Deployment Driver During Deployment
+
+[role="_abstract"]
+Because the Deployment Driver is temporary, you must actively monitor the provisioning process in the Azure Portal to access the interface before the installation completes and the driver is de-provisioned.
+
+.Procedure
+
+. *Initiate deployment:* Start deploying the {PlatformNameShort} managed application from the Azure Marketplace.
+. *Monitor deployment progress(*): In the Azure Portal, open the resource group receiving the deployment and select Deployments under the Settings menu to monitor the running deployment status.
+. *Retrieve the Deployment Driver URL*:
+.. Approximately 15 minutes after deployment starts, select the active deployment entry.
+.. Navigate to the Outputs (or Parameters and outputs).
+.. Look for the deployment driver endpoint output and copy the provided URL.
+. *Authenticate support entitlements*:
+.. Open the URL in a browser tab while the deployment is still actively running.
+When prompted by the pop-up, click the link to log in to the Red Hat Hybrid Cloud Console using your Red Hat credentials.
+.. Authenticating issues a support entitlement or verifies an existing active entitlement linked to your account.
+. *Observe completion*: Keep the Deployment Driver tab open until authentication succeeds and the main deployment progress in Azure completes.
++
+[WARNING]
+====
+You must monitor and access the Deployment Driver URL during the active deployment window. Once provisioning finishes, the Deployment Driver is permanently dismantled and the URL becomes unreachable. If this happens before you log in, proceed to xref:<>.
+====
