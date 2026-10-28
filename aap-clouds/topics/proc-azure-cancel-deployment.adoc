@@ -2,29 +2,34 @@
 
 [id="azure-cancel-deployment_{context}"]
 
-= Cancel {AAPonAzureNameShort} deployments
+= Delete an {AAPonAzureNameShort} deployment
 
 [role="_abstract"]
 You can gracefully cancel an {AAPonAzureNameShort} deployment. 
 
+Deleting the managed application automatically removes its associated managed resource group and all deployed infrastructure (virtual machines, storage, and networking).
+
+[WARNING]
+====
+When you delete the managed application, Azure removes the associated managed resource group and all deployed infrastructure (virtual machines, storage, and networking).
+====
+
+.Prerequisites
+
+* An Azure account with permissions to delete resources in the subscription or resource group, for example, Owner or Contributor role.
+
 .Procedure
 
-. Log in to the deployment engine to display the progress of the deployment steps in the *Ansible Automation Platform Deployment Engine* page.
-Refer to
-link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html-single/red_hat_ansible_automation_platform_on_microsoft_azure_guide/index#azure-monitor-deployment-engine_azure-deploy[Monitoring deployments on the {PlatformNameShort} Deployment Engine]
-for information on accessing and logging into the *Ansible Automation Platform Deployment Engine* page.
-. To cancel the deployment, click btn:[Cancel Deployment] and confirm.
+. Sign in to the link:https://portal.azure.com/[Azure portal].
+. In the top search bar, type *Managed Applications* and select it from the services list.
+. In the list of managed applications, locate and click the name of your {PlatformNameShort} instance.
+. From the top action toolbar on the Overview page, click btn:[Delete].
+. In the confirmation dialog, type `yes` (or the name of the application, if prompted) to verify.
+. Click btn:[Delete] to begin removal.
 
 .Verification
 
-* To confirm you cancelled the deployment processes on Azure, navigate to the *Overview* page for the managed resource group in which you deployed {PlatformNameShort} and select *Deployments*.
-
-[IMPORTANT]
-====
-Canceling the deployment does not delete the managed application from your Azure subscription.
-To avoid incurring costs for the managed application and other resources that are still running, you must delete them.
-
-To delete Azure resources, navigate to the resource group for your deployment in the Azure portal. Select the resources you want to delete and click btn:[Delete].
-For more information about deleting resources, refer to link:https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resources-portal[Manage Azure resources by using the Azure portal] in the Microsoft Azure documentation.
-====
+. In the global navigation bar, click the Notifications image:bell.png[15,15] icon to monitor deletion progress.
+. When the notification confirms deletion is complete, navigate back to *Managed Applications* and verify the instance no longer appears.
+. Navigate to *Resource groups* and verify that the managed resource group associated with the deployment (typically prefixed with `mrg-`) has been removed.
 
