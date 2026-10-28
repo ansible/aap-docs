@@ -5,11 +5,18 @@
 = {PlatformNameShort} Deployment Engine interface
 
 [role="_abstract"]
+Track real-time installation progress and recover interrupted steps to prevent deployment session timeouts.
+
+[IMPORTANT]
+====
+Monitoring your deployment is a requirement. You must actively monitor the Deployment Engine interface immediately after initiating the install. Transient cloud failures can occasionally interrupt the process; if a failure occurs and you delay checking the status, the deployment engine session will time out and disappear, leaving you unable to view the logs or restart the failed steps.
+====
+
 The {PlatformNameShort} Deployment Engine displays a list of the steps in the deployment process.
 A progress bar shows how far along the deployment is.
 
 Icons indicate the steps that have been completed, the steps that are in progress, and steps that have failed.
 
-To view extended information about a step that failed, click on the *failed* icon for that step.
+* To view extended information about a step that failed, click on the *failed* icon for that step.
 
-To restart a failed step, click btn:[Restart Step].
+* To restart a failed step, click btn:[Restart Step].
