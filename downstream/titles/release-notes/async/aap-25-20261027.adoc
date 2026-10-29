@@ -17,29 +17,27 @@ This release includes the following components and versions:
 | October 27, 2026
 a|
 
-* Automation controller 
-* Automation hub 
-* Event-Driven Ansible 
-* Container-based installer Ansible Automation Platform (bundle) 
-* Container-based installer Ansible Automation Platform (online) 
-* Receptor 
-* RPM-based installer Ansible Automation Platform (bundle) 
-* RPM-based installer Ansible Automation Platform (online) 
+* Automation controller 4.6.33
+* Automation hub 4.10.19
+* Event-Driven Ansible 1.1.23
+* Container-based installer Ansible Automation Platform (bundle) 2.5-25.6
+* Container-based installer Ansible Automation Platform (online) 2.5-25
+* Receptor 1.6.8
+* RPM-based installer Ansible Automation Platform (bundle) 2.5-23.7
+* RPM-based installer Ansible Automation Platform (online) 2.5-23
 
 
 |====
 
 CSV Versions in this release:
 
-* Namespace-scoped bundle: 
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1793205560
 
-* Cluster-scoped bundle: 
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1793205548
 
 == Overview
+This Ansible Automation Platform 2.5 async release is a security update. It includes an update to ca-certificates (RHSB-2026-012).
 
-This Ansible Automation Platform 2.5 async release contains a security update for Receptor. It fixes a vulnerability in the Go crypto/x509 library that could allow man-in-the-middle attacks through untrusted intermediate certificates. We recommend that all Ansible Automation Platform 2.5 users apply this update.
-
-== CVE
-* Receptor
-** Receptor (container image: `ansible-automation-platform-25/<image-name>`)
-*** link:https://access.redhat.com/security/cve/CVE-2026-111943[CVE-2026-111943] – receptor: crypto/x509: Man-in-the-middle attacks via untrusted intermediate certificates. AAP-98619
+== Security Updates
+* ca-certificates
+** Updated to address link:https://access.redhat.com/security/vulnerabilities/RHSB-2026-012[RHSB-2026-012] – removes trust in compromised eMudhra intermediate certificates from the system trust store.
