@@ -108,8 +108,11 @@ peers
 | Redis node | 6379 | {GatewayStart} | TCP | Redis | Data storage and retrieval | 
 | Redis node | 16379 | Redis node | TCP | Redis | Redis cluster bus port for a resilient Redis configuration |
 | Mesh ingress | 443| Execution node | Receptor | HTTPS | If using mesh ingress, ensure that outbound HTTPS (port 443) is allowed from the execution nodes to the OpenShift route URL.|
+| {GatewayStart} | 22 | Installer node | TCP | SSH | Management (Install, Configure, Upgrade) | ansible_port
+| {GatewayStart} | 80/443 | Installer node | TCP | HTTP/HTTPS | Accessing {Gateway} from the installer node | 
 | {GatewayStart} | 80/443 *80/8444* | {HubNameStart} | TCP | HTTPS | Link between {Gateway} and {PlatformNameShort} components |
-| {GatewayStart} | 8443 | {GatewayStart} | TCP  | HTTPS | nginx | 
+| {GatewayStart} | 8443 *8446* | Installer node | TCP | HTTPS | Installer updates {Gateway} settings through the gateway API. For container-based installations the default is port 8446. | gateway_nginx_https_port
+| {GatewayStart} | 8443 *8446* | {GatewayStart} | TCP | HTTPS | {GatewayStart} NGINX HTTPS port | gateway_nginx_https_port
 |===
 
 [NOTE]

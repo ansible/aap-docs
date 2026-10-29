@@ -18,8 +18,12 @@ a|
 * Total available disk space: 60 GB
 * Installation directory: 15 GB (if on a dedicated partition)
 * `/var/tmp` for online installations: 1 GB
-* `/var/tmp` for offline or bundled installations: 3 GB
-* Temporary directory (defaults to `/tmp`) for offline or bundled installations: 10GB
+* `/var/tmp` for offline or bundled installations: 10 GB
++
+Offline and bundled installations extract and load container images under `/var/tmp`. Ensure `/var/tmp` has enough free space for this temporary image data, which can exceed 6 GB during a minimum offline installation.
+* Temporary directory (defaults to `/tmp`) for offline or bundled installations: 10 GB
++
+You can change the installation program image cache location with the `images_tmp_dir` inventory variable. Container tools can still write temporary image data under `/var/tmp` during image load, so size `/var/tmp` for the offline requirement above even when you set `images_tmp_dir`.
 
 | Disk IOPS   
 | 3000   
