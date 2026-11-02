@@ -33,15 +33,15 @@ The legacy Automation Analytics dictionary used numbered sections and field-leve
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`name` |string |No |No |
-|`description` |string |No |No |
+|`name` |string |No |No |Public group.function name of the collector.
+|`description` |string |No |No |Summary of the collector's output.
 |`payload_shape` |string (`object`, `array`) |No |No |Top-level JSON shape of payload: object or array. * `object` - object * `array` - array
 |`key_field` |string |No |Yes |Field represented by top-level object keys, or null when not applicable.
-|`mode` |string |No |No |
-|`accepts_since_until` |boolean |No |No |
-|`last_collect` |date-time |No |Yes |
-|`rows_url` |string |No |No |
-|`collect_url` |string |No |No |
+|`mode` |string |No |No |Collection schedule mode: hourly, daily, or snapshot.
+|`accepts_since_until` |boolean |No |No |Whether the collector supports since and until collection bounds.
+|`last_collect` |date-time |No |Yes |Time the latest successful collection finished, or null.
+|`rows_url` |string |No |No |URL for stored collection envelopes.
+|`collect_url` |string |No |No |URL for triggering an on-demand collection task.
 |===
 
 == Shared collection response
@@ -51,10 +51,10 @@ The legacy Automation Analytics dictionary used numbered sections and field-leve
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`count` |integer |Yes |No |
-|`next` |string |Yes |Yes |
-|`previous` |string |Yes |Yes |
-|`results` |array of one of the documented collector payload shapes |Yes |No |
+|`count` |integer |Yes |No |Number of stored collection envelopes in the result set.
+|`next` |string |Yes |Yes |URL for the next page, or null.
+|`previous` |string |Yes |Yes |URL for the previous page, or null.
+|`results` |array of one of the documented collector payload shapes |Yes |No |Stored collection envelopes for the requested collector.
 |===
 
 === Collection envelope fields
@@ -91,10 +91,10 @@ The `200` and `202` response bodies have the same fields. The status indicates w
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`task_id` |integer |Yes |No |
-|`task_url` |string |Yes |No |
-|`collector` |string |Yes |No |
-|`task_data` |object |Yes |No |
+|`task_id` |integer |Yes |No |Identifier of the collection task.
+|`task_url` |string |Yes |No |URL of the collection task.
+|`collector` |string |Yes |No |Public group.function collector name.
+|`task_data` |object |Yes |No |Resolved collector and collection-window task data.
 |`task_status` |string |Yes |No |Current Task status.
 |`disposition` |string (`created`, `reused`, `requeued`) |Yes |No |Whether this request created a task, reused an existing one, or requeued a failed/stale one. * `created` - created * `reused` - reused * `requeued` - requeued
 |===
@@ -104,11 +104,11 @@ A `409` response means another pending or running task covers a different window
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`detail` |string |Yes |No |
-|`task_id` |integer |Yes |No |
-|`task_url` |string |Yes |No |
-|`task_status` |string |Yes |No |
-|`task_data` |object |Yes |No |
+|`detail` |string |Yes |No |Reason the requested collection conflicts.
+|`task_id` |integer |Yes |No |Identifier of the blocking task.
+|`task_url` |string |Yes |No |URL of the blocking task.
+|`task_status` |string |Yes |No |Current status of the blocking task.
+|`task_data` |object |Yes |No |Collector and collection-window task data.
 |===
 
 == Collector payloads
@@ -131,37 +131,37 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Unified job identifier
 |`[].polymorphic_ctype_id` |integer |No |Yes |Django content type ID of the concrete job type.
-|`[].model` |string |No |Yes |Concrete job type, for example job, project_update, or workflow_job.
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].execution_environment_image` |string |No |Yes |
-|`[].inventory_id` |integer |No |Yes |
-|`[].inventory_name` |string |No |Yes |
-|`[].execution_environment_id` |integer |No |Yes |
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].name` |string |No |Yes |
-|`[].unified_job_template_id` |integer |No |Yes |
+|`[].model` |string |No |Yes |{ControllerNameStart} content type model name, for example job, projectupdate, or workflowjob.
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].execution_environment_image` |string |No |Yes |Execution environment image.
+|`[].inventory_id` |integer |No |Yes |{ControllerNameStart} inventory identifier.
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
+|`[].execution_environment_id` |integer |No |Yes |Execution environment identifier.
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].name` |string |No |Yes |Record name.
+|`[].unified_job_template_id` |integer |No |Yes |Unified job template identifier.
 |`[].launch_type` |string |No |Yes |How the job was launched, for example manual, relaunch, scheduled, or workflow.
-|`[].schedule_id` |integer |No |Yes |
-|`[].execution_node` |string |No |Yes |
-|`[].controller_node` |string |No |Yes |
-|`[].cancel_flag` |boolean |No |Yes |
-|`[].status` |string |No |Yes |
-|`[].failed` |boolean |No |Yes |
-|`[].started` |date-time |No |Yes |
-|`[].finished` |date-time |No |Yes |
+|`[].schedule_id` |integer |No |Yes |Schedule identifier.
+|`[].execution_node` |string |No |Yes |Node on which the job executed.
+|`[].controller_node` |string |No |Yes |{ControllerNameStart} node that handled the job.
+|`[].cancel_flag` |boolean |No |Yes |Cancel flag value.
+|`[].status` |string |No |Yes |Current status.
+|`[].failed` |boolean |No |Yes |Whether the operation failed.
+|`[].started` |date-time |No |Yes |Job start time.
+|`[].finished` |date-time |No |Yes |Job finish time.
 |`[].elapsed` |string |No |Yes |Job run time in seconds, as a decimal string (for example "120.000").
-|`[].job_explanation` |string |No |Yes |
-|`[].instance_group_id` |integer |No |Yes |
+|`[].job_explanation` |string |No |Yes |Explanation recorded for the job.
+|`[].instance_group_id` |integer |No |Yes |Instance group identifier.
 |`[].installed_collections` |object |No |Yes |Ansible collections installed in the job's execution environment, keyed by collection FQCN.
-|`[].installed_collections.{key}.version` |string |No |Yes |
-|`[].ansible_version` |string |No |Yes |
-|`[].forks` |integer |No |Yes |
-|`[].job_template_name` |string |No |Yes |
+|`[].installed_collections.{key}.version` |string |No |Yes |Version reported by the source.
+|`[].ansible_version` |string |No |Yes |Ansible version.
+|`[].forks` |integer |No |Yes |Forks value.
+|`[].job_template_name` |string |No |Yes |Unified job template name.
 |`[].scm_type` |string |No |Yes |Source-control type of the job's project.
-|`[].project_id` |integer |No |Yes |
-|`[].project_name` |string |No |Yes |
+|`[].project_id` |integer |No |Yes |{ControllerNameStart} project identifier.
+|`[].project_name` |string |No |Yes |{ControllerNameStart} project name.
 |`[].launched_by_id` |integer |No |Yes |User ID that launched the job; null unless launch_type is manual or relaunch.
 |`[].label_ids` |string |No |Yes |Comma-separated label IDs.
 |`[].num_hosts` |integer |No |Yes |Number of job host summaries recorded for the job.
@@ -183,33 +183,33 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Unified job identifier
 |`[].polymorphic_ctype_id` |integer |No |Yes |Django content type ID of the concrete job type.
-|`[].model` |string |No |Yes |Concrete job type, for example job, project_update, or workflow_job.
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].execution_environment_image` |string |No |Yes |
-|`[].inventory_id` |integer |No |Yes |
-|`[].inventory_name` |string |No |Yes |
-|`[].execution_environment_id` |integer |No |Yes |
-|`[].created` |date-time |No |Yes |
-|`[].name` |string |No |Yes |
-|`[].unified_job_template_id` |integer |No |Yes |
+|`[].model` |string |No |Yes |{ControllerNameStart} content type model name, for example job, projectupdate, or workflowjob.
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].execution_environment_image` |string |No |Yes |Execution environment image.
+|`[].inventory_id` |integer |No |Yes |{ControllerNameStart} inventory identifier.
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
+|`[].execution_environment_id` |integer |No |Yes |Execution environment identifier.
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].name` |string |No |Yes |Record name.
+|`[].unified_job_template_id` |integer |No |Yes |Unified job template identifier.
 |`[].launch_type` |string |No |Yes |How the job was launched, for example manual, relaunch, scheduled, or workflow.
-|`[].schedule_id` |integer |No |Yes |
-|`[].execution_node` |string |No |Yes |
-|`[].controller_node` |string |No |Yes |
-|`[].cancel_flag` |boolean |No |Yes |
-|`[].status` |string |No |Yes |
-|`[].failed` |boolean |No |Yes |
-|`[].started` |date-time |No |Yes |
-|`[].finished` |date-time |No |Yes |
+|`[].schedule_id` |integer |No |Yes |Schedule identifier.
+|`[].execution_node` |string |No |Yes |Node on which the job executed.
+|`[].controller_node` |string |No |Yes |{ControllerNameStart} node that handled the job.
+|`[].cancel_flag` |boolean |No |Yes |Cancel flag value.
+|`[].status` |string |No |Yes |Current status.
+|`[].failed` |boolean |No |Yes |Whether the operation failed.
+|`[].started` |date-time |No |Yes |Job start time.
+|`[].finished` |date-time |No |Yes |Job finish time.
 |`[].elapsed` |string |No |Yes |Job run time in seconds, as a decimal string (for example "120.000").
-|`[].job_explanation` |string |No |Yes |
-|`[].instance_group_id` |integer |No |Yes |
+|`[].job_explanation` |string |No |Yes |Explanation recorded for the job.
+|`[].instance_group_id` |integer |No |Yes |Instance group identifier.
 |`[].installed_collections` |object |No |Yes |Ansible collections installed in the job's execution environment, keyed by collection FQCN.
-|`[].installed_collections.{key}.version` |string |No |Yes |
-|`[].ansible_version` |string |No |Yes |
-|`[].forks` |integer |No |Yes |
-|`[].job_template_name` |string |No |Yes |
+|`[].installed_collections.{key}.version` |string |No |Yes |Version reported by the source.
+|`[].ansible_version` |string |No |Yes |Ansible version.
+|`[].forks` |integer |No |Yes |Forks value.
+|`[].job_template_name` |string |No |Yes |Unified job template name.
 |`[].scm_type` |string |No |Yes |Source-control type of the job's project.
 |===
 
@@ -227,14 +227,14 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].job_type` |string |No |Yes |
-|`[].status` |string |No |Yes |
-|`[].job_count` |integer |No |Yes |
-|`[].failure_count` |integer |No |Yes |
-|`[].elapsed_total` |number |No |Yes |
-|`[].elapsed_average` |number |No |Yes |
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].job_type` |string |No |Yes |Unified job type.
+|`[].status` |string |No |Yes |Current status.
+|`[].job_count` |integer |No |Yes |Number of jobs.
+|`[].failure_count` |integer |No |Yes |Number of failed jobs.
+|`[].elapsed_total` |number |No |Yes |Total job run time in seconds.
+|`[].elapsed_average` |number |No |Yes |Average job run time in seconds.
 |===
 
 === Table 4: `controller.job_host_summary_service`
@@ -252,31 +252,31 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Job host summary identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].host_name` |string |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].host_name` |string |No |Yes |Inventory host name.
 |`[].host_remote_id` |integer |No |Yes |{ControllerNameStart} host ID.
 |`[].changed` |integer |No |Yes |Number of tasks that reported changes on the host.
 |`[].dark` |integer |No |Yes |Number of tasks for which the host was unreachable.
 |`[].failures` |integer |No |Yes |Number of failed tasks on the host.
 |`[].ok` |integer |No |Yes |Number of successful tasks on the host.
-|`[].processed` |integer |No |Yes |
+|`[].processed` |integer |No |Yes |Number of processed tasks.
 |`[].skipped` |integer |No |Yes |Number of skipped tasks on the host.
 |`[].failed` |boolean |No |Yes |Whether the host failed in the job.
 |`[].ignored` |integer |No |Yes |Number of failed tasks ignored on the host.
 |`[].rescued` |integer |No |Yes |Number of failed tasks rescued on the host.
-|`[].job_created` |date-time |No |Yes |
+|`[].job_created` |date-time |No |Yes |Creation time of the related job.
 |`[].job_remote_id` |integer |No |Yes |{ControllerNameStart} job ID.
 |`[].job_template_remote_id` |integer |No |Yes |{ControllerNameStart} unified job template ID.
-|`[].job_template_name` |string |No |Yes |
-|`[].ansible_version` |string |No |Yes |
-|`[].launch_type` |string |No |Yes |
+|`[].job_template_name` |string |No |Yes |Unified job template name.
+|`[].ansible_version` |string |No |Yes |Ansible version.
+|`[].launch_type` |string |No |Yes |How the job was launched.
 |`[].inventory_remote_id` |integer |No |Yes |{ControllerNameStart} inventory ID.
-|`[].inventory_name` |string |No |Yes |
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
 |`[].organization_remote_id` |integer |No |Yes |{ControllerNameStart} organization ID.
-|`[].organization_name` |string |No |Yes |
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].project_remote_id` |integer |No |Yes |{ControllerNameStart} project ID.
-|`[].project_name` |string |No |Yes |
+|`[].project_name` |string |No |Yes |{ControllerNameStart} project name.
 |`[].model` |string |No |Yes |Concrete job type of the related job.
 |===
 
@@ -295,9 +295,9 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Job host summary identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].host_name` |string |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].host_name` |string |No |Yes |Inventory host name.
 |`[].host_remote_id` |integer |No |Yes |{ControllerNameStart} host ID.
 |`[].ansible_host_variable` |string |No |Yes |ansible_host value from the host variables.
 |`[].ansible_connection_variable` |string |No |Yes |ansible_connection value from the host variables.
@@ -305,21 +305,21 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |`[].dark` |integer |No |Yes |Number of tasks for which the host was unreachable.
 |`[].failures` |integer |No |Yes |Number of failed tasks on the host.
 |`[].ok` |integer |No |Yes |Number of successful tasks on the host.
-|`[].processed` |integer |No |Yes |
+|`[].processed` |integer |No |Yes |Number of processed tasks.
 |`[].skipped` |integer |No |Yes |Number of skipped tasks on the host.
 |`[].failed` |boolean |No |Yes |Whether the host failed in the job.
 |`[].ignored` |integer |No |Yes |Number of failed tasks ignored on the host.
 |`[].rescued` |integer |No |Yes |Number of failed tasks rescued on the host.
-|`[].job_created` |date-time |No |Yes |
+|`[].job_created` |date-time |No |Yes |Creation time of the related job.
 |`[].job_remote_id` |integer |No |Yes |{ControllerNameStart} job ID.
 |`[].job_template_remote_id` |integer |No |Yes |{ControllerNameStart} unified job template ID.
-|`[].job_template_name` |string |No |Yes |
+|`[].job_template_name` |string |No |Yes |Unified job template name.
 |`[].inventory_remote_id` |integer |No |Yes |{ControllerNameStart} inventory ID.
-|`[].inventory_name` |string |No |Yes |
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
 |`[].organization_remote_id` |integer |No |Yes |{ControllerNameStart} organization ID.
-|`[].organization_name` |string |No |Yes |
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].project_remote_id` |integer |No |Yes |{ControllerNameStart} project ID.
-|`[].project_name` |string |No |Yes |
+|`[].project_name` |string |No |Yes |{ControllerNameStart} project name.
 |===
 
 === Table 6: `controller.credentials_service`
@@ -353,8 +353,8 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].credential_type` |string |No |No |Managed credential type name.
 |===
 
@@ -373,42 +373,42 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Job event identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
 |`[].job_created` |date-time |No |Yes |Creation time of the event's job; the job event partition key.
-|`[].job_finished` |date-time |No |Yes |
-|`[].ansible_version` |string |No |Yes |
-|`[].uuid` |string |No |Yes |
-|`[].parent_uuid` |string |No |Yes |
+|`[].job_finished` |date-time |No |Yes |Finish time of the related job.
+|`[].ansible_version` |string |No |Yes |Ansible version.
+|`[].uuid` |string |No |Yes |Universally unique identifier.
+|`[].parent_uuid` |string |No |Yes |UUID of the parent event.
 |`[].event` |string |No |Yes |Ansible callback event name, for example runner_on_ok.
 |`[].task_action` |string |No |Yes |Module or action name as written in the task.
 |`[].resolved_action` |string |No |Yes |Fully-qualified module or action name resolved by Ansible.
-|`[].resolved_role` |string |No |Yes |
+|`[].resolved_role` |string |No |Yes |Role associated with the task.
 |`[].duration` |string |No |Yes |Task duration in seconds, as recorded in the event data.
-|`[].start` |date-time |No |Yes |
-|`[].end` |date-time |No |Yes |
-|`[].task_uuid` |string |No |Yes |
+|`[].start` |date-time |No |Yes |Event start time.
+|`[].end` |date-time |No |Yes |Event end time.
+|`[].task_uuid` |string |No |Yes |UUID of the task.
 |`[].ignore_errors` |boolean |No |Yes |Whether the failed task had ignore_errors set; false when unknown.
-|`[].failed` |boolean |No |Yes |
-|`[].changed` |boolean |No |Yes |
-|`[].playbook` |string |No |Yes |
-|`[].play` |string |No |Yes |
-|`[].task` |string |No |Yes |
-|`[].role` |string |No |Yes |
+|`[].failed` |boolean |No |Yes |Whether the operation failed.
+|`[].changed` |boolean |No |Yes |Whether the operation changed the target.
+|`[].playbook` |string |No |Yes |Playbook name.
+|`[].play` |string |No |Yes |Play name.
+|`[].task` |string |No |Yes |Task name.
+|`[].role` |string |No |Yes |Role name.
 |`[].job_remote_id` |integer |No |Yes |{ControllerNameStart} job ID.
-|`[].job_id` |integer |No |Yes |
+|`[].job_id` |integer |No |Yes |Unified job identifier.
 |`[].host_remote_id` |integer |No |Yes |{ControllerNameStart} host ID.
-|`[].host_id` |integer |No |Yes |
-|`[].host_name` |string |No |Yes |
+|`[].host_id` |integer |No |Yes |Inventory host identifier.
+|`[].host_name` |string |No |Yes |Inventory host name.
 |`[].warnings` |array of string |No |Yes |Warnings reported in the task result.
 |`[].deprecations` |array of object |No |Yes |Deprecations reported in the task result.
-|`[].deprecations[].msg` |string |No |Yes |
+|`[].deprecations[].msg` |string |No |Yes |Deprecation message.
 |`[].deprecations[].version` |string |No |Yes |Version in which the deprecated feature is removed.
 |`[].deprecations[].date` |string |No |Yes |Date after which the deprecated feature is removed.
-|`[].deprecations[].collection_name` |string |No |Yes |
+|`[].deprecations[].collection_name` |string |No |Yes |Ansible collection name.
 |`[].event_data_length` |integer |No |Yes |Stored size of the raw event data, in bytes.
-|`[].job_failed` |boolean |No |Yes |
-|`[].job_started` |date-time |No |Yes |
+|`[].job_failed` |boolean |No |Yes |Whether the related job failed.
+|`[].job_started` |date-time |No |Yes |Start time of the related job.
 |===
 
 === Table 9: `controller.main_jobevent`
@@ -426,25 +426,25 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].main_jobhostsummary_id` |integer |No |Yes |Job host summary that selected this event.
-|`[].main_jobhostsummary_created` |date-time |No |Yes |
+|`[].main_jobhostsummary_created` |date-time |No |Yes |Creation time of the selected job host summary.
 |`[].id` |integer |No |No |Job event identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
 |`[].job_created` |date-time |No |Yes |Creation time of the event's job; the job event partition key.
 |`[].event` |string |No |Yes |Ansible callback event name, for example runner_on_ok.
 |`[].task_action` |string |No |Yes |Module or action name as written in the task.
 |`[].resolved_action` |string |No |Yes |Fully-qualified module or action name resolved by Ansible.
-|`[].resolved_role` |string |No |Yes |
+|`[].resolved_role` |string |No |Yes |Role associated with the task.
 |`[].duration` |string |No |Yes |Task duration in seconds, as recorded in the event data.
-|`[].failed` |boolean |No |Yes |
-|`[].changed` |boolean |No |Yes |
-|`[].playbook` |string |No |Yes |
-|`[].play` |string |No |Yes |
-|`[].task` |string |No |Yes |
-|`[].role` |string |No |Yes |
+|`[].failed` |boolean |No |Yes |Whether the operation failed.
+|`[].changed` |boolean |No |Yes |Whether the operation changed the target.
+|`[].playbook` |string |No |Yes |Playbook name.
+|`[].play` |string |No |Yes |Play name.
+|`[].task` |string |No |Yes |Task name.
+|`[].role` |string |No |Yes |Role name.
 |`[].job_remote_id` |integer |No |Yes |{ControllerNameStart} job ID.
 |`[].host_remote_id` |integer |No |Yes |{ControllerNameStart} host ID.
-|`[].host_name` |string |No |Yes |
+|`[].host_name` |string |No |Yes |Inventory host name.
 |===
 
 === Table 10: `controller.events_table`
@@ -462,34 +462,34 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Job event identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
 |`[].job_created` |date-time |No |Yes |Creation time of the event's job; the job event partition key.
-|`[].uuid` |string |No |Yes |
-|`[].parent_uuid` |string |No |Yes |
+|`[].uuid` |string |No |Yes |Universally unique identifier.
+|`[].parent_uuid` |string |No |Yes |UUID of the parent event.
 |`[].event` |string |No |Yes |Ansible callback event name, for example runner_on_ok.
 |`[].task_action` |string |No |Yes |Module or action name as written in the task.
 |`[].resolved_action` |string |No |Yes |Fully-qualified module or action name resolved by Ansible.
-|`[].resolved_role` |string |No |Yes |
+|`[].resolved_role` |string |No |Yes |Role associated with the task.
 |`[].playbook_on_stats` |object |No |Yes |Event data of playbook_on_stats events (per-host result counts), without artifact_data; null for other events.
-|`[].failed` |boolean |No |Yes |
-|`[].changed` |boolean |No |Yes |
-|`[].playbook` |string |No |Yes |
-|`[].play` |string |No |Yes |
-|`[].task` |string |No |Yes |
-|`[].role` |string |No |Yes |
-|`[].job_id` |integer |No |Yes |
-|`[].host_id` |integer |No |Yes |
-|`[].host_name` |string |No |Yes |
-|`[].start` |date-time |No |Yes |
-|`[].end` |date-time |No |Yes |
+|`[].failed` |boolean |No |Yes |Whether the operation failed.
+|`[].changed` |boolean |No |Yes |Whether the operation changed the target.
+|`[].playbook` |string |No |Yes |Playbook name.
+|`[].play` |string |No |Yes |Play name.
+|`[].task` |string |No |Yes |Task name.
+|`[].role` |string |No |Yes |Role name.
+|`[].job_id` |integer |No |Yes |Unified job identifier.
+|`[].host_id` |integer |No |Yes |Inventory host identifier.
+|`[].host_name` |string |No |Yes |Inventory host name.
+|`[].start` |date-time |No |Yes |Event start time.
+|`[].end` |date-time |No |Yes |Event end time.
 |`[].duration` |string |No |Yes |Task duration in seconds, as recorded in the event data.
 |`[].warnings` |array of string |No |Yes |Warnings reported in the task result.
 |`[].deprecations` |array of object |No |Yes |Deprecations reported in the task result.
-|`[].deprecations[].msg` |string |No |Yes |
+|`[].deprecations[].msg` |string |No |Yes |Deprecation message.
 |`[].deprecations[].version` |string |No |Yes |Version in which the deprecated feature is removed.
 |`[].deprecations[].date` |string |No |Yes |Date after which the deprecated feature is removed.
-|`[].deprecations[].collection_name` |string |No |Yes |
+|`[].deprecations[].collection_name` |string |No |Yes |Ansible collection name.
 |===
 
 === Table 11: `controller.workflow_job_node_table`
@@ -507,17 +507,17 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Workflow job node identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
 |`[].job_id` |integer |No |Yes |Unified job spawned by this node.
-|`[].unified_job_template_id` |integer |No |Yes |
-|`[].workflow_job_id` |integer |No |Yes |
-|`[].inventory_id` |integer |No |Yes |
+|`[].unified_job_template_id` |integer |No |Yes |Unified job template identifier.
+|`[].workflow_job_id` |integer |No |Yes |Workflow job identifier.
+|`[].inventory_id` |integer |No |Yes |{ControllerNameStart} inventory identifier.
 |`[].success_nodes` |array of integer |No |Yes |Nodes run when this node succeeds.
 |`[].failure_nodes` |array of integer |No |Yes |Nodes run when this node fails.
 |`[].always_nodes` |array of integer |No |Yes |Nodes run regardless of this node's result.
-|`[].do_not_run` |boolean |No |Yes |
-|`[].all_parents_must_converge` |boolean |No |Yes |
+|`[].do_not_run` |boolean |No |Yes |Whether this workflow node is disabled.
+|`[].all_parents_must_converge` |boolean |No |Yes |Whether all parent nodes must converge before this node runs.
 |===
 
 === Table 12: `controller.query_info`
@@ -536,7 +536,7 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |Field |Type |Required |Nullable |Description
 |`last_run` |string |No |Yes |String representation of the requested start bound ("None" when unbounded).
 |`current_time` |string |No |Yes |String representation of the requested end bound ("None" when unbounded).
-|`collection_type` |string |No |Yes |
+|`collection_type` |string |No |Yes |Collection type value.
 |===
 
 === Table 13: `controller.execution_environments`
@@ -554,16 +554,16 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Execution environment identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].description` |string |No |Yes |
-|`[].image` |string |No |Yes |
-|`[].managed` |boolean |No |Yes |
-|`[].created_by_id` |integer |No |Yes |
-|`[].credential_id` |integer |No |Yes |
-|`[].modified_by_id` |integer |No |Yes |
-|`[].organization_id` |integer |No |Yes |
-|`[].name` |string |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].description` |string |No |Yes |Record description.
+|`[].image` |string |No |Yes |Image value.
+|`[].managed` |boolean |No |Yes |Whether the resource is managed by the platform.
+|`[].created_by_id` |integer |No |Yes |Identifier of the creating user.
+|`[].credential_id` |integer |No |Yes |Credential id value.
+|`[].modified_by_id` |integer |No |Yes |Identifier of the user who last modified the record.
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].name` |string |No |Yes |Record name.
 |`[].pull` |string |No |Yes |Image pull policy.
 |===
 
@@ -581,45 +581,45 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`authentication_backends` |array of string |No |Yes |
-|`controller_url_base` |string |No |Yes |
-|`external_logger_enabled` |boolean |No |Yes |
-|`external_logger_type` |string |No |Yes |
-|`install_uuid` |string |No |Yes |
-|`instance_uuid` |string |No |Yes |
-|`logging_aggregators` |array of string |No |Yes |
-|`pendo_tracking` |string |No |Yes |
-|`subscription_usage_model` |string |No |Yes |
-|`account_number` |string |No |Yes |
-|`automated_instances` |integer |No |Yes |
+|`authentication_backends` |array of string |No |Yes |Configured authentication backends.
+|`controller_url_base` |string |No |Yes |Base URL of the {ControllerNameStart}.
+|`external_logger_enabled` |boolean |No |Yes |Whether external logging is enabled.
+|`external_logger_type` |string |No |Yes |External logger type.
+|`install_uuid` |string |No |Yes |{ControllerNameStart} installation UUID.
+|`instance_uuid` |string |No |Yes |{ControllerNameStart} instance UUID.
+|`logging_aggregators` |array of string |No |Yes |Configured logging aggregators.
+|`pendo_tracking` |string |No |Yes |Pendo tracking state.
+|`subscription_usage_model` |string |No |Yes |Subscription usage model.
+|`account_number` |string |No |Yes |Subscription account number.
+|`automated_instances` |integer |No |Yes |Number of automated instances.
 |`automated_since` |integer |No |Yes |Unix timestamp of the first automation.
-|`compliant` |boolean |No |Yes |
-|`current_instances` |integer |No |Yes |
+|`compliant` |boolean |No |Yes |Whether the subscription is compliant.
+|`current_instances` |integer |No |Yes |Current instance count.
 |`date_expired` |boolean |No |Yes |Whether the subscription has expired.
 |`date_warning` |boolean |No |Yes |Whether the subscription is close to expiring.
-|`free_instances` |integer |No |Yes |
+|`free_instances` |integer |No |Yes |Number of free instances.
 |`grace_period_remaining` |integer |No |Yes |Seconds of grace period remaining.
 |`license_date` |integer |No |Yes |Unix timestamp when the subscription ends.
 |`license_expiry` |integer |No |Yes |Seconds until the subscription ends.
-|`license_type` |string |No |Yes |
-|`pool_id` |string |No |Yes |
-|`product_name` |string |No |Yes |
-|`satellite` |boolean |No |Yes |
-|`sku` |string |No |Yes |
-|`subscription_id` |string |No |Yes |
-|`subscription_name` |string |No |Yes |
-|`support_level` |string |No |Yes |
-|`total_licensed_instances` |integer |No |Yes |
-|`trial` |boolean |No |Yes |
+|`license_type` |string |No |Yes |License type.
+|`pool_id` |string |No |Yes |Subscription pool identifier.
+|`product_name` |string |No |Yes |Licensed product name.
+|`satellite` |boolean |No |Yes |Whether the subscription is provided through Satellite.
+|`sku` |string |No |Yes |Subscription SKU.
+|`subscription_id` |string |No |Yes |Subscription identifier.
+|`subscription_name` |string |No |Yes |Subscription name.
+|`support_level` |string |No |Yes |Support level reported by the source.
+|`total_licensed_instances` |integer |No |Yes |Total number of licensed instances.
+|`trial` |boolean |No |Yes |Whether the subscription is a trial.
 |`usage` |string |No |Yes |Subscription usage, for example Production or Development.
-|`valid_key` |boolean |No |Yes |
+|`valid_key` |boolean |No |Yes |Whether the license key is valid.
 |`billing_provider_params` |object |No |Yes |Billing provider metadata supplied by the collection environment; keys depend on the provider.
-|`controller_version` |string |No |Yes |
-|`metrics_utility_version` |string |No |Yes |
-|`platform` |object |No |No |
+|`controller_version` |string |No |Yes |{ControllerNameStart} version.
+|`metrics_utility_version` |string |No |Yes |Metrics Utility version.
+|`platform` |object |No |Yes |Platform value.
 |`platform.dist` |array of string |No |Yes |Linux distribution name, version, and codename.
-|`platform.release` |string |No |Yes |
-|`platform.system` |string |No |Yes |
+|`platform.release` |string |No |Yes |Operating system release.
+|`platform.system` |string |No |Yes |Operating system name.
 |`platform.type` |string |No |Yes |Install type: openshift, k8s, or traditional.
 |===
 
@@ -637,7 +637,7 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].controller_version` |string |No |No |
+|`[].controller_version` |string |No |No |{ControllerNameStart} version.
 |===
 
 === Table 16: `controller.table_metadata`
@@ -654,12 +654,12 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].schemaname` |string |No |Yes |
-|`[].tablename` |string |No |Yes |
-|`[].estimated_row_count` |integer |No |Yes |
-|`[].total_size_bytes` |integer |No |Yes |
-|`[].table_size_bytes` |integer |No |Yes |
-|`[].indexes_size_bytes` |integer |No |Yes |
+|`[].schemaname` |string |No |Yes |Database schema name.
+|`[].tablename` |string |No |Yes |Database table name.
+|`[].estimated_row_count` |integer |No |Yes |Estimated number of rows in the table.
+|`[].total_size_bytes` |integer |No |Yes |Total table and index size in bytes.
+|`[].table_size_bytes` |integer |No |Yes |Table size in bytes.
+|`[].indexes_size_bytes` |integer |No |Yes |Index size in bytes.
 |===
 
 === Table 17: `controller.feature_flags_service`
@@ -676,13 +676,13 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].name` |string |No |No |
-|`[].condition` |string |No |Yes |
-|`[].value` |string |No |Yes |
-|`[].description` |string |No |Yes |
-|`[].support_level` |string |No |Yes |
-|`[].toggle_type` |string |No |Yes |
-|`[].visibility` |boolean |No |Yes |
+|`[].name` |string |No |No |Record name.
+|`[].condition` |string |No |Yes |Feature flag condition.
+|`[].value` |string |No |Yes |Feature flag value.
+|`[].description` |string |No |Yes |Record description.
+|`[].support_level` |string |No |Yes |Support level reported by the source.
+|`[].toggle_type` |string |No |Yes |Feature flag toggle type.
+|`[].visibility` |boolean |No |Yes |Whether the feature is visible.
 |===
 
 === Table 18: `controller.counts`
@@ -699,27 +699,27 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`organization` |integer |No |Yes |
-|`team` |integer |No |Yes |
-|`user` |integer |No |Yes |
-|`inventory` |integer |No |Yes |
-|`credential` |integer |No |Yes |
-|`project` |integer |No |Yes |
-|`job_template` |integer |No |Yes |
-|`workflow_job_template` |integer |No |Yes |
-|`host` |integer |No |Yes |
-|`schedule` |integer |No |Yes |
-|`notification_template` |integer |No |Yes |
+|`organization` |integer |No |Yes |Number of organizations.
+|`team` |integer |No |Yes |Number of teams.
+|`user` |integer |No |Yes |Number of users.
+|`inventory` |integer |No |Yes |Number of inventories.
+|`credential` |integer |No |Yes |Number of credentials.
+|`project` |integer |No |Yes |Number of projects.
+|`job_template` |integer |No |Yes |Number of job templates.
+|`workflow_job_template` |integer |No |Yes |Number of workflow job templates.
+|`host` |integer |No |Yes |Number of hosts.
+|`schedule` |integer |No |Yes |Number of schedules.
+|`notification_template` |integer |No |Yes |Number of notification templates.
 |`inventories` |object |No |Yes |Inventory counts keyed by inventory kind; always includes normal and smart.
 |`inventories.{key}` |integer |No |Yes |Value associated with the dynamic object key.
 |`unified_job` |integer |No |Yes |Unified jobs, excluding project syncs.
-|`active_host_count` |integer |No |Yes |
-|`active_sessions` |integer |No |Yes |
-|`active_user_sessions` |integer |No |Yes |
-|`active_anonymous_sessions` |integer |No |Yes |
-|`running_jobs` |integer |No |Yes |
-|`pending_jobs` |integer |No |Yes |
-|`database_connections` |integer |No |Yes |
+|`active_host_count` |integer |No |Yes |Active host count value.
+|`active_sessions` |integer |No |Yes |Active sessions value.
+|`active_user_sessions` |integer |No |Yes |Active user sessions value.
+|`active_anonymous_sessions` |integer |No |Yes |Active anonymous sessions value.
+|`running_jobs` |integer |No |Yes |Running jobs value.
+|`pending_jobs` |integer |No |Yes |Pending jobs value.
+|`database_connections` |integer |No |Yes |Database connections value.
 |===
 
 === Table 19: `controller.cred_type_counts`
@@ -737,9 +737,9 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`{credential_type_id}` |object key |No |No |Top-level object key identifying the record by `credential_type_id`.
-|`{credential_type_id}.name` |string |No |Yes |
-|`{credential_type_id}.credential_count` |integer |No |Yes |
-|`{credential_type_id}.managed` |boolean |No |Yes |
+|`{credential_type_id}.name` |string |No |Yes |Record name.
+|`{credential_type_id}.credential_count` |integer |No |Yes |Number of credentials.
+|`{credential_type_id}.managed` |boolean |No |Yes |Whether the resource is managed by the platform.
 |===
 
 === Table 20: `controller.cred_type_counts_org`
@@ -756,12 +756,12 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].credential_type_id` |integer |No |No |
-|`[].credential_type` |string |No |No |
-|`[].managed` |boolean |No |No |
-|`[].credential_count` |integer |No |Yes |
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].credential_type_id` |integer |No |No |Credential type identifier.
+|`[].credential_type` |string |No |No |Credential type name.
+|`[].managed` |boolean |No |No |Whether the resource is managed by the platform.
+|`[].credential_count` |integer |No |Yes |Number of credentials.
 |===
 
 === Table 21: `controller.host_metric_summary_monthly_table`
@@ -778,13 +778,13 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].id` |integer |No |No |
+|`[].id` |integer |No |No |Unique identifier for this record.
 |`[].date` |date |No |Yes |First day of the summarized month.
-|`[].license_capacity` |integer |No |Yes |
-|`[].license_consumed` |integer |No |Yes |
-|`[].hosts_added` |integer |No |Yes |
-|`[].hosts_deleted` |integer |No |Yes |
-|`[].indirectly_managed_hosts` |integer |No |Yes |
+|`[].license_capacity` |integer |No |Yes |Licensed host capacity.
+|`[].license_consumed` |integer |No |Yes |Consumed licensed host capacity.
+|`[].hosts_added` |integer |No |Yes |Hosts added during the month.
+|`[].hosts_deleted` |integer |No |Yes |Hosts deleted during the month.
+|`[].indirectly_managed_hosts` |integer |No |Yes |Indirectly managed host count.
 |===
 
 === Table 22: `controller.instance_info`
@@ -802,16 +802,16 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`{uuid}` |object key |No |No |Top-level object key identifying the record by `uuid`.
-|`{uuid}.uuid` |string |No |Yes |
-|`{uuid}.version` |string |No |Yes |
-|`{uuid}.capacity` |integer |No |Yes |
+|`{uuid}.uuid` |string |No |Yes |Universally unique identifier.
+|`{uuid}.version` |string |No |Yes |Version reported by the source.
+|`{uuid}.capacity` |integer |No |Yes |Total instance capacity.
 |`{uuid}.cpu` |string |No |Yes |CPU count, as a decimal string (for example "1.0").
 |`{uuid}.memory` |integer |No |Yes |Memory in bytes.
-|`{uuid}.managed_by_policy` |boolean |No |Yes |
-|`{uuid}.enabled` |boolean |No |Yes |
+|`{uuid}.managed_by_policy` |boolean |No |Yes |Whether the instance is managed by policy.
+|`{uuid}.enabled` |boolean |No |Yes |Whether the resource is enabled.
 |`{uuid}.consumed_capacity` |integer |No |Yes |Capacity used by running and waiting jobs.
-|`{uuid}.remaining_capacity` |integer |No |Yes |
-|`{uuid}.node_type` |string |No |Yes |
+|`{uuid}.remaining_capacity` |integer |No |Yes |Capacity remaining for jobs.
+|`{uuid}.node_type` |string |No |Yes |{ControllerNameStart} node type.
 |===
 
 === Table 23: `controller.inventory_counts`
@@ -829,14 +829,14 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`{inventory_id}` |object key |No |No |Top-level object key identifying the record by `inventory_id`.
-|`{inventory_id}.name` |string |No |Yes |
+|`{inventory_id}.name` |string |No |Yes |Record name.
 |`{inventory_id}.kind` |string |No |Yes |Empty for normal inventories, smart for smart inventories.
-|`{inventory_id}.hosts` |integer |No |Yes |
-|`{inventory_id}.sources` |integer |No |Yes |
-|`{inventory_id}.source_list` |array of object |No |Yes |
-|`{inventory_id}.source_list[].name` |string |No |Yes |
-|`{inventory_id}.source_list[].source` |string |No |Yes |
-|`{inventory_id}.source_list[].num_hosts` |integer |No |Yes |
+|`{inventory_id}.hosts` |integer |No |Yes |Number of hosts.
+|`{inventory_id}.sources` |integer |No |Yes |Number of inventory sources.
+|`{inventory_id}.source_list` |array of object |No |Yes |Inventory source details.
+|`{inventory_id}.source_list[].name` |string |No |Yes |Record name.
+|`{inventory_id}.source_list[].source` |string |No |Yes |Source name or source record.
+|`{inventory_id}.source_list[].num_hosts` |integer |No |Yes |Number of hosts associated with the source.
 |===
 
 === Table 24: `controller.inventory_counts_org`
@@ -853,12 +853,12 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].inventory_kind` |string |No |No |
-|`[].inventory_count` |integer |No |Yes |
-|`[].host_count` |integer |No |Yes |
-|`[].source_count` |integer |No |Yes |
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].inventory_kind` |string |No |No |Inventory kind.
+|`[].inventory_count` |integer |No |Yes |Number of inventories.
+|`[].host_count` |integer |No |Yes |Number of hosts.
+|`[].source_count` |integer |No |Yes |Number of inventory sources.
 |===
 
 === Table 25: `controller.org_counts`
@@ -876,9 +876,9 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`{organization_id}` |object key |No |No |Top-level object key identifying the record by `organization_id`.
-|`{organization_id}.name` |string |No |Yes |
-|`{organization_id}.users` |integer |No |Yes |
-|`{organization_id}.teams` |integer |No |Yes |
+|`{organization_id}.name` |string |No |Yes |Record name.
+|`{organization_id}.users` |integer |No |Yes |Number of users.
+|`{organization_id}.teams` |integer |No |Yes |Number of teams.
 |===
 
 === Table 26: `controller.projects_by_scm_type`
@@ -913,10 +913,10 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].organization_id` |integer |No |Yes |
-|`[].organization_name` |string |No |Yes |
-|`[].scm_type` |string |No |No |
-|`[].project_count` |integer |No |Yes |
+|`[].organization_id` |integer |No |Yes |{ControllerNameStart} organization identifier.
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
+|`[].scm_type` |string |No |No |Source-control type.
+|`[].project_count` |integer |No |Yes |Number of projects.
 |===
 
 === Table 28: `controller.unified_job_template_table`
@@ -933,22 +933,22 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].id` |integer |No |No |
-|`[].polymorphic_ctype_id` |integer |No |Yes |
+|`[].id` |integer |No |No |Unique identifier for this record.
+|`[].polymorphic_ctype_id` |integer |No |Yes |Django content type identifier for the concrete model.
 |`[].model` |string |No |Yes |Concrete template type, for example job_template or project.
-|`[].execution_environment_image` |string |No |Yes |
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].created_by_id` |integer |No |Yes |
-|`[].modified_by_id` |integer |No |Yes |
-|`[].name` |string |No |Yes |
-|`[].current_job_id` |integer |No |Yes |
-|`[].last_job_id` |integer |No |Yes |
-|`[].last_job_failed` |boolean |No |Yes |
-|`[].last_job_run` |date-time |No |Yes |
-|`[].next_job_run` |date-time |No |Yes |
-|`[].next_schedule_id` |integer |No |Yes |
-|`[].status` |string |No |Yes |
+|`[].execution_environment_image` |string |No |Yes |Execution environment image.
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].created_by_id` |integer |No |Yes |Identifier of the creating user.
+|`[].modified_by_id` |integer |No |Yes |Identifier of the user who last modified the record.
+|`[].name` |string |No |Yes |Record name.
+|`[].current_job_id` |integer |No |Yes |Current job identifier.
+|`[].last_job_id` |integer |No |Yes |Most recent job identifier.
+|`[].last_job_failed` |boolean |No |Yes |Whether the most recent job failed.
+|`[].last_job_run` |date-time |No |Yes |Most recent job run time.
+|`[].next_job_run` |date-time |No |Yes |Next scheduled job run time.
+|`[].next_schedule_id` |integer |No |Yes |Next schedule identifier.
+|`[].status` |string |No |Yes |Current status.
 |===
 
 === Table 29: `controller.workflow_job_template_node_table`
@@ -966,15 +966,15 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Workflow job template node identifier
-|`[].created` |date-time |No |Yes |
-|`[].modified` |date-time |No |Yes |
-|`[].unified_job_template_id` |integer |No |Yes |
-|`[].workflow_job_template_id` |integer |No |Yes |
-|`[].inventory_id` |integer |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
+|`[].modified` |date-time |No |Yes |Record last-modification time.
+|`[].unified_job_template_id` |integer |No |Yes |Unified job template identifier.
+|`[].workflow_job_template_id` |integer |No |Yes |Workflow job template identifier.
+|`[].inventory_id` |integer |No |Yes |{ControllerNameStart} inventory identifier.
 |`[].success_nodes` |array of integer |No |Yes |Nodes run when this node succeeds.
 |`[].failure_nodes` |array of integer |No |Yes |Nodes run when this node fails.
 |`[].always_nodes` |array of integer |No |Yes |Nodes run regardless of this node's result.
-|`[].all_parents_must_converge` |boolean |No |Yes |
+|`[].all_parents_must_converge` |boolean |No |Yes |Whether all parent nodes must converge before this node runs.
 |===
 
 === Table 30: `controller.main_host`
@@ -991,33 +991,33 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].host_name` |string |No |No |
-|`[].host_id` |integer |No |Yes |
+|`[].host_name` |string |No |No |Inventory host name.
+|`[].host_id` |integer |No |Yes |Inventory host identifier.
 |`[].inventory_remote_id` |integer |No |Yes |{ControllerNameStart} inventory ID.
-|`[].inventory_name` |string |No |Yes |
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
 |`[].organization_remote_id` |integer |No |Yes |{ControllerNameStart} organization ID.
-|`[].organization_name` |string |No |Yes |
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].last_automation` |date-time |No |Yes |Creation time of the host's most recent job.
 |`[].first_automation` |date-time |No |Yes |First automation time recorded for this host.
 |`[].ansible_host_variable` |string |No |Yes |ansible_host value from the host variables.
-|`[].canonical_facts` |object |No |No |
-|`[].canonical_facts.ansible_product_serial` |string |No |Yes |
-|`[].canonical_facts.ansible_machine_id` |string |No |Yes |
-|`[].canonical_facts.ansible_host` |string |No |Yes |
-|`[].canonical_facts.host_name` |string |No |Yes |
-|`[].canonical_facts.ansible_port` |integer |No |Yes |
-|`[].facts` |object |No |No |
-|`[].facts.ansible_connection_variable` |string |No |Yes |
-|`[].facts.ansible_virtualization_type` |string |No |Yes |
-|`[].facts.ansible_virtualization_role` |string |No |Yes |
-|`[].facts.ansible_system_vendor` |string |No |Yes |
-|`[].facts.ansible_product_name` |string |No |Yes |
-|`[].facts.ansible_architecture` |string |No |Yes |
+|`[].canonical_facts` |object |No |Yes |Host identity facts used for deduplication.
+|`[].canonical_facts.ansible_product_serial` |string |No |Yes |Product serial number reported by Ansible.
+|`[].canonical_facts.ansible_machine_id` |string |No |Yes |Machine identifier reported by Ansible.
+|`[].canonical_facts.ansible_host` |string |No |Yes |Canonical Ansible host value.
+|`[].canonical_facts.host_name` |string |No |Yes |Inventory host name.
+|`[].canonical_facts.ansible_port` |integer |No |Yes |Ansible connection port.
+|`[].facts` |object |No |Yes |Selected hardware and system facts.
+|`[].facts.ansible_connection_variable` |string |No |Yes |ansible_connection value from the host variables.
+|`[].facts.ansible_virtualization_type` |string |No |Yes |Virtualization type reported by Ansible.
+|`[].facts.ansible_virtualization_role` |string |No |Yes |Virtualization role reported by Ansible.
+|`[].facts.ansible_system_vendor` |string |No |Yes |System vendor reported by Ansible.
+|`[].facts.ansible_product_name` |string |No |Yes |Product name reported by Ansible.
+|`[].facts.ansible_architecture` |string |No |Yes |System architecture reported by Ansible.
 |`[].facts.ansible_processor` |string |No |Yes |Processor facts as JSON text.
-|`[].facts.ansible_form_factor` |string |No |Yes |
-|`[].facts.ansible_bios_vendor` |string |No |Yes |
-|`[].facts.ansible_bios_version` |string |No |Yes |
-|`[].facts.ansible_board_serial` |string |No |Yes |
+|`[].facts.ansible_form_factor` |string |No |Yes |System form factor reported by Ansible.
+|`[].facts.ansible_bios_vendor` |string |No |Yes |BIOS vendor reported by Ansible.
+|`[].facts.ansible_bios_version` |string |No |Yes |BIOS version reported by Ansible.
+|`[].facts.ansible_board_serial` |string |No |Yes |Board serial number reported by Ansible.
 |===
 
 === Table 31: `controller.main_host_daily`
@@ -1034,33 +1034,33 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].host_name` |string |No |No |
-|`[].host_id` |integer |No |Yes |
+|`[].host_name` |string |No |No |Inventory host name.
+|`[].host_id` |integer |No |Yes |Inventory host identifier.
 |`[].inventory_remote_id` |integer |No |Yes |{ControllerNameStart} inventory ID.
-|`[].inventory_name` |string |No |Yes |
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
 |`[].organization_remote_id` |integer |No |Yes |{ControllerNameStart} organization ID.
-|`[].organization_name` |string |No |Yes |
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].last_automation` |date-time |No |Yes |Creation time of the host's most recent job.
 |`[].first_automation` |date-time |No |Yes |First automation time recorded for this host.
 |`[].ansible_host_variable` |string |No |Yes |ansible_host value from the host variables.
-|`[].canonical_facts` |object |No |No |
-|`[].canonical_facts.ansible_product_serial` |string |No |Yes |
-|`[].canonical_facts.ansible_machine_id` |string |No |Yes |
-|`[].canonical_facts.ansible_host` |string |No |Yes |
-|`[].canonical_facts.host_name` |string |No |Yes |
-|`[].canonical_facts.ansible_port` |integer |No |Yes |
-|`[].facts` |object |No |No |
-|`[].facts.ansible_connection_variable` |string |No |Yes |
-|`[].facts.ansible_virtualization_type` |string |No |Yes |
-|`[].facts.ansible_virtualization_role` |string |No |Yes |
-|`[].facts.ansible_system_vendor` |string |No |Yes |
-|`[].facts.ansible_product_name` |string |No |Yes |
-|`[].facts.ansible_architecture` |string |No |Yes |
+|`[].canonical_facts` |object |No |Yes |Host identity facts used for deduplication.
+|`[].canonical_facts.ansible_product_serial` |string |No |Yes |Product serial number reported by Ansible.
+|`[].canonical_facts.ansible_machine_id` |string |No |Yes |Machine identifier reported by Ansible.
+|`[].canonical_facts.ansible_host` |string |No |Yes |Canonical Ansible host value.
+|`[].canonical_facts.host_name` |string |No |Yes |Inventory host name.
+|`[].canonical_facts.ansible_port` |integer |No |Yes |Ansible connection port.
+|`[].facts` |object |No |Yes |Selected hardware and system facts.
+|`[].facts.ansible_connection_variable` |string |No |Yes |ansible_connection value from the host variables.
+|`[].facts.ansible_virtualization_type` |string |No |Yes |Virtualization type reported by Ansible.
+|`[].facts.ansible_virtualization_role` |string |No |Yes |Virtualization role reported by Ansible.
+|`[].facts.ansible_system_vendor` |string |No |Yes |System vendor reported by Ansible.
+|`[].facts.ansible_product_name` |string |No |Yes |Product name reported by Ansible.
+|`[].facts.ansible_architecture` |string |No |Yes |System architecture reported by Ansible.
 |`[].facts.ansible_processor` |string |No |Yes |Processor facts as JSON text.
-|`[].facts.ansible_form_factor` |string |No |Yes |
-|`[].facts.ansible_bios_vendor` |string |No |Yes |
-|`[].facts.ansible_bios_version` |string |No |Yes |
-|`[].facts.ansible_board_serial` |string |No |Yes |
+|`[].facts.ansible_form_factor` |string |No |Yes |System form factor reported by Ansible.
+|`[].facts.ansible_bios_vendor` |string |No |Yes |BIOS vendor reported by Ansible.
+|`[].facts.ansible_bios_version` |string |No |Yes |BIOS version reported by Ansible.
+|`[].facts.ansible_board_serial` |string |No |Yes |Board serial number reported by Ansible.
 |===
 
 === Table 32: `controller.main_hostmetric`
@@ -1077,20 +1077,20 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 [options="header"]
 |===
 |Field |Type |Required |Nullable |Description
-|`[].hostname` |string |No |No |
+|`[].hostname` |string |No |No |Hostname value.
 |`[].host_id` |integer |No |Yes |Matching inventory host ID, or 0 when the host no longer exists.
-|`[].first_automation` |date-time |No |Yes |
-|`[].last_automation` |date-time |No |Yes |
-|`[].automated_counter` |integer |No |Yes |
-|`[].deleted_counter` |integer |No |Yes |
-|`[].last_deleted` |date-time |No |Yes |
-|`[].deleted` |boolean |No |Yes |
+|`[].first_automation` |date-time |No |Yes |First automation time recorded for the host.
+|`[].last_automation` |date-time |No |Yes |Creation time of the host's most recent job.
+|`[].automated_counter` |integer |No |Yes |Number of automation runs for the host.
+|`[].deleted_counter` |integer |No |Yes |Number of deletion events for the host.
+|`[].last_deleted` |date-time |No |Yes |Time the host was last deleted.
+|`[].deleted` |boolean |No |Yes |Whether the record was deleted.
 |`[].id` |integer |No |Yes |Host metric identifier
-|`[].used_in_inventories` |integer |No |Yes |
-|`[].ansible_product_serial` |string |No |Yes |
-|`[].ansible_machine_id` |string |No |Yes |
-|`[].ansible_host_variable` |string |No |Yes |
-|`[].ansible_connection_variable` |string |No |Yes |
+|`[].used_in_inventories` |integer |No |Yes |Number of inventories using the host.
+|`[].ansible_product_serial` |string |No |Yes |Product serial number reported by Ansible.
+|`[].ansible_machine_id` |string |No |Yes |Machine identifier reported by Ansible.
+|`[].ansible_host_variable` |string |No |Yes |ansible_host value from the host variables.
+|`[].ansible_connection_variable` |string |No |Yes |ansible_connection value from the host variables.
 |===
 
 === Table 33: `controller.main_indirectmanagednodeaudit`
@@ -1108,23 +1108,23 @@ Payload fields are relative to the payload root. `[]` denotes an array item and 
 |===
 |Field |Type |Required |Nullable |Description
 |`[].id` |integer |No |No |Audit record identifier
-|`[].created` |date-time |No |Yes |
+|`[].created` |date-time |No |Yes |Record creation time.
 |`[].host_name` |string |No |Yes |Ansible name of the indirectly managed node.
 |`[].host_remote_id` |integer |No |Yes |{ControllerNameStart} host ID, when the node matches an inventory host.
 |`[].canonical_facts` |object |No |Yes |Facts used for managed node deduplication; keys depend on the query.
 |`[].facts` |object |No |Yes |Additional non-canonical facts about the managed node.
 |`[].events` |array of string |No |Yes |Fully-qualified names of modules that ran against the node.
 |`[].task_runs` |integer |No |Yes |How many times registered modules were invoked on the node.
-|`[].job_created` |date-time |No |Yes |
+|`[].job_created` |date-time |No |Yes |Creation time of the related job.
 |`[].job_remote_id` |integer |No |Yes |{ControllerNameStart} job ID.
 |`[].job_template_remote_id` |integer |No |Yes |{ControllerNameStart} unified job template ID.
-|`[].job_template_name` |string |No |Yes |
+|`[].job_template_name` |string |No |Yes |Unified job template name.
 |`[].inventory_remote_id` |integer |No |Yes |{ControllerNameStart} inventory ID.
-|`[].inventory_name` |string |No |Yes |
+|`[].inventory_name` |string |No |Yes |{ControllerNameStart} inventory name.
 |`[].organization_remote_id` |integer |No |Yes |{ControllerNameStart} organization ID.
-|`[].organization_name` |string |No |Yes |
+|`[].organization_name` |string |No |Yes |{ControllerNameStart} organization name.
 |`[].project_remote_id` |integer |No |Yes |{ControllerNameStart} project ID.
-|`[].project_name` |string |No |Yes |
+|`[].project_name` |string |No |Yes |{ControllerNameStart} project name.
 |===
 
 == Source and regeneration
