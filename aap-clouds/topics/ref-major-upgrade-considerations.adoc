@@ -1,0 +1,53 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-azure-major-upgrade-considerations"]
+
+= What to expect during major upgrades for Managed {PlatformNameShort} environments
+
+[role="_abstract"]
+Prepare your environment, validate automation assets, and coordinate phased deployment schedules to ensure continuous operations during major {PlatformNameShort} control plane upgrades.
+
+Major upgrade events introduce new core features, architectural updates, and platform enhancements to the {PlatformNameShort} control plane. While Red Hat Site Reliability Engineering (SRE) manages the deployment, major upgrades require proactive planning from organizations to ensure automation continuity.
+
+== Upgrade schedule and execution
+
+*Maintenance window alignment*
+
+Major {PlatformNameShort} upgrades are executed entirely within the standard, predefined maintenance windows. The upgrade policy, regional days, and times do not change for major releases:
+
+* *Duration*: The upgrade is designed to complete within the standard 2-hour allotment.
+* *Detailed Schedule*: For specific regional maintenance window times and emergency patching schedules, please refer to the {PlatformNameShort} Managed Service Maintenance Schedule KBA.
+
+*Downtime Expectations*
+
+* *Control plane availability*: Organizations should plan for the possibility of temporary control plane (UI and API) unavailability while the upgrade operations occur.
+* *Window vs. Outage*: The 2-hour window defines the timeframe for the upgrade process. It is not definite that the environment will experience an outage for the full two hours; Red Hat SRE makes every effort to minimize or eliminate actual downtime.
+
+== Planning and Preparation
+
+Because major releases introduce significant platform changes, organizations should use the weeks leading up to the event to audit their environments.
+
+. *Documentation and deprecation review*
+
+* *Analyze pre-release notes*: Review Red Hat's major version pre-release documentation as soon as it becomes available to identify structural changes.
+* *Audit for deprecations*: Identify and address any feature, module, or API deprecations. Ensure that existing playbooks and workflows do not rely on components scheduled for removal in the upcoming version.
+
+. *Infrastructure and cloud policy verification*
+
+* *{Azure} policy compliance*: For managed application on {Azure}, audit active {Azure} Policies. Ensure that restrictive custom policies (such as strict resource tagging or restricted VM sizes) do not block Red Hat SREs from deploying new upgrade infrastructure or modifying existing resources.
+
+. *Execution environments and automation mesh*
+
+* *Validate custom execution environments*: Verify that custom execution environments are compatible with the new {PlatformNameShort} control plane version.
+* *Plan core component updates*: While {AutomationMesh} execution nodes are designed to maintain backward compatibility during the upgrade window, plan to update node components (such as the receptor) post-upgrade to maintain long-term support and compatibility.
+
+. *Using Multi-Phased Deployments*
+
+If an organization maintains multiple managed {PlatformNameShort} environments, for example, Development, Stage, Production, upgrades should be phased across different maintenance windows:
+
+* *Early testing*: Configure non-production environments to ingest the upgrade during the first available maintenance window.
+* *Validation*: Use the days following the initial non-production upgrade to run smoke tests, validate critical automation workflows, and ensure custom {ExecEnvShort}s behave as expected before production environments are upgraded in a subsequent window.
+
+== Need assistance?
+
+If an organization experiences prolonged issues following a major upgrade event, or requires clarification on specific pre-release deprecations, a support ticket should be opened through the Customer Portal.
