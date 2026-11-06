@@ -1,0 +1,55 @@
+AAP on Microsoft Azure — isolated audit verification summary
+Completed: 2026-11-06
+Source base: d7307c91c2
+Run branch head before audit: 19664cba036f9391b7cbe5c3aaea5943ad6d3f80
+csv2map revision: 3e5d3e31ecb92c8cfaeb4b1dd37b10e3996d43ca
+Converter image ID: aafcc2d86d6bf7fadf05a52ddf71d6a43b2a169c5b0f4ae90834d3710ca1446b
+DITA-OT: 4.4.1
+
+These are summaries of completed temporary-copy tests, not a full readiness rerun.
+Detailed probe directories were removed during repository cleanup.
+
+MAP STRUCTURE
+Refreshed Azure CSV generated AsciiDoc maps identical to the 2026-11-05 run.
+baseline: convert -rC
+  Invalid mapref warnings: 61; DOTJ088E: 7; DOTX068W: 21.
+  Missing map targets: 5; converted topics outside map scope: 0.
+assembly-topics: convert -ArC
+  Invalid mapref warnings: 0; DOTJ088E: 0; DOTX068W: 0.
+  Missing map targets: 0; converted topics outside map scope: 5.
+direct-maps: convert -ArC topics, then csv2map --ditamap maps
+  Invalid mapref warnings: 0; DOTJ088E: 0; DOTX068W: 0.
+  Missing map targets: 0; converted topics outside map scope: 5.
+Corrected map cases retain all seven job titles/short descriptions.
+No repeated topic href within a corrected job; reuse across jobs remains.
+Corrected whole-navigation builds still reported link/chunk and image issues.
+Conclusion: use -A; writer decisions are required for five assembly-only files.
+
+LIFECYCLE: ORIGINAL SOURCE AND STANDARD CLEANUP
+Before cleanup href: #con-azure-lifecycle_azure-intro
+Target topic ID: con-azure-lifecycle_azure
+After standard cleanup href: #con-azure-lifecycle_azure-intro
+Related-link helper diagnostic: ID not found in any .dita file: #con-azure-lifecycle_azure-intro
+dita-cleanup diagnostic: No matching ID: con-azure-lifecycle_azure-intro
+Focused build exited 0, but rendered original fragment was absent from the page.
+Explicit generated-DITA repair verified:
+  con-azure-lifecycle.dita#con-azure-lifecycle_azure
+  Rendered href: con-azure-lifecycle.html#con-azure-lifecycle_azure
+  Destination file and fragment both exist.
+
+LIFECYCLE: VERIFIED SOURCE FIX
+con-azure-lifecycle.adoc: [id="con-azure-lifecycle_{context}"] -> [id="con-azure-lifecycle"]
+ref-azure-responsibilities.adoc: xref:con-azure-lifecycle_azure-intro[ -> xref:con-azure-lifecycle[
+Link text was preserved. No repository source edits were applied.
+Current AsciiDoc book: #con-azure-lifecycle; destination/anchor verified.
+After normal cleanup: con-azure-lifecycle.dita#con-azure-lifecycle
+Converted HTML: con-azure-lifecycle.html#con-azure-lifecycle; destination/anchor verified.
+No explicit DITA rewrite was used for the source-fix test.
+Filename-only xref alternative: converted HTML worked, but current single-book HTML
+pointed at a separate absent page; that alternative is not recommended.
+Changing the source ID changes the anchor; use the DITA-only repair if the old ID must remain.
+
+RETAINED INPUTS
+CSV: _conversion/azure-jtbd-scope.csv (2026-11-06 refresh; LF line endings)
+Attributes: _conversion/aap-on-azure-attributes.adoc
+All substantive pre-check logs and Azure-specific scope/conditional logs are retained.
