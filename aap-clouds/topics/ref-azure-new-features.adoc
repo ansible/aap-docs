@@ -1,0 +1,49 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-azure-new-features_{context}"]
+
+= New features and change
+
+[role="_abstract"]
+The following new features and enhancements are available for Managed Application customers in the {AAPonAzureNameShort} general availability release on Nov 3rd, 2026.
+
+[cols="10%,90%", options="header"]
+|===
+| Date | Feature
+| Nov 4th 2026 a| *Resolve Azure Policy Restrictions to Allow Automated AKS Upgrades for {AAPonAzureNameShort}*
+
+*Target Audience*: Administrators of {AAPonAzureName} (Managed Application)
+
+*Overview*
+
+Red Hat manages the infrastructure and operations for your {AAPonAzureNameShort} deployment, including the underlying _Azure Kubernetes Service_ (AKS) clusters. {Azure} has introduced a policy change that enforces automatic platform upgrades for any AKS cluster operating on unsupported Kubernetes versions starting June 1, 2027 (Reference Tracking ID: 6H03-S40).
+
+To maintain service stability, compliance, and supportability, Red Hat must be able to perform these routine version upgrades on your managed clusters.
+
+*Critical Impact: Customer-Enforced Azure Policies*
+
+If your organization has applied subscription-level or tenant-level Azure Policies that restrict AKS version upgrades, lock down network endpoints, or block Red Hat management activities within the managed resource group, your deployment may fail required maintenance updates.
+
+Failure to permit these upgrades before the June 1, 2027 deadline could result in:
+
+* Underlying AKS clusters entering an unsupported state with Microsoft Azure.
+
+* Red Hat being blocked from applying critical security patches, bug fixes, and cluster lifecycle operations.
+
+* Compliance gaps and potential disruption to your automation workloads.
+
+After the June 1, 2027 milestone, Azure enforces a strict 60-day window following Kubernetes end-of-support before platform-initiated upgrades occur automatically.
+
+*Required Customer Actions*
+
+. *Review Azure Policy Assignments*: Check subscription-level Azure Policies or management group rules applied to your AAP on Azure subscription to ensure they do not prevent AKS node image or Kubernetes version upgrades.
+
+. *Follow Red Hat Action Requests*: When Red Hat Support communicates specific policy remediation steps, exemptions, or update windows for your managed deployment, address them promptly to ensure management permissions remain operational.
+
+. *Plan Maintenance Windows*: If you require specific blackout dates or coordinated timing for cluster maintenance, contact Red Hat Support in advance of scheduled upgrade notices.
+
+*Questions & Support*
+
+If you need guidance regarding which Azure Policy assignments may conflict with Red Hat managed operations, or to discuss upcoming upgrade windows for your {PlatformNameShort} environment, submit a ticket through the Red Hat Customer Portal. 
+|===
+
