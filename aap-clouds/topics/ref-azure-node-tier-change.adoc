@@ -1,0 +1,35 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-azure-node-tier-change_{context}"]
+
+= Steps to upgrade node tier
+
+[role="_abstract"]
+Scale managed automation capacity on {Azure} by provisioning a parallel cluster, coordinating content cutover with the engineering support team, and decommissioning the legacy workload to eliminate overlapping licensing costs.
+
+* *Private Offer Acceptance*
+The Account Team must issue a private offer for the desired tier. You must accept this offer before deployment.
+
+* *Plan a 48-Hour Transition Window*
+Schedule a 48-hour window to deploy, migrate data, and test.
++
+[NOTE]
+==== 
+This timeframe is critical. You will hold licenses for both environments during this time; completing the transition quickly prevents extended simultaneous billing charges.
+====
+
+* *Security Access*
+Ensure a *local administrator user account* is configured in your current (source) environment to facilitate SRE access during the migration.
+
+* *Halt Operations*
+To prevent data inconsistency, stop any automation currently running on the existing (source) site before the migration begins.
+
+[IMPORTANT]
+==== 
+*Critical architecture notice*
+
+*In-Place Upgrades Are Not Possible*
+
+Due to the platform's architectural reliance on single-instance billing models, you cannot perform an in-place upgrade. Transitioning to a different tier requires the deployment of a new, separate instance of the managed application.
+====
+
