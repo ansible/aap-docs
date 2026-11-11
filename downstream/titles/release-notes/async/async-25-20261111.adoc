@@ -1,0 +1,54 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-20261111]]
+
+= Ansible automation portal patch release November 11, 2026
+
+
+[role="_abstract"]
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| November 11, 2026
+a|
+
+* Automation controller 4.6.35
+* Automation hub 4.10.19
+* Event-Driven Ansible 1.1.23
+* Container-based installer Ansible Automation Platform (bundle) 2.5-25.7
+* Container-based installer Ansible Automation Platform (online) 2.5-25
+* Receptor 1.6.8
+* RPM-based installer Ansible Automation Platform (bundle) 2.5-23.9
+* RPM-based installer Ansible Automation Platform (online) 2.5-23
+
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1793872036
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1793872138
+
+== Overview
+This release addresses GitPython vulnerabilities affecting the automation controller package and container image, including command injection, denial of service, arbitrary file read, and arbitrary code execution.
+
+
+
+== CVE
+
+* Automation controller
+** Automation controller (package: `automation-controller`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110858[CVE-2026-110858] – GitPython: Command injection in versions 3.1.30 before 3.2.0 involving the Remote.pull() refspec. (AAP-98665)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110856[CVE-2026-110856] – GitPython: Denial of service caused by regular expression backtracking during date parsing. (AAP-97608)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110859[CVE-2026-110859] – GitPython: Arbitrary file read caused by argument injection during branch checkout. (AAP-97586)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110857[CVE-2026-110857] – GitPython: Arbitrary code execution caused by unsafe URL protocol handling. (AAP-97565)
+** Controller (container image: `ansible-automation-platform-25/controller-rhel8`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110858[CVE-2026-110858] – GitPython: Command injection in versions 3.1.30 before 3.2.0 involving the Remote.pull() refspec. (AAP-98661)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110856[CVE-2026-110856] – GitPython: Denial of service caused by regular expression backtracking during date parsing. (AAP-97601)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110859[CVE-2026-110859] – GitPython: Arbitrary file read caused by argument injection during branch checkout. (AAP-97579)
+*** link:https://access.redhat.com/security/cve/CVE-2026-110857[CVE-2026-110857] – GitPython: Arbitrary code execution caused by unsafe URL protocol handling. (AAP-97557)
