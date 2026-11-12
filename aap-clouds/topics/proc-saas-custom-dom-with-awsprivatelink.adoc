@@ -48,11 +48,11 @@ The CNAME you create must point to a name that the Red Hat service can resolve.
 .. platform (for example, `platform._exampledomain_.com`) → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
 .. mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `vpce-xxxx-xxxx.vpce-svc-xxxx.us-east-1.vpce.amazonaws.com`
-
-.Validation
-
-After creating the CNAME records, you must validate that your hostnames are resolvable by the Red Hat service:
-
++
+*Validation*
++
+. After creating the CNAME records, you must validate that your hostnames are resolvable by the Red Hat service:
++
 . From a machine with potential access to the Red Hat service or control plane:
 .. Run: `nslookup platform.<yourdomain>.com`
 .. Confirm the hostname resolves to the VPC endpoint address
@@ -65,7 +65,7 @@ After creating the CNAME records, you must validate that your hostnames are reso
 .. Contact link:{CustomerSupport}[Red Hat support] before proceeding with {PlatformNameShort} configuration
 
 . Do not configure these hostnames in {PlatformNameShort} until DNS resolution has been validated from the service's perspective.
-
++
 [NOTE]
 ====
 If you cannot validate service-side DNS resolution yourself, Red Hat support can help you test DNS resolution from the service environment as part of the PrivateLink setup process.
