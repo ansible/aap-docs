@@ -109,18 +109,18 @@ Before configuring custom hostnames in {SaaSonAWS}:
 
 == Validation
 
-.Test Local Resolution
+*Test Local Resolution*
 
----
+----
 nslookup platform.example.com
 dig platform.example.com +short
----
+----
 
 Expected result: Returns the VPC endpoint DNS name or IP address
 
 *Verify {AWSPrivateLink} Configuration*
 
----
+----
 aws ec2 describe-vpc-endpoints \
   --vpc-endpoint-ids vpce-xxxx \
   --query 'VpcEndpoints[0].{
@@ -128,7 +128,7 @@ aws ec2 describe-vpc-endpoints \
     PrivateDnsEnabled:PrivateDnsEnabled,
     DnsEntries:DnsEntries[0].DnsName
   }'
----
+----
 
 Expected results:
 * `ServiceName`: Should show the Red Hat service name
@@ -144,7 +144,7 @@ If you cannot validate DNS resolution yourself:
    .. {AWSPrivateLink} Private DNS is enabled (if using {AWSPrivateLink})
    .. Security groups and NACLs allow DNS traffic
 
-. Contact link:{CustomerSupport}[Red Hat support] with:
+. Contact Red Hat support with:
    .. Your custom domain name(s)
    .. Your VPC endpoint ID
    .. DNS configuration details
@@ -152,7 +152,7 @@ If you cannot validate DNS resolution yourself:
 
 Red Hat support can validate service-side DNS resolution as part of the configuration process.
 
-==Troubleshooting
+== Troubleshooting
 
 [cols="1,2"]
 |===
@@ -165,9 +165,11 @@ Red Hat support can validate service-side DNS resolution as part of the configur
 | Connection timeouts to custom hostname | Verify CNAME points to working VPC endpoint. Check security group rules.
 |===
 
-[role="_related-topics"]
+[role="_additional-resources"]
+.Additional resources
+* link:https://access.redhat.com/support/cases/?extIdCarryOver=true&sc_cid=RHCTG0250000454096#/case/new/get-support?caseCreate=true[Customer support]
 * link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-aws#proc-saas-custom-dom-with-awsprivatelink[Setting up a custom domain with {AWSPrivateLink}]
 * link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-private-link#ref-saas-enabling-aws-privatelink[Enabling {AWSPrivateLink} connectivity]
-* {AWS} {AWSPrivateLink} documentation: https://docs.aws.amazon.com/vpc/latest/privatelink/
+* link:https://docs.aws.amazon.com/vpc/latest/privatelink/[AWS PrivateLink documentation]
 
 
