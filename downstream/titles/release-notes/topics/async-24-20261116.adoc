@@ -1,0 +1,65 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-24-2_4_20261116]]
+
+= Ansible Automation Platform 2.4 patch release November 16, 2026
+
+
+[role="_abstract"]
+The following patch release detail the CVEs and Bug fixes for the Ansible Automation Platform patch released on November 16, 2026
+
+This release includes the following components and versions:
+
+[cols="2a,3a", options="header"]
+|====
+| Release Date | Component versions
+
+| November 16, 2026
+a|
+
+* {ControllerNameStart} 4.5.39
+* {HubNameStart} 4.9.8
+* {EDAcontroller} 1.0.11
+* Automation mesh 1.6.4
+* RPM-based installer  {PlatformNameShort} (bundle) 2.4-16.10
+* RPM-based installer  {PlatformNameShort} (online) 2.4-16
+
+
+|====
+
+== Overview
+
+This release of Ansible Automation Platform 2.4 includes 3 security updates addressing Common Vulnerabilities and Exposures (CVEs), 3 enhancements, and 2 bug fixes.
+
+== Enhancements
+
+=== {ControllerNameStart}
+
+* Added awx-manage `create_host_summary_index` management command that creates a composite database index to improve host list page load performance. The command is safe to run on a live system (non-blocking) and can be re-run without side effects. (AAP-101617)
+* Added awx-manage `create_host_summary_index` management command that creates a composite database index to improve host list page load performance. The command is safe to run on a live system (non-blocking) and can be re-run without side effects. (AAP-94167)
+
+=== {ExecEnvShort}
+
+* The ansible.controller collection has been updated to version 4.5.39 (AAP-101444)
+
+== CVE
+
+=== {ExecEnvShort}
+
+* https://access.redhat.com/security/cve/CVE-2026-102268[CVE-2026-102268] – ansible-automation-platform-24/ee-supported-rhel8: PyJWT: Authentication bypass via improper public key validation. (AAP-98003)
+* https://access.redhat.com/security/cve/CVE-2026-102268[CVE-2026-102268] – ansible-automation-platform-24/ee-supported-rhel9: PyJWT: Authentication bypass via improper public key validation. (AAP-97973)
+
+=== General
+
+* https://access.redhat.com/security/cve/CVE-2026-119194[CVE-2026-119194] – through 119197) in ansible-lightspeed-container 2.4. (AAP-101298)
+
+== Bug fixes
+
+=== {ControllerNameStart}
+
+* Fixed an issue where After upgrading automation controller to 4.5.37 or later, `GET /api/v2/dashboard/` could exceed the request timeout and the dashboard could show 0 hosts, on deployments with a large `main_jobhostsummary` table. This release adds the awx-manage `create_host_summary_index` command, which creates the composite index required by the dashboard's failed-hosts query.
+
+After upgrading, run `awx-manage` `create_host_summary_index`. The index is not created automatically. The command is `idempotent` and reports "already exists" if the index was created manually beforehand. (AAP-101643)
+
+* Fixed an issue where fixes a bug where hosts facts were not updated for sliced jobs (AAP-99481)
