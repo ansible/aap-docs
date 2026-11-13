@@ -1,0 +1,38 @@
+:_mod-docs-content-type: CONCEPT
+
+[id="con-azure-private-dns-zones_{context}"]
+
+= Private DNS zones
+
+[role="_abstract"]
+Plan and configure internal name resolution for {AAPonAzureNameShort} so your automation workflows can reach private network endpoints without disrupting managed platform operations.
+
+{AAPonAzureNameShort} uses Azure's managed DNS services when deployed.
+
+To use private DNS records that cannot be resolved publicly, you can either use Azure Private DNS zones that are peered to the managed application VNet, or you can make a submit request to Red Hat to submit DNS zones that must be forwarded to a customer-managed private DNS server.
+
+A limitation of Private DNS zones is that only one instance of a given zone may be linked to a Virtual Network.
+Attempting to link zones that match the names of Private DNS zones in the managed resource group causes conflicts.
+Microsoft recommends consolidating DNS records into a single zone to work around this limitation.
+
+You can replicate the records from the zones in the managed resource group into your own instance of the Private DNS zone.
+You can then unlink Private DNS zones in the managed resource group from the Virtual Network and replace it with your own instance of the Private DNS zone.
+
+Failure to properly maintain the records in the Private DNS zone can prevent the managed application from operating.
+
+The Azure Kubernetes Service (AKS) Private DNS zone cannot be customer managed and still allow Red Hat to update or upgrade the managed AKS that is a part of this offering.
+To allow Red Hat to upgrade the customer AKS to the latest version during the maintenance windows, do not unlink the `<GUID>.privatelink.<region>.azmk8s.io` Private DNS zone.
+For more information on this limitation, see _"CreateOrUpdateVirtualNetworkLinkFailed" error when updating or upgrading an AKS cluster_ in the Microsoft Azure documentation.
+
+To work around this limitation, Red Hat allows you to manage A and CNAME records in the Private DNS zones in the managed resource group.
+Any records that you put in the Private DNS zones in the managed resource group are visible to the Red Hat SREs.
+If you decide to use the Private DNS zones in the managed resource group, you are responsible for updating them with the records you need.
+Customer supplied records are not backed up as a part of the disaster recovery process.
+Removing any Azure supplied records can cause network connectivity issues with {AAPonAzureNameShort}.
+
+For more information about working with Private DNS zones, see _Private DNS with Red Hat Ansible Automation Platform on Microsoft Azure_ on the Red Hat customer portal.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://learn.microsoft.com/en-us/troubleshoot/azure/azure-kubernetes/create-upgrade-delete/createorupdatevirtualnetworklinkfailed-error["CreateOrUpdateVirtualNetworkLinkFailed" error when updating or upgrading an AKS cluster]
+* link:https://access.redhat.com/articles/6983525[Private DNS with Red Hat Ansible Automation Platform on Microsoft Azure]
