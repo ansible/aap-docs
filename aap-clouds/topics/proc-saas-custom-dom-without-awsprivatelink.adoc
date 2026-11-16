@@ -53,18 +53,23 @@ The CNAME you create must point to a name that the Red Hat service can resolve.
 * platform (for example, `platform._exampledomain_.com`) → `cus-xxxxx-alb-11111111.us-east-1.elb.amazonaws.com`
 * mesh-ingress-0 (for example, `mesh-ingress-0._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
 * mesh-ingress-1 (for example, `mesh-ingress-1._exampledomain_.com`)  → `xxxxx.elb.us-east-1.amazonaws.com`
-
-.Validation
-
++
+*Validation*
++
 After configuring your custom domain DNS records:
-
++
 . From your network, verify the hostname resolves correctly:
 .. Run: `nslookup platform.<yourdomain>.com`
 .. Confirm it resolves to your platform's IP address or endpoint
 
 . Confirm that the Red Hat managed service can also resolve your custom hostname:
-.. Contact link:{CustomerSupport}[Red Hat support] to validate service-side DNS resolution
+.. Contact Red Hat support to validate service-side DNS resolution
 .. Provide your custom domain name and the DNS records you configured
 .. Red Hat support can verify that the service can reach your configured endpoints
 
 . Do not proceed with {PlatformNameShort} configuration until you have confirmed service-side DNS resolution.
+
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://access.redhat.com/support/cases/?extIdCarryOver=true&sc_cid=RHCTG0250000454096#/case/new/get-support?caseCreate=true[Customer support]

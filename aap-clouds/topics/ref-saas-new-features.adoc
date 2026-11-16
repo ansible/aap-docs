@@ -1,0 +1,53 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-saas-new-features_{context}"]
+
+= New features and enhancements
+
+[role="_abstract"]
+The following new features and enhancements are available for Managed Service customers in the {SaaSonAWSShort} general availability release on November 3, 2026.
+
+[cols="10%,90%", options="header"]
+|====
+| Date | Feature
+| 10th August 2026 a| *Mandatory Infrastructure Migration to Multi-Region Business Continuity (MRBC) Topology*
+
+*Target Audience*: Administrators of {SaaSonAWS}
+
+*Overview*
+
+Red Hat is modernizing the underlying infrastructure for {SaaSonAWSShort} by introducing a mandatory _Multi-Region Business Continuity_ (MRBC) topology.
+
+Deployments provisioned prior to *August 4, 2026* run on legacy infrastructure that has entered a deprecation status. This legacy environment is scheduled for permanent shutdown on *August 3, 2027*. All existing customers must plan and complete a migration to the new infrastructure layout on or before this shutdown date.
+
+For detailed architecture specifications and disaster recovery workflows, review the link:https://docs.redhat.com/en/documentation/ansible_on_clouds/2.x/html/red_hat_ansible_automation_platform_service_on_aws/saas-service-definition#assembly-saas-business-continuity[Red Hat Multi-Region Business Continuity Documentation].
+
+*Migration Timeline & Topology Rules*
+
+*Customer-Scheduled Migrations (Available Now through August 3, 2027)*:
+Customers can request and schedule their migration at any point prior to August 3, 2027 to take advantage of multi-region capabilities during planned maintenance windows.
+
+*Deployments Over 50 Nodes*: All deployments exceeding 50 nodes will migrate directly to the multi-region active/passive topology.
+
+*50-Node Deployments*: Customers running 50-node deployments must also migrate away from the deprecated infrastructure. During migration, administrators can choose between remaining on a single-region deployment or upgrading to the multi-region topology.
+
+*Automatic Migrations (August 3, 2027)*: Any deployment that has not been transitioned by August 3, 2027 will be automatically migrated by Red Hat into the mandatory active/passive multi-region topology.
+
+*Network & Infrastructure Reconfiguration Requirements*
+
+Because this migration provisions new underlying cloud resources, customer-managed network routes and endpoints will not carry over automatically:
+
+* *Custom DNS and Vanity Domains*: Custom domain routing does not automatically map to secondary region infrastructure during disaster recovery. Customers who use custom vanity domains are required to disclose this when opening their migration ticket. In the event of a failover, customers remain strictly responsible for manually updating their `DNS CNAME` records to route traffic to the secondary active region.
+
+* *AWS PrivateLink & Network Endpoints*: Customers must reconfigure and re-establish AWS PrivateLink connections, VPC peering, and custom routing configurations to integrate with the new environment.
+
+*Required Customer Actions*
+
+. *Submit a Migration Request*: Open a support case via the Red Hat Customer Portal to schedule a migration date before August 3, 2027.
+
+. *Disclose Custom Domain Configurations*: Clearly state whether your deployment uses custom vanity domains or certificates in your migration ticket so engineering teams can coordinate routing steps.
+
+. *Prepare Network Adjustments*: Audit existing AWS PrivateLink attachments, VPC routes, and external firewalls in preparation for post-migration endpoint updates.
+|====
+
+
