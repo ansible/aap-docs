@@ -2,11 +2,11 @@
 
 **Run:** 2026-11-17 · `conversion-aap-service-aws` source tree at `367cd2c8e2` (includes writer fix `45a2f7af6d`) · versionless · CSV map mode, 11 jobs and 87 H2 topics · `--assembly-topics` (`-ArC`) · prefix `aap-service-aws`.
 
-**Readiness:** Not ready for conversion. Regenerate the maps from the live export and remove the redundant category-level chunk attributes listed below. Then verify the generated output during conversion.
+**Readiness:** Ready for conversion. The navigation and category/job maps were generated from the current live export. The redundant category-level chunk attributes are removed; verify the DITA-OT build has no chunk errors and the job content remains reachable.
 
-## Generated map chunking
+## Map chunking
 
-The job map chunks its assembly, and the generated category map repeats that chunk boundary. The current live export produces 11 affected category-level includes. In the generated maps, remove `chunk="to-content"` from:
+The job maps already chunk their assemblies. The 11 redundant `chunk="to-content"` attributes were removed from these generated category-map includes:
 
 - `aap-service-aws-plan.adoc`: `control-plane.adoc`, `execution-plane.adoc`, and `red-hat-ansible-automation-platform-service-on-aws-pull-and-push-models.adoc`.
 - `aap-service-aws-get-started.adoc`: `set-up-red-hat-ansible-automation-platform-service-on-aws.adoc`.
@@ -15,9 +15,9 @@ The job map chunks its assembly, and the generated category map repeats that chu
 - `aap-service-aws-optimize.adoc`: `multiregion-activepassive-infrastructure.adoc`.
 - `aap-service-aws-whats-new.adoc`: `ansible-automation-platform-service-on-aws-release-notes.adoc`.
 
-Keep chunking on job maps and their assembly includes. A focused correction to the earlier map removed these redundant category boundaries and cleared its DITA-OT chunk diagnostics; recheck the current map after applying the change.
+Chunking remains on job maps and their assembly includes.
 
-**Owner:** Conversion engineer · **Timing:** Before conversion — correct generated maps; during conversion — confirm there are no chunk errors and job content remains reachable
+**Owner:** Conversion engineer · **Timing:** During conversion — confirm there are no chunk errors and job content remains reachable
 
 ## Duplicate IDs
 
