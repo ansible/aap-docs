@@ -10,23 +10,12 @@ This procedure removes Egress PrivateLink connectivity used for the PUSH model, 
 .Procedure
 
 . Submit a *separate* Customer Support case to request Egress PrivateLink disconnection.
-Include the following in your request:
+. Include the following in your request:
+
 * *AWS Account ID*
 * *Deployment ID*
 * *Endpoint Service Name*
 * *Service Regions/AZs*
-. Wait for Red Hat to delete the consumer VPC endpoint on the control plane side and confirm that you can proceed.
-+
-[IMPORTANT]
-====
-Do not delete your Endpoint Service, NLB, or related components until Red Hat confirms removal on the control plane side.
-Deleting customer-side resources first can leave the connection in a failed or disconnected state and prevent a clean teardown.
-====
-. After Red Hat confirms removal, remove split-horizon DNS configuration for the private resources that were accessed through PrivateLink.
-. Delete the AWS Endpoint Service, NLB, and any other AWS resources that were created solely for this Egress PrivateLink connection.
-. Verify connectivity:
-* Confirm whether PUSH model execution nodes or private resources such as Git and {PrivateHubName} still require access from the control plane.
-* If alternate connectivity is required, configure it before you decommission the Endpoint Service and NLB.
 +
 [NOTE]
 ====
@@ -56,6 +45,20 @@ Please delete the consumer VPC endpoint on the control plane side and confirm wh
 Thank you.
 ----
 ====
+
+. Wait for Red Hat to delete the consumer VPC endpoint on the control plane side and confirm that you can proceed.
++
+[IMPORTANT]
+====
+Do not delete your Endpoint Service, NLB, or related components until Red Hat confirms removal on the control plane side.
+Deleting customer-side resources first can leave the connection in a failed or disconnected state and prevent a clean teardown.
+====
+. After Red Hat confirms removal, remove split-horizon DNS configuration for the private resources that were accessed through PrivateLink.
+. Delete the AWS Endpoint Service, NLB, and any other AWS resources that were created solely for this Egress PrivateLink connection.
+. Verify connectivity:
+
+* Confirm whether PUSH model execution nodes or private resources such as Git and {PrivateHubName} still require access from the control plane.
+* If alternate connectivity is required, configure it before you decommission the Endpoint Service and NLB.
 
 [role="_additional-resources"]
 .Additional resources
