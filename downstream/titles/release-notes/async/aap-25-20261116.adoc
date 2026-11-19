@@ -1,0 +1,78 @@
+:_mod-docs-content-type: REFERENCE
+
+
+[[aap-25-20261116]]
+
+= Ansible automation portal patch release November 16, 2026
+
+
+[role="_abstract"]
+
+This release includes the following components and versions:
+
+[cols=="2a,3a", options=="header"]
+|====
+| Release Date | Component versions
+
+| November 16, 2026
+a|
+
+* Automation controller 4.6.36
+* Automation hub 4.10.19
+* Event-Driven Ansible 1.1.23
+* Container-based installer Ansible Automation Platform (bundle) 2.5-25.7
+* Container-based installer Ansible Automation Platform (online) 2.5-25
+* Receptor 1.6.8
+* RPM-based installer Ansible Automation Platform (bundle) 2.5-23.9
+* RPM-based installer Ansible Automation Platform (online) 2.5-23
+
+
+|====
+
+CSV Versions in this release:
+
+* Namespace-scoped bundle: aap-operator.v2.5.0-0.1794430517
+* Cluster-scoped bundle: aap-operator.v2.5.0-0.1794430605
+
+== Overview
+The updates cover automation controller and supported execution environments, including security fixes, reliability improvements, and expanded configuration options for notification destinations.
+
+== Highlights
+
+* Key changes include protection against token forgery, authentication bypass, and unauthenticated disruption of job dispatch. Controller improvements address fact caching for sliced jobs, database locking during concurrent job completion, and administrator control over notification destinations.
+
+== Enhancements
+
+=== Execution environments
+
+* The `ansible.controller` collection has been updated to version 4.6.36. (AAP-101441)
+
+== CVE
+
+* Automation controller
+** Automation controller (container image: `ansible-automation-platform-25/controller-rhel8`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-102273[CVE-2026-102273] - PyJWT: JWT token forgery through acceptance of public JWK container representations as HMAC secrets, bypassing the HMAC key guard. Updated PyJWT to version 2.15.1. (AAP-94840)
+** Automation controller scheduler-trigger endpoints
+*** link:https://access.redhat.com/security/cve/CVE-2026-84486[CVE-2026-84486] - Automation controller: Unauthenticated access to debug scheduler-trigger endpoints on production builds could disrupt job dispatch through advisory-lock starvation, resulting in denial of service. (AAP-90937)
+
+* Execution environments
+** Ansible Automation Platform supported execution environments (container image: `ansible-automation-platform-25/ee-supported-rhel8`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-102268[CVE-2026-102268] - PyJWT: Authentication bypass through improper public key validation. Updated PyJWT to version 2.14.0. (AAP-97981)
+
+** Supported execution environment (container image: `ansible-automation-platform-25/ee-supported-rhel9`)
+*** link:https://access.redhat.com/security/cve/CVE-2026-102268[CVE-2026-102268] – PyJWT: Authentication bypass through improper public key validation. Updated PyJWT to version 2.14.0. (AAP-97979)
+
+
+== Bug fixes
+
+=== Automation Controller
+
+* Fixed an issue where host facts were not updated for sliced jobs. (AAP-99482)
+* Fixed an issue where concurrent job completions on a job template with `allow_simultaneous` enabled could cause row-level lock convoys on the `main_unifiedjobtemplate` table, leading to API unresponsiveness. The parent job template update now uses PostgreSQL `SKIP LOCKED` to avoid queuing behind locked rows, allowing concurrent updaters to return immediately instead of waiting. (AAP-96775)
+* Fixed an issue where notification SSRF protection blocked all private, loopback, and link-local addresses without an override option. Notification SSRF protection now supports an administrator-configurable allowlist for permitting specific internal IP ranges or hostnames as notification destinations. (AAP-95787)
+* Fixed an issue where notification SSRF protection blocked all private, loopback, and link-local addresses without an override option. Notification SSRF protection now supports an administrator-configurable allowlist for permitting specific internal IP ranges or hostnames as notification destinations. (AAP-94445)
+* Fixed an issue where notification SSRF protection blocked all private, loopback, and link-local addresses without an override option. Notification SSRF protection now supports an administrator-configurable allowlist for permitting specific internal IP ranges and hostnames as notification destinations. (AAP-94163)
+* Fixed an issue where notification SSRF protection blocked all private, loopback, and link-local addresses without an override option. Notification SSRF protection now supports an administrator-configurable allowlist for permitting specific internal IP ranges and hostnames as notification destinations. (AAP-91627)
+
+== Known issues
+No known issues. 
