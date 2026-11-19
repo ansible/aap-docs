@@ -1,0 +1,14 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-azure-data-export-and-compliance"]
+
+= Data export and compliance
+
+[role="_abstract"]
+If your organization requires long-term data retention for compliance or auditing purposes, consider these alternatives to extending in-platform retention:
+
+|===
+| link:https://access.redhat.com/kb/7136477[External log aggregation]	| Configure Ansible Automation Platform to forward job logs to an external SIEM (Splunk, ELK, Azure Monitor) before cleanup removes them
+| link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.7/optimize-con_user_data_tracking#proc-controller-configure-analytics[Automation Analytics]	| Enable Red Hat Insights / Automation Analytics to retain aggregated metrics beyond the cleanup window
+| link:https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.6/develop-assembly_controller_api_tools[API-based export]	| Use the /api/controller/v2/jobs/ and /api/controller/v2/activity_stream/ endpoints to programmatically export data before cleanup
+|===
