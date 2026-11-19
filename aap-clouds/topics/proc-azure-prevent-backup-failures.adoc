@@ -1,0 +1,27 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-azure-prevent-backup-failures_{context}"]
+
+= Prevent backup failures
+
+[role="_abstract"]
+Troubleshoot and resolve PostgreSQL backup failures by reducing job history retention and running manual cleanup jobs so you can restore automated backups and return your deployment to a supported state.
+
+Managed {AAPonAzureNameShort} uses automated PostgreSQL backups. When the database exceeds the backup storage allocation or the backup takes longer than the maintenance window, the backup fails. Once the database size prevents successful backups, typically due to excessive retention of Job History or Activity Stream data, the {PlatformName} environment will be considered in an unsupported state.
+
+*Warning Signs*
+
+* Slow UI response when loading job history or activity stream
+* Backup job notifications showing warnings or failures
+* Database size alerts from Azure monitoring
+* Job event queries timing out in the API
+
+*Immediate remediation*
+ 
+If backups are already failing, follow these steps:
+
+.Procedure
+. Reduce Job History retention to 30 days temporarily
+. Manually launch the "Cleanup Job Details" system job from menu:Administration[Management Jobs]
+. Wait for cleanup to complete. This can take 30-60 minutes for large datasets
+. Verify that the next scheduled backup succeeds

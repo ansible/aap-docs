@@ -1,0 +1,21 @@
+:_mod-docs-content-type: PROCEDURE
+
+[id="proc-azure-configure-retention_{context}"]
+
+= Configure retention
+
+[role="_abstract"]
+For long-term compliance and auditing, the recommended approach is to configure link:https://access.redhat.com/kb/7136477[External log aggregation] post-deployment. See, xref:ref-azure-data-export-and-compliance[Data export and compliance]
+
+Follow these steps to configure the short-term operational data retention (Job History and Activity Stream) with the Ansible Automation Platform UI:
+
+.Procedure
+. Navigate to menu:Administration[Management Jobs].
+. For each cleanup job, click the *Schedule* tab
+. Edit the schedule to set:
+
+** *Days of data to keep*: Enter the number of retention days. For example, 30.
+** *Frequency*: Set the recurrence (Weekly is the recommended minimum; Daily for large environments).
+** *Save the schedule*: The cleanup job will run automatically at the next scheduled time.
+
+. (Optional) To run cleanup immediately, click btn:[Launch] button on the *Management Jobs* page.
