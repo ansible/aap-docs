@@ -65,7 +65,7 @@ The updates cover automation controller and supported execution environments, in
 
 == Bug fixes
 
-=== Controller
+=== Automation Controller
 
 * Fixed an issue where host facts were not updated for sliced jobs. (AAP-99482)
 * Fixed an issue where concurrent job completions on a job template with `allow_simultaneous` enabled could cause row-level lock convoys on the `main_unifiedjobtemplate` table, leading to API unresponsiveness. The parent job template update now uses PostgreSQL `SKIP LOCKED` to avoid queuing behind locked rows, allowing concurrent updaters to return immediately instead of waiting. (AAP-96775)
