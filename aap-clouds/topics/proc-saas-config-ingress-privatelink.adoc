@@ -9,6 +9,17 @@ Configure AWS PrivateLink by submitting a support request to Red Hat and creatin
 
 This configuration allows your internal users and automation to access the {PlatformNameShort} UI and API over PrivateLink.
 
+[IMPORTANT]
+====
+*Disclaimer for Multi-Region Environments*
+
+For customers with multi-region active/passive deployments, your VPC Endpoint Service must support Availability Zones in both your primary and secondary regions. When creating your Endpoint Service and submitting configuration details to Red Hat:
+
+* Ensure the Endpoint Service in your AWS account is configured to be available to the primary and secondary regions/AZs by adding them to the Supported Regions tab of the endpoint service.
+* Red Hat automation provisions Interface Endpoints across both regions; omitting supported AZs in either region will cause the automated endpoint provisioning to fail.
+====
+
+
 .Procedure 
 
 . Submit the Ingress PrivateLink support request
