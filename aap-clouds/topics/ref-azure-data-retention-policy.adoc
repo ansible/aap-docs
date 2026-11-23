@@ -7,7 +7,10 @@
 [role="_abstract"]
 Plan short-term database cleanup and external log aggregation for Ansible Automation Platform so you can preserve long-term audit trails while preventing backup failures and keeping your deployment supported.
 
-{PlatformNameShort} customers must plan for short-term and long-term data storage. {PlatformNameShort}'s managed PostgreSQL database is optimized for short-term operational data. For example, job history and activity streams, typically up to 30 days. For long-term compliance or auditing needs, customers must immediately configure external log aggregation post-deployment. This keeps the internal database lean while preserving a complete audit trail externally. Without regular cleanup, data accumulation leads to:
+{PlatformNameShort} customers must plan for short-term and long-term data storage. {PlatformNameShort}'s managed PostgreSQL database is optimized for short-term operational data. For example, job history and activity streams, typically up to 30 days. For long-term compliance or auditing needs, customers must immediately configure external log aggregation post-deployment. 
+Customers can set the retention value, which does not change from self-managed {PlatformNameShort}. 
+However, the value should not be set for greater than 30 days, as doing so can lead to performance issues and put the site into an unsupported state. 
+This keeps the internal database lean while preserving a complete audit trail externally. Without regular cleanup, data accumulation leads to:
 
 * Backup timeouts and failures
 * Degraded UI performance
