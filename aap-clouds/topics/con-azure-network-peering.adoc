@@ -18,7 +18,6 @@ Azure network peering allows:
 Each Azure networking configuration is unique.
 To enable user access to {PlatformNameShort}, collaborate with your Azure administrators to establish connections between the platform's deployment, your VNets, and external VPN-routed networks.
 
-
 [NOTE]
 ====
 Network peering must be configured by Azure administrators in your organization who are familiar with Azure networking.
@@ -28,14 +27,20 @@ The network peering procedures described in this document are not supported by R
 Contact Microsoft for assistance in peering Azure networks.
 
 While every effort has been made to align with Microsoft's documentation for this content, there may be drift in accuracy over time.
-link:https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview[Microsoft's documentation] is the definitive source for information about networking topics for Azure.
+_Microsoft's documentation_ is the definitive source for information about networking topics for Azure.
 ====
 
 Azure offers different ways to peer private networks. These are typically divided into two categories:
 
 * **Hub-and-spoke peering**: In this topology, there is a centralized hub VNet that other virtual networks peer with.
 This hub network has mechanisms to route traffic through transit routing. Cloud networks, including VPN/Express Connect connections with on-premises and other cloud networks, can communicate through the hub VNet.
-* **Azure Virtual WAN (VWAN)**: Azure Virtual WAN is a networking service that provides simplified hub-and-spoke network modeling across Azure, on-premises, and other VPN/Direct Connect networks. For more about VWAN, refer to Microsoft's link:https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about[Virtual WAN documentation].
+* **Azure Virtual WAN (VWAN)**: Azure Virtual WAN is a networking service that provides simplified hub-and-spoke network modeling across Azure, on-premises, and other VPN/Direct Connect networks. For more about VWAN, refer to Microsoft's _Virtual WAN documentation_.
 * **Direct peering**: Private networks are individually connected to one another with no routing hops between them. This is a simpler peering model: it is useful when you only want to connect a few networks.
 
-Refer to link:https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/vnet-peering[Choose between virtual network peering and VPN gateways] in the Microsoft _Application architecture fundamentals guide_ to determine the correct peering approach for your organization.
+Refer to _Choose between virtual network peering and VPN gateways_ in the Microsoft _Application architecture fundamentals guide_ to determine the correct peering approach for your organization.
+
+[role="_additional-resources"]
+.Additional resources
+* link:https://docs.microsoft.com/en-us/azure/virtual-network/virtual-network-peering-overview[Microsoft's documentation]
+* link:https://learn.microsoft.com/en-us/azure/virtual-wan/virtual-wan-about[Virtual WAN documentation]
+* link:https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/vnet-peering[Choose between virtual network peering and VPN gateways]

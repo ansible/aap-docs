@@ -1,0 +1,28 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="azure-data-categories-and-retention_{context}"]
+
+= Data categories and retention
+
+[role="_abstract"]
+Set retention periods and weekly cleanup schedules for job history and activity stream data so you can control database growth, ensure reliable backups, and keep your deployment in a supported state.
+
+*1 Job History (Cleanup Job Details)*
+
+|===
+| *What it includes* | Job stdout, job events, job metadata (start/finish times, status, launched_by), ad hoc command history, project update history, inventory sync history, workflow job records
+| *Required retention*	| 30 days  (use external logging if this does not align with your organization's audit requirements)
+| *Cleanup schedule* | Weekly (Sundays)
+|===
+
+*Why it matters*: Job history is the single largest data contributor to the {PlatformNameShort} database. A customer running 500+ jobs/day at 365-day retention can generate 50+ GB of job event data per year. This is the primary cause of backup failures. Once the database size prevents successful backups, the system will be in an unsupported state.
+
+*2 Activity Stream (Cleanup Activity Stream)*
+
+|===
+| *What it includes* | Audit trail of all user and system actions - logins, permission changes, resource creation/deletion, configuration changes
+| *Required retention* | 30 days (use external logging if this does not align with your organization's audit requirements)
+| *Cleanup schedule* | Weekly (Tuesdays)
+|===
+
+*Why it matters*: Activity stream data grows proportionally to user activity. High-user environments (50+ active users) should use shorter retention periods. When the resulting database size prevents successful backups, the system will be in an unsupported state.
