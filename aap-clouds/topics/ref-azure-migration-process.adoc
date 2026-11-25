@@ -1,0 +1,44 @@
+:_mod-docs-content-type: REFERENCE
+
+[id="ref-azure-migration-process_{context}"]
+
+= Step-by-step migration process
+
+[role="_abstract"]
+The following table outlines the sequential actions required.
+
+[cols="10%,15%,75%" options="header"]
+|===
+| Sequence | Owner | Action item
+| 01 | Customer | *Deploy New Instance*
+
+At the start of the planned 48-hour window, deploy the new {AAPonAzureNameShort} instance ensuring the correct tier plan is selected. 
+| 02 | Customer | *Initiate Migration Ticket*
+
+Submit a support request (ticket) to the SRE team formally requesting migration assistance. (See Template in Section 3).
+| 03 | Customer | *Confirm Readiness*
+
+Customers are responsible for initiating the communication by updating the support ticket they opened in Sequence 2. This message confirms that the newly deployed target environment is active and configured with all necessary Azure dependencies. The SRE Team must then respond to the ticket to acknowledge this confirmation.
+| 04 | SRE Team | *Migrate Content*
+
+The SRE team will proceed with migrating content from the old site to the new site.
+| 05 | SRE Team | *Confirm Completion*
+
+The SRE team will notify you through the ticket that the content migration is complete.
+| 06 | Customer | *Update DNS*
+
+Reconfigure custom DNS settings (if applicable) to point to the new deployment.
+| 07 | Customer | *Validate Environment*
+
+Test the configuration of the new site to validate successful migration and operational functionality.
+| 08 | Customer | *Configure Azure Dependencies*
+
+Configure network peering, route tables (including managed application route tables), and other Azure dependencies for the new environment using the planned networking values.
+| 09 | Customer | *Reconfigure SSO*
+
+If applicable, reconfigure Single Sign-On (SSO). Update your Identity Provider (IdP) with the new environment's URL.
+| 10 | Customer | *Decommission*
+
+Once the new environment is fully validated and operational, remove or delete the old environment to cease billing for the previous tier.
+|===
+
