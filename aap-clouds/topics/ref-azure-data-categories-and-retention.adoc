@@ -11,8 +11,8 @@ Set retention periods and weekly cleanup schedules for job history and activity 
 
 |===
 | *What it includes* | Job stdout, job events, job metadata (start/finish times, status, launched_by), ad hoc command history, project update history, inventory sync history, workflow job records
-| Recommended retention	| 30 days
-| Cleanup schedule | Weekly (Sundays)
+| *Required retention*	| 30 days  (use external logging if this does not align with your organization's audit requirements)
+| *Cleanup schedule* | Weekly (Sundays)
 |===
 
 *Why it matters*: Job history is the single largest data contributor to the {PlatformNameShort} database. A customer running 500+ jobs/day at 365-day retention can generate 50+ GB of job event data per year. This is the primary cause of backup failures. Once the database size prevents successful backups, the system will be in an unsupported state.
@@ -20,9 +20,9 @@ Set retention periods and weekly cleanup schedules for job history and activity 
 *2 Activity Stream (Cleanup Activity Stream)*
 
 |===
-| What it includes | Audit trail of all user and system actions - logins, permission changes, resource creation/deletion, configuration changes
-| Recommended retention | 30 days (align with your organization's audit requirements)
-| Cleanup schedule | Weekly (Tuesdays)
+| *What it includes* | Audit trail of all user and system actions - logins, permission changes, resource creation/deletion, configuration changes
+| *Required retention* | 30 days (use external logging if this does not align with your organization's audit requirements)
+| *Cleanup schedule* | Weekly (Tuesdays)
 |===
 
 *Why it matters*: Activity stream data grows proportionally to user activity. High-user environments (50+ active users) should use shorter retention periods. When the resulting database size prevents successful backups, the system will be in an unsupported state.
